@@ -50,4 +50,5 @@ jobs:
           node dist/cli.js validate examples/showcase/bestiary/index.html --style bestiary --strict
           node dist/cli.js validate examples/showcase/psychedelic/index.html --style psychedelic --strict
           node dist/cli.js validate examples/showcase/memphis/index.html --style memphis --strict
-          node dist/cli.js validate examples/showcase/vaporwave/index.html --style vaporwave --strict`n          node dist/cli.js validate examples/showcase/galactic/index.html --style galactic --strict
+          node dist/cli.js validate examples/showcase/vaporwave/index.html --style vaporwave --strict
+          node dist/cli.js validate examples/showcase/galactic/index.html --style galactic --strict
