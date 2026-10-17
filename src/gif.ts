@@ -980,7 +980,8 @@ function frameShowcase(env: FrameEnv): void {
     { color: p.palette.accent, italic: false },
   );
   if (subtitle) {
-    drawTracked(ctx, subtitle.toUpperCase(), w / 2, h - s * 0.08, { family, size: s * 0.018, weight: 400, color: p.palette.muted }, s * 0.006);
+    const subtitleY = p.slug === 'isotype' ? s * 0.045 : h - s * 0.08;
+    drawTracked(ctx, subtitle.toUpperCase(), w / 2, subtitleY, { family, size: s * 0.018, weight: 400, color: p.palette.muted }, s * 0.006);
   }
   ctx.restore();
 }

@@ -43,6 +43,18 @@ If you skip this step you will guess a font or a hex colour, and the page will l
 - `prefers-reduced-motion` must show the final state; no essential information may depend on an animation.
 - For teaching pages, body text is at least 18px and labels at least 11px. A projector is not a phone.
 
+## Choose the artefact
+
+| The user asks for | Tool | Skill format |
+| --- | --- | --- |
+| a landing, portfolio, studio page | `beauty_create_page` | `page` |
+| a talk, review, retro, planning | `beauty_create_deck` | `deck` + `agile` |
+| a restaurant, museum, club, studio with rooms | `beauty_create_experience` | `experience` |
+| a cuento, history lesson, narrative essay | `beauty_create_story` | `story` |
+| a short title, teaser or social loop | `beauty_create_gif` | none |
+
+A GIF is never a list. If the user asks for objectives, a lesson or a story, create the page/experience/story first and use the GIF as its door.
+
 ### 2. Write the brief
 
 A good brief has:

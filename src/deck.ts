@@ -147,7 +147,7 @@ export function renderDeck({ style, brief: input }: DeckOptions): DeckResult {
   const accent = style.palette[subfamily.accent];
   const ground = subfamily.ground ? style.palette[subfamily.ground] : style.palette.bg;
   const cta = brief.cta ?? { label: t(locale, 'Gracias', 'Thank you'), href: '#' };
-  const closingTitle = t(locale, 'Fin de la presentación.', 'End of the deck.');
+  const closingTitle = input.closing || t(locale, 'La conversación sigue.', 'The conversation continues.');
   const total = slides.length + 2;
   const display = style.fonts.display;
   const bodyFont = style.fonts.body;

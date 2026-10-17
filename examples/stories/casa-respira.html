@@ -32,7 +32,7 @@ body.story-page a{color:inherit;text-decoration:none}
 .story-intro{max-width:44ch;margin:20px 0 0;color:var(--st-muted);font-size:17px}
 .story-button{display:inline-flex;align-items:center;gap:12px;margin-top:30px;padding:13px 18px;background:var(--st-accent);color:var(--st-bg);border:var(--st-line) solid var(--st-accent);font-family:var(--st-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;transition:transform .25s var(--motion-ease),background .25s,color .25s}
 .story-button:hover{transform:translateY(-2px)}
-.story-cover-art{min-height:min(70vh,700px)}
+.story-cover-art{min-height:min(70vh,700px);margin:0}.story-cover-art figcaption,.story-plate figcaption{margin:10px 0 0;padding:0 2px;font-family:var(--st-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--st-muted)}
 .story-nav{position:sticky;top:0;z-index:40;display:flex;gap:0;overflow:auto;border-top:var(--st-line) solid color-mix(in srgb,var(--st-ink) 24%,transparent);border-bottom:var(--st-line) solid color-mix(in srgb,var(--st-ink) 24%,transparent);background:var(--st-bg);scrollbar-width:thin}
 .story-nav a{flex:0 0 auto;display:flex;align-items:center;gap:9px;padding:12px 18px;border-right:var(--st-rule) solid color-mix(in srgb,var(--st-ink) 16%,transparent);font-family:var(--st-mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--st-muted);white-space:nowrap}
 .story-nav a span{color:var(--st-accent2)}.story-nav a[aria-current="true"]{background:var(--st-surface);color:var(--st-ink)}
@@ -108,19 +108,19 @@ a{text-underline-offset:.18em;text-decoration-thickness:1px}
 <body class="story-page style-renaissance">
 <header class="story-top">
     <a class="story-brand" href="#top">OPEN/BEAUTY</a>
-    <p>Una historia <span>·</span> 5 capítulos <span>·</span> 6 min</p>
+    <p>Cuento · cinco capítulos <span>·</span> 5 capítulos <span>·</span> 4 min</p>
   </header>
 
   <main class="story" id="top">
     <section class="story-cover" aria-labelledby="story-title">
       <div class="story-cover-copy reveal">
-        <p class="story-kicker">Una historia</p>
+        <p class="story-kicker">Cuento · cinco capítulos</p>
         <h1 id="story-title">La casa que aprendió a respirar</h1>
         <p class="story-tagline">Un cuento sobre una casa que creció alrededor de una conversación.</p>
         
         <a class="story-button" href="#chapter-1">Empezar a leer <span aria-hidden="true">↓</span></a>
       </div>
-      <div class="story-cover-art reveal" style="--i:1"><div class="scene-art scene-renaissance scene-v0" aria-hidden="true"><svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
+      <figure class="story-cover-art reveal" style="--i:1"><div class="scene-art scene-renaissance scene-v0" aria-hidden="true"><svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
           <rect width="800" height="800" fill="#F6EDDD"/>
           <path d="M110 760V342c0-170 130-300 290-300s290 130 290 300v418" fill="#E3E9E6" stroke="#B08A4F" stroke-width="2"/>
           <circle cx="455" cy="330" r="92" fill="#B4432C"/>
@@ -133,22 +133,22 @@ a{text-underline-offset:.18em;text-decoration-thickness:1px}
           </g>
           <g fill="#B9C4A6"><path d="M620 640c0-55 12-100 34-135 22 35 34 80 34 135Z"/><path d="M680 640c0-38 9-70 24-98 15 28 24 60 24 98Z"/></g>
           <circle cx="665" cy="735" r="7" fill="#B08A4F"/>
-        </svg></div></div>
+        <g transform="translate(400 590)" fill="none" stroke="#B08A4F" stroke-width="2" opacity=".9"><path d="M-105 90V-40L0-125 105-40V90Z"/><path d="M-22 90V18h44v72" stroke="#B4432C"/><path d="M-150 90h300" stroke="#B4432C" opacity=".65"/></g></svg></div><figcaption>Cuento · cinco capítulos</figcaption></figure>
     </section>
 
     <nav class="story-nav" aria-label="Capítulos">
-      <a href="#chapter-1" data-chapter="1"><span>01</span>La puerta sin calle</a><a href="#chapter-2" data-chapter="2"><span>02</span>La silla que avanzaba</a><a href="#chapter-3" data-chapter="3"><span>03</span>El cuarto que faltaba</a><a href="#chapter-4" data-chapter="4"><span>04</span>La que volvió</a><a href="#chapter-5" data-chapter="5"><span>05</span>El patio del otro lado</a>
+      <a href="#chapter-1" data-chapter="1"><span>01</span>La casa de cal</a><a href="#chapter-2" data-chapter="2"><span>02</span>La puerta sin destino</a><a href="#chapter-3" data-chapter="3"><span>03</span>La silla que se acercaba</a><a href="#chapter-4" data-chapter="4"><span>04</span>La habitación que faltaba</a><a href="#chapter-5" data-chapter="5"><span>05</span>El regreso</a>
     </nav>
 
     <article class="story-chapter " id="chapter-1" data-chapter="1" aria-labelledby="chapter-title-1">
       <div class="story-chapter-head reveal">
         <p class="story-kicker">I</p>
-        <h2 id="chapter-title-1">La puerta sin calle</h2>
+        <h2 id="chapter-title-1">La casa de cal</h2>
       </div>
-      <div class="story-prose reveal"><p class="story-lede">Cuando Mara volvió al pueblo, la casa de su infancia seguía mirando hacia el río, aunque el río ya no se veía desde ninguna ventana. Traía una carpeta para medirla antes de venderla y encontró a Inés en la cocina, junto a dos tazas tibias. Se abrazaron con la cautela de quienes recuerdan demasiadas versiones de una misma despedida. Al fondo del pasillo había una puerta estrecha, sin pomo por fuera. Inés juró que nunca estuvo allí. Mara la abrió: detrás solo había una pared encalada, fresca como una frente. Cerró sin preguntar. Para empezar, hablaron del viaje, de la humedad, del tejado. Luego Inés mencionó a su madre cantando mientras colaba café. Una tabla crujió en el piso de arriba. La casa, pensó Mara, estaba prestando atención.</p></div>
+      <div class="story-prose reveal"><p class="story-lede">Cuando Inés heredó la casa, encontró polvo en los alféizares, una gotera paciente y un patio donde la higuera se inclinaba hacia el pozo. La gente del pueblo decía que llevaba años vacía. Inés abrió las ventanas y puso agua para el té. Mientras barría, le habló de su viaje en autobús, de su hermana y de las cosas que todavía no sabía ordenar. El yeso devolvió un crujido suave, como alguien acomodándose para escuchar. Aquella noche durmió en la cocina, bajo una manta. Por primera vez en mucho tiempo, el silencio no le pareció dueño de todo el cuarto.</p></div>
       
       
-      <div class="story-plate reveal"><div class="scene-art scene-renaissance scene-v1" aria-hidden="true"><svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
+      <figure class="story-plate reveal"><div class="scene-art scene-renaissance scene-v1" aria-hidden="true"><svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
           <rect width="800" height="800" fill="#F6EDDD"/>
           <path d="M110 760V342c0-170 130-300 290-300s290 130 290 300v418" fill="#AFC5D6" stroke="#B08A4F" stroke-width="2"/>
           <circle cx="455" cy="330" r="92" fill="#B4432C"/>
@@ -161,25 +161,25 @@ a{text-underline-offset:.18em;text-decoration-thickness:1px}
           </g>
           <g fill="#B9C4A6"><path d="M620 640c0-55 12-100 34-135 22 35 34 80 34 135Z"/><path d="M680 640c0-38 9-70 24-98 15 28 24 60 24 98Z"/></g>
           <circle cx="665" cy="735" r="7" fill="#B08A4F"/>
-        </svg></div></div>
+        <g transform="translate(400 590)" fill="none" stroke="#B08A4F" stroke-width="2" opacity=".9"><path d="M-105 90V-40L0-125 105-40V90Z"/><path d="M-22 90V18h44v72" stroke="#B4432C"/><path d="M-150 90h300" stroke="#B4432C" opacity=".65"/></g></svg></div><figcaption>I · La casa de cal</figcaption></figure>
     </article><article class="story-chapter is-reverse" id="chapter-2" data-chapter="2" aria-labelledby="chapter-title-2">
       <div class="story-chapter-head reveal">
         <p class="story-kicker">II</p>
-        <h2 id="chapter-title-2">La silla que avanzaba</h2>
+        <h2 id="chapter-title-2">La puerta sin destino</h2>
       </div>
-      <div class="story-prose reveal"><p class="story-lede">Al sentarse, Mara oyó un rasguño suave. La silla de enea se había separado del muro y avanzaba por el suelo sin que nadie la tocara. Inés dijo que quizá una pata estaba desnivelada. Cada vez que regresaban al tiempo y la lluvia, la silla se alejaba; cuando Mara dijo que se había marchado porque estaba cansada de ser la hija que resolvía todo, avanzó un palmo. Inés no la miró. Confesó que conservó las llaves para que nadie decidiera por las dos, aunque nunca supo si su hermana quería volver. La silla se acercó otro palmo. Entonces la mesa pareció alargarse y el muro del comedor retrocedió, dejando sitio a una habitación angosta. Ninguna gritó. Inés puso una mano en la madera como quien toma el pulso a un animal dormido. La silla quedó entre ambas, vacía pero vuelta hacia ellas. En el extremo nuevo, apareció otra vez la puerta lisa.</p></div>
+      <div class="story-prose reveal"><p class="story-lede">Al tercer día, mientras buscaba la escoba, Inés descubrió una puerta estrecha entre la despensa y el patio. No tenía aldaba ni cerradura; al abrirla, encontró detrás un corredor de aire fresco que terminaba en una pared lisa. Ningún jardín, ninguna calle. La cerró con cuidado, como si hubiera interrumpido a alguien. Entonces llamaron a la puerta de entrada. Era Tomás, el niño de la casa azul, con un cuenco de limones que su madre mandaba compartir. Miró el suelo mojado y preguntó si podía quedarse un rato: la lluvia había borrado su juego de tiza. Inés puso dos tazas. La puerta pequeña quedó entornada tras ellos.</p></div>
       
       
       
     </article><article class="story-chapter " id="chapter-3" data-chapter="3" aria-labelledby="chapter-title-3">
       <div class="story-chapter-head reveal">
         <p class="story-kicker">III</p>
-        <h2 id="chapter-title-3">El cuarto que faltaba</h2>
+        <h2 id="chapter-title-3">La silla que se acercaba</h2>
       </div>
-      <div class="story-prose reveal"><p class="story-lede">En el cuarto nuevo, el yeso olía a lluvia. Había un cuadrado más claro en la pared, allí donde alguna vez colgó el retrato de su madre. Inés recordó la última tarde en que las tres estuvieron juntas: Mara hablaba de irse a la capital; ella lavaba tazas para no intervenir. Durante años, cada hermana creyó que la otra había entendido aquel silencio. —Yo pensé que no querías que volviera —dijo Inés. —Yo pensé que, si volvía, tendría que pedirte perdón por haberme ido. Inés apoyó los dedos en la pared, sobre la marca pálida. Mara le contó que todavía conservaba una taza desportillada de aquella cocina. El muro dejó oír un leve crujido y se abrió una ventana hacia un patio que ninguna recordaba, con un limonero inclinado sobre la noche.</p></div>
+      <div class="story-prose reveal"><p class="story-lede">Tomás volvió al día siguiente y encontró una silla de madera junto a la ventana. Inés la había dejado lejos de la mesa, pero, mientras contaban las nubes, la silla avanzó unos centímetros. Ninguno dijo nada. Cuando Tomás confesó que extrañaba a su padre, que trabajaba en otra ciudad, la silla se deslizó hasta quedar cerca de su rodilla. Inés le contó que también extrañaba a alguien y que a veces preparar té para dos hacía más llevadera la tarde. El niño apoyó una mano en el respaldo. La silla crujió, satisfecha, y los dos siguieron hablando hasta que el cielo se volvió color de durazno.</p></div>
       
       
-      <div class="story-plate reveal"><div class="scene-art scene-renaissance scene-v0" aria-hidden="true"><svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
+      <figure class="story-plate reveal"><div class="scene-art scene-renaissance scene-v0" aria-hidden="true"><svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
           <rect width="800" height="800" fill="#F6EDDD"/>
           <path d="M110 760V342c0-170 130-300 290-300s290 130 290 300v418" fill="#E3E9E6" stroke="#B08A4F" stroke-width="2"/>
           <circle cx="455" cy="330" r="92" fill="#B4432C"/>
@@ -192,22 +192,22 @@ a{text-underline-offset:.18em;text-decoration-thickness:1px}
           </g>
           <g fill="#B9C4A6"><path d="M620 640c0-55 12-100 34-135 22 35 34 80 34 135Z"/><path d="M680 640c0-38 9-70 24-98 15 28 24 60 24 98Z"/></g>
           <circle cx="665" cy="735" r="7" fill="#B08A4F"/>
-        </svg></div></div>
+        <g transform="translate(400 590)" fill="none" stroke="#B08A4F" stroke-width="2" opacity=".9"><path d="M-105 90V-40L0-125 105-40V90Z"/><path d="M-22 90V18h44v72" stroke="#B4432C"/><path d="M-150 90h300" stroke="#B4432C" opacity=".65"/></g></svg></div><figcaption>III · La silla que se acercaba</figcaption></figure>
     </article><article class="story-chapter is-reverse" id="chapter-4" data-chapter="4" aria-labelledby="chapter-title-4">
       <div class="story-chapter-head reveal">
         <p class="story-kicker">IV</p>
-        <h2 id="chapter-title-4">La que volvió</h2>
+        <h2 id="chapter-title-4">La habitación que faltaba</h2>
       </div>
-      <div class="story-prose reveal"><p class="story-lede">Más tarde, Mara salió sin tomar la carpeta. En la calle empezaba a lloviznar; caminó hasta el puente y se quedó mirando el cauce oscuro, que llevaba años oculto detrás de los edificios. El autobús hacia la ciudad pasó levantando agua. Ella no subió. Regresó con barro en los zapatos y encontró la puerta de la casa abierta, aunque estaba segura de haberla cerrado. Inés la esperaba en el comedor. Ninguna preguntó por qué había vuelto. La silla de enea se hallaba ahora junto a la ventana nueva, orientada hacia el pasillo. Mara dejó las llaves sobre la mesa, no la carpeta. Luego se sentó. Hablaron de cosas pequeñas: del limonero, del techo, de la taza rota. Esta vez las pausas también encontraron sitio. Desde algún lugar de la casa llegó el sonido de una llave girando.</p></div>
+      <div class="story-prose reveal"><p class="story-lede">Desde entonces, las visitas tuvieron su propio ritmo: dos golpes en la puerta, dos tazas, una silla que encontraba el sitio justo. Hablaron de recetas que salían mal, de nombres para las estrellas y de las personas que podían extrañarse sin dejar de quererlas. Mientras conversaban, la casa respiraba: las cortinas se inflaban con un viento que no entraba por ninguna ventana y el pasillo parecía alargarse para guardar cada pausa. Una tarde, detrás de la despensa, apareció una habitación que antes no estaba. Tenía un banco, una ventana azul y espacio suficiente para que las palabras de ambos descansaran sin apurarse.</p></div>
       
       
       
     </article><article class="story-chapter " id="chapter-5" data-chapter="5" aria-labelledby="chapter-title-5">
       <div class="story-chapter-head reveal">
         <p class="story-kicker">V</p>
-        <h2 id="chapter-title-5">El patio del otro lado</h2>
+        <h2 id="chapter-title-5">El regreso</h2>
       </div>
-      <div class="story-prose reveal"><p class="story-lede">La puerta lisa ya no estaba al fondo del pasillo, sino junto a la ventana que daba al patio. Inés acercó la silla y dejó un espacio entre ella y el umbral. A través de la madera llegó olor a tierra mojada y a cáscara de limón. Mara buscó el pomo; apareció bajo su mano, tibio, como si alguien acabara de soltarlo desde el otro lado. —¿La habías visto antes? —preguntó Inés. Mara negó con la cabeza. Se quedaron un momento oyendo la casa: una viga que cedía, el agua en las canaletas, el rumor de dos respiraciones acompasadas. Afuera, en el patio, una luz pequeña se encendió bajo el limonero. Inés tomó la taza desportillada y la dejó en el suelo, junto al umbral. Mara giró el pomo, y la puerta se abrió sobre un patio que olía al río.</p></div>
+      <div class="story-prose reveal"><p class="story-lede">Al llegar noviembre, la madre de Tomás recibió trabajo junto al mar. El niño se despidió con un abrazo y prometió volver cuando pudiera. Inés conservó las dos tazas en el estante y dejó la silla frente a la ventana. Pasaron algunos años. Una tarde de lluvia, alguien llamó dos veces. Tomás había regresado; traía una caja de semillas y a su hija, que observaba la casa como si reconociera un sueño contado muchas veces. La silla se acercó a la niña. Ella la siguió hasta la puerta estrecha. Del otro lado, una habitación nueva esperaba con la ventana abierta al viento. Inés sostuvo la hoja mientras la pequeña cruzaba. La puerta quedó abierta.</p></div>
       
       
       
@@ -218,7 +218,7 @@ a{text-underline-offset:.18em;text-decoration-thickness:1px}
       <h2 id="story-outro">Toda historia deja una puerta abierta.</h2>
       
       <a class="story-button" href="#top">Volver al inicio <span aria-hidden="true">↗</span></a>
-      <p class="story-credit">OPEN/BEAUTY · 5 capítulos · 6 min</p>
+      <p class="story-credit">OPEN/BEAUTY · 5 capítulos · 4 min</p>
     </footer>
   </main>
 

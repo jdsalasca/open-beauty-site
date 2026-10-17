@@ -47,6 +47,14 @@ The renderer currently gives you `title`, `tagline`, `intro`, `sections`, `quote
 
 If the topic needs a figure, a definition box or a process diagram, write the figure as an inline SVG in a hand-edited page and validate it. Do not add a fake image URL.
 
+## Rooms and chapters
+
+- A **history lesson** uses `beauty_create_story`: 3–5 chapters, one fact per chapter, a source, a question at the end.
+- A **museum or exhibition** uses `beauty_create_experience`: rooms, objects with date/medium/source, one quiet room.
+- A **class deck** uses `beauty_create_deck`; a **handout** uses `beauty_create_page`.
+
+Do not turn a lesson into a deck by default. Choose the room that matches the evidence.
+
 ## Slide version
 
 For a lesson in 16:9, call `beauty_create_deck` (not `beauty_create_page`). The deck generates the cover, closing, navigation and animations. Use 4–6 content slides:

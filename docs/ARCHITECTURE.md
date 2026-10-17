@@ -76,7 +76,13 @@ Three templates:
 
 Each style has its own frame function: gold arch and sun (Renaissance), black panel and acid ticker (Brutalist), paper cards and blobs (Paper craft). The fonts are bundled TTFs, so the GIF looks the same on every machine.
 
-### 6. MCP server (`src/mcp/server.ts`)
+### 6. Experiences and stories
+
+`src/page/experience.ts` turns a brief into 3–8 full-viewport rooms, a room rail, keyboard navigation and a scene per room. `src/page/story.ts` builds a cover, chapter nav, prose with a drop cap, plates, margin facts and source. `src/art.ts` draws original scenes per style and subject (table, vitrine, river, house) and keeps captions attached to the text.
+
+These are not generic templates with colour substitution: each style supplies palette, type and motion through the shared shell, and each renderer has a different reading structure.
+
+### 7. MCP server (`src/mcp/server.ts`)
 
 `McpServer` over stdio. Ten tools, eighteen resources, and an `instructions` string that repeats the workflow. The tools call the same `generate.ts` functions as the CLI, so the output is identical.
 

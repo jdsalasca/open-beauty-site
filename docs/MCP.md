@@ -144,6 +144,7 @@ Creates a chaptered story, history lesson or narrative essay: cover, chapter nav
 | Argument | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `style` | style slug | yes | |
+| `kind` | `story \| history \| lesson \| essay` | no | Changes the art register; history expects a source. |
 | `title`, `tagline`, `intro`, `brand` | strings | title yes | |
 | `chapters` | array (2–8) | yes | `{ kicker?, title, body, quote?, fact? }`; 80–250 words each. |
 | `source` | string | no | Required for history/lesson in practice. |

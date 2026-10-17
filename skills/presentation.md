@@ -7,6 +7,8 @@ description: Build a 16:9 animated presentation with open-beauty-site. Use when 
 
 A deck is not a page cut into rectangles. It is a sequence of **one-idea rooms**.
 
+For sprint review, retrospective or planning, read `skills/agile.md` too: the deck is the room, the GIF is the door. Real numbers only; no fake metrics.
+
 ## The brief
 
 - **5–8 slides total**, including the cover and closing that the tool generates.

@@ -9,6 +9,7 @@ Read `beauty_get_skill({ format: "story" })` and `beauty_get_style` before the b
 ```json
 {
   "style": "renaissance",
+  "kind": "story",
   "title": "La casa que aprendió a respirar",
   "tagline": "Un cuento sobre una casa que creció alrededor de una conversación.",
   "eyebrow": "Cuento · 2026",
@@ -39,7 +40,7 @@ Cover (image + promise) → chapter 1: a door → chapter 2: an obstacle or a st
 
 ### Historia
 
-Cover (place + date) → chapter 1: the world before → 2: the event → 3: who was excluded → 4: what changed and what did not. Add a `fact` with a date and a source. End with a question and a bibliography.
+Use `"kind": "history"` so the art uses a river/map register and the validator treats the source as essential. Cover (place + date) → chapter 1: the world before → 2: the event → 3: who was excluded → 4: what changed and what did not. Add a `fact` with a date and a source. End with a question and a bibliography.
 
 ### Lección
 

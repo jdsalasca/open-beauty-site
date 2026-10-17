@@ -1,13 +1,43 @@
 import type { StylePreset } from './types.js';
+import { esc } from './page/common.js';
 
 /**
  * Original inline scenes for experiences and stories. Each style has a
  * different composition, not a recolour of the same orbit.
  * The SVG uses only palette roles; the validator sees those hex values.
  */
-export function sceneArt(preset: StylePreset, index = 1): string {
+export type SceneSubject = 'table' | 'vitrine' | 'river' | 'house' | 'stage' | 'plant' | 'window' | 'none';
+
+
+function subjectMark(subject: SceneSubject, preset: StylePreset): string {
+  const p = preset.palette;
+  const lw = Math.max(2, preset.rules.borderWidths[0] || 2);
+  const line = p.accent;
+  const soft = p.accent2;
+  switch (subject) {
+    case 'table':
+      return `<g transform="translate(400 610)" fill="none" stroke="${line}" stroke-width="${lw}" opacity=".9"><ellipse rx="110" ry="42"/><ellipse rx="78" ry="28" stroke="${soft}"/><path d="M145-40v96M160-40v96M180-30l10 70" /><path d="M-170-20h30v58a12 12 0 0 0 24 0V-20h30" stroke="${soft}"/></g>`;
+    case 'vitrine':
+      return `<g transform="translate(400 560)" fill="none" stroke="${line}" stroke-width="${lw}" opacity=".9"><path d="M-100 120h200M-80 120V-100M80 120V-100M-100-100h200V90H-100Z"/><circle cx="0" cy="-18" r="38" fill="${soft}" stroke="none" opacity=".75"/><path d="M-55 50h110" stroke="${soft}"/></g>`;
+    case 'river':
+      return `<g transform="translate(400 620)" fill="none" stroke="${line}" stroke-width="${lw}" opacity=".9"><path d="M-300 30c70-80 140 40 210-20s150-60 210 10 100 10 180-40"/><path d="M-300 58c70-80 140 40 210-20s150-60 210 10 100 10 180-40" stroke="${soft}" opacity=".7"/><path d="M-210-30v30M-60-15v30M90-30v30M240-45v30" stroke="${soft}" opacity=".8"/></g>`;
+    case 'house':
+      return `<g transform="translate(400 590)" fill="none" stroke="${line}" stroke-width="${lw}" opacity=".9"><path d="M-105 90V-40L0-125 105-40V90Z"/><path d="M-22 90V18h44v72" stroke="${soft}"/><path d="M-150 90h300" stroke="${soft}" opacity=".65"/></g>`;
+    case 'stage':
+      return `<g transform="translate(400 620)" fill="none" stroke="${line}" stroke-width="${lw}" opacity=".85"><path d="M-180 60a180 180 0 0 1 360 0"/><path d="M-120 60V-20M120 60V-20M0 60V-60" stroke="${soft}"/><circle cx="0" cy="-60" r="16" fill="${soft}" stroke="none"/></g>`;
+    case 'plant':
+      return `<g transform="translate(400 610)" fill="none" stroke="${line}" stroke-width="${lw}" opacity=".9"><path d="M0 90V-90M0-20c-55-5-82-45-82-82 55 5 82 45 82 82ZM0 20c55-5 82-45 82-82-55 5-82 45-82 82Z" stroke="${soft}"/><path d="M-70 90h140"/></g>`;
+    case 'window':
+      return `<g transform="translate(400 560)" fill="none" stroke="${line}" stroke-width="${lw}" opacity=".85"><path d="M-130-90h260v260H-130Z"/><path d="M-130 0h260M0-90v260" stroke="${soft}"/><circle cx="70" cy="-35" r="24" fill="${soft}" stroke="none" opacity=".55"/></g>`;
+    default:
+      return '';
+  }
+}
+
+export function sceneArt(preset: StylePreset, index = 1, caption?: string, subject: SceneSubject = 'none'): string {
   const p = preset.palette;
   const n = Math.abs(index) % 3;
+  const label = esc((caption || '').split('·')[0]?.trim().slice(0, 18));
   const svg = (() => {
     switch (preset.slug) {
       case 'renaissance':
@@ -76,13 +106,13 @@ export function sceneArt(preset: StylePreset, index = 1): string {
         return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
           <rect width="800" height="800" fill="${p.bg}"/>
           <g stroke="${p.muted}" stroke-width="1" opacity=".4"><path d="M0 170h800M0 300h800M0 430h800M0 560h800M0 690h800"/><path d="M120 0v800M250 0v800M380 0v800M510 0v800M640 0v800"/></g>
-          <text x="60" y="96" font-family="Jost, sans-serif" font-size="28" letter-spacing="4" fill="${p.ink}">WIEN 1925</text>
+          <text x="60" y="96" font-family="Jost, sans-serif" font-size="28" letter-spacing="4" fill="${p.ink}">${esc(label || 'ARCHIVO / SERIE 01')}</text>
           <g fill="${p.accent}">${Array.from({ length: 7 }, (_, i) => `<path d="M70 ${220 + i * 62}h44v44H70z"/><path d="M88 ${214 + i * 62}l14-18 14 18Z"/>`).join('')}</g>
           <g fill="${p.accent2}">${Array.from({ length: 4 }, (_, i) => `<circle cx="${360 + i * 54}" cy="250" r="18"/>`).join('')}</g>
           <g fill="${p.accent3}">${Array.from({ length: 5 }, (_, i) => `<rect x="${390 + i * 44}" y="390" width="26" height="70"/>`).join('')}</g>
           <rect x="350" y="540" width="330" height="120" fill="none" stroke="${p.ink}" stroke-width="2"/>
           <text x="370" y="620" font-family="Jost, sans-serif" font-size="64" font-weight="700" fill="${p.ink}">68%</text>
-          <text x="370" y="648" font-family="IBM Plex Sans, sans-serif" font-size="16" letter-spacing="2" fill="${p.muted}">VIVIENDA / 1925</text>
+          <text x="370" y="648" font-family="IBM Plex Sans, sans-serif" font-size="16" letter-spacing="2" fill="${p.muted}">SERIE / 01</text>
           <path d="M60 740h680" stroke="${p.accent}" stroke-width="8"/>
         </svg>`;
       case 'opart':
@@ -172,11 +202,12 @@ export function sceneArt(preset: StylePreset, index = 1): string {
           <circle cx="${n === 1 ? 500 : 420}" cy="390" r="150" fill="url(#gplanet)"/>
           <ellipse cx="420" cy="390" rx="300" ry="42" fill="none" stroke="${p.accent}" stroke-width="2" transform="rotate(-18 420 390)"/>
           <circle cx="660" cy="240" r="14" fill="${p.accent3}"/>
-          <text x="400" y="760" text-anchor="middle" font-family="Michroma, sans-serif" font-size="16" letter-spacing="9" fill="${p.muted}">ORBITAL / MEMORY</text>
+          <text x="400" y="760" text-anchor="middle" font-family="Michroma, sans-serif" font-size="16" letter-spacing="9" fill="${p.muted}">${esc(label || 'MEMORIA / ORBITAL')}</text>
         </svg>`;
       default:
         return `<svg viewBox="0 0 800 800"><rect width="800" height="800" fill="${p.bg}"/><circle cx="400" cy="400" r="220" fill="${p.accent}"/></svg>`;
     }
   })();
-  return `<div class="scene-art scene-${preset.slug} scene-v${n}" aria-hidden="true">${svg}</div>`;
+  const marked = svg.replace(/<\/svg>\s*$/, `${subjectMark(subject, preset)}</svg>`);
+  return `<div class="scene-art scene-${preset.slug} scene-v${n}" aria-hidden="true">${marked}</div>`;
 }

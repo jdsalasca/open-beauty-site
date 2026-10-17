@@ -55,7 +55,10 @@ function paragraphs(body: string): string {
 
 export function renderStory(input: Partial<StoryBrief>, preset: StylePreset): string {
   const { brief, chapters, source, readingTime } = normalizeStory(input);
+  const storyKind = input.kind ?? 'story';
   const locale = brief.locale ?? 'es';
+  const subject = storyKind === 'history' ? 'river' : storyKind === 'lesson' ? 'window' : storyKind === 'essay' ? 'window' : 'house';
+  const storyLabel = storyKind === 'history' ? t(locale, 'Historia', 'History') : storyKind === 'lesson' ? t(locale, 'Lección', 'Lesson') : t(locale, 'Cuento', 'Story');
   const brand = brief.brand || brief.title;
   const line = preset.rules.borderWidths[0] ?? 1;
   const radius = preset.rules.radius[1] ?? 0;
@@ -77,7 +80,7 @@ export function renderStory(input: Partial<StoryBrief>, preset: StylePreset): st
         ${brief.intro ? `<p class="story-intro">${esc(brief.intro)}</p>` : ''}
         <a class="story-button" href="#chapter-1">${t(locale, 'Empezar a leer', 'Start reading')} <span aria-hidden="true">↓</span></a>
       </div>
-      <div class="story-cover-art reveal" style="--i:1">${sceneArt(preset, 0)}</div>
+      <figure class="story-cover-art reveal" style="--i:1">${sceneArt(preset, 0, storyLabel, subject)}<figcaption>${esc(brief.eyebrow || '')}</figcaption></figure>
     </section>
 
     <nav class="story-nav" aria-label="${t(locale, 'Capítulos', 'Chapters')}">
@@ -92,7 +95,7 @@ export function renderStory(input: Partial<StoryBrief>, preset: StylePreset): st
       <div class="story-prose reveal">${paragraphs(chapter.body)}</div>
       ${chapter.quote?.text ? `<figure class="story-quote reveal"><blockquote>“${esc(chapter.quote.text)}”</blockquote>${chapter.quote.author ? `<figcaption>${esc(chapter.quote.author)}</figcaption>` : ''}</figure>` : ''}
       ${chapter.fact ? `<aside class="story-fact reveal"><p class="story-kicker">${t(locale, 'Dato al margen', 'Margin note')}</p><p>${esc(chapter.fact)}</p></aside>` : ''}
-      ${index === 0 || index === Math.floor(chapters.length / 2) ? `<div class="story-plate reveal">${sceneArt(preset, index + 1)}</div>` : ''}
+      ${index === 0 || index === Math.floor(chapters.length / 2) ? `<figure class="story-plate reveal">${sceneArt(preset, index + 1, storyLabel, subject)}<figcaption>${esc(chapter.kicker || '')} · ${esc(chapter.title)}</figcaption></figure>` : ''}
     </article>`).join('')}
 
     <footer class="story-outro" aria-labelledby="story-outro">
@@ -122,7 +125,7 @@ body.story-page a{color:inherit;text-decoration:none}
 .story-intro{max-width:44ch;margin:20px 0 0;color:var(--st-muted);font-size:17px}
 .story-button{display:inline-flex;align-items:center;gap:12px;margin-top:30px;padding:13px 18px;background:var(--st-accent);color:var(--st-bg);border:var(--st-line) solid var(--st-accent);font-family:var(--st-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;transition:transform .25s var(--motion-ease),background .25s,color .25s}
 .story-button:hover{transform:translateY(-2px)}
-.story-cover-art{min-height:min(70vh,700px)}
+.story-cover-art{min-height:min(70vh,700px);margin:0}.story-cover-art figcaption,.story-plate figcaption{margin:10px 0 0;padding:0 2px;font-family:var(--st-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--st-muted)}
 .story-nav{position:sticky;top:0;z-index:40;display:flex;gap:0;overflow:auto;border-top:var(--st-line) solid color-mix(in srgb,var(--st-ink) 24%,transparent);border-bottom:var(--st-line) solid color-mix(in srgb,var(--st-ink) 24%,transparent);background:var(--st-bg);scrollbar-width:thin}
 .story-nav a{flex:0 0 auto;display:flex;align-items:center;gap:9px;padding:12px 18px;border-right:var(--st-rule) solid color-mix(in srgb,var(--st-ink) 16%,transparent);font-family:var(--st-mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--st-muted);white-space:nowrap}
 .story-nav a span{color:var(--st-accent2)}.story-nav a[aria-current="true"]{background:var(--st-surface);color:var(--st-ink)}

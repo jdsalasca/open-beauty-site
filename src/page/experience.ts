@@ -80,23 +80,6 @@ function itemMarkup(item: ExperienceItem, index: number): string {
   </li>`;
 }
 
-function roomBody(room: ExperienceRoom, locale: 'es' | 'en'): string {
-  const paragraphs = (room.body ?? '').split(/\n{2,}/).filter(Boolean).map((p) => `<p>${esc(p)}</p>`).join('');
-  const quote = room.quote?.text
-    ? `<figure class="xp-quote"><blockquote>“${esc(room.quote.text)}”</blockquote>${room.quote.author ? `<figcaption>${esc(room.quote.author)}</figcaption>` : ''}</figure>`
-    : '';
-  const items = room.items?.length
-    ? `<ul class="xp-items xp-items-${room.display}">${room.items.map(itemMarkup).join('')}</ul>`
-    : '';
-  return `<div class="xp-copy">
-    <p class="xp-kicker">${esc(room.kicker ?? '')}</p>
-    <h2>${esc(room.title)}</h2>
-    ${paragraphs}
-    ${quote}
-    ${items}
-    ${room.note ? `<p class="xp-note">${esc(room.note)}</p>` : ''}
-  </div>`;
-}
 
 export function renderExperience(briefInput: Partial<ExperienceBrief>, preset: StylePreset): string {
   const { brief, kind, rooms, hours, address, source, closing } = normalizeExperience(briefInput);
@@ -107,6 +90,7 @@ export function renderExperience(briefInput: Partial<ExperienceBrief>, preset: S
   const radius = preset.rules.radius[1] ?? 0;
   const type = preset.typeSystem;
   const roomCount = String(rooms.length).padStart(2, '0');
+  const subject = kind === 'restaurant' ? 'table' : kind === 'museum' ? 'vitrine' : kind === 'history' ? 'river' : kind === 'club' ? 'stage' : kind === 'garden' ? 'plant' : 'window';
   const cta = brief.cta ?? { label: t(locale, 'Entrar', 'Enter'), href: '#sala-1' };
 
   const body = `<header class="xp-top">
@@ -125,12 +109,12 @@ export function renderExperience(briefInput: Partial<ExperienceBrief>, preset: S
         <a class="xp-button" href="${safeHref(cta.href)}">${esc(cta.label)} ${arrow()}</a>
         <p class="xp-hint">${t(locale, 'Desplazate para recorrer las salas', 'Scroll through the rooms')} <span aria-hidden="true">↓</span></p>
       </div>
-      <div class="xp-hero-art reveal" style="--i:1">${sceneArt(preset, 0)}</div>
+      <figure class="xp-hero-art reveal" style="--i:1">${sceneArt(preset, 0, kindLabel, subject)}<figcaption>${esc(brief.eyebrow || kindLabel)}</figcaption></figure>
     </section>
 
     ${rooms.map((room, index) => `<section class="xp-room ${index % 2 ? 'is-reverse' : ''}" id="sala-${index + 1}" data-room="${index + 1}" aria-labelledby="room-${index + 1}">
       <div class="xp-room-number" aria-hidden="true">${String(index + 1).padStart(2, '0')}</div>
-      <div class="xp-room-art reveal" style="--i:1">${sceneArt(preset, index + 1)}</div>
+      <figure class="xp-room-art reveal" style="--i:1">${sceneArt(preset, index + 1, kindLabel, subject)}<figcaption>${esc(room.kicker || '')} · ${esc(room.title)}</figcaption></figure>
       <div class="xp-room-copy reveal"><p class="xp-kicker">${esc(room.kicker ?? '')}</p><h2 id="room-${index + 1}">${esc(room.title)}</h2>${(room.body ?? '').split(/\n{2,}/).filter(Boolean).map((p) => `<p>${esc(p)}</p>`).join('')}${room.quote?.text ? `<figure class="xp-quote"><blockquote>“${esc(room.quote.text)}”</blockquote>${room.quote.author ? `<figcaption>${esc(room.quote.author)}</figcaption>` : ''}</figure>` : ''}${room.items?.length ? `<ul class="xp-items xp-items-${room.display}">${room.items.map(itemMarkup).join('')}</ul>` : ''}${room.note ? `<p class="xp-note">${esc(room.note)}</p>` : ''}</div>
     </section>`).join('')}
 
@@ -169,13 +153,13 @@ body.xp a{color:inherit;text-decoration:none}
 .xp-button{display:inline-flex;align-items:center;gap:12px;margin-top:30px;padding:13px 18px;background:var(--xp-accent);color:var(--xp-bg);border:var(--xp-line) solid var(--xp-accent);font-family:var(--xp-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;transition:transform .25s var(--motion-ease),background .25s,color .25s}
 .xp-button:hover{transform:translateY(-2px)}
 .xp-hint{margin-top:34px;color:var(--xp-muted);font-family:var(--xp-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase}
-.xp-hero-art{min-height:min(70vh,700px);position:relative}
+.xp-hero-art{min-height:min(70vh,700px);position:relative;margin:0}.xp-hero-art figcaption,.xp-room-art figcaption{margin-top:10px;font-family:var(--xp-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--xp-muted)}
 .scene-art{position:relative;overflow:hidden;width:100%;height:100%;min-height:320px;background:var(--xp-surface);border:var(--line) solid color-mix(in srgb,var(--xp-ink) 28%,transparent);border-radius:var(--xp-radius)}
 .scene-art svg{display:block;width:100%;height:100%;min-height:inherit}
 
 .xp-room{position:relative;min-height:100svh;display:grid;grid-template-columns:minmax(0,1.03fr) minmax(0,.97fr);align-items:center;gap:clamp(24px,5vw,86px);padding:clamp(80px,10vh,130px) clamp(18px,7vw,110px);border-top:var(--xp-line) solid color-mix(in srgb,var(--xp-ink) 22%,transparent)}
 .xp-room.is-reverse .xp-room-art{order:2}.xp-room.is-reverse .xp-room-copy{order:1}
-.xp-room-art{min-height:min(66vh,660px)}
+.xp-room-art{min-height:min(66vh,660px);margin:0}
 .xp-room-copy{max-width:620px;position:relative;z-index:2}
 .xp-room h2{font-size:clamp(38px,6vw,92px);max-width:13ch}
 .xp-room-copy>p:not(.xp-kicker):not(.xp-note){max-width:47ch;margin:24px 0 0;font-size:clamp(18px,1.35vw,21px)}

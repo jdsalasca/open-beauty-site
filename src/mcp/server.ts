@@ -133,6 +133,7 @@ function deckBriefFromArgs(args: Record<string, unknown>): Partial<DeckBrief> {
     eyebrow: args.eyebrow as string | undefined,
     brand: args.brand as string | undefined,
     slides: args.slides as DeckBrief['slides'],
+    closing: args.closing as string | undefined,
     cta: args.cta as Brief['cta'],
     locale: args.locale as Brief['locale'],
     subfamily: args.subfamily as string | undefined,
@@ -298,6 +299,7 @@ QUALITY BAR
         eyebrow: z.string().max(60).optional(),
         brand: z.string().max(50).optional(),
         slides: z.array(deckSlideSchema).min(1).max(8).describe('Content slides. The cover and closing are generated automatically.'),
+        closing: z.string().max(120).optional().describe('Closing headline; defaults to "La conversación sigue."'),
         subfamily: z.string().max(40).optional().describe('Curated subfamily slug from beauty_get_style.'),
         cta: ctaSchema.optional(),
         locale: localeEnum.optional(),
@@ -400,6 +402,7 @@ QUALITY BAR
         'Builds a chaptered, single-file story: cover, chapter nav, prose, a drop cap, plates, margin facts and a source. Use it for cuentos, history lessons and narrative essays. Aim for 2–8 chapters, 80–250 words each.',
       inputSchema: {
         style: styleEnum,
+        kind: z.enum(['story', 'history', 'lesson', 'essay']).optional().describe('story = cuento; history = lección histórica; lesson = explicador.'),
         title: z.string().min(1).max(120),
         tagline: z.string().max(200).optional(),
         intro: z.string().max(700).optional(),
@@ -423,6 +426,7 @@ QUALITY BAR
           style: args.style,
           brief: {
             title: args.title,
+            kind: args.kind,
             tagline: args.tagline,
             intro: args.intro,
             eyebrow: args.eyebrow,
@@ -541,7 +545,16 @@ QUALITY BAR
           : path.join(root, 'examples', 'gifs', `${slug}.gif`);
         return `- ${presets[slug].name}: page ${page} · gif ${gif}`;
       });
-      return text(`# Reference output\n\n${lines.join('\n')}\n\nOpen the pages in a browser. Compare your result against them.`);
+      const extra = ([
+        ['Casa Perla (restaurant)', 'examples/experiences/casa-perla.html'],
+        ['Museo de lo invisible (museum)', 'examples/experiences/museo-invisible.html'],
+        ['La casa que aprendió a respirar (story)', 'examples/stories/casa-respira.html'],
+        ['El río que cambió de ciudad (history)', 'examples/stories/rio-1870.html'],
+        ['Atlas Sprint 14 review', 'examples/agile/sprint-14-review.html'],
+        ['Atlas Sprint 14 retrospective', 'examples/agile/sprint-14-retro.html'],
+        ['Atlas Sprint 15 planning', 'examples/agile/sprint-15-planning.html'],
+      ] as const).map(([label, file]) => `- ${label}: ${path.join(root, file)}`);
+      return text(`# Reference output\n\n${lines.join('\n')}\n\n## Recent experiences\n\n${extra.join('\n')}\n\nOpen the pages in a browser. Compare your result against them.`);
     },
   );
 

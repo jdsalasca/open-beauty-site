@@ -85,6 +85,7 @@ export interface StoryChapter {
 }
 
 export interface StoryBrief extends Brief {
+  kind?: 'story' | 'history' | 'lesson' | 'essay';
   chapters?: StoryChapter[];
   source?: string;
   readingTime?: string;
@@ -92,6 +93,8 @@ export interface StoryBrief extends Brief {
 
 export interface DeckBrief extends Brief {
   slides?: DeckSlide[];
+  /** Optional closing headline; defaults to a generic door. */
+  closing?: string;
 }
 
 

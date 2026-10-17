@@ -182,6 +182,13 @@ Generated with \`pnpm showcase\`:
 - [showcase/index.html](showcase/index.html) — gallery of the nine new styles.
 - [compare.html](compare.html) — my brief vs Luna 6 Max, side by side.
 - [luna-deck/memory-future.html](luna-deck/memory-future.html) — 8-slide animated deck by Luna 6 Max (A/100 · vision 4/4).
+- [experiences/casa-perla.html](experiences/casa-perla.html) — restaurant sequence, papercraft.
+- [experiences/museo-invisible.html](experiences/museo-invisible.html) — museum sequence, galactic.
+- [stories/casa-respira.html](stories/casa-respira.html) — five-chapter story, Renaissance.
+- [stories/rio-1870.html](stories/rio-1870.html) — history lesson, Isotype.
+- [agile/sprint-14-review.html](agile/sprint-14-review.html) — Sprint review deck + GIF.
+- [agile/sprint-14-retro.html](agile/sprint-14-retro.html) — retrospective deck + GIF.
+- [agile/sprint-15-planning.html](agile/sprint-15-planning.html) — planning deck + GIF.
 - Art Deco, Isotype, Op Art, Ukiyo-e, Bestiario, Psicodelia, Memphis, Vaporwave and Galactic Futurism. Every page is A/100 · vision 4/4, with an original SVG/CSS illustration, interaction and a GIF in \`gifs/showcase-<style>.gif\`.
 
 The grammar is fixed; the composition changes with \`seed\` and the copy changes with the brief. Copy is not design.
