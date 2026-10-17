@@ -48,6 +48,48 @@ export interface DeckSlide {
   quote?: QuoteBrief;
 }
 
+
+export type ExperienceKind = 'restaurant' | 'museum' | 'history' | 'studio' | 'club' | 'garden';
+
+export interface ExperienceItem {
+  label: string;
+  detail?: string;
+  value?: string;
+}
+
+export interface ExperienceRoom {
+  kicker?: string;
+  title: string;
+  body?: string;
+  display?: 'scene' | 'menu' | 'exhibit' | 'timeline' | 'quote' | 'objects';
+  items?: ExperienceItem[];
+  quote?: QuoteBrief;
+  note?: string;
+}
+
+export interface ExperienceBrief extends Brief {
+  kind?: ExperienceKind;
+  rooms?: ExperienceRoom[];
+  hours?: string;
+  address?: string;
+  source?: string;
+  closing?: string;
+}
+
+export interface StoryChapter {
+  kicker?: string;
+  title: string;
+  body: string;
+  quote?: QuoteBrief;
+  fact?: string;
+}
+
+export interface StoryBrief extends Brief {
+  chapters?: StoryChapter[];
+  source?: string;
+  readingTime?: string;
+}
+
 export interface DeckBrief extends Brief {
   slides?: DeckSlide[];
 }

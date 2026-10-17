@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
-import type { Brief, DeckBrief, StyleSlug } from './types.js';
+import type { Brief, DeckBrief, ExperienceBrief, StoryBrief, StyleSlug } from './types.js';
 import { VERSION } from './index.js';
-import { createDeck, createGifFile, createPage, slugify, timestamp } from './generate.js';
-import { formatValidation, validateDeck, validateHtml } from './validate.js';
+import { createDeck, createExperience, createGifFile, createPage, createStory, slugify, timestamp } from './generate.js';
+import { formatValidation, validateDeck, validateExperience, validateHtml, validateStory } from './validate.js';
 import { getStyle, isStyleSlug, styleSlugs } from './styles/presets.js';
 import { styleGuideMarkdown, stylesOverview } from './guide.js';
 import { ensureFonts } from './canvas.js';
@@ -92,6 +92,8 @@ Usage:
       [--brief brief.json] [--out file.html]
   beauty deck --style <s> --title "..."      Create an animated 16:9 presentation
       --brief deck.json [--subfamily orbital] [--out deck.html]
+  beauty experience --style <s> --brief exp.json  Create a 3–8 room experience
+  beauty story --style <s> --brief story.json     Create a chaptered story/lesson
   beauty gif --style <s> --text "..."        Create a looping GIF
       [--subtitle "..."] [--template title|loop|poster] [--fps 20] [--duration 2.4]
       [--width 800] [--height 800] [--out file.gif]
@@ -169,6 +171,32 @@ async function main(): Promise<void> {
       return;
     }
 
+    case 'experience': {
+      const style = requireStyle(stringFlag(flags, 'style'));
+      const brief = mergeBrief(await loadBrief(stringFlag(flags, 'brief')), flags) as Partial<ExperienceBrief>;
+      if (!brief.title) throw new Error('Pass --brief with a title and 3–8 rooms.');
+      const output = stringFlag(flags, 'out') ?? path.join('beauty-output', `${style}-experience-${slugify(brief.title)}-${timestamp()}.html`);
+      const result = await createExperience({ style, brief, output });
+      console.log(`${getStyle(style).name} experience · ${result.roomCount} rooms · ${result.kind}`);
+      console.log(`${result.validation.grade} ${result.validation.score}/100 · vision ${result.validation.vision.score}/4`);
+      console.log(result.path);
+      if (result.validation.issues.length) console.log(formatValidation(result.validation));
+      return;
+    }
+
+    case 'story': {
+      const style = requireStyle(stringFlag(flags, 'style'));
+      const brief = mergeBrief(await loadBrief(stringFlag(flags, 'brief')), flags) as Partial<StoryBrief>;
+      if (!brief.title) throw new Error('Pass --brief with a title and 2–8 chapters.');
+      const output = stringFlag(flags, 'out') ?? path.join('beauty-output', `${style}-story-${slugify(brief.title)}-${timestamp()}.html`);
+      const result = await createStory({ style, brief, output });
+      console.log(`${getStyle(style).name} story · ${result.chapterCount} chapters`);
+      console.log(`${result.validation.grade} ${result.validation.score}/100 · vision ${result.validation.vision.score}/4`);
+      console.log(result.path);
+      if (result.validation.issues.length) console.log(formatValidation(result.validation));
+      return;
+    }
+
     case 'gif': {
       const style = requireStyle(stringFlag(flags, 'style'));
       const text = stringFlag(flags, 'text');
@@ -199,7 +227,13 @@ async function main(): Promise<void> {
       if (!file) throw new Error('Pass an HTML file to validate.');
       const style = requireStyle(stringFlag(flags, 'style'));
       const html = await readFile(path.resolve(process.cwd(), file), 'utf8');
-      const result = html.includes('class="deck') ? validateDeck(html, style) : validateHtml(html, style);
+      const result = html.includes('class="deck')
+        ? validateDeck(html, style)
+        : html.includes('class="xp ')
+          ? validateExperience(html, style)
+          : html.includes('class="story-page')
+            ? validateStory(html, style)
+            : validateHtml(html, style);
       console.log(formatValidation(result));
       console.log(`stats: ${JSON.stringify(result.stats)}`);
       if (flags.strict && result.score < 90) process.exitCode = 1;

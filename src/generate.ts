@@ -1,10 +1,12 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import type { Brief, DeckBrief, GifOptions, GifResult, StyleSlug, ValidationResult } from './types.js';
+import type { Brief, DeckBrief, ExperienceBrief, GifOptions, GifResult, StoryBrief, StyleSlug, ValidationResult } from './types.js';
 import { renderPage } from './page/index.js';
-import { validateDeck, validateHtml } from './validate.js';
+import { validateDeck, validateExperience, validateHtml, validateStory } from './validate.js';
 import { createGif } from './gif.js';
 import { renderDeck } from './deck.js';
+import { renderExperience } from './page/experience.js';
+import { renderStory } from './page/story.js';
 import { getStyle } from './styles/presets.js';
 
 export interface PageResult {
@@ -82,3 +84,39 @@ export async function createDeck({ style, brief, output }: CreateDeckOptions): P
   await writeFile(absolute, deck.html, 'utf8');
   return { html: deck.html, path: absolute, validation, slideCount: deck.slideCount, subfamily: deck.subfamily.name };
 }
+
+export interface CreateExperienceOptions {
+  style: StyleSlug;
+  brief: Partial<ExperienceBrief>;
+  output?: string;
+}
+
+export async function createExperience({ style, brief, output }: CreateExperienceOptions): Promise<PageResult & { roomCount: number; kind: string }> {
+  const html = renderExperience(brief, getStyle(style));
+  const validation = validateExperience(html, style);
+  const roomCount = Math.min(8, Math.max(3, brief.rooms?.length ?? 3));
+  const kind = brief.kind ?? 'studio';
+  if (!output) return { html, validation, roomCount, kind };
+  const absolute = path.resolve(process.cwd(), output);
+  await mkdir(path.dirname(absolute), { recursive: true });
+  await writeFile(absolute, html, 'utf8');
+  return { html, path: absolute, validation, roomCount, kind };
+}
+
+export interface CreateStoryOptions {
+  style: StyleSlug;
+  brief: Partial<StoryBrief>;
+  output?: string;
+}
+
+export async function createStory({ style, brief, output }: CreateStoryOptions): Promise<PageResult & { chapterCount: number }> {
+  const html = renderStory(brief, getStyle(style));
+  const validation = validateStory(html, style);
+  const chapterCount = Math.min(8, Math.max(2, brief.chapters?.length ?? 2));
+  if (!output) return { html, validation, chapterCount };
+  const absolute = path.resolve(process.cwd(), output);
+  await mkdir(path.dirname(absolute), { recursive: true });
+  await writeFile(absolute, html, 'utf8');
+  return { html, path: absolute, validation, chapterCount };
+}
+

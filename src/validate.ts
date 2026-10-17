@@ -551,3 +551,91 @@ export function validateDeck(html: string, style: StyleSlug): ValidationResult {
   const grade: ValidationResult['grade'] = score >= 90 ? 'A' : score >= 80 ? 'B' : score >= 70 ? 'C' : score >= 60 ? 'D' : 'F';
   return { ...base, score, grade, issues };
 }
+
+/**
+ * Experience audit: a sequence of rooms, not a long landing.
+ */
+export function validateExperience(html: string, style: StyleSlug): ValidationResult {
+  const base = validateHtml(html, style);
+  const issues = [...base.issues];
+  const rooms = html.match(/data-room="\d+"/g) ?? [];
+  if (rooms.length < 3) {
+    issues.push({ severity: 'error', code: 'experience-too-short', message: `The experience has ${rooms.length} rooms; the minimum is 3.`, fix: 'Add an entrance, one room and an exit.' });
+  }
+  if (rooms.length > 8) {
+    issues.push({ severity: 'warn', code: 'experience-too-long', message: `The experience has ${rooms.length} rooms; the maximum is 8.`, fix: 'Keep 4–6 rooms and move the rest to another visit.' });
+  }
+  const blocks = html.match(/<section class="xp-room[\s\S]*?<\/section>/g) ?? [];
+  blocks.forEach((block, index) => {
+    const text = block.replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/gi, ' ').replace(/\s+/g, ' ').trim();
+    const words = text ? text.split(' ').length : 0;
+    if (words > 130) {
+      issues.push({ severity: 'warn', code: 'experience-room-too-wordy', message: `Room ${index + 1} has ${words} words. Keep a room below 130.`, fix: 'Move the detail to objects or cut it.' });
+    }
+  });
+  if (!html.includes('xp-rail')) {
+    issues.push({ severity: 'warn', code: 'experience-missing-rail', message: 'The experience has no room navigation.', fix: 'Add an accessible room rail with aria-current.' });
+  }
+  if (!html.includes('@media print')) {
+    issues.push({ severity: 'warn', code: 'experience-missing-print', message: 'The experience has no print styles.', fix: 'Print each room on its own page.' });
+  }
+  if (!html.includes('prefers-reduced-motion')) {
+    issues.push({ severity: 'warn', code: 'experience-missing-reduced-motion', message: 'The experience does not honor reduced motion.', fix: 'Add the reduced-motion state.' });
+  }
+  if ((html.includes('kind-restaurant') || html.includes('kind-museum')) && !html.includes('xp-item')) {
+    issues.push({ severity: 'warn', code: 'experience-missing-objects', message: 'A restaurant or museum needs at least one object, dish or exhibit.', fix: 'Add items to a room.' });
+  }
+  const errors = issues.filter((issue) => issue.severity === 'error').length;
+  const warnings = issues.filter((issue) => issue.severity === 'warn').length;
+  const infos = issues.filter((issue) => issue.severity === 'info').length;
+  const score = Math.max(0, Math.min(100, 100 - errors * 18 - warnings * 6 - infos));
+  const grade: ValidationResult['grade'] = score >= 90 ? 'A' : score >= 80 ? 'B' : score >= 70 ? 'C' : score >= 60 ? 'D' : 'F';
+  return { ...base, score, grade, issues };
+}
+
+/**
+ * Story audit: chapters with enough prose and a visible reading structure.
+ */
+export function validateStory(html: string, style: StyleSlug): ValidationResult {
+  const base = validateHtml(html, style);
+  const issues = [...base.issues];
+  const chapters = html.match(/class="story-chapter[^"]*"[^>]*id="chapter-\d+"/g) ?? [];
+  if (chapters.length < 2) {
+    issues.push({ severity: 'error', code: 'story-too-short', message: `The story has ${chapters.length} chapters; the minimum is 2.`, fix: 'Add a second chapter with a turn.' });
+  }
+  if (chapters.length > 8) {
+    issues.push({ severity: 'warn', code: 'story-too-long', message: `The story has ${chapters.length} chapters; the maximum is 8.`, fix: 'Split the story or cut one chapter.' });
+  }
+  const blocks = html.match(/<article class="story-chapter[\s\S]*?<\/article>/g) ?? [];
+  let total = 0;
+  blocks.forEach((block, index) => {
+    const text = block.replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/gi, ' ').replace(/\s+/g, ' ').trim();
+    const words = text ? text.split(' ').length : 0;
+    total += words;
+    if (words < 40) {
+      issues.push({ severity: 'warn', code: 'story-chapter-thin', message: `Chapter ${index + 1} has ${words} words. Give it a scene or a turn.`, fix: 'Add one concrete image and one consequence.' });
+    }
+    if (words > 900) {
+      issues.push({ severity: 'warn', code: 'story-chapter-long', message: `Chapter ${index + 1} has ${words} words. Consider a break.`, fix: 'Split the chapter or move a section to a fact.' });
+    }
+  });
+  if (total < 180) {
+    issues.push({ severity: 'warn', code: 'story-too-small', message: `The story has ${total} words. It reads like a caption.`, fix: 'Give each chapter one scene and one turn.' });
+  }
+  if (!html.includes('story-nav')) {
+    issues.push({ severity: 'warn', code: 'story-missing-nav', message: 'The story has no chapter navigation.', fix: 'Add the chapter nav with aria-current.' });
+  }
+  if (!html.includes('story-lede')) {
+    issues.push({ severity: 'warn', code: 'story-missing-lede', message: 'The story has no lede/drop cap treatment.', fix: 'Use the first paragraph as the lede.' });
+  }
+  if (!html.includes('@media print')) {
+    issues.push({ severity: 'warn', code: 'story-missing-print', message: 'The story has no print styles.', fix: 'Add print rules with one chapter per page.' });
+  }
+  const errors = issues.filter((issue) => issue.severity === 'error').length;
+  const warnings = issues.filter((issue) => issue.severity === 'warn').length;
+  const infos = issues.filter((issue) => issue.severity === 'info').length;
+  const score = Math.max(0, Math.min(100, 100 - errors * 18 - warnings * 6 - infos));
+  const grade: ValidationResult['grade'] = score >= 90 ? 'A' : score >= 80 ? 'B' : score >= 70 ? 'C' : score >= 60 ? 'D' : 'F';
+  return { ...base, score, grade, issues };
+}
+

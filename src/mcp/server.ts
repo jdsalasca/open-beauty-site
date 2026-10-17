@@ -5,10 +5,10 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { z } from 'zod';
-import type { Brief, DeckBrief, StyleSlug } from '../types.js';
+import type { Brief, DeckBrief, ExperienceBrief, StoryBrief, StyleSlug } from '../types.js';
 import { VERSION } from '../index.js';
-import { createDeck, createGifFile, createPage, timestamp } from '../generate.js';
-import { formatValidation, validateDeck, validateHtml } from '../validate.js';
+import { createDeck, createExperience, createGifFile, createPage, createStory, timestamp } from '../generate.js';
+import { formatValidation, validateDeck, validateExperience, validateHtml, validateStory } from '../validate.js';
 import { presets, styleSlugs } from '../styles/presets.js';
 import { SKILL_FALLBACK, styleGuideMarkdown, stylesOverview } from '../guide.js';
 import { packageRoot } from '../paths.js';
@@ -27,6 +27,7 @@ const styleEnum = z.enum([
   'vaporwave',
   'galactic',
 ]);
+
 const localeEnum = z.enum(['es', 'en']);
 
 const sectionSchema = z.object({
@@ -65,6 +66,31 @@ const deckSlideSchema = z.object({
   quote: quoteSchema.optional(),
 });
 
+const experienceItemSchema = z.object({
+  label: z.string().min(1).max(80),
+  detail: z.string().max(180).optional(),
+  value: z.string().max(24).optional(),
+});
+
+const experienceRoomSchema = z.object({
+  kicker: z.string().max(42).optional(),
+  title: z.string().min(1).max(92),
+  body: z.string().max(700).optional(),
+  display: z.enum(['scene', 'menu', 'exhibit', 'timeline', 'quote', 'objects']).optional(),
+  items: z.array(experienceItemSchema).max(6).optional(),
+  quote: quoteSchema.optional(),
+  note: z.string().max(180).optional(),
+});
+
+const storyChapterSchema = z.object({
+  kicker: z.string().max(48).optional(),
+  title: z.string().min(1).max(120),
+  body: z.string().min(1).max(5000),
+  quote: quoteSchema.optional(),
+  fact: z.string().max(220).optional(),
+});
+
+
 const briefFields = {
   title: z.string().min(1).max(120).describe('Page headline. This is the only required field besides style.'),
   tagline: z.string().max(200).optional().describe('One sentence under the headline.'),
@@ -77,6 +103,8 @@ const briefFields = {
   footer: z.string().max(160).optional(),
   locale: localeEnum.optional().describe('Microcopy language. Defaults to Spanish.'),
   seed: z.number().int().min(0).max(9999).optional().describe('Changes decorative variation deterministically.'),
+  subfamily: z.string().max(40).optional().describe('Curated subfamily slug from beauty_get_style.'),
+  audio: z.object({ src: z.string().max(300), title: z.string().max(80), subtitle: z.string().max(100).optional(), note: z.string().max(180).optional() }).optional().describe('Optional original audio, user-initiated.'),
 };
 
 function briefFromArgs(args: Record<string, unknown>): Partial<Brief> {
@@ -92,6 +120,8 @@ function briefFromArgs(args: Record<string, unknown>): Partial<Brief> {
     footer: args.footer as string | undefined,
     locale: args.locale as Brief['locale'],
     seed: args.seed as number | undefined,
+    subfamily: args.subfamily as string | undefined,
+    audio: args.audio as Brief['audio'],
   };
 }
 
@@ -109,6 +139,10 @@ function deckBriefFromArgs(args: Record<string, unknown>): Partial<DeckBrief> {
   };
 }
 
+function slugFromTitle(value: string): string {
+  return value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40) || 'piece';
+}
+
 function text(value: string) {
   return { content: [{ type: 'text' as const, text: value }] };
 }
@@ -122,9 +156,9 @@ export function createBeautyServer(): McpServer {
 MANDATORY WORKFLOW
 1. Call beauty_list_styles.
 2. Call beauty_get_style for the chosen style and follow its hard tokens. Never invent fonts, hex colours, border widths or radii.
-3. Call beauty_create_page with a real title, tagline, optional intro and 2–3 sections, or beauty_create_deck with 4–8 content slides, one idea per slide and a curated subfamily.
+3. Choose the artefact: beauty_create_page for a landing, beauty_create_deck for a talk, beauty_create_experience for a place with rooms, beauty_create_story for a cuento or history lesson.
 4. Call beauty_validate on the output file. Reach craft A (90+) and vision 4/4. If craft is lower, read the fix lines and adjust the brief or the HTML. If vision is 3/4, change the composition (seed), the image scale or the material.
-5. For motion, call beauty_create_gif with the same style. For a deck, use beauty_get_skill({ format: "deck" }) before briefing.
+5. For motion, call beauty_create_gif with the same style. Use beauty_get_skill({ format: "deck" | "experience" | "story" | "agile" }) before briefing. For sprint review/retro/planning use the deck tool plus the agile skill.
 
 QUALITY BAR
 - No lorem ipsum, no placeholder names, no emoji, no stock photography.
@@ -174,7 +208,7 @@ QUALITY BAR
         'Returns a copy-paste skill/prompt that teaches an agent the mandatory workflow and the quality bar. Optionally includes one style guide.',
       inputSchema: {
         style: styleEnum.optional().describe('Include a specific style guide after the skill instructions.'),
-        format: z.enum(['page', 'deck']).optional().describe('Include the presentation skill when format is deck.'),
+        format: z.enum(['page', 'deck', 'experience', 'story', 'agile']).optional().describe('Append the deck, experience, story or agile skill.'),
       },
     },
     async ({ style, format }) => {
@@ -184,11 +218,18 @@ QUALITY BAR
       } catch {
         // The generated fallback is intentionally equivalent.
       }
-      if (format === 'deck') {
+      if (format && format !== 'page') {
+        const file = format === 'deck' ? 'presentation.md' : format === 'experience' ? 'experience.md' : format === 'story' ? 'story.md' : 'agile.md';
         try {
-          skill += `\n\n---\n\n${await readFile(path.join(packageRoot(), 'skills', 'presentation.md'), 'utf8')}`;
+          skill += `\n\n---\n\n${await readFile(path.join(packageRoot(), 'skills', file), 'utf8')}`;
         } catch {
-          skill += '\n\nUse beauty_create_deck with 4–8 content slides, one subfamily and 5–8 total slides.';
+          skill += format === 'experience'
+            ? '\n\nUse beauty_create_experience with 3–8 rooms, one idea per room, objects for utility.'
+            : format === 'story'
+              ? '\n\nUse beauty_create_story with 2–8 chapters, one scene and one turn per chapter.'
+              : format === 'agile'
+                ? '\n\nUse beauty_create_deck for sprint review, retrospective or planning; use beauty_create_gif for the teaser.'
+                : '\n\nUse beauty_create_deck with 4–8 content slides, one subfamily and 5–8 total slides.';
         }
       }
       if (style) {
@@ -288,6 +329,128 @@ QUALITY BAR
   );
 
   server.registerTool(
+    'beauty_create_experience',
+    {
+      title: 'Create a digital experience with rooms',
+      description:
+        'Builds a multi-room, single-file experience for a restaurant, museum, history room, studio or club. Each room has a procedural scene, copy, optional objects and an exit. Use 3–8 rooms; add source/hours/address when the place needs utility.',
+      inputSchema: {
+        style: styleEnum,
+        kind: z.enum(['restaurant', 'museum', 'history', 'studio', 'club', 'garden']).optional(),
+        title: z.string().min(1).max(120),
+        tagline: z.string().max(200).optional(),
+        intro: z.string().max(700).optional(),
+        eyebrow: z.string().max(60).optional(),
+        brand: z.string().max(50).optional(),
+        rooms: z.array(experienceRoomSchema).min(3).max(8),
+        hours: z.string().max(140).optional(),
+        address: z.string().max(140).optional(),
+        source: z.string().max(240).optional(),
+        closing: z.string().max(220).optional(),
+        cta: ctaSchema.optional(),
+        locale: localeEnum.optional(),
+        output: z.string().max(260).optional(),
+        include_html: z.boolean().optional(),
+      },
+    },
+    async (args) => {
+      try {
+        const output =
+          args.output ??
+          path.join('beauty-output', `${args.style}-${args.kind ?? 'experience'}-${slugFromTitle(args.title)}-${timestamp()}.html`);
+        const result = await createExperience({
+          style: args.style,
+          brief: {
+            title: args.title,
+            tagline: args.tagline,
+            intro: args.intro,
+            eyebrow: args.eyebrow,
+            brand: args.brand,
+            kind: args.kind,
+            rooms: args.rooms as ExperienceBrief['rooms'],
+            hours: args.hours,
+            address: args.address,
+            source: args.source,
+            closing: args.closing,
+            cta: args.cta as Brief['cta'],
+            locale: args.locale,
+          },
+          output,
+        });
+        const summary = [
+          `Created a ${result.roomCount}-room ${presets[args.style].name} experience (${result.kind}).`,
+          `file: ${result.path}`,
+          `grade: ${result.validation.grade} (${result.validation.score}/100)`,
+          `vision: ${result.validation.vision.score}/4`,
+          `issues: ${result.validation.issues.length}`,
+          `\nRooms share a scene system, a room rail, scroll progress and reduced-motion.`,
+        ].join('\n');
+        return text(args.include_html ? `${summary}\n\n--- HTML ---\n${result.html}` : summary);
+      } catch (error) {
+        return { content: [{ type: 'text' as const, text: `Experience failed: ${(error as Error).message}` }], isError: true };
+      }
+    },
+  );
+
+  server.registerTool(
+    'beauty_create_story',
+    {
+      title: 'Create a long-form story or history lesson',
+      description:
+        'Builds a chaptered, single-file story: cover, chapter nav, prose, a drop cap, plates, margin facts and a source. Use it for cuentos, history lessons and narrative essays. Aim for 2–8 chapters, 80–250 words each.',
+      inputSchema: {
+        style: styleEnum,
+        title: z.string().min(1).max(120),
+        tagline: z.string().max(200).optional(),
+        intro: z.string().max(700).optional(),
+        eyebrow: z.string().max(60).optional(),
+        brand: z.string().max(50).optional(),
+        chapters: z.array(storyChapterSchema).min(2).max(8),
+        source: z.string().max(300).optional(),
+        readingTime: z.string().max(40).optional(),
+        cta: ctaSchema.optional(),
+        locale: localeEnum.optional(),
+        output: z.string().max(260).optional(),
+        include_html: z.boolean().optional(),
+      },
+    },
+    async (args) => {
+      try {
+        const output =
+          args.output ??
+          path.join('beauty-output', `${args.style}-story-${slugFromTitle(args.title)}-${timestamp()}.html`);
+        const result = await createStory({
+          style: args.style,
+          brief: {
+            title: args.title,
+            tagline: args.tagline,
+            intro: args.intro,
+            eyebrow: args.eyebrow,
+            brand: args.brand,
+            chapters: args.chapters as StoryBrief['chapters'],
+            source: args.source,
+            readingTime: args.readingTime,
+            cta: args.cta as Brief['cta'],
+            locale: args.locale,
+          },
+          output,
+        });
+        const summary = [
+          `Created a ${result.chapterCount}-chapter ${presets[args.style].name} story.`,
+          `file: ${result.path}`,
+          `grade: ${result.validation.grade} (${result.validation.score}/100)`,
+          `vision: ${result.validation.vision.score}/4`,
+          `issues: ${result.validation.issues.length}`,
+          `\nReading structure: cover, chapter nav, drop cap, plates, margin facts, source.`,
+        ].join('\n');
+        return text(args.include_html ? `${summary}\n\n--- HTML ---\n${result.html}` : summary);
+      } catch (error) {
+        return { content: [{ type: 'text' as const, text: `Story failed: ${(error as Error).message}` }], isError: true };
+      }
+    },
+  );
+
+  server.registerTool(
     'beauty_create_gif',
     {
       title: 'Create a looping GIF',
@@ -345,7 +508,13 @@ QUALITY BAR
         if (!source) {
           return { content: [{ type: 'text' as const, text: 'Pass either path or html.' }], isError: true };
         }
-        const result = source.includes('class="deck') ? validateDeck(source, style) : validateHtml(source, style);
+        const result = source.includes('class="deck')
+      ? validateDeck(source, style)
+      : source.includes('class="xp ')
+        ? validateExperience(source, style)
+        : source.includes('class="story-page')
+          ? validateStory(source, style)
+          : validateHtml(source, style);
         return text(`${formatValidation(result)}\n\nstats: ${JSON.stringify(result.stats)}`);
       } catch (error) {
         return { content: [{ type: 'text' as const, text: `Validate failed: ${(error as Error).message}` }], isError: true };
@@ -433,6 +602,27 @@ QUALITY BAR
       return { contents: [{ uri: uri.href, mimeType: 'text/markdown', text }] };
     },
   );
+
+  for (const [slug, title, fallback] of [
+    ['experience', 'Experience skill', '# Experience skill\n\n3–8 rooms, one idea each. Use beauty_create_experience.'],
+    ['story', 'Story skill', '# Story skill\n\n2–8 chapters, one scene and one turn each. Use beauty_create_story.'],
+    ['agile', 'Agile rooms skill', '# Agile skill\n\nSprint review, retrospective and planning decks with real numbers; GIF teaser.'],
+  ] as const) {
+    server.registerResource(
+      `beauty-${slug}-skill`,
+      `beauty://skills/${slug}.md`,
+      { title, mimeType: 'text/markdown' },
+      async (uri) => {
+        let body: string = fallback;
+        try {
+          body = await readFile(path.join(packageRoot(), 'skills', `${slug}.md`), 'utf8');
+        } catch {
+          // Keep the compact fallback.
+        }
+        return { contents: [{ uri: uri.href, mimeType: 'text/markdown', text: body }] };
+      },
+    );
+  }
 
   return server;
 }

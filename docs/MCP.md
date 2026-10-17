@@ -1,6 +1,6 @@
 # MCP server
 
-`open-beauty-site` exposes a stdio MCP server with eight tools and fifteen resources. The server is deliberately narrow: it does not call an LLM, it does not browse the web, and it does not invent content. It turns a short brief into a complete, validated artefact.
+`open-beauty-site` exposes a stdio MCP server with ten tools and eighteen resources. The server is deliberately narrow: it does not call an LLM, it does not browse the web, and it does not invent content. It turns a short brief into a complete, validated artefact.
 
 ## Build
 
@@ -78,9 +78,9 @@ Returns the hard tokens: exact fonts, palette, border widths, radii, motion wind
 | Argument | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `style` | style slug | no | Appends that style guide to the skill. |
-| `format` | `page \| deck` | no | `deck` appends the presentation skill. |
+| `format` | `page \| deck \| experience \| story \| agile` | no | Appends the matching skill. |
 
-Returns the contents of `skills/beauty.md` (and `skills/presentation.md` when `format: "deck"`). Load it into an agent's context before asking it to design.
+Returns the contents of `skills/beauty.md` plus the matching skill (`presentation`, `experience`, `story` or `agile`). Load it into an agent's context before asking it to design.
 
 ### `beauty_create_page`
 
@@ -123,6 +123,33 @@ Creates a 16:9 animated presentation. The cover and closing are generated; `slid
 
 The deck includes keyboard/touch navigation, progress, fullscreen, print styles, `inert` hidden slides, `aria-live` and reduced-motion handling. Craft and the deck audit both run.
 
+### `beauty_create_experience`
+
+Creates a 3–8 room, single-file digital place: restaurant, museum, history room, studio, club or garden. Each room has a procedural scene, copy, optional objects and a room rail.
+
+| Argument | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `style` | style slug | yes | |
+| `kind` | `restaurant \| museum \| history \| studio \| club \| garden` | no | Defaults to `studio`. |
+| `title`, `tagline`, `intro`, `brand` | strings | title yes | |
+| `rooms` | array (3–8) | yes | `{ kicker?, title, body?, display?, items?, quote?, note? }`. |
+| `items` | array (≤6) | no | `{ label, value?, detail? }` for dishes, exhibits or dates. |
+| `hours`, `address`, `source` | strings | no | Visible facts; never invent them. |
+| `output` | string | no | Defaults to `beauty-output/<style>-<kind>-<slug>-<timestamp>.html`. |
+
+### `beauty_create_story`
+
+Creates a chaptered story, history lesson or narrative essay: cover, chapter navigation, drop cap, plates, margin facts and source.
+
+| Argument | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `style` | style slug | yes | |
+| `title`, `tagline`, `intro`, `brand` | strings | title yes | |
+| `chapters` | array (2–8) | yes | `{ kicker?, title, body, quote?, fact? }`; 80–250 words each. |
+| `source` | string | no | Required for history/lesson in practice. |
+| `readingTime` | string | no | e.g. `6 min`; otherwise estimated. |
+| `output` | string | no | Defaults to `beauty-output/<style>-story-<slug>-<timestamp>.html`. |
+
 ### `beauty_create_gif`
 
 | Argument | Type | Required | Notes |
@@ -157,7 +184,7 @@ Returns a craft score (0–100), a craft grade (A–F), a vision score (0–4), 
 - `<title>`, `<h1>`, `<main>`, `lang`, unresolved placeholders, missing `alt`;
 - contrast of the token pairs the style actually uses for text.
 
-For a deck, the same audit also checks slide count, words per slide, points per slide, layout variety, `aria-live`, `inert` and print styles.
+For a deck, the same audit also checks slide count, words per slide, points per slide, layout variety, `aria-live`, `inert` and print styles. Experiences get room count, word count, rail, objects, print and reduced motion; stories get chapter count, prose length, nav, lede and print.
 
 Vision (0–4) is a separate heuristic, not a grade:
 
@@ -180,6 +207,9 @@ No arguments. Returns the absolute paths of the reference pages and GIFs. Use th
 | `beauty://skills/beauty.md` | `text/markdown` | Agent skill |
 | `beauty://skills/education.md` | `text/markdown` | Educational page skill |
 | `beauty://skills/presentation.md` | `text/markdown` | Animated presentation skill |
+| `beauty://skills/experience.md` | `text/markdown` | Room experience skill |
+| `beauty://skills/story.md` | `text/markdown` | Story and history skill |
+| `beauty://skills/agile.md` | `text/markdown` | Sprint review/retro/planning skill |
 
 Resources are read-only. Use the tools to create files.
 

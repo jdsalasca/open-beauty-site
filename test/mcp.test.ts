@@ -32,8 +32,10 @@ test('exposes the full tool surface', async () => {
   const names = tools.map((tool) => tool.name).sort();
   assert.deepEqual(names, [
     'beauty_create_deck',
+    'beauty_create_experience',
     'beauty_create_gif',
     'beauty_create_page',
+    'beauty_create_story',
     'beauty_examples',
     'beauty_get_skill',
     'beauty_get_style',
@@ -133,4 +135,50 @@ test('example routes point to real files', async () => {
   const pages = [...text.matchAll(/page (.+?) · gif (.+)/g)].flatMap((match) => [match[1]?.trim(), match[2]?.trim()]).filter(Boolean) as string[];
   assert.equal(pages.length, 24);
   for (const file of pages) assert.ok(existsSync(file), `missing example: ${file}`);
+});
+
+test('creates a museum experience over MCP', async () => {
+  const result = await client.callTool({
+    name: 'beauty_create_experience',
+    arguments: {
+      style: 'galactic',
+      kind: 'museum',
+      title: 'Sala de lo que no existe',
+      tagline: 'Un museo de objetos que podrían existir.',
+      brand: 'MUSEM',
+      source: 'Archivo del museo',
+      rooms: [
+        { title: 'Entrada', body: 'Un museo empieza en la pregunta que traés.', display: 'quote', quote: { text: '¿Qué recuerda una casa?', author: 'Nota de sala' } },
+        { title: 'La llave sin puerta', body: 'Una pieza de latón que abre una habitación que ya no existe.', display: 'exhibit', items: [{ label: 'Objeto', value: '01', detail: 'Latón, 1930. Archivo del museo.' }] },
+        { title: 'Salida', body: 'El museo no tiene tienda: tiene una ventana.', display: 'scene' },
+      ],
+      output: 'museum.html',
+    },
+  });
+  const text = (result.content as Array<{ type: string; text: string }>)[0]?.text ?? '';
+  assert.match(text, /3-room/);
+  assert.match(text, /grade: A/);
+  assert.match(text, /vision: 4\/4/);
+});
+
+test('creates a chaptered story over MCP', async () => {
+  const body = 'Una casa aprende a respirar cuando alguien la habita. La puerta cruje, el pasillo huele a lluvia y una silla se mueve cuando la memoria vuelve. No hay fantasmas: hay costumbres que ocupan el espacio. '.repeat(2);
+  const result = await client.callTool({
+    name: 'beauty_create_story',
+    arguments: {
+      style: 'renaissance',
+      title: 'La casa que respira',
+      tagline: 'Un cuento sobre habitar.',
+      source: 'Cuaderno de la casa',
+      chapters: [
+        { kicker: 'I', title: 'La puerta', body },
+        { kicker: 'II', title: 'La silla', body },
+        { kicker: 'III', title: 'La casa', body },
+      ],
+      output: 'story.html',
+    },
+  });
+  const text = (result.content as Array<{ type: string; text: string }>)[0]?.text ?? '';
+  assert.match(text, /3-chapter/);
+  assert.match(text, /grade: A/);
 });
