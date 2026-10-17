@@ -71,9 +71,9 @@ Black and bone, a pattern that refuses to sit still. The page is an instrument f
 
 ## Copy voice
 
-- Voice: precise, curious, never jokey. Explain the subject, not the studio.
-- Headline: 2–6 words. One word may carry the accent colour.
-- Body: one idea per paragraph, concrete nouns, no filler.
+- Voice: a perceptual experiment. Ask one question about what the eye sees, then answer it plainly.
+- Headline: 2–5 words with one verb of seeing or moving; never a generic "future" claim.
+- Body: short declaratives. Give the eye a pause before the next pattern.
 
 ## Never
 
@@ -85,6 +85,28 @@ Black and bone, a pattern that refuses to sit still. The page is an instrument f
 - No soft shadows.
 - No more than 3 Hz.
 - No pattern without a pause.
+
+## Type system
+
+| Token | Value |
+| --- | --- |
+| Display case | uppercase |
+| Display tracking | -.03em |
+| Display leading | .84 |
+| Body size / leading | 18px / 1.6 |
+| Label tracking | .16em |
+| Features | "kern" 1 |
+
+## Motion system
+
+| Token | Value |
+| --- | --- |
+| Enter | 200ms · cubic-bezier(.2,.8,.2,1) |
+| Distance / stagger | 0px / 30ms |
+| Page transition | 200ms · cut |
+| Ambient | moire · 18s |
+| Hover | none |
+| Note | Hard cuts; the eye supplies the movement. No strobe, no bounce. |
 
 ## Subfamilies
 

@@ -71,9 +71,9 @@ Parchment, iron-gall ink and a single lapis blue. A manuscript page with an illu
 
 ## Copy voice
 
-- Voice: precise, curious, never jokey. Explain the subject, not the studio.
-- Headline: 2–6 words. One word may carry the accent colour.
-- Body: one idea per paragraph, concrete nouns, no filler.
+- Voice: a field guide for an impossible species: anatomy, habitat, behaviour. Mark the invented as hypothesis.
+- Headline: the creature's name and one distinguishing trait.
+- Body: observation before metaphor. A marginal note may translate the Latin, not replace the evidence.
 
 ## Never
 
@@ -85,6 +85,28 @@ Parchment, iron-gall ink and a single lapis blue. A manuscript page with an illu
 - No glossy gradients.
 - No modern sans-serif.
 - No generic fantasy dragons.
+
+## Type system
+
+| Token | Value |
+| --- | --- |
+| Display case | none |
+| Display tracking | .01em |
+| Display leading | 1 |
+| Body size / leading | 18px / 1.75 |
+| Label tracking | .12em |
+| Features | "liga" 1, "kern" 1, "onum" 1 |
+
+## Motion system
+
+| Token | Value |
+| --- | --- |
+| Enter | 800ms · cubic-bezier(.22,.61,.36,1) |
+| Distance / stagger | 12px / 80ms |
+| Page transition | 1000ms · illuminate |
+| Ambient | blink · 7s |
+| Hover | glow |
+| Note | One blink, one glint, one translation; the manuscript is otherwise still. |
 
 ## Subfamilies
 

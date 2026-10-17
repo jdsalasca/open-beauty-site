@@ -91,6 +91,28 @@ Plaster, pigment and ink. Flat pastel fields, one cinnabar event, a large arch p
 - No saturated primary colours. The pastels must stay chalky, never neon.
 - No more than one italic phrase per screen.
 
+## Type system
+
+| Token | Value |
+| --- | --- |
+| Display case | none |
+| Display tracking | .01em |
+| Display leading | .88 |
+| Body size / leading | 20px / 1.62 |
+| Label tracking | .18em |
+| Features | "liga" 1, "kern" 1, "onum" 1 |
+
+## Motion system
+
+| Token | Value |
+| --- | --- |
+| Enter | 900ms · cubic-bezier(.22,.61,.36,1) |
+| Distance / stagger | 16px / 80ms |
+| Page transition | 1200ms · rise |
+| Ambient | draw · 24s |
+| Hover | underline |
+| Note | Slow, ceremonial; one draw, one fade, no bounce. |
+
 ## Subfamilies
 
 | Slug | Name | Composition | Accent | What changes |

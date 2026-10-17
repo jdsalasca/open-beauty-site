@@ -71,9 +71,9 @@ Night blue, magenta and orange, liquid shapes and a headline that bends. A 1967 
 
 ## Copy voice
 
-- Voice: precise, curious, never jokey. Explain the subject, not the studio.
-- Headline: 2–6 words. One word may carry the accent colour.
-- Body: one idea per paragraph, concrete nouns, no filler.
+- Voice: a concert poster with a clear subject. One sensory verb, one plain explanation, no vague "vibes".
+- Headline: the phenomenon and the invitation, 2–5 words.
+- Body: describe what happens to the eye or the room; then say why it matters.
 
 ## Never
 
@@ -85,6 +85,28 @@ Night blue, magenta and orange, liquid shapes and a headline that bends. A 1967 
 - No more than three hot colours.
 - No illegible body copy.
 - No strobing above 3 Hz.
+
+## Type system
+
+| Token | Value |
+| --- | --- |
+| Display case | uppercase |
+| Display tracking | .02em |
+| Display leading | .85 |
+| Body size / leading | 18px / 1.55 |
+| Label tracking | .18em |
+| Features | "kern" 1 |
+
+## Motion system
+
+| Token | Value |
+| --- | --- |
+| Enter | 550ms · cubic-bezier(.22,.8,.24,1) |
+| Distance / stagger | 18px / 60ms |
+| Page transition | 800ms · swirl |
+| Ambient | drift · 9s |
+| Hover | lift |
+| Note | Blobs drift like heat; the type stays readable. |
 
 ## Subfamilies
 

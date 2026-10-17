@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La luz y la piedra — OPEN/BEAUTY</title>
+<meta name="description" content="Una hipótesis visual para la web que viene.">
+<meta name="generator" content="open-beauty-site (renaissance)">
+<meta name="theme-color" content="#F6EDDD">
+<meta property="og:title" content="La luz y la piedra — OPEN/BEAUTY">
+<meta property="og:description" content="Una hipótesis visual para la web que viene.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%232B211B'/%3E%3Crect x='12' y='12' width='40' height='40' fill='%23B08A4F'/%3E%3C/svg%3E">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+
+:root{
+  --bg:#F6EDDD;--surface:#E3E9E6;--ink:#2B211B;
+  --muted:#6F5D50;--gold:#B08A4F;--rose:#B4432C;
+  --blue:#AFC5D6;--sage:#B9C4A6;--deep:#1C1611;
+  --hair:rgba(43,33,27,.28);--ease:cubic-bezier(.22,.61,.36,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'EB Garamond',Georgia,'Times New Roman',serif;font-size:20px;line-height:1.62;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.05;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E")}
+.page-frame{position:fixed;inset:18px;border:1px solid var(--hair);z-index:60;pointer-events:none}
+.page-frame::after{content:"";position:absolute;inset:6px;border:1px solid var(--hair);opacity:.6}
+a{color:inherit;text-decoration:none}
+img,svg{display:block;max-width:100%}
+main,header.site-head,footer.site-foot{position:relative;z-index:2}
+.site-head{max-width:1280px;margin:0 auto;padding:34px 10px 22px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.wordmark{display:inline-flex;align-items:center;gap:12px;font-size:14px;letter-spacing:.18em;font-feature-settings:"smcp" 1;text-transform:none;font-weight:600}
+.wordmark .mark{color:var(--gold);font-size:16px}
+.site-head nav{display:flex;gap:30px;font-size:12px;letter-spacing:.18em;font-feature-settings:"smcp" 1;text-transform:none}
+.site-head nav a{position:relative;padding-bottom:4px}
+.site-head nav a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--gold);transition:width .5s var(--ease)}
+.site-head nav a:hover::after{width:100%}
+.hero{max-width:1280px;margin:0 auto;padding:64px 28px 44px;display:grid;grid-template-columns:minmax(0,.94fr) minmax(0,1.06fr);gap:54px;align-items:center;text-align:left}
+.hero-copy{position:relative;z-index:2}
+.eyebrow{display:flex;align-items:center;gap:16px;margin:0;font-size:13px;letter-spacing:.18em;font-feature-settings:"smcp" 1;text-transform:none;color:var(--muted);font-weight:600}
+.eyebrow .rule{display:block;width:46px;height:1px;background:var(--gold)}
+h1{font-weight:400;font-size:clamp(64px,10.5vw,152px);line-height:.87;letter-spacing:-.012em;margin:18px 0 0;max-width:9ch}
+h1 em{font-style:italic;color:var(--rose)}
+.tagline{max-width:520px;margin:24px 0 0;font-size:21px;line-height:1.55;color:var(--muted)}
+.hero-actions{display:flex;align-items:center;justify-content:flex-start;gap:28px;margin-top:28px;flex-wrap:wrap}
+.button{display:inline-flex;align-items:center;gap:12px;padding:15px 26px;background:var(--ink);color:var(--bg);border:1px solid var(--ink);font-size:12px;letter-spacing:.18em;font-feature-settings:"smcp" 1;text-transform:none;font-weight:600;transition:background .4s var(--ease),color .4s var(--ease)}
+.button svg{transition:transform .4s var(--ease)}
+.button:hover{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.button:hover svg{transform:translateX(4px)}
+.quiet-link{font-size:12px;letter-spacing:.18em;font-feature-settings:"smcp" 1;text-transform:none;border-bottom:1px solid var(--hair);padding-bottom:5px;transition:border-color .4s var(--ease),color .4s var(--ease)}
+.quiet-link:hover{color:var(--rose);border-color:var(--rose)}
+.plate{margin:0;width:100%;position:relative;z-index:1}
+.variant-1 .hero{grid-template-columns:1.06fr .94fr}
+.variant-1 .hero-copy{order:2}
+.variant-1 .plate{order:1}
+.plate-svg{width:100%;height:auto;color:var(--gold)}
+.plate-svg .ink-lines{color:var(--ink);opacity:.74}
+.plate-svg .sun{color:var(--gold)}
+.plate-svg .laurel{opacity:.9}
+.plate figcaption{margin-top:14px;font-size:12px;letter-spacing:.14em;font-feature-settings:"smcp" 1;text-transform:none;color:var(--muted);font-style:italic}
+.scroll-cue{display:inline-flex;align-items:center;gap:12px;margin-top:34px;font-size:11px;letter-spacing:.2em;font-feature-settings:"smcp" 1;text-transform:none;color:var(--muted)}
+.scroll-cue span:first-child{display:block;width:1px;height:34px;background:var(--gold);animation:cue 2.4s var(--ease) infinite}
+@keyframes cue{0%,100%{transform:scaleY(.55);transform-origin:top;opacity:.5}50%{transform:scaleY(1);opacity:1}}
+.ornament{max-width:420px;margin:38px auto 0;color:var(--gold);padding:0 24px}
+.ornament svg{width:100%;height:auto}
+.ornament svg path,.ornament svg line{stroke-dasharray:520;stroke-dashoffset:520;animation:draw 1.4s .2s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.manifesto{max-width:1180px;margin:0 auto;padding:80px 48px;display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:72px;background:var(--surface);border-top:1px solid var(--hair)}
+.section-label{margin:0 0 22px;font-size:13px;letter-spacing:.18em;font-feature-settings:"smcp" 1;text-transform:none;color:var(--deep);font-weight:600}
+.dropcap{margin:0;font-size:21px;line-height:1.7}
+.dropcap::first-letter{float:left;font-size:100px;line-height:.74;padding:10px 16px 0 0;color:var(--rose);font-style:italic}
+.marginalia{border-left:1px solid var(--gold);padding-left:26px;align-self:start}
+.marginalia p{margin:16px 0 0;font-size:15px;line-height:1.55;color:var(--muted);font-style:italic}
+.marginalia .folio{font-size:12px;letter-spacing:.2em;color:var(--deep)}
+.marginalia-rule{display:block;width:36px;height:1px;background:var(--gold);margin:22px 0}
+.marginalia-small{font-style:normal;font-size:11px;letter-spacing:.18em;font-feature-settings:"smcp" 1;text-transform:none}
+.works{max-width:1280px;margin:0 auto;padding:80px 48px;background:color-mix(in srgb, var(--sage) 26%, var(--bg));border-top:1px solid var(--hair)}
+.works-head{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;margin-bottom:54px}
+.works-head h2{font-weight:400;font-size:clamp(38px,4.4vw,58px);line-height:1;margin:0;letter-spacing:-.01em}
+.works-count{font-size:11px;letter-spacing:.18em;font-feature-settings:"smcp" 1;text-transform:none;color:var(--muted);text-align:right;line-height:1.7}
+.works-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.work{padding:0 30px;border-left:1px solid var(--hair)}
+.work:first-child{padding-left:0;border-left:none}
+.work:last-child{padding-right:0}
+.work-top{display:flex;align-items:center;gap:14px;margin-bottom:24px}
+.work .folio{font-size:12px;letter-spacing:.18em;color:var(--deep)}
+.work-rule{flex:1;height:1px;background:var(--hair)}
+.work:nth-child(1) .work-rule{background:var(--rose)}
+.work:nth-child(2) .work-rule{background:var(--blue)}
+.work:nth-child(3) .work-rule{background:var(--sage)}
+.work h3{font-weight:400;font-size:31px;line-height:1.1;margin:0 0 12px;letter-spacing:-.01em}
+.work p{margin:0 0 20px;font-size:16px;line-height:1.6;color:var(--muted)}
+.text-link{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.18em;font-feature-settings:"smcp" 1;text-transform:none;color:var(--deep);border-bottom:1px solid transparent;padding-bottom:3px;transition:border-color .4s var(--ease),color .4s var(--ease)}
+.text-link:hover{border-color:var(--rose);color:var(--rose)}
+.text-link svg{transition:transform .4s var(--ease)}
+.text-link:hover svg{transform:translateX(3px)}
+.quote{max-width:100%;margin:0;padding:88px 28px;text-align:center;background:color-mix(in srgb, var(--rose) 12%, var(--bg));border-top:1px solid var(--hair)}
+.quote-mark{display:block;color:var(--gold);font-size:92px;line-height:.6;font-style:italic}
+.quote blockquote{margin:0;font-size:clamp(30px,3.6vw,48px);line-height:1.2;font-style:italic;letter-spacing:-.01em;max-width:920px;margin:0 auto}
+.quote-author{margin:24px 0 0;font-size:12px;letter-spacing:.2em;font-feature-settings:"smcp" 1;text-transform:none;color:var(--deep)}
+.cta{position:relative;max-width:1180px;margin:40px auto 80px;background:var(--deep);color:var(--bg);padding:84px 40px;text-align:center;outline:1px solid var(--gold);outline-offset:-14px}
+.cta .section-label{color:var(--gold)}
+.cta h2{font-weight:400;font-size:clamp(40px,5.2vw,66px);line-height:.98;margin:0 auto 18px;max-width:760px;letter-spacing:-.015em}
+.cta p{max-width:600px;margin:0 auto 30px;color:rgba(246,237,221,.82);font-size:19px}
+.button-gold{background:var(--gold);color:var(--deep);border-color:var(--gold)}
+.button-gold:hover{background:var(--bg);border-color:var(--bg);color:var(--deep)}
+.site-foot{max-width:1280px;margin:0 auto;padding:30px 10px 40px;display:flex;align-items:center;justify-content:space-between;gap:20px;border-top:1px solid var(--hair);font-size:11px;letter-spacing:.16em;font-feature-settings:"smcp" 1;text-transform:none;color:var(--muted)}
+.foot-brand{display:flex;align-items:center;gap:10px;color:var(--ink)}
+.foot-brand .mark{color:var(--gold)}
+.foot-meta{text-align:right;line-height:1.7}
+.js .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s var(--ease),transform .7s var(--ease);transition-delay:calc(var(--d,0) * 110ms)}
+.js .reveal.is-in{opacity:1;transform:none}
+@media (max-width:980px){
+  .hero{grid-template-columns:1fr;gap:34px;padding-top:44px}
+  .variant-1 .hero-copy,.variant-1 .plate{order:0}
+  .plate{max-width:620px;margin:0 auto}
+  .manifesto{grid-template-columns:1fr;gap:44px}
+  .works-grid{grid-template-columns:1fr;gap:0}
+  .work{padding:28px 0;border-left:none;border-top:1px solid var(--hair)}
+  .work:first-child{border-top:none;padding-top:0}
+  .works-head{flex-direction:column;align-items:flex-start;gap:14px}
+  .works-count{text-align:left}
+}
+@media (max-width:620px){
+  body{font-size:18px}
+  .page-frame{inset:10px}
+  .site-head{padding-top:26px;flex-direction:column;gap:16px}
+  .site-head nav{gap:18px}
+  .hero{padding-top:36px}
+  .cta{margin-left:16px;margin-right:16px;padding:58px 24px}
+  .site-foot{flex-direction:column;align-items:flex-start}
+  .foot-meta{text-align:left}
+}
+@media (prefers-reduced-motion:reduce){
+  .js .reveal{opacity:1;transform:none;transition:none}
+  .scroll-cue span:first-child{animation:none}
+  .ornament svg path,.ornament svg line{stroke-dashoffset:0;animation:none}
+  .button,.button svg,.text-link svg{transition:none}
+}
+
+
+:root{--type-display-case:none;--type-display-tracking:.01em;--type-display-leading:.88;--type-body-size:20px;--type-body-leading:1.62;--type-label-tracking:.18em;--type-label-case:uppercase;--motion-enter:900ms;--motion-distance:16px;--motion-stagger:80ms;--motion-ease:cubic-bezier(.22,.61,.36,1);--motion-page:1200ms}
+body{font-size:var(--type-body-size);line-height:var(--type-body-leading);font-kerning:normal;font-optical-sizing:auto;text-rendering:optimizeLegibility}
+:where(h1,h2,h3,.display){line-height:var(--type-display-leading);letter-spacing:var(--type-display-tracking);text-transform:var(--type-display-case);text-wrap:balance;font-feature-settings:"liga" 1, "kern" 1, "onum" 1}
+:where(p,li,blockquote){text-wrap:pretty;font-feature-settings:"liga" 1, "kern" 1, "onum" 1}
+:where(.eyebrow,.kicker,.label,.meta,.micro,.tag){letter-spacing:var(--type-label-tracking);text-transform:var(--type-label-case)}
+body[class] .card p,body[class] .aside p,body[class] .section-head p{font-size:max(15px, .92em);line-height:1.58}
+body[class] .quote cite{font-size:11px}
+body[class] .top nav,body[class] .eyebrow,body[class] .kicker,body[class] .link,body[class] .card-link{font-size:11px}
+body[class] .hero-note{font-size:10px}
+.beauty-scroll{position:fixed;top:0;left:0;z-index:9999;width:100%;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:0 50%;pointer-events:none;opacity:.9}
+a{text-underline-offset:.18em;text-decoration-thickness:1px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+::selection{background:var(--accent);color:var(--ground,var(--bg))}
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+  body{animation:beauty-page-in var(--motion-page) var(--motion-ease) both}
+  .js .reveal{transition-duration:var(--motion-enter);transition-timing-function:var(--motion-ease);transition-delay:calc(var(--i,0) * var(--motion-stagger))}
+  @keyframes beauty-page-in{from{opacity:0}to{opacity:1}}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  body{animation:none!important}
+  .js .reveal{transition:none!important;transform:none!important;opacity:1!important}
+}
+
+@media print{
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .reveal,.js .reveal{opacity:1!important;transform:none!important;transition:none!important;animation:none!important}
+  .page-frame,.grain,.beauty-scroll{display:none!important}
+  .site-head,.topbar{position:static!important}
+  .ticker-track{animation:none!important}
+}
+</style>
+</head>
+<body class="variant-0">
+<div class="page-frame" aria-hidden="true"></div>
+<header class="site-head">
+  <a class="wordmark" href="#top"><span class="mark">✦</span><span>OPEN/BEAUTY</span></a>
+  <nav aria-label="Navegación principal">
+    <a href="#manifesto">Manifiesto</a>
+    <a href="#works">Obras</a>
+    <a href="#contact">Contacto</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow reveal" style="--d:0"><span class="rule"></span>Ronda de estilos 2026<span class="rule"></span></p>
+      <h1 class="reveal" style="--d:1">La luz y la <em>piedra</em></h1>
+      <p class="tagline reveal" style="--d:2">Una hipótesis visual para la web que viene.</p>
+      <div class="hero-actions reveal" style="--d:3">
+        <a class="button" href="#works">Ver obras <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg></a>
+        <a class="quiet-link" href="#contact">Contacto</a>
+      </div>
+      <a class="scroll-cue reveal" style="--d:4" href="#works" aria-label="Siguiente">
+        <span></span><span>Seguir</span>
+      </a>
+    </div>
+    <figure class="plate reveal" style="--d:4">
+  <svg class="plate-svg" viewBox="0 0 560 470" role="img" aria-label="Grabado de un sol sobre colinas dentro de un arco">
+    <defs>
+      <clipPath id="archClip"><path d="M76 445 V218 C76 106, 168 14, 280 14 C392 14, 484 106, 484 218 V445 Z"/></clipPath>
+      <linearGradient id="skyWash" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#AFC5D6" stop-opacity=".52"/>
+        <stop offset=".62" stop-color="#AFC5D6" stop-opacity=".16"/>
+        <stop offset="1" stop-color="#F8EFE2" stop-opacity="0"/>
+      </linearGradient>
+      <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+        <line x1="0" y1="0" x2="0" y2="7" stroke="currentColor" stroke-width=".7" opacity=".45"/>
+      </pattern>
+    </defs>
+    <g clip-path="url(#archClip)"><rect x="60" y="0" width="440" height="445" fill="#AFC5D6"/></g>
+    <g clip-path="url(#archClip)">
+      <path d="M60 405 C 140 360, 210 382, 280 405 S 420 356, 500 400 V450 H60 Z" fill="#B9C4A6" opacity=".42"/>
+      <path d="M60 428 C 150 392, 220 410, 280 428 S 420 390, 500 425 V450 H60 Z" fill="#AFC5D6" opacity=".38"/>
+      <g fill="#B9C4A6" opacity=".8">
+        <path d="M120 445 C 118 405, 124 380, 132 356 C 140 380, 146 405, 144 445 Z"/>
+        <path d="M418 445 C 416 410, 422 390, 428 370 C 434 390, 440 410, 438 445 Z"/>
+        <path d="M158 445 C 156 418, 160 402, 165 386 C 170 402, 174 418, 172 445 Z" opacity=".65"/>
+      </g>
+      <g class="ink-lines" fill="none" stroke="currentColor" stroke-width="1">
+        <path d="M60 382 C 138 330, 205 350, 280 382 S 425 334, 500 382"/>
+        <path d="M60 405 C 145 360, 212 382, 280 405 S 420 360, 500 405"/>
+        <path d="M60 428 C 150 390, 214 410, 280 428 S 418 388, 500 428"/>
+      </g>
+      <path d="M60 405 C 145 360, 212 382, 280 405 S 420 360, 500 405 V450 H60 Z" fill="url(#hatch)" opacity=".38"/>
+    </g>
+    <g class="gold-lines" fill="none" stroke="currentColor" stroke-width="1">
+      <path d="M60 445 V215 C60 93, 158 15, 280 15 C402 15, 500 93, 500 215 V445"/>
+      <path d="M76 445 V218 C76 106, 168 14, 280 14 C392 14, 484 106, 484 218 V445"/>
+      <line x1="40" y1="445" x2="520" y2="445"/>
+      <line x1="40" y1="452" x2="520" y2="452" opacity=".55"/>
+    </g>
+    <g class="sun gold-lines" fill="none" stroke="currentColor" stroke-width="1">
+      <circle cx="280" cy="196" r="52" fill="#B4432C" fill-opacity=".55" stroke="none"/>
+      <circle cx="280" cy="196" r="52"/>
+      <circle cx="280" cy="196" r="44" opacity=".45"/>
+      <line x1="342.0" y1="196.0" x2="362.0" y2="196.0"/><line x1="337.3" y1="219.7" x2="347.4" y2="223.9"/><line x1="323.8" y1="239.8" x2="338.0" y2="254.0"/><line x1="303.7" y1="253.3" x2="307.9" y2="263.4"/><line x1="280.0" y1="258.0" x2="280.0" y2="278.0"/><line x1="256.3" y1="253.3" x2="252.1" y2="263.4"/><line x1="236.2" y1="239.8" x2="222.0" y2="254.0"/><line x1="222.7" y1="219.7" x2="212.6" y2="223.9"/><line x1="218.0" y1="196.0" x2="198.0" y2="196.0"/><line x1="222.7" y1="172.3" x2="212.6" y2="168.1"/><line x1="236.2" y1="152.2" x2="222.0" y2="138.0"/><line x1="256.3" y1="138.7" x2="252.1" y2="128.6"/><line x1="280.0" y1="134.0" x2="280.0" y2="114.0"/><line x1="303.7" y1="138.7" x2="307.9" y2="128.6"/><line x1="323.8" y1="152.2" x2="338.0" y2="138.0"/><line x1="337.3" y1="172.3" x2="347.4" y2="168.1"/>
+    </g>
+    <g class="ink-lines" fill="none" stroke="currentColor" stroke-width="1" opacity=".8">
+      <path d="M196 148 q 10 -10 20 0 q 10 -10 20 0"/>
+      <path d="M338 126 q 8 -8 16 0 q 8 -8 16 0"/>
+      <path d="M132 190 q 7 -7 14 0 q 7 -7 14 0"/>
+    </g>
+    <g class="laurel gold-lines" fill="none" stroke="currentColor" stroke-width="1">
+      <path d="M236 452 C 214 430, 208 402, 218 376"/>
+      <path d="M324 452 C 346 430, 352 402, 342 376"/>
+      <path d="M236 438 q -10 -4 -14 -14"/><path d="M324 438 q 10 -4 14 -14"/><path d="M238 424 q -14 -4 -18 -14"/><path d="M322 424 q 14 -4 18 -14"/><path d="M240 410 q -18 -4 -22 -14"/><path d="M320 410 q 18 -4 22 -14"/><path d="M242 396 q -22 -4 -26 -14"/><path d="M318 396 q 22 -4 26 -14"/><path d="M244 382 q -26 -4 -30 -14"/><path d="M316 382 q 26 -4 30 -14"/>
+      <circle cx="280" cy="452" r="3" fill="currentColor" stroke="none"/>
+    </g>
+  </svg>
+  <figcaption>Fig. I — Estudio de la luz y la piedra</figcaption>
+</figure>
+  </section>
+
+  <div class="ornament reveal" aria-hidden="true" style="--d:1">
+  <svg viewBox="0 0 420 40" fill="none" stroke="currentColor" stroke-width="1">
+    <line x1="0" y1="20" x2="150" y2="20"/>
+    <line x1="270" y1="20" x2="420" y2="20"/>
+    <path d="M176 20 q 14 -14 28 0 q 14 14 28 0 q 14 -14 28 0"/>
+    <circle cx="210" cy="20" r="2.5" fill="currentColor" stroke="none"/>
+    <circle cx="238" cy="20" r="2.5" fill="currentColor" stroke="none"/>
+  </svg>
+</div>
+
+  <section id="manifesto" class="manifesto">
+    <div class="manifesto-copy reveal">
+      <p class="section-label">Manifiesto</p>
+      <p class="dropcap">Imaginamos la web como una sala abierta: la luz revela la materia y cada pausa deja lugar para mirar.</p>
+    </div>
+    <aside class="marginalia reveal" style="--d:1">
+      <span class="folio">II</span>
+      <p>Cada proyecto empieza con una conversación larga y un boceto a lápiz.</p>
+      <span class="marginalia-rule"></span>
+      <p class="marginalia-small">OPEN/BEAUTY — MMXXVI</p>
+    </aside>
+  </section>
+
+  <section id="works" class="works">
+    <header class="works-head reveal">
+      <div>
+        <p class="section-label">Obras</p>
+        <h2>Tres estudios recientes.</h2>
+      </div>
+      <span class="works-count">03 Obras seleccionadas</span>
+    </header>
+    <div class="works-grid">
+      <article class="work reveal" style="--d:1">
+  <div class="work-top"><span class="folio">I</span><span class="work-rule"></span></div>
+  <h3>Entrar despacio</h3>
+  <p>Una página también puede recibirnos con calma. Un arco de cal marca el paso entre la calle y la lectura.</p>
+  <a class="text-link" href="#works">Leer más <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg></a>
+</article>
+<article class="work reveal" style="--d:2">
+  <div class="work-top"><span class="folio">II</span><span class="work-rule"></span></div>
+  <h3>Tocar la luz</h3>
+  <p>El color no decora: orienta la mirada. Una franja azul de temple señala dónde comienza el relato.</p>
+  <a class="text-link" href="#works">Leer más <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg></a>
+</article>
+<article class="work reveal" style="--d:3">
+  <div class="work-top"><span class="folio">III</span><span class="work-rule"></span></div>
+  <h3>Dejar una huella</h3>
+  <p>La pantalla guarda memoria cuando atiende a lo esencial. Una línea de cinabrio basta para anclar el recorrido.</p>
+  <a class="text-link" href="#works">Leer más <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg></a>
+</article>
+    </div>
+  </section>
+
+  <section class="quote reveal">
+    <span class="quote-mark" aria-hidden="true">“</span>
+    <blockquote>La forma también recuerda.</blockquote>
+    <p class="quote-author">— MUSEM</p>
+  </section>
+
+  <section id="contact" class="cta reveal">
+    <p class="section-label">Contacto</p>
+    <h2>El siguiente capítulo es tuyo.</h2>
+    <p>Un proyecto, una exposición, un libro. Escribinos y lo pensamos juntos.</p>
+    <a class="button button-gold" href="#contact">Empecemos <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg></a>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="foot-brand"><span class="mark">✦</span>OPEN/BEAUTY</div>
+  <div class="foot-meta">Buenos Aires · Desde MMXXVI</div>
+  <div class="foot-meta">© 2026 — Diseñado con open-beauty-site</div>
+</footer>
+<div class="beauty-scroll" aria-hidden="true"></div>
+<script>
+
+(() => {
+  const nodes = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    nodes.forEach((node) => node.classList.add('is-in'));
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-in');
+        io.unobserve(entry.target);
+      }
+    }
+  }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+  nodes.forEach((node) => io.observe(node));
+})();
+
+</script>
+<script>
+(() => { const bar = document.querySelector('.beauty-scroll'); if (!bar) return; const update = () => { const max = document.documentElement.scrollHeight - innerHeight; bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, scrollY / max) : 0) + ')'; }; addEventListener('scroll', update, { passive: true }); addEventListener('resize', update); update(); })();
+</script>
+</body>
+</html>

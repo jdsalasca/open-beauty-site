@@ -71,9 +71,9 @@ Black lacquer, champagne lines and a sunburst geometry. Symmetrical, vertical, c
 
 ## Copy voice
 
-- Voice: precise, curious, never jokey. Explain the subject, not the studio.
-- Headline: 2–6 words. One word may carry the accent colour.
-- Body: one idea per paragraph, concrete nouns, no filler.
+- Voice: a 1929 cinema programme: precise, upward, a little theatrical. Name the building, the year, the material.
+- Headline: 3–6 words in spaced caps. One word may be champagne; never use "luxury" as a claim.
+- Body: one image, one fact, one date. Cut any sentence that could belong to a perfume ad.
 
 ## Never
 
@@ -85,6 +85,28 @@ Black lacquer, champagne lines and a sunburst geometry. Symmetrical, vertical, c
 - No sans-serif body other than Josefin Sans.
 - No rainbow palette.
 - No centred-everything without one asymmetry.
+
+## Type system
+
+| Token | Value |
+| --- | --- |
+| Display case | uppercase |
+| Display tracking | .06em |
+| Display leading | .9 |
+| Body size / leading | 18px / 1.7 |
+| Label tracking | .22em |
+| Features | "kern" 1 |
+
+## Motion system
+
+| Token | Value |
+| --- | --- |
+| Enter | 900ms · cubic-bezier(.22,.61,.36,1) |
+| Distance / stagger | 12px / 90ms |
+| Page transition | 1100ms · curtain |
+| Ambient | sun · 38s |
+| Hover | glow |
+| Note | A curtain opens upward; the sun keeps turning in the background. |
 
 ## Subfamilies
 

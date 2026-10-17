@@ -85,6 +85,28 @@ Plaster, pigment and ink. Flat pastel fields, one cinnabar event, a large arch p
 - No saturated primary colours. The pastels must stay chalky, never neon.
 - No more than one italic phrase per screen.
 
+## Type system
+
+| Token | Value |
+| --- | --- |
+| Display case | none |
+| Display tracking | .01em |
+| Display leading | .88 |
+| Body size / leading | 20px / 1.62 |
+| Label tracking | .18em |
+| Features | "liga" 1, "kern" 1, "onum" 1 |
+
+## Motion system
+
+| Token | Value |
+| --- | --- |
+| Enter | 900ms · cubic-bezier(.22,.61,.36,1) |
+| Distance / stagger | 16px / 80ms |
+| Page transition | 1200ms · rise |
+| Ambient | draw · 24s |
+| Hover | underline |
+| Note | Slow, ceremonial; one draw, one fade, no bounce. |
+
 ## Subfamilies
 
 | Slug | Name | Composition | Accent | What changes |
@@ -183,13 +205,35 @@ A loud poster that happens to be a website. Visible skeleton, 3px borders, hard 
 - No serif, no pastel, no centered-everything layouts.
 - No more than one acid block and one red stamp per screen.
 
+## Type system
+
+| Token | Value |
+| --- | --- |
+| Display case | uppercase |
+| Display tracking | -.035em |
+| Display leading | .84 |
+| Body size / leading | 18px / 1.55 |
+| Label tracking | .12em |
+| Features | "kern" 1 |
+
+## Motion system
+
+| Token | Value |
+| --- | --- |
+| Enter | 250ms · cubic-bezier(.2,.8,.2,1) |
+| Distance / stagger | 20px / 60ms |
+| Page transition | 250ms · cut |
+| Ambient | marquee · 22s |
+| Hover | shift |
+| Note | Mechanical, hard stops; the layout moves like a sign, not a spring. |
+
 ## Subfamilies
 
 | Slug | Name | Composition | Accent | What changes |
 | --- | --- | --- | --- |
 | `concrete` | Concrete | sala | `accent` | Paper, ink and acid: the original control room. |
-| `signal` | Signal | gabinete | `accent2` | Red warning stripe on a bone field. Louder, not busier. |
-| `terminal` | Terminal | cartel | `accent3` | Blue telemetry and monospace; a control room after hours. |
+| `signal` | Signal | cartel | `accent2` | Red warning stripe on a bone field. Louder, not busier. |
+| `terminal` | Terminal | gabinete | `accent3` | Blue telemetry and monospace; a control room after hours. |
 
 ## Signature moves
 
@@ -281,17 +325,39 @@ Cream, kraft and scissors. Layered paper shapes, soft shadows, tape and a gentle
 - No rounded sans display, no hard shadows, no dark backgrounds.
 - No serif-with-hairlines (DM Serif) and no rounded sans (Fredoka). Both read as stock.
 
+## Type system
+
+| Token | Value |
+| --- | --- |
+| Display case | none |
+| Display tracking | .005em |
+| Display leading | .94 |
+| Body size / leading | 18px / 1.65 |
+| Label tracking | .18em |
+| Features | "liga" 1, "kern" 1 |
+
+## Motion system
+
+| Token | Value |
+| --- | --- |
+| Enter | 480ms · cubic-bezier(.22,.9,.24,1) |
+| Distance / stagger | 22px / 90ms |
+| Page transition | 800ms · settle |
+| Ambient | float · 8s |
+| Hover | lift |
+| Note | Paper settles: shadow arrives 180ms after the sheet. |
+
 ## Subfamilies
 
 | Slug | Name | Composition | Accent | What changes |
 | --- | --- | --- | --- |
 | `picnic` | Picnic | sala | `accent2` | Sage tablecloth, terracotta card, butter tape. |
-| `carnival` | Carnival | gabinete | `accent` | Terracotta lead, sky secondary, confetti kept small. |
-| `museum` | Museum | cartel | `accent3` | Sky-blue label, paper white, plum only in the seal. |
+| `carnival` | Carnival | cartel | `accent` | Terracotta lead, sky secondary, confetti kept small. |
+| `museum` | Museum | gabinete | `accent3` | Sky-blue label, paper white, plum only in the seal. |
 
 ## Signature moves
 
-- Fraunces Soft display with Nunito Sans body
+- Fraunces display with Nunito Sans body
 - Cut-paper radii: 30px 12px 28px 14px
 - Layered paper sheets behind each card
 - Washi tape with torn ends and a 6–8° tilt
@@ -363,9 +429,9 @@ Black lacquer, champagne lines and a sunburst geometry. Symmetrical, vertical, c
 
 ## Copy voice
 
-- Voice: precise, curious, never jokey. Explain the subject, not the studio.
-- Headline: 2–6 words. One word may carry the accent colour.
-- Body: one idea per paragraph, concrete nouns, no filler.
+- Voice: a 1929 cinema programme: precise, upward, a little theatrical. Name the building, the year, the material.
+- Headline: 3–6 words in spaced caps. One word may be champagne; never use "luxury" as a claim.
+- Body: one image, one fact, one date. Cut any sentence that could belong to a perfume ad.
 
 ## Never
 
@@ -377,6 +443,28 @@ Black lacquer, champagne lines and a sunburst geometry. Symmetrical, vertical, c
 - No sans-serif body other than Josefin Sans.
 - No rainbow palette.
 - No centred-everything without one asymmetry.
+
+## Type system
+
+| Token | Value |
+| --- | --- |
+| Display case | uppercase |
+| Display tracking | .06em |
+| Display leading | .9 |
+| Body size / leading | 18px / 1.7 |
+| Label tracking | .22em |
+| Features | "kern" 1 |
+
+## Motion system
+
+| Token | Value |
+| --- | --- |
+| Enter | 900ms · cubic-bezier(.22,.61,.36,1) |
+| Distance / stagger | 12px / 90ms |
+| Page transition | 1100ms · curtain |
+| Ambient | sun · 38s |
+| Hover | glow |
+| Note | A curtain opens upward; the sun keeps turning in the background. |
 
 ## Subfamilies
 
@@ -459,9 +547,9 @@ Vienna, 1925: cream paper, black rules and a red pictogram that counts. Data as 
 
 ## Copy voice
 
-- Voice: precise, curious, never jokey. Explain the subject, not the studio.
-- Headline: 2–6 words. One word may carry the accent colour.
-- Body: one idea per paragraph, concrete nouns, no filler.
+- Voice: a public-data caption. State quantity, unit, denominator and source; say what each pictogram counts.
+- Headline: a finding, not a theme: "One in four homes has no lift."
+- Body: the comparison in words, then the number. No jargon, no decorative statistics.
 
 ## Never
 
@@ -473,6 +561,28 @@ Vienna, 1925: cream paper, black rules and a red pictogram that counts. Data as 
 - No drop shadows.
 - No more than two pictogram families.
 - No fake statistics.
+
+## Type system
+
+| Token | Value |
+| --- | --- |
+| Display case | none |
+| Display tracking | -.02em |
+| Display leading | .95 |
+| Body size / leading | 18px / 1.65 |
+| Label tracking | .14em |
+| Features | "tnum" 1, "kern" 1 |
+
+## Motion system
+
+| Token | Value |
+| --- | --- |
+| Enter | 350ms · cubic-bezier(.2,.7,.2,1) |
+| Distance / stagger | 10px / 50ms |
+| Page transition | 500ms · count |
+| Ambient | none · 0s |
+| Hover | underline |
+| Note | Information arrives once and stays put; numbers count, nothing loops. |
 
 ## Subfamilies
 
@@ -555,9 +665,9 @@ Black and bone, a pattern that refuses to sit still. The page is an instrument f
 
 ## Copy voice
 
-- Voice: precise, curious, never jokey. Explain the subject, not the studio.
-- Headline: 2–6 words. One word may carry the accent colour.
-- Body: one idea per paragraph, concrete nouns, no filler.
+- Voice: a perceptual experiment. Ask one question about what the eye sees, then answer it plainly.
+- Headline: 2–5 words with one verb of seeing or moving; never a generic "future" claim.
+- Body: short declaratives. Give the eye a pause before the next pattern.
 
 ## Never
 
@@ -569,6 +679,28 @@ Black and bone, a pattern that refuses to sit still. The page is an instrument f
 - No soft shadows.
 - No more than 3 Hz.
 - No pattern without a pause.
+
+## Type system
+
+| Token | Value |
+| --- | --- |
+| Display case | uppercase |
+| Display tracking | -.03em |
+| Display leading | .84 |
+| Body size / leading | 18px / 1.6 |
+| Label tracking | .16em |
+| Features | "kern" 1 |
+
+## Motion system
+
+| Token | Value |
+| --- | --- |
+| Enter | 200ms · cubic-bezier(.2,.8,.2,1) |
+| Distance / stagger | 0px / 30ms |
+| Page transition | 200ms · cut |
+| Ambient | moire · 18s |
+| Hover | none |
+| Note | Hard cuts; the eye supplies the movement. No strobe, no bounce. |
 
 ## Subfamilies
 
@@ -651,9 +783,9 @@ Prussian blue, washi cream and a vermilion seal. Flat planes, a great wave and a
 
 ## Copy voice
 
-- Voice: precise, curious, never jokey. Explain the subject, not the studio.
-- Headline: 2–6 words. One word may carry the accent colour.
-- Body: one idea per paragraph, concrete nouns, no filler.
+- Voice: a travel print: coast, season, date and a human trace. Never use Japan as decoration or fake Japanese.
+- Headline: a place and a change, 2–6 words. Let the weather do some of the work.
+- Body: one observed detail, one consequence. No exoticism, no cherry-blossom cliché.
 
 ## Never
 
@@ -666,13 +798,35 @@ Prussian blue, washi cream and a vermilion seal. Flat planes, a great wave and a
 - No cherry-blossom clip art.
 - No faux-Japanese lettering.
 
+## Type system
+
+| Token | Value |
+| --- | --- |
+| Display case | none |
+| Display tracking | .02em |
+| Display leading | 1.04 |
+| Body size / leading | 18px / 1.8 |
+| Label tracking | .14em |
+| Features | "liga" 1, "kern" 1, "palt" 1 |
+
+## Motion system
+
+| Token | Value |
+| --- | --- |
+| Enter | 1000ms · cubic-bezier(.22,.61,.36,1) |
+| Distance / stagger | 14px / 90ms |
+| Page transition | 1200ms · rise |
+| Ambient | drift · 12s |
+| Hover | underline |
+| Note | Waves drift, paper stays still; nothing should look digital. |
+
 ## Subfamilies
 
 | Slug | Name | Composition | Accent | What changes |
 | --- | --- | --- | --- |
 | `prussian` | Prussian | sala | `accent` | The classic deep blue sea and a vermilion seal. |
-| `vermilion` | Vermilion | gabinete | `accent2` | Red sun, blue shadow, washi sky. |
-| `mist` | Mist | cartel | `accent3` | Grey-blue distance; the horizon disappears. |
+| `vermilion` | Vermilion | cartel | `accent2` | Red sun, blue shadow, washi sky. |
+| `mist` | Mist | gabinete | `accent3` | Grey-blue distance; the horizon disappears. |
 
 ## Signature moves
 
@@ -747,9 +901,9 @@ Parchment, iron-gall ink and a single lapis blue. A manuscript page with an illu
 
 ## Copy voice
 
-- Voice: precise, curious, never jokey. Explain the subject, not the studio.
-- Headline: 2–6 words. One word may carry the accent colour.
-- Body: one idea per paragraph, concrete nouns, no filler.
+- Voice: a field guide for an impossible species: anatomy, habitat, behaviour. Mark the invented as hypothesis.
+- Headline: the creature's name and one distinguishing trait.
+- Body: observation before metaphor. A marginal note may translate the Latin, not replace the evidence.
 
 ## Never
 
@@ -761,6 +915,28 @@ Parchment, iron-gall ink and a single lapis blue. A manuscript page with an illu
 - No glossy gradients.
 - No modern sans-serif.
 - No generic fantasy dragons.
+
+## Type system
+
+| Token | Value |
+| --- | --- |
+| Display case | none |
+| Display tracking | .01em |
+| Display leading | 1 |
+| Body size / leading | 18px / 1.75 |
+| Label tracking | .12em |
+| Features | "liga" 1, "kern" 1, "onum" 1 |
+
+## Motion system
+
+| Token | Value |
+| --- | --- |
+| Enter | 800ms · cubic-bezier(.22,.61,.36,1) |
+| Distance / stagger | 12px / 80ms |
+| Page transition | 1000ms · illuminate |
+| Ambient | blink · 7s |
+| Hover | glow |
+| Note | One blink, one glint, one translation; the manuscript is otherwise still. |
 
 ## Subfamilies
 
@@ -843,9 +1019,9 @@ Night blue, magenta and orange, liquid shapes and a headline that bends. A 1967 
 
 ## Copy voice
 
-- Voice: precise, curious, never jokey. Explain the subject, not the studio.
-- Headline: 2–6 words. One word may carry the accent colour.
-- Body: one idea per paragraph, concrete nouns, no filler.
+- Voice: a concert poster with a clear subject. One sensory verb, one plain explanation, no vague "vibes".
+- Headline: the phenomenon and the invitation, 2–5 words.
+- Body: describe what happens to the eye or the room; then say why it matters.
 
 ## Never
 
@@ -857,6 +1033,28 @@ Night blue, magenta and orange, liquid shapes and a headline that bends. A 1967 
 - No more than three hot colours.
 - No illegible body copy.
 - No strobing above 3 Hz.
+
+## Type system
+
+| Token | Value |
+| --- | --- |
+| Display case | uppercase |
+| Display tracking | .02em |
+| Display leading | .85 |
+| Body size / leading | 18px / 1.55 |
+| Label tracking | .18em |
+| Features | "kern" 1 |
+
+## Motion system
+
+| Token | Value |
+| --- | --- |
+| Enter | 550ms · cubic-bezier(.22,.8,.24,1) |
+| Distance / stagger | 18px / 60ms |
+| Page transition | 800ms · swirl |
+| Ambient | drift · 9s |
+| Hover | lift |
+| Note | Blobs drift like heat; the type stays readable. |
 
 ## Subfamilies
 
@@ -939,9 +1137,9 @@ Milan, 1981: squiggles, terrazzo, cobalt and pink. Postmodern play with a straig
 
 ## Copy voice
 
-- Voice: precise, curious, never jokey. Explain the subject, not the studio.
-- Headline: 2–6 words. One word may carry the accent colour.
-- Body: one idea per paragraph, concrete nouns, no filler.
+- Voice: dry wit under a playful title. The joke is in the composition, not in the copy.
+- Headline: a concrete object or action, 2–5 words. Resist the easy punchline.
+- Body: a precise observation in one or two sentences; keep one straight face.
 
 ## Never
 
@@ -953,6 +1151,28 @@ Milan, 1981: squiggles, terrazzo, cobalt and pink. Postmodern play with a straig
 - No rounded sans-only look without a keyline.
 - No more than five accents.
 - No aligning everything.
+
+## Type system
+
+| Token | Value |
+| --- | --- |
+| Display case | none |
+| Display tracking | -.01em |
+| Display leading | .9 |
+| Body size / leading | 18px / 1.55 |
+| Label tracking | .16em |
+| Features | "kern" 1 |
+
+## Motion system
+
+| Token | Value |
+| --- | --- |
+| Enter | 300ms · cubic-bezier(.2,.8,.2,1) |
+| Distance / stagger | 16px / 45ms |
+| Page transition | 500ms · scatter |
+| Ambient | none · 0s |
+| Hover | lift |
+| Note | Shapes land with a hard stop; one shuffle per visit is enough. |
 
 ## Subfamilies
 
@@ -1035,9 +1255,9 @@ Violet dusk, chrome type and a perspective grid. A desktop from 1999, half-remem
 
 ## Copy voice
 
-- Voice: precise, curious, never jokey. Explain the subject, not the studio.
-- Headline: 2–6 words. One word may carry the accent colour.
-- Body: one idea per paragraph, concrete nouns, no filler.
+- Voice: a user manual for an obsolete interface: artifact, year, gesture. Nostalgia needs a specific object.
+- Headline: 2–5 words, one chrome word at most. No generic "Y2K" mood.
+- Body: what the interface promised, what it actually did, and who used it.
 
 ## Never
 
@@ -1049,6 +1269,28 @@ Violet dusk, chrome type and a perspective grid. A desktop from 1999, half-remem
 - No modern SaaS cards.
 - No illegible pixel body copy.
 - No flashing.
+
+## Type system
+
+| Token | Value |
+| --- | --- |
+| Display case | uppercase |
+| Display tracking | .08em |
+| Display leading | .95 |
+| Body size / leading | 18px / 1.7 |
+| Label tracking | .18em |
+| Features | "kern" 1 |
+
+## Motion system
+
+| Token | Value |
+| --- | --- |
+| Enter | 350ms · cubic-bezier(.2,.8,.2,1) |
+| Distance / stagger | 8px / 50ms |
+| Page transition | 600ms · glitch |
+| Ambient | grid · 16s |
+| Hover | glow |
+| Note | The desktop breathes; glitch is a short event, never a loop. |
 
 ## Subfamilies
 
@@ -1131,9 +1373,9 @@ Deep-space navy, chrome ivory and one slow planet. Michroma, orbital rings and t
 
 ## Copy voice
 
-- Voice: precise, curious, never jokey. Explain the subject, not the studio.
-- Headline: 2–6 words. One word may carry the accent colour.
-- Body: one idea per paragraph, concrete nouns, no filler.
+- Voice: a planetarium note or a memory of a sound. Intimate, not cosmic gibberish; chrome one word at most.
+- Headline: a human-scale image, 2–6 words. The universe is the room, not the subject.
+- Body: one remembered detail, one measured fact. Leave space for the audio to speak.
 
 ## Never
 
@@ -1145,6 +1387,28 @@ Deep-space navy, chrome ivory and one slow planet. Michroma, orbital rings and t
 - No neon rainbow.
 - No autoplay audio.
 - No sci-fi logos or fake alien alphabets.
+
+## Type system
+
+| Token | Value |
+| --- | --- |
+| Display case | uppercase |
+| Display tracking | .1em |
+| Display leading | 1.02 |
+| Body size / leading | 18px / 1.65 |
+| Label tracking | .24em |
+| Features | "kern" 1 |
+
+## Motion system
+
+| Token | Value |
+| --- | --- |
+| Enter | 800ms · cubic-bezier(.22,.61,.36,1) |
+| Distance / stagger | 14px / 80ms |
+| Page transition | 1100ms · orbit |
+| Ambient | orbit · 48s |
+| Hover | glow |
+| Note | Orbits and starlight move; the reading layer stays anchored. |
 
 ## Subfamilies
 

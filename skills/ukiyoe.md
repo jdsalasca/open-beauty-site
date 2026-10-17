@@ -71,9 +71,9 @@ Prussian blue, washi cream and a vermilion seal. Flat planes, a great wave and a
 
 ## Copy voice
 
-- Voice: precise, curious, never jokey. Explain the subject, not the studio.
-- Headline: 2–6 words. One word may carry the accent colour.
-- Body: one idea per paragraph, concrete nouns, no filler.
+- Voice: a travel print: coast, season, date and a human trace. Never use Japan as decoration or fake Japanese.
+- Headline: a place and a change, 2–6 words. Let the weather do some of the work.
+- Body: one observed detail, one consequence. No exoticism, no cherry-blossom cliché.
 
 ## Never
 
@@ -86,13 +86,35 @@ Prussian blue, washi cream and a vermilion seal. Flat planes, a great wave and a
 - No cherry-blossom clip art.
 - No faux-Japanese lettering.
 
+## Type system
+
+| Token | Value |
+| --- | --- |
+| Display case | none |
+| Display tracking | .02em |
+| Display leading | 1.04 |
+| Body size / leading | 18px / 1.8 |
+| Label tracking | .14em |
+| Features | "liga" 1, "kern" 1, "palt" 1 |
+
+## Motion system
+
+| Token | Value |
+| --- | --- |
+| Enter | 1000ms · cubic-bezier(.22,.61,.36,1) |
+| Distance / stagger | 14px / 90ms |
+| Page transition | 1200ms · rise |
+| Ambient | drift · 12s |
+| Hover | underline |
+| Note | Waves drift, paper stays still; nothing should look digital. |
+
 ## Subfamilies
 
 | Slug | Name | Composition | Accent | What changes |
 | --- | --- | --- | --- |
 | `prussian` | Prussian | sala | `accent` | The classic deep blue sea and a vermilion seal. |
-| `vermilion` | Vermilion | gabinete | `accent2` | Red sun, blue shadow, washi sky. |
-| `mist` | Mist | cartel | `accent3` | Grey-blue distance; the horizon disappears. |
+| `vermilion` | Vermilion | cartel | `accent2` | Red sun, blue shadow, washi sky. |
+| `mist` | Mist | gabinete | `accent3` | Grey-blue distance; the horizon disappears. |
 
 ## Signature moves
 

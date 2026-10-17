@@ -13,13 +13,13 @@ export const SUBFAMILIES: Record<StyleSlug, StyleSubfamily[]> = {
   ],
   brutalist: [
     { slug: 'concrete', name: 'Concrete', description: 'Paper, ink and acid: the original control room.', accent: 'accent' },
-    { slug: 'signal', name: 'Signal', description: 'Red warning stripe on a bone field. Louder, not busier.', accent: 'accent2' },
-    { slug: 'terminal', name: 'Terminal', description: 'Blue telemetry and monospace; a control room after hours.', accent: 'accent3' },
+    { slug: 'signal', name: 'Signal', description: 'Red warning stripe on a bone field. Louder, not busier.', accent: 'accent2', composition: 'cartel' },
+    { slug: 'terminal', name: 'Terminal', description: 'Blue telemetry and monospace; a control room after hours.', accent: 'accent3', composition: 'gabinete' },
   ],
   papercraft: [
     { slug: 'picnic', name: 'Picnic', description: 'Sage tablecloth, terracotta card, butter tape.', accent: 'accent2' },
-    { slug: 'carnival', name: 'Carnival', description: 'Terracotta lead, sky secondary, confetti kept small.', accent: 'accent' },
-    { slug: 'museum', name: 'Museum', description: 'Sky-blue label, paper white, plum only in the seal.', accent: 'accent3' },
+    { slug: 'carnival', name: 'Carnival', description: 'Terracotta lead, sky secondary, confetti kept small.', accent: 'accent', composition: 'cartel' },
+    { slug: 'museum', name: 'Museum', description: 'Sky-blue label, paper white, plum only in the seal.', accent: 'accent3', composition: 'gabinete' },
   ],
   artdeco: [
     { slug: 'lacquer', name: 'Lacquer', description: 'Champagne line on black; the default lobby.', accent: 'accent' },
@@ -38,8 +38,8 @@ export const SUBFAMILIES: Record<StyleSlug, StyleSubfamily[]> = {
   ],
   ukiyoe: [
     { slug: 'prussian', name: 'Prussian', description: 'The classic deep blue sea and a vermilion seal.', accent: 'accent' },
-    { slug: 'vermilion', name: 'Vermilion', description: 'Red sun, blue shadow, washi sky.', accent: 'accent2' },
-    { slug: 'mist', name: 'Mist', description: 'Grey-blue distance; the horizon disappears.', accent: 'accent3' },
+    { slug: 'vermilion', name: 'Vermilion', description: 'Red sun, blue shadow, washi sky.', accent: 'accent2', composition: 'cartel' },
+    { slug: 'mist', name: 'Mist', description: 'Grey-blue distance; the horizon disappears.', accent: 'accent3', composition: 'gabinete' },
   ],
   bestiary: [
     { slug: 'scriptorium', name: 'Scriptorium', description: 'Old gold and iron gall; the room lit by one candle.', accent: 'accent' },

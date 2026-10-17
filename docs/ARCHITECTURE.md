@@ -22,7 +22,7 @@ brief + style ──► preset ──► renderer ──► HTML ──► valid
 
 ### 1. Types (`src/types.ts`)
 
-`Brief`, `StylePreset`, `ValidationResult`, `GifOptions`. Presets are data: palette, fonts, rules, guidance, signature moves, CSS markers.
+`Brief`, `StylePreset`, `TypeSystem`, `MotionSystem`, `ValidationResult`, `GifOptions`. Presets are data: palette, fonts, rules, type, motion, guidance, signature moves, CSS markers.
 
 ### 2. Presets (`src/styles/presets.ts`)
 
@@ -31,12 +31,14 @@ Twelve complete systems. Each one includes:
 - a palette with semantic roles (`bg`, `surface`, `ink`, `muted`, `accent`, `accent2`, `accent3`, `deep`);
 - exact font families plus the Google Fonts URL;
 - machine-readable rules (`radius`, `borderWidths`, `borderStyles`, `motion`, `requiredFonts`, `forbiddenFonts`, `shadowPattern`);
+- `typeSystem`: display case, tracking, leading, body size, label tracking, OpenType features;
+- `motionSystem`: enter, distance, stagger, easing, page transition, ambient, hover and reduced-motion note;
 - human-readable guidance broken into typography, colour, layout, motion, imagery, copy, don't;
 - signature moves that make the style recognisable in a thumbnail.
 
 ### 3. Page renderers (`src/page/*.ts`)
 
-One renderer per style, each with its own CSS and markup. They share only a shell (`src/page/common.ts`): escaping, locale labels, fonts, favicon, reveal script and print rules.
+One renderer per style, each with its own CSS and markup. They share only a shell (`src/page/common.ts`): escaping, locale labels, fonts, favicon, reveal script, scroll progress, type/motion tokens and print rules.
 
 Why not one generic template with token substitution? Because that produces recolours of the same page. The styles differ in structure, not just colour:
 

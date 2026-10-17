@@ -71,9 +71,9 @@ Vienna, 1925: cream paper, black rules and a red pictogram that counts. Data as 
 
 ## Copy voice
 
-- Voice: precise, curious, never jokey. Explain the subject, not the studio.
-- Headline: 2–6 words. One word may carry the accent colour.
-- Body: one idea per paragraph, concrete nouns, no filler.
+- Voice: a public-data caption. State quantity, unit, denominator and source; say what each pictogram counts.
+- Headline: a finding, not a theme: "One in four homes has no lift."
+- Body: the comparison in words, then the number. No jargon, no decorative statistics.
 
 ## Never
 
@@ -85,6 +85,28 @@ Vienna, 1925: cream paper, black rules and a red pictogram that counts. Data as 
 - No drop shadows.
 - No more than two pictogram families.
 - No fake statistics.
+
+## Type system
+
+| Token | Value |
+| --- | --- |
+| Display case | none |
+| Display tracking | -.02em |
+| Display leading | .95 |
+| Body size / leading | 18px / 1.65 |
+| Label tracking | .14em |
+| Features | "tnum" 1, "kern" 1 |
+
+## Motion system
+
+| Token | Value |
+| --- | --- |
+| Enter | 350ms · cubic-bezier(.2,.7,.2,1) |
+| Distance / stagger | 10px / 50ms |
+| Page transition | 500ms · count |
+| Ambient | none · 0s |
+| Hover | underline |
+| Note | Information arrives once and stays put; numbers count, nothing loops. |
 
 ## Subfamilies
 

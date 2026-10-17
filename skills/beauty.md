@@ -13,7 +13,7 @@ You are using a design harness, not a blank canvas. The harness owns the typogra
 | --- | --- | --- | --- |
 | `renaissance` | art history, literature, cultural institutions, editorial lessons | EB Garamond | chalky fresco fields, cinnabar, asymmetry, slow |
 | `brutalist` | studios, launches, music, events, manifestos, loud portfolios | Archivo Black | concrete, acid, 3px borders, hard shadows |
-| `papercraft` | biology, children's museums, crafts, community, stationery | Fraunces Soft | cut paper, layered sheets, tape, warm |
+| `papercraft` | biology, children's museums, crafts, community, stationery | Fraunces | cut paper, layered sheets, tape, warm |
 | `artdeco` | architecture, jazz, timelines, luxury, city histories | Poiret One | black lacquer, champagne lines, sunburst, vertical |
 | `isotype` | data, economics, civics, public health, maths | Jost | pictograms, counting grid, Vienna, signal red |
 | `opart` | perception, geometry, physics, experimental education | Archivo Black | moiré, high contrast, optical movement |
@@ -33,6 +33,15 @@ Do not mix styles. Do not invent a twelfth one.
 Call `beauty_list_styles`. Then call `beauty_get_style` for the chosen slug and read the **Hard tokens**, **Typography**, **Colour**, **Layout** and **Never** sections.
 
 If you skip this step you will guess a font or a hex colour, and the page will look generic.
+
+## Typography and motion tokens
+
+`beauty_get_style` also returns `typeSystem` and `motionSystem`. Use them instead of inventing sizes or durations.
+
+- `typeSystem`: display case, tracking, leading, body size, label tracking, OpenType features. Do not add a font.
+- `motionSystem`: enter duration/distance/stagger/easing, ambient, hover, page transition. Choose one ambient move, never three.
+- `prefers-reduced-motion` must show the final state; no essential information may depend on an animation.
+- For teaching pages, body text is at least 18px and labels at least 11px. A projector is not a phone.
 
 ### 2. Write the brief
 

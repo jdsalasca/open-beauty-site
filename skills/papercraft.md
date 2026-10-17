@@ -88,17 +88,39 @@ Cream, kraft and scissors. Layered paper shapes, soft shadows, tape and a gentle
 - No rounded sans display, no hard shadows, no dark backgrounds.
 - No serif-with-hairlines (DM Serif) and no rounded sans (Fredoka). Both read as stock.
 
+## Type system
+
+| Token | Value |
+| --- | --- |
+| Display case | none |
+| Display tracking | .005em |
+| Display leading | .94 |
+| Body size / leading | 18px / 1.65 |
+| Label tracking | .18em |
+| Features | "liga" 1, "kern" 1 |
+
+## Motion system
+
+| Token | Value |
+| --- | --- |
+| Enter | 480ms · cubic-bezier(.22,.9,.24,1) |
+| Distance / stagger | 22px / 90ms |
+| Page transition | 800ms · settle |
+| Ambient | float · 8s |
+| Hover | lift |
+| Note | Paper settles: shadow arrives 180ms after the sheet. |
+
 ## Subfamilies
 
 | Slug | Name | Composition | Accent | What changes |
 | --- | --- | --- | --- |
 | `picnic` | Picnic | sala | `accent2` | Sage tablecloth, terracotta card, butter tape. |
-| `carnival` | Carnival | gabinete | `accent` | Terracotta lead, sky secondary, confetti kept small. |
-| `museum` | Museum | cartel | `accent3` | Sky-blue label, paper white, plum only in the seal. |
+| `carnival` | Carnival | cartel | `accent` | Terracotta lead, sky secondary, confetti kept small. |
+| `museum` | Museum | gabinete | `accent3` | Sky-blue label, paper white, plum only in the seal. |
 
 ## Signature moves
 
-- Fraunces Soft display with Nunito Sans body
+- Fraunces display with Nunito Sans body
 - Cut-paper radii: 30px 12px 28px 14px
 - Layered paper sheets behind each card
 - Washi tape with torn ends and a 6–8° tilt

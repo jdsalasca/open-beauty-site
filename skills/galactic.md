@@ -71,9 +71,9 @@ Deep-space navy, chrome ivory and one slow planet. Michroma, orbital rings and t
 
 ## Copy voice
 
-- Voice: precise, curious, never jokey. Explain the subject, not the studio.
-- Headline: 2–6 words. One word may carry the accent colour.
-- Body: one idea per paragraph, concrete nouns, no filler.
+- Voice: a planetarium note or a memory of a sound. Intimate, not cosmic gibberish; chrome one word at most.
+- Headline: a human-scale image, 2–6 words. The universe is the room, not the subject.
+- Body: one remembered detail, one measured fact. Leave space for the audio to speak.
 
 ## Never
 
@@ -85,6 +85,28 @@ Deep-space navy, chrome ivory and one slow planet. Michroma, orbital rings and t
 - No neon rainbow.
 - No autoplay audio.
 - No sci-fi logos or fake alien alphabets.
+
+## Type system
+
+| Token | Value |
+| --- | --- |
+| Display case | uppercase |
+| Display tracking | .1em |
+| Display leading | 1.02 |
+| Body size / leading | 18px / 1.65 |
+| Label tracking | .24em |
+| Features | "kern" 1 |
+
+## Motion system
+
+| Token | Value |
+| --- | --- |
+| Enter | 800ms · cubic-bezier(.22,.61,.36,1) |
+| Distance / stagger | 14px / 80ms |
+| Page transition | 1100ms · orbit |
+| Ambient | orbit · 48s |
+| Hover | glow |
+| Note | Orbits and starlight move; the reading layer stays anchored. |
 
 ## Subfamilies
 

@@ -11,6 +11,7 @@ import {
   vaporwave,
 } from './showcase-presets.js';
 import { SUBFAMILIES } from './subfamilies.js';
+import { MOTION_SYSTEMS, TYPE_SYSTEMS } from './design-language.js';
 
 const renaissance: StylePreset = {
   slug: 'renaissance',
@@ -226,7 +227,7 @@ const papercraft: StylePreset = {
     shadowPattern: '0\\s+22px\\s+40px',
   },
   signature: [
-    'Fraunces Soft display with Nunito Sans body',
+    'Fraunces display with Nunito Sans body',
     'Cut-paper radii: 30px 12px 28px 14px',
     'Layered paper sheets behind each card',
     'Washi tape with torn ends and a 6–8° tilt',
@@ -296,8 +297,10 @@ const COMPOSITIONS = ['sala', 'gabinete', 'cartel'] as const;
 for (const slug of Object.keys(presets) as StyleSlug[]) {
   presets[slug].subfamilies = SUBFAMILIES[slug].map((subfamily, index) => ({
     ...subfamily,
-    composition: COMPOSITIONS[index % COMPOSITIONS.length],
+    composition: subfamily.composition ?? COMPOSITIONS[index % COMPOSITIONS.length],
   }));
+  presets[slug].typeSystem = TYPE_SYSTEMS[slug];
+  presets[slug].motionSystem = MOTION_SYSTEMS[slug];
 }
 
 export const styleSlugs = Object.keys(presets) as StyleSlug[];

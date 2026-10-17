@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ronda 2026 — 12 estilos con Luna 6 Max</title>
+<meta name="description" content="Doce páginas creadas por Luna 6 Max vía MCP, una por estilo, todas A/100 + vision 4/4.">
+<style>
+  :root{--bg:#0b0b0c;--surface:#141416;--ink:#f4ebd9;--muted:#a8a49a;--gold:#c8a45c;--line:#2a2a2d}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,'Times New Roman',serif;line-height:1.5}
+  a{color:inherit;text-decoration:none}
+  .wrap{width:min(1180px,92vw);margin:0 auto;padding:34px 0 70px}
+  header{display:flex;justify-content:space-between;gap:20px;align-items:baseline;border-bottom:1px solid var(--gold);padding-bottom:18px;margin-bottom:48px}
+  .brand{font:600 12px/1.2 ui-monospace,'Courier New',monospace;letter-spacing:.18em;text-transform:uppercase}
+  .brand span{color:var(--gold)}
+  header p{margin:0;color:var(--muted);font:11px/1.4 ui-monospace,'Courier New',monospace;letter-spacing:.08em;text-transform:uppercase}
+  .intro{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:end;margin-bottom:52px}
+  h1{font-size:clamp(50px,7vw,96px);line-height:.9;letter-spacing:-.03em;font-weight:400;margin:0;max-width:10ch}
+  h1 em{color:var(--gold);font-style:italic}
+  .intro p{margin:0;color:var(--muted);max-width:44ch;font-size:17px}
+  .stats{display:flex;gap:26px;margin-top:26px;font:10px/1.4 ui-monospace,'Courier New',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .stats strong{display:block;color:var(--ink);font:400 28px/1 Georgia,serif;letter-spacing:0;margin-bottom:4px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .card{border:1px solid var(--line);padding:20px 18px 18px;min-height:190px;display:flex;flex-direction:column;justify-content:space-between;transition:border-color .25s,transform .25s,background .25s}
+  .card:hover{border-color:var(--gold);background:var(--surface);transform:translateY(-2px)}
+  .card .num{font:10px/1 ui-monospace,'Courier New',monospace;letter-spacing:.16em;color:var(--gold)}
+  .card h2{font-size:24px;font-weight:400;line-height:1.1;margin:18px 0 10px}
+  .card .sub{font:10px/1.4 ui-monospace,'Courier New',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .card .score{margin-top:18px;padding-top:12px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font:10px/1.4 ui-monospace,'Courier New',monospace;letter-spacing:.08em;color:var(--muted)}
+  .card .score b{color:var(--ink);font-weight:400}
+  footer{margin-top:54px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:18px;color:var(--muted);font:10px/1.5 ui-monospace,'Courier New',monospace;letter-spacing:.08em;text-transform:uppercase}
+  @media(max-width:850px){.intro{grid-template-columns:1fr;gap:26px}.grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:540px){.grid{grid-template-columns:1fr}header{display:block}header p{margin-top:12px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">open<span>/</span>beauty <span>·</span> agent archive</div>
+    <p>Codex CLI · gpt-6-luna · effort max</p>
+  </header>
+
+  <section class="intro">
+    <div>
+      <h1>Doce estilos, <em>una</em> mesa.</h1>
+      <div class="stats">
+        <div><strong>12/12</strong>A / 100</div>
+        <div><strong>4/4</strong>vision</div>
+        <div><strong>481k</strong>tokens</div>
+      </div>
+    </div>
+    <p>Doce corridas separadas, una por estilo, con briefs distintos en español. Luna llamó al MCP, eligió una subfamilia y validó cada página; no escribió HTML. La ronda 2026 está documentada en <a href="https://github.com/jdsalasca/open-beauty-site/blob/main/docs/STYLE-REVIEW-2026.md" style="color:var(--gold)">STYLE-REVIEW-2026</a>.</p>
+  </section>
+
+  <main class="grid">
+    <a class="card" href="renaissance.html"><span class="num">01</span><h2>Renaissance</h2><span class="sub">fresco · EB Garamond</span><span class="score"><span>craft <b>A 100</b></span><span>vision <b>4/4</b></span></span></a>
+    <a class="card" href="brutalist.html"><span class="num">02</span><h2>Brutalist</h2><span class="sub">signal · Archivo Black</span><span class="score"><span>craft <b>A 100</b></span><span>vision <b>4/4</b></span></span></a>
+    <a class="card" href="papercraft.html"><span class="num">03</span><h2>Paper Craft</h2><span class="sub">picnic · Fraunces</span><span class="score"><span>craft <b>A 100</b></span><span>vision <b>4/4</b></span></span></a>
+    <a class="card" href="artdeco.html"><span class="num">04</span><h2>Art Deco</h2><span class="sub">cinema · Poiret One</span><span class="score"><span>craft <b>A 100</b></span><span>vision <b>4/4</b></span></span></a>
+    <a class="card" href="isotype.html"><span class="num">05</span><h2>Isotype</h2><span class="sub">vienna · Jost</span><span class="score"><span>craft <b>A 100</b></span><span>vision <b>4/4</b></span></span></a>
+    <a class="card" href="opart.html"><span class="num">06</span><h2>Op Art</h2><span class="sub">interference · Archivo Black</span><span class="score"><span>craft <b>A 100</b></span><span>vision <b>4/4</b></span></span></a>
+    <a class="card" href="ukiyoe.html"><span class="num">07</span><h2>Ukiyo-e</h2><span class="sub">prussian · Shippori Mincho</span><span class="score"><span>craft <b>A 100</b></span><span>vision <b>4/4</b></span></span></a>
+    <a class="card" href="bestiary.html"><span class="num">08</span><h2>Bestiary</h2><span class="sub">lapis · UnifrakturMaguntia</span><span class="score"><span>craft <b>A 100</b></span><span>vision <b>4/4</b></span></span></a>
+    <a class="card" href="psychedelic.html"><span class="num">09</span><h2>Psychedelic</h2><span class="sub">magenta · Bungee Shade</span><span class="score"><span>craft <b>A 100</b></span><span>vision <b>4/4</b></span></span></a>
+    <a class="card" href="memphis.html"><span class="num">10</span><h2>Memphis</h2><span class="sub">cobalt · Bricolage Grotesque</span><span class="score"><span>craft <b>A 100</b></span><span>vision <b>4/4</b></span></span></a>
+    <a class="card" href="vaporwave.html"><span class="num">11</span><h2>Vaporwave / Y2K</h2><span class="sub">chrome · Press Start 2P</span><span class="score"><span>craft <b>A 100</b></span><span>vision <b>4/4</b></span></span></a>
+    <a class="card" href="galactic.html"><span class="num">12</span><h2>Galactic Futurism</h2><span class="sub">orbital · Michroma</span><span class="score"><span>craft <b>A 100</b></span><span>vision <b>4/4</b></span></span></a>
+  </main>
+
+  <footer>
+    <span>open-beauty-site · round 2026</span>
+    <a href="../../index.html" style="color:var(--gold)">Volver a la galería</a>
+  </footer>
+</div>
+</body>
+</html>

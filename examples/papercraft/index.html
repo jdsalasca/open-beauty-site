@@ -147,10 +147,41 @@ h1 em{font-style:normal;color:var(--terracotta);display:inline-block;transform:r
 }
 
 
+:root{--type-display-case:none;--type-display-tracking:.005em;--type-display-leading:.94;--type-body-size:18px;--type-body-leading:1.65;--type-label-tracking:.18em;--type-label-case:uppercase;--motion-enter:480ms;--motion-distance:22px;--motion-stagger:90ms;--motion-ease:cubic-bezier(.22,.9,.24,1);--motion-page:800ms}
+html{overflow-x:hidden}
+html body,html body[class]{font-size:var(--type-body-size);line-height:var(--type-body-leading);font-kerning:normal;font-optical-sizing:auto;text-rendering:optimizeLegibility;overflow-x:hidden}
+html body :where(p,li),html body[class] :where(p,li){font-size:inherit}
+:where(h1,h2,h3,.display){line-height:var(--type-display-leading);letter-spacing:var(--type-display-tracking);text-transform:var(--type-display-case);text-wrap:balance;font-feature-settings:"liga" 1, "kern" 1}
+:where(p,li,blockquote){text-wrap:pretty;font-feature-settings:"liga" 1, "kern" 1}
+:where(.eyebrow,.kicker,.label,.meta,.micro,.tag){letter-spacing:var(--type-label-tracking);text-transform:var(--type-label-case)}
+html body .card p,html body[class] .card p,html body .aside p,html body[class] .aside p,html body .section-head p,html body[class] .section-head p{font-size:16px;line-height:1.6}
+html body .quote cite,html body[class] .quote cite{font-size:11px}
+html body .top nav,html body[class] .top nav,html body .eyebrow,html body[class] .eyebrow,html body .kicker,html body[class] .kicker,html body .link,html body[class] .link,html body .card-link,html body[class] .card-link{font-size:11px}
+html body .hero-note,html body[class] .hero-note{font-size:10px}
+.beauty-scroll{position:fixed;top:0;left:0;z-index:9999;width:100%;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:0 50%;pointer-events:none;opacity:.9}
+.motion-toggle{position:fixed;right:12px;bottom:12px;z-index:9998;border:0;background:var(--bg);color:var(--muted);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;font:10px/1 ui-monospace,'Courier New',monospace;letter-spacing:.1em;text-transform:uppercase;padding:8px 10px;opacity:.55;cursor:pointer;border-radius:0}
+.motion-toggle:hover,.motion-toggle:focus-visible{opacity:1;color:var(--ink);text-decoration-color:var(--accent)}
+body.motion-paused *,body.motion-paused *::before,body.motion-paused *::after{animation-play-state:paused!important;transition:none!important}
+a{text-underline-offset:.18em;text-decoration-thickness:1px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+::selection{background:var(--accent);color:var(--ground,var(--bg))}
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+  body{animation:beauty-page-in var(--motion-page) var(--motion-ease) both}
+  .js .reveal{transition-duration:var(--motion-enter);transition-timing-function:var(--motion-ease);transition-delay:calc(var(--i,0) * var(--motion-stagger))}
+  @keyframes beauty-page-in{from{opacity:0}to{opacity:1}}
+}
+@media (max-width:560px){html body .hero h1,html body[class] .hero h1{font-size:clamp(40px,11.5vw,56px)!important;letter-spacing:var(--type-display-tracking)}html body .style-vaporwave .hero h1,html body[class] .style-vaporwave .hero h1{font-size:clamp(24px,6.8vw,40px)!important}}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  body{animation:none!important}
+  .js .reveal{transition:none!important;transform:none!important;opacity:1!important}
+}
+
 @media print{
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .reveal,.js .reveal{opacity:1!important;transform:none!important;transition:none!important;animation:none!important}
-  .page-frame,.grain{display:none!important}
+  .page-frame,.grain,.beauty-scroll,.motion-toggle{display:none!important}
   .site-head,.topbar{position:static!important}
   .ticker-track{animation:none!important}
 }
@@ -338,6 +369,8 @@ h1 em{font-style:normal;color:var(--terracotta);display:inline-block;transform:r
   <span>Taller de papel y pantalla · MMXXVI</span>
   <span>© 2026 — Diseñado con open-beauty-site</span>
 </footer>
+<div class="beauty-scroll" aria-hidden="true"></div>
+<button class="motion-toggle" type="button" aria-pressed="false">Pausar movimiento</button>
 <script>
 
 (() => {
@@ -357,6 +390,9 @@ h1 em{font-style:normal;color:var(--terracotta);display:inline-block;transform:r
   nodes.forEach((node) => io.observe(node));
 })();
 
+</script>
+<script>
+(() => { const bar = document.querySelector('.beauty-scroll'); const toggle = document.querySelector('.motion-toggle'); if (toggle) { toggle.addEventListener('click', () => { const paused = document.body.classList.toggle('motion-paused'); toggle.setAttribute('aria-pressed', String(paused)); toggle.textContent = paused ? (document.documentElement.lang === 'es' ? 'Reanudar movimiento' : 'Resume motion') : (document.documentElement.lang === 'es' ? 'Pausar movimiento' : 'Pause motion'); }); } if (!bar) return; const update = () => { const max = document.documentElement.scrollHeight - innerHeight; bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, scrollY / max) : 0) + ')'; }; addEventListener('scroll', update, { passive: true }); addEventListener('resize', update); update(); })();
 </script>
 </body>
 </html>

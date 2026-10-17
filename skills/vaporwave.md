@@ -71,9 +71,9 @@ Violet dusk, chrome type and a perspective grid. A desktop from 1999, half-remem
 
 ## Copy voice
 
-- Voice: precise, curious, never jokey. Explain the subject, not the studio.
-- Headline: 2–6 words. One word may carry the accent colour.
-- Body: one idea per paragraph, concrete nouns, no filler.
+- Voice: a user manual for an obsolete interface: artifact, year, gesture. Nostalgia needs a specific object.
+- Headline: 2–5 words, one chrome word at most. No generic "Y2K" mood.
+- Body: what the interface promised, what it actually did, and who used it.
 
 ## Never
 
@@ -85,6 +85,28 @@ Violet dusk, chrome type and a perspective grid. A desktop from 1999, half-remem
 - No modern SaaS cards.
 - No illegible pixel body copy.
 - No flashing.
+
+## Type system
+
+| Token | Value |
+| --- | --- |
+| Display case | uppercase |
+| Display tracking | .08em |
+| Display leading | .95 |
+| Body size / leading | 18px / 1.7 |
+| Label tracking | .18em |
+| Features | "kern" 1 |
+
+## Motion system
+
+| Token | Value |
+| --- | --- |
+| Enter | 350ms · cubic-bezier(.2,.8,.2,1) |
+| Distance / stagger | 8px / 50ms |
+| Page transition | 600ms · glitch |
+| Ambient | grid · 16s |
+| Hover | glow |
+| Note | The desktop breathes; glitch is a short event, never a loop. |
 
 ## Subfamilies
 

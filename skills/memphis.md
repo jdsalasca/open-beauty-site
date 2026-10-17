@@ -71,9 +71,9 @@ Milan, 1981: squiggles, terrazzo, cobalt and pink. Postmodern play with a straig
 
 ## Copy voice
 
-- Voice: precise, curious, never jokey. Explain the subject, not the studio.
-- Headline: 2–6 words. One word may carry the accent colour.
-- Body: one idea per paragraph, concrete nouns, no filler.
+- Voice: dry wit under a playful title. The joke is in the composition, not in the copy.
+- Headline: a concrete object or action, 2–5 words. Resist the easy punchline.
+- Body: a precise observation in one or two sentences; keep one straight face.
 
 ## Never
 
@@ -85,6 +85,28 @@ Milan, 1981: squiggles, terrazzo, cobalt and pink. Postmodern play with a straig
 - No rounded sans-only look without a keyline.
 - No more than five accents.
 - No aligning everything.
+
+## Type system
+
+| Token | Value |
+| --- | --- |
+| Display case | none |
+| Display tracking | -.01em |
+| Display leading | .9 |
+| Body size / leading | 18px / 1.55 |
+| Label tracking | .16em |
+| Features | "kern" 1 |
+
+## Motion system
+
+| Token | Value |
+| --- | --- |
+| Enter | 300ms · cubic-bezier(.2,.8,.2,1) |
+| Distance / stagger | 16px / 45ms |
+| Page transition | 500ms · scatter |
+| Ambient | none · 0s |
+| Hover | lift |
+| Note | Shapes land with a hard stop; one shuffle per visit is enough. |
 
 ## Subfamilies
 

@@ -52,6 +52,32 @@ export interface DeckBrief extends Brief {
   slides?: DeckSlide[];
 }
 
+
+export interface TypeSystem {
+  displayCase: 'none' | 'uppercase' | 'lowercase' | 'capitalize';
+  displayTracking: string;
+  displayLeading: string;
+  bodySize: string;
+  bodyLeading: string;
+  labelTracking: string;
+  labelCase: 'uppercase' | 'none';
+  features: string;
+  wrap: 'balance' | 'pretty';
+}
+
+export interface MotionSystem {
+  enter: string;
+  distance: string;
+  stagger: string;
+  easing: string;
+  page: string;
+  reveal: 'rise' | 'cut' | 'settle' | 'curtain' | 'count' | 'glitch' | 'swirl' | 'scatter' | 'orbit' | 'illuminate';
+  ambient: 'draw' | 'marquee' | 'float' | 'sun' | 'none' | 'moire' | 'drift' | 'blink' | 'grid' | 'orbit';
+  ambientDuration: string;
+  hover: 'lift' | 'shift' | 'underline' | 'glow' | 'none';
+  note: string;
+}
+
 export interface StyleSubfamily {
   slug: string;
   name: string;
@@ -159,6 +185,10 @@ export interface StylePreset {
   cssMarkers: string[];
   /** Curated tonal families inside the style. Do not add new hex values. */
   subfamilies?: StyleSubfamily[];
+  /** Typography tokens consumed by the shared shell and the style guide. */
+  typeSystem?: TypeSystem;
+  /** Motion tokens consumed by the shared shell and the style guide. */
+  motionSystem?: MotionSystem;
 }
 
 export interface ValidationIssue {

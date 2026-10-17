@@ -87,13 +87,35 @@ A loud poster that happens to be a website. Visible skeleton, 3px borders, hard 
 - No serif, no pastel, no centered-everything layouts.
 - No more than one acid block and one red stamp per screen.
 
+## Type system
+
+| Token | Value |
+| --- | --- |
+| Display case | uppercase |
+| Display tracking | -.035em |
+| Display leading | .84 |
+| Body size / leading | 18px / 1.55 |
+| Label tracking | .12em |
+| Features | "kern" 1 |
+
+## Motion system
+
+| Token | Value |
+| --- | --- |
+| Enter | 250ms · cubic-bezier(.2,.8,.2,1) |
+| Distance / stagger | 20px / 60ms |
+| Page transition | 250ms · cut |
+| Ambient | marquee · 22s |
+| Hover | shift |
+| Note | Mechanical, hard stops; the layout moves like a sign, not a spring. |
+
 ## Subfamilies
 
 | Slug | Name | Composition | Accent | What changes |
 | --- | --- | --- | --- |
 | `concrete` | Concrete | sala | `accent` | Paper, ink and acid: the original control room. |
-| `signal` | Signal | gabinete | `accent2` | Red warning stripe on a bone field. Louder, not busier. |
-| `terminal` | Terminal | cartel | `accent3` | Blue telemetry and monospace; a control room after hours. |
+| `signal` | Signal | cartel | `accent2` | Red warning stripe on a bone field. Louder, not busier. |
+| `terminal` | Terminal | gabinete | `accent3` | Blue telemetry and monospace; a control room after hours. |
 
 ## Signature moves
 

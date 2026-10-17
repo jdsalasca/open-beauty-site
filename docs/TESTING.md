@@ -224,3 +224,26 @@ Result: **A · 100/100 · vision 4/4**, 8 slides (6 content + cover + closing), 
 
 The editorial auditor's P0 list drove the deck audit, the per-style atmosphere fix, `inert`/`aria-live`, print styles and the `sala | gabinete | cartel` composition modes. Figures and per-style motion profiles are still pending.
 
+## Ronda 2026: 12 estilos con Luna 6 Max
+
+Doce corridas independientes, una por estilo, con un brief distinto en español y el MCP real. Cada una llamó `beauty_get_skill`, `beauty_get_style`, `beauty_create_page` y `beauty_validate`; ninguna escribió HTML. Salidas públicas en `examples/agents/round-2026/<style>.html` (copia de las salidas de `qa/luna-12/`).
+
+| Estilo | Subfamilia | Craft | Vision | Tokens |
+| --- | --- | --- | --- | ---: |
+| Renaissance | `fresco` | A · 100 | 4/4 | 42.936 |
+| Brutalist | `signal` | A · 100 | 4/4 | 45.076 |
+| Paper Craft | `picnic` | A · 100 | 4/4 | 32.306 |
+| Art Deco | `cinema` | A · 100 | 4/4 | 38.260 |
+| Isotype | `vienna` | A · 100 | 4/4 | 49.795 |
+| Op Art | `interference` | A · 100 | 4/4 | 36.090 |
+| Ukiyo-e | `prussian` | A · 100 | 4/4 | 43.167 |
+| Bestiary | `lapis` | A · 100 | 4/4 | 21.296 |
+| Psychedelic | `magenta` | A · 100 | 4/4 | 43.346 |
+| Memphis | `cobalt` | A · 100 | 4/4 | 46.631 |
+| Vaporwave | `chrome` | A · 100 | 4/4 | 53.833 |
+| Galactic | `orbital` | A · 100 | 4/4 | 28.492 |
+
+Total: **12/12 A/100 + vision 4/4**, **481.228 tokens**. La matriz también se validó con `node dist/cli.js validate` después de generar los doce archivos. El informe de arte/editorial está en [`docs/STYLE-REVIEW-2026.md`](STYLE-REVIEW-2026.md).
+
+La lección de la ronda: el modelo no necesita saber CSS; necesita un brief concreto, un estilo y una validación que le devuelva el fix. La varianza de tokens (21k–54k) muestra que el brief y la longitud de la página importan más que el estilo.
+

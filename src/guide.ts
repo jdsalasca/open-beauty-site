@@ -73,6 +73,28 @@ ${bullets(preset.guidance.copy)}
 
 ${bullets(preset.guidance.dont)}
 
+## Type system
+
+| Token | Value |
+| --- | --- |
+| Display case | ${preset.typeSystem?.displayCase ?? 'none'} |
+| Display tracking | ${preset.typeSystem?.displayTracking ?? '0'} |
+| Display leading | ${preset.typeSystem?.displayLeading ?? '1'} |
+| Body size / leading | ${preset.typeSystem?.bodySize ?? '16px'} / ${preset.typeSystem?.bodyLeading ?? '1.6'} |
+| Label tracking | ${preset.typeSystem?.labelTracking ?? '.12em'} |
+| Features | ${preset.typeSystem?.features ?? 'normal'} |
+
+## Motion system
+
+| Token | Value |
+| --- | --- |
+| Enter | ${preset.motionSystem?.enter ?? '.6s'} · ${preset.motionSystem?.easing ?? 'ease'} |
+| Distance / stagger | ${preset.motionSystem?.distance ?? '16px'} / ${preset.motionSystem?.stagger ?? '0ms'} |
+| Page transition | ${preset.motionSystem?.page ?? '.6s'} · ${preset.motionSystem?.reveal ?? 'rise'} |
+| Ambient | ${preset.motionSystem?.ambient ?? 'none'} · ${preset.motionSystem?.ambientDuration ?? '0s'} |
+| Hover | ${preset.motionSystem?.hover ?? 'none'} |
+| Note | ${preset.motionSystem?.note ?? ''} |
+
 ## Subfamilies
 
 | Slug | Name | Composition | Accent | What changes |
@@ -89,7 +111,8 @@ export function stylesOverview(): string {
   const lines = styleSlugs.map((slug) => {
     const preset = presets[slug];
     return `## ${preset.name} (\`${slug}\`)\n${preset.epithet}. ${preset.description}\n- Display: ${preset.fonts.display}\n- Use for: ${preset.bestFor.join(', ')}\n- Avoid for: ${preset.avoid.join(', ')}
-- Subfamilies: ${(preset.subfamilies ?? []).map((sub) => `\`${sub.slug}\` (${sub.composition ?? 'sala'})`).join(', ')}`;
+- Subfamilies: ${(preset.subfamilies ?? []).map((sub) => `\`${sub.slug}\` (${sub.composition ?? 'sala'})`).join(', ')}
+- Motion: ${preset.motionSystem?.enter ?? '.6s'} ${preset.motionSystem?.easing ?? 'ease'} · ambient ${preset.motionSystem?.ambient ?? 'none'}`;
   });
   return `# open-beauty-site styles\n\n${lines.join('\n\n')}\n\nNext: call beauty_get_style with one slug.`;
 }
