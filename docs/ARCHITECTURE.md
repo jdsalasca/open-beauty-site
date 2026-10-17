@@ -38,7 +38,7 @@ Three complete systems. Each one includes:
 
 One renderer per style, each with its own CSS and markup. They share only a shell (`src/page/common.ts`): escaping, locale labels, fonts, favicon, reveal script and print rules.
 
-Why not one generic template with token substitution? Because that produces three recolours of the same page. The styles differ in structure, not just colour:
+Why not one generic template with token substitution? Because that produces recolours of the same page. The styles differ in structure, not just colour:
 
 - Renaissance is a centred folio with a fixed double hairline, an arch plate, a drop cap and roman numerals.
 - Brutalist is a split poster with a visible grid, 3px borders, hard shadows, a marquee and an oversized numeral.
@@ -76,7 +76,7 @@ Each style has its own frame function: gold arch and sun (Renaissance), black pa
 
 ### 6. MCP server (`src/mcp/server.ts`)
 
-`McpServer` over stdio. Seven tools, five resources, and an `instructions` string that repeats the workflow. The tools call the same `generate.ts` functions as the CLI, so the output is identical.
+`McpServer` over stdio. Seven tools, thirteen resources, and an `instructions` string that repeats the workflow. The tools call the same `generate.ts` functions as the CLI, so the output is identical.
 
 ### 7. CLI (`src/cli.ts`)
 
@@ -106,7 +106,7 @@ To add a style:
 5. Add tests; the validator must accept the generated page at A.
 6. Run `pnpm docs` to regenerate the style skill and guide.
 
-To add a component, add it to all three renderers with the same content contract; do not add a style-specific option to the MCP tool unless all styles can honour it.
+To add a component, add it to all renderers with the same content contract; do not add a style-specific option to the MCP tool unless all styles can honour it.
 
 ## Known limits
 

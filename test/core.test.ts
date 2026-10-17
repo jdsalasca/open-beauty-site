@@ -68,5 +68,5 @@ test('the validator catches generic AI design', () => {
 });
 
 test('the validator rejects unknown styles', () => {
-  assert.throws(() => validateHtml('<html></html>', 'artdeco' as never), /Unknown style/);
+  assert.throws(() => validateHtml('<html></html>', 'editorial' as never), /Unknown style/);
 });

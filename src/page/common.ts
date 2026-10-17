@@ -200,7 +200,7 @@ export const REVEAL_SCRIPT = `
 })();
 `;
 
-/** Small inline arrow used by all three styles. */
+/** Small inline arrow used by all styles. */
 export function arrowSvg(size = 18): string {
   return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg>`;
 }

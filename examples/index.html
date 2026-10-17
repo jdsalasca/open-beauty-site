@@ -40,6 +40,15 @@
   .links{display:flex;flex-wrap:wrap;gap:12px;margin-top:auto;padding-top:12px;border-top:3px solid var(--ink);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
   .links a{border-bottom:3px solid var(--ink);padding-bottom:2px}
   .links a:hover{background:var(--acid)}
+  nav a{font-size:10px;letter-spacing:.12em;text-transform:uppercase;border-bottom:3px solid transparent;padding-bottom:2px}
+  nav a:hover{border-color:var(--ink)}
+  .lab{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:end;border:3px solid var(--ink);background:var(--acid);padding:20px 22px;margin:28px 0 8px}
+  .lab .tag{display:inline-block;background:var(--ink);color:var(--acid);padding:3px 7px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+  .lab h2{font-family:'Archivo Black',sans-serif;font-size:clamp(28px,4vw,52px);line-height:.92;letter-spacing:-.04em;margin:0;text-transform:uppercase}
+  .lab p{margin:8px 0 0;font-size:13px;line-height:1.5;max-width:540px}
+  .lab-links{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+  .lab-links a{background:var(--paper);border:3px solid var(--ink);padding:9px 12px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;box-shadow:4px 4px 0 var(--ink)}
+  .lab-links a:hover{background:var(--ink);color:var(--acid)}
   .agent .tag{background:var(--red)}
   .agent .score{font-family:'Archivo Black',sans-serif;font-size:18px;color:var(--red);letter-spacing:-.02em}
   footer{border-top:3px solid var(--ink);background:var(--ink);color:var(--paper);padding:20px 28px;display:flex;justify-content:space-between;gap:18px;font-size:9px;letter-spacing:.12em;text-transform:uppercase}
@@ -53,16 +62,29 @@
   <div class="meta">INDEX · 2026</div>
   <nav class="nav">
     <a href="#systems">Sistemas</a>
-    <a href="#education">Lecciones</a>
+    <a href="showcase/index.html">8 estilos</a>
+    <a href="compare.html">Dos manos</a>
     <a href="#agents">Agentes</a>
     <a href="https://github.com/jdsalasca/open-beauty-site">GitHub ↗</a>
   </nav>
 </header>
 
 <main>
-  <p class="kicker">Diseño determinista · tres sistemas · cero plantillas genéricas</p>
+  <p class="kicker">Diseño determinista · once sistemas · cero plantillas genéricas</p>
   <h1>Páginas hechas por <mark>modelos</mark> que no saben diseñar.</h1>
   <p class="lede">Estos ocho artefactos fueron generados por agentes que llamaron el harness. El sistema puso la tipografía, la paleta, los bordes, el movimiento y la validación. El modelo solo escribió el contenido. Ninguno tiene HTML escrito a mano.</p>
+
+  <div class="lab">
+    <div>
+      <span class="tag">Nuevo · 8 direcciones</span>
+      <h2>Ocho sistemas nuevos.</h2>
+      <p>Art Deco · Isotype · Op Art · Ukiyo-e · Bestiario · Psicodelia · Memphis · Vaporwave. SVG original, tipografía exacta, interacción y GIF. Todos validan A/100 y vision 4/4.</p>
+    </div>
+    <div class="lab-links">
+      <a href="showcase/index.html">Recorrer los 8 estilos →</a>
+      <a href="compare.html">Mi versión vs Luna 6 Max →</a>
+    </div>
+  </div>
 
   <div class="section-head" id="systems">
     <h2>Los tres sistemas</h2>

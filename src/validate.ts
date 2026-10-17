@@ -1,5 +1,5 @@
 import type { StylePreset, StyleSlug, ValidationIssue, ValidationResult, VisionCheck, VisionReport } from './types.js';
-import { getStyle, isStyleSlug } from './styles/presets.js';
+import { getStyle, isStyleSlug, styleSlugs } from './styles/presets.js';
 
 const HEX_RE = /#[0-9a-fA-F]{3,8}\b/g;
 const FONT_RE = /font-family\s*:\s*([^;}{]+)/gi;
@@ -52,7 +52,7 @@ export function contrastRatio(a: string, b: string): number {
   return (light + 0.05) / (dark + 0.05);
 }
 
-const CONTRAST_PAIRS: Record<StyleSlug, Array<[keyof StylePreset['palette'], keyof StylePreset['palette'], string]>> = {
+const CONTRAST_PAIRS: Partial<Record<StyleSlug, Array<[keyof StylePreset['palette'], keyof StylePreset['palette'], string]>>> = {
   renaissance: [
     ['ink', 'bg', 'body text'],
     ['muted', 'bg', 'secondary text'],
@@ -209,6 +209,7 @@ function issuesForShadows(css: string, preset: StylePreset): ValidationIssue[] {
   }
 
   // Paper craft: at least one soft shadow, no hard 0-blur shadows.
+  if (preset.slug !== 'papercraft') return issues;
   if (declarations.length === 0) {
     issues.push({
       severity: 'warn',
@@ -291,7 +292,10 @@ function issuesForContrast(preset: StylePreset): ValidationIssue[] {
         ['ink', 'accent', 'text on acid'],
         ['bg', 'ink', 'inverted footer'],
       ] as const)
-    : CONTRAST_PAIRS[preset.slug];
+    : (CONTRAST_PAIRS[preset.slug] ?? [
+        ['ink', 'bg', 'body text'],
+        ['muted', 'bg', 'secondary text'],
+      ]);
 
   const issues: ValidationIssue[] = [];
   for (const [fg, bg, label] of pairs) {
@@ -320,10 +324,23 @@ export function visionReport(css: string, preset: StylePreset): VisionReport {
 
   const gradients = (css.match(/(?<!repeating-)(?:linear|radial)-gradient/gi) ?? []).length;
   const bleed = /100vw|calc\(50%\s*-\s*50vw\)|clip-path|grid-template-columns:[^;]*fr[^;]*fr/i.test(css);
-  const material = ['feTurbulence', 'inset 0', 'clip-path', 'repeating-linear-gradient', 'stroke-dashoffset', '8px 8px 0', 'border:3px'].filter((marker) =>
+  const material = ['feTurbulence', 'inset 0', 'clip-path', 'repeating-linear-gradient', 'stroke-dashoffset', '8px 8px 0', 'border:3px', 'drop-shadow', 'writing-mode', 'columns:'].filter((marker) =>
     css.includes(marker),
   ).length;
-  const gradientBudget = preset.slug === 'brutalist' ? 4 : 0;
+  const gradientBudget =
+    preset.slug === 'brutalist'
+      ? 4
+      : preset.slug === 'psychedelic'
+        ? 8
+        : preset.slug === 'vaporwave'
+          ? 8
+          : preset.slug === 'memphis'
+            ? 4
+            : preset.slug === 'opart'
+              ? 3
+              : preset.slug === 'ukiyoe' || preset.slug === 'artdeco'
+                ? 2
+                : 0;
 
   const checks: VisionCheck[] = [
     {
@@ -357,7 +374,7 @@ export function visionReport(css: string, preset: StylePreset): VisionReport {
 
 export function validateHtml(html: string, style: StyleSlug): ValidationResult {
   if (!isStyleSlug(style)) {
-    throw new Error(`Unknown style "${style}". Use renaissance, brutalist or papercraft.`);
+    throw new Error(`Unknown style "${style}". Use one of: ${styleSlugs.join(', ')}.`);
   }
   const preset = getStyle(style);
   const css = stripComments(styleCss(html));

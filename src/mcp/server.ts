@@ -13,7 +13,19 @@ import { presets, styleSlugs } from '../styles/presets.js';
 import { SKILL_FALLBACK, styleGuideMarkdown, stylesOverview } from '../guide.js';
 import { packageRoot } from '../paths.js';
 
-const styleEnum = z.enum(['renaissance', 'brutalist', 'papercraft']);
+const styleEnum = z.enum([
+  'renaissance',
+  'brutalist',
+  'papercraft',
+  'artdeco',
+  'isotype',
+  'opart',
+  'ukiyoe',
+  'bestiary',
+  'psychedelic',
+  'memphis',
+  'vaporwave',
+]);
 const localeEnum = z.enum(['es', 'en']);
 
 const sectionSchema = z.object({
@@ -107,7 +119,7 @@ QUALITY BAR
       description:
         'Returns the exact fonts, palette, border widths, radii, motion window, layout rules and do/don\'t list. Call this before creating anything.',
       inputSchema: {
-        style: styleEnum.describe('One of renaissance, brutalist or papercraft.'),
+        style: styleEnum.describe('One of the 11 art directions. Call beauty_list_styles for the full list.'),
         format: z.enum(['markdown', 'json']).optional().describe('Markdown for reading, JSON for programmatic use.'),
       },
     },
@@ -258,7 +270,7 @@ QUALITY BAR
     'beauty_examples',
     {
       title: 'List reference output',
-      description: 'Returns the paths of the three example pages and GIFs shipped with the repo.',
+      description: 'Returns the paths of the eleven example pages and GIFs shipped with the repo.',
       inputSchema: {},
     },
     async () => {

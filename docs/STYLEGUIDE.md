@@ -273,3 +273,707 @@ Cream, kraft and scissors. Layered paper shapes, soft shadows, tape and a gentle
 - Washi tape with torn ends and a 6–8° tilt
 - Scalloped or torn band dividers
 
+
+---
+
+# Art Deco — A lacquered machine for looking upward
+
+Black lacquer, champagne lines and a sunburst geometry. Symmetrical, vertical, cinematic: a lobby for a future that never quite arrived.
+
+**Use it for:** architecture, jazz and nightlife, timelines, luxury brands, city histories.
+**Avoid it for:** children, dense data, informal community pages.
+
+## Hard tokens
+
+| Token | Value |
+| --- | --- |
+| Display font | `Poiret One` |
+| Body font | `Josefin Sans` |
+| Mono/label font | `Josefin Sans` |
+| Border widths | 1, 2 px |
+| Border radius | 0–2 px |
+| Motion window | 0.4–1.4 s |
+| Shadow rule | No shadow: depth comes from gold hairlines and nested stepped frames. |
+
+## Palette (exact)
+
+| Role | Hex |
+| --- | --- |
+| bg | `#0E0E10` |
+| surface | `#17171B` |
+| ink | `#F4EBD9` |
+| muted | `#B9C0C4` |
+| accent | `#C8A45C` |
+| accent2 | `#1F5C4A` |
+| accent3 | `#6E1F2B` |
+| accent4 | `#D9A6A0` |
+| deep | `#050506` |
+
+## Typography
+
+- Display: Poiret One 400 at 88–148px, uppercase, letter-spacing .06em, line-height .9. Never bold it.
+- Body: Josefin Sans 300/400 at 16–18px, line-height 1.7. Labels: Josefin Sans 600 at 11px, uppercase, letter-spacing .22em.
+- One champagne italic is allowed for a single word; everything else stays geometric.
+
+## Colour
+
+- Black #0E0E10 is 75% of the page. Champagne #C8A45C is a 1px line, a sun, a numeral; never a large fill.
+- Emerald #1F5C4A and burgundy #6E1F2B are deep accents in small fields. Ivory #F4EBD9 is the only text colour.
+- No pastel gradients. Gold may glow only through opacity, not a soft radial haze.
+
+## Layout
+
+- Symmetry is the point: a centred axis, mirrored steps, a tall hero. Break it once with an off-centre caption.
+- Use nested frames: 1px outer, 8px gap, 1px inner. Corners may step, never round.
+- Cards are vertical panels with a stepped top, not floating rectangles.
+
+## Motion
+
+- A slow 24s sun rotation; 900ms gold line draw; hover lifts a card by 2px and brightens the hairline.
+- Nothing bounces. No spring.
+
+## Imagery
+
+- Original SVG: sunburst, stepped arch, chevrons, fans, a skyscraper silhouette. Hard edges, no photos.
+- Gold lines at 1px; deep green and burgundy only as flat fields.
+
+## Copy voice
+
+- Voice: precise, curious, never jokey. Explain the subject, not the studio.
+- Headline: 2–6 words. One word may carry the accent colour.
+- Body: one idea per paragraph, concrete nouns, no filler.
+
+## Never
+
+- No lorem ipsum.
+- No emoji.
+- No stock photography.
+- No gradients that fake depth unless the style calls for them.
+- No rounded corners.
+- No sans-serif body other than Josefin Sans.
+- No rainbow palette.
+- No centred-everything without one asymmetry.
+
+## Signature moves
+
+- Gold sunburst with stepped rays
+- Symmetrical black-and-champagne frame
+- Vertical chevrons and stepped corners
+- Poiret One spaced caps
+
+
+---
+
+# Isotype — A city explained with pictograms
+
+Vienna, 1925: cream paper, black rules and a red pictogram that counts. Data as a public language, not a dashboard.
+
+**Use it for:** data and economics, civic history, mathematics, public health, explanatory journalism.
+**Avoid it for:** luxury, romance, atmospheric fiction.
+
+## Hard tokens
+
+| Token | Value |
+| --- | --- |
+| Display font | `Jost` |
+| Body font | `IBM Plex Sans` |
+| Mono/label font | `IBM Plex Sans` |
+| Border widths | 1, 2, 3 px |
+| Border radius | 0–2 px |
+| Motion window | 0.3–1.2 s |
+| Shadow rule | No shadow. The grid and the pictograms do the work. |
+
+## Palette (exact)
+
+| Role | Hex |
+| --- | --- |
+| bg | `#F2EBDD` |
+| surface | `#E7DFC9` |
+| ink | `#1C1C1C` |
+| muted | `#6F6A5E` |
+| accent | `#D23B2E` |
+| accent2 | `#2A7F7A` |
+| accent3 | `#D9A441` |
+| accent4 | `#8C8C8C` |
+| deep | `#1C1C1C` |
+
+## Typography
+
+- Display: Jost 500 at 72–128px, line-height .95, tight tracking -.02em. It must look drawn, not branded.
+- Body: IBM Plex Sans 400 at 16–18px, line-height 1.65. Labels: IBM Plex Sans 500 at 11px, uppercase, letter-spacing .14em.
+- Numbers are display: tabular, large, black; one number may be red.
+
+## Colour
+
+- Cream #F2EBDD is paper. Black #1C1C1C is ink. Signal red #D23B2E marks one quantity, never decoration.
+- Teal #2A7F7A and mustard #D9A441 are secondary series. Grey #8C8C8C is the grid.
+- No gradients, no shadows, no glass. The page is printed.
+
+## Layout
+
+- Visible 12-column grid with a 1px rule. Asymmetry comes from data, not from arbitrary offsets.
+- A pictogram row is a paragraph: repeat the same silhouette, never mix three icon families.
+- Tables are allowed and should look like tables. Do not turn every number into a card.
+
+## Motion
+
+- Counters tick once on reveal; bars grow 400ms from zero. No looping animation.
+- Respect reduced motion; show the final number.
+
+## Imagery
+
+- Original pictograms: person, house, tree, factory, book, water drop. Flat silhouettes on the grid.
+- No isometric 3D, no rounded icon packs.
+
+## Copy voice
+
+- Voice: precise, curious, never jokey. Explain the subject, not the studio.
+- Headline: 2–6 words. One word may carry the accent colour.
+- Body: one idea per paragraph, concrete nouns, no filler.
+
+## Never
+
+- No lorem ipsum.
+- No emoji.
+- No stock photography.
+- No gradients that fake depth unless the style calls for them.
+- No rounded cards.
+- No drop shadows.
+- No more than two pictogram families.
+- No fake statistics.
+
+## Signature moves
+
+- One pictogram = one unit
+- Visible counting grid
+- Cream, black and signal red
+- Hand-cut silhouettes, not icons
+
+
+---
+
+# Op Art — Your eye is the medium
+
+Black and bone, a pattern that refuses to sit still. The page is an instrument for perception: your movement completes the image.
+
+**Use it for:** perception, geometry, physics, music posters, experimental education.
+**Avoid it for:** long reading, formal finance, accessibility-critical content without a static fallback.
+
+## Hard tokens
+
+| Token | Value |
+| --- | --- |
+| Display font | `Archivo Black` |
+| Body font | `Space Grotesk` |
+| Mono/label font | `Space Grotesk` |
+| Border widths | 1, 2, 3 px |
+| Border radius | 0–0 px |
+| Motion window | 0.2–1 s |
+| Shadow rule | No shadow. Contrast and repetition create depth. |
+
+## Palette (exact)
+
+| Role | Hex |
+| --- | --- |
+| bg | `#0A0A0A` |
+| surface | `#F7F7F2` |
+| ink | `#F7F7F2` |
+| muted | `#A6A6A6` |
+| accent | `#E03C31` |
+| accent2 | `#1F4FD8` |
+| accent3 | `#E8FF3A` |
+| accent4 | `#9A9A9A` |
+| deep | `#F7F7F2` |
+
+## Typography
+
+- Display: Archivo Black at 82–150px, uppercase, line-height .82, letter-spacing -.03em. Let it collide with the pattern.
+- Body: Space Grotesk 400 at 16–18px. Labels: Space Grotesk 500 at 11px, uppercase, tracked .16em.
+- Do not use more than two weights. The pattern is the third voice.
+
+## Colour
+
+- Black #0A0A0A and bone #F7F7F2 are the pattern. Red #E03C31 is a warning or a single number.
+- Blue #1F4FD8 and acid #E8FF3A appear in one band each, never together in a gradient.
+- No soft shadows; no grey haze.
+
+## Layout
+
+- Full-bleed pattern behind or beside the type. The grid should be visible and slightly wrong.
+- Alternate dense and empty bands. Give the eye a rest every second screen.
+- One rotated element is enough; rotating everything cancels the effect.
+
+## Motion
+
+- The moiré follows the pointer at 0.04 damping; a toggle freezes it. Never strobe above 3 Hz.
+- Reveal is a hard cut or a 240ms wipe, not a fade.
+
+## Imagery
+
+- Original CSS/SVG patterns: concentric rings, warped grids, checkerboards, interference lines.
+- No stock optical illusions; build the pattern.
+
+## Copy voice
+
+- Voice: precise, curious, never jokey. Explain the subject, not the studio.
+- Headline: 2–6 words. One word may carry the accent colour.
+- Body: one idea per paragraph, concrete nouns, no filler.
+
+## Never
+
+- No lorem ipsum.
+- No emoji.
+- No stock photography.
+- No gradients that fake depth unless the style calls for them.
+- No rounded corners.
+- No soft shadows.
+- No more than 3 Hz.
+- No pattern without a pause.
+
+## Signature moves
+
+- Moiré field that moves with the pointer
+- Black/white/red with one acid accent
+- Hard geometric type
+- Static fallback for reduced motion
+
+
+---
+
+# Ukiyo-e — The floating world, printed on paper
+
+Prussian blue, washi cream and a vermilion seal. Flat planes, a great wave and a vertical cartouche: the world seen from the edge of the water.
+
+**Use it for:** oceanography, Japanese history, poetry, climate, art history.
+**Avoid it for:** fast product launches, dense dashboards, ironic memes.
+
+## Hard tokens
+
+| Token | Value |
+| --- | --- |
+| Display font | `Shippori Mincho B1` |
+| Body font | `Zen Kaku Gothic New` |
+| Mono/label font | `Zen Kaku Gothic New` |
+| Border widths | 1, 2 px |
+| Border radius | 0–2 px |
+| Motion window | 0.6–1.6 s |
+| Shadow rule | No shadow. Paper and ink are flat. |
+
+## Palette (exact)
+
+| Role | Hex |
+| --- | --- |
+| bg | `#F3E9D2` |
+| surface | `#DCE6E3` |
+| ink | `#22201D` |
+| muted | `#5B6B73` |
+| accent | `#1B3A5C` |
+| accent2 | `#C8402A` |
+| accent3 | `#5B7C99` |
+| accent4 | `#6E7F5C` |
+| deep | `#1B3A5C` |
+
+## Typography
+
+- Display: Shippori Mincho B1 700 at 62–112px, line-height 1.02, vertical rhythm. One word can be set vertically.
+- Body: Zen Kaku Gothic New 400 at 16–18px, line-height 1.75. Labels: Zen Kaku 500 at 11px, letter-spacing .16em.
+- Use the seal as punctuation, not as a logo.
+
+## Colour
+
+- Washi #F3E9D2 is 55%. Prussian #1B3A5C is the sea and the type. Vermilion #C8402A is the seal and one accent.
+- Mist #DCE6E3 and moss #6E7F5C are distant planes; never gradients.
+- No gold, no neon, no pure white.
+
+## Layout
+
+- A low horizon and a large negative sky. The composition should feel like a print cropped by the page.
+- Title in a narrow vertical cartouche on the left or right; body text on the opposite side.
+- Bands are flat and overlap like printed layers.
+
+## Motion
+
+- Waves drift 8–16px on scroll; foam appears once. No bounce.
+- The seal can breathe opacity 0.9→1 over 6s.
+
+## Imagery
+
+- Original SVG: waves, foam, a distant mountain, a boat, a crane. Flat shapes, no outlines-only clip art.
+- Paper grain and misregistration are welcome.
+
+## Copy voice
+
+- Voice: precise, curious, never jokey. Explain the subject, not the studio.
+- Headline: 2–6 words. One word may carry the accent colour.
+- Body: one idea per paragraph, concrete nouns, no filler.
+
+## Never
+
+- No lorem ipsum.
+- No emoji.
+- No stock photography.
+- No gradients that fake depth unless the style calls for them.
+- No rounded corners.
+- No 3D or drop shadows.
+- No cherry-blossom clip art.
+- No faux-Japanese lettering.
+
+## Signature moves
+
+- Layered wave planes with foam claws
+- Vertical title cartouche
+- Vermilion seal
+- Washi grain and a low horizon
+
+
+---
+
+# Illuminated bestiary — A field guide for animals that never existed
+
+Parchment, iron-gall ink and a single lapis blue. A manuscript page with an illuminated initial, marginalia and a creature that watches back.
+
+**Use it for:** biology and taxonomy, fable and literature, mythology, natural history, slow essays.
+**Avoid it for:** sports, SaaS, breaking news.
+
+## Hard tokens
+
+| Token | Value |
+| --- | --- |
+| Display font | `UnifrakturMaguntia` |
+| Body font | `IM Fell English` |
+| Mono/label font | `IM Fell English` |
+| Border widths | 1, 2 px |
+| Border radius | 0–4 px |
+| Motion window | 0.5–1.4 s |
+| Shadow rule | No shadow. The manuscript is flat; use a 1px ink rule. |
+
+## Palette (exact)
+
+| Role | Hex |
+| --- | --- |
+| bg | `#E8D9B8` |
+| surface | `#F2E6C9` |
+| ink | `#2B2118` |
+| muted | `#6A5745` |
+| accent | `#C9A227` |
+| accent2 | `#A63A2B` |
+| accent3 | `#2E4A7D` |
+| accent4 | `#4E7A63` |
+| deep | `#2B2118` |
+
+## Typography
+
+- Display: UnifrakturMaguntia 400 at 54–94px, sentence case. It is a display face; never set body copy in it.
+- Body: IM Fell English 400 at 18–21px, line-height 1.7. Italic for marginalia. Labels: IM Fell English 400 at 12px, small caps.
+- Drop caps: 4 lines, lapis or vermilion, with a 12px gold rule.
+
+## Colour
+
+- Parchment #E8D9B8 is the page. Iron-gall #2B2118 is the text. Lapis #2E4A7D is the sacred blue, ≤10%.
+- Gold #C9A227 is flat leaf, never a gradient. Vermilion #A63A2B is a rubric or a wound.
+- No white backgrounds, no neon, no photographic texture.
+
+## Layout
+
+- Two columns with a wide gutter and generous lower margin. The initial breaks the first column.
+- Marginalia sits outside the text block, rotated 90° only if it is short.
+- Frames are drawn with 1px rules and small corner fleurons, not thick borders.
+
+## Motion
+
+- The creature blinks every 7s; gold glints once on reveal. No floating.
+- Hovering a marginal note reveals its translation.
+
+## Imagery
+
+- Original SVG: a hare-headed bird, a two-tailed fox, a botanical border, a gold sun. Hand-drawn silhouette, no clip art.
+- Texture from CSS grain, not a photo.
+
+## Copy voice
+
+- Voice: precise, curious, never jokey. Explain the subject, not the studio.
+- Headline: 2–6 words. One word may carry the accent colour.
+- Body: one idea per paragraph, concrete nouns, no filler.
+
+## Never
+
+- No lorem ipsum.
+- No emoji.
+- No stock photography.
+- No gradients that fake depth unless the style calls for them.
+- No blackletter body copy.
+- No glossy gradients.
+- No modern sans-serif.
+- No generic fantasy dragons.
+
+## Signature moves
+
+- Illuminated initial with a creature
+- Two-column manuscript grid
+- Gold leaf as a flat shape, not a gradient
+- Marginalia and a red rubric
+
+
+---
+
+# Psychedelic poster — A poster that refuses to sit still
+
+Night blue, magenta and orange, liquid shapes and a headline that bends. A 1967 concert poster for a subject that deserves a trip.
+
+**Use it for:** music, biology, chemistry, festivals, consciousness.
+**Avoid it for:** legal, medical instructions, conservative finance.
+
+## Hard tokens
+
+| Token | Value |
+| --- | --- |
+| Display font | `Bungee Shade` |
+| Body font | `Space Grotesk` |
+| Mono/label font | `Space Grotesk` |
+| Border widths | 0, 1, 2, 4 px |
+| Border radius | 0–40 px |
+| Motion window | 0.3–1.4 s |
+| Shadow rule | Hard offset shadows in magenta or orange are allowed; no soft grey shadows. |
+
+## Palette (exact)
+
+| Role | Hex |
+| --- | --- |
+| bg | `#1B1B3A` |
+| surface | `#2A1A5E` |
+| ink | `#F7E8C8` |
+| muted | `#B9A7FF` |
+| accent | `#E5197F` |
+| accent2 | `#FF6B1A` |
+| accent3 | `#F5E13B` |
+| accent4 | `#00A6A6` |
+| deep | `#5B2A86` |
+
+## Typography
+
+- Display: Bungee Shade at 68–120px, uppercase, line-height .88. It is already decorative; do not add another display face.
+- Body: Space Grotesk 400 at 16–18px, line-height 1.6. Labels: Space Grotesk 500 at 11px, tracked .14em.
+- One word can be set in a curved arc or rotated 3°; not the whole headline.
+
+## Colour
+
+- Night #1B1B3A is the ground. Magenta #E5197F and orange #FF6B1A are the hot pair. Acid #F5E13B is a single hit.
+- Teal #00A6A6 and violet #5B2A86 are cool pauses. Cream #F7E8C8 is text.
+- Gradients are allowed only inside blobs; keep type on flat colour.
+
+## Layout
+
+- All-over composition: blobs, rings and type overlap. Leave one quiet corner for the CTA.
+- Cards are poster panels, not UI cards: thick black keylines and a hard offset.
+- The fold or crop can cut a shape; do not center everything.
+
+## Motion
+
+- Blobs drift 20–40px over 9s; hover expands a blob 4%. No strobing.
+- Reduced motion freezes the blobs and keeps the poster.
+
+## Imagery
+
+- Original SVG: liquid blobs, concentric rings, a sun with a face, mushrooms? no: abstract cells and eyes.
+- No stock psychedelic art, no AI-glow.
+
+## Copy voice
+
+- Voice: precise, curious, never jokey. Explain the subject, not the studio.
+- Headline: 2–6 words. One word may carry the accent colour.
+- Body: one idea per paragraph, concrete nouns, no filler.
+
+## Never
+
+- No lorem ipsum.
+- No emoji.
+- No stock photography.
+- No gradients that fake depth unless the style calls for them.
+- No soft shadows.
+- No more than three hot colours.
+- No illegible body copy.
+- No strobing above 3 Hz.
+
+## Signature moves
+
+- Liquid blobs that follow the pointer
+- Bungee Shade headline with a hard offset
+- Acid yellow and hot magenta
+- A poster that fills the viewport
+
+
+---
+
+# Memphis — A deliberate case of bad taste
+
+Milan, 1981: squiggles, terrazzo, cobalt and pink. Postmodern play with a straight face, held together by a black keyline.
+
+**Use it for:** design history, music, workshops, creative education, events.
+**Avoid it for:** hospitals, luxury, solemn memorials.
+
+## Hard tokens
+
+| Token | Value |
+| --- | --- |
+| Display font | `Bricolage Grotesque` |
+| Body font | `DM Sans` |
+| Mono/label font | `DM Sans` |
+| Border widths | 1, 2, 3 px |
+| Border radius | 0–48 px |
+| Motion window | 0.3–1.2 s |
+| Shadow rule | Hard black offset shadows (6px 6px 0) are the point; no soft blur. |
+
+## Palette (exact)
+
+| Role | Hex |
+| --- | --- |
+| bg | `#F5F0E6` |
+| surface | `#FFFFFF` |
+| ink | `#111111` |
+| muted | `#6B6B6B` |
+| accent | `#F2A6B3` |
+| accent2 | `#9FD8C8` |
+| accent3 | `#2E4FD8` |
+| accent4 | `#F4D35E` |
+| deep | `#B9A7E0` |
+
+## Typography
+
+- Display: Bricolage Grotesque 700 at 72–128px, line-height .92, tight tracking -.03em.
+- Body: DM Sans 400 at 16–18px, line-height 1.6. Labels: DM Sans 500 at 11px, uppercase, tracked .12em.
+- One word can be on a pink highlight; do not rainbow the headline.
+
+## Colour
+
+- Bone #F5F0E6 is the table. Black #111111 is the keyline. Pink #F2A6B3, mint #9FD8C8, cobalt #2E4FD8 and butter #F4D35E are flat shapes.
+- Lilac #B9A7E0 is a fifth accent; use it sparingly.
+- No gradients, no soft shadows, no beige minimalism.
+
+## Layout
+
+- Asymmetrical, rotated 1–4°, overlapping. A 3px black keyline keeps the chaos legible.
+- Cards can be different widths; the grid is a suggestion. Do not align everything.
+- Use one giant squiggle and one terrazzo field per page.
+
+## Motion
+
+- Click “shuffle” to re-scatter shapes with a 300ms transform. Squiggles draw in 700ms.
+- Hover lifts a card 4px and increases the hard shadow to 8px.
+
+## Imagery
+
+- Original SVG: squiggles, terrazzo chips, a checkerboard, a wavy vase, a star.
+- No Memphis Group scans; draw the vocabulary.
+
+## Copy voice
+
+- Voice: precise, curious, never jokey. Explain the subject, not the studio.
+- Headline: 2–6 words. One word may carry the accent colour.
+- Body: one idea per paragraph, concrete nouns, no filler.
+
+## Never
+
+- No lorem ipsum.
+- No emoji.
+- No stock photography.
+- No gradients that fake depth unless the style calls for them.
+- No soft shadows.
+- No rounded sans-only look without a keyline.
+- No more than five accents.
+- No aligning everything.
+
+## Signature moves
+
+- Squiggles and terrazzo
+- Hard 6px black offset shadows
+- Rotated cards with a 3px keyline
+- Cobalt, pink, mint and butter
+
+
+---
+
+# Vaporwave / Y2K — A window into a future that already expired
+
+Violet dusk, chrome type and a perspective grid. A desktop from 1999, half-remembered, with a cursor that still works.
+
+**Use it for:** internet history, media studies, music, digital culture, nostalgia.
+**Avoid it for:** serious policy, health, legal.
+
+## Hard tokens
+
+| Token | Value |
+| --- | --- |
+| Display font | `Press Start 2P` |
+| Body font | `Space Grotesk` |
+| Mono/label font | `Space Grotesk` |
+| Border widths | 1, 2, 3 px |
+| Border radius | 0–6 px |
+| Motion window | 0.2–1.4 s |
+| Shadow rule | Chrome bevels and 2px hard inset edges; no soft ambient shadow. |
+
+## Palette (exact)
+
+| Role | Hex |
+| --- | --- |
+| bg | `#1B1035` |
+| surface | `#2B3A8F` |
+| ink | `#FFFFFF` |
+| muted | `#B9A7FF` |
+| accent | `#FF4FA3` |
+| accent2 | `#4FE3E3` |
+| accent3 | `#C9D1D9` |
+| accent4 | `#FFD6F2` |
+| deep | `#2B3A8F` |
+
+## Typography
+
+- Display: Press Start 2P at 28–56px, uppercase, line-height 1.35. It is a pixel face: keep lines short.
+- Body: Space Grotesk 400 at 16–18px. Labels: Space Grotesk 500 at 10px, uppercase, tracked .14em.
+- Chrome is a gradient on the title only; body text stays white or lavender.
+
+## Colour
+
+- Violet #1B1035 is the desktop. Hot pink #FF4FA3, cyan #4FE3E3 and chrome #C9D1D9 are UI accents.
+- Blue #2B3A8F is the window title bar. White #FFFFFF is body text.
+- Gradients are allowed in the sky and chrome, never behind body copy.
+
+## Layout
+
+- A fake OS window with a title bar, three buttons and a status bar. The page is the desktop.
+- Perspective grid on the lower third; sun on the horizon. Do not center the window exactly.
+- Cards are file windows or tiles, not rounded SaaS cards.
+
+## Motion
+
+- The grid scrolls slowly; the sun’s stripes drift; the window can be dragged. Glitch is a 120ms RGB split on hover.
+- No flashing above 3 Hz.
+
+## Imagery
+
+- Original CSS/SVG: chrome gradient, grid, sun, pixel cursor, window chrome, floppy disk.
+- No lifted Windows screenshots.
+
+## Copy voice
+
+- Voice: precise, curious, never jokey. Explain the subject, not the studio.
+- Headline: 2–6 words. One word may carry the accent colour.
+- Body: one idea per paragraph, concrete nouns, no filler.
+
+## Never
+
+- No lorem ipsum.
+- No emoji.
+- No stock photography.
+- No gradients that fake depth unless the style calls for them.
+- No soft shadows.
+- No modern SaaS cards.
+- No illegible pixel body copy.
+- No flashing.
+
+## Signature moves
+
+- Draggable 1999 window
+- Perspective grid and a striped sun
+- Chrome gradient title
+- Glitch on hover
+

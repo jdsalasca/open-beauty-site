@@ -1,4 +1,14 @@
 import type { StylePreset, StyleSlug } from '../types.js';
+import {
+  artDeco,
+  bestiary,
+  isotype,
+  memphis,
+  opart,
+  psychedelic,
+  ukiyoe,
+  vaporwave,
+} from './showcase-presets.js';
 
 const renaissance: StylePreset = {
   slug: 'renaissance',
@@ -269,6 +279,14 @@ export const presets: Record<StyleSlug, StylePreset> = {
   renaissance,
   brutalist,
   papercraft,
+  artdeco: artDeco,
+  isotype,
+  opart,
+  ukiyoe,
+  bestiary,
+  psychedelic,
+  memphis,
+  vaporwave,
 };
 
 export const styleSlugs = Object.keys(presets) as StyleSlug[];

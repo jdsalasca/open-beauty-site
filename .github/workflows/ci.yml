@@ -30,6 +30,12 @@ jobs:
       - name: Generate education pages
         run: pnpm education
 
+      - name: Generate showcase styles
+        run: pnpm showcase
+
+      - name: Build comparison page
+        run: pnpm compare
+
       - name: Validate examples
         run: |
           node dist/cli.js validate examples/renaissance/index.html --style renaissance --strict
@@ -37,3 +43,11 @@ jobs:
           node dist/cli.js validate examples/papercraft/index.html --style papercraft --strict
           node dist/cli.js validate examples/education/renaissance-perspective.html --style renaissance --strict
           node dist/cli.js validate examples/education/papercraft-museum.html --style papercraft --strict
+          node dist/cli.js validate examples/showcase/artdeco/index.html --style artdeco --strict
+          node dist/cli.js validate examples/showcase/isotype/index.html --style isotype --strict
+          node dist/cli.js validate examples/showcase/opart/index.html --style opart --strict
+          node dist/cli.js validate examples/showcase/ukiyoe/index.html --style ukiyoe --strict
+          node dist/cli.js validate examples/showcase/bestiary/index.html --style bestiary --strict
+          node dist/cli.js validate examples/showcase/psychedelic/index.html --style psychedelic --strict
+          node dist/cli.js validate examples/showcase/memphis/index.html --style memphis --strict
+          node dist/cli.js validate examples/showcase/vaporwave/index.html --style vaporwave --strict

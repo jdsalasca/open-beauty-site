@@ -52,6 +52,8 @@
     "test": "tsx --test test/*.test.ts",
     "examples": "tsx scripts/build-examples.ts",
     "education": "tsx scripts/build-education.ts",
+    "showcase": "tsx scripts/build-showcase.ts",
+    "compare": "tsx scripts/build-compare.ts",
     "docs:build": "tsx scripts/build-docs.ts",
     "e2e:colmena": "tsx scripts/e2e-colmena.ts",
     "check": "tsc -p tsconfig.json --noEmit"

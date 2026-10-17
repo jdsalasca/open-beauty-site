@@ -176,10 +176,28 @@ The output is preserved at `examples/agents/hive-renaissance.html`. It is a quie
 
    `~/.colmena/colmena.yml` must define a `luna-max` worker. The script calls `doctor` first, then `run` with `worker: "luna-max"`, `wait: true` and a 480 s timeout.
 
+## Eight new styles, Luna × 8
+
+After adding Art Deco, Isotype, Op Art, Ukiyo-e, Bestiario, Psicodelia, Memphis and Vaporwave, Luna 6 Max was asked to create one page per style through the MCP. It wrote its own Spanish brief for each, called `beauty_create_page` eight times and validated all eight.
+
+```text
+| style        | craft      | vision | path                                      |
+| artdeco      | A 100/100  | 4/4    | examples/luna-showcase/artdeco.html       |
+| isotype      | A 100/100  | 4/4    | examples/luna-showcase/isotype.html       |
+| opart        | A 100/100  | 4/4    | examples/luna-showcase/opart.html         |
+| ukiyoe       | A 100/100  | 4/4    | examples/luna-showcase/ukiyoe.html        |
+| bestiary     | A 100/100  | 4/4    | examples/luna-showcase/bestiary.html      |
+| psychedelic  | A 100/100  | 4/4    | examples/luna-showcase/psychedelic.html   |
+| memphis      | A 100/100  | 4/4    | examples/luna-showcase/memphis.html       |
+| vaporwave    | A 100/100  | 4/4    | examples/luna-showcase/vaporwave.html     |
+```
+
+Session: 97,047 tokens. The comparison against my own briefs is at `examples/compare.html`; it is the visual record of the same grammar used by two authors.
+
 ## What was not tested
 
 - A production CDN / hosting setup.
 - Right-to-left scripts and CJK typography.
 - More than 6 sections or 900 characters of body copy.
 - Windows display scaling above 150%.
-- Real user acceptance beyond the two agent runs above.
+- Real user acceptance beyond the agent runs above.

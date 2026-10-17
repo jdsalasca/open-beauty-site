@@ -1,0 +1,101 @@
+---
+name: open-beauty-artdeco
+description: Apply the Art Deco editorial system (A lacquered machine for looking upward) to a page or GIF with open-beauty-site.
+---
+
+# Art Deco skill
+
+Use this skill together with `beauty` when the brief calls for art deco.
+Never mix it with another style.
+
+# Art Deco — A lacquered machine for looking upward
+
+Black lacquer, champagne lines and a sunburst geometry. Symmetrical, vertical, cinematic: a lobby for a future that never quite arrived.
+
+**Use it for:** architecture, jazz and nightlife, timelines, luxury brands, city histories.
+**Avoid it for:** children, dense data, informal community pages.
+
+## Hard tokens
+
+| Token | Value |
+| --- | --- |
+| Display font | `Poiret One` |
+| Body font | `Josefin Sans` |
+| Mono/label font | `Josefin Sans` |
+| Border widths | 1, 2 px |
+| Border radius | 0–2 px |
+| Motion window | 0.4–1.4 s |
+| Shadow rule | No shadow: depth comes from gold hairlines and nested stepped frames. |
+
+## Palette (exact)
+
+| Role | Hex |
+| --- | --- |
+| bg | `#0E0E10` |
+| surface | `#17171B` |
+| ink | `#F4EBD9` |
+| muted | `#B9C0C4` |
+| accent | `#C8A45C` |
+| accent2 | `#1F5C4A` |
+| accent3 | `#6E1F2B` |
+| accent4 | `#D9A6A0` |
+| deep | `#050506` |
+
+## Typography
+
+- Display: Poiret One 400 at 88–148px, uppercase, letter-spacing .06em, line-height .9. Never bold it.
+- Body: Josefin Sans 300/400 at 16–18px, line-height 1.7. Labels: Josefin Sans 600 at 11px, uppercase, letter-spacing .22em.
+- One champagne italic is allowed for a single word; everything else stays geometric.
+
+## Colour
+
+- Black #0E0E10 is 75% of the page. Champagne #C8A45C is a 1px line, a sun, a numeral; never a large fill.
+- Emerald #1F5C4A and burgundy #6E1F2B are deep accents in small fields. Ivory #F4EBD9 is the only text colour.
+- No pastel gradients. Gold may glow only through opacity, not a soft radial haze.
+
+## Layout
+
+- Symmetry is the point: a centred axis, mirrored steps, a tall hero. Break it once with an off-centre caption.
+- Use nested frames: 1px outer, 8px gap, 1px inner. Corners may step, never round.
+- Cards are vertical panels with a stepped top, not floating rectangles.
+
+## Motion
+
+- A slow 24s sun rotation; 900ms gold line draw; hover lifts a card by 2px and brightens the hairline.
+- Nothing bounces. No spring.
+
+## Imagery
+
+- Original SVG: sunburst, stepped arch, chevrons, fans, a skyscraper silhouette. Hard edges, no photos.
+- Gold lines at 1px; deep green and burgundy only as flat fields.
+
+## Copy voice
+
+- Voice: precise, curious, never jokey. Explain the subject, not the studio.
+- Headline: 2–6 words. One word may carry the accent colour.
+- Body: one idea per paragraph, concrete nouns, no filler.
+
+## Never
+
+- No lorem ipsum.
+- No emoji.
+- No stock photography.
+- No gradients that fake depth unless the style calls for them.
+- No rounded corners.
+- No sans-serif body other than Josefin Sans.
+- No rainbow palette.
+- No centred-everything without one asymmetry.
+
+## Signature moves
+
+- Gold sunburst with stepped rays
+- Symmetrical black-and-champagne frame
+- Vertical chevrons and stepped corners
+- Poiret One spaced caps
+
+
+## Before you ship
+
+- Run `beauty_validate` and reach grade A.
+- Check the page at 360px, 768px and 1440px.
+- Remove every word that is not carrying information.

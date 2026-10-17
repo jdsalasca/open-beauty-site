@@ -766,6 +766,203 @@ function framePapercraft(env: FrameEnv): void {
   }
 }
 
+function frameShowcase(env: FrameEnv): void {
+  const { ctx, w, h, preset: p, text, subtitle, t } = env;
+  const s = Math.min(w, h);
+  const e = easeOutCubic(t);
+  const family =
+    p.slug === 'vaporwave'
+      ? 'Space Mono'
+      : p.slug === 'artdeco' || p.slug === 'ukiyoe' || p.slug === 'bestiary'
+        ? 'EB Garamond'
+        : 'Archivo Black';
+
+  ctx.fillStyle = p.palette.bg;
+  ctx.fillRect(0, 0, w, h);
+  ctx.save();
+  ctx.globalAlpha = 0.82;
+
+  if (p.slug === 'artdeco') {
+    ctx.strokeStyle = p.palette.accent;
+    ctx.lineWidth = Math.max(1, s * 0.0015);
+    for (let i = 0; i < 16; i += 1) {
+      const a = (i / 16) * TAU + t * 0.08;
+      ctx.beginPath();
+      ctx.moveTo(w / 2 + Math.cos(a) * s * 0.1, h / 2 + Math.sin(a) * s * 0.1);
+      ctx.lineTo(w / 2 + Math.cos(a) * s * 0.48, h / 2 + Math.sin(a) * s * 0.48);
+      ctx.stroke();
+    }
+    ctx.fillStyle = rgba(p.palette.accent, 0.2);
+    ctx.beginPath();
+    ctx.arc(w / 2, h / 2, s * 0.22, 0, TAU);
+    ctx.fill();
+    ctx.strokeStyle = p.palette.accent;
+    ctx.beginPath();
+    ctx.arc(w / 2, h / 2, s * 0.15, 0, TAU);
+    ctx.stroke();
+    ctx.fillStyle = p.palette.accent;
+    for (let i = 0; i < 4; i += 1) {
+      const x = s * 0.1 + i * s * 0.22;
+      ctx.fillRect(x, h - s * 0.21, s * 0.12, s * (0.06 + i * 0.025));
+    }
+  } else if (p.slug === 'isotype') {
+    ctx.fillStyle = p.palette.accent;
+    for (let row = 0; row < 5; row += 1) {
+      for (let col = 0; col < 9; col += 1) {
+        if ((row + col) % 3 === 0) continue;
+        const x = s * 0.08 + col * s * 0.095;
+        const y = h - s * 0.3 + row * s * 0.045;
+        ctx.beginPath();
+        ctx.arc(x, y, s * 0.009, 0, TAU);
+        ctx.fill();
+        ctx.fillRect(x - s * 0.009, y + s * 0.01, s * 0.018, s * 0.026);
+      }
+    }
+    ctx.strokeStyle = rgba(p.palette.ink, 0.45);
+    for (let i = 0; i < 7; i += 1) {
+      ctx.beginPath();
+      ctx.moveTo(s * 0.06, s * 0.12 + i * s * 0.035);
+      ctx.lineTo(w - s * 0.06, s * 0.12 + i * s * 0.035);
+      ctx.stroke();
+    }
+  } else if (p.slug === 'opart') {
+    ctx.strokeStyle = p.palette.ink;
+    ctx.lineWidth = Math.max(1, s * 0.002);
+    for (let i = 1; i < 14; i += 1) {
+      ctx.beginPath();
+      ctx.arc(w / 2, h / 2, i * s * 0.026 + Math.sin(t * TAU + i) * s * 0.004, 0, TAU);
+      ctx.stroke();
+    }
+    ctx.fillStyle = p.palette.accent;
+    ctx.fillRect(w * 0.08, h * 0.72, w * 0.84, s * 0.018);
+  } else if (p.slug === 'ukiyoe') {
+    ctx.fillStyle = rgba(p.palette.accent3, 0.45);
+    ctx.fillRect(0, h * 0.46, w, h * 0.54);
+    ctx.fillStyle = p.palette.accent2;
+    ctx.beginPath();
+    ctx.arc(w * 0.78, h * 0.22, s * 0.075, 0, TAU);
+    ctx.fill();
+    ctx.strokeStyle = p.palette.accent;
+    ctx.lineWidth = Math.max(2, s * 0.004);
+    for (let i = 0; i < 5; i += 1) {
+      ctx.beginPath();
+      for (let x = -20; x <= w + 20; x += 12) {
+        const y = h * (0.56 + i * 0.07) + Math.sin(x / 90 + i + t * 1.4) * s * 0.025;
+        if (x === -20) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+    ctx.fillStyle = p.palette.bg;
+    for (let i = 0; i < 18; i += 1) {
+      ctx.beginPath();
+      ctx.arc((i * 97) % w, h * 0.64 + ((i * 43) % (s * 0.18)), s * 0.004, 0, TAU);
+      ctx.fill();
+    }
+  } else if (p.slug === 'bestiary') {
+    ctx.strokeStyle = p.palette.accent;
+    ctx.lineWidth = Math.max(1, s * 0.002);
+    ctx.strokeRect(s * 0.07, s * 0.06, w - s * 0.14, h - s * 0.12);
+    ctx.strokeRect(s * 0.085, s * 0.075, w - s * 0.17, h - s * 0.15);
+    ctx.fillStyle = rgba(p.palette.accent3, 0.18);
+    ctx.beginPath();
+    ctx.arc(w / 2, h / 2, s * 0.27, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = p.palette.ink;
+    ctx.beginPath();
+    ctx.ellipse(w / 2, h * 0.52, s * 0.17, s * 0.12, 0, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = p.palette.accent3;
+    ctx.beginPath();
+    ctx.arc(w / 2 - s * 0.06, h * 0.5, s * 0.018, 0, TAU);
+    ctx.arc(w / 2 + s * 0.06, h * 0.5, s * 0.018, 0, TAU);
+    ctx.fill();
+  } else if (p.slug === 'psychedelic') {
+    const rng = mulberry32(env.seed || 7);
+    for (let i = 0; i < 4; i += 1) {
+      ctx.fillStyle = [p.palette.accent, p.palette.accent2, p.palette.accent4, p.palette.deep][i] ?? p.palette.accent;
+      blobPath(ctx, s * (0.22 + i * 0.19), s * (0.3 + (i % 2) * 0.28), s * (0.18 + i * 0.03), s * 0.16, rng, 7);
+      ctx.fill();
+    }
+    ctx.strokeStyle = p.palette.accent3;
+    ctx.lineWidth = Math.max(1, s * 0.002);
+    for (let i = 0; i < 4; i += 1) {
+      ctx.beginPath();
+      ctx.arc(w / 2, h / 2, s * (0.3 + i * 0.04), 0, TAU);
+      ctx.stroke();
+    }
+  } else if (p.slug === 'memphis') {
+    ctx.fillStyle = p.palette.accent;
+    ctx.beginPath();
+    ctx.arc(w * 0.78, h * 0.2, s * 0.1, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = p.palette.accent2;
+    ctx.fillRect(w * 0.58, h * 0.28, s * 0.18, s * 0.28);
+    ctx.fillStyle = p.palette.accent3;
+    ctx.fillRect(w * 0.08, h * 0.7, s * 0.3, s * 0.08);
+    ctx.fillStyle = p.palette.accent4;
+    ctx.fillRect(w * 0.15, h * 0.14, s * 0.13, s * 0.13);
+    ctx.strokeStyle = p.palette.ink;
+    ctx.lineWidth = Math.max(3, s * 0.008);
+    ctx.beginPath();
+    for (let i = 0; i < 6; i += 1) {
+      const x = w * 0.18 + i * s * 0.09;
+      const y = h * 0.84 + Math.sin(i * 1.8) * s * 0.035;
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.quadraticCurveTo(x - s * 0.045, y - s * 0.06, x, y);
+    }
+    ctx.stroke();
+  } else if (p.slug === 'vaporwave') {
+    ctx.fillStyle = rgba(p.palette.accent, 0.75);
+    ctx.beginPath();
+    ctx.arc(w * 0.76, h * 0.25, s * 0.12, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = p.palette.bg;
+    for (let i = 0; i < 6; i += 1) ctx.fillRect(w * 0.62, h * 0.17 + i * s * 0.025, s * 0.28, s * 0.008);
+    ctx.strokeStyle = rgba(p.palette.accent2, 0.7);
+    ctx.lineWidth = Math.max(1, s * 0.0015);
+    for (let i = 0; i < 12; i += 1) {
+      ctx.beginPath();
+      ctx.moveTo(w * 0.5, h * 0.58);
+      ctx.lineTo(w * (0.05 + i * 0.085), h);
+      ctx.stroke();
+      ctx.beginPath();
+      const y = h * 0.58 + i * s * 0.03;
+      ctx.moveTo(0, y);
+      ctx.lineTo(w, y);
+      ctx.stroke();
+    }
+  }
+  ctx.restore();
+
+  ctx.save();
+  ctx.globalAlpha = e;
+  ctx.translate(0, (1 - e) * s * 0.045);
+  const layout = layoutTitle(ctx, text.toUpperCase(), {
+    maxWidth: w * 0.72,
+    maxLines: 3,
+    maxSize: s * (p.slug === 'vaporwave' ? 0.075 : 0.11),
+    minSize: s * 0.035,
+    family,
+    weight: 400,
+    lineHeight: 1.02,
+  });
+  const firstBaseline = h / 2 - ((layout.lines.length - 1) * layout.lineHeight) / 2 + layout.size * 0.34;
+  drawTitleLines(
+    ctx,
+    layout.lines,
+    w / 2,
+    firstBaseline,
+    layout.lineHeight,
+    { family, size: layout.size, weight: 400, color: p.palette.ink },
+    { color: p.palette.accent, italic: false },
+  );
+  if (subtitle) {
+    drawTracked(ctx, subtitle.toUpperCase(), w / 2, h - s * 0.08, { family, size: s * 0.018, weight: 400, color: p.palette.muted }, s * 0.006);
+  }
+  ctx.restore();
+}
+
 /* ------------------------------------------------------------------ */
 /* Public API                                                          */
 /* ------------------------------------------------------------------ */
@@ -774,6 +971,14 @@ const RENDERERS: Record<StyleSlug, (env: FrameEnv) => void> = {
   renaissance: frameRenaissance,
   brutalist: frameBrutalist,
   papercraft: framePapercraft,
+  artdeco: frameShowcase,
+  isotype: frameShowcase,
+  opart: frameShowcase,
+  ukiyoe: frameShowcase,
+  bestiary: frameShowcase,
+  psychedelic: frameShowcase,
+  memphis: frameShowcase,
+  vaporwave: frameShowcase,
 };
 
 export async function createGif(style: StyleSlug, options: GifOptions, output: string): Promise<GifResult> {

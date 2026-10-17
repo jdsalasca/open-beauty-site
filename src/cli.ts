@@ -83,7 +83,7 @@ function help(): string {
 A design harness for small models: HTML pages + GIFs with an editorial line.
 
 Usage:
-  beauty styles                              List the three styles
+  beauty styles                              List the eleven styles
   beauty guide <style> [--json]              Read the exact tokens and rules
   beauty page --style <s> --title "..."      Create a full HTML page
       [--tagline "..."] [--intro "..."] [--brand "..."] [--locale es|en]

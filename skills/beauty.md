@@ -7,15 +7,23 @@ description: Create art-directed HTML pages and looping GIFs with the open-beaut
 
 You are using a design harness, not a blank canvas. The harness owns the typography, palette, borders, spacing, motion and validation. Your job is to choose a style, write real content, and let the tools render it.
 
-## The three styles
+## The eleven styles
 
 | Style | Use it for | Display font | Feeling |
 | --- | --- | --- | --- |
 | `renaissance` | art history, literature, cultural institutions, editorial lessons | EB Garamond | chalky fresco fields, cinnabar, asymmetry, slow |
 | `brutalist` | studios, launches, music, events, manifestos, loud portfolios | Archivo Black | concrete, acid, 3px borders, hard shadows |
 | `papercraft` | biology, children's museums, crafts, community, stationery | Fraunces Soft | cut paper, layered sheets, tape, warm |
+| `artdeco` | architecture, jazz, timelines, luxury, city histories | Poiret One | black lacquer, champagne lines, sunburst, vertical |
+| `isotype` | data, economics, civics, public health, maths | Jost | pictograms, counting grid, Vienna, signal red |
+| `opart` | perception, geometry, physics, experimental education | Archivo Black | moiré, high contrast, optical movement |
+| `ukiyoe` | ocean, climate, Japanese history, poetry | Shippori Mincho B1 | Prussian blue, flat planes, wave, seal |
+| `bestiary` | biology, taxonomy, fable, mythology, natural history | UnifrakturMaguntia | parchment, iron gall, lapis, illuminated initial |
+| `psychedelic` | music, festivals, chemistry, consciousness | Bungee Shade | liquid blobs, magenta, acid, 1967 poster |
+| `memphis` | design history, music, workshops, creative education | Bricolage Grotesque | squiggles, terrazzo, cobalt, hard keylines |
+| `vaporwave` | internet history, media, digital culture, nostalgia | Press Start 2P | chrome, grid, 1999 window, glitch |
 
-Do not mix styles. Do not invent a fourth one.
+Do not mix styles. Do not invent a twelfth one.
 
 ## Mandatory workflow
 

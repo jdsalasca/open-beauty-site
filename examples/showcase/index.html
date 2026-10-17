@@ -1,0 +1,69 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ocho estilos nuevos · open-beauty-site</title>
+<style>
+:root{--paper:#F2EFE6;--ink:#0B0B0B;--acid:#D8FF3E;--red:#E0432E;--mono:'Space Mono',monospace;--display:'Archivo Black',sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--mono);font-size:13px}
+a{color:inherit;text-decoration:none}img{display:block;width:100%}
+.top{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:14px 22px;border-bottom:2px solid var(--ink)}
+.brand{font-family:var(--display);font-size:18px}.brand i{color:var(--red);font-style:normal}
+.top nav{display:flex;gap:18px;font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.hero{padding:52px 22px 34px;border-bottom:2px solid var(--ink);max-width:1320px;margin:0 auto}
+h1{font-family:var(--display);font-size:clamp(46px,8vw,116px);line-height:1.08;letter-spacing:-.06em;text-transform:uppercase;margin:0;max-width:14ch}
+h1 mark{background:var(--acid);padding:.02em .04em;box-decoration-break:clone;line-height:1.12}
+p.lede{max-width:640px;font-size:16px;line-height:1.6;margin:22px 0}
+.cta{display:inline-flex;border:2px solid var(--ink);padding:10px 13px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;background:var(--acid)}
+.grid{max-width:1320px;margin:0 auto;padding:34px 22px 60px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.card{position:relative;border:2px solid var(--ink);background:#fff;display:grid;grid-template-columns:1fr;transition:transform .25s,box-shadow .25s}
+.card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--ink)}
+.card img{aspect-ratio:16/10;object-fit:cover;object-position:top;border-bottom:2px solid var(--ink)}
+.body{padding:14px 16px 16px;position:relative}
+.num{position:absolute;top:-14px;left:12px;background:var(--acid);border:2px solid var(--ink);padding:3px 6px;font-size:10px;z-index:2}
+h2{font-family:var(--display);font-size:24px;line-height:1;letter-spacing:-.03em;margin:0 0 6px}
+.body p{margin:0 0 12px;color:#6D6A61;font-size:10px;letter-spacing:.06em;text-transform:uppercase}
+.go{font-size:10px;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid var(--ink);padding-bottom:2px}
+@media(max-width:780px){.grid{grid-template-columns:1fr}.top nav{display:none}}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono&display=swap" rel="stylesheet">
+</head><body>
+<header class="top"><a class="brand" href="../index.html">OPEN<i>/</i>BEAUTY</a><nav><a href="../index.html">Galería</a><a href="../compare.html">Dos manos</a><a href="https://github.com/jdsalasca/open-beauty-site">GitHub ↗</a></nav></header>
+<section class="hero"><h1>Ocho<br><mark>estilos nuevos.</mark></h1><p class="lede">Art Deco, Isotype, Op Art, Ukiyo-e, Bestiario, Psicodelia, Memphis y Vaporwave. SVG y CSS original, tipografía exacta, interacción y GIF. Todos A/100 y vision 4/4.</p><a class="cta" href="../compare.html">Ver mi versión vs Luna 6 Max →</a></section>
+<main class="grid"><a class="card" href="artdeco/index.html">
+  <span class="num">01</span>
+  <img src="../previews/mine-artdeco.png" alt="La ciudad vertical" loading="lazy">
+  <div class="body"><h2>La ciudad vertical</h2><p>artdeco · Arquitectura · Nueva York, 1930</p><span class="go">Abrir estilo →</span></div>
+</a>
+<a class="card" href="isotype/index.html">
+  <span class="num">02</span>
+  <img src="../previews/mine-isotype.png" alt="Viena 1925" loading="lazy">
+  <div class="body"><h2>Viena 1925</h2><p>isotype · Datos · Vivienda pública, 1925–1934</p><span class="go">Abrir estilo →</span></div>
+</a>
+<a class="card" href="opart/index.html">
+  <span class="num">03</span>
+  <img src="../previews/mine-opart.png" alt="Tu ojo miente" loading="lazy">
+  <div class="body"><h2>Tu ojo miente</h2><p>opart · Percepción · Laboratorio óptico</p><span class="go">Abrir estilo →</span></div>
+</a>
+<a class="card" href="ukiyoe/index.html">
+  <span class="num">04</span>
+  <img src="../previews/mine-ukiyoe.png" alt="La ola que se repite" loading="lazy">
+  <div class="body"><h2>La ola que se repite</h2><p>ukiyoe · Océano · Edo, 1831</p><span class="go">Abrir estilo →</span></div>
+</a>
+<a class="card" href="bestiary/index.html">
+  <span class="num">05</span>
+  <img src="../previews/mine-bestiary.png" alt="Animales que nunca existieron" loading="lazy">
+  <div class="body"><h2>Animales que nunca existieron</h2><p>bestiary · Biología · Bestiario imaginario, s. XIII</p><span class="go">Abrir estilo →</span></div>
+</a>
+<a class="card" href="psychedelic/index.html">
+  <span class="num">06</span>
+  <img src="../previews/mine-psychedelic.png" alt="Carteles que vibran" loading="lazy">
+  <div class="body"><h2>Carteles que vibran</h2><p>psychedelic · Música · San Francisco, 1967</p><span class="go">Abrir estilo →</span></div>
+</a>
+<a class="card" href="memphis/index.html">
+  <span class="num">07</span>
+  <img src="../previews/mine-memphis.png" alt="El mal gusto es un método" loading="lazy">
+  <div class="body"><h2>El mal gusto es un método</h2><p>memphis · Diseño · Milán, 1981</p><span class="go">Abrir estilo →</span></div>
+</a>
+<a class="card" href="vaporwave/index.html">
+  <span class="num">08</span>
+  <img src="../previews/mine-vaporwave.png" alt="La historia de internet en 12 ventanas" loading="lazy">
+  <div class="body"><h2>La historia de internet en 12 ventanas</h2><p>vaporwave · Medios · Interfaz de escritorio, 1999</p><span class="go">Abrir estilo →</span></div>
+</a></main>
+</body></html>

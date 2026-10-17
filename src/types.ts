@@ -1,4 +1,15 @@
-export type StyleSlug = 'renaissance' | 'brutalist' | 'papercraft';
+export type StyleSlug =
+  | 'renaissance'
+  | 'brutalist'
+  | 'papercraft'
+  | 'artdeco'
+  | 'isotype'
+  | 'opart'
+  | 'ukiyoe'
+  | 'bestiary'
+  | 'psychedelic'
+  | 'memphis'
+  | 'vaporwave';
 
 export type Locale = 'es' | 'en';
 

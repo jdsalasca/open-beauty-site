@@ -62,13 +62,13 @@ All tools return human-readable text. Errors are returned with `isError: true` a
 
 ### `beauty_list_styles`
 
-No arguments. Returns the three styles with their display font, best use cases and what to avoid.
+No arguments. Returns the eleven styles with their display font, best use cases and what to avoid.
 
 ### `beauty_get_style`
 
 | Argument | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `style` | `renaissance \| brutalist \| papercraft` | yes | |
+| `style` | one of `renaissance`, `brutalist`, `papercraft`, `artdeco`, `isotype`, `opart`, `ukiyoe`, `bestiary`, `psychedelic`, `memphis`, `vaporwave` | yes | |
 | `format` | `markdown \| json` | no | Markdown by default; JSON returns the full preset. |
 
 Returns the hard tokens: exact fonts, palette, border widths, radii, motion window, shadow rule, layout rules, copy voice and a `Never` list. This is the single source of truth.
@@ -149,7 +149,7 @@ The skill asks for **craft A and vision 4/4**. A/100 with vision 3/4 means the p
 
 ### `beauty_examples`
 
-No arguments. Returns the absolute paths of the three example pages and GIFs. Use them as a visual reference, not as a template to copy.
+No arguments. Returns the absolute paths of the reference pages and GIFs. Use them as a visual reference, not as a template to copy.
 
 ## Resources
 

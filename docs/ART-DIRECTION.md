@@ -64,6 +64,8 @@ Use a different seed when two pages for the same client should not look like the
 
 ## Eight signature styles for education
 
+**Status:** all eight are implemented in src/page/showcase-a.ts and showcase-b.ts, with pages in xamples/showcase/, GIFs in xamples/gifs/showcase-*.gif, and a side-by-side test in xamples/compare.html.
+
 These are not recolours. Each changes the **minimum unit** of composition, so it is recognisable at 200px and useful for a different subject.
 
 | # | Style | Unit | Anchor topics | Display / body | Palette core |
@@ -77,13 +79,13 @@ These are not recolours. Each changes the **minimum unit** of composition, so it
 | 7 | **Memphis** (Milan, 1981–88) | postmodern shape | design, music, patterns | Bricolage Grotesque / DM Sans | black, bone, pink, mint, cobalt, butter |
 | 8 | **Vaporwave / Y2K** (internet, 2010s) | pixel / gradient | internet history, media | Press Start 2P / Space Grotesk | violet, hot pink, cyan, chrome, grid blue |
 
-### Top three to build next
+### Build order (all shipped)
 
-1. **Art Deco.** Highest impact per line of code: `conic-gradient` rays, stepped frames, Poiret One. Covers architecture, jazz, timelines and presentations. The risk is the Gatsby wedding invitation: keep black dominant and gold as a 1px line.
-2. **Isotype.** The most educational style: one pictogram equals one unit. A library of 30 silhouettes serves history, economics, biology and maths. The risk is a generic chart library; keep the hand-cut silhouette and the visible grid.
-3. **Op Art.** Cheapest and most recognisable at thumbnail size. Fully procedural: patterns, moiré, deformed grids. Covers perception, geometry and physics. Accessibility: cap at 3 Hz, provide a static frame.
+1. **Art Deco.** Shipped. Highest impact per line of code: `conic-gradient` rays, stepped frames, Poiret One. Covers architecture, jazz, timelines and presentations. The risk is the Gatsby wedding invitation: keep black dominant and gold as a 1px line.
+2. **Isotype.** Shipped. The most educational style: one pictogram equals one unit. A library of 30 silhouettes serves history, economics, biology and maths. The risk is a generic chart library; keep the hand-cut silhouette and the visible grid.
+3. **Op Art.** Shipped. Cheapest and most recognisable at thumbnail size. Fully procedural: patterns, moiré, deformed grids. Covers perception, geometry and physics. Accessibility: cap at 3 Hz, provide a static frame.
 
-Fourth in line: **Memphis**, the most fun and the easiest to pair with papercraft. Ukiyo-e and the bestiary are the most beautiful but need a library of waves, patterns and creatures; leave them for a second wave.
+The second wave — Ukiyo-e, Bestiario, Psicodelia, Memphis, Vaporwave — is also shipped. The next gap is not another style: it is the slide format and the `figure` / `keyIdea` / `process` blocks.
 
 ## Education and slides
 

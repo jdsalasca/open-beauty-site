@@ -22,14 +22,16 @@
 
 Los modelos chicos pueden escribir un buen titular. Lo que no pueden hacer de forma consistente es elegir una tipografía, un acento, un ancho de borde y un ritmo de animación que funcionen juntos. El resultado típico es la estética "IA genérica": Inter, tarjetas redondeadas, degradados violetas, todo centrado, nada recordado.
 
-Este repo mueve esas decisiones a tres sistemas editoriales completos. El modelo solo tiene que elegir uno, escribir contenido real y llamar a una herramienta.
+Este repo mueve esas decisiones a **once sistemas editoriales** completos. El modelo solo tiene que elegir uno, escribir contenido real y llamar a una herramienta.
 
 - **Sin LLM en runtime.** El render es determinista: brief + preset → HTML/GIF.
 - **Sin plantillas genéricas.** Cada estilo tiene su propio layout, no un recoloreo.
 - **Con validador.** Un página que se sale de la línea editorial se detecta y se corrige antes de publicar.
 - **Un solo archivo.** El HTML es autocontenido; el GIF se genera con canvas y `gifenc`.
 
-## Los tres estilos
+## Los once estilos
+
+Los tres clásicos:
 
 | Renaissance | Brutalist | Paper Craft |
 | --- | --- | --- |
@@ -39,13 +41,29 @@ Este repo mueve esas decisiones a tres sistemas editoriales completos. El modelo
 
 Cada estilo incluye tokens exactos, reglas de layout, recetas de componentes, voz de copy y una lista de "nunca". Están en [`docs/STYLEGUIDE.md`](docs/STYLEGUIDE.md) y en las skills de [`skills/`](skills/).
 
+## Ocho direcciones nuevas
+
+Ocho sistemas completos, con arte SVG/CSS original, interacción y GIF. Todos validan **A/100 + vision 4/4**. Recorrelos en [`examples/showcase/`](examples/showcase/index.html) o mirá la comparación **lado a lado** con Luna 6 Max en [`examples/compare.html`](examples/compare.html).`n`n[<img src="examples/previews/compare.png" width="760" alt="Dos manos: mi versión vs Luna 6 Max">](examples/compare.html)
+
+| Art Deco | Isotype | Op Art | Ukiyo-e |
+| --- | --- | --- | --- |
+| <img src="examples/previews/mine-artdeco.png" width="240"> | <img src="examples/previews/mine-isotype.png" width="240"> | <img src="examples/previews/mine-opart.png" width="240"> | <img src="examples/previews/mine-ukiyoe.png" width="240"> |
+| [La ciudad vertical](examples/showcase/artdeco/index.html) · `Poiret One` | [Viena 1925](examples/showcase/isotype/index.html) · `Jost` | [Tu ojo miente](examples/showcase/opart/index.html) · `Archivo Black` | [La ola que se repite](examples/showcase/ukiyoe/index.html) · `Shippori Mincho B1` |
+
+| Bestiario | Psicodelia | Memphis | Vaporwave / Y2K |
+| --- | --- | --- | --- |
+| <img src="examples/previews/mine-bestiary.png" width="240"> | <img src="examples/previews/mine-psychedelic.png" width="240"> | <img src="examples/previews/mine-memphis.png" width="240"> | <img src="examples/previews/mine-vaporwave.png" width="240"> |
+| [Animales que nunca existieron](examples/showcase/bestiary/index.html) · `UnifrakturMaguntia` | [Carteles que vibran](examples/showcase/psychedelic/index.html) · `Bungee Shade` | [El mal gusto es un método](examples/showcase/memphis/index.html) · `Bricolage Grotesque` | [La historia de internet en 12 ventanas](examples/showcase/vaporwave/index.html) · `Press Start 2P` |
+
+**Interacción real:** el sol de Art Deco gira, Isotype cuenta pictogramas con tabs 1925/1934, Op Art sigue el puntero y congela el moiré, Ukiyo-e mueve las olas, el bestiario parpadea, la psicodelia respira, Memphis revuelve sus formas y la ventana de Vaporwave se puede arrastrar.
+
 ### GIFs
 
 | Renaissance | Brutalist | Paper Craft |
 | --- | --- | --- |
 | <img src="examples/gifs/renaissance.gif" width="240" alt="Renaissance GIF"> | <img src="examples/gifs/brutalist.gif" width="240" alt="Brutalist GIF"> | <img src="examples/gifs/papercraft.gif" width="240" alt="Paper Craft GIF"> |
 
-Los tres salen del mismo comando que las páginas y comparten la línea editorial.
+Los once salen del mismo comando que las páginas y comparten la línea editorial.
 
 ## Sitios educativos
 
@@ -90,10 +108,13 @@ node dist/cli.js gif \
 node dist/cli.js validate out/luna.html --style brutalist --strict
 ```
 
-También podés generar los tres ejemplos completos:
+También podés generar todos los ejemplos:
 
 ```bash
-pnpm examples
+pnpm examples          # 3 clásicos + 3 GIFs
+pnpm education         # 2 lecciones
+pnpm showcase          # 8 estilos nuevos + 8 GIFs + galería
+pnpm compare           # página de comparación con Luna
 ```
 
 ## MCP
@@ -136,7 +157,7 @@ startup_timeout_sec = 30.0
 
 | Tool | Qué hace |
 | --- | --- |
-| `beauty_list_styles` | Lista los tres estilos y para qué sirve cada uno. |
+| `beauty_list_styles` | Lista los once estilos y para qué sirve cada uno. |
 | `beauty_get_style` | Devuelve tokens exactos, reglas y do/don't. Es la fuente de verdad. |
 | `beauty_get_skill` | Devuelve la skill lista para pegar en el contexto del agente. |
 | `beauty_create_page` | Crea una página completa y la escribe a disco. |
@@ -144,7 +165,7 @@ startup_timeout_sec = 30.0
 | `beauty_validate` | Audita un HTML y devuelve score, grade y fixes. |
 | `beauty_examples` | Devuelve las rutas de los ejemplos de referencia. |
 
-Recursos: `beauty://styles/{renaissance|brutalist|papercraft}` y `beauty://skills/beauty.md`.
+Recursos: `beauty://styles/{slug}` para los once estilos, `beauty://skills/beauty.md` y `beauty://skills/education.md`.
 
 El servidor manda instrucciones al conectarse: listar estilos → leer el estilo → crear con copy real → validar hasta A. La misma secuencia está en [`skills/beauty.md`](skills/beauty.md).
 
@@ -173,16 +194,17 @@ Chequea fuentes, colores, bordes, radios, sombras, motion, landmarks, placeholde
 
 ## Probado con modelos reales
 
-No es una demo teórica. Dos agentes distintos, dos estilos distintos, sin HTML escrito a mano:
+No es una demo teórica. Varios agentes, estilos distintos, sin HTML escrito a mano:
 
 | Agente | Estilo | Resultado | Evidencia |
 | --- | --- | --- | --- |
 | Codex CLI 0.163 · `gpt-6-luna` · effort `max` | Brutalist | **A · 100/100** | [`examples/agents/luna-brutalist.html`](examples/agents/luna-brutalist.html) |
 | Codex CLI 0.163 · `gpt-6-luna` · effort `max` · v2 | Paper Craft | **A · 100/100 · vision 4/4** | [`examples/agents/luna-papercraft-v2.html`](examples/agents/luna-papercraft-v2.html) |
+| Codex CLI 0.163 · `gpt-6-luna` · effort `max` · 8 nuevos | 8 estilos | **8/8 A · 100/100 · vision 4/4** | [`examples/compare.html`](examples/compare.html) |
 | `colmena-mcp` · worker `luna-max` · v1 | Paper Craft | **A · 100/100** | [`examples/agents/luna-papercraft.html`](examples/agents/luna-papercraft.html) |
 | `colmena-mcp` · worker `max-hive` · LongCat 2.5 free | Renaissance | **A · 100/100** | [`examples/agents/hive-renaissance.html`](examples/agents/hive-renaissance.html) |
 
-Luna llamó las herramientas MCP en orden y no escribió HTML. La v2 usa la dirección nueva (Fraunces Soft, capas de papel, geometría cortada) y pasó craft A + vision 4/4. La comparación v1/v2 está en [`examples/agents/`](examples/agents/): la v1 usaba DM Serif y Lato; la v2 usa Fraunces y Nunito Sans. El detalle de los runs está en [`docs/TESTING.md`](docs/TESTING.md).
+Luna llamó las herramientas MCP en orden y no escribió HTML. En la última corrida creó ocho páginas nuevas, una por estilo, con su propio brief en español: **8/8 A/100 + vision 4/4**, 97.047 tokens. La comparación lado a lado con mis briefs está en [`examples/compare.html`](examples/compare.html). El detalle de los runs está en [`docs/TESTING.md`](docs/TESTING.md).
 
 ## Cómo funciona
 
@@ -192,7 +214,7 @@ brief + style ──► preset ──► renderer ──► HTML ──► valid
                      └────► canvas frames ──► gifenc ──► GIF
 ```
 
-- `src/styles/presets.ts` — los tres sistemas como datos: paleta, fuentes, reglas, guía.
+- `src/styles/presets.ts` — los once sistemas como datos: paleta, fuentes, reglas, guía.
 - `src/page/*.ts` — un renderer por estilo, con CSS y markup propios.
 - `src/validate.ts` — auditoría y scoring.
 - `src/gif.ts` — frames con `@napi-rs/canvas`, encoding con `gifenc`.
@@ -209,18 +231,16 @@ open-beauty-site/
 ├── src/            # presets, renderers, validator (craft + vision), GIF, MCP, CLI
 ├── skills/         # beauty.md + education.md + una skill por estilo
 ├── docs/           # style guide, art direction, MCP, arquitectura, testing
-├── examples/       # 3 páginas, 3 GIFs, 2 lecciones, agentes y previews
+├── examples/       # 11 páginas, 11 GIFs, 2 lecciones, 8 de Luna, previews y compare.html
 ├── fonts/          # TTFs OFL para los GIFs
-├── scripts/        # build de ejemplos/lecciones/docs, QA y e2e con colmena
+├── scripts/        # build de ejemplos/lecciones/showcase/docs, QA y e2e con colmena
 └── test/           # tests de core y MCP
 ```
 
 ## Roadmap
 
-- [ ] **Art Deco** (Poiret One) para arquitectura, jazz y timelines.
-- [ ] **Isotype** (Jost + IBM Plex) para datos, economía y matemática.
-- [ ] **Op Art** (procedural) para percepción, geometría y física.
-- [ ] **Memphis** y **Ukiyo-e** en una segunda ola, con bibliotecas de formas.
+- [x] **Art Deco**, **Isotype**, **Op Art**, **Ukiyo-e**, **Bestiario**, **Psicodelia**, **Memphis** y **Vaporwave**.
+- [ ] Segunda composición por estilo (hoy `seed` varía en los 3 clásicos; los 8 nuevos usan una composición).
 - [ ] `format: slide` (1600×900) y bloques `figure`, `keyIdea`, `process`.
 - [ ] `beauty_create_social` para carruseles y OG images.
 - [ ] Self-hosting de fuentes en el HTML para uso offline.
