@@ -98,11 +98,11 @@ Creates a full HTML page and writes it to disk.
 | `cta` | `{ label, href }` | no | Defaults to a locale-aware CTA. |
 | `footer` | string (≤160) | no | |
 | `locale` | `es \| en` | no | Defaults to `es`. |
-| `seed` | integer | no | Deterministic ornament variation. |
+| `seed` | integer | no | Composition archetype: `0` default, `1` mirrored hero, `2` full-bleed (papercraft). |
 | `output` | string | no | Defaults to `beauty-output/<style>-<slug>-<timestamp>.html`. |
 | `include_html` | boolean | no | Also return the full HTML in the response. |
 
-Returns the absolute path, grade, score, fonts used and up to six issues with fixes.
+Returns the absolute path, craft grade/score, vision score (0–4), fonts used and up to six issues with fixes.
 
 ### `beauty_create_gif`
 
@@ -127,7 +127,7 @@ Returns path, dimensions, frame count, fps and file size. Frames are capped at 1
 | `path` | string | one of path/html | Relative to the server's cwd. |
 | `html` | string | one of path/html | Raw HTML. |
 
-Returns a score (0–100), a grade (A–F), every issue with a fix, and stats (bytes, colours, fonts, radii, durations). Checks:
+Returns a craft score (0–100), a craft grade (A–F), a vision score (0–4), every issue with a fix, and stats (bytes, colours, fonts, radii, durations). Checks:
 
 - exact required fonts and forbidden fonts;
 - hex colours outside the palette;
@@ -137,6 +137,15 @@ Returns a score (0–100), a grade (A–F), every issue with a fix, and stats (b
 - motion duration sanity;
 - `<title>`, `<h1>`, `<main>`, `lang`, unresolved placeholders, missing `alt`;
 - contrast of the token pairs the style actually uses for text.
+
+Vision (0–4) is a separate heuristic, not a grade:
+
+- `scale-jump`: max/min font size ≥10;
+- `flat-fields`: no soft gradients (brutalist allows its grid);
+- `asymmetry-or-bleed`: a full-bleed band, clip-path or two-column hero;
+- `material`: at least two physical marks (grain, tape, inset edge, draw-on-stroke, 3px border).
+
+The skill asks for **craft A and vision 4/4**. A/100 with vision 3/4 means the page is obedient but still a template.
 
 ### `beauty_examples`
 
@@ -150,6 +159,7 @@ No arguments. Returns the absolute paths of the three example pages and GIFs. Us
 | `beauty://styles/brutalist` | `application/json` | Full preset |
 | `beauty://styles/papercraft` | `application/json` | Full preset |
 | `beauty://skills/beauty.md` | `text/markdown` | Agent skill |
+| `beauty://skills/education.md` | `text/markdown` | Educational page skill |
 
 Resources are read-only. Use the tools to create files.
 

@@ -20,7 +20,7 @@ const brief: Brief = {
   locale: 'en',
 };
 
-test('every style renders a complete document and scores A', () => {
+test('every style renders a complete document, scores A and passes vision', () => {
   for (const style of styleSlugs) {
     const html = renderPage(style, brief);
     assert.match(html, /^<!doctype html>/i);
@@ -32,8 +32,17 @@ test('every style renders a complete document and scores A', () => {
     const result = validateHtml(html, style);
     assert.ok(result.score >= 90, `${style} scored ${result.score}: ${JSON.stringify(result.issues)}`);
     assert.equal(result.grade, 'A');
+    assert.equal(result.vision.score, 4, `${style} vision: ${JSON.stringify(result.vision.checks)}`);
     assert.deepEqual(result.issues, []);
   }
+});
+
+test('seed changes the composition archetype', () => {
+  const first = renderPage('papercraft', { ...brief, seed: 0 });
+  const second = renderPage('papercraft', { ...brief, seed: 1 });
+  assert.match(first, /class="variant-0"/);
+  assert.match(second, /class="variant-1"/);
+  assert.notEqual(first, second);
 });
 
 test('user content is escaped', () => {

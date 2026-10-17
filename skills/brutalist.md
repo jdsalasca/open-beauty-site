@@ -38,6 +38,7 @@ A loud poster that happens to be a website. Visible skeleton, 3px borders, hard 
 | accent | `#D8FF00` |
 | accent2 | `#FF3D1F` |
 | accent3 | `#2438FF` |
+| accent4 | `#F2EFE4` |
 | deep | `#0B0B0B` |
 
 ## Typography

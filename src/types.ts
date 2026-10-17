@@ -50,6 +50,7 @@ export interface StylePalette {
   accent: string;
   accent2: string;
   accent3: string;
+  accent4: string;
   deep: string;
 }
 
@@ -106,11 +107,24 @@ export interface ValidationIssue {
   fix?: string;
 }
 
+export interface VisionCheck {
+  name: string;
+  passed: boolean;
+  detail: string;
+}
+
+export interface VisionReport {
+  score: number;
+  checks: VisionCheck[];
+  note: string;
+}
+
 export interface ValidationResult {
   style: StyleSlug;
   score: number;
   grade: 'A' | 'B' | 'C' | 'D' | 'F';
   issues: ValidationIssue[];
+  vision: VisionReport;
   stats: {
     bytes: number;
     colors: number;

@@ -1,4 +1,4 @@
-import type { StylePreset, StyleSlug, ValidationIssue, ValidationResult } from './types.js';
+import type { StylePreset, StyleSlug, ValidationIssue, ValidationResult, VisionCheck, VisionReport } from './types.js';
 import { getStyle, isStyleSlug } from './styles/presets.js';
 
 const HEX_RE = /#[0-9a-fA-F]{3,8}\b/g;
@@ -57,7 +57,7 @@ const CONTRAST_PAIRS: Record<StyleSlug, Array<[keyof StylePreset['palette'], key
     ['ink', 'bg', 'body text'],
     ['muted', 'bg', 'secondary text'],
     ['bg', 'deep', 'inverted CTA'],
-    ['accent2', 'bg', 'accents and labels'],
+    ['deep', 'bg', 'labels and small accents'],
   ],
   brutalist: [
     ['ink', 'bg', 'body text'],
@@ -310,6 +310,51 @@ function issuesForContrast(preset: StylePreset): ValidationIssue[] {
   return issues;
 }
 
+export function visionReport(css: string, preset: StylePreset): VisionReport {
+  const sizes = Array.from(css.matchAll(/font-size\s*:\s*([^;}{]+)/gi)).flatMap((match) =>
+    Array.from((match[1] ?? '').matchAll(/(\d+(?:\.\d+)?)px/g), (px) => Number(px[1])),
+  ).filter((size) => size >= 8 && size <= 300);
+  const maxSize = sizes.length ? Math.max(...sizes) : 0;
+  const minSize = sizes.length ? Math.min(...sizes) : 1;
+  const scale = minSize > 0 ? maxSize / minSize : 0;
+
+  const gradients = (css.match(/(?<!repeating-)(?:linear|radial)-gradient/gi) ?? []).length;
+  const bleed = /100vw|calc\(50%\s*-\s*50vw\)|clip-path|grid-template-columns:[^;]*fr[^;]*fr/i.test(css);
+  const material = ['feTurbulence', 'inset 0', 'clip-path', 'repeating-linear-gradient', 'stroke-dashoffset', '8px 8px 0', 'border:3px'].filter((marker) =>
+    css.includes(marker),
+  ).length;
+  const gradientBudget = preset.slug === 'brutalist' ? 4 : 0;
+
+  const checks: VisionCheck[] = [
+    {
+      name: 'scale-jump',
+      passed: scale >= 10,
+      detail: `max/min font-size = ${scale.toFixed(1)}:1 (target ≥10)`,
+    },
+    {
+      name: 'flat-fields',
+      passed: gradients <= gradientBudget,
+      detail: `${gradients} gradient(s), budget ${gradientBudget}`,
+    },
+    {
+      name: 'asymmetry-or-bleed',
+      passed: bleed,
+      detail: bleed ? 'bleed or asymmetric grid found' : 'no full-bleed or asymmetric grid',
+    },
+    {
+      name: 'material',
+      passed: material >= 2,
+      detail: `${material} physical mark(s) (target ≥2)`,
+    },
+  ];
+
+  return {
+    score: checks.filter((check) => check.passed).length,
+    checks,
+    note: 'Vision is a heuristic, not a grade. Confirm with human eyes: squint test, replacement test, memory test.',
+  };
+}
+
 export function validateHtml(html: string, style: StyleSlug): ValidationResult {
   if (!isStyleSlug(style)) {
     throw new Error(`Unknown style "${style}". Use renaissance, brutalist or papercraft.`);
@@ -358,6 +403,7 @@ export function validateHtml(html: string, style: StyleSlug): ValidationResult {
     score,
     grade,
     issues,
+    vision: visionReport(css, preset),
     stats: {
       bytes: Buffer.byteLength(html, 'utf8'),
       colors: colors.colors.length,
@@ -369,9 +415,14 @@ export function validateHtml(html: string, style: StyleSlug): ValidationResult {
 }
 
 export function formatValidation(result: ValidationResult): string {
-  const lines = [`${result.grade} · ${result.score}/100 · ${result.style}`];
+  const passed = result.vision.checks.filter((check) => check.passed).map((check) => check.name);
+  const failed = result.vision.checks.filter((check) => !check.passed).map((check) => check.name);
+  const lines = [
+    `${result.grade} · ${result.score}/100 · ${result.style}`,
+    `vision ${result.vision.score}/4${failed.length ? ` · missing: ${failed.join(', ')}` : ' · all checks pass'}${passed.length ? ` · ${passed.join(', ')}` : ''}`,
+  ];
   if (result.issues.length === 0) {
-    lines.push('No issues. The page respects the editorial system.');
+    lines.push('No craft issues. The page respects the editorial system.');
     return lines.join('\n');
   }
   for (const issue of result.issues) {

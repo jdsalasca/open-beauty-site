@@ -11,9 +11,9 @@ You are using a design harness, not a blank canvas. The harness owns the typogra
 
 | Style | Use it for | Display font | Feeling |
 | --- | --- | --- | --- |
-| `renaissance` | portfolios, cultural institutions, editorial essays, weddings, long-form launches | Crimson Text | parchment, ink, gold, symmetry, slow |
+| `renaissance` | art history, literature, cultural institutions, editorial lessons | EB Garamond | chalky fresco fields, cinnabar, asymmetry, slow |
 | `brutalist` | studios, launches, music, events, manifestos, loud portfolios | Archivo Black | concrete, acid, 3px borders, hard shadows |
-| `papercraft` | crafts, food, education, community, personal projects, stationery | DM Serif Display | cream, kraft, tape, layered paper, warm |
+| `papercraft` | biology, children's museums, crafts, community, stationery | Fraunces Soft | cut paper, layered sheets, tape, warm |
 
 Do not mix styles. Do not invent a fourth one.
 
@@ -37,6 +37,7 @@ A good brief has:
 - `cta`: optional label and href.
 - `brand`: optional. Defaults to the title.
 - `locale`: `es` or `en`. Defaults to `es`.
+- `seed`: `0`, `1` or `2`. Chooses a composition archetype: `0` is the default, `1` mirrors the hero, `2` goes full-bleed (papercraft). Use a different seed when you want a different composition, not a different skin.
 
 Do not use lorem ipsum. Do not use "Your Company". Do not write placeholders.
 
@@ -66,11 +67,14 @@ Tool: `beauty_create_page`.
 
 Call `beauty_validate` with `{ "style": "...", "path": "out/brutalist.html" }`.
 
-- **A (90–100)**: ship it.
-- **B (80–89)**: fix the warnings before showing the user.
-- **C or lower**: regenerate with a simpler brief or fix the HTML, then validate again.
+The result has two numbers:
 
-Never report a page as finished if the grade is below A. Never ignore a `forbidden-font`, `missing-font`, `color-outside-palette` or `soft-shadow-in-brutalist` error.
+- **craft** (`A`/`B`/`C`/`F`, 0–100): fonts, palette, borders, radii, shadows, markup, contrast. This is obedience.
+- **vision** (0–4): scale jump, flat colour fields, asymmetry/bleed, physical material. This is the difference between "correct" and "art".
+
+Ship only when craft is **A** and vision is **4/4**. If vision is 3/4, the page is still a template; change the composition (`seed`), the scale of the image, or the material before showing it.
+
+Never ignore a `forbidden-font`, `missing-font`, `color-outside-palette`, `soft-shadow-in-brutalist` or `hard-shadow-in-papercraft` error.
 
 ### 5. Make a GIF
 
@@ -98,13 +102,23 @@ Templates:
 
 ## Self-check before answering
 
-1. Is the grade A?
+1. Is craft A **and** vision 4/4?
 2. Does the page contain real copy, not placeholders?
 3. Is there exactly one accent colour doing the work?
 4. Is the headline readable at 360px wide?
 5. Do the fonts match the style guide exactly?
 6. If there is a GIF, does it loop and is the text short enough to read in two seconds?
 7. Did you avoid emoji, stock photography, purple gradients and rounded cards in brutalist?
+8. Can you name the composition, or does every page look like the same landing page?
+
+### Four tests the validator cannot replace
+
+- **Squint test:** blur the page. Can you see at least three masses of value? If it is one beige column, change the composition.
+- **Replacement test:** replace the copy with lorem ipsum. If the page still looks finished, it is a skin. Change the image scale, the asymmetry or the material.
+- **Memory test:** look for 3 seconds, look away, name the page. If you remember the style and not the subject, the content is not doing its job.
+- **Break test:** allow one deliberate violation of the manual per page (a cinnabar rule, a sheet crossing the margin, a too-large plate). A page with zero ruptures has no authorship.
+
+For educational pages, read `skills/education.md` before writing the brief.
 
 ## If the MCP server is not available
 
@@ -128,3 +142,5 @@ The CLI and MCP call the same renderers, so the result is identical.
 - **Using the wrong style for the content.** A funeral home is not brutalist. A techno label is not papercraft. Re-read `bestFor` and `avoid`.
 - **Forgetting the brief.** The page renders with defaults; it will look clean but generic. Real copy is the difference.
 - **Editing the HTML by hand without re-validating.** Run `beauty_validate` again after every edit.
+- **Mistaking obedience for art.** A/100 only means the page follows the rules. Vision 4/4 and the four human tests decide whether it is worth looking at.
+- **Using gradients to fake pastel.** Renaissance and papercraft want flat fields with a hard edge, not a radial aura fading to transparent.

@@ -35,7 +35,7 @@ Este repo mueve esas decisiones a tres sistemas editoriales completos. El modelo
 | --- | --- | --- |
 | <img src="examples/previews/renaissance.png" width="280" alt="Renaissance example"> | <img src="examples/previews/brutalist.png" width="280" alt="Brutalist example"> | <img src="examples/previews/papercraft.png" width="280" alt="Paper Craft example"> |
 | Pergamino, tinta, oro. Simetría, arco, capitular. Lento y digno. | Papel, tinta, ácido. 3px, sombras duras, marquee. Ruidoso. | Crema, kraft, washi tape. Capas, recortes, flotación. Cálido. |
-| `Crimson Text` | `Archivo Black` + `Space Mono` | `DM Serif Display` + `Lato` |
+| `EB Garamond` | `Archivo Black` + `Space Mono` | `Fraunces Soft` + `Nunito Sans` |
 
 Cada estilo incluye tokens exactos, reglas de layout, recetas de componentes, voz de copy y una lista de "nunca". Están en [`docs/STYLEGUIDE.md`](docs/STYLEGUIDE.md) y en las skills de [`skills/`](skills/).
 
@@ -46,6 +46,17 @@ Cada estilo incluye tokens exactos, reglas de layout, recetas de componentes, vo
 | <img src="examples/gifs/renaissance.gif" width="240" alt="Renaissance GIF"> | <img src="examples/gifs/brutalist.gif" width="240" alt="Brutalist GIF"> | <img src="examples/gifs/papercraft.gif" width="240" alt="Paper Craft GIF"> |
 
 Los tres salen del mismo comando que las páginas y comparten la línea editorial.
+
+## Sitios educativos
+
+El harness también sirve para lecciones, museos y explicadores, no solo para landings. Dos versiones propias, con copy real y fuentes citadas:
+
+| Renaissance | Paper Craft |
+| --- | --- |
+| <img src="examples/previews/education-renaissance.png" width="360" alt="La città ideale"> | <img src="examples/previews/education-papercraft.png" width="360" alt="Museo de las Cosas Pequeñas"> |
+| [La città ideale](examples/education/renaissance-perspective.html) — perspectiva, espacio y poder. Campos planos de fresco, EB Garamond, plato asimétrico. | [Museo de las Cosas Pequeñas](examples/education/papercraft-museum.html) — insectos y semillas. Fraunces Soft, capas de papel, geometría cortada. |
+
+Ambas pasan A/100 y vision 4/4. El método para escribir una lección está en [`skills/education.md`](skills/education.md).
 
 ## Quickstart
 
@@ -139,12 +150,13 @@ El servidor manda instrucciones al conectarse: listar estilos → leer el estilo
 
 ## Validación
 
-El validador no es un navegador; es un auditor de la línea editorial. Detecta los errores que cometen los modelos:
+El validador no es un navegador; es un auditor de la línea editorial. Devuelve dos números: **craft** (¿obedece el manual?) y **vision** (¿tiene una idea visual?).
 
 ```text
 A · 100/100 · brutalist
-No issues. The page respects the editorial system.
-stats: {"bytes":15605,"colors":7,"fonts":["Space Mono","Archivo Black"],"radii":[],"durations":[0.25,0.3,0.45]}
+vision 4/4 · all checks pass · scale-jump, flat-fields, asymmetry-or-bleed, material
+No craft issues. The page respects the editorial system.
+stats: {"bytes":18381,"colors":7,"fonts":["Space Mono","Archivo Black"],"radii":[],"durations":[0.25,0.3,0.45]}
 ```
 
 Y cuando algo está mal:
@@ -152,12 +164,12 @@ Y cuando algo está mal:
 ```text
 [error] forbidden-font: "Inter" is forbidden in Brutalist.
   fix: Use Archivo Black for display and Space Mono for text.
-[warn] radius-out-of-range: border-radius 8px is outside Brutalist's 0–0px range.
-  fix: Use border-radius:0px (or none).
-[error] soft-shadow-in-brutalist: Brutalist shadows must have zero blur.
+[warn] radius-out-of-range: border-radius 8px is outside Brutalist's 10–48px range.
+  fix: Use a cut corner, not a generic rounded rectangle.
+[error] hard-shadow-in-papercraft: Paper Craft shadows must be soft.
 ```
 
-Chequea fuentes, colores, bordes, radios, sombras, motion, landmarks, placeholders y contraste de los pares que el estilo usa para texto.
+Chequea fuentes, colores, bordes, radios, sombras, motion, landmarks, placeholders y contraste. La **vision** mide salto de escala, campos planos de color, asimetría/sangría y materia física. Craft A + vision 4/4 es el estándar; el resto son páginas obedientes, no arte. Los criterios están en [`docs/ART-DIRECTION.md`](docs/ART-DIRECTION.md).
 
 ## Probado con modelos reales
 
@@ -166,10 +178,11 @@ No es una demo teórica. Dos agentes distintos, dos estilos distintos, sin HTML 
 | Agente | Estilo | Resultado | Evidencia |
 | --- | --- | --- | --- |
 | Codex CLI 0.163 · `gpt-6-luna` · effort `max` | Brutalist | **A · 100/100** | [`examples/agents/luna-brutalist.html`](examples/agents/luna-brutalist.html) |
-| `colmena-mcp` · worker `luna-max` | Paper Craft | **A · 100/100** | [`examples/agents/luna-papercraft.html`](examples/agents/luna-papercraft.html) |
+| Codex CLI 0.163 · `gpt-6-luna` · effort `max` · v2 | Paper Craft | **A · 100/100 · vision 4/4** | [`examples/agents/luna-papercraft-v2.html`](examples/agents/luna-papercraft-v2.html) |
+| `colmena-mcp` · worker `luna-max` · v1 | Paper Craft | **A · 100/100** | [`examples/agents/luna-papercraft.html`](examples/agents/luna-papercraft.html) |
 | `colmena-mcp` · worker `max-hive` · LongCat 2.5 free | Renaissance | **A · 100/100** | [`examples/agents/hive-renaissance.html`](examples/agents/hive-renaissance.html) |
 
-Luna llamó las cuatro herramientas MCP en orden, recibió el brief y el sistema hizo el resto. El modelo gratuito ni siquiera usó MCP: le alcanzó con dos comandos del CLI. El detalle de los runs está en [`docs/TESTING.md`](docs/TESTING.md).
+Luna llamó las herramientas MCP en orden y no escribió HTML. La v2 usa la dirección nueva (Fraunces Soft, capas de papel, geometría cortada) y pasó craft A + vision 4/4. La comparación v1/v2 está en [`examples/agents/`](examples/agents/): la v1 usaba DM Serif y Lato; la v2 usa Fraunces y Nunito Sans. El detalle de los runs está en [`docs/TESTING.md`](docs/TESTING.md).
 
 ## Cómo funciona
 
@@ -193,23 +206,27 @@ Más detalle en [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) y [`docs/MCP.md`]
 
 ```text
 open-beauty-site/
-├── src/            # presets, renderers, validator, GIF, MCP, CLI
-├── skills/         # beauty.md + una skill por estilo (generadas)
-├── docs/           # style guide, MCP, arquitectura, testing
-├── examples/       # 3 páginas, 3 GIFs, previews y outputs de agentes
+├── src/            # presets, renderers, validator (craft + vision), GIF, MCP, CLI
+├── skills/         # beauty.md + education.md + una skill por estilo
+├── docs/           # style guide, art direction, MCP, arquitectura, testing
+├── examples/       # 3 páginas, 3 GIFs, 2 lecciones, agentes y previews
 ├── fonts/          # TTFs OFL para los GIFs
-├── scripts/        # build de ejemplos, docs, QA y e2e con colmena
+├── scripts/        # build de ejemplos/lecciones/docs, QA y e2e con colmena
 └── test/           # tests de core y MCP
 ```
 
 ## Roadmap
 
-- [ ] Más estilos: swiss editorial, art déco, risograph, cine negro.
-- [ ] Secciones opcionales: galería, tabla de precios, FAQ, formulario.
+- [ ] **Art Deco** (Poiret One) para arquitectura, jazz y timelines.
+- [ ] **Isotype** (Jost + IBM Plex) para datos, economía y matemática.
+- [ ] **Op Art** (procedural) para percepción, geometría y física.
+- [ ] **Memphis** y **Ukiyo-e** en una segunda ola, con bibliotecas de formas.
+- [ ] `format: slide` (1600×900) y bloques `figure`, `keyIdea`, `process`.
 - [ ] `beauty_create_social` para carruseles y OG images.
 - [ ] Self-hosting de fuentes en el HTML para uso offline.
 - [ ] Publicación en npm (`npx open-beauty-site`).
-- [ ] Tests de accesibilidad con axe.
+
+Las ideas completas, con paletas y tipografías, están en [`docs/ART-DIRECTION.md`](docs/ART-DIRECTION.md).
 
 ## Contribuir
 
@@ -217,6 +234,6 @@ Las contribuciones son bienvenidas. Si agregás un estilo, tiene que pasar el va
 
 ## Licencia
 
-MIT. Las fuentes incluidas son OFL: Crimson Text, Archivo Black, Space Mono, DM Serif Display y Lato. Las licencias están en [`fonts/`](fonts/).
+MIT. Las fuentes incluidas son OFL: EB Garamond, Archivo Black, Space Mono, Fraunces y Nunito Sans. Las licencias están en [`fonts/`](fonts/).
 
 Hecho con demasiado café en Buenos Aires.

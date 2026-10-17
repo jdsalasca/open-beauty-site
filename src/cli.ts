@@ -202,7 +202,7 @@ async function main(): Promise<void> {
       console.log(`node ${process.version}`);
       console.log(`package root ${packageRoot()}`);
       ensureFonts();
-      console.log('fonts registered: Crimson Text, Archivo Black, Space Mono, DM Serif Display, Lato');
+      console.log('fonts registered: EB Garamond, Archivo Black, Space Mono, Fraunces, Nunito Sans');
       console.log('native canvas: ok');
       console.log('status: ready');
       return;

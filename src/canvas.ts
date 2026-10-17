@@ -5,17 +5,16 @@ import { BeautyError } from './page/common.js';
 import { packageRoot } from './paths.js';
 
 const FONT_FILES: Array<[string, string]> = [
-  ['CrimsonText-Regular.ttf', 'Crimson Text'],
-  ['CrimsonText-SemiBold.ttf', 'Crimson Text'],
-  ['CrimsonText-Bold.ttf', 'Crimson Text'],
-  ['CrimsonText-Italic.ttf', 'Crimson Text'],
   ['ArchivoBlack-Regular.ttf', 'Archivo Black'],
   ['SpaceMono-Regular.ttf', 'Space Mono'],
   ['SpaceMono-Bold.ttf', 'Space Mono'],
-  ['DMSerifDisplay-Regular.ttf', 'DM Serif Display'],
-  ['Lato-Regular.ttf', 'Lato'],
-  ['Lato-Bold.ttf', 'Lato'],
-  ['Lato-Black.ttf', 'Lato'],
+  ['EBGaramond-Regular.ttf', 'EB Garamond'],
+  ['EBGaramond-SemiBold.ttf', 'EB Garamond'],
+  ['EBGaramond-Italic.ttf', 'EB Garamond'],
+  ['Fraunces-Soft.ttf', 'Fraunces'],
+  ['NunitoSans-Regular.ttf', 'Nunito Sans'],
+  ['NunitoSans-Bold.ttf', 'Nunito Sans'],
+  ['NunitoSans-ExtraBold.ttf', 'Nunito Sans'],
 ];
 
 let registered = false;

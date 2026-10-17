@@ -282,9 +282,21 @@ function frameRenaissance(env: FrameEnv): void {
   const p = preset.palette;
   const s = Math.min(w, h);
   const rng = mulberry32(seed * 31 + 7);
-  const titleFontFamily = 'Crimson Text';
+  const titleFontFamily = 'EB Garamond';
 
   ctx.fillStyle = p.bg;
+  ctx.fillRect(0, 0, w, h);
+
+  const roseWash = ctx.createRadialGradient(w * 0.18, h * 0.2, 0, w * 0.18, h * 0.2, w * 0.62);
+  roseWash.addColorStop(0, rgba(p.accent2, 0.28));
+  roseWash.addColorStop(1, rgba(p.accent2, 0));
+  ctx.fillStyle = roseWash;
+  ctx.fillRect(0, 0, w, h);
+
+  const blueWash = ctx.createRadialGradient(w * 0.88, h * 0.78, 0, w * 0.88, h * 0.78, w * 0.58);
+  blueWash.addColorStop(0, rgba(p.accent3, 0.36));
+  blueWash.addColorStop(1, rgba(p.accent3, 0));
+  ctx.fillStyle = blueWash;
   ctx.fillRect(0, 0, w, h);
 
   drawNoise(ctx, w, h, p.ink, 1400, 0.05, rng);
@@ -301,13 +313,55 @@ function frameRenaissance(env: FrameEnv): void {
   const archTop = h * 0.15;
   const archBottom = h * 0.84;
   const archR = archW / 2;
-  ctx.strokeStyle = rgba(p.accent, 0.42);
-  ctx.lineWidth = Math.max(1, s * 0.0022);
+
+  const archPath = (): void => {
+    ctx.beginPath();
+    ctx.moveTo(archX, archBottom);
+    ctx.lineTo(archX, archTop + archR);
+    ctx.arc(archX + archR, archTop + archR, archR, Math.PI, 0);
+    ctx.lineTo(archX + archW, archBottom);
+    ctx.closePath();
+  };
+
+  ctx.save();
+  archPath();
+  ctx.clip();
+  const sky = ctx.createLinearGradient(0, archTop, 0, archBottom);
+  sky.addColorStop(0, rgba(p.accent3, 0.72));
+  sky.addColorStop(0.55, rgba(p.accent3, 0.26));
+  sky.addColorStop(1, rgba(p.bg, 0.1));
+  ctx.fillStyle = sky;
+  ctx.fillRect(archX, archTop - 10, archW, archBottom - archTop + 20);
+
+  ctx.fillStyle = rgba(p.accent4, 0.42);
   ctx.beginPath();
   ctx.moveTo(archX, archBottom);
-  ctx.lineTo(archX, archTop + archR);
-  ctx.arc(archX + archR, archTop + archR, archR, Math.PI, 0);
+  ctx.lineTo(archX, archBottom - s * 0.12);
+  ctx.quadraticCurveTo(w * 0.34, archBottom - s * 0.2, w * 0.52, archBottom - s * 0.1);
+  ctx.quadraticCurveTo(w * 0.72, archBottom - s * 0.24, archX + archW, archBottom - s * 0.14);
   ctx.lineTo(archX + archW, archBottom);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.fillStyle = rgba(p.accent3, 0.38);
+  ctx.beginPath();
+  ctx.moveTo(archX, archBottom);
+  ctx.lineTo(archX, archBottom - s * 0.05);
+  ctx.quadraticCurveTo(w * 0.4, archBottom - s * 0.12, w * 0.6, archBottom - s * 0.04);
+  ctx.quadraticCurveTo(w * 0.78, archBottom + s * 0.01, archX + archW, archBottom - s * 0.07);
+  ctx.lineTo(archX + archW, archBottom);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.arc(w * 0.5, h * 0.3, s * 0.062, 0, TAU);
+  ctx.fillStyle = rgba(p.accent2, 0.55);
+  ctx.fill();
+  ctx.restore();
+
+  ctx.strokeStyle = rgba(p.accent, 0.55);
+  ctx.lineWidth = Math.max(1, s * 0.0022);
+  archPath();
   ctx.stroke();
 
   const reveal = template === 'title' ? easeOutCubic(clamp(t / 0.55, 0, 1)) : 1;
@@ -617,11 +671,17 @@ function framePapercraft(env: FrameEnv): void {
   ctx.translate(cardCX, cardCY + bob);
   ctx.rotate(angle);
   ctx.scale(cardScale, cardScale);
-  ctx.shadowColor = 'rgba(58,46,40,.20)';
+
+  // A second sheet peeks out behind the card: the paper layer is visible.
+  ctx.fillStyle = rgba(p.accent2, 0.55);
+  roundRect(ctx, -cardW / 2 + s * 0.014, -cardH / 2 + s * 0.018, cardW, cardH, s * 0.045);
+  ctx.fill();
+
+  ctx.shadowColor = 'rgba(74,58,50,.20)';
   ctx.shadowBlur = s * 0.04;
   ctx.shadowOffsetY = s * 0.018;
   ctx.fillStyle = p.bg;
-  roundRect(ctx, -cardW / 2, -cardH / 2, cardW, cardH, s * 0.035);
+  roundRect(ctx, -cardW / 2, -cardH / 2, cardW, cardH, s * 0.045);
   ctx.fill();
   ctx.shadowColor = 'transparent';
   ctx.shadowBlur = 0;
@@ -629,26 +689,25 @@ function framePapercraft(env: FrameEnv): void {
 
   ctx.strokeStyle = rgba(p.ink, 0.28);
   ctx.lineWidth = Math.max(1.5, s * 0.0025);
-  ctx.setLineDash([s * 0.011, s * 0.012]);
-  roundRect(ctx, -cardW / 2 + s * 0.022, -cardH / 2 + s * 0.022, cardW - s * 0.044, cardH - s * 0.044, s * 0.028);
+  roundRect(ctx, -cardW / 2 + s * 0.022, -cardH / 2 + s * 0.022, cardW - s * 0.044, cardH - s * 0.044, s * 0.036);
   ctx.stroke();
-  ctx.setLineDash([]);
 
-  ctx.fillStyle = rgba('#D9B98C', 0.78);
+  ctx.fillStyle = rgba(p.accent4, 0.82);
   ctx.save();
   ctx.translate(0, -cardH / 2);
   ctx.rotate(-0.06);
-  ctx.fillRect(-s * 0.09, -s * 0.018, s * 0.18, s * 0.036);
+  roundRect(ctx, -s * 0.095, -s * 0.02, s * 0.19, s * 0.04, s * 0.008);
+  ctx.fill();
   ctx.restore();
 
   const layout = layoutTitle(ctx, text, {
     maxWidth: cardW * 0.8,
     maxLines: 3,
-    maxSize: s * 0.125,
+    maxSize: s * 0.13,
     minSize: s * 0.06,
-    family: 'DM Serif Display',
+    family: 'Fraunces',
     weight: 400,
-    lineHeight: 0.98,
+    lineHeight: 1.02,
   });
   const blockHeight = layout.lines.length * layout.lineHeight;
   const titleTop = -cardH * 0.16 - blockHeight / 2 + layout.size * 0.78;
@@ -660,8 +719,8 @@ function framePapercraft(env: FrameEnv): void {
     0,
     titleTop,
     layout.lineHeight,
-    { family: 'DM Serif Display', size: layout.size, weight: 400, color: p.ink },
-    { color: p.accent, italic: true },
+    { family: 'Fraunces', size: layout.size, weight: 400, color: p.ink },
+    { color: p.accent, italic: false },
   );
 
   const ruleY = titleTop + blockHeight + s * 0.025;
@@ -678,7 +737,7 @@ function framePapercraft(env: FrameEnv): void {
       subtitle.toUpperCase(),
       0,
       ruleY + s * 0.045,
-      { family: 'Lato', size: s * 0.019, weight: 900, color: p.muted },
+      { family: 'Nunito Sans', size: s * 0.02, weight: 800, color: p.muted },
       s * 0.004,
     );
   }

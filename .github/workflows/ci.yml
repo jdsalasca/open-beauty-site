@@ -27,8 +27,13 @@ jobs:
       - name: Generate examples
         run: pnpm examples
 
+      - name: Generate education pages
+        run: pnpm education
+
       - name: Validate examples
         run: |
           node dist/cli.js validate examples/renaissance/index.html --style renaissance --strict
           node dist/cli.js validate examples/brutalist/index.html --style brutalist --strict
           node dist/cli.js validate examples/papercraft/index.html --style papercraft --strict
+          node dist/cli.js validate examples/education/renaissance-perspective.html --style renaissance --strict
+          node dist/cli.js validate examples/education/papercraft-museum.html --style papercraft --strict

@@ -109,7 +109,7 @@ export function normalizeBrief(input: Partial<Brief>): Brief {
     cta: ctaLabel ? { label: ctaLabel, href: clampText(input.cta?.href, 200) || '#' } : undefined,
     footer: clampText(input.footer, 140) || undefined,
     locale,
-    seed: Number.isFinite(input.seed) ? Math.abs(Math.trunc(input.seed as number)) : 7,
+    seed: Number.isFinite(input.seed) ? Math.abs(Math.trunc(input.seed as number)) : 0,
   };
 }
 

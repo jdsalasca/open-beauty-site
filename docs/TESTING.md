@@ -9,10 +9,10 @@ pnpm test
 
 The suite runs with Node's test runner through `tsx`:
 
-- `test/core.test.ts` — every style renders a complete document, escapes user content, and reaches A/100; the validator rejects generic AI design (Inter, invented colours, 8px radii, 5px borders, soft shadows in brutalist).
+- `test/core.test.ts` — every style renders a complete document, escapes user content, reaches A/100 and vision 4/4; the validator rejects generic AI design (Inter, invented colours, 8px radii, 5px borders, soft shadows in brutalist); `seed` changes the composition archetype.
 - `test/mcp.test.ts` — spawns the built MCP server over stdio, verifies the seven-tool surface, reads the Renaissance tokens, creates and audits a page, and creates a valid GIF.
 
-Current result: **8/8 passing** in ~1 s (plus MCP startup).
+Current result: **9/9 passing** in ~1 s (plus MCP startup).
 
 ```text
 ✔ every style renders a complete document and scores A
@@ -66,6 +66,32 @@ Problemas pendientes: ninguno.
 Session: `01a14a89-39a0-72b2-a140-b779e9569f69` · 32,813 tokens. The agent did not hand-write HTML; every design decision came from the harness.
 
 The output is preserved at `examples/agents/luna-brutalist.html`.
+
+## End-to-end: Codex CLI with Luna 6, round 2
+
+After the art-direction rewrite (EB Garamond, flat fresco fields, Fraunces Soft, cut-paper geometry, vision audit), Luna was run again with the same MCP:
+
+```text
+mcp: open_beauty/beauty_list_styles started
+mcp: open_beauty/beauty_list_styles (completed)
+mcp: open_beauty/beauty_get_style started
+mcp: open_beauty/beauty_get_style (completed)
+mcp: open_beauty/beauty_create_page started
+mcp: open_beauty/beauty_create_page (completed)
+mcp: open_beauty/beauty_validate started
+mcp: open_beauty/beauty_validate (completed)
+```
+
+Result:
+
+```text
+Calificación: A · 100/100
+Visión: 4/4; todas las comprobaciones pasan
+Problemas: ninguno
+Archivo: examples/agents/luna-papercraft-v2.html
+```
+
+Session: `01a14ab1-e42e-7fa2-b57c-d8e28405c128` · 35,526 tokens. The page is a children's natural-history lesson built with Fraunces Soft, layered paper sheets and cut corners. It is a different object from the v1 papercraft page, not a recolour: `examples/agents/luna-papercraft.html` used DM Serif Display and Lato; v2 uses Fraunces and Nunito Sans. The v1 page is kept as a before/after reference.
 
 ## End-to-end: colmena-mcp with `luna-max`
 

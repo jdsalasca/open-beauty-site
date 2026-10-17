@@ -76,7 +76,7 @@ Each style has its own frame function: gold arch and sun (Renaissance), black pa
 
 ### 6. MCP server (`src/mcp/server.ts`)
 
-`McpServer` over stdio. Seven tools, four resources, and an `instructions` string that repeats the workflow. The tools call the same `generate.ts` functions as the CLI, so the output is identical.
+`McpServer` over stdio. Seven tools, five resources, and an `instructions` string that repeats the workflow. The tools call the same `generate.ts` functions as the CLI, so the output is identical.
 
 ### 7. CLI (`src/cli.ts`)
 

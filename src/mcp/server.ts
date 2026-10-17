@@ -76,12 +76,13 @@ MANDATORY WORKFLOW
 1. Call beauty_list_styles.
 2. Call beauty_get_style for the chosen style and follow its hard tokens. Never invent fonts, hex colours, border widths or radii.
 3. Call beauty_create_page with a real title, a one-sentence tagline, an optional intro and 2–3 sections.
-4. Call beauty_validate on the output file. If the grade is below A, read the fix lines, adjust the brief or the HTML, and validate again.
+4. Call beauty_validate on the output file. Reach craft A (90+) and vision 4/4. If craft is lower, read the fix lines and adjust the brief or the HTML. If vision is 3/4, change the composition (seed), the image scale or the material.
 5. For motion, call beauty_create_gif with the same style.
 
 QUALITY BAR
 - No lorem ipsum, no placeholder names, no emoji, no stock photography.
 - One accent per screen; whitespace is part of the layout.
+- Pastel is a flat field with a hard edge, not a gradient aura.
 - Headlines must remain readable at 360px wide.
 - Do not mix two styles in one artefact.
 - If a tool fails, report the exact error; do not silently fall back to generic design.`,
@@ -174,10 +175,11 @@ QUALITY BAR
           `Created a ${presets[style].name} page.`,
           `file: ${result.path}`,
           `grade: ${result.validation.grade} (${result.validation.score}/100)`,
+          `vision: ${result.validation.vision.score}/4 (${result.validation.vision.checks.map((check) => `${check.name}:${check.passed ? 'ok' : 'missing'}`).join(' · ')})`,
           `fonts: ${result.validation.stats.fonts.join(', ')}`,
           `issues: ${result.validation.issues.length}`,
-          issues ? `\n${issues}` : '\nNo issues. The page follows the editorial system.',
-          `\nNext: open the file, or call beauty_validate if you edit it.`,
+          issues ? `\n${issues}` : '\nNo craft issues. The page follows the editorial system.',
+          `\nNext: open the file, or call beauty_validate if you edit it. If vision is below 4/4, the page is obedient but may not be art.`,
         ].join('\n');
         return text(args.include_html ? `${summary}\n\n--- HTML ---\n${result.html}` : summary);
       } catch (error) {
@@ -286,9 +288,31 @@ QUALITY BAR
     'beauty-skill',
     'beauty://skills/beauty.md',
     { title: 'open-beauty-site agent skill', mimeType: 'text/markdown' },
-    async (uri) => ({
-      contents: [{ uri: uri.href, mimeType: 'text/markdown', text: SKILL_FALLBACK }],
-    }),
+    async (uri) => {
+      let text = SKILL_FALLBACK;
+      try {
+        text = await readFile(path.join(packageRoot(), 'skills', 'beauty.md'), 'utf8');
+      } catch {
+        // Keep the fallback if the file is unavailable.
+      }
+      return { contents: [{ uri: uri.href, mimeType: 'text/markdown', text }] };
+    },
+  );
+
+  server.registerResource(
+    'beauty-education-skill',
+    'beauty://skills/education.md',
+    { title: 'Educational page skill', mimeType: 'text/markdown' },
+    async (uri) => {
+      let text =
+        '# Education skill\n\nOne learning objective, one misconception, one concrete detail, one source. Sections as rooms: hook → concept → use. Quote the primary source.';
+      try {
+        text = await readFile(path.join(packageRoot(), 'skills', 'education.md'), 'utf8');
+      } catch {
+        // Keep the compact fallback.
+      }
+      return { contents: [{ uri: uri.href, mimeType: 'text/markdown', text }] };
+    },
   );
 
   return server;

@@ -44,8 +44,8 @@ test('exposes the full tool surface', async () => {
 test('styles expose exact fonts and palette', async () => {
   const result = await client.callTool({ name: 'beauty_get_style', arguments: { style: 'renaissance' } });
   const text = (result.content as Array<{ type: string; text: string }>)[0]?.text ?? '';
-  assert.match(text, /Crimson Text/);
-  assert.match(text, /#B8892F/);
+  assert.match(text, /EB Garamond/);
+  assert.match(text, /#B4432C/);
   assert.match(text, /0–2 px/);
 });
 
