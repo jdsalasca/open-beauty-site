@@ -107,6 +107,15 @@ export function normalizeBrief(input: Partial<Brief>): Brief {
         }
       : undefined,
     cta: ctaLabel ? { label: ctaLabel, href: clampText(input.cta?.href, 200) || '#' } : undefined,
+    audio:
+      input.audio?.src && input.audio?.title
+        ? {
+            src: clampText(input.audio.src, 300),
+            title: clampText(input.audio.title, 80),
+            subtitle: clampText(input.audio.subtitle, 100) || undefined,
+            note: clampText(input.audio.note, 180) || undefined,
+          }
+        : undefined,
     footer: clampText(input.footer, 140) || undefined,
     locale,
     seed: Number.isFinite(input.seed) ? Math.abs(Math.trunc(input.seed as number)) : 0,

@@ -495,3 +495,64 @@ export const vaporwave: StylePreset = {
   },
   cssMarkers: ["font-family:'Press Start 2P'", "font-family:'Space Grotesk'", 'linear-gradient', 'text-shadow'],
 };
+
+export const galactic: StylePreset = {
+  slug: 'galactic',
+  name: 'Galactic Futurism',
+  epithet: 'A planetarium for the things we remember',
+  description:
+    'Deep-space navy, chrome ivory and one slow planet. Michroma, orbital rings and the silence before a bassline: less sci-fi blockbuster, more planetarium after closing time.',
+  bestFor: ['music rooms', 'space and astronomy', 'memory and technology', 'film essays', 'album tributes'],
+  avoid: ['fast commerce', 'children’s worksheets', 'cluttered dashboards'],
+  palette: {
+    bg: '#05060A',
+    surface: '#0D1020',
+    ink: '#F2F4FF',
+    muted: '#9BA6C4',
+    accent: '#79E8FF',
+    accent2: '#B388FF',
+    accent3: '#F5C86B',
+    accent4: '#FF6FAE',
+    deep: '#02030A',
+  },
+  fonts: {
+    display: 'Michroma',
+    body: 'Space Grotesk',
+    mono: 'Space Grotesk',
+    googleHref:
+      'https://fonts.googleapis.com/css2?family=Michroma&family=Space+Grotesk:wght@300;400;500&display=swap',
+  },
+  rules: {
+    radius: [0, 2],
+    borderWidths: [1, 2],
+    borderStyles: ['solid'],
+    motion: [0.4, 1.8],
+    requiredFonts: ['Michroma', 'Space Grotesk'],
+    forbiddenFonts: forbidden,
+    shadow: 'No box shadow: depth comes from the starfield, orbital lines and black space.',
+    shadowPattern: 'none',
+  },
+  signature: ['One planet, three orbits', 'Chrome Michroma caps', 'Cyan and solar gold on void black', 'A music room with an original track'],
+  guidance: {
+    typography: [
+      'Display: Michroma 400 at 42–92px, uppercase, letter-spacing .01em, line-height 1.08. It is wide: keep headlines short.',
+      'Body: Space Grotesk 300/400 at 16–18px, line-height 1.7. Labels: Space Grotesk 500 at 10px, uppercase, tracked .18em.',
+      'One chrome-gradient word is allowed. Never chrome the whole headline.',
+    ],
+    color: [
+      'Void #05060A is 70% of the page. Chrome ivory #F2F4FF is the text. Cyan #79E8FF is a line or a planet rim, never a fill.',
+      'Violet #B388FF and solar gold #F5C86B are secondary orbital accents. Magenta #FF6FAE is a single event.',
+      'No rainbow nebula. No purple-to-pink gradient across everything. Space is mostly black.',
+    ],
+    layout: [
+      'One planet, three orbits, one headline. The page should feel like a room with a very large window.',
+      'Asymmetric: copy on one side, a planet that bleeds off the other. Generous negative space is the luxury.',
+      'Cards are instruments, not glassmorphism: 1px cyan rule, black field, small technical labels.',
+    ],
+    motion: ['Orbits rotate over 40–80s; the planet breathes 4px; stars twinkle at 6s. No warp speed.', 'Audio player is user-initiated; never autoplay.'],
+    imagery: ['Original SVG: ringed planet, thin orbital ellipses, a small moon, a starfield. No NASA photos, no Star Wars ships, no lens flares.', 'A single grain layer keeps the black from feeling flat.'],
+    copy,
+    dont: [...dontBase, 'No rounded cards.', 'No neon rainbow.', 'No autoplay audio.', 'No sci-fi logos or fake alien alphabets.'],
+  },
+  cssMarkers: ["font-family:'Michroma'", "font-family:'Space Grotesk'", 'border:1px solid', 'radial-gradient'],
+};

@@ -26,7 +26,7 @@ brief + style ──► preset ──► renderer ──► HTML ──► valid
 
 ### 2. Presets (`src/styles/presets.ts`)
 
-Three complete systems. Each one includes:
+Twelve complete systems. Each one includes:
 
 - a palette with semantic roles (`bg`, `surface`, `ink`, `muted`, `accent`, `accent2`, `accent3`, `deep`);
 - exact font families plus the Google Fonts URL;
@@ -76,7 +76,7 @@ Each style has its own frame function: gold arch and sun (Renaissance), black pa
 
 ### 6. MCP server (`src/mcp/server.ts`)
 
-`McpServer` over stdio. Seven tools, thirteen resources, and an `instructions` string that repeats the workflow. The tools call the same `generate.ts` functions as the CLI, so the output is identical.
+`McpServer` over stdio. Seven tools, fourteen resources, and an `instructions` string that repeats the workflow. The tools call the same `generate.ts` functions as the CLI, so the output is identical.
 
 ### 7. CLI (`src/cli.ts`)
 
@@ -84,7 +84,7 @@ Each style has its own frame function: gold arch and sun (Renaissance), black pa
 
 ### 8. Skills (`skills/*.md`)
 
-The natural-language half of the harness. `beauty.md` is the mandatory workflow; the three style skills are generated from the presets so they cannot drift.
+The natural-language half of the harness. `beauty.md` is the mandatory workflow; the twelve style skills are generated from the presets so they cannot drift.
 
 ## Determinism
 

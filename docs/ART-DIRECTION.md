@@ -62,9 +62,9 @@ Use a different seed when two pages for the same client should not look like the
 - **Paper Craft:** Matisse, *Jazz* (1947) and *The Snail* (1953); Kveta Pacovská, *The Little Flower King* (1987); riso at two inks with 1.5px misregistration.
 - **Brutalist:** concrete poetry broadsides of the 1960s (*An Anthology*, Emmett Williams, 1963): typographic mass as image.
 
-## Eight signature styles for education
+## Nine signature styles for education
 
-**Status:** all eight are implemented in src/page/showcase-a.ts and showcase-b.ts, with pages in xamples/showcase/, GIFs in xamples/gifs/showcase-*.gif, and a side-by-side test in xamples/compare.html.
+**Status:** all nine are implemented in `src/page/showcase-a.ts` / `showcase-b.ts`, with pages in `examples/showcase/`, GIFs in `examples/gifs/showcase-*.gif`, and a side-by-side test in `examples/compare.html`. Galactic Futurism is the room style behind `musem.eridu.top`.
 
 These are not recolours. Each changes the **minimum unit** of composition, so it is recognisable at 200px and useful for a different subject.
 
@@ -78,6 +78,7 @@ These are not recolours. Each changes the **minimum unit** of composition, so it
 | 6 | **Psychedelic poster** (SF, 1966–72) | liquid filter | music, biology, chemistry | Bungee Shade / Space Grotesk | night blue, magenta, orange, lemon, turquoise |
 | 7 | **Memphis** (Milan, 1981–88) | postmodern shape | design, music, patterns | Bricolage Grotesque / DM Sans | black, bone, pink, mint, cobalt, butter |
 | 8 | **Vaporwave / Y2K** (internet, 2010s) | pixel / gradient | internet history, media | Press Start 2P / Space Grotesk | violet, hot pink, cyan, chrome, grid blue |
+| 9 | **Galactic Futurism** (MUSEM, 2026) | orbital line | music rooms, space, memory | Michroma / Space Grotesk | void black, chrome ivory, cyan, solar gold, violet |
 
 ### Build order (all shipped)
 

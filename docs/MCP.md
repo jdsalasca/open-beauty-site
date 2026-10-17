@@ -62,13 +62,13 @@ All tools return human-readable text. Errors are returned with `isError: true` a
 
 ### `beauty_list_styles`
 
-No arguments. Returns the eleven styles with their display font, best use cases and what to avoid.
+No arguments. Returns the twelve styles with their display font, best use cases and what to avoid.
 
 ### `beauty_get_style`
 
 | Argument | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `style` | one of `renaissance`, `brutalist`, `papercraft`, `artdeco`, `isotype`, `opart`, `ukiyoe`, `bestiary`, `psychedelic`, `memphis`, `vaporwave` | yes | |
+| `style` | one of `renaissance`, `brutalist`, `papercraft`, `artdeco`, `isotype`, `opart`, `ukiyoe`, `bestiary`, `psychedelic`, `memphis`, `vaporwave`, `galactic` | yes | |
 | `format` | `markdown \| json` | no | Markdown by default; JSON returns the full preset. |
 
 Returns the hard tokens: exact fonts, palette, border widths, radii, motion window, shadow rule, layout rules, copy voice and a `Never` list. This is the single source of truth.

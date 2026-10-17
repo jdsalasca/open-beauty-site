@@ -9,7 +9,8 @@ export type StyleSlug =
   | 'bestiary'
   | 'psychedelic'
   | 'memphis'
-  | 'vaporwave';
+  | 'vaporwave'
+  | 'galactic';
 
 export type Locale = 'es' | 'en';
 
@@ -38,6 +39,13 @@ export interface Brief {
   /** Up to 6 cards. If omitted, the page renders without a works grid. */
   sections?: SectionBrief[];
   quote?: QuoteBrief;
+  /** Optional original audio track, used by the Galactic Futurism style. */
+  audio?: {
+    src: string;
+    title: string;
+    subtitle?: string;
+    note?: string;
+  };
   cta?: { label: string; href: string };
   footer?: string;
   locale?: Locale;

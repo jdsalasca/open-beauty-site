@@ -2,6 +2,7 @@ import type { StylePreset, StyleSlug } from '../types.js';
 import {
   artDeco,
   bestiary,
+  galactic,
   isotype,
   memphis,
   opart,
@@ -287,6 +288,7 @@ export const presets: Record<StyleSlug, StylePreset> = {
   psychedelic,
   memphis,
   vaporwave,
+  galactic,
 };
 
 export const styleSlugs = Object.keys(presets) as StyleSlug[];

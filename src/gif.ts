@@ -912,6 +912,28 @@ function frameShowcase(env: FrameEnv): void {
       else ctx.quadraticCurveTo(x - s * 0.045, y - s * 0.06, x, y);
     }
     ctx.stroke();
+  } else if (p.slug === 'galactic') {
+    ctx.strokeStyle = rgba(p.palette.accent, 0.6);
+    ctx.lineWidth = Math.max(1, s * 0.0015);
+    for (let i = 0; i < 3; i += 1) {
+      ctx.beginPath();
+      ctx.ellipse(w / 2, h / 2, s * (0.24 + i * 0.08), s * (0.08 + i * 0.045), (i * 0.36) + t * 0.06, 0, TAU);
+      ctx.stroke();
+    }
+    ctx.fillStyle = p.palette.accent2;
+    ctx.beginPath();
+    ctx.arc(w / 2, h / 2, s * 0.16, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = p.palette.accent3;
+    ctx.beginPath();
+    ctx.arc(w * 0.76, h * 0.24, s * 0.018, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = p.palette.ink;
+    for (let i = 0; i < 28; i += 1) {
+      ctx.beginPath();
+      ctx.arc((i * 79) % w, (i * 137) % h, s * 0.0022, 0, TAU);
+      ctx.fill();
+    }
   } else if (p.slug === 'vaporwave') {
     ctx.fillStyle = rgba(p.palette.accent, 0.75);
     ctx.beginPath();
@@ -979,6 +1001,7 @@ const RENDERERS: Record<StyleSlug, (env: FrameEnv) => void> = {
   psychedelic: frameShowcase,
   memphis: frameShowcase,
   vaporwave: frameShowcase,
+  galactic: frameShowcase,
 };
 
 export async function createGif(style: StyleSlug, options: GifOptions, output: string): Promise<GifResult> {

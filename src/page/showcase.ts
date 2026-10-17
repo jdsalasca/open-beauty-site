@@ -9,6 +9,14 @@ export interface ShowcaseConfig {
   heroNote?: string;
   ctaHeading?: { es: string; en: string };
   sectionTitle?: { es: string; en: string };
+  music?: ShowcaseMusic;
+}
+
+export interface ShowcaseMusic {
+  src: string;
+  title: string;
+  subtitle?: string;
+  note?: string;
 }
 
 const BASE_CSS = `:root{
@@ -66,6 +74,26 @@ h1 em{font-style:normal;color:var(--accent)}
 .card p{margin:0 0 18px;font-size:14px;line-height:1.55;color:var(--muted)}
 .card-link{margin-top:auto;font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
 .quote{position:relative;z-index:2;max-width:1000px;margin:0 auto;padding:64px 34px;text-align:center}
+.music-room{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:38px;align-items:center;max-width:1180px;margin:0 auto;padding:44px 34px;border-top:1px solid var(--muted);border-bottom:1px solid var(--muted)}
+.music-room h2{font-family:var(--display);font-size:clamp(30px,4vw,52px);line-height:1;letter-spacing:-.02em;margin:8px 0 10px}
+.music-room p{max-width:420px;margin:0;color:var(--muted);font-size:15px}
+.player{display:grid;grid-template-columns:68px 1fr;gap:16px;align-items:center;border:1px solid var(--accent);padding:14px;background:rgba(0,0,0,.18)}
+.player audio{display:none}
+.play{width:56px;height:56px;border:1px solid var(--accent);display:grid;place-items:center;color:var(--accent);font-size:16px;transition:background .3s,color .3s}
+.play:hover{background:var(--accent);color:var(--bg)}
+.player-main{min-width:0}
+.player-label{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 3px}
+.player-title{display:block;font-family:var(--body);font-size:15px;margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar{height:3px;background:rgba(128,128,128,.28);position:relative;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .1s linear}
+.player-meta{display:flex;justify-content:space-between;gap:10px;margin-top:6px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--muted)}
+.player-note{grid-column:1/-1;margin:0;font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:var(--muted)}
+.levels{display:flex;align-items:flex-end;gap:2px;height:14px;margin-top:7px}
+.levels i{display:block;width:3px;height:4px;background:var(--accent);opacity:.45}
+.player.is-playing .levels i{animation:level 1.1s ease-in-out infinite alternate}
+.player.is-playing .levels i:nth-child(2n){animation-delay:.18s}
+.player.is-playing .levels i:nth-child(3n){animation-delay:.33s}
+@keyframes level{to{height:14px;opacity:1}}
 .quote blockquote{font-family:var(--display);font-size:clamp(30px,4.2vw,54px);line-height:1.1;letter-spacing:-.018em;margin:0}
 .quote cite{display:block;margin-top:18px;font-family:var(--mono);font-style:normal;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 .cta{position:relative;z-index:2;max-width:1180px;margin:20px auto 70px;padding:58px 34px;text-align:center;border:1px solid var(--accent)}
@@ -141,6 +169,52 @@ const BASE_SCRIPT = `${REVEAL_SCRIPT}
       observer.disconnect();
     }, { threshold: .4 });
     observer.observe(element);
+  });
+  const formatTime = (value) => {
+    if (!Number.isFinite(value)) return '0:00';
+    const minutes = Math.floor(value / 60);
+    const seconds = Math.floor(value % 60);
+    return minutes + ':' + String(seconds).padStart(2, '0');
+  };
+  document.querySelectorAll('[data-player]').forEach((player) => {
+    const audio = player.querySelector('[data-audio]');
+    const button = player.querySelector('[data-play]');
+    const progress = player.querySelector('[data-progress]');
+    const current = player.querySelector('[data-current]');
+    const duration = player.querySelector('[data-duration]');
+    if (!audio || !button || !progress) return;
+    const setTime = () => {
+      const total = audio.duration || 0;
+      const now = audio.currentTime || 0;
+      progress.style.width = total ? Math.min(100, (now / total) * 100) + '%' : '0%';
+      if (current) current.textContent = formatTime(now);
+      if (duration) duration.textContent = formatTime(total);
+    };
+    button.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play().catch(() => {});
+      } else {
+        audio.pause();
+      }
+    });
+    audio.addEventListener('loadedmetadata', setTime);
+    audio.addEventListener('timeupdate', setTime);
+    audio.addEventListener('play', () => {
+      player.classList.add('is-playing');
+      button.textContent = '❚❚';
+      button.setAttribute('aria-label', 'Pausar');
+    });
+    audio.addEventListener('pause', () => {
+      player.classList.remove('is-playing');
+      button.textContent = '▶';
+      button.setAttribute('aria-label', 'Reproducir');
+    });
+    audio.addEventListener('ended', () => {
+      player.classList.remove('is-playing');
+      button.textContent = '▶';
+      progress.style.width = '0%';
+    });
+    setTime();
   });
 })();`;
 
@@ -222,6 +296,25 @@ export function renderShowcase(briefInput: Partial<Brief>, preset: StylePreset, 
       ? `<section id="works" class="works">
     <div class="section-head reveal"><div><p class="kicker">${esc(l.works)}</p><h2>${esc(sectionTitle)}</h2></div><span>${String(sections.length).padStart(2, '0')} ${esc(t(locale, 'piezas', 'pieces'))}</span></div>
     <div class="cards">${cards}</div>
+  </section>`
+      : ''
+  }
+  ${
+    config.music
+      ? `<section class="music-room reveal" id="music">
+    <div><p class="kicker">${esc(t(locale, 'Música original de la sala', 'Original room music'))}</p><h2>${esc(config.music.title)}</h2><p>${esc(config.music.subtitle || '')}</p></div>
+    <div class="player" data-player>
+      <button class="play" type="button" data-play aria-label="${esc(t(locale, 'Reproducir', 'Play'))}">▶</button>
+      <div class="player-main">
+        <p class="player-label">${esc(t(locale, 'Pista original', 'Original track'))}</p>
+        <strong class="player-title">${esc(config.music.title)}</strong>
+        <div class="bar"><i data-progress></i></div>
+        <div class="player-meta"><span data-current>0:00</span><span data-duration>0:00</span></div>
+        <div class="levels" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+      <p class="player-note">${esc(config.music.note || '')}</p>
+      <audio data-audio src="${esc(config.music.src)}" preload="metadata"></audio>
+    </div>
   </section>`
       : ''
   }

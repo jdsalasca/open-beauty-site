@@ -324,3 +324,127 @@ export function renderVaporwave(brief: Partial<Brief>, preset: StylePreset): str
 })();`,
   });
 }
+
+export function renderGalactic(brief: Partial<Brief>, preset: StylePreset): string {
+  const art = `<div class="galaxy-stage">
+  <div class="galaxy-stars" aria-hidden="true"></div>
+  <svg class="galaxy-svg" viewBox="0 0 760 760" role="img" aria-label="Planeta anillado con órbitas y estrellas">
+    <defs>
+      <radialGradient id="planetBody" cx="38%" cy="32%" r="72%">
+        <stop offset="0" stop-color="#B388FF"/>
+        <stop offset=".48" stop-color="#3A2669"/>
+        <stop offset="1" stop-color="#0D1020"/>
+      </radialGradient>
+      <linearGradient id="planetRing" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#79E8FF"/>
+        <stop offset=".55" stop-color="#F2F4FF"/>
+        <stop offset="1" stop-color="#F5C86B"/>
+      </linearGradient>
+    </defs>
+    <g class="orbit orbit-one" fill="none" stroke="#79E8FF" stroke-width="1" opacity=".55">
+      <ellipse cx="380" cy="380" rx="330" ry="104" transform="rotate(-18 380 380)"/>
+    </g>
+    <g class="orbit orbit-two" fill="none" stroke="#B388FF" stroke-width="1" opacity=".42">
+      <ellipse cx="380" cy="380" rx="292" ry="188" transform="rotate(28 380 380)"/>
+    </g>
+    <g class="orbit orbit-three" fill="none" stroke="#F5C86B" stroke-width="1" opacity=".35">
+      <ellipse cx="380" cy="380" rx="228" ry="228"/>
+    </g>
+    <circle cx="380" cy="380" r="142" fill="url(#planetBody)"/>
+    <path d="M244 380c0 26 61 47 136 47s136-21 136-47-61-47-136-47-136 21-136 47Z" fill="none" stroke="url(#planetRing)" stroke-width="4" transform="rotate(-18 380 380)"/>
+    <path d="M238 354c28 36 80 58 142 58s114-22 142-58" fill="none" stroke="#F2F4FF" stroke-width="1.2" opacity=".55" transform="rotate(-18 380 380)"/>
+    <circle cx="380" cy="380" r="142" fill="none" stroke="#79E8FF" stroke-width="1" opacity=".4"/>
+    <g class="galaxy-moon" fill="#F5C86B">
+      <circle cx="596" cy="238" r="9"/>
+      <circle cx="596" cy="238" r="19" fill="none" stroke="#F5C86B" opacity=".35"/>
+    </g>
+    <g fill="#F2F4FF" opacity=".8">
+      <circle cx="110" cy="150" r="1.4"/><circle cx="164" cy="98" r="1"/><circle cx="650" cy="116" r="1.6"/>
+      <circle cx="690" cy="420" r="1.1"/><circle cx="94" cy="512" r="1.5"/><circle cx="210" cy="650" r="1.2"/>
+      <circle cx="560" cy="650" r="1.3"/><circle cx="670" cy="584" r="1"/><circle cx="452" cy="92" r="1.2"/>
+    </g>
+  </svg>
+  <span class="galaxy-coord">RA 05h 35m · DEC −05° 23′</span>
+  <span class="galaxy-scale">1 UA / 149 597 870 km</span>
+</div>`;
+  const css = `
+.style-galactic{background:var(--bg);color:var(--ink)}
+.style-galactic body,.style-galactic p,.style-galactic .tagline{font-family:'Space Grotesk',sans-serif;font-weight:300}
+.style-galactic h1,.style-galactic .statement,.style-galactic .brand,.style-galactic .card h3,.style-galactic .quote blockquote,.style-galactic .cta h2,.style-galactic .section-head h2{font-family:'Michroma',sans-serif;font-weight:400}
+.style-galactic .top{border-bottom:1px solid rgba(121,232,255,.26);background:rgba(5,6,10,.55);backdrop-filter:blur(10px)}
+.style-galactic .brand{text-transform:uppercase;font-size:15px;letter-spacing:.12em}
+.style-galactic .brand .mark{color:var(--accent)}
+.style-galactic .top nav a{color:var(--muted)}
+.style-galactic .hero{grid-template-columns:1.02fr .98fr;gap:10px;padding-top:36px;padding-bottom:58px;min-height:680px}
+.style-galactic .hero-copy{position:relative;z-index:3}
+.style-galactic .eyebrow{color:var(--accent);letter-spacing:.22em}
+.style-galactic h1{font-size:clamp(40px,5.8vw,88px);line-height:1.16;letter-spacing:.01em;text-transform:uppercase;max-width:14ch}
+.style-galactic h1 em{display:block;font-style:normal;background:linear-gradient(180deg,var(--ink) 0%,var(--accent) 54%,var(--accent2) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.style-galactic .tagline{max-width:440px;color:var(--muted);font-size:17px;line-height:1.75}
+.style-galactic .btn{background:var(--accent);color:var(--bg);font-family:'Michroma',sans-serif;font-size:9px;letter-spacing:.14em}
+.style-galactic .btn:hover{background:var(--ink);color:var(--bg);transform:translateY(-2px)}
+.style-galactic .nav-cta{border:1px solid var(--accent);color:var(--accent);background:rgba(121,232,255,.05)}
+.style-galactic .hero-art{position:relative;z-index:2;min-width:0}
+.style-galactic .galaxy-stage{position:relative;width:112%;max-width:760px;margin-left:-2%;aspect-ratio:1}
+.style-galactic .galaxy-stars{position:absolute;inset:-20%;background-image:radial-gradient(circle at 18% 22%,rgba(242,244,255,.8) 0 1px,transparent 1.5px),radial-gradient(circle at 72% 16%,rgba(121,232,255,.8) 0 1px,transparent 1.6px),radial-gradient(circle at 84% 68%,rgba(242,244,255,.55) 0 1px,transparent 1.4px),radial-gradient(circle at 34% 82%,rgba(179,136,255,.65) 0 1px,transparent 1.5px);background-size:170px 190px,230px 210px,190px 240px,260px 200px;opacity:.8;animation:star-drift 70s linear infinite}
+.style-galactic .galaxy-svg{position:relative;z-index:2;width:100%;height:auto;overflow:visible}
+.style-galactic .orbit-one{transform-origin:380px 380px;animation:orbit 62s linear infinite}
+.style-galactic .orbit-two{transform-origin:380px 380px;animation:orbit 44s linear infinite reverse}
+.style-galactic .orbit-three{transform-origin:380px 380px;animation:orbit 80s linear infinite}
+.style-galactic .galaxy-moon{animation:moon 14s ease-in-out infinite}
+.style-galactic .galaxy-coord,.style-galactic .galaxy-scale{position:absolute;z-index:3;font-family:'Space Grotesk',sans-serif;font-size:8px;letter-spacing:.16em;color:var(--muted);text-transform:uppercase}
+.style-galactic .galaxy-coord{left:2%;bottom:12%}
+.style-galactic .galaxy-scale{right:0;bottom:8%}
+@keyframes orbit{to{transform:rotate(360deg)}}
+@keyframes moon{0%,100%{transform:translate(0,0)}50%{transform:translate(-8px,7px)}}
+@keyframes star-drift{to{transform:translate(-40px,20px)}}
+.style-galactic .manifesto{background:var(--surface);border-top:1px solid rgba(121,232,255,.2);border-bottom:1px solid rgba(121,232,255,.2);max-width:100%;padding-left:max(34px,calc((100vw - 1180px)/2));padding-right:max(34px,calc((100vw - 1180px)/2))}
+.style-galactic .statement{font-size:clamp(20px,2.3vw,30px);line-height:1.62;letter-spacing:.005em;color:var(--ink);max-width:880px}
+.style-galactic .kicker{color:var(--accent);letter-spacing:.2em}
+.style-galactic .aside{border-left:1px solid var(--accent3)}
+.style-galactic .aside span{color:var(--accent3)}
+.style-galactic .works{padding-top:54px}
+.style-galactic .section-head{border-color:rgba(121,232,255,.25)}
+.style-galactic .card{background:rgba(13,16,32,.72);border:1px solid rgba(121,232,255,.28);min-height:250px;color:var(--ink)}
+.style-galactic .card:hover{background:var(--surface);border-color:var(--accent);transform:translateY(-4px)}
+.style-galactic .card-num{color:var(--accent3)}
+.style-galactic .card h3{font-size:17px;line-height:1.45;letter-spacing:.02em;margin:10px 0 12px;text-transform:uppercase}
+.style-galactic .card p{color:var(--muted);font-size:13px}
+.style-galactic .card-link{color:var(--accent)}
+.style-galactic .music-room{border-color:rgba(245,200,107,.4);background:linear-gradient(180deg,rgba(13,16,32,.5),rgba(5,6,10,0))}
+.style-galactic .music-room h2{font-size:24px;text-transform:uppercase;letter-spacing:.04em;color:var(--accent3)}
+.style-galactic .music-room .player{border-color:rgba(121,232,255,.5);background:rgba(2,3,10,.78);padding:16px;grid-template-columns:64px 1fr}
+.style-galactic .play{border-color:var(--accent);color:var(--accent);border-radius:50%;width:52px;height:52px;background:rgba(121,232,255,.06)}
+.style-galactic .play:hover{background:var(--accent);color:var(--bg)}
+.style-galactic .bar{background:rgba(121,232,255,.16);height:2px}
+.style-galactic .bar i{background:var(--accent3)}
+.style-galactic .player-title{font-family:'Space Grotesk',sans-serif;font-weight:400;letter-spacing:.02em}
+.style-galactic .player-note{color:var(--muted);opacity:.8}
+.style-galactic .quote{max-width:100%;background:var(--surface);border-top:1px solid rgba(121,232,255,.2);border-bottom:1px solid rgba(121,232,255,.2);padding-top:52px;padding-bottom:52px}
+.style-galactic .quote blockquote{font-size:clamp(18px,2.3vw,30px);line-height:1.55;text-transform:uppercase;letter-spacing:.02em;color:var(--ink)}
+.style-galactic .quote cite{color:var(--accent)}
+.style-galactic .cta{background:linear-gradient(180deg,rgba(13,16,32,.92),rgba(5,6,10,.98));border:1px solid var(--accent3);max-width:1100px;box-shadow:0 0 80px rgba(179,136,255,.08)}
+.style-galactic .cta h2{font-size:clamp(20px,2.8vw,34px);line-height:1.45;text-transform:uppercase;letter-spacing:.04em}
+.style-galactic .cta .btn{background:var(--accent3);color:var(--bg)}
+.style-galactic .cta .btn:hover{background:var(--ink)}
+.style-galactic .foot{border-color:rgba(121,232,255,.22);color:var(--muted)}
+@media (max-width:980px){.style-galactic .hero{grid-template-columns:1fr;min-height:auto}.style-galactic .galaxy-stage{width:100%;max-width:560px;margin:0 auto}.style-galactic h1{max-width:16ch}.style-galactic .music-room{grid-template-columns:1fr}.style-galactic .music-room .player{grid-template-columns:56px 1fr}}
+@media (prefers-reduced-motion:reduce){.style-galactic .orbit-one,.style-galactic .orbit-two,.style-galactic .orbit-three,.style-galactic .galaxy-moon,.style-galactic .galaxy-stars{animation:none}}
+`;
+  return renderShowcase(brief, preset, {
+    art,
+    css,
+    eyebrow: brief.eyebrow || 'Museo de la memoria · Sala 01',
+    heroNote: 'GALACTIC FUTURISM · ÓRBITA 01',
+    sectionTitle: { es: 'Tres ventanas al disco', en: 'Three windows into the record' },
+    ctaHeading: { es: 'La memoria sigue sonando.', en: 'The memory keeps playing.' },
+    music: brief.audio
+      ? {
+          src: brief.audio.src,
+          title: brief.audio.title,
+          subtitle: brief.audio.subtitle,
+          note: brief.audio.note,
+        }
+      : undefined,
+  });
+}

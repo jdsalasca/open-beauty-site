@@ -7,7 +7,7 @@ description: Create art-directed HTML pages and looping GIFs with the open-beaut
 
 You are using a design harness, not a blank canvas. The harness owns the typography, palette, borders, spacing, motion and validation. Your job is to choose a style, write real content, and let the tools render it.
 
-## The eleven styles
+## The twelve styles
 
 | Style | Use it for | Display font | Feeling |
 | --- | --- | --- | --- |
@@ -22,6 +22,7 @@ You are using a design harness, not a blank canvas. The harness owns the typogra
 | `psychedelic` | music, festivals, chemistry, consciousness | Bungee Shade | liquid blobs, magenta, acid, 1967 poster |
 | `memphis` | design history, music, workshops, creative education | Bricolage Grotesque | squiggles, terrazzo, cobalt, hard keylines |
 | `vaporwave` | internet history, media, digital culture, nostalgia | Press Start 2P | chrome, grid, 1999 window, glitch |
+| `galactic` | music rooms, space, memory, album tributes | Michroma | planetarium, one planet, orbital rings, original audio |
 
 Do not mix styles. Do not invent a twelfth one.
 

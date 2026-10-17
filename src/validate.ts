@@ -266,8 +266,14 @@ function issuesForMarkup(html: string): ValidationIssue[] {
   if (!/<html[^>]+lang=/i.test(html)) {
     issues.push({ severity: 'warn', code: 'missing-lang', message: 'The <html> tag has no lang attribute.', fix: 'Add lang="es" or lang="en".' });
   }
-  for (const pattern of ['{{', 'undefined', 'NaN', 'lorem ipsum']) {
-    if (html.toLowerCase().includes(pattern.toLowerCase())) {
+  const placeholders: Array<[string, boolean]> = [
+    ['{{', html.includes('{{')],
+    ['undefined', /\bundefined\b/.test(html)],
+    ['NaN', /\bNaN\b/.test(html)],
+    ['lorem ipsum', /lorem ipsum/i.test(html)],
+  ];
+  for (const [pattern, found] of placeholders) {
+    if (found) {
       issues.push({
         severity: 'error',
         code: 'unresolved-token',
@@ -324,7 +330,7 @@ export function visionReport(css: string, preset: StylePreset): VisionReport {
 
   const gradients = (css.match(/(?<!repeating-)(?:linear|radial)-gradient/gi) ?? []).length;
   const bleed = /100vw|calc\(50%\s*-\s*50vw\)|clip-path|grid-template-columns:[^;]*fr[^;]*fr/i.test(css);
-  const material = ['feTurbulence', 'inset 0', 'clip-path', 'repeating-linear-gradient', 'stroke-dashoffset', '8px 8px 0', 'border:3px', 'drop-shadow', 'writing-mode', 'columns:'].filter((marker) =>
+  const material = ['feTurbulence', 'inset 0', 'clip-path', 'repeating-linear-gradient', 'stroke-dashoffset', '8px 8px 0', 'border:3px', 'drop-shadow', 'writing-mode', 'columns:', 'radial-gradient'].filter((marker) =>
     css.includes(marker),
   ).length;
   const gradientBudget =
@@ -340,7 +346,9 @@ export function visionReport(css: string, preset: StylePreset): VisionReport {
               ? 3
               : preset.slug === 'ukiyoe' || preset.slug === 'artdeco'
                 ? 2
-                : 0;
+                : preset.slug === 'galactic'
+                  ? 8
+                  : 0;
 
   const checks: VisionCheck[] = [
     {

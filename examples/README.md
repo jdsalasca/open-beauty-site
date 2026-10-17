@@ -24,12 +24,12 @@ Generated with `pnpm education`:
 - [education/renaissance-perspective.html](education/renaissance-perspective.html) — `La città ideale` (A/100 · vision 4/4).
 - [education/papercraft-museum.html](education/papercraft-museum.html) — `Museo de las Cosas Pequeñas` (A/100 · vision 4/4).
 
-## Eight new directions
+## Nine new directions
 
 Generated with `pnpm showcase`:
 
-- [showcase/index.html](showcase/index.html) — gallery of the eight new styles.
+- [showcase/index.html](showcase/index.html) — gallery of the nine new styles.
 - [compare.html](compare.html) — my brief vs Luna 6 Max, side by side.
-- Art Deco, Isotype, Op Art, Ukiyo-e, Bestiario, Psicodelia, Memphis and Vaporwave. Every page is A/100 · vision 4/4, with an original SVG/CSS illustration, interaction and a GIF in `gifs/showcase-<style>.gif`.
+- Art Deco, Isotype, Op Art, Ukiyo-e, Bestiario, Psicodelia, Memphis, Vaporwave and Galactic Futurism. Every page is A/100 · vision 4/4, with an original SVG/CSS illustration, interaction and a GIF in `gifs/showcase-<style>.gif`.
 
 The grammar is fixed; the composition changes with `seed` and the copy changes with the brief. Copy is not design.

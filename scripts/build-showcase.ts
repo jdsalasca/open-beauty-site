@@ -149,6 +149,25 @@ const pages: Array<{ slug: StyleSlug; brief: Brief }> = [
     },
   },
   {
+    slug: 'galactic',
+    brief: {
+      title: 'La noche larga',
+      brand: 'Observatorio Eridu',
+      eyebrow: 'Astronomía · Observatorio, 03:40',
+      tagline: 'Lo que vemos es una carta que tardó millones de años en llegar.',
+      intro:
+        'Mirar el cielo es mirar hacia atrás. La luz que entra por el telescopio salió de su estrella antes de que existiera este edificio. La noche no es un fondo: es un archivo.',
+      sections: [
+        { kicker: '01 / La luz', title: 'Una carta vieja', body: 'Cada estrella es una imagen del pasado. La distancia no se mide en kilómetros: se mide en años de retraso.' },
+        { kicker: '02 / El silencio', title: 'El espacio no está vacío', body: 'Hay polvo, gas y campos magnéticos. Lo que llamamos vacío es un lugar lleno de cosas que no emiten luz visible.' },
+        { kicker: '03 / La memoria', title: 'El cielo como archivo', body: 'Los astrónomos leen capas: la luz más roja llegó antes. La historia del universo está escrita en el color.' },
+      ],
+      quote: { text: 'No miramos el cielo: leemos una carta vieja.', author: 'Observatorio Eridu' },
+      cta: { label: 'Abrir el observatorio', href: '#top' },
+      footer: 'Observatorio Eridu · Cuaderno de noche',
+      locale: 'es',
+    },
+  },  {
     slug: 'vaporwave',
     brief: {
       title: 'La historia de internet en 12 ventanas',
@@ -192,6 +211,7 @@ async function main(): Promise<void> {
     psychedelic: 'VIBRÁ',
     memphis: 'MEMPHIS',
     vaporwave: '1999',
+    galactic: 'ERIDU',
   };
   for (const page of pages) {
     const gif = path.join(root, 'examples', 'gifs', `showcase-${page.slug}.gif`);
@@ -220,11 +240,11 @@ a{color:inherit;text-decoration:none}img{display:block;width:100%}
 .brand{font-family:var(--display);font-size:18px}.brand i{color:var(--red);font-style:normal}
 .top nav{display:flex;gap:18px;font-size:10px;letter-spacing:.12em;text-transform:uppercase}
 .hero{padding:52px 22px 34px;border-bottom:2px solid var(--ink);max-width:1320px;margin:0 auto}
-h1{font-family:var(--display);font-size:clamp(46px,8vw,116px);line-height:1.08;letter-spacing:-.06em;text-transform:uppercase;margin:0;max-width:14ch}
-h1 mark{background:var(--acid);padding:.02em .04em;box-decoration-break:clone;line-height:1.12}
+h1{font-family:var(--display);font-size:clamp(42px,7vw,102px);line-height:1.1;letter-spacing:-.06em;text-transform:uppercase;margin:0;max-width:16ch}
+h1 mark{background:var(--acid);padding:.02em .04em;box-decoration-break:clone;line-height:1.14}
 p.lede{max-width:640px;font-size:16px;line-height:1.6;margin:22px 0}
 .cta{display:inline-flex;border:2px solid var(--ink);padding:10px 13px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;background:var(--acid)}
-.grid{max-width:1320px;margin:0 auto;padding:34px 22px 60px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.grid{max-width:1320px;margin:0 auto;padding:34px 22px 60px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
 .card{position:relative;border:2px solid var(--ink);background:#fff;display:grid;grid-template-columns:1fr;transition:transform .25s,box-shadow .25s}
 .card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--ink)}
 .card img{aspect-ratio:16/10;object-fit:cover;object-position:top;border-bottom:2px solid var(--ink)}
@@ -238,7 +258,7 @@ h2{font-family:var(--display);font-size:24px;line-height:1;letter-spacing:-.03em
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono&display=swap" rel="stylesheet">
 </head><body>
 <header class="top"><a class="brand" href="../index.html">OPEN<i>/</i>BEAUTY</a><nav><a href="../index.html">Galería</a><a href="../compare.html">Dos manos</a><a href="https://github.com/jdsalasca/open-beauty-site">GitHub ↗</a></nav></header>
-<section class="hero"><h1>Ocho<br><mark>estilos nuevos.</mark></h1><p class="lede">Art Deco, Isotype, Op Art, Ukiyo-e, Bestiario, Psicodelia, Memphis y Vaporwave. SVG y CSS original, tipografía exacta, interacción y GIF. Todos A/100 y vision 4/4.</p><a class="cta" href="../compare.html">Ver mi versión vs Luna 6 Max →</a></section>
+<section class="hero"><h1>Nueve<br><mark>estilos nuevos.</mark></h1><p class="lede">Art Deco, Isotype, Op Art, Ukiyo-e, Bestiario, Psicodelia, Memphis, Vaporwave y Galactic Futurism. SVG y CSS original, tipografía exacta, interacción y GIF. Todos A/100 y vision 4/4.</p><a class="cta" href="../compare.html">Ver mi versión vs Luna 6 Max →</a></section>
 <main class="grid">${cards}</main>
 </body></html>`,
     'utf8',
