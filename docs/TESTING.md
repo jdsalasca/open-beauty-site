@@ -1,0 +1,159 @@
+# Testing
+
+## Automated
+
+```bash
+pnpm build
+pnpm test
+```
+
+The suite runs with Node's test runner through `tsx`:
+
+- `test/core.test.ts` — every style renders a complete document, escapes user content, and reaches A/100; the validator rejects generic AI design (Inter, invented colours, 8px radii, 5px borders, soft shadows in brutalist).
+- `test/mcp.test.ts` — spawns the built MCP server over stdio, verifies the seven-tool surface, reads the Renaissance tokens, creates and audits a page, and creates a valid GIF.
+
+Current result: **8/8 passing** in ~1 s (plus MCP startup).
+
+```text
+✔ every style renders a complete document and scores A
+✔ user content is escaped
+✔ the validator catches generic AI design
+✔ the validator rejects unknown styles
+✔ exposes the full tool surface
+✔ styles expose exact fonts and palette
+✔ creates and audits a page over MCP
+✔ creates a valid GIF over MCP
+```
+
+## Visual QA
+
+The example pages are rendered at 1440×900 and full-page with Playwright (Chrome), after scrolling to trigger the reveal observer. Screenshots live in `examples/previews/`.
+
+```bash
+pnpm examples
+python scripts/qa.py        # needs playwright + the Chrome channel
+```
+
+The QA script also prints section geometry and console errors. The current run reports zero console errors and all sections visible.
+
+## End-to-end: Codex CLI with Luna 6
+
+Codex CLI 0.163.0 was configured with `model = "gpt-6-luna"` and `model_reasoning_effort = "max"`. The MCP server was registered as `open_beauty` in `~/.codex/config.toml` for the duration of the test.
+
+Prompt (shortened): *"Call beauty_list_styles, then beauty_get_style for brutalist, create a page titled LUNA / SIGNAL with three sections, validate it, report the grade."*
+
+Observed tool trace:
+
+```text
+mcp: open_beauty/beauty_list_styles started
+mcp: open_beauty/beauty_list_styles (completed)
+mcp: open_beauty/beauty_get_style started
+mcp: open_beauty/beauty_get_style (completed)
+mcp: open_beauty/beauty_create_page started
+mcp: open_beauty/beauty_create_page (completed)
+mcp: open_beauty/beauty_validate started
+mcp: open_beauty/beauty_validate (completed)
+```
+
+Result:
+
+```text
+Validación completada: A (100/100).
+Archivo: C:/Users/jdsal/Documents/Programming-personal/open-beauty-site/luna-test/brutalist.html
+Problemas pendientes: ninguno.
+```
+
+Session: `01a14a89-39a0-72b2-a140-b779e9569f69` · 32,813 tokens. The agent did not hand-write HTML; every design decision came from the harness.
+
+The output is preserved at `examples/agents/luna-brutalist.html`.
+
+## End-to-end: colmena-mcp with `luna-max`
+
+`colmena-mcp` was connected over stdio by `scripts/e2e-colmena.ts`. It reported a healthy doctor (Node, git, config, Codex binary, home writable) and ran a job with `worker: "luna-max"`, `isolation: "inplace"`.
+
+Result:
+
+```json
+{
+  "id": "bf1623ed",
+  "state": "done",
+  "worker": "luna-max",
+  "model": "gpt-6-luna",
+  "provider": "codex",
+  "effort": "max",
+  "cost_usd": 0,
+  "reportOk": true,
+  "report": {
+    "RESULT": "Página Casa Limón creada; validación A · 100/100.",
+    "FILES": ".../open-beauty-site/luna-test/papercraft.html",
+    "TESTS": "beauty_validate con estilo papercraft: sin problemas.",
+    "RISKS": "Ninguno reportado."
+  }
+}
+```
+
+The output is preserved at `examples/agents/luna-papercraft.html`.
+
+That is two different styles, two different agents, two A/100 pages, with no manual HTML.
+
+## End-to-end: the cheapest worker in the hive
+
+To test the "dumb model" claim literally, the same harness was run through `colmena-mcp` with `worker: "max-hive"` — an OpenCode worker on `opencode-go/longcat-2.5-preview-free`, effort `high`, cost 0. OpenCode does not share Codex's MCP config, so the prompt used the CLI, which calls the same renderers.
+
+Result:
+
+```json
+{
+  "id": "070b00e9",
+  "state": "done",
+  "worker": "max-hive",
+  "model": "opencode-go/longcat-2.5-preview-free",
+  "provider": "opencode",
+  "effort": "high",
+  "cost_usd": 0,
+  "reportOk": true,
+  "report": {
+    "RESULT": "Ejecuté ambos comandos en orden. El page generó el HTML y el validate confirmó conformidad con el sistema editorial.",
+    "FILES": "luna-test/hive-renaissance.html (creado, 17555 bytes).",
+    "TESTS": "page → Renaissance · 100/100; validate → A · 100/100 · renaissance."
+  }
+}
+```
+
+The output is preserved at `examples/agents/hive-renaissance.html`. It is a quieter page than the Luna ones because the brief had no sections, but it is still a complete, art-directed folio: the harness supplied the layout, the free model supplied four sentences.
+
+## Reproduce the agent tests
+
+1. Build and confirm the MCP server starts:
+
+   ```bash
+   pnpm build
+   node dist/cli.js doctor
+   ```
+
+2. Add the server to Codex (`~/.codex/config.toml`):
+
+   ```toml
+   [mcp_servers.open_beauty]
+   command = "node"
+   args = ["C:/absolute/path/open-beauty-site/dist/mcp/server.js"]
+   startup_timeout_sec = 30.0
+   ```
+
+3. Run Codex with a brief. Keep the prompt short and explicit about using the tools.
+
+4. For colmena:
+
+   ```bash
+   COLMENA_ROOT="C:/path/to/colmena-mcp" pnpm e2e:colmena
+   ```
+
+   `~/.colmena/colmena.yml` must define a `luna-max` worker. The script calls `doctor` first, then `run` with `worker: "luna-max"`, `wait: true` and a 480 s timeout.
+
+## What was not tested
+
+- A production CDN / hosting setup.
+- Right-to-left scripts and CJK typography.
+- More than 6 sections or 900 characters of body copy.
+- Windows display scaling above 150%.
+- Real user acceptance beyond the two agent runs above.
