@@ -10,9 +10,9 @@ pnpm test
 The suite runs with Node's test runner through `tsx`:
 
 - `test/core.test.ts` — every style renders a complete document, escapes user content, reaches A/100 and vision 4/4; the validator rejects generic AI design (Inter, invented colours, 8px radii, 5px borders, soft shadows in brutalist); `seed` changes the composition archetype.
-- `test/mcp.test.ts` — spawns the built MCP server over stdio, verifies the seven-tool surface, reads the Renaissance tokens, creates and audits a page, and creates a valid GIF.
+- `test/mcp.test.ts` — spawns the built MCP server over stdio, verifies the eight-tool surface, reads the Renaissance tokens, creates and audits a page, creates a valid GIF, creates an animated deck and verifies the presentation skill and example routes.
 
-Current result: **9/9 passing** in ~1 s (plus MCP startup).
+Current result: **13/13 passing** in ~1.5 s (plus MCP startup).
 
 ```text
 ✔ every style renders a complete document and scores A
@@ -23,6 +23,10 @@ Current result: **9/9 passing** in ~1 s (plus MCP startup).
 ✔ styles expose exact fonts and palette
 ✔ creates and audits a page over MCP
 ✔ creates a valid GIF over MCP
+✔ creates an animated deck over MCP
+✔ serves the presentation skill on demand
+✔ example routes point to real files
+✔ the deck audit catches a slide with too many words
 ```
 
 ## Visual QA
@@ -205,3 +209,18 @@ The ninth new style is live at [musem.eridu.top](https://musem.eridu.top). The R
 - More than 6 sections or 900 characters of body copy.
 - Windows display scaling above 150%.
 - Real user acceptance beyond the agent runs above.
+
+## Deck end-to-end: Luna 6 Max
+
+Codex CLI `0.163.0`, `gpt-6-luna`, `model_reasoning_effort = "max"`. The MCP server was registered only for the run and removed afterwards.
+
+Prompt asked for an 8-slide 16:9 symposium deck in `galactic`, subfamily `deep-field`, with statement, points, stats and quote layouts. The agent read `beauty_get_skill({ format: "deck" })`, the Galactic style guide and the subfamilies; it never wrote HTML.
+
+Result: **A · 100/100 · vision 4/4**, 8 slides (6 content + cover + closing), 47,481 tokens.
+
+- Deck: `examples/luna-deck/memory-future.html`
+- Screenshots: `examples/luna-deck/luna-deck-1.png` … `luna-deck-8.png`
+- Log: `qa/luna-deck3.log` (local only; not published)
+
+The editorial auditor's P0 list drove the deck audit, the per-style atmosphere fix, `inert`/`aria-live`, print styles and the `sala | gabinete | cartel` composition modes. Figures and per-style motion profiles are still pending.
+

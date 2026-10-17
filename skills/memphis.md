@@ -86,6 +86,14 @@ Milan, 1981: squiggles, terrazzo, cobalt and pink. Postmodern play with a straig
 - No more than five accents.
 - No aligning everything.
 
+## Subfamilies
+
+| Slug | Name | Composition | Accent | What changes |
+| --- | --- | --- | --- |
+| `cobalt` | Cobalt | sala | `accent3` | Blue keyline, pink squiggle, bone ground. |
+| `pink` | Pink | gabinete | `accent` | Pink field, mint object, cobalt detail. |
+| `mint` | Mint | cartel | `accent2` | Mint ground, butter shape, black keyline. |
+
 ## Signature moves
 
 - Squiggles and terrazzo

@@ -86,6 +86,14 @@ Parchment, iron-gall ink and a single lapis blue. A manuscript page with an illu
 - No modern sans-serif.
 - No generic fantasy dragons.
 
+## Subfamilies
+
+| Slug | Name | Composition | Accent | What changes |
+| --- | --- | --- | --- |
+| `scriptorium` | Scriptorium | sala | `accent` | Old gold and iron gall; the room lit by one candle. |
+| `lapis` | Lapis | gabinete | `accent3` | A blue initial and a gold rule; the sacred page. |
+| `rubric` | Rubric | cartel | `accent2` | Vermilion marginalia and a green vine. |
+
 ## Signature moves
 
 - Illuminated initial with a creature

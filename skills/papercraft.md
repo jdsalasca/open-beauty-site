@@ -88,6 +88,14 @@ Cream, kraft and scissors. Layered paper shapes, soft shadows, tape and a gentle
 - No rounded sans display, no hard shadows, no dark backgrounds.
 - No serif-with-hairlines (DM Serif) and no rounded sans (Fredoka). Both read as stock.
 
+## Subfamilies
+
+| Slug | Name | Composition | Accent | What changes |
+| --- | --- | --- | --- |
+| `picnic` | Picnic | sala | `accent2` | Sage tablecloth, terracotta card, butter tape. |
+| `carnival` | Carnival | gabinete | `accent` | Terracotta lead, sky secondary, confetti kept small. |
+| `museum` | Museum | cartel | `accent3` | Sky-blue label, paper white, plum only in the seal. |
+
 ## Signature moves
 
 - Fraunces Soft display with Nunito Sans body

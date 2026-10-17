@@ -1,6 +1,6 @@
 # open-beauty-site style guide
 
-Three complete editorial systems. Every value here is normative: if a page uses another font, colour, border width or radius, the validator will flag it.
+Twelve complete editorial systems. Every value here is normative: if a page uses another font, colour, border width or radius, the validator will flag it.
 
 # Renaissance — A chalky, asymmetric fresco system
 
@@ -84,6 +84,14 @@ Plaster, pigment and ink. Flat pastel fields, one cinnabar event, a large arch p
 - No soft gradient washes. Pastel must arrive as a flat field.
 - No saturated primary colours. The pastels must stay chalky, never neon.
 - No more than one italic phrase per screen.
+
+## Subfamilies
+
+| Slug | Name | Composition | Accent | What changes |
+| --- | --- | --- | --- |
+| `fresco` | Fresco | sala | `accent3` | Powder-blue ground, cinnabar only in the margin. |
+| `incarnato` | Incarnato | gabinete | `accent2` | Warm plaster and a cinnabar event; the most human room. |
+| `notte` | Notte | cartel | `accent` | A darker sacristy: umber ground, gold line, one blue window. |
 
 ## Signature moves
 
@@ -175,6 +183,14 @@ A loud poster that happens to be a website. Visible skeleton, 3px borders, hard 
 - No serif, no pastel, no centered-everything layouts.
 - No more than one acid block and one red stamp per screen.
 
+## Subfamilies
+
+| Slug | Name | Composition | Accent | What changes |
+| --- | --- | --- | --- |
+| `concrete` | Concrete | sala | `accent` | Paper, ink and acid: the original control room. |
+| `signal` | Signal | gabinete | `accent2` | Red warning stripe on a bone field. Louder, not busier. |
+| `terminal` | Terminal | cartel | `accent3` | Blue telemetry and monospace; a control room after hours. |
+
 ## Signature moves
 
 - 3px black borders on every surface
@@ -265,6 +281,14 @@ Cream, kraft and scissors. Layered paper shapes, soft shadows, tape and a gentle
 - No rounded sans display, no hard shadows, no dark backgrounds.
 - No serif-with-hairlines (DM Serif) and no rounded sans (Fredoka). Both read as stock.
 
+## Subfamilies
+
+| Slug | Name | Composition | Accent | What changes |
+| --- | --- | --- | --- |
+| `picnic` | Picnic | sala | `accent2` | Sage tablecloth, terracotta card, butter tape. |
+| `carnival` | Carnival | gabinete | `accent` | Terracotta lead, sky secondary, confetti kept small. |
+| `museum` | Museum | cartel | `accent3` | Sky-blue label, paper white, plum only in the seal. |
+
 ## Signature moves
 
 - Fraunces Soft display with Nunito Sans body
@@ -354,6 +378,14 @@ Black lacquer, champagne lines and a sunburst geometry. Symmetrical, vertical, c
 - No rainbow palette.
 - No centred-everything without one asymmetry.
 
+## Subfamilies
+
+| Slug | Name | Composition | Accent | What changes |
+| --- | --- | --- | --- |
+| `lacquer` | Lacquer | sala | `accent` | Champagne line on black; the default lobby. |
+| `emerald` | Emerald | gabinete | `accent2` | Deep green ground and a gold sun; a cinema foyer. |
+| `cinema` | Cinema | cartel | `accent4` | Rose-gold light, burgundy shadow, one white screen. |
+
 ## Signature moves
 
 - Gold sunburst with stepped rays
@@ -441,6 +473,14 @@ Vienna, 1925: cream paper, black rules and a red pictogram that counts. Data as 
 - No drop shadows.
 - No more than two pictogram families.
 - No fake statistics.
+
+## Subfamilies
+
+| Slug | Name | Composition | Accent | What changes |
+| --- | --- | --- | --- |
+| `vienna` | Vienna | sala | `accent` | Signal red pictograms on cream; the 1925 room. |
+| `civic` | Civic | gabinete | `accent2` | Teal series, mustard secondary, counting grid. |
+| `archive` | Archive | cartel | `accent3` | Mustard index cards and grey rules; quieter data. |
 
 ## Signature moves
 
@@ -530,6 +570,14 @@ Black and bone, a pattern that refuses to sit still. The page is an instrument f
 - No more than 3 Hz.
 - No pattern without a pause.
 
+## Subfamilies
+
+| Slug | Name | Composition | Accent | What changes |
+| --- | --- | --- | --- |
+| `interference` | Interference | sala | `accent` | Black and bone with a red warning line. |
+| `electric` | Electric | gabinete | `accent2` | Blue interference and a single acid pause. |
+| `acid` | Acid | cartel | `accent3` | Acid core, black field, red only as an error. |
+
 ## Signature moves
 
 - Moiré field that moves with the pointer
@@ -617,6 +665,14 @@ Prussian blue, washi cream and a vermilion seal. Flat planes, a great wave and a
 - No 3D or drop shadows.
 - No cherry-blossom clip art.
 - No faux-Japanese lettering.
+
+## Subfamilies
+
+| Slug | Name | Composition | Accent | What changes |
+| --- | --- | --- | --- |
+| `prussian` | Prussian | sala | `accent` | The classic deep blue sea and a vermilion seal. |
+| `vermilion` | Vermilion | gabinete | `accent2` | Red sun, blue shadow, washi sky. |
+| `mist` | Mist | cartel | `accent3` | Grey-blue distance; the horizon disappears. |
 
 ## Signature moves
 
@@ -706,6 +762,14 @@ Parchment, iron-gall ink and a single lapis blue. A manuscript page with an illu
 - No modern sans-serif.
 - No generic fantasy dragons.
 
+## Subfamilies
+
+| Slug | Name | Composition | Accent | What changes |
+| --- | --- | --- | --- |
+| `scriptorium` | Scriptorium | sala | `accent` | Old gold and iron gall; the room lit by one candle. |
+| `lapis` | Lapis | gabinete | `accent3` | A blue initial and a gold rule; the sacred page. |
+| `rubric` | Rubric | cartel | `accent2` | Vermilion marginalia and a green vine. |
+
 ## Signature moves
 
 - Illuminated initial with a creature
@@ -793,6 +857,14 @@ Night blue, magenta and orange, liquid shapes and a headline that bends. A 1967 
 - No more than three hot colours.
 - No illegible body copy.
 - No strobing above 3 Hz.
+
+## Subfamilies
+
+| Slug | Name | Composition | Accent | What changes |
+| --- | --- | --- | --- |
+| `magenta` | Magenta | sala | `accent` | Hot pink lead, orange shadow, acid only as punctuation. |
+| `acid` | Acid | gabinete | `accent3` | Yellow lead on violet; the poster under blacklight. |
+| `teal` | Teal | cartel | `accent4` | Cool teal and violet; the after-hours version. |
 
 ## Signature moves
 
@@ -882,6 +954,14 @@ Milan, 1981: squiggles, terrazzo, cobalt and pink. Postmodern play with a straig
 - No more than five accents.
 - No aligning everything.
 
+## Subfamilies
+
+| Slug | Name | Composition | Accent | What changes |
+| --- | --- | --- | --- |
+| `cobalt` | Cobalt | sala | `accent3` | Blue keyline, pink squiggle, bone ground. |
+| `pink` | Pink | gabinete | `accent` | Pink field, mint object, cobalt detail. |
+| `mint` | Mint | cartel | `accent2` | Mint ground, butter shape, black keyline. |
+
 ## Signature moves
 
 - Squiggles and terrazzo
@@ -970,6 +1050,14 @@ Violet dusk, chrome type and a perspective grid. A desktop from 1999, half-remem
 - No illegible pixel body copy.
 - No flashing.
 
+## Subfamilies
+
+| Slug | Name | Composition | Accent | What changes |
+| --- | --- | --- | --- |
+| `chrome` | Chrome | sala | `accent2` | Cyan chrome, violet desktop, magenta accent. |
+| `hot-pink` | Hot pink | gabinete | `accent` | Pink window, cyan grid, chrome type. |
+| `terminal` | Terminal | cartel | `accent3` | Chrome text on blue; the quiet server room. |
+
 ## Signature moves
 
 - Draggable 1999 window
@@ -1057,6 +1145,14 @@ Deep-space navy, chrome ivory and one slow planet. Michroma, orbital rings and t
 - No neon rainbow.
 - No autoplay audio.
 - No sci-fi logos or fake alien alphabets.
+
+## Subfamilies
+
+| Slug | Name | Composition | Accent | What changes |
+| --- | --- | --- | --- |
+| `orbital` | Orbital | sala | `accent` | Cyan orbit, violet planet, chrome ivory. |
+| `deep-field` | Deep field | gabinete | `accent2` | Violet nebula and a gold moon; less interface. |
+| `solar` | Solar | cartel | `accent3` | Gold sun, black space, cyan only as a line. |
 
 ## Signature moves
 

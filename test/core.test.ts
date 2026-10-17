@@ -1,8 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { renderPage } from '../src/page/index.js';
-import { validateHtml } from '../src/validate.js';
-import { styleSlugs } from '../src/styles/presets.js';
+import { validateDeck, validateHtml } from '../src/validate.js';
+import { getStyle, styleSlugs } from '../src/styles/presets.js';
+import { renderDeck } from '../src/deck.js';
 import type { Brief } from '../src/types.js';
 
 const brief: Brief = {
@@ -69,4 +70,23 @@ test('the validator catches generic AI design', () => {
 
 test('the validator rejects unknown styles', () => {
   assert.throws(() => validateHtml('<html></html>', 'editorial' as never), /Unknown style/);
+});
+
+
+test('the deck audit catches a slide with too many words', () => {
+  const longBody = 'idea '.repeat(70).trim();
+  const deck = renderDeck({
+    style: getStyle('galactic'),
+    brief: {
+      title: 'Prueba de deck',
+      slides: [
+        { layout: 'statement', kicker: '01', title: 'Una idea', body: longBody },
+        { layout: 'points', kicker: '02', title: 'Tres puntos', points: [
+          { title: 'Uno' }, { title: 'Dos' }, { title: 'Tres' },
+        ] },
+      ],
+    },
+  });
+  const result = validateDeck(deck.html, 'galactic');
+  assert.ok(result.issues.some((issue) => issue.code === 'deck-word-count'));
 });

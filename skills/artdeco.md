@@ -86,6 +86,14 @@ Black lacquer, champagne lines and a sunburst geometry. Symmetrical, vertical, c
 - No rainbow palette.
 - No centred-everything without one asymmetry.
 
+## Subfamilies
+
+| Slug | Name | Composition | Accent | What changes |
+| --- | --- | --- | --- |
+| `lacquer` | Lacquer | sala | `accent` | Champagne line on black; the default lobby. |
+| `emerald` | Emerald | gabinete | `accent2` | Deep green ground and a gold sun; a cinema foyer. |
+| `cinema` | Cinema | cartel | `accent4` | Rose-gold light, burgundy shadow, one white screen. |
+
 ## Signature moves
 
 - Gold sunburst with stepped rays

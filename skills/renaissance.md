@@ -91,6 +91,14 @@ Plaster, pigment and ink. Flat pastel fields, one cinnabar event, a large arch p
 - No saturated primary colours. The pastels must stay chalky, never neon.
 - No more than one italic phrase per screen.
 
+## Subfamilies
+
+| Slug | Name | Composition | Accent | What changes |
+| --- | --- | --- | --- |
+| `fresco` | Fresco | sala | `accent3` | Powder-blue ground, cinnabar only in the margin. |
+| `incarnato` | Incarnato | gabinete | `accent2` | Warm plaster and a cinnabar event; the most human room. |
+| `notte` | Notte | cartel | `accent` | A darker sacristy: umber ground, gold line, one blue window. |
+
 ## Signature moves
 
 - Fixed double hairline frame around the viewport

@@ -86,6 +86,14 @@ Violet dusk, chrome type and a perspective grid. A desktop from 1999, half-remem
 - No illegible pixel body copy.
 - No flashing.
 
+## Subfamilies
+
+| Slug | Name | Composition | Accent | What changes |
+| --- | --- | --- | --- |
+| `chrome` | Chrome | sala | `accent2` | Cyan chrome, violet desktop, magenta accent. |
+| `hot-pink` | Hot pink | gabinete | `accent` | Pink window, cyan grid, chrome type. |
+| `terminal` | Terminal | cartel | `accent3` | Chrome text on blue; the quiet server room. |
+
 ## Signature moves
 
 - Draggable 1999 window

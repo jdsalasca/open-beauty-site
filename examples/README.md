@@ -30,6 +30,7 @@ Generated with `pnpm showcase`:
 
 - [showcase/index.html](showcase/index.html) — gallery of the nine new styles.
 - [compare.html](compare.html) — my brief vs Luna 6 Max, side by side.
+- [luna-deck/memory-future.html](luna-deck/memory-future.html) — 8-slide animated deck by Luna 6 Max (A/100 · vision 4/4).
 - Art Deco, Isotype, Op Art, Ukiyo-e, Bestiario, Psicodelia, Memphis, Vaporwave and Galactic Futurism. Every page is A/100 · vision 4/4, with an original SVG/CSS illustration, interaction and a GIF in `gifs/showcase-<style>.gif`.
 
 The grammar is fixed; the composition changes with `seed` and the copy changes with the brief. Copy is not design.

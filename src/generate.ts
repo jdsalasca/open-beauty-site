@@ -1,9 +1,11 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import type { Brief, GifOptions, GifResult, StyleSlug, ValidationResult } from './types.js';
+import type { Brief, DeckBrief, GifOptions, GifResult, StyleSlug, ValidationResult } from './types.js';
 import { renderPage } from './page/index.js';
-import { validateHtml } from './validate.js';
+import { validateDeck, validateHtml } from './validate.js';
 import { createGif } from './gif.js';
+import { renderDeck } from './deck.js';
+import { getStyle } from './styles/presets.js';
 
 export interface PageResult {
   html: string;
@@ -60,4 +62,23 @@ export async function createGifFile({ style, output, ...options }: CreateGifFile
   );
   await mkdir(path.dirname(target), { recursive: true });
   return createGif(style, options, target);
+}
+
+export interface CreateDeckOptions {
+  style: StyleSlug;
+  brief: Partial<DeckBrief>;
+  /** Absolute path or a path relative to process.cwd(). Omit to return HTML only. */
+  output?: string;
+}
+
+export async function createDeck({ style, brief, output }: CreateDeckOptions): Promise<PageResult & { slideCount: number; subfamily: string }> {
+  const deck = renderDeck({ style: getStyle(style), brief });
+  const validation = validateDeck(deck.html, style);
+  if (!output) {
+    return { html: deck.html, validation, slideCount: deck.slideCount, subfamily: deck.subfamily.name };
+  }
+  const absolute = path.resolve(process.cwd(), output);
+  await mkdir(path.dirname(absolute), { recursive: true });
+  await writeFile(absolute, deck.html, 'utf8');
+  return { html: deck.html, path: absolute, validation, slideCount: deck.slideCount, subfamily: deck.subfamily.name };
 }

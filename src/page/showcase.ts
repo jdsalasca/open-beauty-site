@@ -232,6 +232,8 @@ export function renderShowcase(briefInput: Partial<Brief>, preset: StylePreset, 
   const ctaHeading = t(locale, config.ctaHeading?.es ?? 'El siguiente capítulo es tuyo.', config.ctaHeading?.en ?? 'The next chapter is yours.');
   const sectionTitle = t(locale, config.sectionTitle?.es ?? l.selectedWorks, config.sectionTitle?.en ?? l.selectedWorks);
   const year = new Date().getFullYear();
+  const subfamily = brief.subfamily ? preset.subfamilies?.find((item) => item.slug === brief.subfamily) : undefined;
+  const subAccent = subfamily ? preset.palette[subfamily.accent] : undefined;
   const css = BASE_CSS
     .replaceAll('{bg}', preset.palette.bg)
     .replaceAll('{surface}', preset.palette.surface)
@@ -339,9 +341,9 @@ export function renderShowcase(briefInput: Partial<Brief>, preset: StylePreset, 
     title: `${brief.title} — ${brand}`,
     description: tagline,
     preset,
-    css: `${css}\n${config.css}`,
+    css: `${css}\n${config.css}${subAccent ? `\n.style-${preset.slug}{--accent:${subAccent}}` : ''}`,
     body,
-    bodyClass: `style-${preset.slug}`,
+    bodyClass: `style-${preset.slug}${subfamily ? ` sub-${subfamily.slug}` : ''}`,
     script: `${BASE_SCRIPT}\n${config.script ?? ''}`,
   });
 }

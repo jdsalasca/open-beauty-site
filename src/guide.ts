@@ -3,11 +3,11 @@ import type { StyleSlug } from './types.js';
 
 export const SKILL_FALLBACK = `# open-beauty-site skill
 
-Use this workflow whenever you need to produce a beautiful HTML page or a GIF.
+Use this workflow whenever you need to produce a beautiful HTML page, an animated 16:9 presentation or a GIF.
 
 1. Call \`beauty_list_styles\` and choose one style. Do not mix styles.
 2. Call \`beauty_get_style\` for that style and read the typography, palette and hard rules.
-3. Call \`beauty_create_page\` with a real title, tagline, and 2–3 sections. Never invent colors, fonts or border widths.
+3. For a page, call \`beauty_create_page\` with a real title, tagline and 2–3 sections. For a presentation, call \`beauty_create_deck\` with 4–8 content slides and one subfamily. Never invent colors, fonts or border widths.
 4. Call \`beauty_validate\` on the generated file. If the grade is below A, read the fixes and regenerate.
 5. For motion, call \`beauty_create_gif\` with the same style and a short text.
 
@@ -73,6 +73,12 @@ ${bullets(preset.guidance.copy)}
 
 ${bullets(preset.guidance.dont)}
 
+## Subfamilies
+
+| Slug | Name | Composition | Accent | What changes |
+| --- | --- | --- | --- |
+${(preset.subfamilies ?? []).map((sub) => `| \`${sub.slug}\` | ${sub.name} | ${sub.composition ?? 'sala'} | \`${sub.accent}\` | ${sub.description} |`).join('\n')}
+
 ## Signature moves
 
 ${bullets(preset.signature)}
@@ -82,7 +88,8 @@ ${bullets(preset.signature)}
 export function stylesOverview(): string {
   const lines = styleSlugs.map((slug) => {
     const preset = presets[slug];
-    return `## ${preset.name} (\`${slug}\`)\n${preset.epithet}. ${preset.description}\n- Display: ${preset.fonts.display}\n- Use for: ${preset.bestFor.join(', ')}\n- Avoid for: ${preset.avoid.join(', ')}`;
+    return `## ${preset.name} (\`${slug}\`)\n${preset.epithet}. ${preset.description}\n- Display: ${preset.fonts.display}\n- Use for: ${preset.bestFor.join(', ')}\n- Avoid for: ${preset.avoid.join(', ')}
+- Subfamilies: ${(preset.subfamilies ?? []).map((sub) => `\`${sub.slug}\` (${sub.composition ?? 'sala'})`).join(', ')}`;
   });
   return `# open-beauty-site styles\n\n${lines.join('\n\n')}\n\nNext: call beauty_get_style with one slug.`;
 }

@@ -1,6 +1,6 @@
 # MCP server
 
-`open-beauty-site` exposes a stdio MCP server with seven tools and four resources. The server is deliberately narrow: it does not call an LLM, it does not browse the web, and it does not invent content. It turns a short brief into a complete, validated artefact.
+`open-beauty-site` exposes a stdio MCP server with eight tools and fifteen resources. The server is deliberately narrow: it does not call an LLM, it does not browse the web, and it does not invent content. It turns a short brief into a complete, validated artefact.
 
 ## Build
 
@@ -78,8 +78,9 @@ Returns the hard tokens: exact fonts, palette, border widths, radii, motion wind
 | Argument | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `style` | style slug | no | Appends that style guide to the skill. |
+| `format` | `page \| deck` | no | `deck` appends the presentation skill. |
 
-Returns the contents of `skills/beauty.md`: the mandatory workflow, a brief recipe, self-check and failure modes. Load it into an agent's context before asking it to design.
+Returns the contents of `skills/beauty.md` (and `skills/presentation.md` when `format: "deck"`). Load it into an agent's context before asking it to design.
 
 ### `beauty_create_page`
 
@@ -99,10 +100,28 @@ Creates a full HTML page and writes it to disk.
 | `footer` | string (≤160) | no | |
 | `locale` | `es \| en` | no | Defaults to `es`. |
 | `seed` | integer | no | Composition archetype: `0` default, `1` mirrored hero, `2` full-bleed (papercraft). |
+| `subfamily` | string | no | Curated tone/composition family from `beauty_get_style`; changes the lead accent on showcase pages. |
 | `output` | string | no | Defaults to `beauty-output/<style>-<slug>-<timestamp>.html`. |
 | `include_html` | boolean | no | Also return the full HTML in the response. |
 
 Returns the absolute path, craft grade/score, vision score (0–4), fonts used and up to six issues with fixes.
+
+### `beauty_create_deck`
+
+Creates a 16:9 animated presentation. The cover and closing are generated; `slides` is the content in between.
+
+| Argument | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `style` | style slug | yes | |
+| `title` | string (≤120) | yes | Deck title on the cover. |
+| `tagline` | string (≤200) | no | One sentence under the title. |
+| `slides` | array (1–8) | yes | `{ layout?, kicker?, title, body?, points?, stats?, quote? }`. |
+| `subfamily` | string | no | Structural family: `sala`, `gabinete` or `cartel` mode from the style guide. |
+| `cta` | `{ label, href }` | no | Used on the closing slide. |
+| `locale` | `es \| en` | no | |
+| `output` | string | no | Defaults to `beauty-output/<style>-deck-<timestamp>.html`. |
+
+The deck includes keyboard/touch navigation, progress, fullscreen, print styles, `inert` hidden slides, `aria-live` and reduced-motion handling. Craft and the deck audit both run.
 
 ### `beauty_create_gif`
 
@@ -138,6 +157,8 @@ Returns a craft score (0–100), a craft grade (A–F), a vision score (0–4), 
 - `<title>`, `<h1>`, `<main>`, `lang`, unresolved placeholders, missing `alt`;
 - contrast of the token pairs the style actually uses for text.
 
+For a deck, the same audit also checks slide count, words per slide, points per slide, layout variety, `aria-live`, `inert` and print styles.
+
 Vision (0–4) is a separate heuristic, not a grade:
 
 - `scale-jump`: max/min font size ≥10;
@@ -155,11 +176,10 @@ No arguments. Returns the absolute paths of the reference pages and GIFs. Use th
 
 | URI | MIME type | Content |
 | --- | --- | --- |
-| `beauty://styles/renaissance` | `application/json` | Full preset |
-| `beauty://styles/brutalist` | `application/json` | Full preset |
-| `beauty://styles/papercraft` | `application/json` | Full preset |
+| `beauty://styles/{slug}` | `application/json` | Full preset for each of the 12 styles |
 | `beauty://skills/beauty.md` | `text/markdown` | Agent skill |
 | `beauty://skills/education.md` | `text/markdown` | Educational page skill |
+| `beauty://skills/presentation.md` | `text/markdown` | Animated presentation skill |
 
 Resources are read-only. Use the tools to create files.
 

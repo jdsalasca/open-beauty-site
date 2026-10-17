@@ -87,6 +87,14 @@ A loud poster that happens to be a website. Visible skeleton, 3px borders, hard 
 - No serif, no pastel, no centered-everything layouts.
 - No more than one acid block and one red stamp per screen.
 
+## Subfamilies
+
+| Slug | Name | Composition | Accent | What changes |
+| --- | --- | --- | --- |
+| `concrete` | Concrete | sala | `accent` | Paper, ink and acid: the original control room. |
+| `signal` | Signal | gabinete | `accent2` | Red warning stripe on a bone field. Louder, not busier. |
+| `terminal` | Terminal | cartel | `accent3` | Blue telemetry and monospace; a control room after hours. |
+
 ## Signature moves
 
 - 3px black borders on every surface

@@ -86,6 +86,14 @@ Deep-space navy, chrome ivory and one slow planet. Michroma, orbital rings and t
 - No autoplay audio.
 - No sci-fi logos or fake alien alphabets.
 
+## Subfamilies
+
+| Slug | Name | Composition | Accent | What changes |
+| --- | --- | --- | --- |
+| `orbital` | Orbital | sala | `accent` | Cyan orbit, violet planet, chrome ivory. |
+| `deep-field` | Deep field | gabinete | `accent2` | Violet nebula and a gold moon; less interface. |
+| `solar` | Solar | cartel | `accent3` | Gold sun, black space, cyan only as a line. |
+
 ## Signature moves
 
 - One planet, three orbits

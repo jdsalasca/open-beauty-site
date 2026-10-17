@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
-import type { Brief, StyleSlug } from './types.js';
+import type { Brief, DeckBrief, StyleSlug } from './types.js';
 import { VERSION } from './index.js';
-import { createGifFile, createPage, slugify, timestamp } from './generate.js';
-import { formatValidation, validateHtml } from './validate.js';
+import { createDeck, createGifFile, createPage, slugify, timestamp } from './generate.js';
+import { formatValidation, validateDeck, validateHtml } from './validate.js';
 import { getStyle, isStyleSlug, styleSlugs } from './styles/presets.js';
 import { styleGuideMarkdown, stylesOverview } from './guide.js';
 import { ensureFonts } from './canvas.js';
@@ -75,6 +75,8 @@ function mergeBrief(fileBrief: Partial<Brief>, flags: Flags): Partial<Brief> {
   if (locale === 'es' || locale === 'en') merged.locale = locale;
   const seed = numberFlag(flags, 'seed');
   if (seed !== undefined) merged.seed = seed;
+  const subfamily = stringFlag(flags, 'subfamily');
+  if (subfamily) merged.subfamily = subfamily;
   return merged;
 }
 
@@ -83,11 +85,13 @@ function help(): string {
 A design harness for small models: HTML pages + GIFs with an editorial line.
 
 Usage:
-  beauty styles                              List the eleven styles
+  beauty styles                              List the twelve styles
   beauty guide <style> [--json]              Read the exact tokens and rules
   beauty page --style <s> --title "..."      Create a full HTML page
       [--tagline "..."] [--intro "..."] [--brand "..."] [--locale es|en]
       [--brief brief.json] [--out file.html]
+  beauty deck --style <s> --title "..."      Create an animated 16:9 presentation
+      --brief deck.json [--subfamily orbital] [--out deck.html]
   beauty gif --style <s> --text "..."        Create a looping GIF
       [--subtitle "..."] [--template title|loop|poster] [--fps 20] [--duration 2.4]
       [--width 800] [--height 800] [--out file.gif]
@@ -150,6 +154,21 @@ async function main(): Promise<void> {
       return;
     }
 
+    case 'deck': {
+      const style = requireStyle(stringFlag(flags, 'style'));
+      const brief = mergeBrief(await loadBrief(stringFlag(flags, 'brief')), flags) as Partial<DeckBrief>;
+      if (!brief.title) throw new Error('Pass --title "..." or use --brief with a title.');
+      const output =
+        stringFlag(flags, 'out') ??
+        path.join('beauty-output', `${style}-deck-${slugify(brief.title)}-${timestamp()}.html`);
+      const result = await createDeck({ style, brief, output });
+      console.log(`${getStyle(style).name} deck · ${result.slideCount} slides · ${result.subfamily}`);
+      console.log(`${result.validation.grade} ${result.validation.score}/100 · vision ${result.validation.vision.score}/4`);
+      console.log(result.path);
+      if (result.validation.issues.length) console.log(formatValidation(result.validation));
+      return;
+    }
+
     case 'gif': {
       const style = requireStyle(stringFlag(flags, 'style'));
       const text = stringFlag(flags, 'text');
@@ -180,7 +199,7 @@ async function main(): Promise<void> {
       if (!file) throw new Error('Pass an HTML file to validate.');
       const style = requireStyle(stringFlag(flags, 'style'));
       const html = await readFile(path.resolve(process.cwd(), file), 'utf8');
-      const result = validateHtml(html, style);
+      const result = html.includes('class="deck') ? validateDeck(html, style) : validateHtml(html, style);
       console.log(formatValidation(result));
       console.log(`stats: ${JSON.stringify(result.stats)}`);
       if (flags.strict && result.score < 90) process.exitCode = 1;

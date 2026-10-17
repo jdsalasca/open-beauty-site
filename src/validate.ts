@@ -330,7 +330,7 @@ export function visionReport(css: string, preset: StylePreset): VisionReport {
 
   const gradients = (css.match(/(?<!repeating-)(?:linear|radial)-gradient/gi) ?? []).length;
   const bleed = /100vw|calc\(50%\s*-\s*50vw\)|clip-path|grid-template-columns:[^;]*fr[^;]*fr/i.test(css);
-  const material = ['feTurbulence', 'inset 0', 'clip-path', 'repeating-linear-gradient', 'stroke-dashoffset', '8px 8px 0', 'border:3px', 'drop-shadow', 'writing-mode', 'columns:', 'radial-gradient'].filter((marker) =>
+  const material = ['feTurbulence', 'inset 0', 'clip-path', 'repeating-linear-gradient', 'stroke-dashoffset', '8px 8px 0', 'border:3px', 'drop-shadow', 'writing-mode', 'columns:', 'radial-gradient', 'border:var(--line)'].filter((marker) =>
     css.includes(marker),
   ).length;
   const gradientBudget =
@@ -455,4 +455,99 @@ export function formatValidation(result: ValidationResult): string {
     if (issue.fix) lines.push(`  fix: ${issue.fix}`);
   }
   return lines.join('\n');
+}
+/**
+ * Deck-specific audit. It does not replace the page audit; it adds checks that
+ * only make sense for a 16:9 sequence.
+ */
+export function validateDeck(html: string, style: StyleSlug): ValidationResult {
+  const base = validateHtml(html, style);
+  const issues = [...base.issues];
+  const blocks = html.match(/<section class="slide[\s\S]*?<\/section>/g) ?? [];
+
+  if (blocks.length < 4) {
+    issues.push({
+      severity: 'warn',
+      code: 'deck-too-short',
+      message: `The deck has ${blocks.length} slides. A presentation needs at least 4.`,
+      fix: 'Add a statement, a points slide or a quote. The cover and closing are already generated.',
+    });
+  }
+  if (blocks.length > 12) {
+    issues.push({
+      severity: 'warn',
+      code: 'deck-too-long',
+      message: `The deck has ${blocks.length} slides; 12 is the maximum.`,
+      fix: 'Split the deck or cut one slide per section.',
+    });
+  }
+
+  const layouts = new Set<string>();
+  blocks.forEach((block, index) => {
+    const layout = block.match(/layout-([a-z]+)/)?.[1] ?? 'cover';
+    layouts.add(layout);
+    const text = block
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/&[a-z]+;/gi, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    const words = text ? text.split(' ').length : 0;
+    if (layout !== 'cover' && layout !== 'closing' && words > 55) {
+      issues.push({
+        severity: 'warn',
+        code: 'deck-word-count',
+        message: `Slide ${index + 1} has ${words} words. Keep a content slide below 55.`,
+        fix: 'Cut the body or split the idea into two slides.',
+      });
+    }
+    const points = (block.match(/class="point\b/g) ?? []).length;
+    if (points > 4) {
+      issues.push({
+        severity: 'error',
+        code: 'deck-too-many-points',
+        message: `Slide ${index + 1} has ${points} points; the maximum is 4.`,
+        fix: 'Keep 2–3 points and move the rest to another slide.',
+      });
+    }
+  });
+
+  if (layouts.size < 2) {
+    issues.push({
+      severity: 'warn',
+      code: 'deck-monotone',
+      message: 'All content slides use the same layout.',
+      fix: 'Use at least one points, stats or quote slide to change the rhythm.',
+    });
+  }
+  if (!html.includes('aria-live')) {
+    issues.push({
+      severity: 'warn',
+      code: 'deck-missing-live',
+      message: 'The deck has no aria-live region for slide changes.',
+      fix: 'Add an aria-live status and announce the current slide.',
+    });
+  }
+  if (!html.includes('inert')) {
+    issues.push({
+      severity: 'warn',
+      code: 'deck-missing-inert',
+      message: 'Hidden slides are still focusable (no inert).',
+      fix: 'Set inert on slides that are not active.',
+    });
+  }
+  if (!html.includes('@media print')) {
+    issues.push({
+      severity: 'warn',
+      code: 'deck-missing-print',
+      message: 'The deck has no print styles; a PDF would lose slides.',
+      fix: 'Add @media print with one page per slide.',
+    });
+  }
+
+  const errors = issues.filter((issue) => issue.severity === 'error').length;
+  const warnings = issues.filter((issue) => issue.severity === 'warn').length;
+  const infos = issues.filter((issue) => issue.severity === 'info').length;
+  const score = Math.max(0, Math.min(100, 100 - errors * 18 - warnings * 6 - infos));
+  const grade: ValidationResult['grade'] = score >= 90 ? 'A' : score >= 80 ? 'B' : score >= 70 ? 'C' : score >= 60 ? 'D' : 'F';
+  return { ...base, score, grade, issues };
 }

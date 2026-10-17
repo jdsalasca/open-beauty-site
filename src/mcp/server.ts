@@ -5,10 +5,10 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { z } from 'zod';
-import type { Brief, StyleSlug } from '../types.js';
+import type { Brief, DeckBrief, StyleSlug } from '../types.js';
 import { VERSION } from '../index.js';
-import { createGifFile, createPage, timestamp } from '../generate.js';
-import { formatValidation, validateHtml } from '../validate.js';
+import { createDeck, createGifFile, createPage, timestamp } from '../generate.js';
+import { formatValidation, validateDeck, validateHtml } from '../validate.js';
 import { presets, styleSlugs } from '../styles/presets.js';
 import { SKILL_FALLBACK, styleGuideMarkdown, stylesOverview } from '../guide.js';
 import { packageRoot } from '../paths.js';
@@ -25,6 +25,7 @@ const styleEnum = z.enum([
   'psychedelic',
   'memphis',
   'vaporwave',
+  'galactic',
 ]);
 const localeEnum = z.enum(['es', 'en']);
 
@@ -42,6 +43,26 @@ const quoteSchema = z.object({
 const ctaSchema = z.object({
   label: z.string().min(1).max(40),
   href: z.string().max(200),
+});
+
+const deckPointSchema = z.object({
+  title: z.string().min(1).max(80),
+  body: z.string().max(180).optional(),
+});
+
+const deckStatSchema = z.object({
+  value: z.string().min(1).max(18),
+  label: z.string().min(1).max(48),
+});
+
+const deckSlideSchema = z.object({
+  layout: z.enum(['statement', 'points', 'stats', 'quote']).optional(),
+  kicker: z.string().max(40).optional(),
+  title: z.string().min(1).max(120),
+  body: z.string().max(300).optional(),
+  points: z.array(deckPointSchema).max(4).optional(),
+  stats: z.array(deckStatSchema).max(3).optional(),
+  quote: quoteSchema.optional(),
 });
 
 const briefFields = {
@@ -74,6 +95,20 @@ function briefFromArgs(args: Record<string, unknown>): Partial<Brief> {
   };
 }
 
+function deckBriefFromArgs(args: Record<string, unknown>): Partial<DeckBrief> {
+  return {
+    title: args.title as string,
+    tagline: args.tagline as string | undefined,
+    intro: args.intro as string | undefined,
+    eyebrow: args.eyebrow as string | undefined,
+    brand: args.brand as string | undefined,
+    slides: args.slides as DeckBrief['slides'],
+    cta: args.cta as Brief['cta'],
+    locale: args.locale as Brief['locale'],
+    subfamily: args.subfamily as string | undefined,
+  };
+}
+
 function text(value: string) {
   return { content: [{ type: 'text' as const, text: value }] };
 }
@@ -82,14 +117,14 @@ export function createBeautyServer(): McpServer {
   const server = new McpServer(
     { name: 'open-beauty-site', version: VERSION },
     {
-      instructions: `open-beauty-site is a design harness. It exists so a small model can produce a page or GIF that looks art-directed instead of generated.
+      instructions: `open-beauty-site is a design harness. It exists so a small model can produce a page, a 16:9 presentation or a GIF that looks art-directed instead of generated.
 
 MANDATORY WORKFLOW
 1. Call beauty_list_styles.
 2. Call beauty_get_style for the chosen style and follow its hard tokens. Never invent fonts, hex colours, border widths or radii.
-3. Call beauty_create_page with a real title, a one-sentence tagline, an optional intro and 2–3 sections.
+3. Call beauty_create_page with a real title, tagline, optional intro and 2–3 sections, or beauty_create_deck with 4–8 content slides, one idea per slide and a curated subfamily.
 4. Call beauty_validate on the output file. Reach craft A (90+) and vision 4/4. If craft is lower, read the fix lines and adjust the brief or the HTML. If vision is 3/4, change the composition (seed), the image scale or the material.
-5. For motion, call beauty_create_gif with the same style.
+5. For motion, call beauty_create_gif with the same style. For a deck, use beauty_get_skill({ format: "deck" }) before briefing.
 
 QUALITY BAR
 - No lorem ipsum, no placeholder names, no emoji, no stock photography.
@@ -104,9 +139,9 @@ QUALITY BAR
   server.registerTool(
     'beauty_list_styles',
     {
-      title: 'List the three editorial systems',
+      title: 'List the twelve editorial systems',
       description:
-        'Start here. Returns the three available styles (renaissance, brutalist, papercraft) with when to use each one and the exact display font.',
+        'Start here. Returns the twelve available styles with when to use each one, the exact display font, and the curated subfamilies.',
       inputSchema: {},
     },
     async () => text(stylesOverview()),
@@ -119,7 +154,7 @@ QUALITY BAR
       description:
         'Returns the exact fonts, palette, border widths, radii, motion window, layout rules and do/don\'t list. Call this before creating anything.',
       inputSchema: {
-        style: styleEnum.describe('One of the 11 art directions. Call beauty_list_styles for the full list.'),
+        style: styleEnum.describe('One of the 12 art directions. Call beauty_list_styles for the full list.'),
         format: z.enum(['markdown', 'json']).optional().describe('Markdown for reading, JSON for programmatic use.'),
       },
     },
@@ -139,14 +174,22 @@ QUALITY BAR
         'Returns a copy-paste skill/prompt that teaches an agent the mandatory workflow and the quality bar. Optionally includes one style guide.',
       inputSchema: {
         style: styleEnum.optional().describe('Include a specific style guide after the skill instructions.'),
+        format: z.enum(['page', 'deck']).optional().describe('Include the presentation skill when format is deck.'),
       },
     },
-    async ({ style }) => {
+    async ({ style, format }) => {
       let skill = SKILL_FALLBACK;
       try {
         skill = await readFile(path.join(packageRoot(), 'skills', 'beauty.md'), 'utf8');
       } catch {
         // The generated fallback is intentionally equivalent.
+      }
+      if (format === 'deck') {
+        try {
+          skill += `\n\n---\n\n${await readFile(path.join(packageRoot(), 'skills', 'presentation.md'), 'utf8')}`;
+        } catch {
+          skill += '\n\nUse beauty_create_deck with 4–8 content slides, one subfamily and 5–8 total slides.';
+        }
       }
       if (style) {
         return text(`${skill}\n\n---\n\n${styleGuideMarkdown(style)}`);
@@ -196,6 +239,50 @@ QUALITY BAR
         return text(args.include_html ? `${summary}\n\n--- HTML ---\n${result.html}` : summary);
       } catch (error) {
         return { content: [{ type: 'text' as const, text: `Create failed: ${(error as Error).message}` }], isError: true };
+      }
+    },
+  );
+
+  server.registerTool(
+    'beauty_create_deck',
+    {
+      title: 'Create an animated 16:9 presentation',
+      description:
+        'Builds a complete keyboard-navigable deck with transitions, progress, cover and closing. Use 4–8 slides, one idea per slide, 1–2 sentences per body. Supports curated subfamilies. Returns craft/vision and the file path.',
+      inputSchema: {
+        style: styleEnum.describe('Editorial system to use.'),
+        title: z.string().min(1).max(120),
+        tagline: z.string().max(200).optional(),
+        intro: z.string().max(900).optional(),
+        eyebrow: z.string().max(60).optional(),
+        brand: z.string().max(50).optional(),
+        slides: z.array(deckSlideSchema).min(1).max(8).describe('Content slides. The cover and closing are generated automatically.'),
+        subfamily: z.string().max(40).optional().describe('Curated subfamily slug from beauty_get_style.'),
+        cta: ctaSchema.optional(),
+        locale: localeEnum.optional(),
+        output: z.string().max(260).optional().describe('File path. Defaults to ./beauty-output/<style>-deck-<timestamp>.html.'),
+        include_html: z.boolean().optional(),
+      },
+    },
+    async (args) => {
+      try {
+        const style = args.style;
+        const output =
+          args.output ??
+          path.join('beauty-output', `${style}-deck-${args.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 48)}-${timestamp()}.html`);
+        const result = await createDeck({ style, brief: deckBriefFromArgs(args), output });
+        const summary = [
+          `Created a ${result.slideCount}-slide ${presets[style].name} presentation (${result.subfamily} subfamily).`,
+          `file: ${result.path}`,
+          `grade: ${result.validation.grade} (${result.validation.score}/100)`,
+          `vision: ${result.validation.vision.score}/4 (${result.validation.vision.checks.map((check) => `${check.name}:${check.passed ? 'ok' : 'missing'}`).join(' · ')})`,
+          `issues: ${result.validation.issues.length}`,
+          `\nNavigation: ← → / space, Home/End, F for fullscreen, swipe on touch.`,
+          `\nNext: open the file, or call beauty_validate if you edit it.`,
+        ].join('\n');
+        return text(args.include_html ? `${summary}\n\n--- HTML ---\n${result.html}` : summary);
+      } catch (error) {
+        return { content: [{ type: 'text' as const, text: `Deck failed: ${(error as Error).message}` }], isError: true };
       }
     },
   );
@@ -258,7 +345,7 @@ QUALITY BAR
         if (!source) {
           return { content: [{ type: 'text' as const, text: 'Pass either path or html.' }], isError: true };
         }
-        const result = validateHtml(source, style);
+        const result = source.includes('class="deck') ? validateDeck(source, style) : validateHtml(source, style);
         return text(`${formatValidation(result)}\n\nstats: ${JSON.stringify(result.stats)}`);
       } catch (error) {
         return { content: [{ type: 'text' as const, text: `Validate failed: ${(error as Error).message}` }], isError: true };
@@ -270,14 +357,19 @@ QUALITY BAR
     'beauty_examples',
     {
       title: 'List reference output',
-      description: 'Returns the paths of the eleven example pages and GIFs shipped with the repo.',
+      description: 'Returns the paths of the twelve example pages and GIFs shipped with the repo.',
       inputSchema: {},
     },
     async () => {
       const root = packageRoot();
+      const showcase = new Set<StyleSlug>(['artdeco', 'isotype', 'opart', 'ukiyoe', 'bestiary', 'psychedelic', 'memphis', 'vaporwave', 'galactic']);
       const lines = styleSlugs.map((slug) => {
-        const page = path.join(root, 'examples', slug, 'index.html');
-        const gif = path.join(root, 'examples', 'gifs', `${slug}.gif`);
+        const page = showcase.has(slug)
+          ? path.join(root, 'examples', 'showcase', slug, 'index.html')
+          : path.join(root, 'examples', slug, 'index.html');
+        const gif = showcase.has(slug)
+          ? path.join(root, 'examples', 'gifs', `showcase-${slug}.gif`)
+          : path.join(root, 'examples', 'gifs', `${slug}.gif`);
         return `- ${presets[slug].name}: page ${page} · gif ${gif}`;
       });
       return text(`# Reference output\n\n${lines.join('\n')}\n\nOpen the pages in a browser. Compare your result against them.`);
@@ -320,6 +412,21 @@ QUALITY BAR
         '# Education skill\n\nOne learning objective, one misconception, one concrete detail, one source. Sections as rooms: hook → concept → use. Quote the primary source.';
       try {
         text = await readFile(path.join(packageRoot(), 'skills', 'education.md'), 'utf8');
+      } catch {
+        // Keep the compact fallback.
+      }
+      return { contents: [{ uri: uri.href, mimeType: 'text/markdown', text }] };
+    },
+  );
+
+  server.registerResource(
+    'beauty-presentation-skill',
+    'beauty://skills/presentation.md',
+    { title: 'Animated presentation skill', mimeType: 'text/markdown' },
+    async (uri) => {
+      let text = '# Presentation skill\n\n5–8 slides. One idea per slide. 35 words max. Use beauty_create_deck with a curated subfamily.';
+      try {
+        text = await readFile(path.join(packageRoot(), 'skills', 'presentation.md'), 'utf8');
       } catch {
         // Keep the compact fallback.
       }

@@ -10,6 +10,7 @@ import {
   ukiyoe,
   vaporwave,
 } from './showcase-presets.js';
+import { SUBFAMILIES } from './subfamilies.js';
 
 const renaissance: StylePreset = {
   slug: 'renaissance',
@@ -290,6 +291,14 @@ export const presets: Record<StyleSlug, StylePreset> = {
   vaporwave,
   galactic,
 };
+
+const COMPOSITIONS = ['sala', 'gabinete', 'cartel'] as const;
+for (const slug of Object.keys(presets) as StyleSlug[]) {
+  presets[slug].subfamilies = SUBFAMILIES[slug].map((subfamily, index) => ({
+    ...subfamily,
+    composition: COMPOSITIONS[index % COMPOSITIONS.length],
+  }));
+}
 
 export const styleSlugs = Object.keys(presets) as StyleSlug[];
 

@@ -47,16 +47,18 @@ The renderer currently gives you `title`, `tagline`, `intro`, `sections`, `quote
 
 If the topic needs a figure, a definition box or a process diagram, write the figure as an inline SVG in a hand-edited page and validate it. Do not add a fake image URL.
 
-## Slide version (future format)
+## Slide version
 
-The current renderer outputs pages, not slides. If you need a 16:9 deck, use this spec and build it as a separate HTML file:
+For a lesson in 16:9, call `beauty_create_deck` (not `beauty_create_page`). The deck generates the cover, closing, navigation and animations. Use 4–6 content slides:
 
-- 1600×900, 80px margins.
-- One idea per slide; title 96–140px; ≤45 words total.
-- A figure or a single number on every second slide.
-- Footer: source and slide number.
-- No bullet lists longer than 3 items.
+- hook (`statement`), three rooms (`points`), a primary source (`quote`), and one number or scale (`stats`).
+- One idea per slide; title ≤8 words; body ≤35 words.
+- A number or a source every second slide.
+- The closing is the next action, not a summary.
 
+The deck renderer does not have a `figure` field yet; use a `statement` with the number or a `quote` with the source and keep the artefact honest.
+
+Static spec for a hand-built deck:
 ## Accessibility
 
 - Reading level: short sentences, one clause per idea.

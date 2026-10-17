@@ -26,6 +26,44 @@ export interface QuoteBrief {
   author?: string;
 }
 
+export type SlideLayout = 'statement' | 'points' | 'stats' | 'quote';
+
+export interface DeckPoint {
+  title: string;
+  body?: string;
+}
+
+export interface DeckStat {
+  value: string;
+  label: string;
+}
+
+export interface DeckSlide {
+  layout?: SlideLayout;
+  kicker?: string;
+  title: string;
+  body?: string;
+  points?: DeckPoint[];
+  stats?: DeckStat[];
+  quote?: QuoteBrief;
+}
+
+export interface DeckBrief extends Brief {
+  slides?: DeckSlide[];
+}
+
+export interface StyleSubfamily {
+  slug: string;
+  name: string;
+  description: string;
+  /** Palette role used as the lead accent. */
+  accent: 'accent' | 'accent2' | 'accent3' | 'accent4';
+  /** Optional palette role used for the slide ground. */
+  ground?: 'bg' | 'surface' | 'deep';
+  /** Structural mode for decks: default room, cabinet or poster. */
+  composition?: 'sala' | 'gabinete' | 'cartel';
+}
+
 export interface Brief {
   title: string;
   /** One sentence under the title. */
@@ -51,6 +89,8 @@ export interface Brief {
   locale?: Locale;
   /** Deterministic ornament variation. */
   seed?: number;
+  /** Optional curated subfamily slug; see the style guide. */
+  subfamily?: string;
 }
 
 export interface StyleFonts {
@@ -117,6 +157,8 @@ export interface StylePreset {
   guidance: StyleGuidance;
   /** CSS snippets that must appear in generated pages. */
   cssMarkers: string[];
+  /** Curated tonal families inside the style. Do not add new hex values. */
+  subfamilies?: StyleSubfamily[];
 }
 
 export interface ValidationIssue {

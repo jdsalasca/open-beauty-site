@@ -31,6 +31,7 @@ test('exposes the full tool surface', async () => {
   const { tools } = await client.listTools();
   const names = tools.map((tool) => tool.name).sort();
   assert.deepEqual(names, [
+    'beauty_create_deck',
     'beauty_create_gif',
     'beauty_create_page',
     'beauty_examples',
@@ -92,4 +93,44 @@ test('creates a valid GIF over MCP', async () => {
   assert.match(text, /Created a Brutalist GIF/);
   const file = await readFile(path.join(dir, 'out', 'mcp.gif'));
   assert.equal(file.subarray(0, 6).toString('ascii'), 'GIF89a');
+});
+test('creates an animated deck over MCP', async () => {
+  const result = await client.callTool({
+    name: 'beauty_create_deck',
+    arguments: {
+      style: 'galactic',
+      title: 'La memoria del futuro',
+      tagline: 'Una prueba de presentación.',
+      subfamily: 'orbital',
+      slides: [
+        { layout: 'statement', kicker: '01 / La idea', title: 'Una idea por slide.', body: 'El resto es ruido.' },
+        { layout: 'points', kicker: '02 / El método', title: 'Tres reglas', points: [
+          { title: 'Menos', body: 'Una idea.' },
+          { title: 'Más grande', body: 'El título manda.' },
+          { title: 'Silencio', body: 'El aire también habla.' },
+        ] },
+      ],
+      output: 'deck.html',
+    },
+  });
+  const text = (result.content as Array<{ type: string; text: string }>)[0]?.text ?? '';
+  assert.match(text, /presentation/);
+  assert.match(text, /vision: 4\/4/);
+  assert.match(text, /grade: A/);
+});
+
+test('serves the presentation skill on demand', async () => {
+  const result = await client.callTool({ name: 'beauty_get_skill', arguments: { style: 'galactic', format: 'deck' } });
+  const text = (result.content as Array<{ type: string; text: string }>)[0]?.text ?? '';
+  assert.match(text, /Presentation skill/);
+  assert.match(text, /beauty_create_deck/);
+  assert.match(text, /subfamil/);
+});
+
+test('example routes point to real files', async () => {
+  const result = await client.callTool({ name: 'beauty_examples', arguments: {} });
+  const text = (result.content as Array<{ type: string; text: string }>)[0]?.text ?? '';
+  const pages = [...text.matchAll(/page (.+?) · gif (.+)/g)].flatMap((match) => [match[1]?.trim(), match[2]?.trim()]).filter(Boolean) as string[];
+  assert.equal(pages.length, 24);
+  for (const file of pages) assert.ok(existsSync(file), `missing example: ${file}`);
 });

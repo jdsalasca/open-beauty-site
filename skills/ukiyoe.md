@@ -86,6 +86,14 @@ Prussian blue, washi cream and a vermilion seal. Flat planes, a great wave and a
 - No cherry-blossom clip art.
 - No faux-Japanese lettering.
 
+## Subfamilies
+
+| Slug | Name | Composition | Accent | What changes |
+| --- | --- | --- | --- |
+| `prussian` | Prussian | sala | `accent` | The classic deep blue sea and a vermilion seal. |
+| `vermilion` | Vermilion | gabinete | `accent2` | Red sun, blue shadow, washi sky. |
+| `mist` | Mist | cartel | `accent3` | Grey-blue distance; the horizon disappears. |
+
 ## Signature moves
 
 - Layered wave planes with foam claws

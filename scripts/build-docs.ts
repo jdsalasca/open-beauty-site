@@ -34,7 +34,7 @@ ${styleGuideMarkdown(slug)}
 
   const guide = `# open-beauty-site style guide
 
-Three complete editorial systems. Every value here is normative: if a page uses another font, colour, border width or radius, the validator will flag it.
+Twelve complete editorial systems. Every value here is normative: if a page uses another font, colour, border width or radius, the validator will flag it.
 
 ${styleSlugs.map((slug) => styleGuideMarkdown(slug)).join('\n\n---\n\n')}
 `;

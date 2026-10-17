@@ -86,6 +86,14 @@ Night blue, magenta and orange, liquid shapes and a headline that bends. A 1967 
 - No illegible body copy.
 - No strobing above 3 Hz.
 
+## Subfamilies
+
+| Slug | Name | Composition | Accent | What changes |
+| --- | --- | --- | --- |
+| `magenta` | Magenta | sala | `accent` | Hot pink lead, orange shadow, acid only as punctuation. |
+| `acid` | Acid | gabinete | `accent3` | Yellow lead on violet; the poster under blacklight. |
+| `teal` | Teal | cartel | `accent4` | Cool teal and violet; the after-hours version. |
+
 ## Signature moves
 
 - Liquid blobs that follow the pointer

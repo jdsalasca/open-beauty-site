@@ -86,6 +86,14 @@ Vienna, 1925: cream paper, black rules and a red pictogram that counts. Data as 
 - No more than two pictogram families.
 - No fake statistics.
 
+## Subfamilies
+
+| Slug | Name | Composition | Accent | What changes |
+| --- | --- | --- | --- |
+| `vienna` | Vienna | sala | `accent` | Signal red pictograms on cream; the 1925 room. |
+| `civic` | Civic | gabinete | `accent2` | Teal series, mustard secondary, counting grid. |
+| `archive` | Archive | cartel | `accent3` | Mustard index cards and grey rules; quieter data. |
+
 ## Signature moves
 
 - One pictogram = one unit

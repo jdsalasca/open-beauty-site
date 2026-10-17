@@ -119,6 +119,7 @@ export function normalizeBrief(input: Partial<Brief>): Brief {
     footer: clampText(input.footer, 140) || undefined,
     locale,
     seed: Number.isFinite(input.seed) ? Math.abs(Math.trunc(input.seed as number)) : 0,
+    subfamily: clampText(input.subfamily, 40) || undefined,
   };
 }
 

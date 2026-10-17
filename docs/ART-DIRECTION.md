@@ -90,14 +90,14 @@ The second wave — Ukiyo-e, Bestiario, Psicodelia, Memphis, Vaporwave — is al
 
 ## Education and slides
 
-The current renderer produces **pages**, not decks. For educational pages:
+The renderer produces pages and 16:9 decks (`beauty_create_deck`). For educational pages:
 
 - one learning objective, one misconception, one concrete detail, one source;
 - sections as rooms: hook → concept → use;
 - quote = primary source, with author and work;
 - CTA = the next action, not "contact us".
 
-For a future `slide` format:
+For the deck format:
 
 - 1600×900, 80px margins;
 - one idea per slide, title 96–140px, ≤45 words;

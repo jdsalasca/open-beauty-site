@@ -86,6 +86,18 @@ El harness también sirve para lecciones, museos y explicadores, no solo para la
 
 Ambas pasan A/100 y vision 4/4. El método para escribir una lección está en [`skills/education.md`](skills/education.md).
 
+## Presentaciones
+
+El harness ahora genera **decks 16:9 animados**, no solo páginas. `beauty_create_deck` arma portada, contenido, cierre, navegación con teclado/swipe, progreso, fullscreen, print y `aria-live`. La validación de deck mide palabras por slide, puntos, monotonía de layouts, `inert`, `aria-live` y print.
+
+Cada estilo tiene **3 subfamilias** (36 en total). No son solo colores: `composition` cambia la estructura entre `sala`, `gabinete` y `cartel`; el acento sale siempre de la paleta del estilo.
+
+**Deck de Luna 6 Max** — 8 slides, A/100 + vision 4/4, 47.481 tokens, sin HTML escrito a mano:
+
+[<img src="examples/previews/luna-deck.png" width="760" alt="La memoria del futuro, deck de Luna 6 Max">](examples/luna-deck/memory-future.html)
+
+[Ver la presentación](examples/luna-deck/memory-future.html) · [Leer la skill de presentación](skills/presentation.md)
+
 ## Quickstart
 
 Requisitos: Node ≥ 22, pnpm, Git.
@@ -106,6 +118,13 @@ node dist/cli.js page \
   --tagline "A transmission from the other side of the prompt." \
   --intro "We build signals for people who are tired of being talked to." \
   --out out/luna.html
+
+# crear una presentación 16:9 (brief con slides)
+node dist/cli.js deck \
+  --style galactic \
+  --brief deck.json \
+  --subfamily deep-field \
+  --out out/deck.html
 
 # crear un GIF
 node dist/cli.js gif \
@@ -129,7 +148,7 @@ pnpm compare           # página de comparación con Luna
 
 ## MCP
 
-El servidor habla stdio y expone siete herramientas. Está pensado para que un modelo débil no tenga que adivinar nada.
+El servidor habla stdio y expone ocho herramientas. Está pensado para que un modelo débil no tenga que adivinar nada.
 
 ```bash
 node dist/mcp/server.js
@@ -171,11 +190,12 @@ startup_timeout_sec = 30.0
 | `beauty_get_style` | Devuelve tokens exactos, reglas y do/don't. Es la fuente de verdad. |
 | `beauty_get_skill` | Devuelve la skill lista para pegar en el contexto del agente. |
 | `beauty_create_page` | Crea una página completa y la escribe a disco. |
+| `beauty_create_deck` | Crea una presentación 16:9 animada con subfamilia y validación de deck. |
 | `beauty_create_gif` | Crea un GIF con el mismo estilo. |
 | `beauty_validate` | Audita un HTML y devuelve score, grade y fixes. |
 | `beauty_examples` | Devuelve las rutas de los ejemplos de referencia. |
 
-Recursos: `beauty://styles/{slug}` para los doce estilos, `beauty://skills/beauty.md` y `beauty://skills/education.md`.
+Recursos: `beauty://styles/{slug}` para los doce estilos, `beauty://skills/beauty.md`, `beauty://skills/education.md` y `beauty://skills/presentation.md`.
 
 El servidor manda instrucciones al conectarse: listar estilos → leer el estilo → crear con copy real → validar hasta A. La misma secuencia está en [`skills/beauty.md`](skills/beauty.md).
 
@@ -214,7 +234,7 @@ No es una demo teórica. Varios agentes, estilos distintos, sin HTML escrito a m
 | `colmena-mcp` · worker `luna-max` · v1 | Paper Craft | **A · 100/100** | [`examples/agents/luna-papercraft.html`](examples/agents/luna-papercraft.html) |
 | `colmena-mcp` · worker `max-hive` · LongCat 2.5 free | Renaissance | **A · 100/100** | [`examples/agents/hive-renaissance.html`](examples/agents/hive-renaissance.html) |
 
-Luna llamó las herramientas MCP en orden y no escribió HTML. En la última corrida creó ocho páginas nuevas, una por estilo, con su propio brief en español: **8/8 A/100 + vision 4/4**, 97.047 tokens. La comparación lado a lado con mis briefs está en [`examples/compare.html`](examples/compare.html). El detalle de los runs está en [`docs/TESTING.md`](docs/TESTING.md).
+Luna llamó las herramientas MCP en orden y no escribió HTML. En la corrida de páginas creó ocho páginas nuevas, una por estilo, con su propio brief en español: **8/8 A/100 + vision 4/4**, 97.047 tokens. En la corrida de presentación creó un deck de 8 slides en `galactic/deep-field`: **A/100 + vision 4/4**, 47.481 tokens. La comparación lado a lado con mis briefs está en [`examples/compare.html`](examples/compare.html). El detalle de los runs está en [`docs/TESTING.md`](docs/TESTING.md).
 
 ## Cómo funciona
 
@@ -232,7 +252,7 @@ brief + style ──► preset ──► renderer ──► HTML ──► valid
 - `src/cli.ts` — la misma funcionalidad desde la terminal.
 - `skills/` — la mitad en lenguaje natural del harness.
 
-Más detalle en [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) y [`docs/MCP.md`](docs/MCP.md).
+Más detalle en [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), [`docs/MCP.md`](docs/MCP.md) y la [revisión editorial](docs/EDITORIAL-REVIEW.md).
 
 ## Estructura
 
@@ -251,7 +271,8 @@ open-beauty-site/
 
 - [x] **Art Deco**, **Isotype**, **Op Art**, **Ukiyo-e**, **Bestiario**, **Psicodelia**, **Memphis** y **Vaporwave**.
 - [ ] Segunda composición por estilo (hoy `seed` varía en los 3 clásicos; los 8 nuevos usan una composición).
-- [ ] `format: slide` (1600×900) y bloques `figure`, `keyIdea`, `process`.
+- [x] Formato presentación 16:9, animaciones, navegación y subfamilias.
+- [ ] Bloques `figure`, `keyIdea`, `process` y export PDF con una página por slide.
 - [ ] `beauty_create_social` para carruseles y OG images.
 - [ ] Self-hosting de fuentes en el HTML para uso offline.
 - [ ] Publicación en npm (`npx open-beauty-site`).

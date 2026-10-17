@@ -85,7 +85,44 @@ Ship only when craft is **A** and vision is **4/4**. If vision is 3/4, the page 
 
 Never ignore a `forbidden-font`, `missing-font`, `color-outside-palette`, `soft-shadow-in-brutalist` or `hard-shadow-in-papercraft` error.
 
-### 5. Make a GIF
+### 5. Make a presentation
+
+Use `beauty_create_deck`, not `beauty_create_page`. The deck is 16:9, keyboard-navigable and already animated: cover, content slides and a closing are generated for you.
+
+A deck brief:
+
+```json
+{
+  "style": "galactic",
+  "title": "La memoria del futuro",
+  "tagline": "Cómo recordamos lo que todavía no pasó.",
+  "subfamily": "orbital",
+  "slides": [
+    { "layout": "statement", "kicker": "01 / La pregunta", "title": "¿Por qué recordamos el futuro?", "body": "La memoria no es un archivo: es una máquina que reconstruye." },
+    { "layout": "points", "kicker": "02 / Tres capas", "title": "Lo que guarda una imagen", "points": [
+      { "title": "Superficie", "body": "Lo que vemos primero." },
+      { "title": "Materia", "body": "De qué está hecha." },
+      { "title": "Tiempo", "body": "Lo que la imagen perdió." }
+    ] },
+    { "layout": "stats", "kicker": "03 / Escala", "title": "Tres números", "stats": [
+      { "value": "13.8", "label": "miles de millones de años" },
+      { "value": "160", "label": "segundos de suite" }
+    ] }
+  ],
+  "cta": { "label": "Volver al museo", "href": "#" }
+}
+```
+
+Rules:
+
+- **5–8 slides total** including the auto cover and closing. One idea per slide.
+- Title ≤8 words; body ≤35 words; points ≤4, each ≤12 words; stats ≤3.
+- Use `layout` only when needed: `statement`, `points`, `stats`, `quote`. Omit it to infer.
+- Choose one `subfamily` from `beauty_get_style` (e.g. `orbital`, `deep-field`, `lacquer`, `fresco`). A subfamily changes the accent, ground and composition mode (`sala`, `gabinete`, `cartel`); it never adds a new font, color or radius.
+- Do not ask for per-slide animations or custom transitions. The deck owns entrance, progress, arrows, swipe, fullscreen and reduced motion.
+- Do not put a paragraph on a slide. If a slide needs more than 35 words, it is two slides.
+
+### 6. Make a GIF
 
 Call `beauty_create_gif` with the same style and a short text (2–6 words):
 
@@ -118,7 +155,8 @@ Templates:
 5. Do the fonts match the style guide exactly?
 6. If there is a GIF, does it loop and is the text short enough to read in two seconds?
 7. Did you avoid emoji, stock photography, purple gradients and rounded cards in brutalist?
-8. Can you name the composition, or does every page look like the same landing page?
+8. If it is a deck: is there one idea per slide, ≤35 words of body, and does it still work without the animations?
+9. Can you name the composition, or does every page look like the same landing page?
 
 ### Four tests the validator cannot replace
 
@@ -137,6 +175,7 @@ Use the CLI from the repository root:
 node dist/cli.js styles
 node dist/cli.js guide brutalist
 node dist/cli.js page --style brutalist --title "LUNA / SIGNAL" --tagline "..." --out out/page.html
+node dist/cli.js deck --style galactic --brief deck.json --subfamily orbital --out out/deck.html
 node dist/cli.js gif --style papercraft --text "Taller Papel" --out out/loop.gif
 node dist/cli.js validate out/page.html --style brutalist --strict
 ```

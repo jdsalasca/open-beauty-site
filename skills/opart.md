@@ -86,6 +86,14 @@ Black and bone, a pattern that refuses to sit still. The page is an instrument f
 - No more than 3 Hz.
 - No pattern without a pause.
 
+## Subfamilies
+
+| Slug | Name | Composition | Accent | What changes |
+| --- | --- | --- | --- |
+| `interference` | Interference | sala | `accent` | Black and bone with a red warning line. |
+| `electric` | Electric | gabinete | `accent2` | Blue interference and a single acid pause. |
+| `acid` | Acid | cartel | `accent3` | Acid core, black field, red only as an error. |
+
 ## Signature moves
 
 - Moiré field that moves with the pointer
