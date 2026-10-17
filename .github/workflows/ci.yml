@@ -53,3 +53,10 @@ jobs:
           node dist/cli.js validate examples/showcase/vaporwave/index.html --style vaporwave --strict
           node dist/cli.js validate examples/showcase/galactic/index.html --style galactic --strict
           node dist/cli.js validate examples/luna-deck/memory-future.html --style galactic --strict
+          node dist/cli.js validate examples/experiences/casa-perla.html --style papercraft --strict
+          node dist/cli.js validate examples/experiences/museo-invisible.html --style galactic --strict
+          node dist/cli.js validate examples/stories/casa-respira.html --style renaissance --strict
+          node dist/cli.js validate examples/stories/rio-1870.html --style isotype --strict
+          node dist/cli.js validate examples/agile/sprint-14-review.html --style artdeco --strict
+          node dist/cli.js validate examples/agile/sprint-14-retro.html --style memphis --strict
+          node dist/cli.js validate examples/agile/sprint-15-planning.html --style isotype --strict

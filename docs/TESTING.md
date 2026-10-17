@@ -10,9 +10,9 @@ pnpm test
 The suite runs with Node's test runner through `tsx`:
 
 - `test/core.test.ts` — every style renders a complete document, escapes user content, reaches A/100 and vision 4/4; the validator rejects generic AI design (Inter, invented colours, 8px radii, 5px borders, soft shadows in brutalist); `seed` changes the composition archetype.
-- `test/mcp.test.ts` — spawns the built MCP server over stdio, verifies the eight-tool surface, reads the Renaissance tokens, creates and audits a page, creates a valid GIF, creates an animated deck and verifies the presentation skill and example routes.
+- `test/mcp.test.ts` — spawns the built MCP server over stdio, verifies the eight-tool surface, reads the Renaissance tokens, creates and audits a page, creates a valid GIF, creates an animated deck, a room experience and a chaptered story, and verifies the presentation skill and example routes.
 
-Current result: **13/13 passing** in ~1.5 s (plus MCP startup).
+Current result: **15/15 passing** in ~1.5 s (plus MCP startup).
 
 ```text
 ✔ every style renders a complete document and scores A
@@ -24,6 +24,8 @@ Current result: **13/13 passing** in ~1.5 s (plus MCP startup).
 ✔ creates and audits a page over MCP
 ✔ creates a valid GIF over MCP
 ✔ creates an animated deck over MCP
+✔ creates a museum experience over MCP
+✔ creates a chaptered story over MCP
 ✔ serves the presentation skill on demand
 ✔ example routes point to real files
 ✔ the deck audit catches a slide with too many words
