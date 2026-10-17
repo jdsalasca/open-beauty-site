@@ -105,8 +105,8 @@ Requisitos: Node ≥ 22, pnpm, Git.
 ```bash
 git clone https://github.com/jdsalasca/open-beauty-site.git
 cd open-beauty-site
-pnpm install
-pnpm build
+pnpm setup            # install + build + 13 tests
+pnpm mcp:config       # imprime el bloque exacto para Codex/Claude/Cursor
 
 # ver los estilos
 node dist/cli.js styles
@@ -126,12 +126,15 @@ node dist/cli.js deck \
   --subfamily deep-field \
   --out out/deck.html
 
-# crear un GIF
+# crear un GIF (tapa corta, no una lista)
 node dist/cli.js gif \
   --style papercraft \
   --text "Taller Papel" \
   --subtitle "Hecho a mano" \
   --out out/taller.gif
+
+# un GIF no enumera objetivos: es una tapa.
+# para "objetivos del sprint", usá "Sprint 14" en el GIF y una página/deck con los 3 objetivos.
 
 # auditar
 node dist/cli.js validate out/luna.html --style brutalist --strict
@@ -149,6 +152,8 @@ pnpm compare           # página de comparación con Luna
 ## MCP
 
 El servidor habla stdio y expone ocho herramientas. Está pensado para que un modelo débil no tenga que adivinar nada.
+
+**Otro PC, en tres pasos:** `git clone … && pnpm setup`, después `pnpm mcp:config` y pegá el bloque en tu cliente. ChatGPT web no puede lanzar un MCP local; usá un cliente con MCP stdio (Codex CLI, Claude Desktop/Code, Cursor) con Luna dentro.
 
 ```bash
 node dist/mcp/server.js

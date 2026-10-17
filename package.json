@@ -45,10 +45,12 @@
     "LICENSE"
   ],
   "scripts": {
+    "setup": "pnpm install && pnpm build && pnpm test",
     "build": "tsc -p tsconfig.json",
     "dev": "tsx src/cli.ts",
     "mcp": "tsx src/mcp/server.ts",
     "mcp:prod": "node dist/mcp/server.js",
+    "mcp:config": "tsx scripts/mcp-config.ts",
     "test": "tsx --test test/*.test.ts",
     "examples": "tsx scripts/build-examples.ts",
     "education": "tsx scripts/build-education.ts",

@@ -146,6 +146,18 @@ Templates:
 - `loop`: seamless marquee/float. Best for a profile banner.
 - `poster`: ambient shapes. Best when the text is short.
 
+A GIF is a cover, not a document. For sprint objectives, put `Sprint 14` (2–5 words) in the GIF and the objectives in a page or deck; a list of goals inside a 2.4s loop is unreadable.
+
+Route the request:
+
+| The user asks for | Use |
+| --- | --- |
+| a list of objectives, a plan, steps, a retrospective | a page or a deck; a GIF can be the cover |
+| a title, a teaser, a social post, a loop | a GIF with 2–5 words |
+| a talk or a sequence | `beauty_create_deck` |
+
+If the user says "un GIF con los objetivos del sprint", make the GIF with the sprint name and put the objectives in a page/deck; explain the split in one line.
+
 ## Self-check before answering
 
 1. Is craft A **and** vision 4/4?
