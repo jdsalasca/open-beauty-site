@@ -58,7 +58,9 @@
     "compare": "tsx scripts/build-compare.ts",
     "docs:build": "tsx scripts/build-docs.ts",
     "e2e:colmena": "tsx scripts/e2e-colmena.ts",
-    "check": "tsc -p tsconfig.json --noEmit"
+    "check": "tsc -p tsconfig.json --noEmit",
+    "check:scripts": "tsc -p tsconfig.scripts.json --noEmit",
+    "check:all": "pnpm check && pnpm check:scripts && pnpm test"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.32.1",

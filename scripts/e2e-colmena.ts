@@ -7,11 +7,11 @@
  * Usage: COLMENA_ROOT=... pnpm exec tsx scripts/e2e-colmena.ts
  */
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
-import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 import path from 'node:path';
+import { colmenaTransport } from './lib/colmena.js';
+import { runScript } from './lib/run.js';
 
 const project = path.resolve(process.cwd());
-const colmenaRoot = process.env.COLMENA_ROOT ?? path.resolve(project, '..', 'colmena-mcp');
 
 interface TextBlock {
   type: string;
@@ -33,11 +33,7 @@ function parsePayload(result: unknown): Record<string, unknown> {
 }
 
 async function main(): Promise<void> {
-  const transport = new StdioClientTransport({
-    command: process.execPath,
-    args: [path.join(colmenaRoot, 'src', 'server.js')],
-    env: { ...process.env, COLMENA_NOTIFIER: 'none' } as Record<string, string>,
-  });
+  const transport = colmenaTransport();
   const client = new Client({ name: 'open-beauty-colmena-test', version: '1.0.0' });
   await client.connect(transport);
 
@@ -89,7 +85,4 @@ Do not write HTML by hand. Do not edit the harness. Use the MCP tools.`;
   await client.close();
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+runScript(main);

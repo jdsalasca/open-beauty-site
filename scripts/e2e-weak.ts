@@ -5,11 +5,11 @@
  * Usage: COLMENA_ROOT=... pnpm exec tsx scripts/e2e-weak.ts
  */
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
-import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 import path from 'node:path';
+import { colmenaTransport } from './lib/colmena.js';
+import { runScript } from './lib/run.js';
 
 const project = path.resolve(process.cwd());
-const colmenaRoot = process.env.COLMENA_ROOT ?? path.resolve(project, '..', 'colmena-mcp');
 const worker = process.env.COLMENA_WORKER ?? 'max-hive';
 
 function textOf(result: unknown): string {
@@ -18,11 +18,7 @@ function textOf(result: unknown): string {
 }
 
 async function main(): Promise<void> {
-  const transport = new StdioClientTransport({
-    command: process.execPath,
-    args: [path.join(colmenaRoot, 'src', 'server.js')],
-    env: { ...process.env, COLMENA_NOTIFIER: 'none' } as Record<string, string>,
-  });
+  const transport = colmenaTransport();
   const client = new Client({ name: 'open-beauty-weak-test', version: '1.0.0' });
   await client.connect(transport);
 
@@ -42,7 +38,4 @@ Report RESULT (grade), FILES (path), TESTS, RISKS. Do not edit source code. Keep
   await client.close();
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+runScript(main);

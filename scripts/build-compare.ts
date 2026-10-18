@@ -1,5 +1,6 @@
-import { writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { writeTextFile } from './lib/fs.js';
+import { runScript } from './lib/run.js';
 
 const styles = [
   { slug: 'artdeco', name: 'Art Deco', meta: 'Poiret One · champagne · sol', mine: 'La ciudad vertical', luna: 'Ascensor a las nubes' },
@@ -206,5 +207,9 @@ ${rows}
 </body>
 </html>`;
 
-await writeFile(path.join(process.cwd(), 'examples', 'compare.html'), html, 'utf8');
-console.log('Wrote examples/compare.html');
+async function main(): Promise<void> {
+  await writeTextFile(path.join(process.cwd(), 'examples', 'compare.html'), html);
+  console.log('Wrote examples/compare.html');
+}
+
+runScript(main);
