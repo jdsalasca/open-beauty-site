@@ -43,7 +43,9 @@ function truncate(value: string, max: number): string {
 }
 
 export function normalizeIdea(value: string): string {
+  // The style system draws its own marks, so emoji never reach the copy (the validator flags them).
   const collapsed = String(value ?? '')
+    .replace(/\p{Emoji_Presentation}|‍|️/gu, '')
     .replace(/\s+/g, ' ')
     .trim();
   if (!collapsed) {

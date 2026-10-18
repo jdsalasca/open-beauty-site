@@ -40,6 +40,7 @@ test('exposes the full tool surface', async () => {
     'beauty_create_sprint',
     'beauty_create_story',
     'beauty_examples',
+    'beauty_fix',
     'beauty_get_skill',
     'beauty_get_style',
     'beauty_list_styles',
