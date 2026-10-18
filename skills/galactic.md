@@ -3,6 +3,32 @@ name: open-beauty-galactic
 description: Apply the Galactic Futurism editorial system (A planetarium for the things we remember) to a page or GIF with open-beauty-site.
 ---
 
+## Quick recipe
+
+Copy, paste, run. Replace only the quoted words.
+
+```bash
+node dist/cli.js page --style galactic --brief examples/recipes/galactic/page.json --out out/galactic.html
+node dist/cli.js deck --style galactic --brief examples/recipes/galactic/deck.json --out out/galactic-deck.html
+node dist/cli.js gif --style galactic --text "Galactic Orbit" --out out/galactic.gif
+```
+
+**5 hard rules**
+- Display font is `Michroma`; body and labels use it too. Never substitute.
+- Border widths: 1, 2 px. Radius: 0–2 px.
+- Motion window: 0.4–1.8 s.
+- Shadow: No box shadow: depth comes from the starfield, orbital lines and black space.
+- No lorem ipsum.
+
+**3 common mistakes (and fixes)**
+- Inventing a font -> read Hard tokens and use the exact family.
+- Adding a second accent -> one accent per screen; keep the rest chalky/flat.
+- Too much copy -> card body 1–2 sentences; headline 2–6 words.
+
+**Words / tone**
+- es: Nota de planetario o memoria de un sonido. Íntimo, no jerga cósmica; chrome una palabra como máximo.
+- en: a planetarium note or a memory of a sound. Intimate, not cosmic gibberish; chrome one word at most.
+
 # Galactic Futurism skill
 
 Use this skill together with `beauty` when the brief calls for galactic futurism.

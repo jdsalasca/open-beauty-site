@@ -1,232 +1,44 @@
 ---
 name: open-beauty-site
-description: Create art-directed HTML pages and looping GIFs with the open-beauty-site MCP server. Use when the user asks for a website, landing page, poster, visual identity, animation, or GIF and you want a coherent editorial style instead of generic AI design.
+description: Create art-directed HTML pages, decks, stories, experiences and GIFs in 13 styles. Use the decision tree below: pick the artifact, copy the command, validate.
 ---
 
-# open-beauty-site
+# open-beauty-site (weak-model kit)
 
-You are using a design harness, not a blank canvas. The harness owns the typography, palette, borders, spacing, motion and validation. Your job is to choose a style, write real content, and let the tools render it.
+Pick what you want. Copy the command. Run validate. Ship only A + vision 4/4.
 
-## The thirteen styles
+## Decision tree
 
-| Style | Use it for | Display font | Feeling |
-| --- | --- | --- | --- |
-| `renaissance` | art history, literature, cultural institutions, editorial lessons | EB Garamond | chalky fresco fields, cinnabar, asymmetry, slow |
-| `brutalist` | studios, launches, music, events, manifestos, loud portfolios | Archivo Black | concrete, acid, 3px borders, hard shadows |
-| `papercraft` | biology, children's museums, crafts, community, stationery | Fraunces | cut paper, layered sheets, tape, warm |
-| `artdeco` | architecture, jazz, timelines, luxury, city histories | Poiret One | black lacquer, champagne lines, sunburst, vertical |
-| `isotype` | data, economics, civics, public health, maths | Jost | pictograms, counting grid, Vienna, signal red |
-| `opart` | perception, geometry, physics, experimental education | Archivo Black | moiré, high contrast, optical movement |
-| `ukiyoe` | ocean, climate, Japanese history, poetry | Shippori Mincho B1 | Prussian blue, flat planes, wave, seal |
-| `bestiary` | biology, taxonomy, fable, mythology, natural history | UnifrakturMaguntia | parchment, iron gall, lapis, illuminated initial |
-| `psychedelic` | music, festivals, chemistry, consciousness | Bungee Shade | liquid blobs, magenta, acid, 1967 poster |
-| `memphis` | design history, music, workshops, creative education | Bricolage Grotesque | squiggles, terrazzo, cobalt, hard keylines |
-| `vaporwave` | internet history, media, digital culture, nostalgia | Press Start 2P | chrome, grid, 1999 window, glitch |
-| `galactic` | music rooms, space, memory, album tributes | Michroma | planetarium, one planet, orbital rings, original audio |
-| `nature` | botanical archives, museums, gardens, slow education, memory | Cormorant Garamond | pressed leaves, field labels, growth rings, moss and clay |
-
-Do not mix styles. Do not invent a fourteenth one.
-
-## Maxxing
-
-When the brief deserves the full art direction, pass `maxxing: true` (or `--maxxing`). It adds an original ornament layer, more type contrast, display ligatures and a slow ambient motion to pages, decks, experiences, stories and GIFs. It never changes the palette or the required fonts. Use it for a hero page, a launch, a museum room, a poster GIF or a sprint opener — not for every utility screen.
-
-## Mandatory workflow
-
-### 1. Choose and read the style
-
-Call `beauty_list_styles`. Then call `beauty_get_style` for the chosen slug and read the **Hard tokens**, **Typography**, **Colour**, **Layout** and **Never** sections.
-
-If you skip this step you will guess a font or a hex colour, and the page will look generic.
-
-## Typography and motion tokens
-
-`beauty_get_style` also returns `typeSystem` and `motionSystem`. Use them instead of inventing sizes or durations.
-
-- `typeSystem`: display case, tracking, leading, body size, label tracking, OpenType features. Do not add a font.
-- `motionSystem`: enter duration/distance/stagger/easing, ambient, hover, page transition. Choose one ambient move, never three.
-- `prefers-reduced-motion` must show the final state; no essential information may depend on an animation.
-- For teaching pages, body text is at least 18px and labels at least 11px. A projector is not a phone.
-
-## Choose the artefact
-
-| The user asks for | Tool | Skill format |
-| --- | --- | --- |
-| a landing, portfolio, studio page | `beauty_create_page` | `page` |
-| a talk, review, retro, planning | `beauty_create_deck` | `deck` + `agile` |
-| a restaurant, museum, club, studio with rooms | `beauty_create_experience` | `experience` |
-| a cuento, history lesson, narrative essay | `beauty_create_story` | `story` |
-| a short title, teaser or social loop | `beauty_create_gif` | none |
-
-A GIF is never a list. If the user asks for objectives, a lesson or a story, create the page/experience/story first and use the GIF as its door.
-
-### 2. Write the brief
-
-A good brief has:
-
-- `title`: 2–6 words. The headline. Required.
-- `tagline`: one sentence under the headline.
-- `intro`: 2–3 sentences for the manifesto. Concrete nouns, no corporate filler.
-- `sections`: 2–3 cards. Each needs a short `title` and one or two sentences. Optional `kicker`.
-- `quote`: optional, one sentence plus an author.
-- `cta`: optional label and href.
-- `brand`: optional. Defaults to the title.
-- `locale`: `es` or `en`. Defaults to `es`.
-- `seed`: `0`, `1` or `2`. Chooses a composition archetype: `0` is the default, `1` mirrors the hero, `2` goes full-bleed (papercraft). Use a different seed when you want a different composition, not a different skin.
-
-Do not use lorem ipsum. Do not use "Your Company". Do not write placeholders.
-
-### 3. Create the page
-
-```json
-{
-  "style": "brutalist",
-  "title": "LUNA / SIGNAL",
-  "tagline": "A transmission from the other side of the prompt.",
-  "intro": "We build signals for people who are tired of being talked to. Less decoration, more voltage.",
-  "sections": [
-    { "kicker": "01 / Identity", "title": "Identity", "body": "Marks with a pulse and rules that survive contact." },
-    { "kicker": "02 / Web", "title": "Web", "body": "Sites built like posters: fast, loud, impossible to confuse." },
-    { "kicker": "03 / Motion", "title": "Motion", "body": "Loops with a pulse. Frame by frame, no plugins." }
-  ],
-  "quote": { "text": "If it doesn't stop you, it isn't finished.", "author": "Studio manifesto" },
-  "cta": { "label": "Start a project", "href": "#contact" },
-  "locale": "en",
-  "output": "out/brutalist.html"
-}
-```
-
-Tool: `beauty_create_page`.
-
-### 4. Validate and fix
-
-Call `beauty_validate` with `{ "style": "...", "path": "out/brutalist.html" }`.
-
-The result has two numbers:
-
-- **craft** (`A`/`B`/`C`/`F`, 0–100): fonts, palette, borders, radii, shadows, markup, contrast. This is obedience.
-- **vision** (0–4): scale jump, flat colour fields, asymmetry/bleed, physical material. This is the difference between "correct" and "art".
-
-Ship only when craft is **A** and vision is **4/4**. If vision is 3/4, the page is still a template; change the composition (`seed`), the scale of the image, or the material before showing it.
-
-Never ignore a `forbidden-font`, `missing-font`, `color-outside-palette`, `soft-shadow-in-brutalist` or `hard-shadow-in-papercraft` error.
-
-### 5. Make a presentation
-
-Use `beauty_create_deck`, not `beauty_create_page`. The deck is 16:9, keyboard-navigable and already animated: cover, content slides and a closing are generated for you.
-
-A deck brief:
-
-```json
-{
-  "style": "galactic",
-  "title": "La memoria del futuro",
-  "tagline": "Cómo recordamos lo que todavía no pasó.",
-  "subfamily": "orbital",
-  "slides": [
-    { "layout": "statement", "kicker": "01 / La pregunta", "title": "¿Por qué recordamos el futuro?", "body": "La memoria no es un archivo: es una máquina que reconstruye." },
-    { "layout": "points", "kicker": "02 / Tres capas", "title": "Lo que guarda una imagen", "points": [
-      { "title": "Superficie", "body": "Lo que vemos primero." },
-      { "title": "Materia", "body": "De qué está hecha." },
-      { "title": "Tiempo", "body": "Lo que la imagen perdió." }
-    ] },
-    { "layout": "stats", "kicker": "03 / Escala", "title": "Tres números", "stats": [
-      { "value": "13.8", "label": "miles de millones de años" },
-      { "value": "160", "label": "segundos de suite" }
-    ] }
-  ],
-  "cta": { "label": "Volver al museo", "href": "#" }
-}
-```
-
-Rules:
-
-- **5–8 slides total** including the auto cover and closing. One idea per slide.
-- Title ≤8 words; body ≤35 words; points ≤4, each ≤12 words; stats ≤3.
-- Use `layout` only when needed: `statement`, `points`, `stats`, `quote`. Omit it to infer.
-- Choose one `subfamily` from `beauty_get_style` (e.g. `orbital`, `deep-field`, `lacquer`, `fresco`). A subfamily changes the accent, ground and composition mode (`sala`, `gabinete`, `cartel`); it never adds a new font, color or radius.
-- Do not ask for per-slide animations or custom transitions. The deck owns entrance, progress, arrows, swipe, fullscreen and reduced motion.
-- Do not put a paragraph on a slide. If a slide needs more than 35 words, it is two slides.
-
-### 6. Make a GIF
-
-Call `beauty_create_gif` with the same style and a short text (2–6 words):
-
-```json
-{
-  "style": "papercraft",
-  "text": "Taller Papel",
-  "subtitle": "Hecho a mano",
-  "template": "title",
-  "width": 800,
-  "height": 800,
-  "fps": 20,
-  "duration": 2.4,
-  "output": "out/papercraft.gif"
-}
-```
-
-Templates:
-
-- `title`: a reveal with a hold. Best for a hero or a social post.
-- `loop`: seamless marquee/float. Best for a profile banner.
-- `poster`: ambient shapes. Best when the text is short.
-
-A GIF is a cover, not a document. For sprint objectives, put `Sprint 14` (2–5 words) in the GIF and the objectives in a page or deck; a list of goals inside a 2.4s loop is unreadable.
-
-Route the request:
-
-| The user asks for | Use |
+| You want | Command |
 | --- | --- |
-| a list of objectives, a plan, steps, a retrospective | a page or a deck; a GIF can be the cover |
-| a title, a teaser, a social post, a loop | a GIF with 2–5 words |
-| a talk or a sequence | `beauty_create_deck` |
+| List styles | `node dist/cli.js styles` |
+| Read one style | `node dist/cli.js guide <style>` |
+| Page | `node dist/cli.js page --style <s> --brief examples/recipes/<s>/page.json --out out/<s>.html` |
+| Deck | `node dist/cli.js deck --style <s> --brief examples/recipes/<s>/deck.json --out out/<s>-deck.html` |
+| Story | `node dist/cli.js story --style <s> --brief examples/recipes/<s>/story.json --out out/<s>-story.html` |
+| Experience | `node dist/cli.js experience --style <s> --brief examples/recipes/<s>/experience.json --out out/<s>-exp.html` |
+| GIF | `node dist/cli.js gif --style <s> --text "Short Title" --out out/<s>.gif` |
+| Validate | `node dist/cli.js validate <file> --style <s> --strict` |
 
-If the user says "un GIF con los objetivos del sprint", make the GIF with the sprint name and put the objectives in a page/deck; explain the split in one line.
+## MCP tools
 
-## Self-check before answering
+`beauty_create_page`, `beauty_create_deck`, `beauty_create_gif`, `beauty_validate`; decks use a subfamily (subfamilia).
 
-1. Is craft A **and** vision 4/4?
-2. Does the page contain real copy, not placeholders?
-3. Is there exactly one accent colour doing the work?
-4. Is the headline readable at 360px wide?
-5. Do the fonts match the style guide exactly?
-6. If there is a GIF, does it loop and is the text short enough to read in two seconds?
-7. Did you avoid emoji, stock photography, purple gradients and rounded cards in brutalist?
-8. If it is a deck: is there one idea per slide, ≤35 words of body, and does it still work without the animations?
-9. Can you name the composition, or does every page look like the same landing page?
+## Styles (pick one, never mix)
 
-### Four tests the validator cannot replace
+`renaissance brutalist papercraft artdeco isotype opart ukiyoe bestiary psychedelic memphis vaporwave galactic nature`
 
-- **Squint test:** blur the page. Can you see at least three masses of value? If it is one beige column, change the composition.
-- **Replacement test:** replace the copy with lorem ipsum. If the page still looks finished, it is a skin. Change the image scale, the asymmetry or the material.
-- **Memory test:** look for 3 seconds, look away, name the page. If you remember the style and not the subject, the content is not doing its job.
-- **Break test:** allow one deliberate violation of the manual per page (a cinnabar rule, a sheet crossing the margin, a too-large plate). A page with zero ruptures has no authorship.
+## Rules
 
-For educational pages, read `skills/education.md` before writing the brief.
+1. Read the style guide first: `node dist/cli.js guide <style>`.
+2. Copy a recipe from `examples/recipes/<style>/`; change only words, not tokens.
+3. One accent per screen. Real copy, no placeholders, no lorem.
+4. Validate every output. Ship only craft A and vision 4/4.
+5. GIF text is 2-5 words; objectives go in a page or deck.
 
-## If the MCP server is not available
+## Coming in this release (not available yet)
 
-Use the CLI from the repository root:
+- `beauty make <kind> --style <slug> --idea "..."`
+- `beauty fix <file> --style <slug>`
 
-```bash
-node dist/cli.js styles
-node dist/cli.js guide brutalist
-node dist/cli.js page --style brutalist --title "LUNA / SIGNAL" --tagline "..." --out out/page.html
-node dist/cli.js deck --style galactic --brief deck.json --subfamily orbital --out out/deck.html
-node dist/cli.js gif --style papercraft --text "Taller Papel" --out out/loop.gif
-node dist/cli.js validate out/page.html --style brutalist --strict
-```
-
-The CLI and MCP call the same renderers, so the result is identical.
-
-## Common failure modes
-
-- **Inventing a font.** The validator catches `forbidden-font` and `missing-font`. Read the error, use the exact family.
-- **Adding a second accent.** One accent per screen. In brutalist, acid is a background, never small text on paper.
-- **Too much copy.** A card body is one or two sentences. A headline is 2–6 words.
-- **Using the wrong style for the content.** A funeral home is not brutalist. A techno label is not papercraft. Re-read `bestFor` and `avoid`.
-- **Forgetting the brief.** The page renders with defaults; it will look clean but generic. Real copy is the difference.
-- **Editing the HTML by hand without re-validating.** Run `beauty_validate` again after every edit.
-- **Mistaking obedience for art.** A/100 only means the page follows the rules. Vision 4/4 and the four human tests decide whether it is worth looking at.
-- **Using gradients to fake pastel.** Renaissance and papercraft want flat fields with a hard edge, not a radial aura fading to transparent.
+Use the commands above until then; do not invent flags.

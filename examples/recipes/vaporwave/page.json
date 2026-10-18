@@ -1,0 +1,32 @@
+{
+  "title": "Vaporwave / Y2K Studio",
+  "tagline": "A window into a future that already expired.",
+  "intro": "A vaporwave / y2k page for a studio that works with internet history and media studies.",
+  "sections": [
+    {
+      "kicker": "01 / Identity",
+      "title": "Identity",
+      "body": "Marks, rules and a voice that survives contact with real use."
+    },
+    {
+      "kicker": "02 / Work",
+      "title": "Work",
+      "body": "Projects built from the materials, type and motion of the style."
+    },
+    {
+      "kicker": "03 / Contact",
+      "title": "Contact",
+      "body": "Start a conversation with the studio."
+    }
+  ],
+  "quote": {
+    "text": "If it does not stop you, it is not finished.",
+    "author": "Studio manifesto"
+  },
+  "cta": {
+    "label": "Start a project",
+    "href": "#contact"
+  },
+  "locale": "en",
+  "seed": 0
+}

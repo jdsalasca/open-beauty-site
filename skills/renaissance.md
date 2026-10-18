@@ -3,6 +3,32 @@ name: open-beauty-renaissance
 description: Apply the Renaissance editorial system (A chalky, asymmetric fresco system) to a page or GIF with open-beauty-site.
 ---
 
+## Quick recipe
+
+Copy, paste, run. Replace only the quoted words.
+
+```bash
+node dist/cli.js page --style renaissance --brief examples/recipes/renaissance/page.json --out out/renaissance.html
+node dist/cli.js deck --style renaissance --brief examples/recipes/renaissance/deck.json --out out/renaissance-deck.html
+node dist/cli.js gif --style renaissance --text "Renaissance Fresco" --out out/renaissance.gif
+```
+
+**5 hard rules**
+- Display font is `EB Garamond`; body and labels use it too. Never substitute.
+- Border widths: 1 px. Radius: 0–2 px.
+- Motion window: 0.6–1.6 s.
+- Shadow: None, or one long soft ambient shadow (0 24px 60px rgba(43,33,27,.08)). Never hard offset shadows.
+- No border-radius above 2px.
+
+**3 common mistakes (and fixes)**
+- Inventing a font -> read Hard tokens and use the exact family.
+- Adding a second accent -> one accent per screen; keep the rest chalky/flat.
+- Too much copy -> card body 1–2 sentences; headline 2–6 words.
+
+**Words / tone**
+- es: Etiqueta de museo, primera persona del plural, sin signos de exclamación.
+- en: museum wall label, first person plural, no exclamation marks.
+
 # Renaissance skill
 
 Use this skill together with `beauty` when the brief calls for renaissance.

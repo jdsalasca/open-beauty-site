@@ -3,6 +3,32 @@ name: open-beauty-ukiyoe
 description: Apply the Ukiyo-e editorial system (The floating world, printed on paper) to a page or GIF with open-beauty-site.
 ---
 
+## Quick recipe
+
+Copy, paste, run. Replace only the quoted words.
+
+```bash
+node dist/cli.js page --style ukiyoe --brief examples/recipes/ukiyoe/page.json --out out/ukiyoe.html
+node dist/cli.js deck --style ukiyoe --brief examples/recipes/ukiyoe/deck.json --out out/ukiyoe-deck.html
+node dist/cli.js gif --style ukiyoe --text "Ukiyo-e Wave" --out out/ukiyoe.gif
+```
+
+**5 hard rules**
+- Display font is `Shippori Mincho B1`; body and labels use it too. Never substitute.
+- Border widths: 1, 2 px. Radius: 0–2 px.
+- Motion window: 0.6–1.6 s.
+- Shadow: No shadow. Paper and ink are flat.
+- No lorem ipsum.
+
+**3 common mistakes (and fixes)**
+- Inventing a font -> read Hard tokens and use the exact family.
+- Adding a second accent -> one accent per screen; keep the rest chalky/flat.
+- Too much copy -> card body 1–2 sentences; headline 2–6 words.
+
+**Words / tone**
+- es: Estampa de viaje: costa, estación, fecha y huella humana. Nunca uses Japón como decoración.
+- en: a travel print: coast, season, date and a human trace. Never use Japan as decoration or fake Japanese.
+
 # Ukiyo-e skill
 
 Use this skill together with `beauty` when the brief calls for ukiyo-e.

@@ -3,6 +3,32 @@ name: open-beauty-bestiary
 description: Apply the Illuminated bestiary editorial system (A field guide for animals that never existed) to a page or GIF with open-beauty-site.
 ---
 
+## Quick recipe
+
+Copy, paste, run. Replace only the quoted words.
+
+```bash
+node dist/cli.js page --style bestiary --brief examples/recipes/bestiary/page.json --out out/bestiary.html
+node dist/cli.js deck --style bestiary --brief examples/recipes/bestiary/deck.json --out out/bestiary-deck.html
+node dist/cli.js gif --style bestiary --text "Bestiary Page" --out out/bestiary.gif
+```
+
+**5 hard rules**
+- Display font is `UnifrakturMaguntia`; body and labels use it too. Never substitute.
+- Border widths: 1, 2 px. Radius: 0–4 px.
+- Motion window: 0.5–1.4 s.
+- Shadow: No shadow. The manuscript is flat; use a 1px ink rule.
+- No lorem ipsum.
+
+**3 common mistakes (and fixes)**
+- Inventing a font -> read Hard tokens and use the exact family.
+- Adding a second accent -> one accent per screen; keep the rest chalky/flat.
+- Too much copy -> card body 1–2 sentences; headline 2–6 words.
+
+**Words / tone**
+- es: Guía de campo de una especie imposible: anatomía, hábitat, conducta. Marca lo inventado como hipótesis.
+- en: a field guide for an impossible species: anatomy, habitat, behaviour. Mark the invented as hypothesis.
+
 # Illuminated bestiary skill
 
 Use this skill together with `beauty` when the brief calls for illuminated bestiary.

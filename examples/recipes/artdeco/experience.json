@@ -1,0 +1,59 @@
+{
+  "title": "Art Deco Studio",
+  "tagline": "A lacquered machine for looking upward.",
+  "kind": "studio",
+  "intro": "A small studio visit in the art deco register.",
+  "rooms": [
+    {
+      "kicker": "01",
+      "title": "Entrance",
+      "body": "Welcome to the studio. The door stays open and the light is warm.",
+      "display": "scene"
+    },
+    {
+      "kicker": "02",
+      "title": "Workshop",
+      "body": "Tools on the table, paper in the drawers, work in progress on the wall.",
+      "display": "objects",
+      "items": [
+        {
+          "label": "Tools",
+          "detail": "Cutting, folding, pressing.",
+          "value": "03"
+        },
+        {
+          "label": "Paper",
+          "detail": "Chosen by touch.",
+          "value": "12"
+        }
+      ]
+    },
+    {
+      "kicker": "03",
+      "title": "Archive",
+      "body": "Finished pieces, kept and labeled by hand.",
+      "display": "exhibit",
+      "items": [
+        {
+          "label": "Pieces",
+          "detail": "Small, numbered, signed.",
+          "value": "24"
+        }
+      ]
+    },
+    {
+      "kicker": "04",
+      "title": "Exit",
+      "body": "Thank you for visiting. Leave a note if you wish.",
+      "display": "quote",
+      "quote": {
+        "text": "If it does not stop you, it is not finished.",
+        "author": "Studio manifesto"
+      }
+    }
+  ],
+  "hours": "Mon–Fri 10:00–18:00",
+  "address": "Calle Mayor 12",
+  "closing": "Vuelve cuando quieras.",
+  "locale": "en"
+}
