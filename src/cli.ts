@@ -1,11 +1,12 @@
 #!/usr/bin/env node
-import { readFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import type { Brief, DeckBrief, ExperienceBrief, SprintBrief, StoryBrief, StyleSlug } from './types.js';
 import { VERSION } from './index.js';
 import { createCanvas, createDeck, createExperience, createGifFile, createMotion, createPage, createStory, slugify, timestamp } from './generate.js';
 import { createSprintKit } from './sprint.js';
 import { formatValidation, validateDeck, validateExperience, validateHtml, validateStory } from './validate.js';
+import { fixHtml } from './fix.js';
 import { getStyle, isStyleSlug, styleSlugs } from './styles/presets.js';
 import { styleGuideMarkdown, stylesOverview } from './guide.js';
 import { ensureFonts } from './canvas.js';
@@ -109,6 +110,8 @@ Usage:
       [--subtitle "..."] [--template title|loop|poster] [--fps 20] [--duration 2.4]
       [--width 800] [--height 800] [--maxxing] [--out file.gif]
   beauty validate <file> --style <s> [--strict]
+  beauty fix <file> --style <s> [--out f.html]
+                                            Apply safe repairs and re-validate
   beauty examples                            Show reference output
   beauty doctor                              Check fonts and runtime
   beauty mcp                                 Start the MCP server (stdio)
@@ -311,6 +314,23 @@ async function main(): Promise<void> {
       console.log(formatValidation(result));
       console.log(`stats: ${JSON.stringify(result.stats)}`);
       if (flags.strict && result.score < 90) process.exitCode = 1;
+      return;
+    }
+
+    case 'fix': {
+      const file = positionals[1];
+      if (!file) throw new Error('Pass an HTML file to fix.');
+      const style = requireStyle(stringFlag(flags, 'style'));
+      const source = path.resolve(process.cwd(), file);
+      const html = await readFile(source, 'utf8');
+      const result = fixHtml(html, style);
+      const out = stringFlag(flags, 'out');
+      const target = out ? path.resolve(process.cwd(), out) : source;
+      await writeFile(target, result.html, 'utf8');
+      console.log(`${style} · ${result.before.score} → ${result.after.score} (${result.before.grade} → ${result.after.grade})`);
+      console.log(`${result.fixes.length} repair(s): ${result.fixes.join(', ') || 'none'}`);
+      console.log(target);
+      if (flags.strict && result.after.score < 90) process.exitCode = 1;
       return;
     }
 
