@@ -1,7 +1,9 @@
-import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { createGifFile, createPage } from '../src/generate.js';
 import type { Brief, StyleSlug } from '../src/types.js';
+import { ensureDir, writeTextFile } from './lib/fs.js';
+import { pageGrade, printIssues } from './lib/page.js';
+import { runScript } from './lib/run.js';
 
 const root = process.cwd();
 const examples = path.join(root, 'examples');
@@ -116,12 +118,10 @@ async function main(): Promise<void> {
     const out = path.join(examples, page.dir, 'index.html');
     const result = await createPage({ style: page.style, brief: page.brief, output: out });
     console.log(
-      `${page.style.padEnd(12)} ${result.validation.grade} ${String(result.validation.score).padStart(3)} ` +
+      `${pageGrade(page.style, result.validation.grade, result.validation.score)} ` +
         `${result.validation.issues.length} issues → ${path.relative(root, result.path ?? out)}`,
     );
-    for (const issue of result.validation.issues) {
-      console.log(`  [${issue.severity}] ${issue.code}: ${issue.message}`);
-    }
+    printIssues(result.validation.issues);
   }
 
   const gifs: Array<{ style: StyleSlug; text: string; subtitle: string; template: 'title' | 'loop'; file: string }> = [
@@ -130,7 +130,7 @@ async function main(): Promise<void> {
     { style: 'papercraft', text: 'Taller Papel', subtitle: 'Hecho a mano', template: 'title', file: 'papercraft.gif' },
   ];
 
-  await mkdir(path.join(examples, 'gifs'), { recursive: true });
+  await ensureDir(path.join(examples, 'gifs'));
   for (const gif of gifs) {
     const out = path.join(examples, 'gifs', gif.file);
     const result = await createGifFile({
@@ -147,7 +147,7 @@ async function main(): Promise<void> {
     console.log(`${gif.style.padEnd(12)} gif ${result.frames}f ${Math.round(result.bytes / 1024)}KB → ${path.relative(root, result.path)}`);
   }
 
-  await writeFile(
+  await writeTextFile(
     path.join(examples, 'README.md'),
     `# Examples
 
@@ -204,11 +204,7 @@ Generated with \`pnpm showcase\`:
 
 The grammar is fixed; the composition changes with \`seed\` and the copy changes with the brief. Copy is not design.
 `,
-    'utf8',
   );
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+runScript(main);
