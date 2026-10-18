@@ -175,11 +175,11 @@ Generated with \`pnpm education\`:
 - [education/renaissance-perspective.html](education/renaissance-perspective.html) — \`La città ideale\` (A/100 · vision 4/4).
 - [education/papercraft-museum.html](education/papercraft-museum.html) — \`Museo de las Cosas Pequeñas\` (A/100 · vision 4/4).
 
-## Nine new directions
+## Ten new directions
 
 Generated with \`pnpm showcase\`:
 
-- [showcase/index.html](showcase/index.html) — gallery of the nine new styles.
+- [showcase/index.html](showcase/index.html) — gallery of the ten new styles.
 - [compare.html](compare.html) — my brief vs Luna 6 Max, side by side.
 - [luna-deck/memory-future.html](luna-deck/memory-future.html) — 8-slide animated deck by Luna 6 Max (A/100 · vision 4/4).
 - [experiences/casa-perla.html](experiences/casa-perla.html) — restaurant sequence, papercraft.
@@ -189,7 +189,12 @@ Generated with \`pnpm showcase\`:
 - [agile/sprint-14-review.html](agile/sprint-14-review.html) — Sprint review deck + GIF.
 - [agile/sprint-14-retro.html](agile/sprint-14-retro.html) — retrospective deck + GIF.
 - [agile/sprint-15-planning.html](agile/sprint-15-planning.html) — planning deck + GIF.
-- Art Deco, Isotype, Op Art, Ukiyo-e, Bestiario, Psicodelia, Memphis, Vaporwave and Galactic Futurism. Every page is A/100 · vision 4/4, with an original SVG/CSS illustration, interaction and a GIF in \`gifs/showcase-<style>.gif\`.
+- [experiences/black-clover.html](experiences/black-clover.html) — Nature Memory museum room; fan tribute.
+- [decks/tea.html](decks/tea.html) — tea presentation, Nature Memory.
+- [decks/kittens.html](decks/kittens.html) — kittens presentation, Paper Craft.
+- [stories/dominio-publico.html](stories/dominio-publico.html) — CC0 open-domain story, Paper Craft.
+- [gifs/luna13/index.html](gifs/luna13/index.html) — 13 GIFs, one per style.
+- Art Deco, Isotype, Op Art, Ukiyo-e, Bestiario, Psicodelia, Memphis, Vaporwave, Galactic Futurism and Nature Memory. Every page is A/100 · vision 4/4, with an original SVG/CSS illustration, interaction and a GIF in \`gifs/showcase-<style>.gif\`.
 
 The grammar is fixed; the composition changes with \`seed\` and the copy changes with the brief. Copy is not design.
 `,

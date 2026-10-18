@@ -773,7 +773,7 @@ function frameShowcase(env: FrameEnv): void {
   const family =
     p.slug === 'vaporwave'
       ? 'Space Mono'
-      : p.slug === 'artdeco' || p.slug === 'ukiyoe' || p.slug === 'bestiary'
+      : p.slug === 'artdeco' || p.slug === 'ukiyoe' || p.slug === 'bestiary' || p.slug === 'nature'
         ? 'EB Garamond'
         : 'Archivo Black';
 
@@ -782,7 +782,41 @@ function frameShowcase(env: FrameEnv): void {
   ctx.save();
   ctx.globalAlpha = 0.82;
 
-  if (p.slug === 'artdeco') {
+  if (p.slug === 'nature') {
+    ctx.fillStyle = p.palette.surface;
+    ctx.fillRect(0, h * 0.7, w, h * 0.3);
+    ctx.strokeStyle = p.palette.ink;
+    ctx.lineWidth = Math.max(2, s * 0.004);
+    ctx.beginPath();
+    ctx.moveTo(w * 0.70, h * 0.88);
+    ctx.quadraticCurveTo(w * 0.67, h * 0.48, w * 0.74, h * 0.18);
+    ctx.stroke();
+    ctx.fillStyle = p.palette.accent;
+    for (let i = 0; i < 4; i += 1) {
+      const y = h * (0.34 + i * 0.12);
+      const side = i % 2 ? 1 : -1;
+      ctx.save();
+      ctx.translate(w * (0.95 + side * 0.03), y);
+      ctx.rotate(side * -0.55);
+      ctx.beginPath();
+      ctx.ellipse(side * s * 0.1, 0, s * 0.12, s * 0.045, 0, 0, TAU);
+      ctx.fill();
+      ctx.restore();
+    }
+    ctx.strokeStyle = p.palette.accent3;
+    ctx.lineWidth = Math.max(1, s * 0.002);
+    for (let i = 1; i <= 5; i += 1) {
+      ctx.beginPath();
+      ctx.arc(w * 0.20, h * 0.24, s * (0.02 + i * 0.018), 0, TAU);
+      ctx.stroke();
+    }
+    ctx.fillStyle = p.palette.accent2;
+    for (let i = 0; i < 8; i += 1) {
+      ctx.beginPath();
+      ctx.arc(w * (0.15 + (i % 4) * 0.025), h * (0.16 + Math.floor(i / 4) * 0.035), s * 0.004, 0, TAU);
+      ctx.fill();
+    }
+  } else if (p.slug === 'artdeco') {
     ctx.strokeStyle = p.palette.accent;
     ctx.lineWidth = Math.max(1, s * 0.0015);
     for (let i = 0; i < 16; i += 1) {
@@ -963,7 +997,7 @@ function frameShowcase(env: FrameEnv): void {
   const layout = layoutTitle(ctx, text.toUpperCase(), {
     maxWidth: w * 0.72,
     maxLines: 3,
-    maxSize: s * (p.slug === 'vaporwave' ? 0.075 : 0.11),
+    maxSize: s * (p.slug === 'vaporwave' ? 0.075 : p.slug === 'nature' ? 0.08 : 0.11),
     minSize: s * 0.035,
     family,
     weight: 400,
@@ -1003,6 +1037,7 @@ const RENDERERS: Record<StyleSlug, (env: FrameEnv) => void> = {
   memphis: frameShowcase,
   vaporwave: frameShowcase,
   galactic: frameShowcase,
+  nature: frameShowcase,
 };
 
 export async function createGif(style: StyleSlug, options: GifOptions, output: string): Promise<GifResult> {

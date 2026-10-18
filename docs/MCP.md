@@ -1,6 +1,6 @@
 # MCP server
 
-`open-beauty-site` exposes a stdio MCP server with ten tools and eighteen resources. The server is deliberately narrow: it does not call an LLM, it does not browse the web, and it does not invent content. It turns a short brief into a complete, validated artefact.
+`open-beauty-site` exposes a stdio MCP server with ten tools and nineteen resources. The server is deliberately narrow: it does not call an LLM, it does not browse the web, and it does not invent content. It turns a short brief into a complete, validated artefact.
 
 ## Build
 
@@ -62,7 +62,7 @@ All tools return human-readable text. Errors are returned with `isError: true` a
 
 ### `beauty_list_styles`
 
-No arguments. Returns the twelve styles with their display font, best use cases and what to avoid.
+No arguments. Returns the thirteen styles with their display font, best use cases and what to avoid.
 
 ### `beauty_get_style`
 

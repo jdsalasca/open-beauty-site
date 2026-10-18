@@ -10,7 +10,8 @@ export type StyleSlug =
   | 'psychedelic'
   | 'memphis'
   | 'vaporwave'
-  | 'galactic';
+  | 'galactic'
+  | 'nature';
 
 export type Locale = 'es' | 'en';
 

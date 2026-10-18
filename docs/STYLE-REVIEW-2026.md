@@ -1,6 +1,6 @@
 # Ronda de estilos 2026
 
-Revisión editorial, tipográfica y de movimiento de los 12 estilos.
+Revisión editorial, tipográfica y de movimiento de los 13 estilos.
 Mesa de trabajo: tres subagentes **Luna 6 Max** (dirección editorial, dirección de arte/tipografía y dirección de movimiento/aprendizaje), con síntesis humana en el repo. Los informes completos quedaron en `qa/luna-editorial.md`, `qa/luna-tipografia.md` y `qa/luna-motion.md` durante la sesión.
 
 La regla de esta ronda: **cada estilo debe reconocerse a 200 px y en tres segundos; el movimiento debe ordenar la lectura, no decorarla**.
@@ -21,6 +21,7 @@ La regla de esta ronda: **cada estilo debe reconocerse a 200 px y en tres segund
 | **Memphis** | Unir humor visual y rigor para que una idea creativa permanezca. | Desorden deliberado: formas improbables, keyline negro y ritmo de imprenta. | Squiggles como confeti o rotarlo todo: caos sin jerarquía. | Voz seca: observación precisa bajo título juguetón, sin remate fácil. | Anclar un squiggle gigante y un campo terrazzo; rotar solo el foco. |
 | **Vaporwave / Y2K** | Leer la cultura digital como una interfaz vieja que todavía responde. | Ventana de 1999, rejilla al horizonte y nostalgia táctil, no solo neón. | Simular un sistema operativo sin historia o pixelar párrafos enteros. | Cambiar nostalgia vaga por un artefacto, un año y un gesto de uso. | Descentrar una ventana legible; rejilla abajo y sol en el horizonte. |
 | **Galactic Futurism** | Hacer del espacio una sala íntima para escuchar lo que recordamos. | Órbita lenta, planeta grande y negro suficiente para respirar. | Apilar nebulosa, estrellas, cromo y audio automático. | Partir de un detalle sonoro concreto; cromar una sola palabra. | Texto a un lado, planeta sangrado al otro y tres órbitas; audio explícito. |
+| **Nature Memory** | Un herbario editorial: memoria botánica con fecha, sombra y procedencia. | Hoja prensada, etiqueta de campo, anillos de crecimiento y papel cálido. | Usar flores y hojas como decoración sin nombre, fecha ni fuente. | Nombrar la especie, el lugar y la fecha; si es ficción, decirlo. | Lámina prensada a un lado, etiqueta vertical y tres pliegues de archivo. |
 
 ## 2. Tipografía
 
@@ -40,6 +41,7 @@ Cada estilo tiene un `typeSystem` con caja, tracking, leading, tamaño de cuerpo
 | Memphis | Bricolage Grotesque / DM Sans | `liga`, `kern`; pesos ya cargados | Cuerpo 18/1.6; tracking abierto en titulares. |
 | Vaporwave | Press Start 2P / Space Grotesk | `kern`; acento cromático en la misma pixel | Cuerpo 18/1.65; el píxel se reserva para display. |
 | Galactic | Michroma / Space Grotesk | `kern`, `liga`; numeral orbital | Cuerpo 18/1.7; Michroma pide titulares cortos. |
+| Nature Memory | Cormorant Garamond / Karla | `liga`, `kern`, `onum`; una cursiva de campo | Cuerpo 18/1.68; etiqueta de 10–11 px y fecha con cifras old-style. |
 
 **Reglas transversales**
 
@@ -68,6 +70,7 @@ El `motionSystem` de cada estilo define entrada, ambiente, hover, transición de
 | Memphis | 300 ms · 16 px · 45 ms | solo el botón «Revolver» | elevar 4 px | piezas en su sitio |
 | Vaporwave | 350 ms · 8 px · 50 ms | rejilla/sol ≥16 s, pausa | RGB split 120 ms | ventana quieta |
 | Galactic | 800 ms · 14 px · 80 ms | órbita 48–62 s; planeta 4 px | línea cian | cielo estático |
+| Nature Memory | 900 ms · 14 px · 80 ms | deriva de una hoja 16 s; anillos una vez | subrayado o 2 px | hoja quieta, anillos finales |
 
 **Reglas de motion educativo**
 
@@ -79,7 +82,7 @@ El `motionSystem` de cada estilo define entrada, ambiente, hover, transición de
 
 ## 4. Lo que cambió en el harness
 
-- `StylePreset.typeSystem` y `StylePreset.motionSystem` son datos obligatorios en los 12 presets.
+- `StylePreset.typeSystem` y `StylePreset.motionSystem` son datos obligatorios en los 13 presets.
 - `shell()` consume esos tokens: caja, tracking, leading, features, página, stagger y scroll progress.
 - La página tiene una **barra de progreso** de 2 px y un fade de entrada; el `reveal` usa duración/stagger del estilo.
 - Las 9 direcciones showcase dejaron de compartir la misma voz de copy: cada una tiene su propia pauta.

@@ -10,6 +10,7 @@ import {
   ukiyoe,
   vaporwave,
 } from './showcase-presets.js';
+import { nature } from './nature-preset.js';
 import { SUBFAMILIES } from './subfamilies.js';
 import { MOTION_SYSTEMS, TYPE_SYSTEMS } from './design-language.js';
 
@@ -291,6 +292,7 @@ export const presets: Record<StyleSlug, StylePreset> = {
   memphis,
   vaporwave,
   galactic,
+  nature,
 };
 
 const COMPOSITIONS = ['sala', 'gabinete', 'cartel'] as const;

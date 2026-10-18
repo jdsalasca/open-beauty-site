@@ -26,6 +26,7 @@ const styleEnum = z.enum([
   'memphis',
   'vaporwave',
   'galactic',
+  'nature',
 ]);
 
 const localeEnum = z.enum(['es', 'en']);
@@ -174,9 +175,9 @@ QUALITY BAR
   server.registerTool(
     'beauty_list_styles',
     {
-      title: 'List the twelve editorial systems',
+      title: 'List the thirteen editorial systems',
       description:
-        'Start here. Returns the twelve available styles with when to use each one, the exact display font, and the curated subfamilies.',
+        'Start here. Returns the thirteen available styles with when to use each one, the exact display font, and the curated subfamilies.',
       inputSchema: {},
     },
     async () => text(stylesOverview()),
@@ -189,7 +190,7 @@ QUALITY BAR
       description:
         'Returns the exact fonts, palette, border widths, radii, motion window, layout rules and do/don\'t list. Call this before creating anything.',
       inputSchema: {
-        style: styleEnum.describe('One of the 12 art directions. Call beauty_list_styles for the full list.'),
+        style: styleEnum.describe('One of the 13 art directions. Call beauty_list_styles for the full list.'),
         format: z.enum(['markdown', 'json']).optional().describe('Markdown for reading, JSON for programmatic use.'),
       },
     },
@@ -530,12 +531,12 @@ QUALITY BAR
     'beauty_examples',
     {
       title: 'List reference output',
-      description: 'Returns the paths of the twelve example pages and GIFs shipped with the repo.',
+      description: 'Returns the paths of the thirteen example pages and GIFs shipped with the repo.',
       inputSchema: {},
     },
     async () => {
       const root = packageRoot();
-      const showcase = new Set<StyleSlug>(['artdeco', 'isotype', 'opart', 'ukiyoe', 'bestiary', 'psychedelic', 'memphis', 'vaporwave', 'galactic']);
+      const showcase = new Set<StyleSlug>(['artdeco', 'isotype', 'opart', 'ukiyoe', 'bestiary', 'psychedelic', 'memphis', 'vaporwave', 'galactic', 'nature']);
       const lines = styleSlugs.map((slug) => {
         const page = showcase.has(slug)
           ? path.join(root, 'examples', 'showcase', slug, 'index.html')

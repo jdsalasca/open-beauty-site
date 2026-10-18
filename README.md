@@ -1,170 +1,118 @@
 # Open Beauty
 
-<p align="center">
-  <img alt="CI" src="https://github.com/jdsalasca/open-beauty-site/actions/workflows/ci.yml/badge.svg">
-  <img alt="license" src="https://img.shields.io/badge/license-MIT-0B0B0B">
-  <img alt="node" src="https://img.shields.io/badge/node-%3E%3D22-0B0B0B">
-  <img alt="MCP" src="https://img.shields.io/badge/MCP-stdio-D8FF00">
-</p>
+Una casa editorial para un internet vivo.
 
+Una página puede informar y, al mismo tiempo, invitar a quedarse. Puede ser un fresco, un museo de cinco salas, un cuento que avanza por capítulos, una presentación para conversar o un GIF que abre una puerta. **Open Beauty convierte un brief en una pieza web con voz, forma y propósito.**
 
-## Una casa editorial para un internet vivo
+La tesis es simple: internet se vuelve vivo cuando dejamos de tratar cada página como una plantilla para repartir información y la hacemos un lugar para mirar, aprender, encontrarse y recordar. El sistema aporta la gramática visual; quien escribe responde por los hechos.
 
-Una página puede servir para algo y, aun así, pedir que nos quedemos. Puede enseñar, orientar, contar un cuento, abrir un museo o hacer una reunión más honesta. **Open Beauty** construye esa clase de web: piezas con una voz, una forma y una razón para existir.
+## Trece maneras de mirar
 
-### La tesis
-
-El internet se vuelve vivo cuando cada página deja de ser una plantilla que reparte información y se convierte en un lugar que podemos recorrer. A veces es un fresco para pensar; otras, una sala de museo, una mesa de restaurante, un capítulo de historia o una retrospectiva de equipo. La forma debe ayudar a mirar, entender y recordar. La utilidad no cancela el arte; el arte puede volver más clara la utilidad.
-
-Open Beauty es una casa editorial para producir esas piezas. El brief trae el tema, los hechos y la voz. El sistema aporta composición, tipografía, color, movimiento y una revisión de oficio. El resultado puede ser una página HTML, un lugar hecho de salas, un relato por capítulos, una presentación o un GIF. **La máquina pone las reglas visuales; quien escribe sigue siendo responsable de lo que afirma.**
-
-## Doce maneras de mirar
-
-No son doce pieles para una misma plantilla. Cada estilo propone una gramática para ordenar la atención. Abrí cualquier imagen para recorrer su ejemplo.
+Cada estilo tiene su propia composición, tipografía, color y ritmo. Las imágenes abren sus ejemplos.
 
 <p align="center">
-  <a href="examples/renaissance/index.html"><img src="examples/previews/renaissance.png" width="180" alt="Renaissance: un fresco de cal, pigmento y tinta"></a>
-  <a href="examples/brutalist/index.html"><img src="examples/previews/brutalist.png" width="180" alt="Brutalist: un cartel público frontal"></a>
-  <a href="examples/papercraft/index.html"><img src="examples/previews/papercraft.png" width="180" alt="Paper Craft: papeles cortados y superpuestos"></a>
-  <br>
-  <sub><a href="examples/renaissance/index.html">Renaissance</a> · idea como fresco</sub> &nbsp; · &nbsp;
-  <sub><a href="examples/brutalist/index.html">Brutalist</a> · postura como cartel</sub> &nbsp; · &nbsp;
-  <sub><a href="examples/papercraft/index.html">Paper Craft</a> · trabajo hecho a mano</sub>
+  <a href="examples/renaissance/index.html"><img src="examples/previews/renaissance.png" width="180" alt="Renaissance: un fresco editorial de cal, pigmento y tinta"><br><sub>Renaissance · una idea como fresco</sub></a> &nbsp;
+  <a href="examples/brutalist/index.html"><img src="examples/previews/brutalist.png" width="180" alt="Brutalist: un cartel público frontal"><br><sub>Brutalist · una postura como cartel</sub></a> &nbsp;
+  <a href="examples/papercraft/index.html"><img src="examples/previews/papercraft.png" width="180" alt="Paper Craft: papeles cortados y superpuestos"><br><sub>Paper Craft · trabajo hecho a mano</sub></a>
 </p>
 
 <p align="center">
-  <a href="examples/showcase/artdeco/index.html"><img src="examples/previews/mine-artdeco.png" width="180" alt="Art Deco: un vestíbulo urbano vertical"></a>
-  <a href="examples/showcase/isotype/index.html"><img src="examples/previews/mine-isotype.png" width="180" alt="Isotype: datos públicos en una retícula de pictogramas"></a>
-  <a href="examples/showcase/opart/index.html"><img src="examples/previews/mine-opart.png" width="180" alt="Op Art: una experiencia de percepción óptica"></a>
-  <br>
-  <sub><a href="examples/showcase/artdeco/index.html">Art Deco</a> · geometría, altura y tiempo</sub> &nbsp; · &nbsp;
-  <sub><a href="examples/showcase/isotype/index.html">Isotype</a> · datos como lenguaje común</sub> &nbsp; · &nbsp;
-  <sub><a href="examples/showcase/opart/index.html">Op Art</a> · el ojo participa del argumento</sub>
+  <a href="examples/showcase/artdeco/index.html"><img src="examples/previews/mine-artdeco.png" width="180" alt="Art Deco: geometría vertical y laca"><br><sub>Art Deco · altura y tiempo</sub></a> &nbsp;
+  <a href="examples/showcase/isotype/index.html"><img src="examples/previews/mine-isotype.png" width="180" alt="Isotype: datos públicos en una retícula de pictogramas"><br><sub>Isotype · datos como lenguaje común</sub></a> &nbsp;
+  <a href="examples/showcase/opart/index.html"><img src="examples/previews/mine-opart.png" width="180" alt="Op Art: patrones ópticos de alto contraste"><br><sub>Op Art · el ojo participa</sub></a>
 </p>
 
 <p align="center">
-  <a href="examples/showcase/ukiyoe/index.html"><img src="examples/previews/mine-ukiyoe.png" width="180" alt="Ukiyo-e: paisaje y agua como estampa"></a>
-  <a href="examples/showcase/bestiary/index.html"><img src="examples/previews/mine-bestiary.png" width="180" alt="Bestiario: manuscrito de historia natural imaginaria"></a>
-  <a href="examples/showcase/psychedelic/index.html"><img src="examples/previews/mine-psychedelic.png" width="180" alt="Psicodelia: color y ritmo de cartel"></a>
-  <br>
-  <sub><a href="examples/showcase/ukiyoe/index.html">Ukiyo-e</a> · paisaje como estampa</sub> &nbsp; · &nbsp;
-  <sub><a href="examples/showcase/bestiary/index.html">Bestiario</a> · curiosidad como manuscrito</sub> &nbsp; · &nbsp;
-  <sub><a href="examples/showcase/psychedelic/index.html">Psicodelia</a> · color para explorar</sub>
+  <a href="examples/showcase/ukiyoe/index.html"><img src="examples/previews/mine-ukiyoe.png" width="180" alt="Ukiyo-e: paisaje y agua como estampa"><br><sub>Ukiyo-e · paisaje impreso</sub></a> &nbsp;
+  <a href="examples/showcase/bestiary/index.html"><img src="examples/previews/mine-bestiary.png" width="180" alt="Bestiario: manuscrito de historia natural imaginaria"><br><sub>Bestiario · curiosidad como manuscrito</sub></a> &nbsp;
+  <a href="examples/showcase/psychedelic/index.html"><img src="examples/previews/mine-psychedelic.png" width="180" alt="Psicodelia: color líquido y ritmo de cartel"><br><sub>Psicodelia · color para explorar</sub></a>
 </p>
 
 <p align="center">
-  <a href="examples/showcase/memphis/index.html"><img src="examples/previews/mine-memphis.png" width="180" alt="Memphis: formas lúdicas con jerarquía editorial"></a>
-  <a href="examples/showcase/vaporwave/index.html"><img src="examples/previews/mine-vaporwave.png" width="180" alt="Vaporwave: una ventana de internet de 1999"></a>
-  <a href="examples/showcase/galactic/index.html"><img src="examples/previews/mine-galactic.png" width="180" alt="Galactic Futurism: un planetario de memoria"></a>
-  <br>
-  <sub><a href="examples/showcase/memphis/index.html">Memphis</a> · humor con rigor</sub> &nbsp; · &nbsp;
-  <sub><a href="examples/showcase/vaporwave/index.html">Vaporwave / Y2K</a> · una interfaz vieja que aún responde</sub> &nbsp; · &nbsp;
-  <sub><a href="examples/showcase/galactic/index.html">Galactic Futurism</a> · memoria en una sala planetaria</sub>
+  <a href="examples/showcase/memphis/index.html"><img src="examples/previews/mine-memphis.png" width="180" alt="Memphis: formas lúdicas con jerarquía editorial"><br><sub>Memphis · humor con rigor</sub></a> &nbsp;
+  <a href="examples/showcase/vaporwave/index.html"><img src="examples/previews/mine-vaporwave.png" width="180" alt="Vaporwave: una ventana de internet de 1999"><br><sub>Vaporwave / Y2K · cultura digital</sub></a> &nbsp;
+  <a href="examples/showcase/galactic/index.html"><img src="examples/previews/mine-galactic.png" width="180" alt="Galactic Futurism: un planetario de memoria"><br><sub>Galactic Futurism · memoria orbital</sub></a>
 </p>
 
-La revisión de 2026 define para cada estilo su promesa, tipografía y movimiento. En todos, el movimiento debe ordenar la lectura; el estado de movimiento reducido deja el contenido disponible. [Leer la revisión editorial](docs/STYLE-REVIEW-2026.md) · [Recorrer la galería](examples/showcase/index.html) · [Ver las 12 páginas de la ronda](examples/agents/round-2026/index.html).
-
-## Lugares que se recorren, historias que se leen
-
-`beauty_create_experience` convierte un lugar en una secuencia de **3 a 8 salas**: cada una tiene una escena, un texto breve y, cuando hace falta, objetos. Sirve para restaurantes, museos, historia, estudios, clubes y jardines. No es una landing con secciones: la primera sala recibe y la última deja una puerta abierta.
-
-`beauty_create_story` compone cuentos, ensayos narrativos y lecciones de historia en **2 a 8 capítulos**, con cubierta, navegación, texto, hechos al margen y fuente. En historia, las fechas, citas y atribuciones deben venir del brief o de una fuente; una herramienta de diseño no sustituye la investigación.
-
-<p>
-  <a href="examples/experiences/casa-perla.html"><img src="examples/experiences/casa-perla.png" width="320" alt="Casa Perla: recorrido por un restaurante y su carta"></a><br>
-  <strong><a href="examples/experiences/casa-perla.html">Casa Perla</a></strong> · restaurante, mercado y mesa larga.
+<p align="center">
+  <a href="examples/showcase/nature/index.html"><img src="examples/previews/mine-nature.png" width="560" alt="Nature Memory: un herbario editorial de hojas prensadas"><br><sub><strong>Nature Memory · el estilo 13</strong> · hoja, sombra, semilla y procedencia.</sub></a>
 </p>
 
-<p>
-  <a href="examples/experiences/museo-invisible.html"><img src="examples/experiences/museo-invisible.png" width="320" alt="Museo de lo invisible: cinco salas para mirar lo que sostiene un museo"></a><br>
-  <strong><a href="examples/experiences/museo-invisible.html">Museo de lo invisible</a></strong> · cinco salas para mirar aquello que suele quedar fuera de la vitrina.
+## De páginas a lugares, relatos y presentaciones
+
+El harness ya puede componer una página editorial, una experiencia de **3 a 8 salas**, una historia de **2 a 8 capítulos**, un deck 16:9 o un GIF breve. El arte SVG responde al asunto —una casa, un río, una mesa, una vitrina o una planta— en vez de ser un adorno intercambiable.
+
+### Lugares
+
+- [Casa Perla](examples/experiences/casa-perla.html): restaurante, mercado, carta y sobremesa en cuatro salas.
+- [Museo de lo invisible](examples/experiences/museo-invisible.html): cinco salas sobre aquello que sostiene la vida de un museo y suele quedar fuera de vitrina.
+- [Black Clover · La memoria del trébol](examples/experiences/black-clover.html): recorrido de homenaje fan, identificado como tal; no es una pieza oficial.
+<p align="center"><a href="examples/experiences/black-clover.html"><img src="examples/experiences/black-clover.png" width="760" alt="Black Clover: sala Nature Memory con un trébol prensado"></a><br><sub>Black Clover · un archivo de tréboles, promesas y magia que no se rinde.</sub></p>
+
+
+### Historias
+
+- [La casa que aprendió a respirar](examples/stories/casa-respira.html): cuento por capítulos.
+- [El río que cambió de ciudad](examples/stories/rio-1870.html): relato histórico urbano con fuentes y hechos al margen.
+- [La semilla que esperó](examples/stories/dominio-publico.html): historia en Paper Craft; la propia página acredita «CC0 1.0 · texto original».
+<p align="center"><a href="examples/stories/dominio-publico.html"><img src="examples/stories/dominio-publico.png" width="420" alt="La semilla que esperó: cuento CC0 en Paper Craft"></a></p>
+
+
+### Presentaciones
+
+- [El té no se apura](examples/decks/tea.html): deck Nature Memory de ocho slides.
+- [Gaticos: una guía para no hacer nada](examples/decks/kittens.html): deck Paper Craft de ocho slides.
+- [La memoria del futuro](examples/luna-deck/memory-future.html): presentación creada por Luna para mostrar el flujo de trabajo.
+<p align="center">
+  <a href="examples/decks/tea.html"><img src="examples/decks/tea.png" width="360" alt="El té no se apura, deck Nature Memory"></a>
+  <a href="examples/decks/kittens.html"><img src="examples/decks/kittens.png" width="360" alt="Gaticos, deck Paper Craft"></a>
 </p>
 
-<p>
-  <a href="examples/stories/casa-respira.html"><img src="examples/stories/casa-respira.png" width="320" alt="La casa que aprendió a respirar: cuento en cinco capítulos"></a><br>
-  <strong><a href="examples/stories/casa-respira.html">La casa que aprendió a respirar</a></strong> · un cuento en cinco capítulos.
-</p>
 
-<p>
-  <a href="examples/stories/rio-1870.html"><img src="examples/stories/rio-1870.png" width="320" alt="El río que cambió de ciudad: relato histórico por capítulos"></a><br>
-  <strong><a href="examples/stories/rio-1870.html">El río que cambió de ciudad</a></strong> · una historia urbana narrada por capítulos.
-</p>
+## MUSEM
+
+El museo real que salió de esta casa sigue abierto: [**musem.eridu.top**](https://musem.eridu.top). La Sala 01, *Random Access Memories*, ahora tiene un vinilo que gira, una onda de audio y una ficha de archivo; la Sala 07 es **Black Clover · La memoria del trébol**, un homenaje fan con texto original y sin material oficial.
 
 ## Para empresas
 
-Una reunión puede dejar algo mejor que una lista de estados. El deck crea una sala para revisar el sprint con evidencia y decisiones; una retrospectiva para nombrar qué cuidar, detener y probar; o una planificación que explicita el resultado buscado, la capacidad real y lo que queda fuera. Números, aprendizajes y voces deben ser reales. La herramienta no rellena métricas.
+Los rituales ágiles pueden ser conversaciones visuales, no formularios de estado. Hay tres decks acompañados por sus GIFs de entrada: [Sprint 14 · Review](examples/agile/sprint-14-review.html) ([GIF](examples/agile/sprint-14-review.gif)), [Sprint 14 · Retrospective](examples/agile/sprint-14-retro.html) ([GIF](examples/agile/sprint-14-retro.gif)) y [Sprint 15 · Planning](examples/agile/sprint-15-planning.html) ([GIF](examples/agile/sprint-15-planning.gif)).
 
-En el challenge de rituales ágiles hay tres decks y tres GIFs. Cada GIF abre la puerta; el deck contiene la conversación.
-
-<p align="center">
-  <a href="examples/agile/sprint-14-review.html"><img src="examples/agile/sprint-14-review.gif" width="170" alt="GIF de Sprint 14 Review; abrir el deck"></a>
-  <a href="examples/agile/sprint-14-retro.html"><img src="examples/agile/sprint-14-retro.gif" width="170" alt="GIF de Sprint 14 Retro; abrir el deck"></a>
-  <a href="examples/agile/sprint-15-planning.html"><img src="examples/agile/sprint-15-planning.gif" width="170" alt="GIF de Sprint 15 Planning; abrir el deck"></a>
-  <br>
-  <sub><a href="examples/agile/sprint-14-review.html">Sprint 14 · Review</a></sub> &nbsp; · &nbsp;
-  <sub><a href="examples/agile/sprint-14-retro.html">Sprint 14 · Retrospective</a></sub> &nbsp; · &nbsp;
-  <sub><a href="examples/agile/sprint-15-planning.html">Sprint 15 · Planning</a></sub>
-</p>
+La review reúne evidencia, cambios para usuarios y decisiones; la retro, aprendizajes y experimentos; la planificación, resultados esperados, capacidad y límites. Son ejemplos de formato: antes de una reunión real, reemplazá cifras, voces, fechas y responsables por información del equipo. El sistema no inventa métricas.
 
 ## Para aulas
 
-Una lección también puede ser un recorrido. Abrí con una pregunta; acercá un objeto, una fecha o una idea; dejá que cada sala o capítulo agregue contexto; cerrá con una fuente y algo para observar. Hay ejemplos de perspectivas y museo en [La città ideale](examples/education/renaissance-perspective.html) y [Museo de las Cosas Pequeñas](examples/education/papercraft-museum.html). Para una lección histórica, distinguí el dato de la interpretación, citá la fuente y marcá lo incierto. En proyector, el texto debe seguir legible y el movimiento nunca debe cargar con la explicación.
+Una clase puede empezar con una pregunta, detenerse ante un objeto y avanzar por salas o capítulos. Mirá [La città ideale](examples/education/renaissance-perspective.html) y [Museo de las Cosas Pequeñas](examples/education/papercraft-museum.html). En historia, cada fecha, cita y atribución necesita fuente; separá el hecho de la interpretación y señalá lo que no se sabe. El texto sigue disponible con movimiento reducido y debe poder leerse en proyector.
 
-## Diez herramientas, una secuencia clara
+## Diez herramientas MCP
 
-El servidor MCP trabaja por **stdio**. No llama a un modelo, no navega la web ni verifica la verdad de los datos: transforma un brief en un artefacto y audita su forma. Estas son las diez herramientas:
+El servidor trabaja por **stdio** y transforma briefs; no llama a un modelo ni navega la web.
 
-**Orientar:**
+- **Orientar:** `beauty_list_styles`, `beauty_get_style`, `beauty_get_skill`.
+- **Crear:** `beauty_create_page`, `beauty_create_experience`, `beauty_create_story`, `beauty_create_deck`, `beauty_create_gif`.
+- **Revisar y encontrar:** `beauty_validate`, `beauty_examples`.
 
-- `beauty_list_styles` — lista los estilos y sus usos.
-- `beauty_get_style` — entrega tokens, reglas y límites del estilo elegido.
-- `beauty_get_skill` — carga las instrucciones de página, deck, experiencia, cuento o trabajo ágil.
-
-**Crear:**
-
-- `beauty_create_page` — página editorial.
-- `beauty_create_experience` — lugar dividido en salas.
-- `beauty_create_story` — relato o lección por capítulos.
-- `beauty_create_deck` — presentación 16:9 navegable.
-- `beauty_create_gif` — pieza breve animada; una tapa, no una agenda.
-
-**Revisar y encontrar:**
-
-- `beauty_validate` — revisa craft, visión y problemas concretos de un archivo.
-- `beauty_examples` — señala las rutas de los ejemplos de referencia.
+En total son diez herramientas: elegir una gramática, cargar sus instrucciones, crear la pieza adecuada, validarla y consultar ejemplos.
 
 ## El flujo de Luna
 
-Luna trabaja dentro del cliente MCP; no escribe HTML a mano. Primero lista los estilos y escoge uno por el tema. Después lee `beauty_get_style` y la skill adecuada con `beauty_get_skill`. Convierte el encargo en un brief con voz y hechos concretos; llama a la herramienta de creación que corresponde; y pasa el resultado por `beauty_validate`. Si el validador encuentra un problema, corrige el brief o la composición y vuelve a revisar. La meta técnica de la casa es **A/100 y visión 4/4**; la última lectura humana todavía pregunta si la pieza enseña, conmueve o ayuda a actuar.
+1. `beauty_list_styles`: compara los estilos con el tema.
+2. `beauty_get_style` y `beauty_get_skill`: lee los tokens y el oficio del formato.
+3. Escribe un brief con voz, objetos, evidencia y hechos proporcionados.
+4. Llama a la herramienta adecuada: página, experiencia, relato, deck o GIF.
+5. Pasa el HTML por `beauty_validate`; corrige y repite hasta lograr **A/100 y visión 4/4**.
+6. Una persona hace la lectura final: revisa los hechos y abre la pieza en un navegador.
 
-La [ronda 2026 de Luna](docs/STYLE-REVIEW-2026.md) conserva los resultados por estilo. El deck [La memoria del futuro](examples/luna-deck/memory-future.html) muestra el flujo de presentación.
+Luna usa las herramientas MCP; no necesita escribir HTML a mano. La calificación automatizada mide reglas de craft y una heurística visual, no la verdad de lo escrito.
 
-### Lo que ya se puso a prueba
+## Evidencia disponible
 
-- La suite registrada en [Testing](docs/TESTING.md) reporta **15/15 pruebas aprobadas**.
-- En la ronda de estilos de Luna: **12/12 páginas A/100 y visión 4/4**.
-- El deck de Luna tiene **8 slides** —cubierta, seis slides de contenido y cierre— y obtuvo A/100, visión 4/4.
-- La nueva colección ofrece **cuatro experiencias y relatos**: dos lugares y dos historias.
-- El challenge de empresa reúne **tres decks y tres GIFs**: review, retrospectiva y planning.
-
-### Límites que importan
-
-- Los decks todavía no tienen un layout `figure` con imagen, pie y fuente.
-- Los perfiles de movimiento están definidos por estilo, no por cada subfamilia.
-- El servidor no busca fuentes ni trae datos: quien prepara el brief responde por cifras, fechas, citas y atribuciones. El validador comprueba reglas de diseño y estructura; no hace verificación factual ni reemplaza la inspección en un navegador.
-
-La mesa de ideas de artistas, escritores, lectores, diseñadores y curadores está en [`docs/IDEAS-2026.md`](docs/IDEAS-2026.md): lo que vieron, lo que implementamos y lo que sigue.
-
-## Cómo se construye
-
-- **Un archivo por pieza.** El HTML es autocontenido: CSS y JavaScript inline, arte SVG, sin runtime de framework. Se abre en cualquier navegador y se imprime.
-- **El gusto es dato.** `src/styles/presets.ts` guarda paleta, fuentes, reglas, `typeSystem`, `motionSystem` y subfamilias; `src/art.ts` dibuja escenas originales por estilo y asunto (mesa, vitrina, río, casa).
-- **La IA no toca el CSS.** El modelo elige un estilo, escribe el brief y llama a una herramienta; el renderer decide composición, escalas, bordes y movimiento.
-- **El validador no es un navegador.** Audita tokens, contraste, estructura, accesibilidad y ritmo; la última lectura sigue siendo humana.
+- [La suite documentada](docs/TESTING.md) registra **15/15 pruebas aprobadas**.
+- La [ronda histórica de Luna](examples/agents/round-2026/index.html) reúne **12/12 páginas A/100 y visión 4/4**. Esa ronda corresponde a los doce estilos que existían entonces.
+- Nature Memory se evaluó en la matriz local: **A/100 y visión 4/4**; el estilo 13 también produce deck y GIF. La matriz actual de páginas cubre **13/13 estilos**.
 
 ## Empezar
 
-Requisitos: **Node.js 22 o superior** y **pnpm**. Desde una terminal:
+Necesitás **Node.js 22 o superior** y **pnpm**. Desde una terminal:
 
 ```bash
 git clone https://github.com/jdsalasca/open-beauty-site.git
@@ -173,14 +121,26 @@ pnpm setup
 pnpm mcp:config
 ```
 
-`pnpm mcp:config` imprime el bloque para registrar el servidor en un cliente compatible con MCP local por stdio. Pegalo en la configuración de Codex, Claude Code u otro cliente y pedile a Luna que empiece por `beauty_list_styles`. La configuración detallada está en [docs/MCP.md](docs/MCP.md). La galería de ejemplos está en [examples/index.html](examples/index.html).
+`pnpm setup` instala dependencias, compila y corre la suite. `pnpm mcp:config` imprime el bloque para registrar el servidor en Codex, Claude Code, Cursor u otro cliente compatible con MCP local por stdio. La configuración y opciones están en [docs/MCP.md](docs/MCP.md).
 
-La app web estándar de ChatGPT no puede lanzar un proceso MCP local: necesitás un cliente con MCP stdio (Codex CLI, Claude Desktop/Code o Cursor) o un puente HTTP. El servidor no llama a un modelo, no navega la web y no verifica la verdad de los datos.
+La web estándar de ChatGPT no puede iniciar un proceso MCP local. Hace falta un cliente con stdio o un puente HTTP. El servidor no busca fuentes, no trae datos y no comprueba fechas, citas o métricas. El validador revisa estructura y reglas de diseño; **no sustituye la inspección en navegador ni la revisión humana**.
 
----
+## Límites
 
-**Open Beauty**: la web puede volver a ser un lugar para mirar, aprender, encontrarse y seguir una historia. Una buena página abre la puerta. Lo que pasa adentro depende de la verdad y el cuidado de quien la escribe.
+`A/100` mide craft y `4/4` es una heurística de visión: ninguno verifica la verdad de un dato ni garantiza cómo se verá en cada navegador. Los decks aún no tienen un layout de figura con imagen, pie y fuente. La pausa de movimiento está disponible en páginas, pero sigue pendiente para decks y GIFs; los perfiles de movimiento tampoco varían por subfamilia.
 
-## Licencia
+## Trece GIFs
 
-MIT. Las fuentes incluidas son OFL y están documentadas en [`fonts/`](fonts/). El repositorio es una herramienta editorial, no una fuente de verdad: las citas, fechas y métricas son responsabilidad del brief y de la fuente.
+El archivo completo, uno por estilo, está en [**examples/gifs/luna13/**](examples/gifs/luna13/index.html). Tres puertas:
+
+<p align="center">
+  <a href="examples/gifs/luna13/artdeco.gif"><img src="examples/gifs/luna13/artdeco.gif" width="180" alt="GIF Art Deco: Subir"></a>
+  <a href="examples/gifs/luna13/papercraft.gif"><img src="examples/gifs/luna13/papercraft.gif" width="180" alt="GIF Paper Craft: Pequeñas cosas"></a>
+  <a href="examples/gifs/luna13/nature.gif"><img src="examples/gifs/luna13/nature.gif" width="180" alt="GIF Nature Memory: Herbario"></a>
+</p>
+
+## Para curiosear
+
+[Galería de estilos](examples/showcase/index.html) · [Índice de ejemplos](examples/index.html) · [Archivo de 13 GIFs](examples/gifs/luna13/index.html) · [Revisión editorial de 2026](docs/STYLE-REVIEW-2026.md) · [Ideas implementadas y pendientes](docs/IDEAS-2026.md) · [Ronda histórica de 12 estilos](examples/agents/round-2026/index.html).
+
+Open Beauty es MIT; las fuentes tipográficas incluidas son OFL. Una buena página abre la puerta. Lo que pasa adentro depende de la verdad y el cuidado de quien la escribe.

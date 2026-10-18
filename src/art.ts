@@ -204,6 +204,18 @@ export function sceneArt(preset: StylePreset, index = 1, caption?: string, subje
           <circle cx="660" cy="240" r="14" fill="${p.accent3}"/>
           <text x="400" y="760" text-anchor="middle" font-family="Michroma, sans-serif" font-size="16" letter-spacing="9" fill="${p.muted}">${esc(label || 'MEMORIA / ORBITAL')}</text>
         </svg>`;
+      case 'nature':
+        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
+          <rect width="800" height="800" fill="${p.bg}"/>
+          <path d="M0 640c120-50 220 30 340-20s230-30 460 20v160H0Z" fill="${p.surface}"/>
+          <path d="M400 700V180" stroke="${p.ink}" stroke-width="3" fill="none"/>
+          <g fill="${p.accent}" opacity=".9"><path d="M400 250c-90 0-140-55-140-125 80 0 140 55 140 125Z"/><path d="M400 330c90 0 140-55 140-125-80 0-140 55-140 125Z"/><path d="M400 420c-75 0-120-45-120-105 70 0 120 45 120 105Z"/><path d="M400 500c75 0 120-45 120-105-70 0-120 45-120 105Z"/></g>
+          <g fill="none" stroke="${p.accent3}" opacity=".8"><circle cx="650" cy="640" r="72"/><circle cx="650" cy="640" r="50"/><circle cx="650" cy="640" r="28"/><circle cx="650" cy="640" r="10"/></g>
+          <g fill="${p.accent2}"><circle cx="260" cy="250" r="7"/><circle cx="300" cy="286" r="4"/><circle cx="525" cy="450" r="5"/><circle cx="555" cy="410" r="3"/></g>
+          <path d="M130 120h150M130 145h100" stroke="${p.muted}" stroke-width="1" opacity=".6"/>
+          <text x="130" y="100" font-family="IBM Plex Mono, monospace" font-size="14" letter-spacing="3" fill="${p.muted}">${esc(label || 'HERBARIUM / FOLIO 01')}</text>
+          <rect x="400" y="700" width="32" height="52" fill="${p.accent4}" opacity=".8"/>
+        </svg>`;
       default:
         return `<svg viewBox="0 0 800 800"><rect width="800" height="800" fill="${p.bg}"/><circle cx="400" cy="400" r="220" fill="${p.accent}"/></svg>`;
     }

@@ -5,6 +5,7 @@ import { renderBrutalist } from './brutalist.js';
 import { renderPapercraft } from './papercraft.js';
 import { renderArtDeco, renderIsotype, renderOpArt, renderUkiyoe } from './showcase-a.js';
 import { renderBestiary, renderGalactic, renderMemphis, renderPsychedelic, renderVaporwave } from './showcase-b.js';
+import { renderNatureMemory } from './nature-memory.js';
 
 export function renderPage(style: StyleSlug, brief: Partial<Brief>): string {
   const preset = getStyle(style);
@@ -33,6 +34,8 @@ export function renderPage(style: StyleSlug, brief: Partial<Brief>): string {
       return renderVaporwave(brief, preset);
     case 'galactic':
       return renderGalactic(brief, preset);
+    case 'nature':
+      return renderNatureMemory(brief, preset);
     default: {
       const exhaustive: never = style;
       throw new Error(`Unknown style: ${String(exhaustive)}`);

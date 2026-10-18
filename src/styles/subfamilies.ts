@@ -61,6 +61,11 @@ export const SUBFAMILIES: Record<StyleSlug, StyleSubfamily[]> = {
     { slug: 'hot-pink', name: 'Hot pink', description: 'Pink window, cyan grid, chrome type.', accent: 'accent' },
     { slug: 'terminal', name: 'Terminal', description: 'Chrome text on blue; the quiet server room.', accent: 'accent3' },
   ],
+  nature: [
+    { slug: 'herbarium', name: 'Herbarium', description: 'Pressed leaves on cream paper, ink labels, one terracotta berry.', accent: 'accent3', composition: 'sala' },
+    { slug: 'understory', name: 'Understory', description: 'Deep moss, rain and a low canopy; quieter and more interior.', accent: 'accent2', composition: 'gabinete' },
+    { slug: 'seedbank', name: 'Seed bank', description: 'A dark archive of seeds and pollen; gold only in the labels.', accent: 'accent4', composition: 'cartel' },
+  ],
   galactic: [
     { slug: 'orbital', name: 'Orbital', description: 'Cyan orbit, violet planet, chrome ivory.', accent: 'accent' },
     { slug: 'deep-field', name: 'Deep field', description: 'Violet nebula and a gold moon; less interface.', accent: 'accent2', ground: 'deep' },

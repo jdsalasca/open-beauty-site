@@ -30,6 +30,9 @@ const motifs: Record<StyleSlug, string> = {
 .deck.style-vaporwave .atmosphere:before{width:22vw;height:22vw;right:9vw;top:9vh;border-radius:50%;background:linear-gradient(180deg,var(--accent),var(--accent2))}
 .deck.style-vaporwave .atmosphere:after{width:24vw;height:24vw;right:8vw;top:8vh;border-radius:50%;background:repeating-linear-gradient(180deg,transparent 0 9%,var(--ground) 9% 13%)}
 .deck.style-vaporwave .point{box-shadow:inset 2px 2px 0 rgba(255,255,255,.35),inset -2px -2px 0 rgba(0,0,0,.35)}`,
+  nature: `.deck.style-nature .atmosphere:before{width:42vw;height:42vw;right:-8vw;bottom:-10vw;border-radius:50%;background:var(--accent);opacity:.12;box-shadow:0 0 0 18px color-mix(in srgb,var(--accent3) 12%,transparent),0 0 0 36px color-mix(in srgb,var(--accent4) 10%,transparent)}
+.deck.style-nature .atmosphere:after{width:28vw;height:34vh;right:7vw;top:12vh;border:1px solid var(--accent2);border-radius:50% 50% 0 0;opacity:.35}
+.deck.style-nature .point{box-shadow:0 18px 40px rgba(36,48,38,.14)}`,
   galactic: `.deck.style-galactic .atmosphere:before{width:66vw;height:66vw;right:-12vw;top:-10vw;border-radius:50%;border:1px solid var(--accent);box-shadow:0 0 0 48px color-mix(in srgb,var(--accent2) 10%,transparent),0 0 0 96px color-mix(in srgb,var(--accent) 8%,transparent)}
 .deck.style-galactic .atmosphere:after{width:31vw;height:31vw;right:4vw;top:12vh;border-radius:50%;background:radial-gradient(circle at 38% 32%,var(--accent2),var(--deep) 58%,var(--bg));}
 .deck.style-galactic .cover-dot{background:radial-gradient(circle at 38% 32%,var(--accent2),var(--deep) 66%);box-shadow:0 0 90px color-mix(in srgb,var(--accent) 24%,transparent)}`,

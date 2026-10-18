@@ -187,6 +187,26 @@ const pages: Array<{ slug: StyleSlug; brief: Brief }> = [
       locale: 'es',
     },
   },
+  {
+    slug: 'nature',
+    brief: {
+      title: 'El jardín de las horas lentas',
+      brand: 'Herbario Eridu',
+      eyebrow: 'Archivo botánico · Invernadero 03',
+      tagline: 'Una hoja prensada también es una forma de mirar el tiempo.',
+      intro:
+        'Un herbario no conserva plantas: conserva la decisión de mirarlas dos veces. Aquí cada pliego guarda una fecha, una sombra y una pregunta sobre lo que sigue creciendo.',
+      sections: [
+        { kicker: '01 / La hoja', title: 'La forma que queda', body: 'Al secarse, la hoja pierde volumen y gana dibujo. La nervadura se vuelve un mapa de lo que la sostuvo.' },
+        { kicker: '02 / La sombra', title: 'Lo que no se prensa', body: 'El color cambia; el lugar y la hora no. La etiqueta es tan importante como el espécimen.' },
+        { kicker: '03 / La semilla', title: 'Un archivo que puede volver', body: 'Guardar una semilla es aceptar que el archivo no termina en la página: puede germinar en otro suelo.' },
+      ],
+      quote: { text: 'Lo que se guarda también crece.', author: 'Cuaderno de campo, 2026' },
+      cta: { label: 'Abrir el herbario', href: '#top' },
+      footer: 'Herbario Eridu · Archivo vivo',
+      locale: 'es',
+    },
+  },
 ];
 
 async function main(): Promise<void> {
@@ -212,6 +232,7 @@ async function main(): Promise<void> {
     memphis: 'MEMPHIS',
     vaporwave: '1999',
     galactic: 'ERIDU',
+  nature: 'HERBARIO',
   };
   for (const page of pages) {
     const gif = path.join(root, 'examples', 'gifs', `showcase-${page.slug}.gif`);
@@ -231,7 +252,7 @@ async function main(): Promise<void> {
 
   await writeFile(
     path.join(out, 'index.html'),
-    `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ocho estilos nuevos · open-beauty-site</title>
+    `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Diez estilos nuevos · open-beauty-site</title>
 <style>
 :root{--paper:#F2EFE6;--ink:#0B0B0B;--acid:#D8FF3E;--red:#E0432E;--mono:'Space Mono',monospace;--display:'Archivo Black',sans-serif}
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--mono);font-size:13px}
@@ -258,7 +279,7 @@ h2{font-family:var(--display);font-size:24px;line-height:1;letter-spacing:-.03em
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono&display=swap" rel="stylesheet">
 </head><body>
 <header class="top"><a class="brand" href="../index.html">OPEN<i>/</i>BEAUTY</a><nav><a href="../index.html">Galería</a><a href="../compare.html">Dos manos</a><a href="https://github.com/jdsalasca/open-beauty-site">GitHub ↗</a></nav></header>
-<section class="hero"><h1>Nueve<br><mark>estilos nuevos.</mark></h1><p class="lede">Art Deco, Isotype, Op Art, Ukiyo-e, Bestiario, Psicodelia, Memphis, Vaporwave y Galactic Futurism. SVG y CSS original, tipografía exacta, interacción y GIF. Todos A/100 y vision 4/4.</p><a class="cta" href="../compare.html">Ver mi versión vs Luna 6 Max →</a></section>
+<section class="hero"><h1>Diez<br><mark>estilos nuevos.</mark></h1><p class="lede">Art Deco, Isotype, Op Art, Ukiyo-e, Bestiario, Psicodelia, Memphis, Vaporwave, Galactic Futurism y Nature Memory. SVG y CSS original, tipografía exacta, interacción y GIF. Todos A/100 y vision 4/4.</p><a class="cta" href="../compare.html">Ver mi versión vs Luna 6 Max →</a></section>
 <main class="grid">${cards}</main>
 </body></html>`,
     'utf8',

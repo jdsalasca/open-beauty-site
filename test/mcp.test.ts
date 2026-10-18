@@ -133,7 +133,7 @@ test('example routes point to real files', async () => {
   const result = await client.callTool({ name: 'beauty_examples', arguments: {} });
   const text = (result.content as Array<{ type: string; text: string }>)[0]?.text ?? '';
   const pages = [...text.matchAll(/page (.+?) · gif (.+)/g)].flatMap((match) => [match[1]?.trim(), match[2]?.trim()]).filter(Boolean) as string[];
-  assert.equal(pages.length, 24);
+  assert.equal(pages.length, 26);
   for (const file of pages) assert.ok(existsSync(file), `missing example: ${file}`);
 });
 
