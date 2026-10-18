@@ -3,6 +3,32 @@ name: open-beauty-papercraft
 description: Apply the Paper Craft editorial system (A warm table covered in cut paper) to a page or GIF with open-beauty-site.
 ---
 
+## Quick recipe
+
+Copy, paste, run. Replace only the quoted words.
+
+```bash
+node dist/cli.js page --style papercraft --brief examples/recipes/papercraft/page.json --out out/papercraft.html
+node dist/cli.js deck --style papercraft --brief examples/recipes/papercraft/deck.json --out out/papercraft-deck.html
+node dist/cli.js gif --style papercraft --text "Paper Craft Taller" --out out/papercraft.gif
+```
+
+**5 hard rules**
+- Display font is `Fraunces`; body and labels use it too. Never substitute.
+- Border widths: 1, 2 px. Radius: 10–48 px.
+- Motion window: 0.5–1.2 s.
+- Shadow: Soft and warm: 0 22px 40px rgba(74,58,50,.20) plus a 0 2px 0 edge. Never a hard offset.
+- No 0px corners, no perfect rounded rectangles: the corner delta must be visible.
+
+**3 common mistakes (and fixes)**
+- Inventing a font -> read Hard tokens and use the exact family.
+- Adding a second accent -> one accent per screen; keep the rest chalky/flat.
+- Too much copy -> card body 1–2 sentences; headline 2–6 words.
+
+**Words / tone**
+- es: Cálido, hecho a mano, primera persona. Frases cortas, detalles sensoriales.
+- en: warm, handmade, first person. Short sentences, sensory details.
+
 # Paper Craft skill
 
 Use this skill together with `beauty` when the brief calls for paper craft.

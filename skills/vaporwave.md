@@ -3,6 +3,32 @@ name: open-beauty-vaporwave
 description: Apply the Vaporwave / Y2K editorial system (A window into a future that already expired) to a page or GIF with open-beauty-site.
 ---
 
+## Quick recipe
+
+Copy, paste, run. Replace only the quoted words.
+
+```bash
+node dist/cli.js page --style vaporwave --brief examples/recipes/vaporwave/page.json --out out/vaporwave.html
+node dist/cli.js deck --style vaporwave --brief examples/recipes/vaporwave/deck.json --out out/vaporwave-deck.html
+node dist/cli.js gif --style vaporwave --text "Vaporwave Window" --out out/vaporwave.gif
+```
+
+**5 hard rules**
+- Display font is `Press Start 2P`; body and labels use it too. Never substitute.
+- Border widths: 1, 2, 3 px. Radius: 0–6 px.
+- Motion window: 0.2–1.4 s.
+- Shadow: Chrome bevels and 2px hard inset edges; no soft ambient shadow.
+- No lorem ipsum.
+
+**3 common mistakes (and fixes)**
+- Inventing a font -> read Hard tokens and use the exact family.
+- Adding a second accent -> one accent per screen; keep the rest chalky/flat.
+- Too much copy -> card body 1–2 sentences; headline 2–6 words.
+
+**Words / tone**
+- es: Manual de uso de una interfaz obsoleta: artefacto, año, gesto. La nostalgia necesita un objeto concreto.
+- en: a user manual for an obsolete interface: artifact, year, gesture. Nostalgia needs a specific object.
+
 # Vaporwave / Y2K skill
 
 Use this skill together with `beauty` when the brief calls for vaporwave / y2k.

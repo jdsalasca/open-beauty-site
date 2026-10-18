@@ -3,6 +3,32 @@ name: open-beauty-memphis
 description: Apply the Memphis editorial system (A deliberate case of bad taste) to a page or GIF with open-beauty-site.
 ---
 
+## Quick recipe
+
+Copy, paste, run. Replace only the quoted words.
+
+```bash
+node dist/cli.js page --style memphis --brief examples/recipes/memphis/page.json --out out/memphis.html
+node dist/cli.js deck --style memphis --brief examples/recipes/memphis/deck.json --out out/memphis-deck.html
+node dist/cli.js gif --style memphis --text "Memphis Squiggle" --out out/memphis.gif
+```
+
+**5 hard rules**
+- Display font is `Bricolage Grotesque`; body and labels use it too. Never substitute.
+- Border widths: 1, 2, 3 px. Radius: 0–48 px.
+- Motion window: 0.3–1.2 s.
+- Shadow: Hard black offset shadows (6px 6px 0) are the point; no soft blur.
+- No lorem ipsum.
+
+**3 common mistakes (and fixes)**
+- Inventing a font -> read Hard tokens and use the exact family.
+- Adding a second accent -> one accent per screen; keep the rest chalky/flat.
+- Too much copy -> card body 1–2 sentences; headline 2–6 words.
+
+**Words / tone**
+- es: Ironía seca bajo un título lúdico. El chiste está en la composición, no en el copy.
+- en: dry wit under a playful title. The joke is in the composition, not in the copy.
+
 # Memphis skill
 
 Use this skill together with `beauty` when the brief calls for memphis.

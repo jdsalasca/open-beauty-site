@@ -3,6 +3,32 @@ name: open-beauty-opart
 description: Apply the Op Art editorial system (Your eye is the medium) to a page or GIF with open-beauty-site.
 ---
 
+## Quick recipe
+
+Copy, paste, run. Replace only the quoted words.
+
+```bash
+node dist/cli.js page --style opart --brief examples/recipes/opart/page.json --out out/opart.html
+node dist/cli.js deck --style opart --brief examples/recipes/opart/deck.json --out out/opart-deck.html
+node dist/cli.js gif --style opart --text "Op Art Eye" --out out/opart.gif
+```
+
+**5 hard rules**
+- Display font is `Archivo Black`; body and labels use it too. Never substitute.
+- Border widths: 1, 2, 3 px. Radius: 0–0 px.
+- Motion window: 0.2–1 s.
+- Shadow: No shadow. Contrast and repetition create depth.
+- No lorem ipsum.
+
+**3 common mistakes (and fixes)**
+- Inventing a font -> read Hard tokens and use the exact family.
+- Adding a second accent -> one accent per screen; keep the rest chalky/flat.
+- Too much copy -> card body 1–2 sentences; headline 2–6 words.
+
+**Words / tone**
+- es: Experimento perceptivo. Haz una pregunta sobre lo que ve el ojo y respóndela con claridad.
+- en: a perceptual experiment. Ask one question about what the eye sees, then answer it plainly.
+
 # Op Art skill
 
 Use this skill together with `beauty` when the brief calls for op art.

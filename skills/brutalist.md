@@ -3,6 +3,32 @@ name: open-beauty-brutalist
 description: Apply the Brutalist editorial system (Concrete, ink and acid) to a page or GIF with open-beauty-site.
 ---
 
+## Quick recipe
+
+Copy, paste, run. Replace only the quoted words.
+
+```bash
+node dist/cli.js page --style brutalist --brief examples/recipes/brutalist/page.json --out out/brutalist.html
+node dist/cli.js deck --style brutalist --brief examples/recipes/brutalist/deck.json --out out/brutalist-deck.html
+node dist/cli.js gif --style brutalist --text "Brutalist Signal" --out out/brutalist.gif
+```
+
+**5 hard rules**
+- Display font is `Archivo Black`; body and labels use it too. Never substitute.
+- Border widths: 3, 6 px. Radius: 0–0 px.
+- Motion window: 0.15–0.7 s.
+- Shadow: Hard offset only: 8px 8px 0 #0B0B0B (zero blur). Hover can grow it to 12px 12px.
+- No rounded corners.
+
+**3 common mistakes (and fixes)**
+- Inventing a font -> read Hard tokens and use the exact family.
+- Adding a second accent -> one accent per screen; keep the rest chalky/flat.
+- Too much copy -> card body 1–2 sentences; headline 2–6 words.
+
+**Words / tone**
+- es: Póster, imperativo, alto. Dos a seis palabras por titular, en mayúsculas.
+- en: poster, imperative, loud. Two to six words per headline, all caps.
+
 # Brutalist skill
 
 Use this skill together with `beauty` when the brief calls for brutalist.

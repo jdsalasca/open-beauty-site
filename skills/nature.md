@@ -3,6 +3,32 @@ name: open-beauty-nature
 description: Apply the Nature Memory editorial system (A herbarium for the living archive) to a page or GIF with open-beauty-site.
 ---
 
+## Quick recipe
+
+Copy, paste, run. Replace only the quoted words.
+
+```bash
+node dist/cli.js page --style nature --brief examples/recipes/nature/page.json --out out/nature.html
+node dist/cli.js deck --style nature --brief examples/recipes/nature/deck.json --out out/nature-deck.html
+node dist/cli.js gif --style nature --text "Nature Herbarium" --out out/nature.gif
+```
+
+**5 hard rules**
+- Display font is `Cormorant Garamond`; body and labels use it too. Never substitute.
+- Border widths: 1, 2 px. Radius: 0–22 px.
+- Motion window: 0.5–1.8 s.
+- Shadow: Soft botanical shadow: 0 18px 40px rgba(36,48,38,.14). Never hard offset.
+- No cottagecore clichés, fake Latin, pressed-flower stickers or "organic" gradients.
+
+**3 common mistakes (and fixes)**
+- Inventing a font -> read Hard tokens and use the exact family.
+- Adding a second accent -> one accent per screen; keep the rest chalky/flat.
+- Too much copy -> card body 1–2 sentences; headline 2–6 words.
+
+**Words / tone**
+- es: Cuaderno de campo para un visitante, no anuncio de perfume. Preciso, paciente, primera persona del plural.
+- en: a field notebook written for a visitor, not a perfume ad. Precise, patient, first person plural.
+
 # Nature Memory skill
 
 Use this skill together with `beauty` when the brief calls for nature memory.

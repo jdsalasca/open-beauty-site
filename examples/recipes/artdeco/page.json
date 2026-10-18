@@ -1,0 +1,32 @@
+{
+  "title": "Art Deco Studio",
+  "tagline": "A lacquered machine for looking upward.",
+  "intro": "A art deco page for a studio that works with architecture and jazz.",
+  "sections": [
+    {
+      "kicker": "01 / Identity",
+      "title": "Identity",
+      "body": "Marks, rules and a voice that survives contact with real use."
+    },
+    {
+      "kicker": "02 / Work",
+      "title": "Work",
+      "body": "Projects built from the materials, type and motion of the style."
+    },
+    {
+      "kicker": "03 / Contact",
+      "title": "Contact",
+      "body": "Start a conversation with the studio."
+    }
+  ],
+  "quote": {
+    "text": "If it does not stop you, it is not finished.",
+    "author": "Studio manifesto"
+  },
+  "cta": {
+    "label": "Start a project",
+    "href": "#contact"
+  },
+  "locale": "en",
+  "seed": 0
+}

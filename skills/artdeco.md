@@ -3,6 +3,32 @@ name: open-beauty-artdeco
 description: Apply the Art Deco editorial system (A lacquered machine for looking upward) to a page or GIF with open-beauty-site.
 ---
 
+## Quick recipe
+
+Copy, paste, run. Replace only the quoted words.
+
+```bash
+node dist/cli.js page --style artdeco --brief examples/recipes/artdeco/page.json --out out/artdeco.html
+node dist/cli.js deck --style artdeco --brief examples/recipes/artdeco/deck.json --out out/artdeco-deck.html
+node dist/cli.js gif --style artdeco --text "Art Deco Lobby" --out out/artdeco.gif
+```
+
+**5 hard rules**
+- Display font is `Poiret One`; body and labels use it too. Never substitute.
+- Border widths: 1, 2 px. Radius: 0–2 px.
+- Motion window: 0.4–1.4 s.
+- Shadow: No shadow: depth comes from gold hairlines and nested stepped frames.
+- No lorem ipsum.
+
+**3 common mistakes (and fixes)**
+- Inventing a font -> read Hard tokens and use the exact family.
+- Adding a second accent -> one accent per screen; keep the rest chalky/flat.
+- Too much copy -> card body 1–2 sentences; headline 2–6 words.
+
+**Words / tone**
+- es: Programa de cine de 1929: preciso, ascendente, un poco teatral. Nombra edificio, año y material.
+- en: a 1929 cinema programme: precise, upward, a little theatrical. Name the building, the year, the material.
+
 # Art Deco skill
 
 Use this skill together with `beauty` when the brief calls for art deco.
