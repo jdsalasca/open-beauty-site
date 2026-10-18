@@ -154,15 +154,15 @@ La review reúne evidencia, cambios para usuarios y decisiones; la retro, aprend
 
 Una clase puede empezar con una pregunta, detenerse ante un objeto y avanzar por salas o capítulos. Mirá [La città ideale](examples/education/renaissance-perspective.html) y [Museo de las Cosas Pequeñas](examples/education/papercraft-museum.html). En historia, cada fecha, cita y atribución necesita fuente; separá el hecho de la interpretación y señalá lo que no se sabe. El texto sigue disponible con movimiento reducido y debe poder leerse en proyector.
 
-## Trece herramientas MCP
+## Catorce herramientas MCP
 
 El servidor trabaja por **stdio** y transforma briefs; no llama a un modelo ni navega la web.
 
 - **Orientar:** `beauty_list_styles`, `beauty_get_style`, `beauty_get_skill`.
-- **Crear:** `beauty_create_page`, `beauty_create_experience`, `beauty_create_story`, `beauty_create_deck`, `beauty_create_gif`, `beauty_create_sprint`, `beauty_create_motion`, `beauty_create_canvas`.
+- **Crear:** `beauty_create_page`, `beauty_create_experience`, `beauty_create_story`, `beauty_create_deck`, `beauty_create_gif`, `beauty_create_sprint`, `beauty_create_motion`, `beauty_create_canvas`, `beauty_create_sequence`.
 - **Revisar y encontrar:** `beauty_validate`, `beauty_examples`.
 
-En total son trece herramientas: elegir una gramática, cargar sus instrucciones, crear la pieza adecuada, validarla y consultar ejemplos.
+En total son catorce herramientas: elegir una gramática, cargar sus instrucciones, crear la pieza adecuada, validarla y consultar ejemplos.
 
 ## Canvas abierto
 
@@ -186,6 +186,29 @@ Colores: `@bg`, `@surface`, `@ink`, `@muted`, `@accent`, `@accent2`, `@accent3`,
 [**Ver los cuatro canvas**](examples/canvas/index.html)
 <p align="center"><a href="examples/canvas/carta-al-mar.svg"><img src="examples/canvas/carta-al-mar.svg" width="520" alt="Carta al mar: canvas abierto Nature Memory"></a></p>
 
+
+## Secuencias y GIFs
+
+`beauty_create_sequence` convierte **2–12 frames** en un SVG animado y un GIF rasterizado de los mismos frames. Cada frame es un canvas abierto: capas, paths, texto, assets. El modelo escribe el cuento; la herramienta le da el tiempo, la paleta y el loop.
+
+```json
+{
+  "style": "papercraft",
+  "title": "Pedro, el conejo que no escuchó",
+  "license": "Dominio público · texto original",
+  "fps": 10,
+  "frames": [
+    { "id": "01", "duration": 2.2, "layers": [] },
+    { "id": "02", "duration": 2.4, "layers": [] }
+  ]
+}
+```
+
+Cada frame exige capas; cada asset exige `alt`. El SVG muestra la secuencia con keyframes; el GIF se genera con `@napi-rs/canvas` y `gifenc`. La licencia y la fuente quedan visibles.
+
+[**Ver la secuencia de Pedro**](examples/sequences/index.html)
+<p align="center"><a href="examples/sequences/index.html"><img src="examples/sequences/pedro-conejo.svg" width="620" alt="Pedro, el conejo que no escuchó: secuencia de papel"></a></p>
+ · [**GIF**](examples/sequences/pedro-conejo.gif)
 
 ## SVG en movimiento
 
@@ -231,7 +254,7 @@ Luna usa las herramientas MCP; no necesita escribir HTML a mano. La calificació
 
 ## Evidencia disponible
 
-- [La suite documentada](docs/TESTING.md) registra **25/25 pruebas aprobadas**.
+- [La suite documentada](docs/TESTING.md) registra **35/35 pruebas aprobadas**.
 - La [ronda histórica de Luna](examples/agents/round-2026/index.html) reúne **12/12 páginas A/100 y visión 4/4**. Esa ronda corresponde a los doce estilos que existían entonces.
 - Nature Memory se evaluó en la matriz local: **A/100 y visión 4/4**; el estilo 13 también produce deck y GIF. La matriz actual de páginas cubre **13/13 estilos**.
 

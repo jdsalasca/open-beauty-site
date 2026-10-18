@@ -255,6 +255,48 @@ export interface CanvasBrief {
   maxxing?: boolean;
 }
 
+export interface SequenceFrame {
+  id?: string;
+  /** Seconds; defaults to the sequence frame duration. */
+  duration?: number;
+  background?: string;
+  texture?: CanvasTexture;
+  layers: CanvasLayer[];
+}
+
+export interface SequenceBrief {
+  style: StyleSlug;
+  title?: string;
+  author?: string;
+  license?: string;
+  size?: CanvasSize;
+  width?: number;
+  height?: number;
+  fps?: number;
+  /** Seconds per frame when a frame has no duration. */
+  frameDuration?: number;
+  frames: SequenceFrame[];
+  credits?: boolean;
+  seed?: number;
+  /** Set false for an SVG-only test; the CLI/MCP default is true. */
+  gif?: boolean;
+}
+
+export interface SequenceResult {
+  svg: string;
+  gif?: string;
+  pathSvg: string;
+  pathGif?: string;
+  width: number;
+  height: number;
+  frames: number;
+  fps: number;
+  duration: number;
+  bytesSvg: number;
+  bytesGif?: number;
+  checks: Array<{ name: string; passed: boolean; detail: string }>;
+}
+
 export interface CanvasResult {
   path: string;
   width: number;

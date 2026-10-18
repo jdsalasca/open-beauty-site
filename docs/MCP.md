@@ -1,6 +1,6 @@
 # MCP server
 
-`open-beauty-site` exposes a stdio MCP server with thirteen tools and twenty-one resources. The server is deliberately narrow: it does not call an LLM, it does not browse the web, and it does not invent content. It turns a short brief into a complete, validated artefact.
+`open-beauty-site` exposes a stdio MCP server with fourteen tools and twenty-two resources. The server is deliberately narrow: it does not call an LLM, it does not browse the web, and it does not invent content. It turns a short brief into a complete, validated artefact.
 
 ## Build
 
@@ -78,7 +78,7 @@ Returns the hard tokens: exact fonts, palette, border widths, radii, motion wind
 | Argument | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `style` | style slug | no | Appends that style guide to the skill. |
-| `format` | `page \| deck \| experience \| story \| agile \| sprint \| motion \| canvas` | no | Appends the matching skill. |
+| `format` | `page \| deck \| experience \| story \| agile \| sprint \| motion \| canvas \| sequence` | no | Appends the matching skill. |
 
 Returns the contents of `skills/beauty.md` plus the matching skill (`presentation`, `experience`, `story` or `agile`). Load it into an agent's context before asking it to design.
 
@@ -206,6 +206,22 @@ Creates a single-file, looping **animated SVG poster**. It is not a GIF: it is a
 | `output` | string | no | Defaults to `beauty-output/<style>-motion-<slug>-<timestamp>.svg`. |
 
 The SVG includes `<title>`, `<desc>`, `@keyframes`, `prefers-reduced-motion` and no external images or scripts. Google Fonts are imported by URL; if the SVG is offline, the font stack falls back to a system face.
+
+### `beauty_create_sequence`
+
+Builds a frame-by-frame story: 2–12 frames, each an open canvas layer stack. Writes an animated SVG and a GIF from the same frames. Use it for a public-domain story, a visual essay, a process or a short comic.
+
+| Argument | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `style` | style slug | yes | |
+| `title`, `author`, `license` | strings | no | License is visible and must not call a copyrighted work public domain. |
+| `frames` | array (2–12) | yes | `{ id?, duration?, background?, texture?, layers }`; each frame needs layers. |
+| `fps` | number (4–24) | no | Default 12. |
+| `frameDuration` | number | no | Default seconds per frame; a frame can override. |
+| `width`, `height` | numbers | no | Defaults from `size`. |
+| `output` | string | no | Base path without extension; writes `.svg` and `.gif`. |
+
+The SVG uses per-frame keyframes and a reduced-motion first frame. The GIF is rasterised from the same static frame SVGs. Assets require `alt`; captions and sources are preserved.
 
 ### `beauty_create_canvas`
 

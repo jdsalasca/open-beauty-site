@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
-import type { Brief, DeckBrief, ExperienceBrief, SprintBrief, StoryBrief, StyleSlug } from './types.js';
+import type { Brief, DeckBrief, ExperienceBrief, SequenceBrief, SprintBrief, StoryBrief, StyleSlug } from './types.js';
 import { VERSION } from './index.js';
-import { createCanvas, createDeck, createExperience, createGifFile, createMotion, createPage, createStory, slugify, timestamp } from './generate.js';
+import { createCanvas, createDeck, createExperience, createGifFile, createMotion, createPage, createSequence, createStory, slugify, timestamp } from './generate.js';
 import { createSprintKit } from './sprint.js';
 import { formatValidation, validateDeck, validateExperience, validateHtml, validateStory } from './validate.js';
 import { getStyle, isStyleSlug, styleSlugs } from './styles/presets.js';
@@ -101,6 +101,7 @@ Usage:
   beauty experience --style <s> --brief exp.json  Create a 3–8 room experience [--maxxing]
   beauty story --style <s> --brief story.json     Create a chaptered story/lesson [--maxxing]
   beauty sprint --style <s> --brief sprint.json   Create review + retrospective + planning + 3 GIFs
+  beauty sequence --style <s> --brief seq.json   Create an SVG story + GIF from frames
   beauty canvas --style <s> --brief canvas.json  Create an open animated SVG canvas
   beauty motion --style <s> --title "..."      Create an animated SVG loop
       [--scene orbit|bloom|tide|papercut|constellation|ribbon|rain|type]
@@ -205,6 +206,22 @@ async function main(): Promise<void> {
       console.log(`${result.validation.grade} ${result.validation.score}/100 · vision ${result.validation.vision.score}/4`);
       console.log(result.path);
       if (result.validation.issues.length) console.log(formatValidation(result.validation));
+      return;
+    }
+
+    case 'sequence': {
+      const style = requireStyle(stringFlag(flags, 'style'));
+      const brief = (await loadBrief(stringFlag(flags, 'brief'))) as Partial<SequenceBrief>;
+      if (!Array.isArray(brief.frames) || brief.frames.length < 2) {
+        throw new Error('Pass a sequence brief with at least two frames; each frame needs layers.');
+      }
+      brief.style = style;
+      const output = stringFlag(flags, 'out') ?? path.join('beauty-output', `${style}-sequence-${slugify(brief.title || 'sequence')}-${timestamp()}`);
+      const result = await createSequence({ style, brief, output });
+      console.log(`${getStyle(style).name} sequence · ${result.frames} frames · ${result.width}×${result.height} · ${result.fps} fps · ${result.duration.toFixed(1)}s`);
+      console.log(result.pathSvg);
+      console.log(result.pathGif ?? 'no GIF');
+      console.log(result.checks.map((check) => `${check.passed ? 'ok' : 'missing'} ${check.name}`).join(' · '));
       return;
     }
 

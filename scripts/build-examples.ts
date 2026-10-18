@@ -198,6 +198,7 @@ Generated with \`pnpm showcase\`:
 - [gifs/maxxing/index.html](gifs/maxxing/index.html) — 13 maxxing GIFs, one per style.
 - [motions/index.html](motions/index.html) — 13 animated SVG posters, one per style and scene.
 - [canvas/index.html](canvas/index.html) — open canvas: 4 original layered SVG artworks with assets.
+- [sequences/index.html](sequences/index.html) — six-frame public-domain story, animated SVG + GIF.
 - [decks/tea.html](decks/tea.html) — tea presentation, Nature Memory.
 - [decks/kittens.html](decks/kittens.html) — kittens presentation, Paper Craft.
 - [stories/dominio-publico.html](stories/dominio-publico.html) — CC0 open-domain story, Paper Craft.

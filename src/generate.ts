@@ -6,6 +6,7 @@ import { validateDeck, validateExperience, validateHtml, validateStory } from '.
 import { createGif } from './gif.js';
 import { motionChecks, renderMotion } from './motion.js';
 import { canvasChecks, renderCanvas } from './canvas-art.js';
+import { renderSequence } from './sequence.js';
 import { renderDeck } from './deck.js';
 import { renderExperience } from './page/experience.js';
 import { renderStory } from './page/story.js';
@@ -66,6 +67,37 @@ export async function createGifFile({ style, output, ...options }: CreateGifFile
   );
   await mkdir(path.dirname(target), { recursive: true });
   return createGif(style, options, target);
+}
+
+export interface CreateSequenceOptions {
+  style: StyleSlug;
+  brief: Partial<import('./types.js').SequenceBrief>;
+  output?: string;
+}
+
+export async function createSequence({ style, brief, output }: CreateSequenceOptions): Promise<import('./types.js').SequenceResult> {
+  const rendered = await renderSequence({ ...brief, style });
+  const requested = path.resolve(process.cwd(), output ?? path.join('beauty-output', `${style}-sequence-${slugify(brief.title || 'sequence')}-${timestamp()}`));
+  const base = requested.toLowerCase().endsWith('.svg') ? requested.slice(0, -4) : requested;
+  const pathSvg = `${base}.svg`;
+  const pathGif = `${base}.gif`;
+  await mkdir(path.dirname(pathSvg), { recursive: true });
+  await writeFile(pathSvg, rendered.svg, 'utf8');
+  if (rendered.gif) await writeFile(pathGif, rendered.gif);
+  return {
+    svg: rendered.svg,
+    gif: rendered.gif ? pathGif : undefined,
+    pathSvg,
+    pathGif,
+    width: rendered.width,
+    height: rendered.height,
+    frames: rendered.frames,
+    fps: rendered.fps,
+    duration: rendered.duration,
+    bytesSvg: Buffer.byteLength(rendered.svg, 'utf8'),
+    bytesGif: rendered.gif?.length,
+    checks: rendered.checks,
+  };
 }
 
 export interface CreateMotionOptions {

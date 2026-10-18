@@ -5,9 +5,9 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { z } from 'zod';
-import type { Brief, CanvasLayer, DeckBrief, StyleSlug } from '../types.js';
+import type { Brief, CanvasLayer, DeckBrief, ExperienceBrief, SequenceFrame, StoryBrief, StyleSlug } from '../types.js';
 import { VERSION } from '../index.js';
-import { createCanvas, createDeck, createExperience, createGifFile, createMotion, createPage, createStory, timestamp } from '../generate.js';
+import { createCanvas, createDeck, createExperience, createGifFile, createMotion, createPage, createSequence, createStory, timestamp } from '../generate.js';
 import { createSprintKit } from '../sprint.js';
 import { formatValidation, validateDeck, validateExperience, validateHtml, validateStory } from '../validate.js';
 import { presets, styleSlugs } from '../styles/presets.js';
@@ -337,7 +337,7 @@ QUALITY BAR
         'Returns a copy-paste skill/prompt that teaches an agent the mandatory workflow and the quality bar. Optionally includes one style guide.',
       inputSchema: {
         style: styleEnum.optional().describe('Include a specific style guide after the skill instructions.'),
-        format: z.enum(['page', 'deck', 'experience', 'story', 'agile', 'sprint', 'motion', 'canvas']).optional().describe('Append the matching format skill.'),
+        format: z.enum(['page', 'deck', 'experience', 'story', 'agile', 'sprint', 'motion', 'canvas', 'sequence']).optional().describe('Append the matching format skill.'),
       },
     },
     async ({ style, format }) => {
@@ -348,7 +348,7 @@ QUALITY BAR
         // The generated fallback is intentionally equivalent.
       }
       if (format && format !== 'page') {
-        const file = format === 'deck' ? 'presentation.md' : format === 'experience' ? 'experience.md' : format === 'story' ? 'story.md' : format === 'motion' ? 'motion.md' : format === 'canvas' ? 'canvas.md' : 'agile.md';
+        const file = format === 'deck' ? 'presentation.md' : format === 'experience' ? 'experience.md' : format === 'story' ? 'story.md' : format === 'motion' ? 'motion.md' : format === 'canvas' ? 'canvas.md' : format === 'sequence' ? 'sequence.md' : 'agile.md';
         try {
           skill += `\n\n---\n\n${await readFile(path.join(packageRoot(), 'skills', file), 'utf8')}`;
         } catch {
@@ -632,6 +632,72 @@ QUALITY BAR
   );
 
   server.registerTool(
+    'beauty_create_sequence',
+    {
+      title: 'Create a frame-by-frame SVG story and GIF',
+      description:
+        'Builds a sequence from 2–12 frames. Each frame is an open canvas layer stack; the tool writes an animated SVG with frame timing and a GIF rasterised from the same frames. Use it for a public-domain story, a visual essay, a process, a title sequence or a short comic. Assets require alt; captions and sources are preserved.',
+      inputSchema: {
+        style: styleEnum.describe('Palette and type system for every frame.'),
+        title: z.string().max(120).optional(),
+        author: z.string().max(120).optional(),
+        license: z.string().max(160).optional().describe('Credit line; say public domain only when it is.'),
+        size: z.enum(['square', 'portrait', 'landscape', 'wide']).optional(),
+        width: z.number().min(320).max(2000).optional(),
+        height: z.number().min(320).max(2000).optional(),
+        fps: z.number().min(4).max(24).optional(),
+        frameDuration: z.number().min(0.3).max(12).optional(),
+        credits: z.boolean().optional(),
+        seed: z.number().int().min(0).max(9999).optional(),
+        frames: z.array(z.object({
+          id: z.string().max(40).optional(),
+          duration: z.number().min(0.3).max(12).optional(),
+          background: z.string().max(30).optional(),
+          texture: z.enum(['none', 'paper', 'grain']).optional(),
+          layers: z.array(canvasLayerSchema).min(1).max(64),
+        })).min(2).max(12),
+        output: z.string().max(260).optional().describe('Base path without extension. Defaults to ./beauty-output/<style>-sequence-<slug>-<timestamp>.'),
+        include_svg: z.boolean().optional(),
+      },
+    },
+    async (args) => {
+      try {
+        const output = args.output ?? path.join('beauty-output', `${args.style}-sequence-${slugFromTitle(args.title || 'sequence')}-${timestamp()}`);
+        const result = await createSequence({
+          style: args.style,
+          brief: {
+            style: args.style,
+            title: args.title,
+            author: args.author,
+            license: args.license,
+            size: args.size,
+            width: args.width,
+            height: args.height,
+            fps: args.fps,
+            frameDuration: args.frameDuration,
+            credits: args.credits,
+            seed: args.seed,
+            frames: args.frames as SequenceFrame[],
+          },
+          output,
+        });
+        const ok = result.checks.every((check) => check.passed);
+        const summary = [
+          `Created a ${result.frames}-frame ${presets[args.style].name} sequence.`,
+          `svg: ${result.pathSvg}`,
+          `gif: ${result.pathGif ?? 'not generated'}`,
+          `${result.width}×${result.height} · ${result.fps} fps · ${result.duration.toFixed(1)}s`,
+          `checks: ${result.checks.map((check) => `${check.name}:${check.passed ? 'ok' : 'missing'}`).join(' · ')}`,
+          ok ? '\nOpen the SVG for timing, the GIF for the loop. The first frame remains under reduced motion.' : '\nOne check failed; inspect the sequence.',
+        ].join('\n');
+        return text(args.include_svg ? `${summary}\n\n--- SVG ---\n${result.svg}` : summary);
+      } catch (error) {
+        return { content: [{ type: 'text' as const, text: `Sequence failed: ${(error as Error).message}` }], isError: true };
+      }
+    },
+  );
+
+  server.registerTool(
     'beauty_create_canvas',
     {
       title: 'Create an open animated SVG canvas',
@@ -803,6 +869,7 @@ QUALITY BAR
         ['La casa que aprendió a respirar (story)', 'examples/stories/casa-respira.html'],
         ['El río que cambió de ciudad (history)', 'examples/stories/rio-1870.html'],
         ['Motion SVG posters', 'examples/motions/index.html'],
+        ['Pedro, el conejo que no escuchó (sequence)', 'examples/sequences/index.html'],
         ['Atlas Sprint 14 review', 'examples/agile/sprint-14-review.html'],
         ['Atlas Sprint 14 retrospective', 'examples/agile/sprint-14-retro.html'],
         ['Atlas Sprint 15 planning', 'examples/agile/sprint-15-planning.html'],

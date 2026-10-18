@@ -12,7 +12,7 @@ The suite runs with Node's test runner through `tsx`:
 - `test/core.test.ts` — every style renders a complete document, escapes user content, reaches A/100 and vision 4/4; the validator rejects generic AI design (Inter, invented colours, 8px radii, 5px borders, soft shadows in brutalist); `seed` changes the composition archetype.
 - `test/mcp.test.ts` — spawns the built MCP server over stdio, verifies the eleven-tool surface, reads the Renaissance tokens, creates and audits a page, creates a valid GIF, creates an animated deck, a room experience and a chaptered story, and verifies the presentation skill and example routes.
 
-Current result: **25/25 passing** in ~8 s (plus MCP startup).
+Current result: **35/35 passing** in ~8 s (plus MCP startup).
 
 ```text
 ✔ every style renders a complete document and scores A
