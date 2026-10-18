@@ -86,19 +86,23 @@ These are not generic templates with colour substitution: each style supplies pa
 
 One `SprintBrief` becomes a coordinated corpo pack: review, retrospective and planning decks plus three GIFs. The module builds three `DeckBrief`s, delegates to `createDeck`, then to `createGifFile`. It is exposed as `beauty sprint` and `beauty_create_sprint`, so a team can go from a JSON brief to a full ritual without hand-writing HTML.
 
-### 8. Maxxing (`src/maxxing.ts`)
+### 8. Storybook and papercut scenes (`src/papercut.ts`)
+
+`format: "storybook"` turns a story into a book-like spread: one illustrated page per chapter, paper frame, folio and next-page link. `papercutScene` draws original layered SVG scenes from a small structured vocabulary — meadow, forest, garden, house, river, night, market, room; rabbit, cat, fox, bird, child; pine, tree, house, gate, table, lantern, basket, flowers, boat. The renderer uses the style palette, a paper-displacement filter and soft cut shadows; it never copies a character IP or a stock image.
+
+### 9. Maxxing (`src/maxxing.ts`)
 
 An optional second art direction. `applyMaxxing` injects a body class, one original style-specific SVG layer and a small CSS/motion system into an already-rendered artefact. It never changes the palette or required fonts, so it can be applied to pages, decks, experiences and stories without weakening the validator. GIFs receive their own maxxing layer in `src/gif.ts`.
 
-### 9. MCP server (`src/mcp/server.ts`)
+### 10. MCP server (`src/mcp/server.ts`)
 
 `McpServer` over stdio. Eleven tools, nineteen resources, and an `instructions` string that repeats the workflow. The tools call the same `generate.ts` functions as the CLI, so the output is identical.
 
-### 10. CLI (`src/cli.ts`)
+### 11. CLI (`src/cli.ts`)
 
 `beauty styles | guide | page | gif | validate | examples | doctor | mcp`. Useful for humans, CI and agents that cannot load MCP.
 
-### 11. Skills (`skills/*.md`)
+### 12. Skills (`skills/*.md`)
 
 The natural-language half of the harness. `beauty.md` is the mandatory workflow; the thirteen style skills are generated from the presets so they cannot drift.
 

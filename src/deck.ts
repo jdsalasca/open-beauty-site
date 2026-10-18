@@ -2,6 +2,8 @@ import type { DeckBrief, DeckSlide, DeckStat, StylePreset, StyleSubfamily } from
 import { esc, normalizeBrief, safeHref, shell, t } from './page/common.js';
 import { motifFor } from './deck-motifs.js';
 import { applyMaxxing } from './maxxing.js';
+import { papercutScene } from './papercut.js';
+import { sceneArt } from './art.js';
 
 export interface DeckOptions {
   style: StylePreset;
@@ -74,7 +76,7 @@ function normalizeSlides(preset: StylePreset, brief: Partial<DeckBrief>): DeckSl
     const stats = normalizeStats(slide.stats);
     const layout =
       slide.layout ??
-      (slide.quote ? 'quote' : stats.length ? 'stats' : points.length ? 'points' : 'statement');
+      (slide.figure ? 'figure' : slide.quote ? 'quote' : stats.length ? 'stats' : points.length ? 'points' : 'statement');
     return {
       layout,
       kicker: String(slide.kicker ?? '').trim().slice(0, 40) || `${String(index + 2).padStart(2, '0')} / ${preset.name}`,
@@ -85,6 +87,7 @@ function normalizeSlides(preset: StylePreset, brief: Partial<DeckBrief>): DeckSl
       quote: slide.quote?.text
         ? { text: String(slide.quote.text).slice(0, 240), author: String(slide.quote.author ?? '').slice(0, 60) || undefined }
         : undefined,
+      figure: slide.figure,
     } satisfies DeckSlide;
   });
 
@@ -97,13 +100,23 @@ function normalizeSlides(preset: StylePreset, brief: Partial<DeckBrief>): DeckSl
       points: undefined,
       stats: undefined,
       quote: undefined,
+      figure: undefined,
     });
   }
   return slides;
 }
 
-function renderSlideContent(slide: DeckSlide, index: number): string {
+function renderSlideContent(slide: DeckSlide, index: number, style: StylePreset): string {
   const kicker = `<p class="kicker anim" style="--a:0">${esc(slide.kicker ?? '')}</p>`;
+  if (slide.layout === 'figure' && slide.figure) {
+    const scene = slide.figure.scene ?? { kind: 'meadow', characters: ['rabbit'], props: ['pine', 'tree', 'flowers'] };
+    const art = style.slug === 'papercraft' ? papercutScene(style, scene, index + 2) : sceneArt(style, index + 2, slide.kicker || 'FIGURA', 'house');
+    return `<div class="slide-inner">
+      ${kicker}
+      <h2 class="anim" style="--a:1">${esc(slide.title)}</h2>
+      <figure class="deck-figure anim" style="--a:2">${art}<figcaption>${esc(slide.figure.caption || '')}${slide.figure.source ? `<span>${esc(slide.figure.source)}</span>` : ''}</figcaption></figure>
+    </div>`;
+  }
   if (slide.layout === 'quote' && slide.quote) {
     return `<div class="slide-inner">
       ${kicker}
@@ -159,7 +172,7 @@ export function renderDeck({ style, brief: input }: DeckOptions): DeckResult {
     .map(
       (slide, index) => `<section class="slide layout-${slide.layout}" data-index="${index + 1}" aria-hidden="true" aria-roledescription="slide" aria-label="Diapositiva ${index + 2} de ${total}" inert>
         <span class="slide-watermark" aria-hidden="true">${String(index + 2).padStart(2, '0')}</span>
-        ${renderSlideContent(slide, index)}
+        ${renderSlideContent(slide, index, style)}
         <span class="slide-number">${String(index + 2).padStart(2, '0')} / ${String(total).padStart(2, '0')}</span>
       </section>`,
     )
@@ -264,6 +277,12 @@ ${motifFor(style.slug)}
 }
 @media (prefers-reduced-motion:reduce){.deck .slide,.deck .anim{transition:none!important}.deck .deck-progress i{transition:none}}
 @page{size:1600px 900px;margin:0}
+.deck-figure{margin:18px 0 0;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(14px,2.4vw,34px);align-items:end;min-height:0}
+.deck-figure svg{width:100%;aspect-ratio:8/5;display:block;border:1px solid color-mix(in srgb,var(--ink) 28%,transparent);border-radius:var(--radius);background:var(--surface)}
+.deck-figure figcaption{display:flex;flex-direction:column;gap:6px;padding-bottom:3px;color:var(--muted);font-family:var(--body);font-size:12px;line-height:1.45;max-width:25ch}
+.deck-figure figcaption span{font-family:var(--mono);font-size:8px;letter-spacing:.1em;text-transform:uppercase}
+.deck.layout-figure .slide-inner{max-width:1180px}
+@media(max-width:820px){.deck-figure{grid-template-columns:1fr}.deck-figure figcaption{max-width:none}}
 @media print{.deck .anim{opacity:1!important;transform:none!important}body.deck{overflow:visible;background:var(--ground)}.deck .deck-top,.deck .deck-bottom,.deck .deck-progress,.deck .deck-hint{display:none}.deck .deck-stage{position:static;inset:auto;background:var(--ground)}.deck .slide{position:relative;inset:auto;width:1600px;height:900px;opacity:1;visibility:visible;transform:none;padding:80px}.deck .slide:not(:first-of-type){page-break-before:always;break-before:page}.deck .slide[aria-hidden=true]{display:flex}}
 `;
 

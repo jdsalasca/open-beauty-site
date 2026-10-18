@@ -27,7 +27,7 @@ export interface QuoteBrief {
   author?: string;
 }
 
-export type SlideLayout = 'statement' | 'points' | 'stats' | 'quote';
+export type SlideLayout = 'statement' | 'points' | 'stats' | 'quote' | 'figure';
 
 export interface DeckPoint {
   title: string;
@@ -39,6 +39,13 @@ export interface DeckStat {
   label: string;
 }
 
+export interface DeckFigure {
+  /** Papercut scene for a figure slide. */
+  scene?: StoryScene;
+  caption?: string;
+  source?: string;
+}
+
 export interface DeckSlide {
   layout?: SlideLayout;
   kicker?: string;
@@ -47,6 +54,7 @@ export interface DeckSlide {
   points?: DeckPoint[];
   stats?: DeckStat[];
   quote?: QuoteBrief;
+  figure?: DeckFigure;
 }
 
 
@@ -77,12 +85,27 @@ export interface ExperienceBrief extends Brief {
   closing?: string;
 }
 
+export type StorySceneKind = 'meadow' | 'forest' | 'garden' | 'house' | 'river' | 'night' | 'market' | 'room';
+export type StoryCharacter = 'rabbit' | 'cat' | 'fox' | 'bird' | 'child';
+export type StoryProp = 'pine' | 'tree' | 'house' | 'gate' | 'table' | 'lantern' | 'basket' | 'flowers' | 'boat';
+
+export interface StoryScene {
+  kind?: StorySceneKind;
+  /** A small cast. The renderer draws paper silhouettes, not character IP. */
+  characters?: StoryCharacter[];
+  props?: StoryProp[];
+  /** Optional exact caption; defaults to a short scene label. */
+  caption?: string;
+}
+
 export interface StoryChapter {
   kicker?: string;
   title: string;
   body: string;
   quote?: QuoteBrief;
   fact?: string;
+  /** Optional papercut scene for the illustrated storybook format. */
+  scene?: StoryScene;
 }
 
 export interface StoryBrief extends Brief {
@@ -90,6 +113,8 @@ export interface StoryBrief extends Brief {
   chapters?: StoryChapter[];
   source?: string;
   readingTime?: string;
+  /** `storybook` adds an illustrated page per chapter; `scroll` is the default. */
+  format?: 'scroll' | 'storybook';
 }
 
 export interface SprintMetric {

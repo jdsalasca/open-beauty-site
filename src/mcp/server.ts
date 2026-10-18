@@ -59,13 +59,23 @@ const deckStatSchema = z.object({
 });
 
 const deckSlideSchema = z.object({
-  layout: z.enum(['statement', 'points', 'stats', 'quote']).optional(),
+  layout: z.enum(['statement', 'points', 'stats', 'quote', 'figure']).optional(),
   kicker: z.string().max(40).optional(),
   title: z.string().min(1).max(120),
   body: z.string().max(300).optional(),
   points: z.array(deckPointSchema).max(4).optional(),
   stats: z.array(deckStatSchema).max(3).optional(),
   quote: quoteSchema.optional(),
+  figure: z.object({
+    caption: z.string().max(140).optional(),
+    source: z.string().max(120).optional(),
+    scene: z.object({
+      kind: z.enum(['meadow', 'forest', 'garden', 'house', 'river', 'night', 'market', 'room']).optional(),
+      characters: z.array(z.enum(['rabbit', 'cat', 'fox', 'bird', 'child'])).max(4).optional(),
+      props: z.array(z.enum(['pine', 'tree', 'house', 'gate', 'table', 'lantern', 'basket', 'flowers', 'boat'])).max(6).optional(),
+      caption: z.string().max(120).optional(),
+    }).optional(),
+  }).optional().describe('Figure layout: papercut scene with caption and source.'),
 });
 
 const experienceItemSchema = z.object({
@@ -84,12 +94,20 @@ const experienceRoomSchema = z.object({
   note: z.string().max(180).optional(),
 });
 
+const storySceneSchema = z.object({
+  kind: z.enum(['meadow', 'forest', 'garden', 'house', 'river', 'night', 'market', 'room']).optional(),
+  characters: z.array(z.enum(['rabbit', 'cat', 'fox', 'bird', 'child'])).max(4).optional(),
+  props: z.array(z.enum(['pine', 'tree', 'house', 'gate', 'table', 'lantern', 'basket', 'flowers', 'boat'])).max(6).optional(),
+  caption: z.string().max(120).optional(),
+});
+
 const storyChapterSchema = z.object({
   kicker: z.string().max(48).optional(),
   title: z.string().min(1).max(120),
   body: z.string().min(1).max(5000),
   quote: quoteSchema.optional(),
   fact: z.string().max(220).optional(),
+  scene: storySceneSchema.optional().describe('Papercut scene for format=storybook.'),
 });
 
 
@@ -475,6 +493,7 @@ QUALITY BAR
         chapters: z.array(storyChapterSchema).min(2).max(8),
         source: z.string().max(300).optional(),
         readingTime: z.string().max(40).optional(),
+        format: z.enum(['scroll', 'storybook']).optional().describe('storybook = illustrated papercut page per chapter.'),
         maxxing: z.boolean().optional().describe('Richer ornament, type contrast and motion.'),
         cta: ctaSchema.optional(),
         locale: localeEnum.optional(),
@@ -499,6 +518,7 @@ QUALITY BAR
             chapters: args.chapters as StoryBrief['chapters'],
             source: args.source,
             readingTime: args.readingTime,
+            format: args.format,
             maxxing: args.maxxing,
             cta: args.cta as Brief['cta'],
             locale: args.locale,

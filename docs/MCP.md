@@ -117,7 +117,7 @@ Creates a 16:9 animated presentation. The cover and closing are generated; `slid
 | `maxxing` | boolean | no | Full art direction. |
 | `title` | string (≤120) | yes | Deck title on the cover. |
 | `tagline` | string (≤200) | no | One sentence under the title. |
-| `slides` | array (1–8) | yes | `{ layout?, kicker?, title, body?, points?, stats?, quote? }`. |
+| `slides` | array (1–8) | yes | `{ layout?, kicker?, title, body?, points?, stats?, quote?, figure? }`. Layouts: `statement`, `points`, `stats`, `quote`, `figure`. |
 | `subfamily` | string | no | Structural family: `sala`, `gabinete` or `cartel` mode from the style guide. |
 | `cta` | `{ label, href }` | no | Used on the closing slide. |
 | `locale` | `es \| en` | no | |
@@ -168,9 +168,10 @@ Creates a chaptered story, history lesson or narrative essay: cover, chapter nav
 | `maxxing` | boolean | no | Full art direction. |
 | `kind` | `story \| history \| lesson \| essay` | no | Changes the art register; history expects a source. |
 | `title`, `tagline`, `intro`, `brand` | strings | title yes | |
-| `chapters` | array (2–8) | yes | `{ kicker?, title, body, quote?, fact? }`; 80–250 words each. |
+| `chapters` | array (2–8) | yes | `{ kicker?, title, body, quote?, fact?, scene? }`; 80–250 words each. `scene` is a papercut scene for storybook. |
 | `source` | string | no | Required for history/lesson in practice. |
 | `readingTime` | string | no | e.g. `6 min`; otherwise estimated. |
+| `format` | `scroll \| storybook` | no | `storybook` gives one illustrated papercut page per chapter. |
 | `output` | string | no | Defaults to `beauty-output/<style>-story-<slug>-<timestamp>.html`. |
 
 ### `beauty_create_gif`

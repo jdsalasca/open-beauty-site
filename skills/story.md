@@ -38,7 +38,17 @@ Read `beauty_get_skill({ format: "story" })` and `beauty_get_style` before the b
 
 Cover (image + promise) → chapter 1: a door → chapter 2: an obstacle or a strange object → chapter 3: a turn → chapter 4: a return that is not the same. One image per two chapters. The last line opens a door; it does not explain the moral.
 
-### Historia
+### Storybook de papel
+
+Para un cuento ilustrado, pasá `format: "storybook"`. Cada capítulo puede llevar una `scene`:
+
+```json
+{ "kind": "meadow", "characters": ["rabbit"], "props": ["pine", "tree", "flowers"], "caption": "El sombrero en el camino" }
+```
+
+`kind`: `meadow | forest | garden | house | river | night | market | room`. `characters`: `rabbit | cat | fox | bird | child`. `props`: `pine | tree | house | gate | table | lantern | basket | flowers | boat`. El renderer dibuja una escena de papel original; no hay personajes con derechos. Usalo en Paper Craft; en otros estilos la misma escena se adapta a la paleta.
+
+## Historia
 
 Use `"kind": "history"` so the art uses a river/map register and the validator treats the source as essential. Cover (place + date) → chapter 1: the world before → 2: the event → 3: who was excluded → 4: what changed and what did not. Add a `fact` with a date and a source. End with a question and a bibliography.
 

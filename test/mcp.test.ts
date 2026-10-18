@@ -205,3 +205,25 @@ test('creates a coordinated sprint kit over MCP', async () => {
   assert.match(text, /review: A 100\/100/);
   assert.match(text, /gifs: 3/);
 });
+
+test('creates an illustrated storybook over MCP', async () => {
+  const body = 'La liebre cruzó el claro con una sombra prestada. El aire olía a lluvia y a pasto recién cortado; cada hoja tenía una sombra distinta. No era magia: era una forma de mirar. '.repeat(2);
+  const result = await client.callTool({
+    name: 'beauty_create_story',
+    arguments: {
+      style: 'papercraft',
+      title: 'La liebre que prestó su sombra',
+      format: 'storybook',
+      source: 'Ficción original · CC0 1.0',
+      chapters: [
+        { kicker: 'I', title: 'El claro', body, scene: { kind: 'meadow', characters: ['rabbit', 'fox'], props: ['pine', 'flowers'] } },
+        { kicker: 'II', title: 'El bosque', body, scene: { kind: 'forest', characters: ['rabbit', 'bird'], props: ['pine', 'pine', 'tree'] } },
+      ],
+      output: 'storybook-test.html',
+    },
+  });
+  const text = (result.content as Array<{ type: string; text: string }>)[0]?.text ?? '';
+  assert.match(text, /2-chapter/);
+  assert.match(text, /grade: A/);
+  assert.match(text, /vision: 4\/4/);
+});

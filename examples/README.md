@@ -41,6 +41,7 @@ Generated with `pnpm showcase`:
 - [experiences/black-clover.html](experiences/black-clover.html) — Nature Memory museum room; fan tribute.
 - [experiences/museo-estaciones.html](experiences/museo-estaciones.html) — six-room Nature Memory maxxing museum.
 - [stories/archivo-hojas.html](stories/archivo-hojas.html) — six-chapter Nature Memory maxxing essay.
+- [stories/liebre-sombrero.html](stories/liebre-sombrero.html) — illustrated papercut storybook, CC0.
 - [decks/atlas-memoria.html](decks/atlas-memoria.html) — eight-slide Galactic maxxing deck.
 - [agile/sprint-16/sprint-16-review.html](agile/sprint-16/sprint-16-review.html) — Sprint 16 review (kit of three decks + GIFs).
 - [gifs/maxxing/index.html](gifs/maxxing/index.html) — 13 maxxing GIFs, one per style.

@@ -1,6 +1,7 @@
-import type { StoryBrief, StoryChapter, StylePreset } from '../types.js';
+import type { StoryBrief, StoryChapter, StoryScene, StylePreset } from '../types.js';
 import { esc, normalizeBrief, safeHref, shell, t, REVEAL_SCRIPT } from './common.js';
 import { sceneArt } from '../art.js';
+import { papercutScene } from '../papercut.js';
 import { applyMaxxing } from '../maxxing.js';
 
 function cleanChapter(chapter: StoryChapter, index: number): StoryChapter {
@@ -12,6 +13,7 @@ function cleanChapter(chapter: StoryChapter, index: number): StoryChapter {
       ? { text: chapter.quote.text.trim().slice(0, 300), author: chapter.quote.author?.trim().slice(0, 60) || undefined }
       : undefined,
     fact: chapter.fact?.trim().slice(0, 220) || undefined,
+    scene: chapter.scene,
   };
 }
 
@@ -57,6 +59,7 @@ function paragraphs(body: string): string {
 export function renderStory(input: Partial<StoryBrief>, preset: StylePreset): string {
   const { brief, chapters, source, readingTime } = normalizeStory(input);
   const storyKind = input.kind ?? 'story';
+  const storybook = input.format === 'storybook';
   const locale = brief.locale ?? 'es';
   const subject = storyKind === 'history' ? 'river' : storyKind === 'lesson' ? 'window' : storyKind === 'essay' ? 'window' : 'house';
   const storyLabel = storyKind === 'history' ? t(locale, 'Historia', 'History') : storyKind === 'lesson' ? t(locale, 'Lección', 'Lesson') : t(locale, 'Cuento', 'Story');
@@ -81,23 +84,30 @@ export function renderStory(input: Partial<StoryBrief>, preset: StylePreset): st
         ${brief.intro ? `<p class="story-intro">${esc(brief.intro)}</p>` : ''}
         <a class="story-button" href="#chapter-1">${t(locale, 'Empezar a leer', 'Start reading')} <span aria-hidden="true">↓</span></a>
       </div>
-      <figure class="story-cover-art reveal" style="--i:1">${sceneArt(preset, 0, storyLabel, subject)}<figcaption>${esc(brief.eyebrow || '')}</figcaption></figure>
+      <figure class="story-cover-art reveal" style="--i:1">${storybook ? papercutScene(preset, { kind: 'meadow', characters: ['rabbit'], props: ['pine', 'tree', 'flowers'], caption: brief.title }, 0) : sceneArt(preset, 0, storyLabel, subject)}<figcaption>${esc(brief.eyebrow || '')}</figcaption></figure>
     </section>
 
     <nav class="story-nav" aria-label="${t(locale, 'Capítulos', 'Chapters')}">
       ${chapters.map((chapter, index) => `<a href="#chapter-${index + 1}" data-chapter="${index + 1}"><span>${String(index + 1).padStart(2, '0')}</span>${esc(chapter.title)}</a>`).join('')}
     </nav>
 
-    ${chapters.map((chapter, index) => `<article class="story-chapter ${index % 2 ? 'is-reverse' : ''}" id="chapter-${index + 1}" data-chapter="${index + 1}" aria-labelledby="chapter-title-${index + 1}">
-      <div class="story-chapter-head reveal">
-        <p class="story-kicker">${esc(chapter.kicker ?? '')}</p>
-        <h2 id="chapter-title-${index + 1}">${esc(chapter.title)}</h2>
-      </div>
-      <div class="story-prose reveal">${paragraphs(chapter.body)}</div>
-      ${chapter.quote?.text ? `<figure class="story-quote reveal"><blockquote>“${esc(chapter.quote.text)}”</blockquote>${chapter.quote.author ? `<figcaption>${esc(chapter.quote.author)}</figcaption>` : ''}</figure>` : ''}
-      ${chapter.fact ? `<aside class="story-fact reveal"><p class="story-kicker">${t(locale, 'Dato al margen', 'Margin note')}</p><p>${esc(chapter.fact)}</p></aside>` : ''}
+    ${chapters.map((chapter, index) => {
+      const scene: StoryScene = chapter.scene ?? { kind: index === chapters.length - 1 ? 'house' : index % 2 ? 'garden' : 'meadow', characters: ['rabbit'], props: index === chapters.length - 1 ? ['house', 'tree', 'flowers'] : ['pine', 'tree', 'flowers'] } as const;
+      const art = preset.slug === 'papercraft' ? papercutScene(preset, scene, index + 1) : sceneArt(preset, index + 1, storyLabel, subject);
+      const head = `<div class="story-chapter-head reveal"><p class="story-kicker">${esc(chapter.kicker ?? '')}</p><h2 id="chapter-title-${index + 1}">${esc(chapter.title)}</h2></div>`;
+      const prose = `<div class="story-prose reveal">${paragraphs(chapter.body)}</div>`;
+      const extras = `${chapter.quote?.text ? `<figure class="story-quote reveal"><blockquote>“${esc(chapter.quote.text)}”</blockquote>${chapter.quote.author ? `<figcaption>${esc(chapter.quote.author)}</figcaption>` : ''}</figure>` : ''}${chapter.fact ? `<aside class="story-fact reveal"><p class="story-kicker">${t(locale, 'Dato al margen', 'Margin note')}</p><p>${esc(chapter.fact)}</p></aside>` : ''}`;
+      if (storybook) {
+        return `<article class="story-chapter storybook-page ${index % 2 ? 'is-reverse' : ''}" id="chapter-${index + 1}" data-chapter="${index + 1}" aria-labelledby="chapter-title-${index + 1}">
+          <figure class="storybook-art reveal">${art}<figcaption>${esc(scene.caption || `${chapter.kicker || ''} · ${chapter.title}`)}</figcaption></figure>
+          <div class="storybook-text">${head}${prose}${extras}<p class="storybook-folio">${String(index + 1).padStart(2, '0')} / ${String(chapters.length).padStart(2, '0')}</p><a class="storybook-next" href="${index + 1 < chapters.length ? `#chapter-${index + 2}` : '#story-outro'}">${t(locale, 'Siguiente', 'Next')} <span aria-hidden="true">→</span></a></div>
+        </article>`;
+      }
+      return `<article class="story-chapter ${index % 2 ? 'is-reverse' : ''}" id="chapter-${index + 1}" data-chapter="${index + 1}" aria-labelledby="chapter-title-${index + 1}">
+      ${head}${prose}${extras}
       ${index === 0 || index === Math.floor(chapters.length / 2) ? `<figure class="story-plate reveal">${sceneArt(preset, index + 1, storyLabel, subject)}<figcaption>${esc(chapter.kicker || '')} · ${esc(chapter.title)}</figcaption></figure>` : ''}
-    </article>`).join('')}
+    </article>`;
+    }).join('')}
 
     <footer class="story-outro" aria-labelledby="story-outro">
       <p class="story-kicker">${t(locale, 'Fin', 'The end')}</p>
@@ -156,6 +166,34 @@ ${preset.slug === 'brutalist' ? '.scene-art,.story-plate{box-shadow:8px 8px 0 va
 
 @media (prefers-reduced-motion:no-preference){.scene-art svg{transform-origin:center;animation:scene-breathe 14s ease-in-out infinite alternate}@keyframes scene-breathe{from{transform:scale(1)}to{transform:scale(1.015)}}}
 @media (prefers-reduced-motion:reduce){.scene-art svg{animation:none!important;transform:none!important}}
+body.storybook{background:var(--st-surface)}
+body.storybook .story-top{position:relative;background:var(--st-bg);border-bottom:var(--st-line) solid color-mix(in srgb,var(--st-ink) 22%,transparent)}
+body.storybook .story-cover{min-height:calc(100svh - 58px);grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:clamp(26px,4vw,64px);max-width:1320px;margin:0 auto;padding:clamp(40px,6vh,72px) clamp(20px,4vw,54px) clamp(40px,7vh,80px)}
+body.storybook .story-cover-art{min-height:0;border:var(--st-line) solid color-mix(in srgb,var(--st-ink) 28%,transparent);border-radius:var(--st-radius);background:var(--st-surface);padding:10px;transform:rotate(-.6deg)}
+body.storybook .story-cover-art svg{width:100%;height:auto;aspect-ratio:8/5;min-height:0;border-radius:calc(var(--st-radius) * .65);display:block}
+body.storybook .story-cover-art figcaption{font-size:8px}
+body.storybook .story-cover h1{font-size:clamp(52px,7.2vw,112px)}
+body.storybook .story-nav{position:sticky;top:0;background:var(--st-surface);border-color:color-mix(in srgb,var(--st-ink) 22%,transparent)}
+body.storybook .story-chapter{max-width:1320px;margin:clamp(20px,3vw,42px) auto;padding:clamp(20px,3vw,36px);background:var(--st-bg);border:var(--st-line) solid color-mix(in srgb,var(--st-ink) 26%,transparent);border-radius:var(--st-radius);grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:clamp(22px,3.4vw,44px);align-items:start;display:grid}
+body.storybook .story-chapter.is-reverse .storybook-art{order:2}
+body.storybook .story-chapter.is-reverse .storybook-text{order:1}
+body.storybook .storybook-art{margin:0;padding:9px;background:var(--st-surface);border:var(--st-line) solid color-mix(in srgb,var(--st-ink) 28%,transparent);border-radius:calc(var(--st-radius) * .8);transform:rotate(-.45deg)}
+body.storybook .storybook-art svg{display:block;width:100%;aspect-ratio:8/5;border-radius:calc(var(--st-radius) * .55)}
+body.storybook .storybook-art figcaption{margin-top:8px;padding:0 2px;font-family:var(--st-mono);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--st-muted)}
+body.storybook .storybook-text{min-width:0;padding:clamp(2px,1vw,14px) 0}
+body.storybook .story-chapter-head .story-kicker{margin-bottom:10px}
+body.storybook .story-chapter h2{font-size:clamp(34px,4.2vw,62px);max-width:13ch;margin-bottom:16px}
+body.storybook .story-prose{font-size:clamp(17px,1.1vw,19px);line-height:1.72;max-width:54ch}
+body.storybook .story-prose .story-lede:first-letter{font-size:4.5em;float:left;line-height:.78;padding:.08em .12em 0 0;color:var(--st-accent2)}
+body.storybook .story-quote{grid-column:auto;margin:16px 0 0;padding:14px 0 0;border-top:var(--st-rule) solid var(--st-accent)}
+body.storybook .story-quote blockquote{font-size:clamp(22px,2.2vw,30px)}
+body.storybook .story-fact{grid-column:auto;grid-row:auto;margin:14px 0 0;padding-top:12px;font-size:13px}
+body.storybook-folio{margin:20px 0 0;font-family:var(--st-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--st-muted)}
+.storybook-next{display:inline-flex;align-items:center;gap:8px;margin-top:14px;font-family:var(--st-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--st-accent2);border-bottom:var(--st-line) solid var(--st-accent2);padding-bottom:3px}
+body.storybook .story-outro{max-width:1000px;margin:clamp(20px,3vw,42px) auto;padding:clamp(42px,7vh,84px);background:var(--st-bg);border:var(--st-line) solid color-mix(in srgb,var(--st-ink) 26%,transparent);border-radius:var(--st-radius)}
+${preset.slug === 'papercraft' ? 'body.storybook.style-papercraft .story-cover-art{box-shadow:0 22px 40px rgba(74,58,50,.18)}body.storybook.style-papercraft .story-chapter{box-shadow:0 22px 40px rgba(74,58,50,.16)}body.storybook.style-papercraft .storybook-art{box-shadow:0 18px 30px rgba(74,58,50,.18)}body.storybook.style-papercraft .story-outro{box-shadow:0 22px 40px rgba(74,58,50,.14)}' : ''}
+@media(max-width:880px){body.storybook .story-cover{grid-template-columns:1fr;padding-top:24px}body.storybook .story-cover-art{min-height:42vh}body.storybook .story-chapter{grid-template-columns:1fr;margin:14px 10px;padding:16px}body.storybook .story-chapter.is-reverse .storybook-art,body.storybook .story-chapter.is-reverse .storybook-text{order:0}}
+@media print{body.storybook .story-cover-art,body.storybook .storybook-art{transform:none!important}body.storybook .story-chapter{break-after:page}}
 @media(max-width:880px){.story-top{position:absolute;background:transparent}.story-top p{display:none}.story-cover{grid-template-columns:1fr;min-height:auto;padding-top:100px}.story-cover-art{min-height:48vh}.story-chapter{grid-template-columns:1fr;gap:28px}.story-chapter.is-reverse .story-chapter-head,.story-chapter.is-reverse .story-prose,.story-quote,.story-chapter.is-reverse .story-quote,.story-fact{order:0;grid-column:1;grid-row:auto}.story-plate{min-height:36vh}.story-prose{font-size:19px}}
 @media print{.story-top,.story-nav,.story-progress,.story-button,.motion-toggle{display:none!important}.story-cover,.story-chapter,.story-outro{min-height:auto;page-break-after:always;padding:48px}.story-prose{font-size:12pt}.scene-art{min-height:300px}}
 @media(prefers-reduced-motion:reduce){.story-cover-art,.story-plate .scene-art{animation:none!important;transition:none!important}}`;
@@ -191,7 +229,7 @@ ${preset.slug === 'brutalist' ? '.scene-art,.story-plate{box-shadow:8px 8px 0 va
     preset,
     css,
     body,
-    bodyClass: `story-page style-${preset.slug}`,
+    bodyClass: `story-page ${storybook ? 'storybook' : ''} style-${preset.slug}`,
     script: `${script}\n${REVEAL_SCRIPT}`,
   });
   return brief.maxxing ? applyMaxxing(html, preset) : html;

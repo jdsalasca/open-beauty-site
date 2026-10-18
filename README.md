@@ -59,7 +59,10 @@ El harness ya puede componer una página editorial, una experiencia de **3 a 8 s
 - [El río que cambió de ciudad](examples/stories/rio-1870.html): relato histórico urbano con fuentes y hechos al margen.
 - [La semilla que esperó](examples/stories/dominio-publico.html): historia en Paper Craft; la propia página acredita «CC0 1.0 · texto original».
 - [El archivo de las hojas](examples/stories/archivo-hojas.html): ensayo narrativo en seis capítulos; ficción original CC0 y arte maxxing.
+- [La liebre que prestó su sombra](examples/stories/liebre-sombrero.html): storybook de papel con escenas, personajes y cuatro capítulos; ficción original CC0.
 <p align="center"><a href="examples/stories/archivo-hojas.html"><img src="examples/stories/archivo-hojas.png" width="420" alt="El archivo de las hojas: ensayo narrativo Nature Memory"></a></p>
+<p align="center"><a href="examples/stories/liebre-sombrero.html"><img src="examples/stories/liebre-sombrero.png" width="760" alt="La liebre que prestó su sombra: storybook de papel"></a><br><sub><strong>La liebre que prestó su sombra</strong> · storybook de papel, 4 capítulos, escenas originales.</sub></p>
+
 
 <p align="center"><a href="examples/stories/dominio-publico.html"><img src="examples/stories/dominio-publico.png" width="420" alt="La semilla que esperó: cuento CC0 en Paper Craft"></a></p>
 
@@ -132,7 +135,7 @@ Luna usa las herramientas MCP; no necesita escribir HTML a mano. La calificació
 
 ## Evidencia disponible
 
-- [La suite documentada](docs/TESTING.md) registra **17/17 pruebas aprobadas**.
+- [La suite documentada](docs/TESTING.md) registra **19/19 pruebas aprobadas**.
 - La [ronda histórica de Luna](examples/agents/round-2026/index.html) reúne **12/12 páginas A/100 y visión 4/4**. Esa ronda corresponde a los doce estilos que existían entonces.
 - Nature Memory se evaluó en la matriz local: **A/100 y visión 4/4**; el estilo 13 también produce deck y GIF. La matriz actual de páginas cubre **13/13 estilos**.
 
