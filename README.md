@@ -254,7 +254,7 @@ Luna usa las herramientas MCP; no necesita escribir HTML a mano. La calificació
 
 ## Evidencia disponible
 
-- [La suite documentada](docs/TESTING.md) registra **35/35 pruebas aprobadas**.
+- [La suite documentada](docs/TESTING.md) registra **65/65 pruebas aprobadas**.
 - La [ronda histórica de Luna](examples/agents/round-2026/index.html) reúne **12/12 páginas A/100 y visión 4/4**. Esa ronda corresponde a los doce estilos que existían entonces.
 - Nature Memory se evaluó en la matriz local: **A/100 y visión 4/4**; el estilo 13 también produce deck y GIF. La matriz actual de páginas cubre **13/13 estilos**.
 
