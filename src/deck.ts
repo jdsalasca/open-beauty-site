@@ -281,7 +281,7 @@ ${motifFor(style.slug)}
 @media (prefers-reduced-motion:reduce){.deck .slide,.deck .anim{transition:none!important}.deck .deck-progress i{transition:none}}
 @page{size:1600px 900px;margin:0}
 .deck-figure{margin:18px 0 0;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(14px,2.4vw,34px);align-items:end;min-height:0}
-.deck-figure svg{width:100%;aspect-ratio:8/5;display:block;border:1px solid color-mix(in srgb,var(--ink) 28%,transparent);border-radius:var(--radius);background:var(--surface)}
+.deck-figure svg{width:100%;aspect-ratio:8/5;display:block;border:var(--line) solid color-mix(in srgb,var(--ink) 28%,transparent);border-radius:var(--radius);background:var(--surface)}
 .deck-figure figcaption{display:flex;flex-direction:column;gap:6px;padding-bottom:3px;color:var(--muted);font-family:var(--body);font-size:12px;line-height:1.45;max-width:25ch}
 .deck-figure figcaption span{font-family:var(--mono);font-size:8px;letter-spacing:.1em;text-transform:uppercase}
 .deck.layout-figure .slide-inner{max-width:1180px}
