@@ -1,12 +1,13 @@
 import { writeFile } from 'node:fs/promises';
 import gifenc from 'gifenc';
 import type { SKRSContext2D } from '@napi-rs/canvas';
-import type { GifOptions, GifResult, StylePreset, StyleSlug } from './types.js';
+import type { StylePreset, StyleSlug } from './types.js';
+import type { GifDitherMode, GifQualityOptions, SafeGifResult } from './types/gif.js';
 import { getStyle, isStyleSlug } from './styles/presets.js';
 import { canvasFor } from './canvas.js';
 import { BeautyError } from './page/common.js';
 
-const { GIFEncoder, applyPalette, quantize } = gifenc;
+const { GIFEncoder, quantize } = gifenc;
 
 const TAU = Math.PI * 2;
 
@@ -54,6 +55,197 @@ function easeOutCubic(t: number): number {
 
 function easeOutQuint(t: number): number {
   return 1 - (1 - clamp(t, 0, 1)) ** 5;
+}
+
+function easeOutQuad(t: number): number {
+  return 1 - (1 - clamp(t, 0, 1)) ** 2;
+}
+
+function easeInOutCubic(t: number): number {
+  const value = clamp(t, 0, 1);
+  return value < 0.5 ? 4 * value * value * value : 1 - (-2 * value + 2) ** 3 / 2;
+}
+
+function easeOutBack(t: number): number {
+  const c1 = 1.70158;
+  const c3 = c1 + 1;
+  return 1 + c3 * (clamp(t, 0, 1) - 1) ** 3 + c1 * (clamp(t, 0, 1) - 1) ** 2;
+}
+
+/**
+ * Progress (0..1) for item `index` of `count`: each item runs for `span` of the
+ * timeline and items are spaced evenly, so entrances never all fire at once.
+ */
+function stagger(t: number, index: number, count: number, span = 0.6): number {
+  const step = count > 1 ? (1 - span) / (count - 1) : 0;
+  return clamp((t - index * step) / span, 0, 1);
+}
+
+/* ------------------------------------------------------------------ */
+/* Per-style rendering profiles                                        */
+/* ------------------------------------------------------------------ */
+
+/** Per-style dithering: gradients get error diffusion, flat styles stay crisp. */
+export const STYLE_DITHER: Record<StyleSlug, GifDitherMode> = {
+  renaissance: 'floyd-steinberg',
+  vaporwave: 'ordered',
+  galactic: 'ordered',
+  ukiyoe: 'ordered',
+  nature: 'ordered',
+  psychedelic: 'ordered',
+  brutalist: 'none',
+  papercraft: 'none',
+  artdeco: 'none',
+  isotype: 'none',
+  opart: 'none',
+  bestiary: 'none',
+  memphis: 'none',
+};
+
+const DEFAULT_DITHER: GifDitherMode = 'none';
+const DEFAULT_PALETTE = 128;
+const ORDERED_SPREAD = 34;
+
+const BAYER8 = [
+  0, 32, 8, 40, 2, 34, 10, 42,
+  48, 16, 56, 24, 50, 18, 58, 26,
+  12, 44, 4, 36, 14, 46, 6, 38,
+  60, 28, 52, 20, 62, 30, 54, 22,
+  3, 35, 11, 43, 1, 33, 9, 41,
+  51, 19, 59, 27, 49, 17, 57, 25,
+  15, 47, 7, 39, 13, 45, 5, 37,
+  63, 31, 55, 23, 61, 29, 53, 21,
+];
+
+/* ------------------------------------------------------------------ */
+/* Global palette + dithering                                          */
+/* ------------------------------------------------------------------ */
+
+function buildPaletteLut(palette: number[][]): Uint8Array {
+  const lut = new Uint8Array(32 * 32 * 32);
+  for (let r = 0; r < 32; r += 1) {
+    for (let g = 0; g < 32; g += 1) {
+      for (let b = 0; b < 32; b += 1) {
+        const rr = r * 8 + 4;
+        const gg = g * 8 + 4;
+        const bb = b * 8 + 4;
+        let best = 0;
+        let bestDistance = Number.POSITIVE_INFINITY;
+        for (let index = 0; index < palette.length; index += 1) {
+          const color = palette[index]!;
+          const dr = color[0]! - rr;
+          const dg = color[1]! - gg;
+          const db = color[2]! - bb;
+          const distance = dr * dr + dg * dg + db * db;
+          if (distance < bestDistance) {
+            bestDistance = distance;
+            best = index;
+          }
+        }
+        lut[(r << 10) | (g << 5) | b] = best;
+      }
+    }
+  }
+  return lut;
+}
+
+/** Map RGBA pixels to palette indices, with optional ordered/Floyd-Steinberg dithering. */
+export function mapIndices(
+  data: Uint8ClampedArray,
+  palette: number[][],
+  lut: Uint8Array,
+  w: number,
+  h: number,
+  mode: GifDitherMode,
+): Uint8Array {
+  const count = w * h;
+  const out = new Uint8Array(count);
+  if (mode === 'none') {
+    for (let i = 0; i < count; i += 1) {
+      const o = i * 4;
+      out[i] = lut[((data[o]! >> 3) << 10) | ((data[o + 1]! >> 3) << 5) | (data[o + 2]! >> 3)]!;
+    }
+    return out;
+  }
+  if (mode === 'ordered') {
+    for (let y = 0; y < h; y += 1) {
+      const row = (y & 7) * 8;
+      for (let x = 0; x < w; x += 1) {
+        const i = y * w + x;
+        const o = i * 4;
+        const shift = ((BAYER8[row + (x & 7)]! + 0.5) / 64 - 0.5) * ORDERED_SPREAD;
+        const r = clamp(data[o]! + shift, 0, 255);
+        const g = clamp(data[o + 1]! + shift, 0, 255);
+        const b = clamp(data[o + 2]! + shift, 0, 255);
+        out[i] = lut[((r >> 3) << 10) | ((g >> 3) << 5) | (b >> 3)]!;
+      }
+    }
+    return out;
+  }
+  const buffer = new Float32Array(data);
+  for (let y = 0; y < h; y += 1) {
+    for (let x = 0; x < w; x += 1) {
+      const o = (y * w + x) * 4;
+      const r = buffer[o]!;
+      const g = buffer[o + 1]!;
+      const b = buffer[o + 2]!;
+      // Diffused error can push channels outside 0..255; clamp before the LUT.
+      const index = lut[
+        ((clamp(r, 0, 255) >> 3) << 10) | ((clamp(g, 0, 255) >> 3) << 5) | (clamp(b, 0, 255) >> 3)
+      ]!;
+      const color = palette[index]!;
+      out[y * w + x] = index;
+      const er = r - color[0]!;
+      const eg = g - color[1]!;
+      const eb = b - color[2]!;
+      if (x + 1 < w) {
+        const p = o + 4;
+        buffer[p] = buffer[p]! + (er * 7) / 16;
+        buffer[p + 1] = buffer[p + 1]! + (eg * 7) / 16;
+        buffer[p + 2] = buffer[p + 2]! + (eb * 7) / 16;
+      }
+      if (y + 1 < h) {
+        const below = o + w * 4;
+        if (x > 0) {
+          const p = below - 4;
+          buffer[p] = buffer[p]! + (er * 3) / 16;
+          buffer[p + 1] = buffer[p + 1]! + (eg * 3) / 16;
+          buffer[p + 2] = buffer[p + 2]! + (eb * 3) / 16;
+        }
+        buffer[below] = buffer[below]! + (er * 5) / 16;
+        buffer[below + 1] = buffer[below + 1]! + (eg * 5) / 16;
+        buffer[below + 2] = buffer[below + 2]! + (eb * 5) / 16;
+        if (x + 1 < w) {
+          const p = below + 4;
+          buffer[p] = buffer[p]! + er / 16;
+          buffer[p + 1] = buffer[p + 1]! + eg / 16;
+          buffer[p + 2] = buffer[p + 2]! + eb / 16;
+        }
+      }
+    }
+  }
+  return out;
+}
+
+/** One global palette per GIF, sampled from frames spread across the loop. */
+function globalPalette(samples: Uint8ClampedArray[], colors: number): number[][] {
+  const stride = 4;
+  let total = 0;
+  for (const sample of samples) total += Math.ceil(sample.length / 4 / stride);
+  const merged = new Uint8ClampedArray(total * 4);
+  let cursor = 0;
+  for (const sample of samples) {
+    const px = sample.length / 4;
+    for (let i = 0; i < px; i += stride) {
+      const o = i * 4;
+      merged[cursor] = sample[o]!;
+      merged[cursor + 1] = sample[o + 1]!;
+      merged[cursor + 2] = sample[o + 2]!;
+      merged[cursor + 3] = sample[o + 3]!;
+      cursor += 4;
+    }
+  }
+  return quantize(merged.subarray(0, cursor), colors, { format: 'rgb444' });
 }
 
 function mulberry32(seed: number): () => number {
@@ -365,7 +557,7 @@ function frameRenaissance(env: FrameEnv): void {
   archPath();
   ctx.stroke();
 
-  const reveal = template === 'title' ? easeOutCubic(clamp(t / 0.55, 0, 1)) : 1;
+  const reveal = template === 'title' ? easeInOutCubic(clamp(t / 0.55, 0, 1)) : 1;
   const sunRotation = template === 'loop' ? t * TAU : 0.18 + reveal * 0.15;
   drawSun(ctx, w * 0.5, h * 0.3, s * 0.07, sunRotation, rgba(p.accent, template === 'loop' ? 0.6 : 0.55 + reveal * 0.25), Math.max(1, s * 0.0022));
 
@@ -568,7 +760,7 @@ function frameBrutalist(env: FrameEnv): void {
 
   const lineY = firstBaseline + blockHeight + s * 0.012;
   const lineW = titleZoneW * 0.72;
-  const lineGrow = template === 'title' ? easeOutCubic(t / 0.55) : 1;
+  const lineGrow = template === 'title' ? easeInOutCubic(t / 0.55) : 1;
   ctx.fillStyle = p.ink;
   ctx.fillRect(titleZoneW * 0.5 - (lineW * lineGrow) / 2, lineY, lineW * lineGrow, Math.max(3, s * 0.006));
 
@@ -663,7 +855,7 @@ function framePapercraft(env: FrameEnv): void {
   const cardH = h * 0.5;
   const cardCX = w * 0.5;
   const cardCY = h * 0.5;
-  const pop = template === 'title' ? easeOutCubic(clamp(t / 0.5 + 0.09, 0, 1)) : 1;
+  const pop = template === 'title' ? easeOutBack(clamp(t / 0.5 + 0.09, 0, 1)) : 1;
   const cardScale = lerp(0.9, 1, pop);
   const bob = template === 'loop' ? Math.sin(t * TAU) * s * 0.008 : 0;
   const angle = -0.035 + (template === 'loop' ? Math.sin(t * TAU) * 0.006 : 0);
@@ -750,17 +942,19 @@ function framePapercraft(env: FrameEnv): void {
     const baseX = confettiRng() * w;
     const baseY = confettiRng() * h;
     const size = s * (0.006 + confettiRng() * 0.008);
+    const appear = template === 'title' ? easeOutQuad(stagger(t, index, 18, 0.55)) : 1;
+    if (appear <= 0) continue;
     const drift = Math.sin(t * TAU + index) * s * 0.008;
     ctx.save();
-    ctx.globalAlpha = 0.5;
+    ctx.globalAlpha = 0.5 * appear;
     ctx.fillStyle = index % 3 === 0 ? p.accent : index % 3 === 1 ? p.accent2 : p.accent3;
     ctx.translate(baseX + drift, baseY + (template === 'loop' ? Math.cos(t * TAU + index) * s * 0.004 : 0));
     ctx.rotate(index * 0.7 + t * (template === 'loop' ? TAU : 0));
     if (index % 2 === 0) {
-      ctx.fillRect(-size / 2, -size / 2, size, size);
+      ctx.fillRect((-size / 2) * appear, (-size / 2) * appear, size * appear, size * appear);
     } else {
       ctx.beginPath();
-      ctx.arc(0, 0, size / 2, 0, TAU);
+      ctx.arc(0, 0, (size / 2) * appear, 0, TAU);
       ctx.fill();
     }
     ctx.restore();
@@ -768,9 +962,11 @@ function framePapercraft(env: FrameEnv): void {
 }
 
 function frameShowcase(env: FrameEnv): void {
-  const { ctx, w, h, preset: p, text, subtitle, t } = env;
+  const { ctx, w, h, preset: p, text, subtitle, template, t } = env;
   const s = Math.min(w, h);
-  const e = easeOutCubic(t);
+  // Only the title reveal animates in; loop/poster frames keep the text steady
+  // so the first and last frames of a loop are identical.
+  const e = template === 'title' ? easeOutCubic(t) : 1;
   const family =
     p.slug === 'vaporwave'
       ? 'Space Mono'
@@ -821,7 +1017,8 @@ function frameShowcase(env: FrameEnv): void {
     ctx.strokeStyle = p.palette.accent;
     ctx.lineWidth = Math.max(1, s * 0.0015);
     for (let i = 0; i < 16; i += 1) {
-      const a = (i / 16) * TAU + t * 0.08;
+      // One ray step per loop keeps the 16-fold pattern identical at t=0 and t=1.
+      const a = (i / 16) * TAU + t * (TAU / 16);
       ctx.beginPath();
       ctx.moveTo(w / 2 + Math.cos(a) * s * 0.1, h / 2 + Math.sin(a) * s * 0.1);
       ctx.lineTo(w / 2 + Math.cos(a) * s * 0.48, h / 2 + Math.sin(a) * s * 0.48);
@@ -882,7 +1079,7 @@ function frameShowcase(env: FrameEnv): void {
     for (let i = 0; i < 5; i += 1) {
       ctx.beginPath();
       for (let x = -20; x <= w + 20; x += 12) {
-        const y = h * (0.56 + i * 0.07) + Math.sin(x / 90 + i + t * 1.4) * s * 0.025;
+        const y = h * (0.56 + i * 0.07) + Math.sin(x / 90 + i + t * TAU) * s * 0.025;
         if (x === -20) ctx.moveTo(x, y);
         else ctx.lineTo(x, y);
       }
@@ -915,9 +1112,17 @@ function frameShowcase(env: FrameEnv): void {
   } else if (p.slug === 'psychedelic') {
     const rng = mulberry32(env.seed || 7);
     for (let i = 0; i < 4; i += 1) {
+      const grow = template === 'title' ? 0.82 + 0.18 * easeOutBack(stagger(t, i, 4, 0.55)) : 1;
+      const bx = s * (0.22 + i * 0.19);
+      const by = s * (0.3 + (i % 2) * 0.28);
+      ctx.save();
+      ctx.translate(bx, by);
+      ctx.scale(grow, grow);
+      ctx.translate(-bx, -by);
       ctx.fillStyle = [p.palette.accent, p.palette.accent2, p.palette.accent4, p.palette.deep][i] ?? p.palette.accent;
-      blobPath(ctx, s * (0.22 + i * 0.19), s * (0.3 + (i % 2) * 0.28), s * (0.18 + i * 0.03), s * 0.16, rng, 7);
+      blobPath(ctx, bx, by, s * (0.18 + i * 0.03), s * 0.16, rng, 7);
       ctx.fill();
+      ctx.restore();
     }
     ctx.strokeStyle = p.palette.accent3;
     ctx.lineWidth = Math.max(1, s * 0.002);
@@ -952,7 +1157,8 @@ function frameShowcase(env: FrameEnv): void {
     ctx.lineWidth = Math.max(1, s * 0.0015);
     for (let i = 0; i < 3; i += 1) {
       ctx.beginPath();
-      ctx.ellipse(w / 2, h / 2, s * (0.24 + i * 0.08), s * (0.08 + i * 0.045), (i * 0.36) + t * 0.06, 0, TAU);
+      // A half turn maps every ellipse onto itself, so the loop closes exactly.
+      ctx.ellipse(w / 2, h / 2, s * (0.24 + i * 0.08), s * (0.08 + i * 0.045), i * 0.36 + t * Math.PI, 0, TAU);
       ctx.stroke();
     }
     ctx.fillStyle = p.palette.accent2;
@@ -1025,7 +1231,7 @@ function frameShowcase(env: FrameEnv): void {
 /* Public API                                                          */
 /* ------------------------------------------------------------------ */
 
-function drawMaxGif(ctx: SKRSContext2D, w: number, h: number, p: StylePreset, t: number): void {
+function drawMaxGif(ctx: SKRSContext2D, w: number, h: number, p: StylePreset, t: number, template: Template): void {
   const s = Math.min(w, h);
   const ease = easeOutCubic(t);
   ctx.save();
@@ -1071,7 +1277,7 @@ function drawMaxGif(ctx: SKRSContext2D, w: number, h: number, p: StylePreset, t:
     }
   } else {
     for (let i = 0; i < 7; i += 1) {
-      const a = (i / 7) * TAU + ease * 0.2;
+      const a = (i / 7) * TAU + (template === 'loop' ? t * (TAU / 7) : ease * 0.2);
       ctx.beginPath();
       ctx.arc(w * 0.12 + Math.cos(a) * s * 0.045, h * 0.86 + Math.sin(a) * s * 0.045, s * 0.005, 0, TAU);
       ctx.stroke();
@@ -1105,7 +1311,148 @@ const RENDERERS: Record<StyleSlug, (env: FrameEnv) => void> = {
   nature: frameShowcase,
 };
 
-export async function createGif(style: StyleSlug, options: GifOptions, output: string): Promise<GifResult> {
+export interface GifFrameRequest {
+  text: string;
+  subtitle?: string;
+  template?: Template;
+  seed?: number;
+  maxxing?: boolean;
+}
+
+/** Render one frame at loop position t (0..1). Exported for tests and tooling. */
+export function drawGifFrame(
+  style: StyleSlug,
+  request: GifFrameRequest,
+  t: number,
+  width: number,
+  height: number,
+): Uint8ClampedArray {
+  const preset = getStyle(style);
+  const { canvas, ctx } = canvasFor(width, height);
+  const template = request.template ?? 'title';
+  ctx.clearRect(0, 0, width, height);
+  ctx.save();
+  RENDERERS[style]({
+    ctx,
+    w: width,
+    h: height,
+    preset,
+    text: request.text.trim(),
+    subtitle: request.subtitle?.trim() || undefined,
+    template,
+    t: clamp(t, 0, 1),
+    seed: request.seed ?? 7,
+    maxxing: request.maxxing ?? false,
+  });
+  if (request.maxxing) drawMaxGif(ctx, width, height, preset, t, template);
+  ctx.restore();
+  return ctx.getImageData(0, 0, width, height).data;
+}
+
+const MAX_WIDTH = 1200;
+const MAX_HEIGHT = 1200;
+const MIN_WIDTH = 240;
+const MIN_HEIGHT = 240;
+const MIN_FPS = 8;
+const MAX_FPS = 30;
+const MIN_DURATION = 1;
+const MAX_DURATION = 6;
+const MIN_FRAMES = 8;
+const MAX_FRAMES = 180;
+const MAX_PIXEL_FRAMES = 48_000_000;
+const PALETTE_SAMPLES = 6;
+
+interface ResolvedGif {
+  width: number;
+  height: number;
+  fps: number;
+  duration: number;
+  frames: number;
+  colors: number;
+  dither: GifDitherMode;
+  warnings: string[];
+}
+
+const DITHER_MODES: readonly GifDitherMode[] = ['none', 'ordered', 'floyd-steinberg'];
+
+function resolveGif(options: GifQualityOptions, defaultDither: GifDitherMode): ResolvedGif {
+  const warnings: string[] = [];
+  const note = (message: string): void => {
+    warnings.push(message);
+  };
+
+  const width = options.width === undefined || !Number.isFinite(options.width)
+    ? 800
+    : Math.round(options.width);
+  if (options.width !== undefined && !Number.isFinite(options.width)) {
+    note(`width ${String(options.width)} is not a valid number; used 800`);
+  }
+  const height = options.height === undefined || !Number.isFinite(options.height)
+    ? 800
+    : Math.round(options.height);
+  if (options.height !== undefined && !Number.isFinite(options.height)) {
+    note(`height ${String(options.height)} is not a valid number; used 800`);
+  }
+  const fps = options.fps === undefined || !Number.isFinite(options.fps)
+    ? 24
+    : Math.round(options.fps);
+  if (options.fps !== undefined && !Number.isFinite(options.fps)) {
+    note(`fps ${String(options.fps)} is not a valid number; used 24`);
+  }
+  const duration = options.duration === undefined || !Number.isFinite(options.duration)
+    ? 2.4
+    : options.duration;
+  if (options.duration !== undefined && !Number.isFinite(options.duration)) {
+    note(`duration ${String(options.duration)} is not a valid number; used 2.4`);
+  }
+
+  const clampedWidth = clamp(width, MIN_WIDTH, MAX_WIDTH);
+  if (clampedWidth !== width) note(`width ${width} clamped to ${clampedWidth} (allowed ${MIN_WIDTH}–${MAX_WIDTH})`);
+  const clampedHeight = clamp(height, MIN_HEIGHT, MAX_HEIGHT);
+  if (clampedHeight !== height) note(`height ${height} clamped to ${clampedHeight} (allowed ${MIN_HEIGHT}–${MAX_HEIGHT})`);
+  const clampedFps = clamp(fps, MIN_FPS, MAX_FPS);
+  if (clampedFps !== fps) note(`fps ${fps} clamped to ${clampedFps} (allowed ${MIN_FPS}–${MAX_FPS})`);
+  const clampedDuration = clamp(duration, MIN_DURATION, MAX_DURATION);
+  if (clampedDuration !== duration) note(`duration ${duration}s clamped to ${clampedDuration}s (allowed ${MIN_DURATION}–${MAX_DURATION})`);
+
+  const frames = clamp(Math.round(clampedFps * clampedDuration), MIN_FRAMES, MAX_FRAMES);
+  if (frames !== Math.round(clampedFps * clampedDuration)) {
+    note(`frame count ${Math.round(clampedFps * clampedDuration)} clamped to ${frames} (allowed ${MIN_FRAMES}–${MAX_FRAMES})`);
+  }
+
+  let finalWidth = clampedWidth;
+  let finalHeight = clampedHeight;
+  const pixelFrames = finalWidth * finalHeight * frames;
+  if (pixelFrames > MAX_PIXEL_FRAMES) {
+    const scale = Math.sqrt(MAX_PIXEL_FRAMES / pixelFrames);
+    finalWidth = Math.max(MIN_WIDTH, Math.round(clampedWidth * scale));
+    finalHeight = Math.max(MIN_HEIGHT, Math.round(clampedHeight * scale));
+    note(
+      `size ${clampedWidth}×${clampedHeight} at ${frames} frames exceeded the memory budget; scaled to ${finalWidth}×${finalHeight}`,
+    );
+  }
+
+  const requestedColors = options.paletteColors;
+  const colorValue = requestedColors === undefined || !Number.isFinite(requestedColors) ? DEFAULT_PALETTE : Math.round(requestedColors);
+  if (requestedColors !== undefined && !Number.isFinite(requestedColors)) {
+    note(`palette size ${String(requestedColors)} is not a valid number; used ${DEFAULT_PALETTE}`);
+  }
+  const colors = clamp(colorValue, 16, 256);
+  if (colors !== colorValue) {
+    note(`palette size ${colorValue} clamped to ${colors} (allowed 16–256)`);
+  }
+
+  const requestedDither = options.dither;
+  const knownDither = requestedDither !== undefined && DITHER_MODES.includes(requestedDither);
+  if (requestedDither !== undefined && !knownDither) {
+    note(`unknown dither mode "${String(requestedDither)}"; used ${defaultDither}`);
+  }
+  const dither = knownDither ? requestedDither : defaultDither;
+
+  return { width: finalWidth, height: finalHeight, fps: clampedFps, duration: clampedDuration, frames, colors, dither, warnings };
+}
+
+export async function createGif(style: StyleSlug, options: GifQualityOptions, output: string): Promise<SafeGifResult> {
   if (!isStyleSlug(style)) {
     throw new BeautyError(`Unknown style "${style}".`, 'UNKNOWN_STYLE');
   }
@@ -1113,49 +1460,39 @@ export async function createGif(style: StyleSlug, options: GifOptions, output: s
     throw new BeautyError('A GIF needs non-empty text.', 'MISSING_TEXT');
   }
 
-  const width = Math.round(clamp(options.width ?? 800, 240, 1200));
-  const height = Math.round(clamp(options.height ?? 800, 240, 1200));
-  const fps = Math.round(clamp(options.fps ?? 24, 8, 30));
-  const duration = clamp(options.duration ?? 2.4, 1, 6);
+  const styleDither = STYLE_DITHER[style] ?? DEFAULT_DITHER;
+  const resolved = resolveGif(options, styleDither);
+  const { width, height, frames, colors, dither: ditherMode, warnings } = resolved;
   const template: Template = options.template ?? 'title';
-  const frames = Math.max(8, Math.min(180, Math.round(fps * duration)));
-  const preset = getStyle(style);
-  const { canvas, ctx } = canvasFor(width, height);
-
-  const gif = GIFEncoder();
-
-  const drawAt = (t: number): Uint8ClampedArray => {
-    ctx.clearRect(0, 0, width, height);
-    ctx.save();
-    RENDERERS[style]({
-      ctx,
-      w: width,
-      h: height,
-      preset,
-      text: options.text.trim(),
-      subtitle: options.subtitle?.trim() || undefined,
-      template,
-      t,
-      seed: options.seed ?? 7,
-      maxxing: options.maxxing ?? false,
-    });
-    if (options.maxxing) drawMaxGif(ctx, width, height, preset, t);
-    ctx.restore();
-    return ctx.getImageData(0, 0, width, height).data;
+  const request: GifFrameRequest = {
+    text: options.text,
+    subtitle: options.subtitle,
+    template,
+    seed: options.seed,
+    maxxing: options.maxxing,
   };
 
-  // Quantize from a fully revealed frame: a palette built from frame 0 would
-  // miss ink/accent colours that only appear later in a reveal animation.
-  const probe = drawAt(template === 'title' ? 0.94 : 0.5);
-  const palette = quantize(probe, 128, { format: 'rgb444' });
+  // One global palette per GIF: sample frames spread across the whole loop so
+  // every colour that appears in any frame has a stable slot (no flicker).
+  const sampleCount = Math.min(PALETTE_SAMPLES, frames);
+  const samples: Uint8ClampedArray[] = [];
+  for (let index = 0; index < sampleCount; index += 1) {
+    const frameIndex = Math.round((index * (frames - 1)) / Math.max(1, sampleCount - 1));
+    samples.push(drawGifFrame(style, request, frameIndex / frames, width, height));
+  }
+  const palette = globalPalette(samples, colors);
+  const lut = buildPaletteLut(palette);
 
+  const gif = GIFEncoder();
   for (let frame = 0; frame < frames; frame += 1) {
+    // t never reaches 1: the last frame sits one step before the first, so the
+    // loop wraps seamlessly instead of repeating the opening frame.
     const t = frame / frames;
-    const data = drawAt(t);
-    const index = applyPalette(data, palette, 'rgb444');
+    const data = drawGifFrame(style, request, t, width, height);
+    const index = mapIndices(data, palette, lut, width, height, ditherMode);
     gif.writeFrame(index, width, height, {
       palette,
-      delay: Math.round(1000 / fps),
+      delay: Math.round(1000 / resolved.fps),
       repeat: frame === 0 ? 0 : undefined,
     });
   }
@@ -1163,14 +1500,16 @@ export async function createGif(style: StyleSlug, options: GifOptions, output: s
   gif.finish();
   const bytes = gif.bytes();
   await writeFile(output, bytes);
-  void canvas;
 
-  return {
+  const result: SafeGifResult = {
     path: output,
     width,
     height,
-    fps,
+    fps: resolved.fps,
+    duration: resolved.duration,
     frames,
     bytes: bytes.byteLength,
+    warnings,
   };
+  return result;
 }
