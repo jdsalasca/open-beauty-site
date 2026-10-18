@@ -13,7 +13,7 @@ export const nature: StylePreset = {
     surface: '#DCE4D2',
     ink: '#243026',
     muted: '#5A6450',
-    accent: '#7A8B4F',
+    accent: '#606E3E',
     accent2: '#B55239',
     accent3: '#4B6B62',
     accent4: '#D8B56A',

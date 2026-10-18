@@ -127,9 +127,12 @@ export function renderExperience(briefInput: Partial<ExperienceBrief>, preset: S
       ${source ? `<p class="xp-fact"><span>${t(locale, 'Fuente', 'Source')}</span>${esc(source)}</p>` : ''}
       ${brief.audio ? `<div class="xp-audio"><p class="xp-kicker">${esc(brief.audio.title)}</p>${brief.audio.subtitle ? `<p>${esc(brief.audio.subtitle)}</p>` : ''}<audio controls preload="none" src="${esc(brief.audio.src)}"></audio></div>` : ''}
       <a class="xp-button" href="${safeHref(cta.href)}">${esc(cta.label)} ${arrow()}</a>
-      <p class="xp-credit">${esc(brief.footer || `${brand} · ${kindLabel}`)}</p>
     </section>
   </main>
+
+  <footer class="xp-foot">
+    <p class="xp-credit">${esc(brief.footer || `${brand} · ${kindLabel}`)}</p>
+  </footer>
 
   <nav class="xp-rail" aria-label="${t(locale, 'Salas', 'Rooms')}">
     ${rooms.map((room, index) => `<a href="#sala-${index + 1}" data-nav="${index + 1}" aria-label="${esc(`${index + 1}. ${room.title}`)}"><span>${String(index + 1).padStart(2, '0')}</span><i></i></a>`).join('')}
@@ -179,7 +182,8 @@ body.xp a{color:inherit;text-decoration:none}
 .xp-outro h2{font-size:clamp(42px,7vw,108px);max-width:14ch}
 .xp-fact{display:flex;gap:16px;flex-wrap:wrap;margin:18px 0 0;font-size:15px;color:var(--xp-muted)}.xp-fact span{font-family:var(--xp-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;min-width:80px;color:var(--xp-accent2)}
 .xp-audio{margin:26px 0 0;padding:18px 0;border-top:var(--xp-rule) solid color-mix(in srgb,var(--xp-ink) 22%,transparent);border-bottom:var(--xp-rule) solid color-mix(in srgb,var(--xp-ink) 22%,transparent)}.xp-audio audio{width:min(460px,100%);margin-top:10px}
-.xp-credit{margin:38px 0 0;color:var(--xp-muted);font-family:var(--xp-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase}
+.xp-credit{margin:0;color:var(--xp-muted);font-family:var(--xp-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase}
+.xp-foot{padding:0 clamp(18px,10vw,180px) 40px;background:var(--xp-surface)}
 .xp-rail{position:fixed;right:16px;bottom:16px;z-index:60;display:flex;flex-direction:column;gap:7px;padding:9px;background:color-mix(in srgb,var(--xp-bg) 84%,transparent);border:var(--xp-line) solid color-mix(in srgb,var(--xp-ink) 22%,transparent);backdrop-filter:blur(8px)}
 .xp-rail a{display:flex;align-items:center;gap:8px;font-family:var(--xp-mono);font-size:9px;letter-spacing:.1em;color:var(--xp-muted);text-decoration:none}.xp-rail a i{display:block;width:4px;height:4px;background:currentColor;border-radius:50%}.xp-rail a[aria-current="true"]{color:var(--xp-accent2)}.xp-rail a[aria-current="true"] i{width:12px;height:4px;border-radius:0}
 .xp-progress{position:fixed;top:0;left:0;height:2px;width:100%;z-index:70;background:transparent;pointer-events:none}.xp-progress i{display:block;height:100%;width:0;background:var(--xp-accent2)}
@@ -227,6 +231,7 @@ ${preset.slug === 'brutalist' ? '.scene-art,.xp-room-art .scene-art{box-shadow:8
     css,
     body,
     bodyClass: `xp style-${preset.slug} kind-${kind}`,
+    skipHref: '#entrada',
     script: `${script}\n${REVEAL_SCRIPT}`,
   });
   return brief.maxxing ? applyMaxxing(html, preset) : html;

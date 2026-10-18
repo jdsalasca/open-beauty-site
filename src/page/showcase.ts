@@ -119,6 +119,7 @@ h1 em{font-style:normal;color:var(--accent)}
 @media (prefers-reduced-motion:reduce){
   .js .reveal{opacity:1;transform:none;transition:none}
   *{scroll-behavior:auto}
+  .player.is-playing .levels i{animation:none}
 }`;
 
 const BASE_SCRIPT = `${REVEAL_SCRIPT}
@@ -260,7 +261,7 @@ export function renderShowcase(briefInput: Partial<Brief>, preset: StylePreset, 
     )
     .join('\n');
 
-  const body = `<div class="top">
+  const body = `<header class="top">
   <a class="brand" href="#top"><span class="mark">◆</span>${esc(brand)}</a>
   <nav aria-label="${esc(t(locale, 'Navegación principal', 'Main navigation'))}">
     <a href="#manifesto">${esc(l.manifesto)}</a>
@@ -268,7 +269,7 @@ export function renderShowcase(briefInput: Partial<Brief>, preset: StylePreset, 
     <a href="#contact">${esc(l.contact)}</a>
   </nav>
   <a class="nav-cta" href="${safeHref(cta.href)}">${esc(cta.label)} ${arrowSvg(12)}</a>
-</div>
+</header>
 <main id="top">
   <section class="hero">
     <div class="hero-copy">
@@ -281,7 +282,7 @@ export function renderShowcase(briefInput: Partial<Brief>, preset: StylePreset, 
       </div>
       <p class="hero-note reveal" style="--i:4">${esc(config.heroNote || '01 — 08')}</p>
     </div>
-    <div class="hero-art reveal" style="--i:1" aria-hidden="true">${config.art}</div>
+    <div class="hero-art reveal" style="--i:1">${config.art}</div>
   </section>
   <section id="manifesto" class="manifesto">
     <div class="reveal">
