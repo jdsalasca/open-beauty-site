@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="ca-title ca-desc">
+  <title id="ca-title">Carta al mar</title>
+  <desc id="ca-desc">Carta al mar. Animated SVG; respects reduced motion.</desc>
+  <metadata>{"style":"nature","title":"Carta al mar","assets":[]}</metadata>
+  <style>:root{--ca-duration:16s}
+  .ca-anim{transform-box:fill-box;transform-origin:center}
+  .ca-drift{animation:ca-drift calc(var(--ca-duration) / var(--ca-speed,1)) ease-in-out infinite alternate;animation-delay:var(--ca-delay,0s)}
+  .ca-float{animation:ca-float calc(var(--ca-duration) / var(--ca-speed,1)) ease-in-out infinite alternate;animation-delay:var(--ca-delay,0s)}
+  .ca-sway{animation:ca-sway calc(var(--ca-duration) / var(--ca-speed,1)) ease-in-out infinite alternate;animation-delay:var(--ca-delay,0s)}
+  .ca-spin{animation:ca-spin calc(var(--ca-duration) * 3 / var(--ca-speed,1)) linear infinite;animation-delay:var(--ca-delay,0s)}
+  .ca-breathe{animation:ca-breathe calc(var(--ca-duration) / var(--ca-speed,1)) ease-in-out infinite;animation-delay:var(--ca-delay,0s)}
+  .ca-pulse{animation:ca-pulse calc(var(--ca-duration) / var(--ca-speed,1)) ease-in-out infinite;animation-delay:var(--ca-delay,0s)}
+  .ca-reveal{animation:ca-reveal 1.4s ease both;animation-delay:var(--ca-delay,0s)}
+  .ca-draw{stroke-dasharray:1000;stroke-dashoffset:1000;animation:ca-draw calc(var(--ca-duration) * .8 / var(--ca-speed,1)) ease forwards;animation-delay:var(--ca-delay,0s)}
+  @keyframes ca-drift{to{transform:translateX(16px)}}
+  @keyframes ca-float{to{transform:translateY(-14px)}}
+  @keyframes ca-sway{to{transform:rotate(2deg)}}
+  @keyframes ca-spin{to{transform:rotate(360deg)}}
+  @keyframes ca-breathe{0%,100%{transform:scale(.97);opacity:.82}50%{transform:scale(1.03);opacity:1}}
+  @keyframes ca-pulse{0%,100%{opacity:.35}50%{opacity:1}}
+  @keyframes ca-reveal{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  @keyframes ca-draw{to{stroke-dashoffset:0}}
+  @media (prefers-reduced-motion:reduce){.ca-anim,.ca-drift,.ca-float,.ca-sway,.ca-spin,.ca-breathe,.ca-pulse,.ca-reveal,.ca-draw{animation:none!important;transform:none!important;opacity:1!important;stroke-dashoffset:0!important}}</style>
+  <defs><filter id="ca-paper" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.5"/></filter><filter id="ca-grain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="7"/><feColorMatrix type="saturate" values="0"/></filter></defs>
+  <rect width="1600" height="1000" fill="#EFE9D8"/>
+  <g filter="url(#ca-paper)"><g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><rect x="0" y="0" width="1600" height="1000" rx="0" fill="#EFE9D8"/></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><rect x="0" y="0" width="1600" height="510" rx="0" fill="#DCE4D2"/></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1" opacity="0.55"><line x1="0" y1="470" x2="1600" y2="470" stroke="#5A6450" stroke-width="1"/></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1" opacity="0.25"><line x1="80" y1="486" x2="1520" y2="486" stroke="#5A6450" stroke-width="1"/></g>
+<g class="ca-anim ca-breathe" style="--ca-delay:0s;--ca-speed:0.72"><circle cx="1240" cy="260" r="88" fill="#D8B56A"/></g>
+<g class="ca-anim ca-drift" style="--ca-delay:0s;--ca-speed:0.62"><path d="M0 555 C180 510 330 610 515 558 C710 502 840 600 1035 548 C1240 495 1435 608 1600 540 V1000 H0 Z" fill="#4B6B62"/></g>
+<g class="ca-anim ca-drift" style="--ca-delay:0.25s;--ca-speed:0.48" opacity="0.82"><path d="M0 675 C205 600 350 728 565 668 C790 602 930 720 1125 665 C1325 610 1450 695 1600 650 V1000 H0 Z" fill="#7A8B4F"/></g>
+<g class="ca-anim ca-drift" style="--ca-delay:0.5s;--ca-speed:0.35" opacity="0.38"><path d="M0 790 C190 730 355 835 560 785 C760 735 930 850 1130 782 C1315 720 1485 820 1600 770 V1000 H0 Z" fill="#141B15"/></g>
+<g class="ca-anim ca-draw" style="--ca-delay:0s;--ca-speed:0.8"><line x1="102" y1="112" x2="510" y2="112" stroke="#B55239" stroke-width="2"/></g>
+<g class="ca-anim ca-reveal" style="--ca-delay:0.15s;--ca-speed:1"><text x="100" y="220" font-family="Cormorant Garamond" font-size="96" font-weight="400" letter-spacing="0" text-anchor="start" fill="#243026">CARTA AL MAR</text></g>
+<g class="ca-anim ca-reveal" style="--ca-delay:0.32s;--ca-speed:1"><text x="106" y="275" font-family="Karla" font-size="27" font-weight="400" letter-spacing="0" text-anchor="start" fill="#5A6450">Las mareas guardan lo que el viento suelta.</text></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><text x="1110" y="420" font-family="IBM Plex Mono" font-size="15" font-weight="400" letter-spacing="0" text-anchor="start" fill="#5A6450">BORDE DE AGUA / 01</text></g></g>
+  
+  
+</svg>

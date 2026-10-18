@@ -196,7 +196,8 @@ Generated with \`pnpm showcase\`:
 - [decks/atlas-memoria.html](decks/atlas-memoria.html) — eight-slide Galactic maxxing deck.
 - [agile/sprint-16/sprint-16-review.html](agile/sprint-16/sprint-16-review.html) — Sprint 16 review (kit of three decks + GIFs).
 - [gifs/maxxing/index.html](gifs/maxxing/index.html) — 13 maxxing GIFs, one per style.
-- [motions/index.html](motions/index.html) — 5 animated SVG posters, one per style and scene.
+- [motions/index.html](motions/index.html) — 13 animated SVG posters, one per style and scene.
+- [canvas/index.html](canvas/index.html) — open canvas: 4 original layered SVG artworks with assets.
 - [decks/tea.html](decks/tea.html) — tea presentation, Nature Memory.
 - [decks/kittens.html](decks/kittens.html) — kittens presentation, Paper Craft.
 - [stories/dominio-publico.html](stories/dominio-publico.html) — CC0 open-domain story, Paper Craft.

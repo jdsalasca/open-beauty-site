@@ -86,8 +86,8 @@ export interface ExperienceBrief extends Brief {
 }
 
 export type StorySceneKind = 'meadow' | 'forest' | 'garden' | 'house' | 'river' | 'night' | 'market' | 'room';
-export type StoryCharacter = 'rabbit' | 'cat' | 'fox' | 'bird' | 'child' | 'farmer';
-export type StoryProp = 'pine' | 'tree' | 'house' | 'gate' | 'table' | 'lantern' | 'basket' | 'flowers' | 'boat' | 'cabbage' | 'fence' | 'wheelbarrow';
+export type StoryCharacter = 'rabbit' | 'cat' | 'fox' | 'bird' | 'child';
+export type StoryProp = 'pine' | 'tree' | 'house' | 'gate' | 'table' | 'lantern' | 'basket' | 'flowers' | 'boat';
 
 export interface StoryScene {
   kind?: StorySceneKind;
@@ -117,8 +117,153 @@ export interface StoryBrief extends Brief {
   format?: 'scroll' | 'storybook';
 }
 
-export type MotionScene = 'orbit' | 'bloom' | 'tide' | 'papercut' | 'constellation' | 'ribbon' | 'rain' | 'type' | 'illustration';
+export type MotionScene = 'orbit' | 'bloom' | 'tide' | 'papercut' | 'constellation' | 'ribbon' | 'rain' | 'type';
 export type MotionSize = 'square' | 'portrait' | 'landscape';
+
+export type CanvasSize = 'square' | 'portrait' | 'landscape' | 'wide';
+export type CanvasAnimation = 'none' | 'drift' | 'float' | 'sway' | 'spin' | 'breathe' | 'pulse' | 'draw' | 'reveal';
+export type CanvasTexture = 'none' | 'paper' | 'grain';
+
+export interface CanvasTransform {
+  x?: number;
+  y?: number;
+  rotate?: number;
+  scale?: number;
+}
+
+export interface CanvasLayerBase {
+  id?: string;
+  opacity?: number;
+  blend?: 'normal' | 'multiply' | 'screen';
+  animation?: CanvasAnimation;
+  delay?: number;
+  speed?: number;
+  transform?: CanvasTransform;
+}
+
+export interface CanvasPathLayer extends CanvasLayerBase {
+  kind: 'path';
+  d: string;
+  fill?: string;
+  stroke?: string;
+  strokeWidth?: number;
+  dash?: string;
+}
+export interface CanvasCircleLayer extends CanvasLayerBase {
+  kind: 'circle';
+  cx: number;
+  cy: number;
+  r: number;
+  fill?: string;
+  stroke?: string;
+  strokeWidth?: number;
+}
+export interface CanvasEllipseLayer extends CanvasLayerBase {
+  kind: 'ellipse';
+  cx: number;
+  cy: number;
+  rx: number;
+  ry: number;
+  rotate?: number;
+  fill?: string;
+  stroke?: string;
+  strokeWidth?: number;
+}
+export interface CanvasRectLayer extends CanvasLayerBase {
+  kind: 'rect';
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  radius?: number;
+  rotate?: number;
+  fill?: string;
+  stroke?: string;
+  strokeWidth?: number;
+}
+export interface CanvasLineLayer extends CanvasLayerBase {
+  kind: 'line';
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+  stroke?: string;
+  strokeWidth?: number;
+  dash?: string;
+}
+export interface CanvasPolygonLayer extends CanvasLayerBase {
+  kind: 'polygon';
+  points: string;
+  fill?: string;
+  stroke?: string;
+  strokeWidth?: number;
+}
+export interface CanvasTextLayer extends CanvasLayerBase {
+  kind: 'text';
+  text: string;
+  x: number;
+  y: number;
+  size: number;
+  font?: 'display' | 'body' | 'mono';
+  fill?: string;
+  anchor?: 'start' | 'middle' | 'end';
+  weight?: number;
+  letterSpacing?: number;
+}
+export interface CanvasImageLayer extends CanvasLayerBase {
+  kind: 'image';
+  href: string;
+  alt: string;
+  caption?: string;
+  source?: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  radius?: number;
+}
+export interface CanvasGroupLayer extends CanvasLayerBase {
+  kind: 'group';
+  children: CanvasLayer[];
+}
+export type CanvasLayer =
+  | CanvasPathLayer
+  | CanvasCircleLayer
+  | CanvasEllipseLayer
+  | CanvasRectLayer
+  | CanvasLineLayer
+  | CanvasPolygonLayer
+  | CanvasTextLayer
+  | CanvasImageLayer
+  | CanvasGroupLayer;
+
+export interface CanvasBrief {
+  style: StyleSlug;
+  /** Optional accessible title; the art itself can be the whole message. */
+  title?: string;
+  size?: CanvasSize;
+  width?: number;
+  height?: number;
+  background?: string;
+  layers: CanvasLayer[];
+  duration?: number;
+  seed?: number;
+  texture?: CanvasTexture;
+  /** Render captions/sources for image layers. Defaults to true. */
+  credits?: boolean;
+  /** Kept for compatibility with the other tools; not a required preset. */
+  maxxing?: boolean;
+}
+
+export interface CanvasResult {
+  path: string;
+  width: number;
+  height: number;
+  layerCount: number;
+  bytes: number;
+  assets: Array<{ href: string; alt: string; caption?: string; source?: string }>;
+  checks: Array<{ name: string; passed: boolean; detail: string }>;
+}
 
 export interface MotionBrief {
   style: StyleSlug;
@@ -127,8 +272,6 @@ export interface MotionBrief {
   eyebrow?: string;
   brand?: string;
   scene?: MotionScene;
-  /** For scene=illustration: a papercut vector scene with a cast and props. */
-  illustration?: StoryScene;
   size?: MotionSize;
   /** Loop duration in seconds, 6–24. */
   duration?: number;

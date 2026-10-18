@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="ca-title ca-desc">
+  <title id="ca-title">Herbario de una hoja</title>
+  <desc id="ca-desc">Herbario de una hoja. Animated SVG; respects reduced motion.</desc>
+  <metadata>{"style":"nature","title":"Herbario de una hoja","assets":[{"href":"assets/hoja.svg","alt":"Hoja prensada de un herbario imaginario","caption":"Herbario Eridu","source":"CC0"}]}</metadata>
+  <style>:root{--ca-duration:16s}
+  .ca-anim{transform-box:fill-box;transform-origin:center}
+  .ca-drift{animation:ca-drift calc(var(--ca-duration) / var(--ca-speed,1)) ease-in-out infinite alternate;animation-delay:var(--ca-delay,0s)}
+  .ca-float{animation:ca-float calc(var(--ca-duration) / var(--ca-speed,1)) ease-in-out infinite alternate;animation-delay:var(--ca-delay,0s)}
+  .ca-sway{animation:ca-sway calc(var(--ca-duration) / var(--ca-speed,1)) ease-in-out infinite alternate;animation-delay:var(--ca-delay,0s)}
+  .ca-spin{animation:ca-spin calc(var(--ca-duration) * 3 / var(--ca-speed,1)) linear infinite;animation-delay:var(--ca-delay,0s)}
+  .ca-breathe{animation:ca-breathe calc(var(--ca-duration) / var(--ca-speed,1)) ease-in-out infinite;animation-delay:var(--ca-delay,0s)}
+  .ca-pulse{animation:ca-pulse calc(var(--ca-duration) / var(--ca-speed,1)) ease-in-out infinite;animation-delay:var(--ca-delay,0s)}
+  .ca-reveal{animation:ca-reveal 1.4s ease both;animation-delay:var(--ca-delay,0s)}
+  .ca-draw{stroke-dasharray:1000;stroke-dashoffset:1000;animation:ca-draw calc(var(--ca-duration) * .8 / var(--ca-speed,1)) ease forwards;animation-delay:var(--ca-delay,0s)}
+  @keyframes ca-drift{to{transform:translateX(16px)}}
+  @keyframes ca-float{to{transform:translateY(-14px)}}
+  @keyframes ca-sway{to{transform:rotate(2deg)}}
+  @keyframes ca-spin{to{transform:rotate(360deg)}}
+  @keyframes ca-breathe{0%,100%{transform:scale(.97);opacity:.82}50%{transform:scale(1.03);opacity:1}}
+  @keyframes ca-pulse{0%,100%{opacity:.35}50%{opacity:1}}
+  @keyframes ca-reveal{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  @keyframes ca-draw{to{stroke-dashoffset:0}}
+  @media (prefers-reduced-motion:reduce){.ca-anim,.ca-drift,.ca-float,.ca-sway,.ca-spin,.ca-breathe,.ca-pulse,.ca-reveal,.ca-draw{animation:none!important;transform:none!important;opacity:1!important;stroke-dashoffset:0!important}}</style>
+  <defs><filter id="ca-paper" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.5"/></filter><filter id="ca-grain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="7"/><feColorMatrix type="saturate" values="0"/></filter></defs>
+  <rect width="1600" height="1000" fill="#EFE9D8"/>
+  <g filter="url(#ca-paper)"><g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><rect x="0" y="0" width="1600" height="1000" rx="0" fill="#EFE9D8"/></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><text x="92" y="110" font-family="IBM Plex Mono" font-size="16" font-weight="400" letter-spacing="0" text-anchor="start" fill="#5A6450">MUESTRA / 01 · ARCHIVO IMAGINARIO</text></g>
+<g class="ca-anim ca-draw" style="--ca-delay:0s;--ca-speed:1"><line x1="90" y1="137" x2="650" y2="137" stroke="#D8B56A" stroke-width="2"/></g>
+<g class="ca-anim ca-reveal" style="--ca-delay:0.12s;--ca-speed:1"><text x="88" y="245" font-family="Cormorant Garamond" font-size="98" font-weight="400" letter-spacing="0" text-anchor="start" fill="#243026">Herbario</text></g>
+<g class="ca-anim ca-reveal" style="--ca-delay:0.24s;--ca-speed:1"><text x="92" y="330" font-family="Cormorant Garamond" font-size="70" font-weight="400" letter-spacing="0" text-anchor="start" fill="#243026">de una hoja</text></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><text x="96" y="388" font-family="Karla" font-size="24" font-weight="400" letter-spacing="0" text-anchor="start" fill="#5A6450">Una forma vegetal, prensada en papel.</text></g>
+<g class="ca-anim ca-draw" style="--ca-delay:0.3s;--ca-speed:1"><path d="M168 758 C245 627 422 579 612 662 C531 809 355 864 168 758 Z" fill="none" stroke="#4B6B62" stroke-width="2"/></g>
+<g class="ca-anim ca-draw" style="--ca-delay:0.45s;--ca-speed:1"><path d="M168 758 C310 737 459 700 612 662" fill="none" stroke="#243026" stroke-width="2"/></g>
+<g class="ca-anim ca-draw" style="--ca-delay:0.55s;--ca-speed:1"><path d="M280 739 C270 702 270 680 279 657 M368 716 C360 682 363 657 378 635 M456 694 C452 670 462 647 482 627 M310 728 C326 757 340 779 363 797 M410 706 C430 733 450 751 478 765 M507 686 C531 705 548 724 564 742" fill="none" stroke="#4B6B62" stroke-width="1.5"/></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><line x1="275" y1="659" x2="120" y2="592" stroke="#5A6450" stroke-width="1"/></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><circle cx="275" cy="659" r="4" fill="#B55239"/></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><text x="102" y="582" font-family="IBM Plex Mono" font-size="14" font-weight="400" letter-spacing="0" text-anchor="start" fill="#5A6450">BORDE</text></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><line x1="418" y1="709" x2="674" y2="545" stroke="#5A6450" stroke-width="1"/></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><circle cx="418" cy="709" r="4" fill="#B55239"/></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><text x="676" y="540" font-family="IBM Plex Mono" font-size="14" font-weight="400" letter-spacing="0" text-anchor="start" fill="#5A6450">EJE CENTRAL</text></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><line x1="477" y1="753" x2="690" y2="816" stroke="#5A6450" stroke-width="1"/></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><circle cx="477" cy="753" r="4" fill="#B55239"/></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><text x="690" y="823" font-family="IBM Plex Mono" font-size="14" font-weight="400" letter-spacing="0" text-anchor="start" fill="#5A6450">NERVADURAS</text></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><rect x="860" y="112" width="650" height="744" rx="0" fill="#DCE4D2" stroke="#4B6B62" stroke-width="1"/></g>
+<g class="ca-anim ca-drift" style="--ca-delay:0s;--ca-speed:0.34"><image href="assets/hoja.svg" x="925" y="166" width="520" height="575" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Hoja prensada de un herbario imaginario"><title>Hoja prensada de un herbario imaginario</title><desc>Herbario Eridu — CC0</desc></image></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><line x1="890" y1="790" x2="1480" y2="790" stroke="#5A6450" stroke-width="1"/></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><text x="892" y="820" font-family="IBM Plex Mono" font-size="14" font-weight="400" letter-spacing="0" text-anchor="start" fill="#5A6450">SIN FECHA / COLECCIÓN IMAGINARIA</text></g></g>
+  <g class="ca-credits" font-family="IBM Plex Mono" font-size="12" fill="#5A6450"><text x="24" y="978">Herbario Eridu · CC0</text></g>
+  
+</svg>

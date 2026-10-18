@@ -101,15 +101,38 @@ La review reúne evidencia, cambios para usuarios y decisiones; la retro, aprend
 
 Una clase puede empezar con una pregunta, detenerse ante un objeto y avanzar por salas o capítulos. Mirá [La città ideale](examples/education/renaissance-perspective.html) y [Museo de las Cosas Pequeñas](examples/education/papercraft-museum.html). En historia, cada fecha, cita y atribución necesita fuente; separá el hecho de la interpretación y señalá lo que no se sabe. El texto sigue disponible con movimiento reducido y debe poder leerse en proyector.
 
-## Doce herramientas MCP
+## Trece herramientas MCP
 
 El servidor trabaja por **stdio** y transforma briefs; no llama a un modelo ni navega la web.
 
 - **Orientar:** `beauty_list_styles`, `beauty_get_style`, `beauty_get_skill`.
-- **Crear:** `beauty_create_page`, `beauty_create_experience`, `beauty_create_story`, `beauty_create_deck`, `beauty_create_gif`, `beauty_create_sprint`, `beauty_create_motion`.
+- **Crear:** `beauty_create_page`, `beauty_create_experience`, `beauty_create_story`, `beauty_create_deck`, `beauty_create_gif`, `beauty_create_sprint`, `beauty_create_motion`, `beauty_create_canvas`.
 - **Revisar y encontrar:** `beauty_validate`, `beauty_examples`.
 
-En total son doce herramientas: elegir una gramática, cargar sus instrucciones, crear la pieza adecuada, validarla y consultar ejemplos.
+En total son trece herramientas: elegir una gramática, cargar sus instrucciones, crear la pieza adecuada, validarla y consultar ejemplos.
+
+## Canvas abierto
+
+`beauty_create_canvas` no impone escena, personaje ni pose. El modelo compone **capas**: `path`, `circle`, `ellipse`, `rect`, `line`, `polygon`, `text`, `image` y `group`. El renderer le da los pinceles, los tokens de color del estilo, el reloj de animación y el sistema de assets. El arte lo pone el modelo.
+
+```json
+{
+  "style": "nature",
+  "title": "Carta al mar",
+  "layers": [
+    { "kind": "rect", "x": 0, "y": 0, "width": 1600, "height": 1000, "fill": "@surface" },
+    { "kind": "path", "d": "M0 640 C 260 560 420 720 680 620 S 1160 680 1600 560 V1000 H0Z", "fill": "@accent3", "animation": "drift" },
+    { "kind": "circle", "cx": 1200, "cy": 240, "r": 100, "fill": "@accent4", "animation": "breathe" },
+    { "kind": "text", "text": "Carta al mar", "x": 80, "y": 820, "size": 96, "font": "display", "fill": "@ink" }
+  ]
+}
+```
+
+Colores: `@bg`, `@surface`, `@ink`, `@muted`, `@accent`, `@accent2`, `@accent3`, `@accent4`, `@deep`. Los assets piden `alt`; `caption` y `source` se conservan en metadata y créditos.
+
+[**Ver los cuatro canvas**](examples/canvas/index.html)
+<p align="center"><a href="examples/canvas/carta-al-mar.svg"><img src="examples/canvas/carta-al-mar.svg" width="520" alt="Carta al mar: canvas abierto Nature Memory"></a></p>
+
 
 ## SVG en movimiento
 
@@ -120,11 +143,9 @@ beauty motion --style nature --title "El jardín de las horas lentas" --scene bl
 beauty motion --style galactic --title "Memoria orbital" --scene orbit --size square --maxxing
 ```
 
-Escenas: `orbit`, `bloom`, `tide`, `papercut`, `constellation`, `ribbon`, `rain`, `type` e `illustration`. La última dibuja una escena vectorial con reparto y objetos: jardín, granjero, conejo, pájaro, coles, cerca y carretilla. El skill `motion.md` explica cuándo usar cada una y qué no animar.
+Escenas: `orbit`, `bloom`, `tide`, `papercut`, `constellation`, `ribbon`, `rain` y `type`. El skill `motion.md` explica cuándo usar cada una y qué no animar.
 
 [**Ver los trece pósters SVG**](examples/motions/index.html) — uno por estilo, con `bloom`, `orbit`, `ribbon`, `papercut`, `tide`, `type`, `constellation` y `rain`, todos con **maxxing**.
-[**El jardín en 13 estilos**](examples/motions/illustrations/index.html) — la misma escena vectorial con granjero, conejo, pájaro, coles, cerca y carretilla, dibujada por el motor de papel en cada paleta.
-<p align="center"><a href="examples/motions/illustrations/index.html"><img src="examples/motions/illustrations/papercraft.svg" width="520" alt="El jardín de los conejos, ilustración vectorial en 13 estilos"></a></p>
 
 
 <p align="center">
@@ -157,7 +178,7 @@ Luna usa las herramientas MCP; no necesita escribir HTML a mano. La calificació
 
 ## Evidencia disponible
 
-- [La suite documentada](docs/TESTING.md) registra **22/22 pruebas aprobadas**.
+- [La suite documentada](docs/TESTING.md) registra **25/25 pruebas aprobadas**.
 - La [ronda histórica de Luna](examples/agents/round-2026/index.html) reúne **12/12 páginas A/100 y visión 4/4**. Esa ronda corresponde a los doce estilos que existían entonces.
 - Nature Memory se evaluó en la matriz local: **A/100 y visión 4/4**; el estilo 13 también produce deck y GIF. La matriz actual de páginas cubre **13/13 estilos**.
 

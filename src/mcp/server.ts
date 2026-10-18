@@ -5,9 +5,9 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { z } from 'zod';
-import type { Brief, DeckBrief, ExperienceBrief, StoryBrief, StyleSlug } from '../types.js';
+import type { Brief, CanvasLayer, DeckBrief, ExperienceBrief, StoryBrief, StyleSlug } from '../types.js';
 import { VERSION } from '../index.js';
-import { createDeck, createExperience, createGifFile, createMotion, createPage, createStory, timestamp } from '../generate.js';
+import { createCanvas, createDeck, createExperience, createGifFile, createMotion, createPage, createStory, timestamp } from '../generate.js';
 import { createSprintKit } from '../sprint.js';
 import { formatValidation, validateDeck, validateExperience, validateHtml, validateStory } from '../validate.js';
 import { presets, styleSlugs } from '../styles/presets.js';
@@ -29,6 +29,28 @@ const styleEnum = z.enum([
   'galactic',
   'nature',
 ]);
+
+const canvasShared = {
+  id: z.string().max(40).optional(),
+  opacity: z.number().min(0).max(1).optional(),
+  blend: z.enum(['normal', 'multiply', 'screen']).optional(),
+  animation: z.enum(['none', 'drift', 'float', 'sway', 'spin', 'breathe', 'pulse', 'draw', 'reveal']).optional(),
+  delay: z.number().min(0).max(20).optional(),
+  speed: z.number().min(0.2).max(4).optional(),
+  transform: z.object({ x: z.number().optional(), y: z.number().optional(), rotate: z.number().optional(), scale: z.number().optional() }).optional(),
+};
+
+const canvasLayerSchema: z.ZodTypeAny = z.lazy(() => z.union([
+  z.object({ ...canvasShared, kind: z.literal('path'), d: z.string().min(2).max(12000), fill: z.string().max(30).optional(), stroke: z.string().max(30).optional(), strokeWidth: z.number().optional(), dash: z.string().max(80).optional() }),
+  z.object({ ...canvasShared, kind: z.literal('circle'), cx: z.number(), cy: z.number(), r: z.number(), fill: z.string().max(30).optional(), stroke: z.string().max(30).optional(), strokeWidth: z.number().optional() }),
+  z.object({ ...canvasShared, kind: z.literal('ellipse'), cx: z.number(), cy: z.number(), rx: z.number(), ry: z.number(), rotate: z.number().optional(), fill: z.string().max(30).optional(), stroke: z.string().max(30).optional(), strokeWidth: z.number().optional() }),
+  z.object({ ...canvasShared, kind: z.literal('rect'), x: z.number(), y: z.number(), width: z.number(), height: z.number(), radius: z.number().optional(), rotate: z.number().optional(), fill: z.string().max(30).optional(), stroke: z.string().max(30).optional(), strokeWidth: z.number().optional() }),
+  z.object({ ...canvasShared, kind: z.literal('line'), x1: z.number(), y1: z.number(), x2: z.number(), y2: z.number(), stroke: z.string().max(30).optional(), strokeWidth: z.number().optional(), dash: z.string().max(80).optional() }),
+  z.object({ ...canvasShared, kind: z.literal('polygon'), points: z.string().min(4).max(2000), fill: z.string().max(30).optional(), stroke: z.string().max(30).optional(), strokeWidth: z.number().optional() }),
+  z.object({ ...canvasShared, kind: z.literal('text'), text: z.string().min(1).max(160), x: z.number(), y: z.number(), size: z.number().min(6).max(320), font: z.enum(['display', 'body', 'mono']).optional(), fill: z.string().max(30).optional(), anchor: z.enum(['start', 'middle', 'end']).optional(), weight: z.number().optional(), letterSpacing: z.number().optional() }),
+  z.object({ ...canvasShared, kind: z.literal('image'), href: z.string().min(1).max(500), alt: z.string().min(1).max(240), caption: z.string().max(160).optional(), source: z.string().max(120).optional(), x: z.number(), y: z.number(), width: z.number(), height: z.number(), radius: z.number().optional() }),
+  z.object({ ...canvasShared, kind: z.literal('group'), children: z.array(canvasLayerSchema).min(1).max(48) }),
+]));
 
 const localeEnum = z.enum(['es', 'en']);
 
@@ -71,8 +93,8 @@ const deckSlideSchema = z.object({
     source: z.string().max(120).optional(),
     scene: z.object({
       kind: z.enum(['meadow', 'forest', 'garden', 'house', 'river', 'night', 'market', 'room']).optional(),
-      characters: z.array(z.enum(['rabbit', 'cat', 'fox', 'bird', 'child', 'farmer'])).max(4).optional(),
-      props: z.array(z.enum(['pine', 'tree', 'house', 'gate', 'table', 'lantern', 'basket', 'flowers', 'boat', 'cabbage', 'fence', 'wheelbarrow'])).max(8).optional(),
+      characters: z.array(z.enum(['rabbit', 'cat', 'fox', 'bird', 'child'])).max(4).optional(),
+      props: z.array(z.enum(['pine', 'tree', 'house', 'gate', 'table', 'lantern', 'basket', 'flowers', 'boat'])).max(8).optional(),
       caption: z.string().max(120).optional(),
     }).optional(),
   }).optional().describe('Figure layout: papercut scene with caption and source.'),
@@ -96,8 +118,8 @@ const experienceRoomSchema = z.object({
 
 const storySceneSchema = z.object({
   kind: z.enum(['meadow', 'forest', 'garden', 'house', 'river', 'night', 'market', 'room']).optional(),
-  characters: z.array(z.enum(['rabbit', 'cat', 'fox', 'bird', 'child', 'farmer'])).max(4).optional(),
-  props: z.array(z.enum(['pine', 'tree', 'house', 'gate', 'table', 'lantern', 'basket', 'flowers', 'boat', 'cabbage', 'fence', 'wheelbarrow'])).max(8).optional(),
+  characters: z.array(z.enum(['rabbit', 'cat', 'fox', 'bird', 'child'])).max(4).optional(),
+  props: z.array(z.enum(['pine', 'tree', 'house', 'gate', 'table', 'lantern', 'basket', 'flowers', 'boat'])).max(8).optional(),
   caption: z.string().max(120).optional(),
 });
 
@@ -232,7 +254,7 @@ QUALITY BAR
         'Returns a copy-paste skill/prompt that teaches an agent the mandatory workflow and the quality bar. Optionally includes one style guide.',
       inputSchema: {
         style: styleEnum.optional().describe('Include a specific style guide after the skill instructions.'),
-        format: z.enum(['page', 'deck', 'experience', 'story', 'agile', 'sprint', 'motion']).optional().describe('Append the matching format skill.'),
+        format: z.enum(['page', 'deck', 'experience', 'story', 'agile', 'sprint', 'motion', 'canvas']).optional().describe('Append the matching format skill.'),
       },
     },
     async ({ style, format }) => {
@@ -243,7 +265,7 @@ QUALITY BAR
         // The generated fallback is intentionally equivalent.
       }
       if (format && format !== 'page') {
-        const file = format === 'deck' ? 'presentation.md' : format === 'experience' ? 'experience.md' : format === 'story' ? 'story.md' : format === 'motion' ? 'motion.md' : 'agile.md';
+        const file = format === 'deck' ? 'presentation.md' : format === 'experience' ? 'experience.md' : format === 'story' ? 'story.md' : format === 'motion' ? 'motion.md' : format === 'canvas' ? 'canvas.md' : 'agile.md';
         try {
           skill += `\n\n---\n\n${await readFile(path.join(packageRoot(), 'skills', file), 'utf8')}`;
         } catch {
@@ -583,6 +605,64 @@ QUALITY BAR
   );
 
   server.registerTool(
+    'beauty_create_canvas',
+    {
+      title: 'Create an open animated SVG canvas',
+      description:
+        'You are the artist: draw with paths, circles, ellipses, rects, lines, polygons, text, groups and images. Use @palette tokens so every colour belongs to the chosen style. Animate individual layers with drift, float, sway, spin, breathe, pulse, draw or reveal. Images require alt; caption and source are preserved. No fixed scenes, characters or poses are imposed.',
+      inputSchema: {
+        style: styleEnum.describe('Palette and type system for the canvas.'),
+        title: z.string().max(120).optional().describe('Accessible title and metadata; optional.'),
+        size: z.enum(['square', 'portrait', 'landscape', 'wide']).optional(),
+        width: z.number().min(320).max(2400).optional(),
+        height: z.number().min(320).max(2400).optional(),
+        background: z.string().max(30).optional().describe('Palette token, e.g. @bg or @deep.'),
+        duration: z.number().min(4).max(40).optional().describe('Animation duration in seconds.'),
+        seed: z.number().int().min(0).max(9999).optional(),
+        texture: z.enum(['none', 'paper', 'grain']).optional(),
+        credits: z.boolean().optional().describe('Render caption/source for image assets; defaults to true.'),
+        layers: z.array(canvasLayerSchema).min(1).max(96).describe('The painting. At least one layer; group nests up to 48 children per group.'),
+        output: z.string().max(260).optional().describe('File path. Defaults to ./beauty-output/<style>-canvas-<slug>-<timestamp>.svg.'),
+        include_svg: z.boolean().optional(),
+      },
+    },
+    async (args) => {
+      try {
+        const output = args.output ?? path.join('beauty-output', `${args.style}-canvas-${slugFromTitle(args.title || 'canvas')}-${timestamp()}.svg`);
+        const result = await createCanvas({
+          style: args.style,
+          brief: {
+            style: args.style,
+            title: args.title,
+            size: args.size,
+            width: args.width,
+            height: args.height,
+            background: args.background,
+            duration: args.duration,
+            seed: args.seed,
+            texture: args.texture,
+            credits: args.credits,
+            layers: args.layers as CanvasLayer[],
+          },
+          output,
+        });
+        const ok = result.checks.every((check) => check.passed);
+        const summary = [
+          `Created an open ${presets[args.style].name} canvas.`,
+          `file: ${result.path}`,
+          `${result.width}×${result.height} · ${result.layerCount} layers · ${result.bytes} bytes`,
+          `assets: ${result.assets.length}${result.assets.length ? ` (${result.assets.map((asset) => asset.alt).join(' · ')})` : ''}`,
+          `checks: ${result.checks.map((check) => `${check.name}:${check.passed ? 'ok' : 'missing'}`).join(' · ')}`,
+          ok ? '\nOpen it in a browser; animation respects prefers-reduced-motion.' : '\nOne check failed; inspect the SVG.',
+        ].join('\n');
+        return text(args.include_svg ? `${summary}\n\n--- SVG ---\n${await readFile(result.path, 'utf8')}` : summary);
+      } catch (error) {
+        return { content: [{ type: 'text' as const, text: `Canvas failed: ${(error as Error).message}` }], isError: true };
+      }
+    },
+  );
+
+  server.registerTool(
     'beauty_create_motion',
     {
       title: 'Create an animated SVG poster',
@@ -595,8 +675,7 @@ QUALITY BAR
         eyebrow: z.string().max(60).optional(),
         brand: z.string().max(50).optional(),
         footer: z.string().max(120).optional(),
-        scene: z.enum(['orbit', 'bloom', 'tide', 'papercut', 'constellation', 'ribbon', 'rain', 'type', 'illustration']).optional(),
-        illustration: storySceneSchema.optional().describe('For scene=illustration: garden, cast and props.'),
+        scene: z.enum(['orbit', 'bloom', 'tide', 'papercut', 'constellation', 'ribbon', 'rain', 'type']).optional(),
         size: z.enum(['square', 'portrait', 'landscape']).optional(),
         duration: z.number().min(6).max(24).optional(),
         seed: z.number().int().min(0).max(9999).optional(),
@@ -618,7 +697,6 @@ QUALITY BAR
             brand: args.brand,
             footer: args.footer,
             scene: args.scene,
-            illustration: args.illustration,
             size: args.size,
             duration: args.duration,
             seed: args.seed,
@@ -698,7 +776,6 @@ QUALITY BAR
         ['La casa que aprendió a respirar (story)', 'examples/stories/casa-respira.html'],
         ['El río que cambió de ciudad (history)', 'examples/stories/rio-1870.html'],
         ['Motion SVG posters', 'examples/motions/index.html'],
-        ['Vector garden in 13 styles', 'examples/motions/illustrations/index.html'],
         ['Atlas Sprint 14 review', 'examples/agile/sprint-14-review.html'],
         ['Atlas Sprint 14 retrospective', 'examples/agile/sprint-14-retro.html'],
         ['Atlas Sprint 15 planning', 'examples/agile/sprint-15-planning.html'],

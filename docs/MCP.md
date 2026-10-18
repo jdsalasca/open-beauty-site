@@ -1,6 +1,6 @@
 # MCP server
 
-`open-beauty-site` exposes a stdio MCP server with twelve tools and twenty resources. The server is deliberately narrow: it does not call an LLM, it does not browse the web, and it does not invent content. It turns a short brief into a complete, validated artefact.
+`open-beauty-site` exposes a stdio MCP server with thirteen tools and twenty-one resources. The server is deliberately narrow: it does not call an LLM, it does not browse the web, and it does not invent content. It turns a short brief into a complete, validated artefact.
 
 ## Build
 
@@ -78,7 +78,7 @@ Returns the hard tokens: exact fonts, palette, border widths, radii, motion wind
 | Argument | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `style` | style slug | no | Appends that style guide to the skill. |
-| `format` | `page \| deck \| experience \| story \| agile \| sprint \| motion` | no | Appends the matching skill. |
+| `format` | `page \| deck \| experience \| story \| agile \| sprint \| motion \| canvas` | no | Appends the matching skill. |
 
 Returns the contents of `skills/beauty.md` plus the matching skill (`presentation`, `experience`, `story` or `agile`). Load it into an agent's context before asking it to design.
 
@@ -198,7 +198,7 @@ Creates a single-file, looping **animated SVG poster**. It is not a GIF: it is a
 | `style` | style slug | yes | |
 | `title` | string (≤90) | yes | 2–6 words; the renderer fits the width. |
 | `subtitle`, `eyebrow`, `brand`, `footer` | strings | no | Caption, label, signature, source. |
-| `scene` | `orbit \| bloom \| tide \| papercut \| constellation \| ribbon \| rain \| type \| illustration` | no | Defaults to `orbit`. |
+| `scene` | `orbit \| bloom \| tide \| papercut \| constellation \| ribbon \| rain \| type` | no | Defaults to `orbit`. |
 | `size` | `square \| portrait \| landscape` | no | 1200², 1000×1400 or 1600×1000. |
 | `duration` | number (6–24) | no | Seconds; default 14. |
 | `seed` | integer | no | Deterministic ornament variation. |
@@ -206,6 +206,24 @@ Creates a single-file, looping **animated SVG poster**. It is not a GIF: it is a
 | `output` | string | no | Defaults to `beauty-output/<style>-motion-<slug>-<timestamp>.svg`. |
 
 The SVG includes `<title>`, `<desc>`, `@keyframes`, `prefers-reduced-motion` and no external images or scripts. Google Fonts are imported by URL; if the SVG is offline, the font stack falls back to a system face.
+
+### `beauty_create_canvas`
+
+The open canvas. You provide the layers, the geometry, the type and the motion; the tool supplies the style palette, brushes, animation clock, asset metadata and checks.
+
+| Argument | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `style` | style slug | yes | Palette and type system. |
+| `title` | string | no | Accessible title and metadata. |
+| `layers` | array (1–96) | yes | `path`, `circle`, `ellipse`, `rect`, `line`, `polygon`, `text`, `image` or `group`. |
+| `size` | `square \| portrait \| landscape \| wide` | no | 1200², 1000×1400, 1600×1000, 1600×700. |
+| `background` | palette token | no | Defaults to `@bg`. |
+| `duration` | number (4–40) | no | Default 14. |
+| `texture` | `none \| paper \| grain` | no | Surface texture, no external assets. |
+| `credits` | boolean | no | Render image captions/sources; default true. |
+| `output` | string | no | Defaults to `beauty-output/<style>-canvas-<slug>-<timestamp>.svg`. |
+
+Layer colours use `@bg`, `@surface`, `@ink`, `@muted`, `@accent`, `@accent2`, `@accent3`, `@accent4` or `@deep`. A hex is accepted only if it is an exact style palette value. Every image requires `alt`; `caption` and `source` go into the SVG metadata and a visible credit line. Animations: `drift`, `float`, `sway`, `spin`, `breathe`, `pulse`, `draw`, `reveal`.
 
 ### `beauty_validate`
 

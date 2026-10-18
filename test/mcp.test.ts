@@ -31,6 +31,7 @@ test('exposes the full tool surface', async () => {
   const { tools } = await client.listTools();
   const names = tools.map((tool) => tool.name).sort();
   assert.deepEqual(names, [
+    'beauty_create_canvas',
     'beauty_create_deck',
     'beauty_create_experience',
     'beauty_create_gif',
@@ -246,5 +247,27 @@ test('creates an animated SVG poster over MCP', async () => {
   const text = (result.content as Array<{ type: string; text: string }>)[0]?.text ?? '';
   assert.match(text, /animated Nature Memory SVG/);
   assert.match(text, /animated:ok/);
+  assert.match(text, /reduced-motion:ok/);
+});
+
+test('creates an open SVG canvas over MCP', async () => {
+  const result = await client.callTool({
+    name: 'beauty_create_canvas',
+    arguments: {
+      style: 'nature',
+      title: 'Carta al mar',
+      size: 'landscape',
+      layers: [
+        { kind: 'rect', x: 0, y: 0, width: 1600, height: 1000, fill: '@surface' },
+        { kind: 'path', d: 'M0 650C300 580 500 720 800 620S1200 680 1600 560V1000H0Z', fill: '@accent3', animation: 'drift' },
+        { kind: 'circle', cx: 1200, cy: 240, r: 100, fill: '@accent4', animation: 'breathe' },
+        { kind: 'text', text: 'Carta al mar', x: 80, y: 820, size: 96, font: 'display', fill: '@ink' },
+      ],
+      output: 'canvas-test.svg',
+    },
+  });
+  const text = (result.content as Array<{ type: string; text: string }>)[0]?.text ?? '';
+  assert.match(text, /open Nature Memory canvas/);
+  assert.match(text, /layers:ok/);
   assert.match(text, /reduced-motion:ok/);
 });

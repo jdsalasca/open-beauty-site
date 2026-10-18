@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1600" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="ca-title ca-desc">
+  <title id="ca-title">Manifiesto de la luz</title>
+  <desc id="ca-desc">Manifiesto de la luz. Animated SVG; respects reduced motion.</desc>
+  <metadata>{"style":"artdeco","title":"Manifiesto de la luz","assets":[]}</metadata>
+  <style>:root{--ca-duration:16s}
+  .ca-anim{transform-box:fill-box;transform-origin:center}
+  .ca-drift{animation:ca-drift calc(var(--ca-duration) / var(--ca-speed,1)) ease-in-out infinite alternate;animation-delay:var(--ca-delay,0s)}
+  .ca-float{animation:ca-float calc(var(--ca-duration) / var(--ca-speed,1)) ease-in-out infinite alternate;animation-delay:var(--ca-delay,0s)}
+  .ca-sway{animation:ca-sway calc(var(--ca-duration) / var(--ca-speed,1)) ease-in-out infinite alternate;animation-delay:var(--ca-delay,0s)}
+  .ca-spin{animation:ca-spin calc(var(--ca-duration) * 3 / var(--ca-speed,1)) linear infinite;animation-delay:var(--ca-delay,0s)}
+  .ca-breathe{animation:ca-breathe calc(var(--ca-duration) / var(--ca-speed,1)) ease-in-out infinite;animation-delay:var(--ca-delay,0s)}
+  .ca-pulse{animation:ca-pulse calc(var(--ca-duration) / var(--ca-speed,1)) ease-in-out infinite;animation-delay:var(--ca-delay,0s)}
+  .ca-reveal{animation:ca-reveal 1.4s ease both;animation-delay:var(--ca-delay,0s)}
+  .ca-draw{stroke-dasharray:1000;stroke-dashoffset:1000;animation:ca-draw calc(var(--ca-duration) * .8 / var(--ca-speed,1)) ease forwards;animation-delay:var(--ca-delay,0s)}
+  @keyframes ca-drift{to{transform:translateX(16px)}}
+  @keyframes ca-float{to{transform:translateY(-14px)}}
+  @keyframes ca-sway{to{transform:rotate(2deg)}}
+  @keyframes ca-spin{to{transform:rotate(360deg)}}
+  @keyframes ca-breathe{0%,100%{transform:scale(.97);opacity:.82}50%{transform:scale(1.03);opacity:1}}
+  @keyframes ca-pulse{0%,100%{opacity:.35}50%{opacity:1}}
+  @keyframes ca-reveal{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  @keyframes ca-draw{to{stroke-dashoffset:0}}
+  @media (prefers-reduced-motion:reduce){.ca-anim,.ca-drift,.ca-float,.ca-sway,.ca-spin,.ca-breathe,.ca-pulse,.ca-reveal,.ca-draw{animation:none!important;transform:none!important;opacity:1!important;stroke-dashoffset:0!important}}</style>
+  <defs><filter id="ca-paper" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.5"/></filter><filter id="ca-grain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="7"/><feColorMatrix type="saturate" values="0"/></filter></defs>
+  <rect width="1000" height="1600" fill="#0E0E10"/>
+  <g><g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><rect x="0" y="0" width="1000" height="1600" rx="0" fill="#0E0E10"/></g>
+<g class="ca-anim ca-draw" style="--ca-delay:0s;--ca-speed:0.8" opacity="0.82"><line x1="386.71152662041874" y1="432.1727172824126" x2="96.69303476869072" y2="296.9348735253888" stroke="#C8A45C" stroke-width="1"/></g>
+<g class="ca-anim ca-draw" style="--ca-delay:0.035s;--ca-speed:0.8" opacity="0.82"><line x1="395.31495563108655" y1="416.69157090461954" x2="127.32124204666809" y2="241.82199242044558" stroke="#C8A45C" stroke-width="1"/></g>
+<g class="ca-anim ca-draw" style="--ca-delay:0.07s;--ca-speed:0.8" opacity="0.82"><line x1="406.0200240651278" y1="402.5817731124914" x2="165.431285671855" y2="191.59111228046936" stroke="#C8A45C" stroke-width="1"/></g>
+<g class="ca-anim ca-draw" style="--ca-delay:0.10500000000000001s;--ca-speed:0.8" opacity="0.82"><line x1="418.61181876100636" y1="390.1265898441048" x2="210.25807478918267" y2="147.250659845013" stroke="#C8A45C" stroke-width="1"/></g>
+<g class="ca-anim ca-draw" style="--ca-delay:0.14s;--ca-speed:0.8" opacity="0.82"><line x1="432.83754895664697" y1="379.5760692733893" x2="260.90167428566326" y2="109.69080661326598" stroke="#C8A45C" stroke-width="1"/></g>
+<g class="ca-anim ca-draw" style="--ca-delay:0.17500000000000002s;--ca-speed:0.8" opacity="0.82"><line x1="448.4116212744507" y1="371.142021884853" x2="316.3453717370444" y2="79.66559791007671" stroke="#C8A45C" stroke-width="1"/></g>
+<g class="ca-anim ca-draw" style="--ca-delay:0.21000000000000002s;--ca-speed:0.8" opacity="0.82"><line x1="465.02137324612596" y1="364.99376820175894" x2="375.4760887562084" y2="57.77781479826177" stroke="#C8A45C" stroke-width="1"/></g>
+<g class="ca-anim ca-draw" style="--ca-delay:0.24500000000000002s;--ca-speed:0.8" opacity="0.82"><line x1="482.3333502720541" y1="361.25473953564904" x2="437.10672696851253" y2="44.46687274691044" stroke="#C8A45C" stroke-width="1"/></g>
+<g class="ca-anim ca-draw" style="--ca-delay:0.28s;--ca-speed:0.8" opacity="0.82"><line x1="500" y1="360" x2="499.99999999999994" y2="40" stroke="#C8A45C" stroke-width="1"/></g>
+<g class="ca-anim ca-draw" style="--ca-delay:0.31500000000000006s;--ca-speed:0.8" opacity="0.82"><line x1="517.6666497279459" y1="361.25473953564904" x2="562.8932730314876" y2="44.4668727469105" stroke="#C8A45C" stroke-width="1"/></g>
+<g class="ca-anim ca-draw" style="--ca-delay:0.35000000000000003s;--ca-speed:0.8" opacity="0.82"><line x1="534.978626753874" y1="364.99376820175894" x2="624.5239112437914" y2="57.777814798261716" stroke="#C8A45C" stroke-width="1"/></g>
+<g class="ca-anim ca-draw" style="--ca-delay:0.385s;--ca-speed:0.8" opacity="0.82"><line x1="551.5883787255493" y1="371.14202188485297" x2="683.6546282629555" y2="79.66559791007666" stroke="#C8A45C" stroke-width="1"/></g>
+<g class="ca-anim ca-draw" style="--ca-delay:0.42000000000000004s;--ca-speed:0.8" opacity="0.82"><line x1="567.162451043353" y1="379.5760692733893" x2="739.0983257143366" y2="109.69080661326586" stroke="#C8A45C" stroke-width="1"/></g>
+<g class="ca-anim ca-draw" style="--ca-delay:0.45500000000000007s;--ca-speed:0.8" opacity="0.82"><line x1="581.3881812389936" y1="390.1265898441047" x2="789.7419252108173" y2="147.25065984501288" stroke="#C8A45C" stroke-width="1"/></g>
+<g class="ca-anim ca-draw" style="--ca-delay:0.49000000000000005s;--ca-speed:0.8" opacity="0.82"><line x1="593.9799759348722" y1="402.5817731124914" x2="834.568714328145" y2="191.59111228046942" stroke="#C8A45C" stroke-width="1"/></g>
+<g class="ca-anim ca-draw" style="--ca-delay:0.525s;--ca-speed:0.8" opacity="0.82"><line x1="604.6850443689135" y1="416.69157090461954" x2="872.678757953332" y2="241.82199242044558" stroke="#C8A45C" stroke-width="1"/></g>
+<g class="ca-anim ca-draw" style="--ca-delay:0.56s;--ca-speed:0.8" opacity="0.82"><line x1="613.2884733795812" y1="432.1727172824125" x2="903.306965231309" y2="296.9348735253885" stroke="#C8A45C" stroke-width="1"/></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><rect x="58" y="58" width="884" height="1484" rx="0" fill="none" stroke="#C8A45C" stroke-width="1"/></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1" opacity="0.65"><rect x="78" y="78" width="844" height="1504" rx="0" fill="none" stroke="#C8A45C" stroke-width="1"/></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><line x1="220" y1="160" x2="780" y2="160" stroke="#C8A45C" stroke-width="1"/></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><circle cx="500" cy="485" r="120" fill="#0E0E10" stroke="#C8A45C" stroke-width="2"/></g>
+<g class="ca-anim ca-breathe" style="--ca-delay:0s;--ca-speed:0.65"><circle cx="500" cy="485" r="84" fill="#C8A45C"/></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><circle cx="500" cy="485" r="48" fill="#0E0E10"/></g>
+<g class="ca-anim ca-draw" style="--ca-delay:0.7s;--ca-speed:1"><polygon points="500,682 548,730 500,778 452,730" fill="none" stroke="#C8A45C" stroke-width="2"/></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><polygon points="500,758 530,788 500,818 470,788" fill="none" stroke="#C8A45C" stroke-width="1"/></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><line x1="180" y1="930" x2="820" y2="930" stroke="#C8A45C" stroke-width="1"/></g>
+<g class="ca-anim ca-reveal" style="--ca-delay:0.25s;--ca-speed:1"><text x="218" y="1100" font-family="Poiret One" font-size="88" font-weight="400" letter-spacing="0" text-anchor="start" fill="#F4EBD9">MANIFIESTO</text></g>
+<g class="ca-anim ca-reveal" style="--ca-delay:0.42s;--ca-speed:1"><text x="236" y="1240" font-family="Poiret One" font-size="112" font-weight="400" letter-spacing="0" text-anchor="start" fill="#F4EBD9">DE LA LUZ</text></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><line x1="340" y1="1283" x2="660" y2="1283" stroke="#C8A45C" stroke-width="1"/></g>
+<g class="ca-anim ca-reveal" style="--ca-delay:0.58s;--ca-speed:1"><text x="278" y="1360" font-family="Josefin Sans" font-size="20" font-weight="400" letter-spacing="0" text-anchor="start" fill="#B9C0C4">CADA RAYO ABRE UNA FORMA</text></g>
+<g class="ca-anim" style="--ca-delay:0s;--ca-speed:1"><text x="180" y="1472" font-family="Josefin Sans" font-size="14" font-weight="400" letter-spacing="0" text-anchor="start" fill="#C8A45C">LUZ / GEOMETRÍA / 16 S</text></g></g>
+  
+  
+</svg>

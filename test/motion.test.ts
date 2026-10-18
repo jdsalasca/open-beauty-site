@@ -18,21 +18,3 @@ test('motion renders an animated, reduced-motion SVG with a scene', () => {
   assert.match(svg, /bloom-stage/);
   assert.ok(motionChecks(svg, 'bloom').every((check) => check.passed));
 });
-
-
-test('illustration composes a garden cast as animated vector paper', () => {
-  const svg = renderMotion({
-    style: 'papercraft',
-    title: 'El jardín de los conejos',
-    scene: 'illustration',
-    illustration: { kind: 'garden', characters: ['rabbit', 'farmer', 'bird'], props: ['cabbage', 'fence', 'wheelbarrow'] },
-    size: 'landscape',
-    duration: 16,
-    maxxing: true,
-  });
-  assert.match(svg, /illustration-stage/);
-  assert.match(svg, /pc-bird/);
-  assert.match(svg, /pc-cloud/);
-  assert.match(svg, /prefers-reduced-motion/);
-  assert.ok(motionChecks(svg, 'illustration').every((check) => check.passed));
-});

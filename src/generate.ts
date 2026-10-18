@@ -5,6 +5,7 @@ import { renderPage } from './page/index.js';
 import { validateDeck, validateExperience, validateHtml, validateStory } from './validate.js';
 import { createGif } from './gif.js';
 import { motionChecks, renderMotion } from './motion.js';
+import { canvasChecks, renderCanvas } from './canvas-art.js';
 import { renderDeck } from './deck.js';
 import { renderExperience } from './page/experience.js';
 import { renderStory } from './page/story.js';
@@ -90,6 +91,36 @@ export async function createMotion({ style, brief, output }: CreateMotionOptions
     duration: brief.duration ?? 14,
     bytes: Buffer.byteLength(svg, 'utf8'),
     checks: motionChecks(svg, brief.scene ?? 'orbit'),
+  };
+}
+
+export interface CreateCanvasOptions {
+  style: StyleSlug;
+  brief: Omit<import('./types.js').CanvasBrief, 'style'> & { style?: StyleSlug };
+  output?: string;
+}
+
+export async function createCanvas({ style, brief, output }: CreateCanvasOptions): Promise<import('./types.js').CanvasResult> {
+  const svg = renderCanvas({ ...brief, style });
+  const target = path.resolve(
+    process.cwd(),
+    output ?? path.join('beauty-output', `${style}-canvas-${slugify(brief.title || 'canvas')}-${timestamp()}.svg`),
+  );
+  await mkdir(path.dirname(target), { recursive: true });
+  await writeFile(target, svg, 'utf8');
+  const dimensions = /viewBox="0 0 (\d+) (\d+)"/.exec(svg);
+  const assets = (brief.layers ?? []).flatMap(function all(layer: import('./types.js').CanvasLayer): Array<{ href: string; alt: string; caption?: string; source?: string }> {
+    return layer.kind === 'group' ? layer.children.flatMap(all) : layer.kind === 'image' ? [{ href: layer.href, alt: layer.alt, caption: layer.caption, source: layer.source }] : [];
+  });
+  const count = (brief.layers ?? []).reduce((sum, layer) => sum + 1 + (layer.kind === 'group' ? layer.children.length : 0), 0);
+  return {
+    path: target,
+    width: Number(dimensions?.[1] ?? 1600),
+    height: Number(dimensions?.[2] ?? 1000),
+    layerCount: count,
+    bytes: Buffer.byteLength(svg, 'utf8'),
+    assets,
+    checks: canvasChecks(svg, brief),
   };
 }
 

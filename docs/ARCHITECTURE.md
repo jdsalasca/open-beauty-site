@@ -98,9 +98,13 @@ One `SprintBrief` becomes a coordinated corpo pack: review, retrospective and pl
 
 An optional second art direction. `applyMaxxing` injects a body class, one original style-specific SVG layer and a small CSS/motion system into an already-rendered artefact. It never changes the palette or required fonts, so it can be applied to pages, decks, experiences and stories without weakening the validator. GIFs receive their own maxxing layer in `src/gif.ts`.
 
+### 9.5. Open canvas (`src/canvas-art.ts`)
+
+`renderCanvas` is the opposite of a preset: the model supplies arbitrary SVG primitives, text and images as a layer tree. The renderer resolves only the style palette tokens, adds a brush-level animation clock, reduced-motion and asset credits. It does not contain a scene library, a cast or a pose. `beauty_create_canvas` exposes it.
+
 ### 10. MCP server (`src/mcp/server.ts`)
 
-`McpServer` over stdio. Twelve tools, twenty resources, and an `instructions` string that repeats the workflow. The tools call the same `generate.ts` functions as the CLI, so the output is identical.
+`McpServer` over stdio. Thirteen tools, twenty-one resources, and an `instructions` string that repeats the workflow. The tools call the same `generate.ts` functions as the CLI, so the output is identical.
 
 ### 11. CLI (`src/cli.ts`)
 
