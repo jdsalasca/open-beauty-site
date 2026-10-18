@@ -29,7 +29,7 @@
 <g class="ca-anim" style="--ca-delay:0s;--ca-speed:1" opacity="0.25"><line x1="80" y1="486" x2="1520" y2="486" stroke="#5A6450" stroke-width="1"/></g>
 <g class="ca-anim ca-breathe" style="--ca-delay:0s;--ca-speed:0.72"><circle cx="1240" cy="260" r="88" fill="#D8B56A"/></g>
 <g class="ca-anim ca-drift" style="--ca-delay:0s;--ca-speed:0.62"><path d="M0 555 C180 510 330 610 515 558 C710 502 840 600 1035 548 C1240 495 1435 608 1600 540 V1000 H0 Z" fill="#4B6B62"/></g>
-<g class="ca-anim ca-drift" style="--ca-delay:0.25s;--ca-speed:0.48" opacity="0.82"><path d="M0 675 C205 600 350 728 565 668 C790 602 930 720 1125 665 C1325 610 1450 695 1600 650 V1000 H0 Z" fill="#7A8B4F"/></g>
+<g class="ca-anim ca-drift" style="--ca-delay:0.25s;--ca-speed:0.48" opacity="0.82"><path d="M0 675 C205 600 350 728 565 668 C790 602 930 720 1125 665 C1325 610 1450 695 1600 650 V1000 H0 Z" fill="#606E3E"/></g>
 <g class="ca-anim ca-drift" style="--ca-delay:0.5s;--ca-speed:0.35" opacity="0.38"><path d="M0 790 C190 730 355 835 560 785 C760 735 930 850 1130 782 C1315 720 1485 820 1600 770 V1000 H0 Z" fill="#141B15"/></g>
 <g class="ca-anim ca-draw" style="--ca-delay:0s;--ca-speed:0.8"><line x1="102" y1="112" x2="510" y2="112" stroke="#B55239" stroke-width="2"/></g>
 <g class="ca-anim ca-reveal" style="--ca-delay:0.15s;--ca-speed:1"><text x="100" y="220" font-family="Cormorant Garamond" font-size="96" font-weight="400" letter-spacing="0" text-anchor="start" fill="#243026">CARTA AL MAR</text></g>

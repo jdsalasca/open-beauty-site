@@ -59,15 +59,53 @@ function attrs(x: number, y: number): string {
   return `x="${x}" y="${y}"`;
 }
 
-function layerSvg(layer: CanvasLayer, preset: StylePreset, assets: CanvasImageLayer[]): string {
+export interface CanvasRenderOptions {
+  /** Normalised 0–1 time used to freeze layer animations (GIF frames). */
+  frameTime?: number;
+  /** When rasterising SVG via canvas, map display/body/mono to bundled fonts. */
+  fontMap?: Partial<Record<'display' | 'body' | 'mono', string>>;
+  /** Omit the CSS animation block and inline the frame state. */
+  staticFrame?: boolean;
+}
+
+function fontStack(preset: StylePreset, role: 'display' | 'body' | 'mono', fontMap?: Partial<Record<'display' | 'body' | 'mono', string>>): string {
+  if (fontMap?.[role]) return `${fontMap[role]}, ${role === 'display' ? 'Georgia, serif' : 'sans-serif'}`;
+  const family = role === 'display' ? preset.fonts.display : role === 'mono' ? preset.fonts.mono : preset.fonts.body;
+  const fallback = preset.slug === 'papercraft' ? "'Fraunces', Georgia, serif" : preset.slug === 'brutalist' || preset.slug === 'opart' || preset.slug === 'psychedelic' || preset.slug === 'galactic' || preset.slug === 'vaporwave' || preset.slug === 'memphis' ? "'Archivo Black', 'Nunito Sans', sans-serif" : "'EB Garamond', 'Nunito Sans', serif";
+  return `${family}, ${fallback}`;
+}
+
+function animationTransform(layer: CanvasLayer, t: number): string {
+  const animation = layer.animation && layer.animation !== 'none' ? layer.animation : '';
+  const phase = t * Math.PI * 2;
+  switch (animation) {
+    case 'drift': return `translate(${Math.sin(phase) * 14} ${Math.cos(phase) * 3})`;
+    case 'float': return `translate(0 ${Math.sin(phase) * -12})`;
+    case 'sway': return `rotate(${Math.sin(phase) * 1.8})`;
+    case 'spin': return `rotate(${t * 360})`;
+    case 'breathe': return `scale(${1 + Math.sin(phase) * 0.035})`;
+    default: return '';
+  }
+}
+
+function staticOpacity(layer: CanvasLayer, t: number): number {
+  const base = layer.opacity ?? 1;
+  if (layer.animation === 'pulse') return base * (0.4 + 0.6 * (0.5 + 0.5 * Math.sin(t * Math.PI * 2)));
+  if (layer.animation === 'reveal') return base * Math.min(1, t * 2.4);
+  return base;
+}
+
+function layerSvg(layer: CanvasLayer, preset: StylePreset, assets: CanvasImageLayer[], frameTime?: number, fontMap?: CanvasRenderOptions['fontMap']): string {
   const fill = 'fill' in layer && layer.fill ? color(layer.fill, preset) : undefined;
   const stroke = 'stroke' in layer && layer.stroke ? color(layer.stroke, preset) : undefined;
   const style = `${animationStyle(layer)}${layer.blend && layer.blend !== 'normal' ? `mix-blend-mode:${layer.blend};` : ''}`;
-  const common = `class="${animationClass(layer)}" style="${style}"${layer.opacity !== undefined ? ` opacity="${clamp(layer.opacity, 0, 1)}"` : ''}`;
+  const frozen = frameTime !== undefined;
+  const frozenStyle = frozen ? `opacity:${staticOpacity(layer, frameTime!)};` : '';
+  const common = frozen ? `style="${style}${frozenStyle}"` : `class="${animationClass(layer)}" style="${style}"${layer.opacity !== undefined ? ` opacity="${clamp(layer.opacity, 0, 1)}"` : ''}`;
   const strokeWidth = 'strokeWidth' in layer ? layer.strokeWidth : undefined;
   const strokeAttrs = `${stroke ? ` stroke="${stroke}"` : ''}${strokeWidth !== undefined ? ` stroke-width="${num(strokeWidth, 1)}"` : ''}`;
   const wrap = (body: string, extraTransform = ''): string => {
-    const transform = [transformOf(layer), extraTransform].filter(Boolean).join(' ');
+    const transform = [transformOf(layer), frozen ? animationTransform(layer, frameTime!) : '', extraTransform].filter(Boolean).join(' ');
     return `<g ${common}${transform ? ` transform="${transform}"` : ''}>${body}</g>`;
   };
   switch (layer.kind) {
@@ -84,7 +122,7 @@ function layerSvg(layer: CanvasLayer, preset: StylePreset, assets: CanvasImageLa
     case 'polygon':
       return wrap(`<polygon points="${esc(layer.points)}"${fill ? ` fill="${fill}"` : ' fill="none"'}${strokeAttrs}/>`);
     case 'text': {
-      const family = layer.font === 'display' ? preset.fonts.display : layer.font === 'mono' ? preset.fonts.mono : preset.fonts.body;
+      const family = fontStack(preset, layer.font ?? 'body', fontMap);
       const body = `<text x="${num(layer.x)}" y="${num(layer.y)}" font-family="${esc(family)}" font-size="${num(layer.size, 32)}" font-weight="${num(layer.weight, 400)}" letter-spacing="${num(layer.letterSpacing, 0)}" text-anchor="${layer.anchor ?? 'start'}" fill="${fill || color('@ink', preset)}">${esc(layer.text)}</text>`;
       return wrap(body);
     }
@@ -129,7 +167,7 @@ function canvasCss(duration: number): string {
   @media (prefers-reduced-motion:reduce){.ca-anim,.ca-drift,.ca-float,.ca-sway,.ca-spin,.ca-breathe,.ca-pulse,.ca-reveal,.ca-draw{animation:none!important;transform:none!important;opacity:1!important;stroke-dashoffset:0!important}}`;
 }
 
-export function renderCanvas(input: Partial<CanvasBrief>): string {
+export function renderCanvas(input: Partial<CanvasBrief>, options: CanvasRenderOptions = {}): string {
   if (!input.style) throw new Error('Canvas needs a style.');
   const preset = getStyle(input.style);
   const layers = input.layers ?? [];
@@ -142,7 +180,7 @@ export function renderCanvas(input: Partial<CanvasBrief>): string {
   const duration = clamp(input.duration ?? 14, 4, 40);
   const background = color(input.background || '@bg', preset);
   const assets: CanvasImageLayer[] = [];
-  const body = layers.map((layer) => layerSvg(layer, preset, assets)).join('\n');
+  const body = layers.map((layer) => layerSvg(layer, preset, assets, options.frameTime, options.fontMap)).join('\n');
   const credits = (input.credits ?? true) && assets.some((asset) => asset.caption || asset.source)
     ? `<g class="ca-credits" font-family="${esc(preset.fonts.mono)}" font-size="12" fill="${color('@muted', preset)}">${assets
         .filter((asset) => asset.caption || asset.source)
@@ -159,7 +197,7 @@ export function renderCanvas(input: Partial<CanvasBrief>): string {
   <title id="ca-title">${esc(input.title || 'Canvas')}</title>
   <desc id="ca-desc">${esc(input.title || 'An original vector canvas')}. Animated SVG; respects reduced motion.</desc>
   <metadata>${metadata}</metadata>
-  <style>${canvasCss(duration)}</style>
+  ${options.staticFrame ? '' : `<style>${canvasCss(duration)}</style>`}
   <defs><filter id="ca-paper" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="${num(input.seed, 7)}" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.5"/></filter><filter id="ca-grain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="${num(input.seed, 7)}"/><feColorMatrix type="saturate" values="0"/></filter></defs>
   <rect width="${width}" height="${height}" fill="${background}"/>
   <g${input.texture === 'paper' ? ' filter="url(#ca-paper)"' : ''}>${body}</g>

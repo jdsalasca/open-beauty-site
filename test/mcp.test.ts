@@ -37,6 +37,7 @@ test('exposes the full tool surface', async () => {
     'beauty_create_gif',
     'beauty_create_motion',
     'beauty_create_page',
+    'beauty_create_sequence',
     'beauty_create_sprint',
     'beauty_create_story',
     'beauty_examples',

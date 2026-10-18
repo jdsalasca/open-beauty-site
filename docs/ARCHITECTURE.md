@@ -102,9 +102,13 @@ An optional second art direction. `applyMaxxing` injects a body class, one origi
 
 `renderCanvas` is the opposite of a preset: the model supplies arbitrary SVG primitives, text and images as a layer tree. The renderer resolves only the style palette tokens, adds a brush-level animation clock, reduced-motion and asset credits. It does not contain a scene library, a cast or a pose. `beauty_create_canvas` exposes it.
 
+### 9.7. Sequences (`src/sequence.ts`)
+
+A `SequenceBrief` is 2–12 open-canvas frames with durations. `renderSequence` freezes layer animation per frame, composes a loopable SVG with per-frame keyframes, and rasterises the same frames through `@napi-rs/canvas` into a GIF encoded by `gifenc`. Assets keep alt, caption and source; the first frame is the reduced-motion still. `beauty_create_sequence` and the `sequence` skill expose it.
+
 ### 10. MCP server (`src/mcp/server.ts`)
 
-`McpServer` over stdio. Thirteen tools, twenty-one resources, and an `instructions` string that repeats the workflow. The tools call the same `generate.ts` functions as the CLI, so the output is identical.
+`McpServer` over stdio. Fourteen tools, twenty-two resources, and an `instructions` string that repeats the workflow. The tools call the same `generate.ts` functions as the CLI, so the output is identical.
 
 ### 11. CLI (`src/cli.ts`)
 

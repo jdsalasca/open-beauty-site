@@ -5,7 +5,7 @@
   <g filter="url(#p)">
     <path d="M120 218V66" stroke="#4A3A32" stroke-width="3" fill="none"/>
     <path d="M120 96C70 72 38 92 28 130c40 10 72-2 92-34Z" fill="#A9C3A0"/>
-    <path d="M120 132c46-22 76-4 86 32-38 12-70 2-86-32Z" fill="#D9785B"/>
+    <path d="M120 132c46-22 76-4 86 32-38 12-70 2-86-32Z" fill="#CE7256"/>
     <path d="M120 142c-38-8-62 4-78 34 34 10 60 2 78-34Z" fill="#B8D4E0"/>
     <g stroke="#4A3A32" stroke-width="1" opacity=".45" fill="none"><path d="M120 140 60 118M120 154 48 172M120 168l44-24M120 186l28-14"/></g>
     <circle cx="120" cy="220" r="6" fill="#F2C879"/>
