@@ -1,7 +1,7 @@
 # Ronda de estilos 2026
 
 Revisión editorial, tipográfica y de movimiento de los 13 estilos.
-Mesa de trabajo: tres subagentes **Luna 6 Max** (dirección editorial, dirección de arte/tipografía y dirección de movimiento/aprendizaje), con síntesis humana en el repo. Los informes completos quedaron en `qa/luna-editorial.md`, `qa/luna-tipografia.md` y `qa/luna-motion.md` durante la sesión.
+Mesa de trabajo: tres subagentes **Luna 6 Max** (dirección editorial, dirección de arte/tipografía y dirección de movimiento/aprendizaje), con síntesis humana en el repo. Los informes completos quedaron fuera del repositorio (carpeta temporal) durante la sesión y no se publican.
 
 La regla de esta ronda: **cada estilo debe reconocerse a 200 px y en tres segundos; el movimiento debe ordenar la lectura, no decorarla**.
 

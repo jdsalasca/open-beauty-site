@@ -49,4 +49,4 @@ No todas son para hoy; la mesa sirve para elegir la próxima que cambie el harne
 
 > El modelo no necesita saber CSS. Necesita un brief con un objeto, una evidencia, un conflicto y un gesto; el harness pone la gramática; el validador pone el oficio; una persona responde por la verdad.
 
-Los informes completos de los cinco roles quedaron en `qa/ideas-*.md` durante la sesión. Esta página conserva lo que cambió el repo.
+Los informes completos de los cinco roles quedaron fuera del repositorio (carpeta temporal) durante la sesión y no se publican. Esta página conserva lo que cambió el repo.

@@ -10,7 +10,7 @@ pnpm test
 The suite runs with Node's test runner through `tsx`:
 
 - `test/core.test.ts` — every style renders a complete document, escapes user content, reaches A/100 and vision 4/4; the validator rejects generic AI design (Inter, invented colours, 8px radii, 5px borders, soft shadows in brutalist); `seed` changes the composition archetype.
-- `test/mcp.test.ts` — spawns the built MCP server over stdio, verifies the eight-tool surface, reads the Renaissance tokens, creates and audits a page, creates a valid GIF, creates an animated deck, a room experience and a chaptered story, and verifies the presentation skill and example routes.
+- `test/mcp.test.ts` — spawns the built MCP server over stdio, verifies the eleven-tool surface, reads the Renaissance tokens, creates and audits a page, creates a valid GIF, creates an animated deck, a room experience and a chaptered story, and verifies the presentation skill and example routes.
 
 Current result: **19/19 passing** in ~8 s (plus MCP startup).
 
@@ -222,20 +222,20 @@ Result: **A · 100/100 · vision 4/4**, 8 slides (6 content + cover + closing), 
 
 - Deck: `examples/luna-deck/memory-future.html`
 - Screenshots: `examples/luna-deck/luna-deck-1.png` … `luna-deck-8.png`
-- Log: `qa/luna-deck3.log` (local only; not published)
+- Log: generado localmente (no publicado).
 
 The editorial auditor's P0 list drove the deck audit, the per-style atmosphere fix, `inert`/`aria-live`, print styles and the `sala | gabinete | cartel` composition modes. Figures and per-style motion profiles are still pending.
 
 ## Maxxing y kit de sprint (2026)
 
 - `test/maxxing.test.ts` comprueba que una página Nature con `maxxing: true` conserva **A/100 y visión 4/4** y contiene la capa `max-layer`.
-- La matriz local `qa/max-matrix.ts` valida **13/13 estilos** con `maxxing` en A/100 y 4/4.
+- La matriz local valida **13/13 estilos** con `maxxing` en A/100 y 4/4.
 - `test/mcp.test.ts` crea un kit de sprint completo por MCP: tres decks **A/100 + 4/4** y tres GIFs.
 - `examples/gifs/maxxing/` guarda **13 GIFs**, uno por estilo, generados por Luna con `maxxing: true`.
 
 ## Ronda 2026: 12 estilos con Luna 6 Max
 
-Doce corridas independientes, una por estilo, con un brief distinto en español y el MCP real. Cada una llamó `beauty_get_skill`, `beauty_get_style`, `beauty_create_page` y `beauty_validate`; ninguna escribió HTML. Salidas públicas en `examples/agents/round-2026/<style>.html` (copia de las salidas de `qa/luna-12/`).
+Doce corridas independientes, una por estilo, con un brief distinto en español y el MCP real. Cada una llamó `beauty_get_skill`, `beauty_get_style`, `beauty_create_page` y `beauty_validate`; ninguna escribió HTML. Salidas públicas en `examples/agents/round-2026/<style>.html`.
 
 | Estilo | Subfamilia | Craft | Vision | Tokens |
 | --- | --- | --- | --- | ---: |

@@ -17,7 +17,7 @@ pnpm examples
 
 - A new page scores **A (90+)** with `beauty_validate`.
 - No new dependency unless it earns its weight.
-- The three styles stay distinct. Do not turn them into recolours of one template.
+- The thirteen styles stay distinct. Do not turn them into recolours of one template.
 - Generated artefacts are deterministic: same brief, same output.
 - The validator catches a real mistake, not a theoretical one.
 - A small model can use the new surface without reading the source.

@@ -227,7 +227,7 @@ No arguments. Returns the absolute paths of the reference pages and GIFs. Use th
 
 | URI | MIME type | Content |
 | --- | --- | --- |
-| `beauty://styles/{slug}` | `application/json` | Full preset for each of the 12 styles |
+| `beauty://styles/{slug}` | `application/json` | Full preset for each of the 13 styles |
 | `beauty://skills/beauty.md` | `text/markdown` | Agent skill |
 | `beauty://skills/education.md` | `text/markdown` | Educational page skill |
 | `beauty://skills/presentation.md` | `text/markdown` | Animated presentation skill |

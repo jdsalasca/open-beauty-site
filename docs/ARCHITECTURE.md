@@ -124,7 +124,7 @@ To add a style:
 3. Add a frame function in `src/gif.ts` and register it in `RENDERERS`.
 4. Add the fonts to `src/canvas.ts` and `fonts/`.
 5. Add tests; the validator must accept the generated page at A.
-6. Run `pnpm docs` to regenerate the style skill and guide.
+6. Run `pnpm docs:build` to regenerate the style skill and guide.
 
 To add a component, add it to all renderers with the same content contract; do not add a style-specific option to the MCP tool unless all styles can honour it.
 
