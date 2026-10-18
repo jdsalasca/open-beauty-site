@@ -62,14 +62,14 @@ function requireStyle(value: string | undefined): StyleSlug {
   return value;
 }
 
-async function loadBrief(value: string | undefined): Promise<Partial<Brief>> {
-  if (!value) return {};
+async function loadBrief<T extends Partial<Brief>>(value: string | undefined): Promise<T> {
+  if (!value) return {} as T;
   const raw = value.trim().startsWith('{') ? value : await readFile(path.resolve(process.cwd(), value), 'utf8');
-  return JSON.parse(raw) as Partial<Brief>;
+  return JSON.parse(raw) as T;
 }
 
-function mergeBrief(fileBrief: Partial<Brief>, flags: Flags): Partial<Brief> {
-  const merged: Partial<Brief> = { ...fileBrief };
+function mergeBrief<T extends Partial<Brief>>(fileBrief: T, flags: Flags): T {
+  const merged: T = { ...fileBrief };
   if (stringFlag(flags, 'title')) merged.title = stringFlag(flags, 'title');
   if (stringFlag(flags, 'tagline')) merged.tagline = stringFlag(flags, 'tagline');
   if (stringFlag(flags, 'intro')) merged.intro = stringFlag(flags, 'intro');
@@ -169,7 +169,7 @@ async function main(): Promise<void> {
 
     case 'deck': {
       const style = requireStyle(stringFlag(flags, 'style'));
-      const brief = mergeBrief(await loadBrief(stringFlag(flags, 'brief')), flags) as Partial<DeckBrief>;
+      const brief = mergeBrief(await loadBrief<Partial<DeckBrief>>(stringFlag(flags, 'brief')), flags);
       if (!brief.title) throw new Error('Pass --title "..." or use --brief with a title.');
       const output =
         stringFlag(flags, 'out') ??
@@ -184,7 +184,7 @@ async function main(): Promise<void> {
 
     case 'experience': {
       const style = requireStyle(stringFlag(flags, 'style'));
-      const brief = mergeBrief(await loadBrief(stringFlag(flags, 'brief')), flags) as Partial<ExperienceBrief>;
+      const brief = mergeBrief(await loadBrief<Partial<ExperienceBrief>>(stringFlag(flags, 'brief')), flags);
       if (!brief.title) throw new Error('Pass --brief with a title and 3–8 rooms.');
       const output = stringFlag(flags, 'out') ?? path.join('beauty-output', `${style}-experience-${slugify(brief.title)}-${timestamp()}.html`);
       const result = await createExperience({ style, brief, output });
@@ -197,7 +197,7 @@ async function main(): Promise<void> {
 
     case 'story': {
       const style = requireStyle(stringFlag(flags, 'style'));
-      const brief = mergeBrief(await loadBrief(stringFlag(flags, 'brief')), flags) as Partial<StoryBrief>;
+      const brief = mergeBrief(await loadBrief<Partial<StoryBrief>>(stringFlag(flags, 'brief')), flags);
       if (!brief.title) throw new Error('Pass --brief with a title and 2–8 chapters.');
       const output = stringFlag(flags, 'out') ?? path.join('beauty-output', `${style}-story-${slugify(brief.title)}-${timestamp()}.html`);
       const result = await createStory({ style, brief, output });
@@ -285,7 +285,7 @@ async function main(): Promise<void> {
 
     case 'sprint': {
       const style = requireStyle(stringFlag(flags, 'style'));
-      const brief = mergeBrief(await loadBrief(stringFlag(flags, 'brief')), flags) as Partial<SprintBrief>;
+      const brief = mergeBrief(await loadBrief<Partial<SprintBrief>>(stringFlag(flags, 'brief')), flags);
       if (!brief.sprint) throw new Error('Pass a sprint brief with { "sprint": "15", "style": "nature", ... }.');
       const result = await createSprintKit({ ...brief, sprint: brief.sprint, style }, stringFlag(flags, 'out'));
       for (const item of [result.review, result.retro, result.planning]) {

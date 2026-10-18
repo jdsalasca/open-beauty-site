@@ -67,6 +67,7 @@ export function renderBestiary(brief: Partial<Brief>, preset: StylePreset): stri
 .style-bestiary .card h3{font-size:30px;font-family:'UnifrakturMaguntia',cursive}
 .style-bestiary .card p{font-size:15px;line-height:1.55}
 .style-bestiary .card-link{color:var(--accent2);text-transform:none;letter-spacing:.06em}
+.style-bestiary .card-num,.style-bestiary .aside span{color:var(--accent2)}
 .style-bestiary .quote{background:var(--surface);border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);max-width:100%;padding-top:46px;padding-bottom:46px}
 .style-bestiary .quote blockquote{font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(28px,3.6vw,46px)}
 .style-bestiary .quote cite{color:var(--accent2);text-transform:none;letter-spacing:.08em}
@@ -76,6 +77,7 @@ export function renderBestiary(brief: Partial<Brief>, preset: StylePreset): stri
 .style-bestiary .cta .btn:hover{background:var(--bg);color:var(--deep)}
 .style-bestiary .foot{border-color:var(--ink)}
 @media (max-width:980px){.style-bestiary .hero{grid-template-columns:1fr}.style-bestiary .bestiary-art{max-width:440px;margin:0 auto}.style-bestiary .statement{columns:1}}
+@media (prefers-reduced-motion:reduce){.style-bestiary .beast-eye{animation:none}}
 `;
   return renderShowcase(brief, preset, {
     art,
@@ -152,6 +154,7 @@ export function renderPsychedelic(brief: Partial<Brief>, preset: StylePreset): s
 .style-psychedelic .cta .btn{background:var(--ink);color:var(--ink);border-color:var(--ink);box-shadow:4px 4px 0 var(--accent3);color:var(--bg)}
 .style-psychedelic .cta .btn:hover{background:var(--accent3);color:var(--bg)}
 .style-psychedelic .foot{border-color:rgba(247,232,200,.25)}
+.style-psychedelic .card-num,.style-psychedelic .card-link,.style-psychedelic .aside span{color:var(--accent3)}
 @media (max-width:980px){.style-psychedelic .hero{grid-template-columns:1fr}.style-psychedelic .psy-field{min-height:0;max-width:520px;margin:0 auto}.style-psychedelic .quote{transform:none}}
 @media (prefers-reduced-motion:reduce){.style-psychedelic .psy-blob-a,.style-psychedelic .psy-blob-b,.style-psychedelic .psy-blob-c{animation:none}}
 `;
@@ -214,6 +217,7 @@ export function renderMemphis(brief: Partial<Brief>, preset: StylePreset): strin
 .style-memphis .card:nth-child(2){transform:rotate(1deg) translateY(8px);background:var(--accent)}
 .style-memphis .card:nth-child(3){transform:rotate(-.6deg);background:var(--accent4)}
 .style-memphis .card:hover{transform:translate(-3px,-3px) rotate(0);box-shadow:9px 9px 0 var(--ink)}
+.style-memphis .card-num{color:var(--ink)}
 .style-memphis .quote{background:var(--accent3);color:var(--bg);max-width:100%;padding-top:50px;padding-bottom:50px;border-top:3px solid var(--ink);border-bottom:3px solid var(--ink)}
 .style-memphis .quote blockquote{font-size:clamp(30px,4vw,52px);letter-spacing:-.03em}
 .style-memphis .quote cite{color:var(--bg)}
@@ -261,8 +265,8 @@ export function renderVaporwave(brief: Partial<Brief>, preset: StylePreset): str
 .style-vaporwave h1{font-size:clamp(24px,3.2vw,40px);line-height:1.35;letter-spacing:-.02em;text-transform:uppercase;max-width:14ch;background:linear-gradient(180deg,var(--ink) 0%,var(--accent2) 38%,var(--accent3) 52%,var(--accent) 78%,var(--ink) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(3px 3px 0 var(--deep))}
 .style-vaporwave h1 em{color:transparent;display:block;font-style:normal}
 .style-vaporwave .tagline{max-width:400px;color:var(--muted);margin-top:18px}
-.style-vaporwave .btn{background:var(--accent);color:var(--ink);box-shadow:inset 2px 2px 0 rgba(255,255,255,.55),inset -2px -2px 0 rgba(0,0,0,.35);border:2px solid var(--ink);font-family:'Space Grotesk',sans-serif;letter-spacing:.16em}
-.style-vaporwave .btn:hover{background:var(--accent2);color:var(--ink);transform:translateY(-2px)}
+.style-vaporwave .btn{background:var(--accent);color:var(--bg);box-shadow:inset 2px 2px 0 rgba(255,255,255,.55),inset -2px -2px 0 rgba(0,0,0,.35);border:2px solid var(--ink);font-family:'Space Grotesk',sans-serif;letter-spacing:.16em}
+.style-vaporwave .btn:hover{background:var(--accent2);color:var(--bg);transform:translateY(-2px)}
 .style-vaporwave .nav-cta{border:2px solid var(--accent2);color:var(--accent2);background:var(--deep)}
 .style-vaporwave .hero-art{position:relative;z-index:2}
 .style-vaporwave .vapor-scene{position:relative;min-height:530px;width:100%}
@@ -276,7 +280,7 @@ export function renderVaporwave(brief: Partial<Brief>, preset: StylePreset): str
 .style-vaporwave .vapor-body{background:var(--accent3);color:var(--ink);padding:9px;font-family:'Space Grotesk',sans-serif;font-size:11px}
 .style-vaporwave .vapor-path{border:1px solid var(--ink);padding:4px 6px;margin:0 0 8px;font-size:9px;background:var(--bg);color:var(--ink);overflow:hidden;white-space:nowrap}
 .style-vaporwave .vapor-file{display:flex;align-items:center;gap:8px;padding:4px 6px;border:1px solid transparent}
-.style-vaporwave .vapor-file.is-selected{background:var(--accent);border-color:var(--ink);color:var(--ink)}
+.style-vaporwave .vapor-file.is-selected{background:var(--accent);border-color:var(--ink);color:var(--bg)}
 .style-vaporwave .vapor-icon{color:var(--deep);font-size:14px}
 .style-vaporwave .vapor-status{display:flex;justify-content:space-between;border-top:1px solid var(--ink);margin-top:8px;padding-top:6px;font-size:8px;letter-spacing:.08em}
 .style-vaporwave .vapor-hint{position:absolute;right:0;bottom:2%;font-family:'Space Grotesk',sans-serif;font-size:8px;letter-spacing:.14em;color:var(--accent2)}
@@ -290,14 +294,15 @@ export function renderVaporwave(brief: Partial<Brief>, preset: StylePreset): str
 .style-vaporwave .card h3{font-size:16px;line-height:1.5;letter-spacing:0}
 .style-vaporwave .card p{color:var(--muted)}
 .style-vaporwave .card:hover{transform:translate(-2px,-2px);box-shadow:inset 2px 2px 0 rgba(255,255,255,.5),inset -2px -2px 0 rgba(0,0,0,.35),7px 7px 0 var(--accent)}
-.style-vaporwave .quote{background:var(--accent);color:var(--ink);max-width:100%;padding-top:50px;padding-bottom:50px}
+.style-vaporwave .quote{background:var(--accent);color:var(--bg);max-width:100%;padding-top:50px;padding-bottom:50px}
 .style-vaporwave .quote blockquote{font-size:clamp(16px,2.2vw,26px);line-height:1.8;letter-spacing:0;text-shadow:2px 2px 0 var(--accent2)}
-.style-vaporwave .quote cite{color:var(--ink)}
+.style-vaporwave .quote cite{color:var(--bg)}
 .style-vaporwave .cta{background:var(--surface);border:2px solid var(--accent2);box-shadow:inset 2px 2px 0 rgba(255,255,255,.5),inset -2px -2px 0 rgba(0,0,0,.35),8px 8px 0 var(--accent);max-width:1000px;color:var(--ink)}
 .style-vaporwave .cta h2{font-size:clamp(18px,2.4vw,28px);line-height:1.6;max-width:820px}
-.style-vaporwave .cta .btn{background:var(--accent2);color:var(--ink)}
-.style-vaporwave .cta .btn:hover{background:var(--accent);color:var(--ink)}
+.style-vaporwave .cta .btn{background:var(--accent2);color:var(--bg)}
+.style-vaporwave .cta .btn:hover{background:var(--accent);color:var(--bg)}
 .style-vaporwave .foot{border-color:rgba(255,255,255,.2)}
+.style-vaporwave .card-num,.style-vaporwave .card-link,.style-vaporwave .aside span{color:var(--accent2)}
 @media (max-width:980px){.style-vaporwave .hero{grid-template-columns:1fr}.style-vaporwave .vapor-scene{min-height:460px;max-width:520px;margin:0 auto;width:100%}.style-vaporwave .vapor-window{top:15%}}
 `;
   return renderShowcase(brief, preset, {

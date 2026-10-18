@@ -1,5 +1,8 @@
 import type { StylePreset, StyleSlug, ValidationIssue, ValidationResult, VisionCheck, VisionReport } from './types.js';
 import { getStyle, isStyleSlug, styleSlugs } from './styles/presets.js';
+import { contrastRatio, relativeLuminance } from './a11y.js';
+
+export { contrastRatio, relativeLuminance as luminance } from './a11y.js';
 
 const HEX_RE = /#[0-9a-fA-F]{3,8}\b/g;
 const FONT_RE = /font-family\s*:\s*([^;}{]+)/gi;
@@ -29,27 +32,6 @@ function styleCss(html: string): string {
   return Array.from(html.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi))
     .map((match) => match[1] ?? '')
     .join('\n');
-}
-
-function channelToLinear(value: number): number {
-  const channel = value / 255;
-  return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
-}
-
-export function luminance(hex: string): number {
-  const normalized = normalizeHex(hex).slice(1);
-  const r = parseInt(normalized.slice(0, 2), 16);
-  const g = parseInt(normalized.slice(2, 4), 16);
-  const b = parseInt(normalized.slice(4, 6), 16);
-  return 0.2126 * channelToLinear(r) + 0.7152 * channelToLinear(g) + 0.0722 * channelToLinear(b);
-}
-
-export function contrastRatio(a: string, b: string): number {
-  const la = luminance(a);
-  const lb = luminance(b);
-  const light = Math.max(la, lb);
-  const dark = Math.min(la, lb);
-  return (light + 0.05) / (dark + 0.05);
 }
 
 const CONTRAST_PAIRS: Partial<Record<StyleSlug, Array<[keyof StylePreset['palette'], keyof StylePreset['palette'], string]>>> = {

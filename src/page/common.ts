@@ -1,4 +1,5 @@
 import type { Brief, Locale, SectionBrief, StylePreset } from '../types.js';
+import { focusRingColor, isDarkColor } from '../a11y.js';
 
 export class BeautyError extends Error {
   constructor(message: string, readonly code = 'BEAUTY_ERROR') {
@@ -146,13 +147,19 @@ export function brandInitial(brand: string): string {
 function designLanguageCss(preset: StylePreset): string {
   const type = preset.typeSystem;
   const motion = preset.motionSystem;
-  if (!type || !motion) return '';
-  return `:root{--type-display-case:${type.displayCase};--type-display-tracking:${type.displayTracking};--type-display-leading:${type.displayLeading};--type-body-size:${type.bodySize};--type-body-leading:${type.bodyLeading};--type-label-tracking:${type.labelTracking};--type-label-case:${type.labelCase};--motion-enter:${motion.enter};--motion-distance:${motion.distance};--motion-stagger:${motion.stagger};--motion-ease:${motion.easing};--motion-page:${motion.page}}
+  const focus = focusRingColor(preset.palette);
+  const scheme = isDarkColor(preset.palette.bg) ? 'dark' : 'light';
+  const tokens = type && motion
+    ? `--type-display-case:${type.displayCase};--type-display-tracking:${type.displayTracking};--type-display-leading:${type.displayLeading};--type-body-size:${type.bodySize};--type-body-leading:${type.bodyLeading};--type-label-tracking:${type.labelTracking};--type-label-case:${type.labelCase};--motion-enter:${motion.enter};--motion-distance:${motion.distance};--motion-stagger:${motion.stagger};--motion-ease:${motion.easing};--motion-page:${motion.page};`
+    : '';
+  return `:root{${tokens}color-scheme:${scheme};--focus-ring:${focus}}
+.skip-link{position:fixed;left:14px;top:-64px;z-index:10000;background:${preset.palette.ink};color:${preset.palette.bg};padding:10px 16px;font:600 13px/1.2 system-ui,-apple-system,'Segoe UI',sans-serif;letter-spacing:.02em;text-decoration:none;outline:2px solid ${preset.palette.accent};outline-offset:-2px;transition:top .18s ease}
+.skip-link:focus,.skip-link:focus-visible{top:14px}
 html{overflow-x:hidden}
 html body,html body[class]{font-size:var(--type-body-size);line-height:var(--type-body-leading);font-kerning:normal;font-optical-sizing:auto;text-rendering:optimizeLegibility;overflow-x:hidden}
 html body :where(p,li),html body[class] :where(p,li){font-size:inherit}
-:where(h1,h2,h3,.display){line-height:var(--type-display-leading);letter-spacing:var(--type-display-tracking);text-transform:var(--type-display-case);text-wrap:${type.wrap};font-feature-settings:${type.features}}
-:where(p,li,blockquote){text-wrap:pretty;font-feature-settings:${type.features}}
+:where(h1,h2,h3,.display){line-height:var(--type-display-leading);letter-spacing:var(--type-display-tracking);text-transform:var(--type-display-case);text-wrap:${type?.wrap ?? 'balance'};font-feature-settings:${type?.features ?? 'normal'}}
+:where(p,li,blockquote){text-wrap:pretty;font-feature-settings:${type?.features ?? 'normal'}}
 :where(.eyebrow,.kicker,.label,.meta,.micro,.tag){letter-spacing:var(--type-label-tracking);text-transform:var(--type-label-case)}
 html body .card p,html body[class] .card p,html body .aside p,html body[class] .aside p,html body .section-head p,html body[class] .section-head p{font-size:16px;line-height:1.6}
 html body .quote cite,html body[class] .quote cite{font-size:11px}
@@ -163,7 +170,8 @@ html body .hero-note,html body[class] .hero-note{font-size:10px}
 .motion-toggle:hover,.motion-toggle:focus-visible{opacity:1;color:var(--ink);text-decoration-color:var(--accent)}
 body.motion-paused *,body.motion-paused *::before,body.motion-paused *::after{animation-play-state:paused!important;transition:none!important}
 a{text-underline-offset:.18em;text-decoration-thickness:1px}
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+img,svg,video,canvas{max-width:100%}
+:focus-visible{outline:3px solid var(--focus-ring,var(--accent));outline-offset:3px}
 ::selection{background:var(--accent);color:var(--ground,var(--bg))}
 @media (prefers-reduced-motion:no-preference){
   html{scroll-behavior:smooth}
@@ -172,6 +180,14 @@ a{text-underline-offset:.18em;text-decoration-thickness:1px}
   @keyframes beauty-page-in{from{opacity:0}to{opacity:1}}
 }
 @media (max-width:560px){html body .hero h1,html body[class] .hero h1{font-size:clamp(40px,11.5vw,56px)!important;letter-spacing:var(--type-display-tracking)}html body .style-vaporwave .hero h1,html body[class] .style-vaporwave .hero h1{font-size:clamp(24px,6.8vw,40px)!important}}
+@media (max-width:380px){
+  html,body{max-width:100%}
+  html body{overflow-wrap:anywhere;word-break:break-word}
+  html body :where(h1,h2,.display){font-size:clamp(30px,11vw,46px)!important;line-height:1.02;letter-spacing:0}
+  html body .style-vaporwave :where(h1,h2,.display){font-size:clamp(20px,7vw,34px)!important}
+  .page-frame,.nature-frame{inset:6px}
+  .top,.site-head,.nature-top,.xp-top,.story-top{padding-left:14px!important;padding-right:14px!important}
+}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   body{animation:none!important}
@@ -189,10 +205,13 @@ export interface ShellOptions {
   body: string;
   script?: string;
   bodyClass?: string;
+  skipHref?: string;
 }
 
-export function shell({ lang, title, description, preset, css, body, script, bodyClass }: ShellOptions): string {
+export function shell({ lang, title, description, preset, css, body, script, bodyClass, skipHref = '#top' }: ShellOptions): string {
   const safeTitle = esc(title);
+  const scheme = isDarkColor(preset.palette.bg) ? 'dark' : 'light';
+  const skipLabel = lang === 'es' ? 'Saltar al contenido' : 'Skip to content';
   return `<!doctype html>
 <html lang="${lang}">
 <head>
@@ -201,6 +220,7 @@ export function shell({ lang, title, description, preset, css, body, script, bod
 <title>${safeTitle}</title>
 <meta name="description" content="${attr(description)}">
 <meta name="generator" content="open-beauty-site (${preset.slug})">
+<meta name="color-scheme" content="${scheme}">
 <meta name="theme-color" content="${preset.palette.bg}">
 <meta property="og:title" content="${attr(title)}">
 <meta property="og:description" content="${attr(description)}">
@@ -216,13 +236,16 @@ ${designLanguageCss(preset)}
 @media print{
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .reveal,.js .reveal{opacity:1!important;transform:none!important;transition:none!important;animation:none!important}
-  .page-frame,.grain,.beauty-scroll,.motion-toggle{display:none!important}
+  .page-frame,.grain,.beauty-scroll,.motion-toggle,.skip-link{display:none!important}
   .site-head,.topbar{position:static!important}
   .ticker-track{animation:none!important}
+  figure,table,pre,blockquote{break-inside:avoid}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:.8em;word-break:break-all}
 }
 </style>
 </head>
 <body${bodyClass ? ` class="${attr(bodyClass)}"` : ''}>
+<a class="skip-link" href="${attr(skipHref)}">${esc(skipLabel)}</a>
 ${body}
 ${bodyClass?.includes('deck') ? '' : `<div class="beauty-scroll" aria-hidden="true"></div>
 <button class="motion-toggle" type="button" aria-pressed="false">${lang === 'es' ? 'Pausar movimiento' : 'Pause motion'}</button>`}

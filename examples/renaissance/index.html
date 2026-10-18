@@ -6,6 +6,7 @@
 <title>Atelier Lumen — Atelier Lumen</title>
 <meta name="description" content="Pintura, cerámica y objetos que envejecen bien.">
 <meta name="generator" content="open-beauty-site (renaissance)">
+<meta name="color-scheme" content="light">
 <meta name="theme-color" content="#F6EDDD">
 <meta property="og:title" content="Atelier Lumen — Atelier Lumen">
 <meta property="og:description" content="Pintura, cerámica y objetos que envejecen bien.">
@@ -143,7 +144,9 @@ h1 em{font-style:italic;color:var(--rose)}
 }
 
 
-:root{--type-display-case:none;--type-display-tracking:.01em;--type-display-leading:.88;--type-body-size:20px;--type-body-leading:1.62;--type-label-tracking:.18em;--type-label-case:uppercase;--motion-enter:900ms;--motion-distance:16px;--motion-stagger:80ms;--motion-ease:cubic-bezier(.22,.61,.36,1);--motion-page:1200ms}
+:root{--type-display-case:none;--type-display-tracking:.01em;--type-display-leading:.88;--type-body-size:20px;--type-body-leading:1.62;--type-label-tracking:.18em;--type-label-case:uppercase;--motion-enter:900ms;--motion-distance:16px;--motion-stagger:80ms;--motion-ease:cubic-bezier(.22,.61,.36,1);--motion-page:1200ms;color-scheme:light;--focus-ring:#2B211B}
+.skip-link{position:fixed;left:14px;top:-64px;z-index:10000;background:#2B211B;color:#F6EDDD;padding:10px 16px;font:600 13px/1.2 system-ui,-apple-system,'Segoe UI',sans-serif;letter-spacing:.02em;text-decoration:none;outline:2px solid #B08A4F;outline-offset:-2px;transition:top .18s ease}
+.skip-link:focus,.skip-link:focus-visible{top:14px}
 html{overflow-x:hidden}
 html body,html body[class]{font-size:var(--type-body-size);line-height:var(--type-body-leading);font-kerning:normal;font-optical-sizing:auto;text-rendering:optimizeLegibility;overflow-x:hidden}
 html body :where(p,li),html body[class] :where(p,li){font-size:inherit}
@@ -159,7 +162,8 @@ html body .hero-note,html body[class] .hero-note{font-size:10px}
 .motion-toggle:hover,.motion-toggle:focus-visible{opacity:1;color:var(--ink);text-decoration-color:var(--accent)}
 body.motion-paused *,body.motion-paused *::before,body.motion-paused *::after{animation-play-state:paused!important;transition:none!important}
 a{text-underline-offset:.18em;text-decoration-thickness:1px}
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+img,svg,video,canvas{max-width:100%}
+:focus-visible{outline:3px solid var(--focus-ring,var(--accent));outline-offset:3px}
 ::selection{background:var(--accent);color:var(--ground,var(--bg))}
 @media (prefers-reduced-motion:no-preference){
   html{scroll-behavior:smooth}
@@ -168,6 +172,14 @@ a{text-underline-offset:.18em;text-decoration-thickness:1px}
   @keyframes beauty-page-in{from{opacity:0}to{opacity:1}}
 }
 @media (max-width:560px){html body .hero h1,html body[class] .hero h1{font-size:clamp(40px,11.5vw,56px)!important;letter-spacing:var(--type-display-tracking)}html body .style-vaporwave .hero h1,html body[class] .style-vaporwave .hero h1{font-size:clamp(24px,6.8vw,40px)!important}}
+@media (max-width:380px){
+  html,body{max-width:100%}
+  html body{overflow-wrap:anywhere;word-break:break-word}
+  html body :where(h1,h2,.display){font-size:clamp(30px,11vw,46px)!important;line-height:1.02;letter-spacing:0}
+  html body .style-vaporwave :where(h1,h2,.display){font-size:clamp(20px,7vw,34px)!important}
+  .page-frame,.nature-frame{inset:6px}
+  .top,.site-head,.nature-top,.xp-top,.story-top{padding-left:14px!important;padding-right:14px!important}
+}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   body{animation:none!important}
@@ -177,13 +189,16 @@ a{text-underline-offset:.18em;text-decoration-thickness:1px}
 @media print{
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .reveal,.js .reveal{opacity:1!important;transform:none!important;transition:none!important;animation:none!important}
-  .page-frame,.grain,.beauty-scroll,.motion-toggle{display:none!important}
+  .page-frame,.grain,.beauty-scroll,.motion-toggle,.skip-link{display:none!important}
   .site-head,.topbar{position:static!important}
   .ticker-track{animation:none!important}
+  figure,table,pre,blockquote{break-inside:avoid}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:.8em;word-break:break-all}
 }
 </style>
 </head>
 <body class="variant-0">
+<a class="skip-link" href="#top">Saltar al contenido</a>
 <div class="page-frame" aria-hidden="true"></div>
 <header class="site-head">
   <a class="wordmark" href="#top"><span class="mark">✦</span><span>Atelier Lumen</span></a>

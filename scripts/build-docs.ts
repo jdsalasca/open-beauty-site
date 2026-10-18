@@ -1,13 +1,14 @@
-import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { styleGuideMarkdown } from '../src/guide.js';
 import { presets, styleSlugs } from '../src/styles/presets.js';
+import { ensureDir, writeTextFile } from './lib/fs.js';
+import { runScript } from './lib/run.js';
 
 const root = process.cwd();
 
 async function main(): Promise<void> {
-  await mkdir(path.join(root, 'skills'), { recursive: true });
-  await mkdir(path.join(root, 'docs'), { recursive: true });
+  await ensureDir(path.join(root, 'skills'));
+  await ensureDir(path.join(root, 'docs'));
 
   for (const slug of styleSlugs) {
     const preset = presets[slug];
@@ -29,7 +30,7 @@ ${styleGuideMarkdown(slug)}
 - Check the page at 360px, 768px and 1440px.
 - Remove every word that is not carrying information.
 `;
-    await writeFile(path.join(root, 'skills', `${slug}.md`), body, 'utf8');
+    await writeTextFile(path.join(root, 'skills', `${slug}.md`), body);
   }
 
   const guide = `# open-beauty-site style guide
@@ -38,11 +39,8 @@ Twelve complete editorial systems. Every value here is normative: if a page uses
 
 ${styleSlugs.map((slug) => styleGuideMarkdown(slug)).join('\n\n---\n\n')}
 `;
-  await writeFile(path.join(root, 'docs', 'STYLEGUIDE.md'), guide, 'utf8');
+  await writeTextFile(path.join(root, 'docs', 'STYLEGUIDE.md'), guide);
   console.log(`Wrote ${styleSlugs.length} style skills and docs/STYLEGUIDE.md`);
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+runScript(main);

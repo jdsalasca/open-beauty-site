@@ -99,6 +99,28 @@ test('creates a valid GIF over MCP', async () => {
   const file = await readFile(path.join(dir, 'out', 'mcp.gif'));
   assert.equal(file.subarray(0, 6).toString('ascii'), 'GIF89a');
 });
+test('aborts a GIF request instead of waiting for the render', async () => {
+  const controller = new AbortController();
+  const pending = client.callTool(
+    {
+      name: 'beauty_create_gif',
+      arguments: { style: 'brutalist', text: 'CANCELLED', width: 320, height: 320, fps: 10, duration: 1, output: 'out/cancelled.gif' },
+    },
+    undefined,
+    { signal: controller.signal },
+  );
+  controller.abort();
+  await assert.rejects(pending, /aborted/i);
+  assert.ok(!existsSync(path.join(dir, 'out', 'cancelled.gif')));
+});
+
+test('rejects invalid tool input with an isError result, not a crash', async () => {
+  const result = await client.callTool({ name: 'beauty_create_page', arguments: { style: 'nope', title: 'X' } });
+  assert.equal(result.isError, true);
+  const text = (result.content as Array<{ type: string; text: string }>)[0]?.text ?? '';
+  assert.match(text, /invalid_enum_value|Invalid/);
+});
+
 test('creates an animated deck over MCP', async () => {
   const result = await client.callTool({
     name: 'beauty_create_deck',

@@ -5,7 +5,7 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { z } from 'zod';
-import type { Brief, CanvasLayer, DeckBrief, ExperienceBrief, StoryBrief, StyleSlug } from '../types.js';
+import type { Brief, CanvasLayer, DeckBrief, StyleSlug } from '../types.js';
 import { VERSION } from '../index.js';
 import { createCanvas, createDeck, createExperience, createGifFile, createMotion, createPage, createStory, timestamp } from '../generate.js';
 import { createSprintKit } from '../sprint.js';
@@ -150,38 +150,113 @@ const briefFields = {
   maxxing: z.boolean().optional().describe('Push ornament, type and motion to the maximum; still palette-bound.'),
 };
 
-function briefFromArgs(args: Record<string, unknown>): Partial<Brief> {
+const pageInputSchema = z.object({
+  style: styleEnum.describe('Editorial system to use.'),
+  ...briefFields,
+  output: z
+    .string()
+    .max(260)
+    .optional()
+    .describe('File path. Defaults to ./beauty-output/<style>-<slug>-<timestamp>.html.'),
+  include_html: z.boolean().optional().describe('Also return the full HTML in the tool response.'),
+});
+
+type PageInput = z.infer<typeof pageInputSchema>;
+
+const deckInputSchema = z.object({
+  style: styleEnum.describe('Editorial system to use.'),
+  title: z.string().min(1).max(120),
+  tagline: z.string().max(200).optional(),
+  intro: z.string().max(900).optional(),
+  eyebrow: z.string().max(60).optional(),
+  brand: z.string().max(50).optional(),
+  slides: z.array(deckSlideSchema).min(1).max(8).describe('Content slides. The cover and closing are generated automatically.'),
+  closing: z.string().max(120).optional().describe('Closing headline; defaults to "La conversación sigue."'),
+  subfamily: z.string().max(40).optional().describe('Curated subfamily slug from beauty_get_style.'),
+  maxxing: z.boolean().optional().describe('Richer ornament, type contrast and motion.'),
+  cta: ctaSchema.optional(),
+  locale: localeEnum.optional(),
+  output: z.string().max(260).optional().describe('File path. Defaults to ./beauty-output/<style>-deck-<timestamp>.html.'),
+  include_html: z.boolean().optional(),
+});
+
+type DeckInput = z.infer<typeof deckInputSchema>;
+
+const experienceInputSchema = z.object({
+  style: styleEnum,
+  kind: z.enum(['restaurant', 'museum', 'history', 'studio', 'club', 'garden']).optional(),
+  title: z.string().min(1).max(120),
+  tagline: z.string().max(200).optional(),
+  intro: z.string().max(700).optional(),
+  eyebrow: z.string().max(60).optional(),
+  brand: z.string().max(50).optional(),
+  rooms: z.array(experienceRoomSchema).min(3).max(8),
+  hours: z.string().max(140).optional(),
+  address: z.string().max(140).optional(),
+  source: z.string().max(240).optional(),
+  closing: z.string().max(220).optional(),
+  maxxing: z.boolean().optional().describe('Richer ornament, type contrast and motion.'),
+  cta: ctaSchema.optional(),
+  locale: localeEnum.optional(),
+  output: z.string().max(260).optional(),
+  include_html: z.boolean().optional(),
+});
+
+type ExperienceInput = z.infer<typeof experienceInputSchema>;
+
+const storyInputSchema = z.object({
+  style: styleEnum,
+  kind: z.enum(['story', 'history', 'lesson', 'essay']).optional().describe('story = cuento; history = lección histórica; lesson = explicador.'),
+  title: z.string().min(1).max(120),
+  tagline: z.string().max(200).optional(),
+  intro: z.string().max(700).optional(),
+  eyebrow: z.string().max(60).optional(),
+  brand: z.string().max(50).optional(),
+  chapters: z.array(storyChapterSchema).min(2).max(8),
+  source: z.string().max(300).optional(),
+  readingTime: z.string().max(40).optional(),
+  format: z.enum(['scroll', 'storybook']).optional().describe('storybook = illustrated papercut page per chapter.'),
+  maxxing: z.boolean().optional().describe('Richer ornament, type contrast and motion.'),
+  cta: ctaSchema.optional(),
+  locale: localeEnum.optional(),
+  output: z.string().max(260).optional(),
+  include_html: z.boolean().optional(),
+});
+
+type StoryInput = z.infer<typeof storyInputSchema>;
+
+function briefFromArgs(args: PageInput): Partial<Brief> {
   return {
-    title: args.title as string,
-    tagline: args.tagline as string | undefined,
-    intro: args.intro as string | undefined,
-    eyebrow: args.eyebrow as string | undefined,
-    brand: args.brand as string | undefined,
-    sections: args.sections as Brief['sections'],
-    quote: args.quote as Brief['quote'],
-    cta: args.cta as Brief['cta'],
-    footer: args.footer as string | undefined,
-    locale: args.locale as Brief['locale'],
-    seed: args.seed as number | undefined,
-    subfamily: args.subfamily as string | undefined,
-    audio: args.audio as Brief['audio'],
-    maxxing: args.maxxing as boolean | undefined,
+    title: args.title,
+    tagline: args.tagline,
+    intro: args.intro,
+    eyebrow: args.eyebrow,
+    brand: args.brand,
+    sections: args.sections,
+    quote: args.quote,
+    cta: args.cta,
+    footer: args.footer,
+    locale: args.locale,
+    seed: args.seed,
+    subfamily: args.subfamily,
+    audio: args.audio,
+    maxxing: args.maxxing,
   };
 }
 
-function deckBriefFromArgs(args: Record<string, unknown>): Partial<DeckBrief> {
+function deckBriefFromArgs(args: DeckInput): Partial<DeckBrief> {
   return {
-    title: args.title as string,
-    tagline: args.tagline as string | undefined,
-    intro: args.intro as string | undefined,
-    eyebrow: args.eyebrow as string | undefined,
-    brand: args.brand as string | undefined,
-    slides: args.slides as DeckBrief['slides'],
-    closing: args.closing as string | undefined,
-    cta: args.cta as Brief['cta'],
-    locale: args.locale as Brief['locale'],
-    subfamily: args.subfamily as string | undefined,
-    maxxing: args.maxxing as boolean | undefined,
+    title: args.title,
+    tagline: args.tagline,
+    intro: args.intro,
+    eyebrow: args.eyebrow,
+    brand: args.brand,
+    slides: args.slides,
+    closing: args.closing,
+    cta: args.cta,
+    locale: args.locale,
+    subfamily: args.subfamily,
+    maxxing: args.maxxing,
   };
 }
 
@@ -191,6 +266,14 @@ function slugFromTitle(value: string): string {
 
 function text(value: string) {
   return { content: [{ type: 'text' as const, text: value }] };
+}
+
+function errorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : String(error);
+}
+
+function errorResult(message: string) {
+  return { content: [{ type: 'text' as const, text: message }], isError: true };
 }
 
 export function createBeautyServer(): McpServer {
@@ -291,16 +374,7 @@ QUALITY BAR
       title: 'Create a complete HTML page',
       description:
         'Renders a full, responsive, animated single-file page from a short brief. Only style and title are required. Returns the file path, grade and fixes.',
-      inputSchema: {
-        style: styleEnum.describe('Editorial system to use.'),
-        ...briefFields,
-        output: z
-          .string()
-          .max(260)
-          .optional()
-          .describe('File path. Defaults to ./beauty-output/<style>-<slug>-<timestamp>.html.'),
-        include_html: z.boolean().optional().describe('Also return the full HTML in the tool response.'),
-      },
+      inputSchema: pageInputSchema,
     },
     async (args) => {
       try {
@@ -325,7 +399,7 @@ QUALITY BAR
         ].join('\n');
         return text(args.include_html ? `${summary}\n\n--- HTML ---\n${result.html}` : summary);
       } catch (error) {
-        return { content: [{ type: 'text' as const, text: `Create failed: ${(error as Error).message}` }], isError: true };
+        return errorResult(`Create failed: ${errorMessage(error)}`);
       }
     },
   );
@@ -336,22 +410,7 @@ QUALITY BAR
       title: 'Create an animated 16:9 presentation',
       description:
         'Builds a complete keyboard-navigable deck with transitions, progress, cover and closing. Use 4–8 slides, one idea per slide, 1–2 sentences per body. Supports curated subfamilies. Returns craft/vision and the file path.',
-      inputSchema: {
-        style: styleEnum.describe('Editorial system to use.'),
-        title: z.string().min(1).max(120),
-        tagline: z.string().max(200).optional(),
-        intro: z.string().max(900).optional(),
-        eyebrow: z.string().max(60).optional(),
-        brand: z.string().max(50).optional(),
-        slides: z.array(deckSlideSchema).min(1).max(8).describe('Content slides. The cover and closing are generated automatically.'),
-        closing: z.string().max(120).optional().describe('Closing headline; defaults to "La conversación sigue."'),
-        subfamily: z.string().max(40).optional().describe('Curated subfamily slug from beauty_get_style.'),
-        maxxing: z.boolean().optional().describe('Richer ornament, type contrast and motion.'),
-        cta: ctaSchema.optional(),
-        locale: localeEnum.optional(),
-        output: z.string().max(260).optional().describe('File path. Defaults to ./beauty-output/<style>-deck-<timestamp>.html.'),
-        include_html: z.boolean().optional(),
-      },
+      inputSchema: deckInputSchema,
     },
     async (args) => {
       try {
@@ -371,7 +430,7 @@ QUALITY BAR
         ].join('\n');
         return text(args.include_html ? `${summary}\n\n--- HTML ---\n${result.html}` : summary);
       } catch (error) {
-        return { content: [{ type: 'text' as const, text: `Deck failed: ${(error as Error).message}` }], isError: true };
+        return errorResult(`Deck failed: ${errorMessage(error)}`);
       }
     },
   );
@@ -427,7 +486,7 @@ QUALITY BAR
         ];
         return text(lines.join('\n'));
       } catch (error) {
-        return { content: [{ type: 'text' as const, text: `Sprint kit failed: ${(error as Error).message}` }], isError: true };
+        return errorResult(`Sprint kit failed: ${errorMessage(error)}`);
       }
     },
   );
@@ -438,25 +497,7 @@ QUALITY BAR
       title: 'Create a digital experience with rooms',
       description:
         'Builds a multi-room, single-file experience for a restaurant, museum, history room, studio or club. Each room has a procedural scene, copy, optional objects and an exit. Use 3–8 rooms; add source/hours/address when the place needs utility.',
-      inputSchema: {
-        style: styleEnum,
-        kind: z.enum(['restaurant', 'museum', 'history', 'studio', 'club', 'garden']).optional(),
-        title: z.string().min(1).max(120),
-        tagline: z.string().max(200).optional(),
-        intro: z.string().max(700).optional(),
-        eyebrow: z.string().max(60).optional(),
-        brand: z.string().max(50).optional(),
-        rooms: z.array(experienceRoomSchema).min(3).max(8),
-        hours: z.string().max(140).optional(),
-        address: z.string().max(140).optional(),
-        source: z.string().max(240).optional(),
-        closing: z.string().max(220).optional(),
-        maxxing: z.boolean().optional().describe('Richer ornament, type contrast and motion.'),
-        cta: ctaSchema.optional(),
-        locale: localeEnum.optional(),
-        output: z.string().max(260).optional(),
-        include_html: z.boolean().optional(),
-      },
+      inputSchema: experienceInputSchema,
     },
     async (args) => {
       try {
@@ -472,13 +513,13 @@ QUALITY BAR
             eyebrow: args.eyebrow,
             brand: args.brand,
             kind: args.kind,
-            rooms: args.rooms as ExperienceBrief['rooms'],
+            rooms: args.rooms,
             hours: args.hours,
             address: args.address,
             source: args.source,
             closing: args.closing,
             maxxing: args.maxxing,
-            cta: args.cta as Brief['cta'],
+            cta: args.cta,
             locale: args.locale,
           },
           output,
@@ -493,7 +534,7 @@ QUALITY BAR
         ].join('\n');
         return text(args.include_html ? `${summary}\n\n--- HTML ---\n${result.html}` : summary);
       } catch (error) {
-        return { content: [{ type: 'text' as const, text: `Experience failed: ${(error as Error).message}` }], isError: true };
+        return errorResult(`Experience failed: ${errorMessage(error)}`);
       }
     },
   );
@@ -504,24 +545,7 @@ QUALITY BAR
       title: 'Create a long-form story or history lesson',
       description:
         'Builds a chaptered, single-file story: cover, chapter nav, prose, a drop cap, plates, margin facts and a source. Use it for cuentos, history lessons and narrative essays. Aim for 2–8 chapters, 80–250 words each.',
-      inputSchema: {
-        style: styleEnum,
-        kind: z.enum(['story', 'history', 'lesson', 'essay']).optional().describe('story = cuento; history = lección histórica; lesson = explicador.'),
-        title: z.string().min(1).max(120),
-        tagline: z.string().max(200).optional(),
-        intro: z.string().max(700).optional(),
-        eyebrow: z.string().max(60).optional(),
-        brand: z.string().max(50).optional(),
-        chapters: z.array(storyChapterSchema).min(2).max(8),
-        source: z.string().max(300).optional(),
-        readingTime: z.string().max(40).optional(),
-        format: z.enum(['scroll', 'storybook']).optional().describe('storybook = illustrated papercut page per chapter.'),
-        maxxing: z.boolean().optional().describe('Richer ornament, type contrast and motion.'),
-        cta: ctaSchema.optional(),
-        locale: localeEnum.optional(),
-        output: z.string().max(260).optional(),
-        include_html: z.boolean().optional(),
-      },
+      inputSchema: storyInputSchema,
     },
     async (args) => {
       try {
@@ -537,12 +561,12 @@ QUALITY BAR
             intro: args.intro,
             eyebrow: args.eyebrow,
             brand: args.brand,
-            chapters: args.chapters as StoryBrief['chapters'],
+            chapters: args.chapters,
             source: args.source,
             readingTime: args.readingTime,
             format: args.format,
             maxxing: args.maxxing,
-            cta: args.cta as Brief['cta'],
+            cta: args.cta,
             locale: args.locale,
           },
           output,
@@ -557,7 +581,7 @@ QUALITY BAR
         ].join('\n');
         return text(args.include_html ? `${summary}\n\n--- HTML ---\n${result.html}` : summary);
       } catch (error) {
-        return { content: [{ type: 'text' as const, text: `Story failed: ${(error as Error).message}` }], isError: true };
+        return errorResult(`Story failed: ${errorMessage(error)}`);
       }
     },
   );
@@ -581,7 +605,10 @@ QUALITY BAR
         output: z.string().max(260).optional().describe('File path. Defaults to ./beauty-output/<style>-<slug>-<timestamp>.gif.'),
       },
     },
-    async (args) => {
+    async (args, extra) => {
+      if (extra.signal?.aborted) {
+        return errorResult('GIF cancelled before rendering.');
+      }
       try {
         const result = await createGifFile({
           style: args.style,
@@ -599,7 +626,7 @@ QUALITY BAR
           `Created a ${presets[args.style].name} GIF.\nfile: ${result.path}\n${result.width}×${result.height} · ${result.frames} frames · ${result.fps} fps · ${Math.round(result.bytes / 1024)} KB\nNext: preview it, or call beauty_validate on a page that uses the same style.`,
         );
       } catch (error) {
-        return { content: [{ type: 'text' as const, text: `GIF failed: ${(error as Error).message}` }], isError: true };
+        return errorResult(`GIF failed: ${errorMessage(error)}`);
       }
     },
   );
@@ -746,7 +773,7 @@ QUALITY BAR
           : validateHtml(source, style);
         return text(`${formatValidation(result)}\n\nstats: ${JSON.stringify(result.stats)}`);
       } catch (error) {
-        return { content: [{ type: 'text' as const, text: `Validate failed: ${(error as Error).message}` }], isError: true };
+        return errorResult(`Validate failed: ${errorMessage(error)}`);
       }
     },
   );
@@ -801,13 +828,13 @@ QUALITY BAR
     'beauty://skills/beauty.md',
     { title: 'open-beauty-site agent skill', mimeType: 'text/markdown' },
     async (uri) => {
-      let text = SKILL_FALLBACK;
+      let body = SKILL_FALLBACK;
       try {
-        text = await readFile(path.join(packageRoot(), 'skills', 'beauty.md'), 'utf8');
+        body = await readFile(path.join(packageRoot(), 'skills', 'beauty.md'), 'utf8');
       } catch {
         // Keep the fallback if the file is unavailable.
       }
-      return { contents: [{ uri: uri.href, mimeType: 'text/markdown', text }] };
+      return { contents: [{ uri: uri.href, mimeType: 'text/markdown', text: body }] };
     },
   );
 
@@ -816,14 +843,14 @@ QUALITY BAR
     'beauty://skills/education.md',
     { title: 'Educational page skill', mimeType: 'text/markdown' },
     async (uri) => {
-      let text =
+      let body =
         '# Education skill\n\nOne learning objective, one misconception, one concrete detail, one source. Sections as rooms: hook → concept → use. Quote the primary source.';
       try {
-        text = await readFile(path.join(packageRoot(), 'skills', 'education.md'), 'utf8');
+        body = await readFile(path.join(packageRoot(), 'skills', 'education.md'), 'utf8');
       } catch {
         // Keep the compact fallback.
       }
-      return { contents: [{ uri: uri.href, mimeType: 'text/markdown', text }] };
+      return { contents: [{ uri: uri.href, mimeType: 'text/markdown', text: body }] };
     },
   );
 
@@ -832,13 +859,13 @@ QUALITY BAR
     'beauty://skills/presentation.md',
     { title: 'Animated presentation skill', mimeType: 'text/markdown' },
     async (uri) => {
-      let text = '# Presentation skill\n\n5–8 slides. One idea per slide. 35 words max. Use beauty_create_deck with a curated subfamily.';
+      let body = '# Presentation skill\n\n5–8 slides. One idea per slide. 35 words max. Use beauty_create_deck with a curated subfamily.';
       try {
-        text = await readFile(path.join(packageRoot(), 'skills', 'presentation.md'), 'utf8');
+        body = await readFile(path.join(packageRoot(), 'skills', 'presentation.md'), 'utf8');
       } catch {
         // Keep the compact fallback.
       }
-      return { contents: [{ uri: uri.href, mimeType: 'text/markdown', text }] };
+      return { contents: [{ uri: uri.href, mimeType: 'text/markdown', text: body }] };
     },
   );
 

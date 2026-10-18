@@ -1,8 +1,10 @@
-import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { createPage } from '../src/generate.js';
 import { createGif } from '../src/gif.js';
 import type { Brief, StyleSlug } from '../src/types.js';
+import { ensureDir, writeTextFile } from './lib/fs.js';
+import { pageGrade } from './lib/page.js';
+import { runScript } from './lib/run.js';
 
 const root = process.cwd();
 const out = path.join(root, 'examples', 'showcase');
@@ -210,15 +212,15 @@ const pages: Array<{ slug: StyleSlug; brief: Brief }> = [
 ];
 
 async function main(): Promise<void> {
-  await mkdir(out, { recursive: true });
-  await mkdir(path.join(root, 'examples', 'gifs'), { recursive: true });
+  await ensureDir(out);
+  await ensureDir(path.join(root, 'examples', 'gifs'));
   for (const page of pages) {
     const file = path.join(out, page.slug, 'index.html');
-    await mkdir(path.dirname(file), { recursive: true });
+    await ensureDir(path.dirname(file));
     const result = await createPage({ style: page.slug, brief: page.brief, output: file });
     const failed = result.validation.vision.checks.filter((check) => !check.passed).map((check) => check.name);
     console.log(
-      `${page.slug.padEnd(12)} ${result.validation.grade} ${String(result.validation.score).padStart(3)} · vision ${result.validation.vision.score}/4${failed.length ? ` (${failed.join(',')})` : ''}`,
+      `${pageGrade(page.slug, result.validation.grade, result.validation.score)} · vision ${result.validation.vision.score}/4${failed.length ? ` (${failed.join(',')})` : ''}`,
     );
   }
 
@@ -250,7 +252,7 @@ async function main(): Promise<void> {
     )
     .join('\n');
 
-  await writeFile(
+  await writeTextFile(
     path.join(out, 'index.html'),
     `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Diez estilos nuevos · open-beauty-site</title>
 <style>
@@ -282,12 +284,8 @@ h2{font-family:var(--display);font-size:24px;line-height:1;letter-spacing:-.03em
 <section class="hero"><h1>Diez<br><mark>estilos nuevos.</mark></h1><p class="lede">Art Deco, Isotype, Op Art, Ukiyo-e, Bestiario, Psicodelia, Memphis, Vaporwave, Galactic Futurism y Nature Memory. SVG y CSS original, tipografía exacta, interacción y GIF. Todos A/100 y vision 4/4.</p><a class="cta" href="../compare.html">Ver mi versión vs Luna 6 Max →</a></section>
 <main class="grid">${cards}</main>
 </body></html>`,
-    'utf8',
   );
   console.log('Wrote examples/showcase/index.html');
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+runScript(main);

@@ -1,7 +1,9 @@
-import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { createPage } from '../src/generate.js';
 import type { Brief } from '../src/types.js';
+import { ensureDir, writeTextFile } from './lib/fs.js';
+import { pageGrade } from './lib/page.js';
+import { runScript } from './lib/run.js';
 
 const root = process.cwd();
 const outDir = path.join(root, 'examples', 'education');
@@ -79,14 +81,14 @@ const pages: Array<{ file: string; style: 'renaissance' | 'papercraft'; brief: B
 ];
 
 async function main(): Promise<void> {
-  await mkdir(outDir, { recursive: true });
+  await ensureDir(outDir);
   for (const page of pages) {
     const out = path.join(outDir, page.file);
     const result = await createPage({ style: page.style, brief: page.brief, output: out });
-    console.log(`${page.style.padEnd(12)} ${result.validation.grade} ${result.validation.score} vision ${result.validation.vision.score}/4 → ${path.relative(root, out)}`);
+    console.log(`${pageGrade(page.style, result.validation.grade, result.validation.score)} vision ${result.validation.vision.score}/4 → ${path.relative(root, out)}`);
   }
 
-  await writeFile(
+  await writeTextFile(
     path.join(root, 'examples', 'education', 'README.md'),
     `# Education examples
 
@@ -97,11 +99,7 @@ Two art-directed lessons generated with the same harness:
 
 Both validate at A/100 and 4/4 on the vision heuristic.
 `,
-    'utf8',
   );
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+runScript(main);

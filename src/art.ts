@@ -41,7 +41,7 @@ export function sceneArt(preset: StylePreset, index = 1, caption?: string, subje
   const svg = (() => {
     switch (preset.slug) {
       case 'renaissance':
-        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
+        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
           <rect width="800" height="800" fill="${p.bg}"/>
           <path d="M110 760V342c0-170 130-300 290-300s290 130 290 300v418" fill="${n === 1 ? p.accent3 : p.surface}" stroke="${p.accent}" stroke-width="2"/>
           <circle cx="${n === 2 ? 530 : 455}" cy="330" r="92" fill="${p.accent2}"/>
@@ -63,7 +63,7 @@ export function sceneArt(preset: StylePreset, index = 1, caption?: string, subje
           <circle cx="665" cy="735" r="7" fill="${p.accent}"/>
         </svg>`;
       case 'brutalist':
-        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
+        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
           <rect width="800" height="800" fill="${p.bg}"/>
           <defs><pattern id="bgrid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M50 0H0V50" fill="none" stroke="${p.ink}" stroke-width="1" opacity=".18"/></pattern></defs>
           <rect width="800" height="800" fill="url(#bgrid)"/>
@@ -78,7 +78,7 @@ export function sceneArt(preset: StylePreset, index = 1, caption?: string, subje
           <text x="90" y="765" font-family="Space Mono, monospace" font-size="18" letter-spacing="4" fill="${p.ink}">OPEN / BEAUTY / 2026</text>
         </svg>`;
       case 'papercraft':
-        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
+        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
           <rect width="800" height="800" fill="${p.bg}"/>
           <circle cx="200" cy="330" r="190" fill="${p.accent3}" opacity=".55"/>
           <g transform="rotate(-7 410 360)"><rect x="190" y="170" width="430" height="360" rx="28" fill="${p.surface}" stroke="${p.ink}" stroke-width="1.2"/><rect x="235" y="245" width="340" height="200" rx="12" fill="${p.bg}"/><circle cx="405" cy="345" r="58" fill="${p.accent2}"/><path d="M235 410c70-40 120-40 190 0s170 34 250-10v45H235Z" fill="${p.accent3}"/></g>
@@ -89,7 +89,7 @@ export function sceneArt(preset: StylePreset, index = 1, caption?: string, subje
           <g fill="${p.accent4}"><circle cx="130" cy="130" r="8"/><circle cx="700" cy="180" r="5"/><rect x="690" y="690" width="18" height="18" transform="rotate(15 690 690)"/></g>
         </svg>`;
       case 'artdeco':
-        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
+        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
           <rect width="800" height="800" fill="${p.bg}"/>
           <g stroke="${p.accent}" fill="none" opacity=".8">${Array.from({ length: 24 }, (_, i) => {
             const a = (i / 24) * Math.PI * 2;
@@ -103,7 +103,7 @@ export function sceneArt(preset: StylePreset, index = 1, caption?: string, subje
           <path d="M110 110h580v580H110Z" fill="none" stroke="${p.accent}" stroke-width="1" opacity=".45"/>
         </svg>`;
       case 'isotype':
-        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
+        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
           <rect width="800" height="800" fill="${p.bg}"/>
           <g stroke="${p.muted}" stroke-width="1" opacity=".4"><path d="M0 170h800M0 300h800M0 430h800M0 560h800M0 690h800"/><path d="M120 0v800M250 0v800M380 0v800M510 0v800M640 0v800"/></g>
           <text x="60" y="96" font-family="Jost, sans-serif" font-size="28" letter-spacing="4" fill="${p.ink}">${esc(label || 'ARCHIVO / SERIE 01')}</text>
@@ -116,7 +116,7 @@ export function sceneArt(preset: StylePreset, index = 1, caption?: string, subje
           <path d="M60 740h680" stroke="${p.accent}" stroke-width="8"/>
         </svg>`;
       case 'opart':
-        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
+        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
           <rect width="800" height="800" fill="${p.bg}"/>
           <defs><pattern id="opcheck" width="40" height="40" patternUnits="userSpaceOnUse"><rect width="20" height="20" fill="${p.bg}"/><rect x="20" y="20" width="20" height="20" fill="${p.ink}"/></pattern></defs>
           <rect width="800" height="800" fill="url(#opcheck)" opacity=".9"/>
@@ -125,7 +125,7 @@ export function sceneArt(preset: StylePreset, index = 1, caption?: string, subje
           <text x="400" y="760" text-anchor="middle" font-family="Archivo Black, sans-serif" font-size="22" letter-spacing="8" fill="${p.bg}">MIRÁ / OTRA VEZ</text>
         </svg>`;
       case 'ukiyoe':
-        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
+        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
           <rect width="800" height="800" fill="${p.bg}"/>
           <circle cx="${n === 2 ? 280 : 590}" cy="230" r="95" fill="${p.accent2}"/>
           <path d="M0 560c80-25 140-25 210 4s150 15 220-18 150-35 230-3 100 22 140 10v247H0Z" fill="${p.accent}"/>
@@ -141,7 +141,7 @@ export function sceneArt(preset: StylePreset, index = 1, caption?: string, subje
           <text x="667" y="196" text-anchor="middle" font-family="Shippori Mincho B1, serif" font-size="24" fill="${p.bg}" transform="rotate(90 667 196)">浮世</text>
         </svg>`;
       case 'bestiary':
-        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
+        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
           <rect width="800" height="800" fill="${p.bg}"/>
           <path d="M130 120h540v560H130Z" fill="none" stroke="${p.accent}" stroke-width="1"/>
           <path d="M170 170h460v460H170Z" fill="none" stroke="${p.accent}" stroke-width="1" opacity=".5"/>
@@ -153,7 +153,7 @@ export function sceneArt(preset: StylePreset, index = 1, caption?: string, subje
           <path d="M560 180c40-28 80-28 120 0" fill="none" stroke="${p.accent}" stroke-width="1.5"/>
         </svg>`;
       case 'psychedelic':
-        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
+        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
           <rect width="800" height="800" fill="${p.bg}"/>
           <path d="M-80 260C80 60 250 80 360 220s190 160 300 40 180-80 240 60v300c-100-120-200-130-310-10S390 760 260 650 20 620-80 720Z" fill="${p.accent}"/>
           <path d="M-60 600c120-160 230-170 340-40s190 120 300 0 170-100 270 20v220H-60Z" fill="${p.accent2}" opacity=".9"/>
@@ -165,7 +165,7 @@ export function sceneArt(preset: StylePreset, index = 1, caption?: string, subje
           <path d="M400 240l30 100 100 30-100 30-30 100-30-100-100-30 100-30Z" fill="${p.bg}" opacity=".9"/>
         </svg>`;
       case 'memphis':
-        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
+        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
           <rect width="800" height="800" fill="${p.bg}"/>
           <g fill="none" stroke="${p.ink}" stroke-width="2" opacity=".25"><path d="M0 100h800M0 300h800M0 500h800M0 700h800M100 0v800M300 0v800M500 0v800M700 0v800"/></g>
           <g transform="translate(400 390)">
@@ -180,7 +180,7 @@ export function sceneArt(preset: StylePreset, index = 1, caption?: string, subje
           <path d="M620 560c40 0 40-50 80-50s40 50 80 50" fill="none" stroke="${p.ink}" stroke-width="8"/>
         </svg>`;
       case 'vaporwave':
-        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
+        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
           <rect width="800" height="800" fill="${p.bg}"/>
           <defs><linearGradient id="vsun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${p.accent3}"/><stop offset="1" stop-color="${p.accent2}"/></linearGradient></defs>
           <circle cx="400" cy="330" r="190" fill="url(#vsun)"/>
@@ -190,7 +190,7 @@ export function sceneArt(preset: StylePreset, index = 1, caption?: string, subje
           <g transform="translate(170 120)"><rect width="460" height="190" fill="${p.surface}" stroke="${p.ink}" stroke-width="2"/><rect width="460" height="30" fill="${p.accent2}"/><text x="18" y="22" font-family="'Press Start 2P', monospace" font-size="10" fill="${p.ink}">MI_MUSEO.EXE</text><g fill="${p.bg}" stroke="${p.ink}" stroke-width="1"><rect x="390" y="7" width="16" height="16"/><rect x="412" y="7" width="16" height="16"/><rect x="434" y="7" width="16" height="16"/></g><text x="20" y="75" font-family="'Press Start 2P', monospace" font-size="9" fill="${p.ink}">C:\\MUSEO\\COSAS_PEQUENAS</text></g>
         </svg>`;
       case 'galactic':
-        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
+        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
           <rect width="800" height="800" fill="${p.bg}"/>
           <g fill="${p.ink}">${Array.from({ length: 70 }, (_, i) => {
             const x = (i * 137) % 760 + 20;
@@ -205,7 +205,7 @@ export function sceneArt(preset: StylePreset, index = 1, caption?: string, subje
           <text x="400" y="760" text-anchor="middle" font-family="Michroma, sans-serif" font-size="16" letter-spacing="9" fill="${p.muted}">${esc(label || 'MEMORIA / ORBITAL')}</text>
         </svg>`;
       case 'nature':
-        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
+        return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
           <rect width="800" height="800" fill="${p.bg}"/>
           <path d="M0 640c120-50 220 30 340-20s230-30 460 20v160H0Z" fill="${p.surface}"/>
           <path d="M400 700V180" stroke="${p.ink}" stroke-width="3" fill="none"/>

@@ -1,6 +1,6 @@
 # open-beauty-site style guide
 
-Twelve complete editorial systems. Every value here is normative: if a page uses another font, colour, border width or radius, the validator will flag it.
+Thirteen complete editorial systems. Every value here is normative: if a page uses another font, colour, border width or radius, the validator will flag it.
 
 # Renaissance — A chalky, asymmetric fresco system
 
