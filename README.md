@@ -1,10 +1,63 @@
 # Open Beauty
 
-Una casa editorial para un internet vivo.
+Open Beauty es un arnés de diseño y servidor MCP que convierte un brief corto en una página HTML, experiencia, cuento, presentación, kit de sprint o GIF completo y validado, en uno de trece sistemas editoriales. El modelo aporta contenido y juicio; el arnés aporta fuentes, paleta, composición, movimiento y la puerta de calidad.
 
-Una página puede informar y, al mismo tiempo, invitar a quedarse. Puede ser un fresco, un museo de cinco salas, un cuento que avanza por capítulos, una presentación para conversar o un GIF que abre una puerta. **Open Beauty convierte un brief en una pieza web con voz, forma y propósito.**
+## Inicio rápido
 
-La tesis es simple: internet se vuelve vivo cuando dejamos de tratar cada página como una plantilla para repartir información y la hacemos un lugar para mirar, aprender, encontrarse y recordar. El sistema aporta la gramática visual; quien escribe responde por los hechos.
+```bash
+pnpm setup
+pnpm mcp:config
+pnpm examples
+```
+
+`pnpm setup` instala, compila y corre la suite. `pnpm mcp:config` imprime el bloque para registrar el servidor MCP por stdio. `pnpm examples` regenera la galería de referencia.
+
+## Herramientas MCP
+
+| Herramienta | Propósito | Llamada de ejemplo |
+| --- | --- | --- |
+| `beauty_list_styles` | Lista los 13 estilos con fuente y uso | `beauty_list_styles()` |
+| `beauty_get_style` | Lee los tokens exactos de un estilo | `beauty_get_style({ style: "nature", format: "markdown" })` |
+| `beauty_get_skill` | Carga el flujo y la skill de formato | `beauty_get_skill({ format: "deck" })` |
+| `beauty_create_page` | Genera una página HTML completa | `beauty_create_page({ style: "nature", title: "Herbario" })` |
+| `beauty_create_experience` | Genera un lugar de 3–8 salas | `beauty_create_experience({ style: "galactic", title: "Museo", rooms: [...] })` |
+| `beauty_create_story` | Genera un cuento o lección por capítulos | `beauty_create_story({ style: "papercraft", title: "La semilla", chapters: [...] })` |
+| `beauty_create_deck` | Genera una presentación 16:9 | `beauty_create_deck({ style: "nature", title: "Té", slides: [...] })` |
+| `beauty_create_sprint` | Genera review + retro + planning + 3 GIFs | `beauty_create_sprint({ style: "artdeco", sprint: "16" })` |
+| `beauty_create_gif` | Genera un GIF editorial | `beauty_create_gif({ style: "artdeco", text: "Subir" })` |
+| `beauty_validate` | Audita HTML y devuelve grado y fixes | `beauty_validate({ style: "nature", path: "page.html" })` |
+| `beauty_examples` | Devuelve rutas de referencia | `beauty_examples()` |
+
+## Galería de estilos
+
+| Estilo | Ejemplo |
+| --- | --- |
+| Renaissance | [examples/renaissance/index.html](examples/renaissance/index.html) |
+| Brutalist | [examples/brutalist/index.html](examples/brutalist/index.html) |
+| Paper Craft | [examples/papercraft/index.html](examples/papercraft/index.html) |
+| Art Deco | [examples/showcase/artdeco/index.html](examples/showcase/artdeco/index.html) |
+| Isotype | [examples/showcase/isotype/index.html](examples/showcase/isotype/index.html) |
+| Op Art | [examples/showcase/opart/index.html](examples/showcase/opart/index.html) |
+| Ukiyo-e | [examples/showcase/ukiyoe/index.html](examples/showcase/ukiyoe/index.html) |
+| Bestiary | [examples/showcase/bestiary/index.html](examples/showcase/bestiary/index.html) |
+| Psychedelic | [examples/showcase/psychedelic/index.html](examples/showcase/psychedelic/index.html) |
+| Memphis | [examples/showcase/memphis/index.html](examples/showcase/memphis/index.html) |
+| Vaporwave | [examples/showcase/vaporwave/index.html](examples/showcase/vaporwave/index.html) |
+| Galactic | [examples/showcase/galactic/index.html](examples/showcase/galactic/index.html) |
+| Nature Memory | [examples/showcase/nature/index.html](examples/showcase/nature/index.html) |
+
+## Solución de problemas
+
+- **Node.js 22 o superior** (`node --version`); `engines.node` lo exige.
+- **Fuentes**: están en `fonts/` y se registran con `@napi-rs/canvas`; no borres esa carpeta. Si falta un TTF, `beauty doctor` falla con `FONTS_MISSING`.
+- **`@napi-rs/canvas` en Windows**: reinstalá con `pnpm install` en Node 22+; usa binarios precompilados y no requiere compilación nativa. Si no carga, verificá la versión de Node y que `dist/` siga junto al repo.
+
+## Barra de calidad
+
+- **Accesibilidad**: `prefers-reduced-motion`, landmarks, `alt`, contraste de los pares de tokens que llevan texto y controles de 44 px en decks.
+- **Determinismo**: la misma brief y estilo producen el mismo HTML (salvo timestamp) y los mismos frames; los ornamentos usan PRNG sembrado.
+- **Pruebas**: `pnpm test` (19/19) y `pnpm check`; el validador exige **A/100 y visión 4/4**.
+
 
 ## Trece maneras de mirar
 
