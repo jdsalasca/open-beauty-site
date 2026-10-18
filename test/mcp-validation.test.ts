@@ -88,6 +88,27 @@ test('runtime failures return a clear message instead of crashing the server', a
   assert.match(validate.text, /Pass either path or html/);
 });
 
+test('beauty_fix applies safe repairs and reports before/after scores', async () => {
+  const broken = '<!doctype html><html><head><style>body{font-family:\'Inter\',sans-serif;background:#123456}</style></head><body><h2>Hello</h2><img src="x.png"></body></html>';
+  const result = await callTool('beauty_fix', { style: 'papercraft', html: broken });
+  assert.equal(result.isError, false);
+  assert.match(result.text, /score: \d+ \(\w\) → \d+ \(\w\)/);
+  assert.match(result.text, /repairs: \d+/);
+  assert.match(result.text, /normalize-headings/);
+  assert.match(result.text, /add-alt/);
+  assert.match(result.text, /replace-hex/);
+
+  const withHtml = await callTool('beauty_fix', { style: 'papercraft', html: broken, include_html: true });
+  assert.equal(withHtml.isError, false);
+  assert.match(withHtml.text, /--- HTML ---/);
+  assert.match(withHtml.text, /<h1>Hello<\/h1>/);
+  assert.match(withHtml.text, /alt=""/);
+
+  const missing = await callTool('beauty_fix', { style: 'papercraft' });
+  assert.equal(missing.isError, true);
+  assert.match(missing.text, /Pass either path or html/);
+});
+
 test('the server keeps answering valid calls after invalid ones', async () => {
   await callTool('beauty_create_page', { style: 'nope' });
   const result = await callTool('beauty_list_styles', {});

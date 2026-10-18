@@ -3,6 +3,32 @@ name: open-beauty-isotype
 description: Apply the Isotype editorial system (A city explained with pictograms) to a page or GIF with open-beauty-site.
 ---
 
+## Quick recipe
+
+Copy, paste, run. Replace only the quoted words.
+
+```bash
+node dist/cli.js page --style isotype --brief examples/recipes/isotype/page.json --out out/isotype.html
+node dist/cli.js deck --style isotype --brief examples/recipes/isotype/deck.json --out out/isotype-deck.html
+node dist/cli.js gif --style isotype --text "Isotype Count" --out out/isotype.gif
+```
+
+**5 hard rules**
+- Display font is `Jost`; body and labels use it too. Never substitute.
+- Border widths: 1, 2, 3 px. Radius: 0–2 px.
+- Motion window: 0.3–1.2 s.
+- Shadow: No shadow. The grid and the pictograms do the work.
+- No lorem ipsum.
+
+**3 common mistakes (and fixes)**
+- Inventing a font -> read Hard tokens and use the exact family.
+- Adding a second accent -> one accent per screen; keep the rest chalky/flat.
+- Too much copy -> card body 1–2 sentences; headline 2–6 words.
+
+**Words / tone**
+- es: Leyenda de datos públicos. Cantidad, unidad, denominador y fuente; di qué cuenta cada pictograma.
+- en: a public-data caption. State quantity, unit, denominator and source; say what each pictogram counts.
+
 # Isotype skill
 
 Use this skill together with `beauty` when the brief calls for isotype.

@@ -1,0 +1,62 @@
+{
+  "title": "Isotype Studio",
+  "tagline": "A city explained with pictograms.",
+  "subfamily": "vienna",
+  "locale": "en",
+  "slides": [
+    {
+      "layout": "statement",
+      "kicker": "01 / The idea",
+      "title": "One idea at a time",
+      "body": "The rest is noise, and noise is not design."
+    },
+    {
+      "layout": "points",
+      "kicker": "02 / Three moves",
+      "title": "How we work",
+      "points": [
+        {
+          "title": "Read the style",
+          "body": "Tokens first, ideas second."
+        },
+        {
+          "title": "Write real copy",
+          "body": "No placeholders, no filler."
+        },
+        {
+          "title": "Validate",
+          "body": "Craft A and vision four of four."
+        }
+      ]
+    },
+    {
+      "layout": "stats",
+      "kicker": "03 / Scale",
+      "title": "Three numbers",
+      "stats": [
+        {
+          "value": "13",
+          "label": "styles in the harness"
+        },
+        {
+          "value": "4",
+          "label": "vision checks to pass"
+        }
+      ]
+    },
+    {
+      "layout": "quote",
+      "kicker": "04 / Manifesto",
+      "title": "A working rule",
+      "quote": {
+        "text": "If it does not stop you, it is not finished.",
+        "author": "Studio manifesto"
+      }
+    }
+  ],
+  "cta": {
+    "label": "Start a project",
+    "href": "#contact"
+  },
+  "closing": "La conversación sigue."
+}

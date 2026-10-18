@@ -3,6 +3,32 @@ name: open-beauty-psychedelic
 description: Apply the Psychedelic poster editorial system (A poster that refuses to sit still) to a page or GIF with open-beauty-site.
 ---
 
+## Quick recipe
+
+Copy, paste, run. Replace only the quoted words.
+
+```bash
+node dist/cli.js page --style psychedelic --brief examples/recipes/psychedelic/page.json --out out/psychedelic.html
+node dist/cli.js deck --style psychedelic --brief examples/recipes/psychedelic/deck.json --out out/psychedelic-deck.html
+node dist/cli.js gif --style psychedelic --text "Psychedelic Poster" --out out/psychedelic.gif
+```
+
+**5 hard rules**
+- Display font is `Bungee Shade`; body and labels use it too. Never substitute.
+- Border widths: 0, 1, 2, 4 px. Radius: 0–40 px.
+- Motion window: 0.3–1.4 s.
+- Shadow: Hard offset shadows in magenta or orange are allowed; no soft grey shadows.
+- No lorem ipsum.
+
+**3 common mistakes (and fixes)**
+- Inventing a font -> read Hard tokens and use the exact family.
+- Adding a second accent -> one accent per screen; keep the rest chalky/flat.
+- Too much copy -> card body 1–2 sentences; headline 2–6 words.
+
+**Words / tone**
+- es: Cartel de concierto con sujeto claro. Un verbo sensorial, una explicación llana, sin 'vibes' vagos.
+- en: a concert poster with a clear subject. One sensory verb, one plain explanation, no vague "vibes".
+
 # Psychedelic poster skill
 
 Use this skill together with `beauty` when the brief calls for psychedelic poster.

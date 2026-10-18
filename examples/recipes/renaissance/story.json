@@ -1,0 +1,27 @@
+{
+  "title": "Renaissance Studio",
+  "tagline": "A chalky, asymmetric fresco system.",
+  "kind": "story",
+  "intro": "A short story about a studio that works in the renaissance register.",
+  "chapters": [
+    {
+      "kicker": "01",
+      "title": "The Room",
+      "body": "The studio opened on a Tuesday in a rented room with tall windows and a single table. Light fell across the floor in long rectangles and the first mark was a line drawn to test the pen. Nothing about the space was finished, but the unfinished quality was the point: a room that still smelled of plaster and turpentine, waiting for a purpose. We swept the floor, set the type, and pinned a single sheet to the wall. By evening the room had a name and a small lamp that made the paper glow. It was enough to begin, and beginning was the only thing we had not yet done."
+    },
+    {
+      "kicker": "02",
+      "title": "The Material",
+      "body": "Paper is not a surface; it is a collaborator. We learned to read its grain the way a sailor reads the sea, turning the sheet until the fibers agreed with the cut. Some papers forgive, others resist, and the difference is a conversation that takes years to hear. We kept samples in a drawer labeled by weight and mood, and chose by touch rather than by number. The best sheets were never the most expensive; they were the ones that held a fold without complaint and accepted ink without bleeding. A good material disappears into the work and leaves only its character behind."
+    },
+    {
+      "kicker": "03",
+      "title": "The Work",
+      "body": "The first finished piece was small and slightly crooked, and we kept it on the wall as a reminder that skill is a direction, not a destination. Clients came slowly, then all at once, and the work changed from demonstration to service without losing its nerve. We still test every idea by making it once by hand before it becomes a system, because a process that cannot be drawn cannot be trusted. The studio grew, but the table stayed the same size, and the lamp still makes the paper glow. That is the work: not perfection, but attention repeated until it becomes a style."
+    }
+  ],
+  "source": "Studio notes, 2026.",
+  "readingTime": "5 min",
+  "format": "scroll",
+  "locale": "en"
+}

@@ -54,6 +54,15 @@ pnpm examples
 
 ## Barra de calidad
 
+## Kit para modelos débiles
+
+- `skills/beauty.md`: árbol de decisión de una página (qué quieres -> comando exacto).
+- `examples/recipes/<style>/`: briefs de arranque (`page`, `deck`, `story`, `experience`) validados contra el CLI.
+- `docs/WEAK-MODELS.md`: por qué fallan los modelos débiles, reglas del arnés y tabla de solución de problemas.
+
+El CLI y MCP son la fuente de verdad; los comandos exactos están en `skills/beauty.md`.
+
+
 - **Accesibilidad**: `prefers-reduced-motion`, landmarks, `alt`, contraste de los pares de tokens que llevan texto y controles de 44 px en decks.
 - **Determinismo**: la misma brief y estilo producen el mismo HTML (salvo timestamp) y los mismos frames; los ornamentos usan PRNG sembrado.
 - **Pruebas**: `pnpm test` (19/19) y `pnpm check`; el validador exige **A/100 y visión 4/4**.

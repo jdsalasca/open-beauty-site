@@ -41,9 +41,11 @@ test('exposes the full tool surface', async () => {
     'beauty_create_sprint',
     'beauty_create_story',
     'beauty_examples',
+    'beauty_fix',
     'beauty_get_skill',
     'beauty_get_style',
     'beauty_list_styles',
+    'beauty_make',
     'beauty_validate',
   ]);
 });
@@ -78,6 +80,38 @@ test('creates and audits a page over MCP', async () => {
   });
   const auditText = (audit.content as Array<{ type: string; text: string }>)[0]?.text ?? '';
   assert.match(auditText, /A · 100\/100/);
+});
+
+test('makes a complete artifact over MCP with one tiny input', async () => {
+  const result = await client.callTool({
+    name: 'beauty_make',
+    arguments: {
+      kind: 'page',
+      style: 'nature',
+      idea: 'Un jardín que guarda la lluvia de octubre.',
+      locale: 'en',
+      output: 'out/make.html',
+    },
+  });
+  assert.equal(result.isError, undefined);
+  const text = (result.content as Array<{ type: string; text: string }>)[0]?.text ?? '';
+  const payload = JSON.parse(text) as { path: string; grade: string; score: number; issues: unknown[]; next_step: string };
+  assert.equal(payload.grade, 'A');
+  assert.ok(payload.score >= 90);
+  assert.deepEqual(payload.issues, []);
+  assert.ok(payload.next_step.length > 0);
+  assert.ok(existsSync(path.join(dir, 'out', 'make.html')));
+});
+
+test('beauty_make returns a helpful error for an empty idea', async () => {
+  const result = await client.callTool({
+    name: 'beauty_make',
+    arguments: { kind: 'deck', style: 'galactic', idea: '   ' },
+  });
+  assert.equal(result.isError, true);
+  const text = (result.content as Array<{ type: string; text: string }>)[0]?.text ?? '';
+  assert.match(text, /idea/i);
+  assert.match(text, /example/i);
 });
 
 test('creates a valid GIF over MCP', async () => {

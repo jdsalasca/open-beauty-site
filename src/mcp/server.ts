@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { readFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { z } from 'zod';
@@ -10,7 +10,9 @@ import { VERSION } from '../index.js';
 import { createCanvas, createDeck, createExperience, createGifFile, createMotion, createPage, createSequence, createStory, timestamp } from '../generate.js';
 import { createSprintKit } from '../sprint.js';
 import { formatValidation, validateDeck, validateExperience, validateHtml, validateStory } from '../validate.js';
+import { fixHtml } from '../fix.js';
 import { presets, styleSlugs } from '../styles/presets.js';
+import { makeArtifact } from '../make.js';
 import { SKILL_FALLBACK, styleGuideMarkdown, stylesOverview } from '../guide.js';
 import { packageRoot } from '../paths.js';
 
@@ -285,8 +287,8 @@ export function createBeautyServer(): McpServer {
 MANDATORY WORKFLOW
 1. Call beauty_list_styles.
 2. Call beauty_get_style for the chosen style and follow its hard tokens. Never invent fonts, hex colours, border widths or radii.
-3. Choose the artefact: beauty_create_page for a landing, beauty_create_deck for a talk, beauty_create_experience for a place with rooms, beauty_create_story for a cuento or history lesson.
-4. Call beauty_validate on the output file. Reach craft A (90+) and vision 4/4. If craft is lower, read the fix lines and adjust the brief or the HTML. If vision is 3/4, change the composition (seed), the image scale or the material.
+3. Shortest path: call beauty_make with kind, style and one idea sentence; it expands the brief, generates and validates in one step. Otherwise choose the artefact: beauty_create_page for a landing, beauty_create_deck for a talk, beauty_create_experience for a place with rooms, beauty_create_story for a cuento or history lesson.
+4. Call beauty_validate on the output file. Reach craft A (90+) and vision 4/4. If craft is lower, call beauty_fix to apply the safe automatic repairs (lang/title/viewport, alt, headings, landmarks, Never-list elements, palette snap, overflow clamps), then beauty_validate again. If vision is 3/4, change the composition (seed), the image scale or the material.
 5. For motion, call beauty_create_gif with the same style. Add maxxing: true when the brief deserves the full art direction. Use beauty_get_skill({ format: "deck" | "experience" | "story" | "agile" | "sprint" }) before briefing. For a coordinated sprint review/retro/planning kit, use beauty_create_sprint.
 
 QUALITY BAR
@@ -365,6 +367,56 @@ QUALITY BAR
         return text(`${skill}\n\n---\n\n${styleGuideMarkdown(style)}`);
       }
       return text(skill);
+    },
+  );
+
+  const makeInputSchema = z.object({
+    kind: z
+      .enum(['page', 'deck', 'gif', 'story', 'experience', 'motion'])
+      .describe('What to create: "page", "deck", "gif", "story", "experience" or "motion". Example: "gif".'),
+    style: styleEnum.describe('One of the 13 art directions; call beauty_list_styles first. Example: "nature".'),
+    idea: z
+      .string()
+      .describe('One sentence describing the subject or goal. Example: "A neighborhood bakery that bakes sourdough at dawn."'),
+    locale: localeEnum.optional().describe('Microcopy language: "es" (default) or "en". Example: "en".'),
+    output: z
+      .string()
+      .max(260)
+      .optional()
+      .describe('File path for the result. Omit it for a deterministic ./beauty-output path. Example: "out/bakery.gif".'),
+  });
+
+  server.registerTool(
+    'beauty_make',
+    {
+      title: 'Create a complete artefact from one sentence',
+      description:
+        'One-shot entry point for small models: pass kind, style and one idea sentence and get a complete, validated artefact. It expands the idea with per-style copy (es/en), runs the matching generator, validates it, and returns { path, grade, score, issues[], next_step }. Example: beauty_make({ kind: "page", style: "nature", idea: "Un jardín que guarda la lluvia de octubre.", locale: "en" }).',
+      inputSchema: makeInputSchema,
+    },
+    async (args) => {
+      try {
+        const result = await makeArtifact(args);
+        return text(
+          JSON.stringify(
+            {
+              path: result.path,
+              grade: result.grade,
+              score: result.score,
+              issues: result.issues,
+              next_step: result.next_step,
+              kind: result.kind,
+              style: result.style,
+              locale: result.locale,
+              summary: result.summary,
+            },
+            null,
+            2,
+          ),
+        );
+      } catch (error) {
+        return errorResult(`Make failed: ${errorMessage(error)}`);
+      }
     },
   );
 
@@ -840,6 +892,45 @@ QUALITY BAR
         return text(`${formatValidation(result)}\n\nstats: ${JSON.stringify(result.stats)}`);
       } catch (error) {
         return errorResult(`Validate failed: ${errorMessage(error)}`);
+      }
+    },
+  );
+
+  server.registerTool(
+    'beauty_fix',
+    {
+      title: 'Apply safe automatic repairs and re-validate',
+      description:
+        'Replays the machine-applicable patches from beauty_validate: missing lang/title/viewport, empty alt, heading order, skip link and landmarks, forbidden Never-list elements, off-palette colours snapped to the nearest token and text-overflow clamps. Returns before/after scores and is idempotent. Write with output when you want a file on disk.',
+      inputSchema: {
+        style: styleEnum,
+        path: z.string().max(260).optional().describe('Path to an HTML file.'),
+        html: z.string().optional().describe('Raw HTML, if you do not have a file.'),
+        output: z.string().max(260).optional().describe('Write the repaired HTML to this path.'),
+        include_html: z.boolean().optional().describe('Also return the repaired HTML.'),
+      },
+    },
+    async ({ style, path: filePath, html, output, include_html }) => {
+      try {
+        const source = html ?? (filePath ? await readFile(path.resolve(process.cwd(), filePath), 'utf8') : '');
+        if (!source) {
+          return { content: [{ type: 'text' as const, text: 'Pass either path or html.' }], isError: true };
+        }
+        const result = fixHtml(source, style);
+        if (output) {
+          await writeFile(path.resolve(process.cwd(), output), result.html, 'utf8');
+        }
+        const summary = [
+          `Repaired a ${presets[style].name} page.`,
+          `score: ${result.before.score} (${result.before.grade}) → ${result.after.score} (${result.after.grade})`,
+          `errors: ${result.before.errors} → ${result.after.errors} · warnings: ${result.before.warnings} → ${result.after.warnings}`,
+          `repairs: ${result.fixes.length}${result.fixes.length ? ` (${result.fixes.join(', ')})` : ' — already clean'}`,
+          output ? `file: ${path.resolve(process.cwd(), output)}` : 'No file written (pass output to save).',
+          `Next: call beauty_validate to confirm the repairs.`,
+        ].join('\n');
+        return text(include_html ? `${summary}\n\n--- HTML ---\n${result.html}` : summary);
+      } catch (error) {
+        return errorResult(`Fix failed: ${errorMessage(error)}`);
       }
     },
   );
