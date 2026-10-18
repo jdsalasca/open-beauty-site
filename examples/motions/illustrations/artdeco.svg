@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="m-title m-desc">
+  <title id="m-title">El jardín vertical</title>
+  <desc id="m-desc">Una ciudad que también cultiva. Animated SVG; respects reduced motion.</desc>
+  <style>@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&amp;family=Poiret+One&amp;display=swap');:root{--dur:16s}
+  .anim,.spin-slow,.drift-slow,.breathe,.twinkle,.rain-drop,.tide-band,.ribbon,.bloom-petal{transform-box:fill-box;transform-origin:center}
+  .title{animation:title-in 1.2s cubic-bezier(.22,.61,.36,1) both}
+  .kicker,.subtitle,.rule{animation:fade-in 1.4s ease both}
+  .subtitle{animation-delay:.25s}.rule{animation-delay:.45s}
+  .spin-slow{animation:spin var(--dur) linear infinite}
+  .drift-slow{animation:drift var(--dur) ease-in-out infinite alternate}
+  .breathe{animation:breathe calc(var(--dur) * .72) ease-in-out infinite}
+  .twinkle{animation:twinkle calc(var(--dur) * .45) ease-in-out infinite;animation-delay:calc(var(--i) * -.4s)}
+  .bloom-petal{animation:bloom calc(var(--dur) * .9) cubic-bezier(.22,.61,.36,1) infinite alternate;animation-delay:calc(var(--i) * -.18s)}
+  .tide-band{animation:tide calc(var(--dur) * .8) ease-in-out infinite alternate;animation-delay:calc(var(--i) * -.6s)}
+  .rain-drop{animation:rain calc(var(--dur) * .55) linear infinite;animation-delay:calc(var(--i) * -.2s)}
+  .ribbon{animation:ribbon calc(var(--dur) * .9) ease-in-out infinite alternate;animation-delay:calc(var(--i) * -.5s)}
+  .orbit-stage{animation:float calc(var(--dur) * 1.2) ease-in-out infinite alternate}
+  @keyframes title-in{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+  @keyframes fade-in{from{opacity:0}to{opacity:1}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes drift{from{transform:translate3d(-8px,4px,0)}to{transform:translate3d(12px,-8px,0)}}
+  @keyframes breathe{0%,100%{transform:scale(.96);opacity:.8}50%{transform:scale(1.04);opacity:1}}
+  @keyframes twinkle{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+  @keyframes bloom{from{transform:scale(.86) rotate(-3deg)}to{transform:scale(1.06) rotate(3deg)}}
+  @keyframes tide{from{transform:translateX(-12px)}to{transform:translateX(12px)}}
+  @keyframes rain{from{transform:translateY(-18px);opacity:.2}to{transform:translateY(22px);opacity:.8}}
+  @keyframes ribbon{from{transform:rotate(-.5deg)}to{transform:rotate(.8deg)}}
+  @keyframes float{from{transform:translateY(-4px)}to{transform:translateY(6px)}}
+  @media (prefers-reduced-motion:reduce){.anim,.spin-slow,.drift-slow,.breathe,.twinkle,.rain-drop,.tide-band,.ribbon,.bloom-petal,.orbit-stage,.title,.kicker,.subtitle,.rule{animation:none!important;transform:none!important;opacity:1!important}}</style>
+  <rect width="1600" height="1000" fill="#0E0E10"/>
+  <g stroke="#C8A45C" stroke-width="1" opacity=".3"><path d="M800 420 1680 420"/><path d="M800 420 1562.1023553303062 860"/><path d="M800 420 1240.0000000000002 1182.1023553303062"/><path d="M800 420 800 1300"/><path d="M800 420 360.00000000000017 1182.1023553303062"/><path d="M800 420 37.89764466969382 860"/><path d="M800 420 -80.00000000000011 420.0000000000001"/><path d="M800 420 37.89764466969393 -20.00000000000017"/><path d="M800 420 359.9999999999996 -342.10235533030595"/><path d="M800 420 799.9999999999999 -460.0000000000001"/><path d="M800 420 1240.0000000000002 -342.10235533030607"/><path d="M800 420 1562.1023553303057 -20.000000000000398"/></g>
+  <g class="stage"><g class="illustration-stage"><svg x="32" y="30" width="1536" height="640" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid meet"><svg viewBox="0 0 800 500" role="img" aria-label="El huerto al mediodía" preserveAspectRatio="xMidYMid slice">
+    <style>.pc-cloud{animation:pc-cloud 26s ease-in-out infinite alternate}.pc-bird{animation:pc-bird 7s ease-in-out infinite alternate}.pc-sway{animation:pc-sway 6s ease-in-out infinite alternate}@keyframes pc-cloud{to{transform:translateX(18px)}}@keyframes pc-bird{to{transform:translateY(-7px)}}@keyframes pc-sway{to{transform:rotate(1.5deg)}}@media(prefers-reduced-motion:reduce){.pc-cloud,.pc-bird,.pc-sway{animation:none!important}}</style>
+    <defs>
+      <filter id="pc-paper-pc-7" x="-8%" y="-8%" width="116%" height="126%"><feTurbulence baseFrequency=".035" numOctaves="2" seed="31" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3"/></filter>
+      <filter id="pc-cut-pc-7" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="1" dy="4" stdDeviation="1.8" flood-color="#F4EBD9" flood-opacity=".26"/></filter>
+      <filter id="pc-grain-pc-7"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="14"/><feColorMatrix type="saturate" values="0"/></filter>
+    </defs>
+    <rect width="800" height="500" fill="#6E1F2B"/>
+    <g filter="url(#pc-paper-pc-7)">
+      <g class="pc-cloud" fill="#17171B" opacity=".85"><ellipse cx="180" cy="96" rx="70" ry="22"/><ellipse cx="240" cy="86" rx="48" ry="18"/><ellipse cx="560" cy="120" rx="86" ry="24"/><ellipse cx="620" cy="110" rx="42" ry="16"/></g>
+      <circle cx="680" cy="86" r="42" fill="#D9A6A0" opacity=".95"/>
+      <rect y="270" width="800" height="230" fill="#1F5C4A"/><rect y="320" width="800" height="180" fill="#B9C0C4"/><g stroke="#1F5C4A" stroke-width="2" opacity=".55"><path d="M40 360h720"/><path d="M40 386h720"/><path d="M40 412h720"/><path d="M40 438h720"/><path d="M40 464h720"/></g><path d="M0 320c160-18 260 8 400-4s260 6 400 10" fill="none" stroke="#17171B" stroke-width="2" opacity=".45"/>
+      <path d="M0 300c130-45 220 25 330-5s240-20 470 12" fill="none" stroke="#17171B" stroke-width="2" opacity=".45"/>
+      <g transform="translate(85 420)" filter="url(#pc-cut-pc-7)"><ellipse cx="0" cy="14" rx="23" ry="8" fill="#F4EBD9" opacity=".12"/><circle cx="0" cy="0" r="22" fill="#1F5C4A"/><circle cx="-10" cy="-4" r="13" fill="#17171B" opacity=".6"/><circle cx="10" cy="2" r="10" fill="#6E1F2B" opacity=".7"/><path d="M0-20c-8 8-8 18 0 26 8-8 8-18 0-26Z" fill="#17171B" opacity=".55"/></g><g transform="translate(190 402)" filter="url(#pc-cut-pc-7)"><ellipse cx="0" cy="14" rx="23" ry="8" fill="#F4EBD9" opacity=".12"/><circle cx="0" cy="0" r="22" fill="#1F5C4A"/><circle cx="-10" cy="-4" r="13" fill="#17171B" opacity=".6"/><circle cx="10" cy="2" r="10" fill="#6E1F2B" opacity=".7"/><path d="M0-20c-8 8-8 18 0 26 8-8 8-18 0-26Z" fill="#17171B" opacity=".55"/></g><g transform="translate(295 420)" filter="url(#pc-cut-pc-7)"><ellipse cx="0" cy="14" rx="23" ry="8" fill="#F4EBD9" opacity=".12"/><circle cx="0" cy="0" r="22" fill="#1F5C4A"/><circle cx="-10" cy="-4" r="13" fill="#17171B" opacity=".6"/><circle cx="10" cy="2" r="10" fill="#6E1F2B" opacity=".7"/><path d="M0-20c-8 8-8 18 0 26 8-8 8-18 0-26Z" fill="#17171B" opacity=".55"/></g><g transform="translate(630 312)" filter="url(#pc-cut-pc-7)"><path d="M-50 20h100M-42 34h84" stroke="#050506" stroke-width="6"/><path d="M-38 0v46M-14 0v46M10 0v46M34 0v46" stroke="#050506" stroke-width="5"/><path d="M-38 0l4-8 4 8M-14 0l4-8 4 8M10 0l4-8 4 8M34 0l4-8 4 8" fill="#050506"/></g><g transform="translate(470 410)" filter="url(#pc-cut-pc-7)"><path d="M-38 8h64l-12 30h-40Z" fill="#C8A45C"/><circle cx="-12" cy="42" r="14" fill="#050506"/><circle cx="-12" cy="42" r="5" fill="#17171B"/><path d="M26 12 58-4M50 8l10 4" stroke="#050506" stroke-width="5"/></g>
+      <g fill="none" stroke="#17171B" stroke-width="2" opacity=".7"><path d="M40 430c16-24 30-24 46 0M700 450c14-22 28-22 42 0M350 455c12-20 24-20 36 0"/></g>
+      <g transform="translate(245 390)" filter="url(#pc-cut-pc-7)">
+    <ellipse cx="0" cy="36" rx="34" ry="9" fill="#F4EBD9" opacity=".14"/>
+    <circle cx="34" cy="22" r="11" fill="#17171B"/><ellipse cx="-9" cy="-38" rx="6" ry="23" fill="#17171B" transform="rotate(-12 -9 -38)"/><ellipse cx="10" cy="-38" rx="6" ry="23" fill="#17171B" transform="rotate(13 10 -38)"/><ellipse cx="-9" cy="-38" rx="2.5" ry="15" fill="#6E1F2B" transform="rotate(-12 -9 -38)"/><ellipse cx="10" cy="-38" rx="2.5" ry="15" fill="#6E1F2B" transform="rotate(13 10 -38)"/>
+    <ellipse cx="0" cy="17" rx="27" ry="29" fill="#17171B"/>
+    <circle cx="0" cy="-13" r="21" fill="#17171B"/>
+    <ellipse cx="2" cy="3" rx="13" ry="10" fill="#17171B" opacity=".85"/>
+    <circle cx="-8" cy="-16" r="2.2" fill="#F4EBD9"/><circle cx="8" cy="-16" r="2.2" fill="#F4EBD9"/>
+    <path d="M-3 -8h6l-3 4Z" fill="#1F5C4A"/><path d="M-7 27v11M8 27v11" stroke="#F4EBD9" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+  </g><g transform="translate(360 405) scale(-1 1)" filter="url(#pc-cut-pc-7)"><ellipse cx="0" cy="42" rx="34" ry="8" fill="#F4EBD9" opacity=".14"/><rect x="-20" y="4" width="40" height="44" rx="8" fill="#6E1F2B"/><rect x="-20" y="27" width="40" height="21" rx="6" fill="#050506"/><path d="M-24 18h48M-14 8v19M14 8v19" stroke="#17171B" stroke-width="2" opacity=".55"/><circle cx="0" cy="-14" r="18" fill="#17171B" stroke="#F4EBD9" stroke-width="1.4"/><path d="M-26-18h52l-8-14h-36Z" fill="#D9A6A0"/><path d="M-14-14h28" stroke="#F4EBD9" stroke-width="3"/><circle cx="-7" cy="-13" r="1.8" fill="#F4EBD9"/><circle cx="7" cy="-13" r="1.8" fill="#F4EBD9"/><path d="M-14 44v10M14 44v10" stroke="#F4EBD9" stroke-width="3" opacity=".6"/></g><g transform="translate(590 195) scale(1.55)"><g class="pc-bird"><path d="M-22 8c14-18 32-18 44 0-15-8-29-8-44 0Z" fill="#1F5C4A"/><circle cx="14" cy="-2" r="4" fill="#F4EBD9"/><path d="M22 0l10 4-10 4" fill="#D9A6A0"/></g></g>
+      <rect width="800" height="500" filter="url(#pc-grain-pc-7)" opacity=".045"/>
+    </g>
+  </svg></svg></g></g>
+  <rect x="0" y="660" width="1600" height="340" fill="#0E0E10"/>
+  <g class="title-block">
+    <text class="kicker anim" x="128" y="690" text-anchor="start" font-family="Josefin Sans" font-size="15" letter-spacing="4" fill="#F4EBD9" opacity=".7">HUERTO DE PAPEL · 2026</text>
+    <text class="title anim" x="128" y="860" text-anchor="start" font-family="Poiret One" font-size="77.03703703703704" letter-spacing=".06em" fill="#F4EBD9" style="text-transform:uppercase"><tspan x="128" dy="0">El jardín vertical</tspan></text>
+    <text class="subtitle anim" x="128" y="931.762962962963" text-anchor="start" font-family="Josefin Sans" font-size="18" fill="#F4EBD9" opacity=".78">Una ciudad que también cultiva</text>
+    <g class="rule anim" aria-hidden="true"><path d="M128 950.0888888888888h170" stroke="#C8A45C" stroke-width="1"/></g>
+  </g>
+  <text x="1472" y="75" text-anchor="end" font-family="Josefin Sans" font-size="13" letter-spacing="3" fill="#F4EBD9" opacity=".7">OPEN/BEAUTY</text><text x="128" y="985" font-family="Josefin Sans" font-size="12" letter-spacing="2" fill="#F4EBD9" opacity=".6">SVG original · sin stock</text><filter id="m-grain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="7"/><feColorMatrix type="saturate" values="0"/></filter><rect width="1600" height="1000" filter="url(#m-grain)" opacity=".035"/>
+</svg>

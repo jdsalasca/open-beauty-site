@@ -1,9 +1,9 @@
-import type { MotionBrief, MotionScene, MotionSize, StylePreset } from './types.js';
+import type { MotionBrief, MotionScene, MotionSize, StoryScene, StylePreset } from './types.js';
 import { esc } from './page/common.js';
 import { papercutScene } from './papercut.js';
 import { getStyle } from './styles/presets.js';
 
-export const MOTION_SCENES: MotionScene[] = ['orbit', 'bloom', 'tide', 'papercut', 'constellation', 'ribbon', 'rain', 'type'];
+export const MOTION_SCENES: MotionScene[] = ['orbit', 'bloom', 'tide', 'papercut', 'constellation', 'ribbon', 'rain', 'type', 'illustration'];
 
 const SIZES: Record<MotionSize, [number, number]> = {
   square: [1200, 1200],
@@ -50,14 +50,14 @@ function textOn(background: string, colors: { ink: string; surface: string }): s
 
 function titleBlock(preset: StylePreset, brief: MotionBrief, w: number, h: number, scene: MotionScene, maxxing: boolean, textColor: string): string {
   const title = brief.title.trim();
-  const maxChars = scene === 'type' ? 11 : w > 1100 ? 18 : 12;
+  const maxChars = scene === 'type' ? 11 : scene === 'illustration' ? 20 : w > 1100 ? 18 : 12;
   const lines = words(title, maxChars);
   const base = scene === 'type' ? Math.min(w * 0.17, h * 0.18) : Math.min(w * 0.095, h * 0.13);
   const longest = Math.max(...lines.map((line) => line.length));
   const fit = (w * 0.78) / Math.max(6, longest * 0.9);
   const size = clamp(Math.min(base / (lines.length > 2 ? 1.1 : 1), fit), 44, scene === 'type' ? 220 : 150);
   const x = scene === 'type' ? w / 2 : w * 0.08;
-  const y = scene === 'type' ? h * 0.52 : h * 0.72;
+  const y = scene === 'type' ? h * 0.52 : scene === 'illustration' ? h * 0.86 : h * 0.72;
   const anchor = scene === 'type' ? 'middle' : 'start';
   const display = preset.fonts.display;
   const titleColor = textColor;
@@ -65,7 +65,7 @@ function titleBlock(preset: StylePreset, brief: MotionBrief, w: number, h: numbe
   const kicker = brief.eyebrow || (maxxing ? 'OPEN/BEAUTY · MOTION' : 'OPEN/BEAUTY');
   const subtitle = brief.subtitle ? `<text class="subtitle anim" x="${x}" y="${y + size * 0.62 + 24}" text-anchor="${anchor}" font-family="${esc(preset.fonts.body)}" font-size="${Math.max(18, size * 0.19)}" fill="${titleColor}" opacity=".78">${esc(brief.subtitle)}</text>` : '';
   return `<g class="title-block">
-    <text class="kicker anim" x="${x}" y="${y - size * (lines.length - 1) - size * 1.14}" text-anchor="${anchor}" font-family="${esc(preset.fonts.mono)}" font-size="${maxxing ? 15 : 13}" letter-spacing="4" fill="${titleColor}" opacity=".7">${esc(kicker)}</text>
+    <text class="kicker anim" x="${x}" y="${scene === 'illustration' ? h * 0.69 : y - size * (lines.length - 1) - size * 1.14}" text-anchor="${anchor}" font-family="${esc(preset.fonts.mono)}" font-size="${maxxing ? 15 : 13}" letter-spacing="4" fill="${titleColor}" opacity=".7">${esc(kicker)}</text>
     <text class="title anim" x="${x}" y="${y - size * (lines.length - 1)}" text-anchor="${anchor}" font-family="${esc(display)}" font-size="${size}" letter-spacing="${preset.typeSystem?.displayTracking ?? '0'}" fill="${titleColor}" style="text-transform:${preset.typeSystem?.displayCase ?? 'none'}">${lines.map((line, i) => `<tspan x="${x}" dy="${i === 0 ? 0 : size * 0.92}">${esc(line)}</tspan>`).join('')}</text>
     ${subtitle}
     <g class="rule anim" aria-hidden="true"><path d="M${x} ${y + size * 0.78 + 30}h${Math.min(170, w * 0.16)}" stroke="${accent}" stroke-width="${preset.rules.borderWidths[0] ?? 1}"/></g>
@@ -106,7 +106,7 @@ function styleTexture(preset: StylePreset, w: number, h: number): string {
   }
 }
 
-function sceneShapes(preset: StylePreset, scene: MotionScene, w: number, h: number, maxxing: boolean, seed: number): string {
+function sceneShapes(preset: StylePreset, scene: MotionScene, w: number, h: number, maxxing: boolean, seed: number, illustration?: StoryScene): string {
   const p = preset.palette;
   const cx = w * 0.64;
   const cy = h * 0.44;
@@ -130,7 +130,7 @@ function sceneShapes(preset: StylePreset, scene: MotionScene, w: number, h: numb
       return `<g class="tide-stage">${[0, 1, 2, 3].map((i) => `<path class="tide-band" style="--i:${i}" d="M-${w * 0.1} ${h * (0.58 + i * 0.07)}c${w * 0.18}-${h * 0.08} ${w * 0.3} ${h * 0.06} ${w * 0.48}-${h * 0.02}s${w * 0.3} ${h * 0.05} ${w * 0.48}-${h * 0.03} ${w * 0.28} ${h * 0.02} ${w * 0.44}-${h * 0.07}" fill="none" stroke="${i % 2 ? p.accent3 : p.accent2}" stroke-width="${maxxing ? 3 : 2}" opacity="${0.8 - i * 0.12}"/>`).join('')}<circle class="breathe" cx="${cx}" cy="${h * 0.28}" r="${r * 0.55}" fill="${p.accent4}" opacity=".7"/>${extra}</g>`;
     case 'papercut': {
       const nested = papercutScene(preset, { kind: 'meadow', characters: ['rabbit'], props: ['pine', 'tree', 'flowers'], caption: briefTitle(preset) }, seed);
-      return `<g class="paper-stage"><svg x="${w * 0.02}" y="${h * 0.04}" width="${w * 0.96}" height="${h * 0.62}" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice">${nested}</svg></g>`;
+      return `<g class="paper-stage"><svg x="${w * 0.02}" y="${h * 0.04}" width="${w * 0.96}" height="${h * 0.62}" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid meet">${nested}</svg></g>`;
     }
     case 'constellation':
       return `<g class="constellation-stage">${Array.from({ length: 12 }, (_, i) => `<circle class="twinkle" style="--i:${i}" cx="${w * 0.12 + ((i * 137) % (w * 0.76))}" cy="${h * 0.1 + ((i * 83) % (h * 0.58))}" r="${2 + (i % 3)}" fill="${p.surface}" opacity=".85"/>`).join('')}<g fill="none" stroke="${p.accent3}" stroke-width="1" opacity=".4"><path d="M${w * 0.18} ${h * 0.22} ${w * 0.36} ${h * 0.4} ${w * 0.5} ${h * 0.28} ${w * 0.68} ${h * 0.46} ${w * 0.82} ${h * 0.3}"/></g>${extra}</g>`;
@@ -138,6 +138,10 @@ function sceneShapes(preset: StylePreset, scene: MotionScene, w: number, h: numb
       return `<g class="ribbon-stage">${[0, 1, 2].map((i) => `<path class="ribbon" style="--i:${i}" d="M${w * (0.56 + i * 0.03)} ${h * 0.08}c${w * 0.2} ${h * 0.12}-${w * 0.16} ${h * 0.25} ${w * 0.02} ${h * 0.4}s${w * 0.2} ${h * 0.28} ${-w * 0.04} ${h * 0.44}" fill="none" stroke="${i % 2 ? p.accent2 : p.accent4}" stroke-width="${18 - i * 5}" opacity=".75"/>`).join('')}${extra}</g>`;
     case 'rain':
       return `<g class="rain-stage">${Array.from({ length: maxxing ? 28 : 18 }, (_, i) => `<path class="rain-drop" style="--i:${i}" d="M${w * 0.55 + ((i * 47) % (w * 0.4))} ${h * 0.08 + ((i * 73) % (h * 0.45))}v${18 + (i % 4) * 12}" stroke="${i % 3 ? p.accent3 : p.accent4}" stroke-width="2" opacity=".6"/>`).join('')}<circle class="pulse" cx="${cx}" cy="${cy}" r="${r * 0.6}" fill="none" stroke="${p.accent}" stroke-width="2"/>${extra}</g>`;
+    case 'illustration': {
+      const nested = papercutScene(preset, illustration ?? { kind: 'garden', characters: ['rabbit', 'farmer', 'bird'], props: ['cabbage', 'cabbage', 'cabbage', 'fence', 'wheelbarrow'], caption: 'Un jardín de papel' }, seed);
+      return `<g class="illustration-stage"><svg x="${w * 0.02}" y="${h * 0.03}" width="${w * 0.96}" height="${h * 0.64}" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid meet">${nested}</svg></g>`;
+    }
     case 'type':
     default:
       return `<g class="type-stage" opacity=".18"><text x="${w * 0.08}" y="${h * 0.3}" font-family="${esc(preset.fonts.display)}" font-size="${h * 0.13}" textLength="${w * 0.84}" lengthAdjust="spacingAndGlyphs" fill="${p.accent}">${esc(briefTitle(preset).toUpperCase())}</text><path d="M${w * 0.08} ${h * 0.34}h${w * 0.84}" stroke="${p.accent2}" stroke-width="2"/></g>`;
@@ -166,10 +170,10 @@ export function renderMotion(input: Partial<MotionBrief>): string {
   const ink = textColor;
   const brief: MotionBrief = { style, title: input.title, subtitle: input.subtitle, eyebrow: input.eyebrow, brand: input.brand, scene, size: sizeName, duration, maxxing, footer: input.footer };
   const title = titleBlock(preset, brief, w, h, scene, maxxing, textColor);
-  const stage = sceneShapes(preset, scene, w, h, maxxing, seed);
+  const stage = sceneShapes(preset, scene, w, h, maxxing, seed, input.illustration);
   const texture = styleTexture(preset, w, h);
   const brand = input.brand ? `<text x="${w * 0.92}" y="${h * 0.075}" text-anchor="end" font-family="${esc(preset.fonts.mono)}" font-size="13" letter-spacing="3" fill="${ink}" opacity=".7">${esc(input.brand)}</text>` : '';
-  const footer = input.footer ? `<text x="${w * 0.08}" y="${h * 0.94}" font-family="${esc(preset.fonts.mono)}" font-size="12" letter-spacing="2" fill="${ink}" opacity=".6">${esc(input.footer)}</text>` : '';
+  const footer = input.footer ? `<text x="${w * 0.08}" y="${h * 0.985}" font-family="${esc(preset.fonts.mono)}" font-size="12" letter-spacing="2" fill="${ink}" opacity=".6">${esc(input.footer)}</text>` : '';
   const fontImport = `@import url('${preset.fonts.googleHref.replace(/&/g, '&amp;')}');`;
   const grain = maxxing ? `<filter id="m-grain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="${seed}"/><feColorMatrix type="saturate" values="0"/></filter><rect width="${w}" height="${h}" filter="url(#m-grain)" opacity=".035"/>` : '';
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="m-title m-desc">
@@ -179,6 +183,7 @@ export function renderMotion(input: Partial<MotionBrief>): string {
   <rect width="${w}" height="${h}" fill="${bg}"/>
   ${texture}
   <g class="stage">${stage}</g>
+  ${scene === 'illustration' ? `<rect x="0" y="${h * 0.66}" width="${w}" height="${h * 0.34}" fill="${p.bg}"/>` : ''}
   ${title}
   ${brand}${footer}${grain}
 </svg>`;

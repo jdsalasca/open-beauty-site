@@ -14,8 +14,27 @@ An animated SVG is a **poster that moves**, not a page with a video. One idea, o
 | `ribbon` | a launch, an identity, a manifesto | ribbons curl behind the type |
 | `rain` | data, weather, a city, a mood | drops travel; a pulse ring breathes |
 | `type` | a title, a quote, a one-word poster | a giant ghost word and a rule |
+| `illustration` | a storybook garden, a farm, a scene with characters | layered paper vector scene; clouds drift, birds fly, flowers sway |
 
 Pick the scene that already carries the meaning. Do not use `orbit` for a restaurant or `bloom` for a database. One scene per SVG; do not mix.
+
+## Illustration
+
+Use `scene: "illustration"` with an `illustration` object when the piece needs a **drawing**, not an abstract field:
+
+```json
+{
+  "scene": "illustration",
+  "illustration": {
+    "kind": "garden",
+    "characters": ["rabbit", "farmer", "bird"],
+    "props": ["cabbage", "cabbage", "cabbage", "fence", "wheelbarrow"],
+    "caption": "El huerto al mediodía"
+  }
+}
+```
+
+Kinds: `meadow | forest | garden | house | river | night | market | room`. Characters: `rabbit | cat | fox | bird | child | farmer`. Props: `pine | tree | house | gate | table | lantern | basket | flowers | boat | cabbage | fence | wheelbarrow`. The renderer draws the scene in the style palette; it is original vector paper, not stock and not a character IP. The art is a **composition**, not arbitrary drawing: choose the setting and cast that carry the story.
 
 ## Compose
 

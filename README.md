@@ -120,9 +120,13 @@ beauty motion --style nature --title "El jardín de las horas lentas" --scene bl
 beauty motion --style galactic --title "Memoria orbital" --scene orbit --size square --maxxing
 ```
 
-Escenas: `orbit`, `bloom`, `tide`, `papercut`, `constellation`, `ribbon`, `rain`, `type`. El skill `motion.md` explica cuándo usar cada una y qué no animar.
+Escenas: `orbit`, `bloom`, `tide`, `papercut`, `constellation`, `ribbon`, `rain`, `type` e `illustration`. La última dibuja una escena vectorial con reparto y objetos: jardín, granjero, conejo, pájaro, coles, cerca y carretilla. El skill `motion.md` explica cuándo usar cada una y qué no animar.
 
 [**Ver los trece pósters SVG**](examples/motions/index.html) — uno por estilo, con `bloom`, `orbit`, `ribbon`, `papercut`, `tide`, `type`, `constellation` y `rain`, todos con **maxxing**.
+[**El jardín en 13 estilos**](examples/motions/illustrations/index.html) — la misma escena vectorial con granjero, conejo, pájaro, coles, cerca y carretilla, dibujada por el motor de papel en cada paleta.
+<p align="center"><a href="examples/motions/illustrations/index.html"><img src="examples/motions/illustrations/papercraft.svg" width="520" alt="El jardín de los conejos, ilustración vectorial en 13 estilos"></a></p>
+
+
 <p align="center">
   <a href="examples/motions/el-jardin-de-las-horas-lentas.svg"><img src="examples/motions/el-jardin-de-las-horas-lentas.svg" width="400" alt="Póster SVG Nature Memory"></a>
   <a href="examples/motions/memoria-orbital.svg"><img src="examples/motions/memoria-orbital.svg" width="240" alt="Póster SVG Galactic"></a>
@@ -153,7 +157,7 @@ Luna usa las herramientas MCP; no necesita escribir HTML a mano. La calificació
 
 ## Evidencia disponible
 
-- [La suite documentada](docs/TESTING.md) registra **21/21 pruebas aprobadas**.
+- [La suite documentada](docs/TESTING.md) registra **22/22 pruebas aprobadas**.
 - La [ronda histórica de Luna](examples/agents/round-2026/index.html) reúne **12/12 páginas A/100 y visión 4/4**. Esa ronda corresponde a los doce estilos que existían entonces.
 - Nature Memory se evaluó en la matriz local: **A/100 y visión 4/4**; el estilo 13 también produce deck y GIF. La matriz actual de páginas cubre **13/13 estilos**.
 

@@ -34,11 +34,12 @@
         <circle cx="768" cy="528" r="58.08" fill="#FF6B1A"/><g opacity=".35" fill="none" stroke="#00A6A6" stroke-width="1.5"><circle cx="768" cy="528" r="382.8"/><circle cx="768" cy="528" r="448.8"/></g>
         <g class="drift-slow" style="--dur:18s"><path d="M732 844.8v237.6" stroke="#F7E8C8" stroke-width="2"/><path d="M732 950.4000000000001c-79.2 0-105.60000000000001-52.800000000000004-105.60000000000001-92.39999999999999 52.800000000000004 0 105.60000000000001 26.400000000000002 105.60000000000001 92.39999999999999Z" fill="#F5E13B"/></g>
       </g></g>
+
   <g class="title-block">
     <text class="kicker anim" x="96" y="772.8000000000001" text-anchor="start" font-family="Space Grotesk" font-size="15" letter-spacing="4" fill="#F7E8C8" opacity=".7">1967 · SINCRONÍA</text>
     <text class="title anim" x="96" y="864" text-anchor="start" font-family="Bungee Shade" font-size="79.99999999999999" letter-spacing=".02em" fill="#F7E8C8" style="text-transform:uppercase"><tspan x="96" dy="0">Color líquido</tspan></text>
     <text class="subtitle anim" x="96" y="937.6" text-anchor="start" font-family="Space Grotesk" font-size="18" fill="#F7E8C8" opacity=".78">Un cartel para no dormir</text>
     <g class="rule anim" aria-hidden="true"><path d="M96 956.4h170" stroke="#E5197F" stroke-width="0"/></g>
   </g>
-  <text x="1104" y="90" text-anchor="end" font-family="Space Grotesk" font-size="13" letter-spacing="3" fill="#F7E8C8" opacity=".7">OPEN/BEAUTY</text><text x="96" y="1128" font-family="Space Grotesk" font-size="12" letter-spacing="2" fill="#F7E8C8" opacity=".6">SVG original · sin stock</text><filter id="m-grain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="7"/><feColorMatrix type="saturate" values="0"/></filter><rect width="1200" height="1200" filter="url(#m-grain)" opacity=".035"/>
+  <text x="1104" y="90" text-anchor="end" font-family="Space Grotesk" font-size="13" letter-spacing="3" fill="#F7E8C8" opacity=".7">OPEN/BEAUTY</text><text x="96" y="1182" font-family="Space Grotesk" font-size="12" letter-spacing="2" fill="#F7E8C8" opacity=".6">SVG original · sin stock</text><filter id="m-grain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="7"/><feColorMatrix type="saturate" values="0"/></filter><rect width="1200" height="1200" filter="url(#m-grain)" opacity=".035"/>
 </svg>

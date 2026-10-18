@@ -30,11 +30,12 @@
   <rect width="1600" height="1000" fill="#F6EDDD"/>
   <g fill="none" stroke="#B4432C" stroke-width="1.2" opacity=".38"><path d="M1248 1000V340c0-160 160-240 256-240s256 80 256 240V1000"/></g>
   <g class="stage"><g class="ribbon-stage"><path class="ribbon" style="--i:0" d="M896.0000000000001 80c320 120-256 250 32 400s320 280 -64 440" fill="none" stroke="#B9C4A6" stroke-width="18" opacity=".75"/><path class="ribbon" style="--i:1" d="M944.0000000000001 80c320 120-256 250 32 400s320 280 -64 440" fill="none" stroke="#B4432C" stroke-width="13" opacity=".75"/><path class="ribbon" style="--i:2" d="M992.0000000000002 80c320 120-256 250 32 400s320 280 -64 440" fill="none" stroke="#B9C4A6" stroke-width="8" opacity=".75"/><g opacity=".35" fill="none" stroke="#B9C4A6" stroke-width="1.5"><circle cx="1024" cy="440" r="319"/><circle cx="1024" cy="440" r="374"/></g></g></g>
+
   <g class="title-block">
     <text class="kicker anim" x="128" y="614.6133333333333" text-anchor="start" font-family="EB Garamond" font-size="15" letter-spacing="4" fill="#2B211B" opacity=".7">RENACIMIENTO · 1480</text>
     <text class="title anim" x="128" y="720" text-anchor="start" font-family="EB Garamond" font-size="92.44444444444444" letter-spacing=".01em" fill="#2B211B" style="text-transform:none"><tspan x="128" dy="0">La ciudad ideal</tspan></text>
     <text class="subtitle anim" x="128" y="801.3155555555555" text-anchor="start" font-family="EB Garamond" font-size="18" fill="#2B211B" opacity=".78">Una perspectiva para mirar el poder</text>
     <g class="rule anim" aria-hidden="true"><path d="M128 822.1066666666667h170" stroke="#B08A4F" stroke-width="1"/></g>
   </g>
-  <text x="1472" y="75" text-anchor="end" font-family="EB Garamond" font-size="13" letter-spacing="3" fill="#2B211B" opacity=".7">OPEN/BEAUTY</text><text x="128" y="940" font-family="EB Garamond" font-size="12" letter-spacing="2" fill="#2B211B" opacity=".6">SVG original · sin stock</text><filter id="m-grain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="7"/><feColorMatrix type="saturate" values="0"/></filter><rect width="1600" height="1000" filter="url(#m-grain)" opacity=".035"/>
+  <text x="1472" y="75" text-anchor="end" font-family="EB Garamond" font-size="13" letter-spacing="3" fill="#2B211B" opacity=".7">OPEN/BEAUTY</text><text x="128" y="985" font-family="EB Garamond" font-size="12" letter-spacing="2" fill="#2B211B" opacity=".6">SVG original · sin stock</text><filter id="m-grain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="7"/><feColorMatrix type="saturate" values="0"/></filter><rect width="1600" height="1000" filter="url(#m-grain)" opacity=".035"/>
 </svg>

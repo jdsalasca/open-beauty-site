@@ -30,11 +30,12 @@
   <rect width="1600" height="1000" fill="#F5F0E6"/>
   <g fill="none" stroke="#F2A6B3" stroke-width="3" opacity=".3"><path d="M1152 120c128-80 256 80 384 0"/><path d="M128 900c96-60 192 60 288 0"/></g>
   <g class="stage"><g class="ribbon-stage"><path class="ribbon" style="--i:0" d="M896.0000000000001 80c320 120-256 250 32 400s320 280 -64 440" fill="none" stroke="#F4D35E" stroke-width="18" opacity=".75"/><path class="ribbon" style="--i:1" d="M944.0000000000001 80c320 120-256 250 32 400s320 280 -64 440" fill="none" stroke="#9FD8C8" stroke-width="13" opacity=".75"/><path class="ribbon" style="--i:2" d="M992.0000000000002 80c320 120-256 250 32 400s320 280 -64 440" fill="none" stroke="#F4D35E" stroke-width="8" opacity=".75"/><g opacity=".35" fill="none" stroke="#F4D35E" stroke-width="1.5"><circle cx="1024" cy="440" r="319"/><circle cx="1024" cy="440" r="374"/></g></g></g>
+
   <g class="title-block">
     <text class="kicker anim" x="128" y="571.8" text-anchor="start" font-family="DM Sans" font-size="15" letter-spacing="4" fill="#111111" opacity=".7">GRUPPO · 1981</text>
     <text class="title anim" x="128" y="720" text-anchor="start" font-family="Bricolage Grotesque" font-size="130" letter-spacing="-.01em" fill="#111111" style="text-transform:none"><tspan x="128" dy="0">Mal gusto</tspan></text>
     <text class="subtitle anim" x="128" y="824.6" text-anchor="start" font-family="DM Sans" font-size="24.7" fill="#111111" opacity=".78">Diseño que se ríe de la buena forma</text>
     <g class="rule anim" aria-hidden="true"><path d="M128 851.4h170" stroke="#F2A6B3" stroke-width="1"/></g>
   </g>
-  <text x="1472" y="75" text-anchor="end" font-family="DM Sans" font-size="13" letter-spacing="3" fill="#111111" opacity=".7">OPEN/BEAUTY</text><text x="128" y="940" font-family="DM Sans" font-size="12" letter-spacing="2" fill="#111111" opacity=".6">SVG original · sin stock</text><filter id="m-grain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="7"/><feColorMatrix type="saturate" values="0"/></filter><rect width="1600" height="1000" filter="url(#m-grain)" opacity=".035"/>
+  <text x="1472" y="75" text-anchor="end" font-family="DM Sans" font-size="13" letter-spacing="3" fill="#111111" opacity=".7">OPEN/BEAUTY</text><text x="128" y="985" font-family="DM Sans" font-size="12" letter-spacing="2" fill="#111111" opacity=".6">SVG original · sin stock</text><filter id="m-grain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="7"/><feColorMatrix type="saturate" values="0"/></filter><rect width="1600" height="1000" filter="url(#m-grain)" opacity=".035"/>
 </svg>

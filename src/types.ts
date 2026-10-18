@@ -86,8 +86,8 @@ export interface ExperienceBrief extends Brief {
 }
 
 export type StorySceneKind = 'meadow' | 'forest' | 'garden' | 'house' | 'river' | 'night' | 'market' | 'room';
-export type StoryCharacter = 'rabbit' | 'cat' | 'fox' | 'bird' | 'child';
-export type StoryProp = 'pine' | 'tree' | 'house' | 'gate' | 'table' | 'lantern' | 'basket' | 'flowers' | 'boat';
+export type StoryCharacter = 'rabbit' | 'cat' | 'fox' | 'bird' | 'child' | 'farmer';
+export type StoryProp = 'pine' | 'tree' | 'house' | 'gate' | 'table' | 'lantern' | 'basket' | 'flowers' | 'boat' | 'cabbage' | 'fence' | 'wheelbarrow';
 
 export interface StoryScene {
   kind?: StorySceneKind;
@@ -117,7 +117,7 @@ export interface StoryBrief extends Brief {
   format?: 'scroll' | 'storybook';
 }
 
-export type MotionScene = 'orbit' | 'bloom' | 'tide' | 'papercut' | 'constellation' | 'ribbon' | 'rain' | 'type';
+export type MotionScene = 'orbit' | 'bloom' | 'tide' | 'papercut' | 'constellation' | 'ribbon' | 'rain' | 'type' | 'illustration';
 export type MotionSize = 'square' | 'portrait' | 'landscape';
 
 export interface MotionBrief {
@@ -127,6 +127,8 @@ export interface MotionBrief {
   eyebrow?: string;
   brand?: string;
   scene?: MotionScene;
+  /** For scene=illustration: a papercut vector scene with a cast and props. */
+  illustration?: StoryScene;
   size?: MotionSize;
   /** Loop duration in seconds, 6–24. */
   duration?: number;

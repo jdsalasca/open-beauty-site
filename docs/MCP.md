@@ -198,7 +198,7 @@ Creates a single-file, looping **animated SVG poster**. It is not a GIF: it is a
 | `style` | style slug | yes | |
 | `title` | string (≤90) | yes | 2–6 words; the renderer fits the width. |
 | `subtitle`, `eyebrow`, `brand`, `footer` | strings | no | Caption, label, signature, source. |
-| `scene` | `orbit \| bloom \| tide \| papercut \| constellation \| ribbon \| rain \| type` | no | Defaults to `orbit`. |
+| `scene` | `orbit \| bloom \| tide \| papercut \| constellation \| ribbon \| rain \| type \| illustration` | no | Defaults to `orbit`. |
 | `size` | `square \| portrait \| landscape` | no | 1200², 1000×1400 or 1600×1000. |
 | `duration` | number (6–24) | no | Seconds; default 14. |
 | `seed` | integer | no | Deterministic ornament variation. |

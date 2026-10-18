@@ -46,7 +46,7 @@ Para un cuento ilustrado, pasá `format: "storybook"`. Cada capítulo puede llev
 { "kind": "meadow", "characters": ["rabbit"], "props": ["pine", "tree", "flowers"], "caption": "El sombrero en el camino" }
 ```
 
-`kind`: `meadow | forest | garden | house | river | night | market | room`. `characters`: `rabbit | cat | fox | bird | child`. `props`: `pine | tree | house | gate | table | lantern | basket | flowers | boat`. El renderer dibuja una escena de papel original; no hay personajes con derechos. Usalo en Paper Craft; en otros estilos la misma escena se adapta a la paleta.
+`kind`: `meadow | forest | garden | house | river | night | market | room`. `characters`: `rabbit | cat | fox | bird | child | farmer`. `props`: `pine | tree | house | gate | table | lantern | basket | flowers | boat | cabbage | fence | wheelbarrow`. El renderer dibuja una escena de papel original; no hay personajes con derechos. Usalo en Paper Craft; en otros estilos la misma escena se adapta a la paleta.
 
 ## Historia
 

@@ -71,8 +71,8 @@ const deckSlideSchema = z.object({
     source: z.string().max(120).optional(),
     scene: z.object({
       kind: z.enum(['meadow', 'forest', 'garden', 'house', 'river', 'night', 'market', 'room']).optional(),
-      characters: z.array(z.enum(['rabbit', 'cat', 'fox', 'bird', 'child'])).max(4).optional(),
-      props: z.array(z.enum(['pine', 'tree', 'house', 'gate', 'table', 'lantern', 'basket', 'flowers', 'boat'])).max(6).optional(),
+      characters: z.array(z.enum(['rabbit', 'cat', 'fox', 'bird', 'child', 'farmer'])).max(4).optional(),
+      props: z.array(z.enum(['pine', 'tree', 'house', 'gate', 'table', 'lantern', 'basket', 'flowers', 'boat', 'cabbage', 'fence', 'wheelbarrow'])).max(8).optional(),
       caption: z.string().max(120).optional(),
     }).optional(),
   }).optional().describe('Figure layout: papercut scene with caption and source.'),
@@ -96,8 +96,8 @@ const experienceRoomSchema = z.object({
 
 const storySceneSchema = z.object({
   kind: z.enum(['meadow', 'forest', 'garden', 'house', 'river', 'night', 'market', 'room']).optional(),
-  characters: z.array(z.enum(['rabbit', 'cat', 'fox', 'bird', 'child'])).max(4).optional(),
-  props: z.array(z.enum(['pine', 'tree', 'house', 'gate', 'table', 'lantern', 'basket', 'flowers', 'boat'])).max(6).optional(),
+  characters: z.array(z.enum(['rabbit', 'cat', 'fox', 'bird', 'child', 'farmer'])).max(4).optional(),
+  props: z.array(z.enum(['pine', 'tree', 'house', 'gate', 'table', 'lantern', 'basket', 'flowers', 'boat', 'cabbage', 'fence', 'wheelbarrow'])).max(8).optional(),
   caption: z.string().max(120).optional(),
 });
 
@@ -595,7 +595,8 @@ QUALITY BAR
         eyebrow: z.string().max(60).optional(),
         brand: z.string().max(50).optional(),
         footer: z.string().max(120).optional(),
-        scene: z.enum(['orbit', 'bloom', 'tide', 'papercut', 'constellation', 'ribbon', 'rain', 'type']).optional(),
+        scene: z.enum(['orbit', 'bloom', 'tide', 'papercut', 'constellation', 'ribbon', 'rain', 'type', 'illustration']).optional(),
+        illustration: storySceneSchema.optional().describe('For scene=illustration: garden, cast and props.'),
         size: z.enum(['square', 'portrait', 'landscape']).optional(),
         duration: z.number().min(6).max(24).optional(),
         seed: z.number().int().min(0).max(9999).optional(),
@@ -617,6 +618,7 @@ QUALITY BAR
             brand: args.brand,
             footer: args.footer,
             scene: args.scene,
+            illustration: args.illustration,
             size: args.size,
             duration: args.duration,
             seed: args.seed,
@@ -696,6 +698,7 @@ QUALITY BAR
         ['La casa que aprendió a respirar (story)', 'examples/stories/casa-respira.html'],
         ['El río que cambió de ciudad (history)', 'examples/stories/rio-1870.html'],
         ['Motion SVG posters', 'examples/motions/index.html'],
+        ['Vector garden in 13 styles', 'examples/motions/illustrations/index.html'],
         ['Atlas Sprint 14 review', 'examples/agile/sprint-14-review.html'],
         ['Atlas Sprint 14 retrospective', 'examples/agile/sprint-14-retro.html'],
         ['Atlas Sprint 15 planning', 'examples/agile/sprint-15-planning.html'],

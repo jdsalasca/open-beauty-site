@@ -10,8 +10,13 @@ function character(kind: StoryCharacter, at: Pt, p: StylePreset['palette'], id: 
   const transform = `translate(${at.x} ${at.y})${flip ? ' scale(-1 1)' : ''}`;
   const ink = p.ink;
   const cream = p.surface;
+  if (kind === 'farmer') {
+    const ink = p.ink;
+    const cream = p.surface;
+    return `<g transform="${transform}" filter="url(#pc-cut-${id})"><ellipse cx="0" cy="42" rx="34" ry="8" fill="${ink}" opacity=".14"/><rect x="-20" y="4" width="40" height="44" rx="8" fill="${p.accent3}"/><rect x="-20" y="27" width="40" height="21" rx="6" fill="${p.deep}"/><path d="M-24 18h48M-14 8v19M14 8v19" stroke="${p.surface}" stroke-width="2" opacity=".55"/><circle cx="0" cy="-14" r="18" fill="${cream}" stroke="${ink}" stroke-width="1.4"/><path d="M-26-18h52l-8-14h-36Z" fill="${p.accent4}"/><path d="M-14-14h28" stroke="${ink}" stroke-width="3"/><circle cx="-7" cy="-13" r="1.8" fill="${ink}"/><circle cx="7" cy="-13" r="1.8" fill="${ink}"/><path d="M-14 44v10M14 44v10" stroke="${ink}" stroke-width="3" opacity=".6"/></g>`;
+  }
   if (kind === 'bird') {
-    return `<g transform="${transform}"><path d="M-22 8c14-18 32-18 44 0-15-8-29-8-44 0Z" fill="${p.accent2}"/><circle cx="14" cy="-2" r="4" fill="${ink}"/><path d="M22 0l10 4-10 4" fill="${p.accent4}"/></g>`;
+    return `<g transform="${transform} scale(1.55)"><g class="pc-bird"><path d="M-22 8c14-18 32-18 44 0-15-8-29-8-44 0Z" fill="${p.accent2}"/><circle cx="14" cy="-2" r="4" fill="${ink}"/><path d="M22 0l10 4-10 4" fill="${p.accent4}"/></g></g>`;
   }
   if (kind === 'child') {
     return `<g transform="${transform}"><rect x="-14" y="8" width="28" height="34" rx="8" fill="${p.accent}"/><circle cx="0" cy="-8" r="15" fill="${cream}" stroke="${ink}" stroke-width="1.4"/><path d="M-15 -9c2-14 26-16 31-2" fill="${p.deep}"/><circle cx="-5" cy="-9" r="1.8" fill="${ink}"/><circle cx="6" cy="-9" r="1.8" fill="${ink}"/></g>`;
@@ -53,15 +58,24 @@ function prop(kind: StoryProp, at: Pt, p: StylePreset['palette'], id: string): s
   if (kind === 'basket') {
     return `<g transform="${t}" filter="url(#pc-cut-${id})"><path d="M-30 0h60l-8 28h-44Z" fill="${p.accent}"/><path d="M-18 0c0-26 36-26 36 0" fill="none" stroke="${p.ink}" stroke-width="4"/></g>`;
   }
+  if (kind === 'cabbage') {
+    return `<g transform="${t}" filter="url(#pc-cut-${id})"><ellipse cx="0" cy="14" rx="23" ry="8" fill="${p.ink}" opacity=".12"/><circle cx="0" cy="0" r="22" fill="${p.accent2}"/><circle cx="-10" cy="-4" r="13" fill="${p.surface}" opacity=".6"/><circle cx="10" cy="2" r="10" fill="${p.accent3}" opacity=".7"/><path d="M0-20c-8 8-8 18 0 26 8-8 8-18 0-26Z" fill="${p.surface}" opacity=".55"/></g>`;
+  }
+  if (kind === 'fence') {
+    return `<g transform="${t}" filter="url(#pc-cut-${id})"><path d="M-50 20h100M-42 34h84" stroke="${p.deep}" stroke-width="6"/><path d="M-38 0v46M-14 0v46M10 0v46M34 0v46" stroke="${p.deep}" stroke-width="5"/><path d="M-38 0l4-8 4 8M-14 0l4-8 4 8M10 0l4-8 4 8M34 0l4-8 4 8" fill="${p.deep}"/></g>`;
+  }
+  if (kind === 'wheelbarrow') {
+    return `<g transform="${t}" filter="url(#pc-cut-${id})"><path d="M-38 8h64l-12 30h-40Z" fill="${p.accent}"/><circle cx="-12" cy="42" r="14" fill="${p.deep}"/><circle cx="-12" cy="42" r="5" fill="${p.surface}"/><path d="M26 12 58-4M50 8l10 4" stroke="${p.deep}" stroke-width="5"/></g>`;
+  }
   if (kind === 'boat') {
     return `<g transform="${t}" filter="url(#pc-cut-${id})"><path d="M-58 0h116l-18 28h-80Z" fill="${p.accent}"/><path d="M0-4V-72l42 68Z" fill="${p.surface}"/><path d="M-6-4V-60l-34 56Z" fill="${p.accent2}"/></g>`;
   }
-  return `<g transform="${t}" filter="url(#pc-cut-${id})">${[0, 1, 2].map((i) => `<circle cx="${(i - 1) * 18}" cy="${-i * 5}" r="7" fill="${i % 2 ? p.accent3 : p.accent4}"/><path d="M${(i - 1) * 18} 8v22" stroke="${p.accent2}" stroke-width="3"/>`).join('')}</g>`;
+  return `<g transform="${t}" filter="url(#pc-cut-${id})"><g class="pc-sway">${[0, 1, 2].map((i) => `<circle cx="${(i - 1) * 18}" cy="${-i * 5}" r="7" fill="${i % 2 ? p.accent3 : p.accent4}"/><path d="M${(i - 1) * 18} 8v22" stroke="${p.accent2}" stroke-width="3"/>`).join('')}</g>`;
 }
 
 function defaultProps(kind: StoryScene['kind']): StoryProp[] {
   if (kind === 'forest') return ['pine', 'pine', 'pine', 'tree'];
-  if (kind === 'garden') return ['flowers', 'flowers', 'gate', 'tree'];
+  if (kind === 'garden') return ['cabbage', 'cabbage', 'cabbage', 'fence', 'wheelbarrow'];
   if (kind === 'house') return ['house', 'tree', 'flowers'];
   if (kind === 'river') return ['boat', 'tree', 'flowers'];
   if (kind === 'market') return ['house', 'basket', 'table'];
@@ -74,7 +88,7 @@ export function papercutScene(preset: StylePreset, scene: StoryScene = {}, index
   const p = preset.palette;
   const id = `pc-${index}`;
   const kind = scene.kind ?? 'meadow';
-  const defaultCharacters: StoryCharacter[] = ['rabbit'];
+  const defaultCharacters: StoryCharacter[] = kind === 'garden' ? ['rabbit', 'bird'] : ['rabbit'];
   const characters: StoryCharacter[] = (scene.characters?.length ? scene.characters : defaultCharacters).slice(0, 4);
   const props = (scene.props?.length ? scene.props : defaultProps(kind)).slice(0, 6);
   const night = kind === 'night';
@@ -87,13 +101,20 @@ export function papercutScene(preset: StylePreset, scene: StoryScene = {}, index
     : '';
   const clouds = night
     ? `<ellipse cx="240" cy="90" rx="70" ry="18" fill="${p.surface}" opacity=".18"/><ellipse cx="550" cy="130" rx="95" ry="22" fill="${p.surface}" opacity=".12"/>`
-    : `<g fill="${p.surface}" opacity=".85"><ellipse cx="180" cy="96" rx="70" ry="22"/><ellipse cx="240" cy="86" rx="48" ry="18"/><ellipse cx="560" cy="120" rx="86" ry="24"/><ellipse cx="620" cy="110" rx="42" ry="16"/></g>`;
-  const positions: Pt[] = [
+    : `<g class="pc-cloud" fill="${p.surface}" opacity=".85"><ellipse cx="180" cy="96" rx="70" ry="22"/><ellipse cx="240" cy="86" rx="48" ry="18"/><ellipse cx="560" cy="120" rx="86" ry="24"/><ellipse cx="620" cy="110" rx="42" ry="16"/></g>`;
+  const groundPositions: Pt[] = [
     { x: 245, y: 390 },
     { x: 360, y: 405 },
     { x: 470, y: 400 },
     { x: 575, y: 410 },
   ];
+  const skyPositions: Pt[] = [
+    { x: 330, y: 170 },
+    { x: 475, y: 120 },
+    { x: 590, y: 195 },
+    { x: 250, y: 110 },
+  ];
+  const positions = characters.map((kind, i) => (kind === 'bird' ? skyPositions[i] ?? skyPositions[0]! : groundPositions[i] ?? groundPositions[0]!));
   const cast = characters.map((characterKind, i) => character(characterKind, positions[i] ?? positions[0]!, p, id, i % 2 === 1)).join('');
   const propPositions: Record<StoryProp, Pt> = {
     pine: { x: 130, y: 315 },
@@ -105,6 +126,9 @@ export function papercutScene(preset: StylePreset, scene: StoryScene = {}, index
     basket: { x: 290, y: 405 },
     flowers: { x: 180, y: 410 },
     boat: { x: 610, y: 390 },
+    cabbage: { x: 190, y: 420 },
+    fence: { x: 630, y: 330 },
+    wheelbarrow: { x: 470, y: 410 },
   };
   const scenery = props.map((kind, i) => {
     const same = props.slice(0, i).filter((item) => item === kind).length;
@@ -116,10 +140,13 @@ export function papercutScene(preset: StylePreset, scene: StoryScene = {}, index
   }).join('');
   const hills = kind === 'river'
     ? `<path d="M0 300c120-30 200 20 300-8s210-10 500 8v200H0Z" fill="${far}"/><path d="M0 345c160-30 280 22 430-8s230 0 370 14v149H0Z" fill="${ground}"/><g stroke="${p.surface}" stroke-width="2" opacity=".55"><path d="M150 390h130M430 375h180M620 420h90"/></g>`
+    : kind === 'garden'
+      ? `<rect y="270" width="800" height="230" fill="${p.accent2}"/><rect y="320" width="800" height="180" fill="${p.muted}"/><g stroke="${p.accent2}" stroke-width="2" opacity=".55">${[0, 1, 2, 3, 4].map((i) => `<path d="M40 ${360 + i * 26}h720"/>`).join('')}</g><path d="M0 320c160-18 260 8 400-4s260 6 400 10" fill="none" stroke="${p.surface}" stroke-width="2" opacity=".45"/>`
     : kind === 'room'
       ? `<rect y="300" width="800" height="200" fill="${p.surface}"/><rect x="70" y="55" width="220" height="185" rx="6" fill="${p.accent3}"/><path d="M180 55v185M70 150h220" stroke="${p.surface}" stroke-width="8"/>`
       : `<path d="M0 300c130-45 220 25 330-5s240-20 470 12v193H0Z" fill="${far}"/><path d="M0 355c160-30 260 20 400-5s260 8 400 18v132H0Z" fill="${ground}"/>`;
   return `<svg viewBox="0 0 800 500" role="img" aria-label="${esc(scene.caption || sceneLabel(kind, characters))}" preserveAspectRatio="xMidYMid slice">
+    <style>.pc-cloud{animation:pc-cloud 26s ease-in-out infinite alternate}.pc-bird{animation:pc-bird 7s ease-in-out infinite alternate}.pc-sway{animation:pc-sway 6s ease-in-out infinite alternate}@keyframes pc-cloud{to{transform:translateX(18px)}}@keyframes pc-bird{to{transform:translateY(-7px)}}@keyframes pc-sway{to{transform:rotate(1.5deg)}}@media(prefers-reduced-motion:reduce){.pc-cloud,.pc-bird,.pc-sway{animation:none!important}}</style>
     <defs>
       <filter id="pc-paper-${id}" x="-8%" y="-8%" width="116%" height="126%"><feTurbulence baseFrequency=".035" numOctaves="2" seed="${24 + index}" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3"/></filter>
       <filter id="pc-cut-${id}" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="1" dy="4" stdDeviation="1.8" flood-color="${p.ink}" flood-opacity=".26"/></filter>

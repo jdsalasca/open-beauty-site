@@ -35,11 +35,12 @@
         <circle cx="704.64" cy="469.92" r="132" fill="#FF6FAE" opacity=".38"/>
         <g class="drift-slow" style="--dur:16s"><circle cx="1190.4" cy="303.6" r="15.84" fill="#FF6FAE"/><circle cx="372" cy="686.4" r="7.92" fill="#F5C86B"/></g><g opacity=".35" fill="none" stroke="#FF6FAE" stroke-width="1.5"><circle cx="768" cy="528" r="382.8"/><circle cx="768" cy="528" r="448.8"/></g>
       </g></g>
+
   <g class="title-block">
     <text class="kicker anim" x="96" y="784.96" text-anchor="start" font-family="Space Grotesk" font-size="15" letter-spacing="4" fill="#F2F4FF" opacity=".7">OBSERVATORIO ERIDU · 03:40</text>
     <text class="title anim" x="96" y="864" text-anchor="start" font-family="Michroma" font-size="69.33333333333333" letter-spacing=".1em" fill="#F2F4FF" style="text-transform:uppercase"><tspan x="96" dy="0">Memoria orbital</tspan></text>
     <text class="subtitle anim" x="96" y="930.9866666666667" text-anchor="start" font-family="Space Grotesk" font-size="18" fill="#F2F4FF" opacity=".78">Una señal que tarda en llegar</text>
     <g class="rule anim" aria-hidden="true"><path d="M96 948.08h170" stroke="#79E8FF" stroke-width="1"/></g>
   </g>
-  <text x="1104" y="90" text-anchor="end" font-family="Space Grotesk" font-size="13" letter-spacing="3" fill="#F2F4FF" opacity=".7">MUSEM</text><text x="96" y="1128" font-family="Space Grotesk" font-size="12" letter-spacing="2" fill="#F2F4FF" opacity=".6">SVG original · sin stock</text><filter id="m-grain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="7"/><feColorMatrix type="saturate" values="0"/></filter><rect width="1200" height="1200" filter="url(#m-grain)" opacity=".035"/>
+  <text x="1104" y="90" text-anchor="end" font-family="Space Grotesk" font-size="13" letter-spacing="3" fill="#F2F4FF" opacity=".7">MUSEM</text><text x="96" y="1182" font-family="Space Grotesk" font-size="12" letter-spacing="2" fill="#F2F4FF" opacity=".6">SVG original · sin stock</text><filter id="m-grain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="7"/><feColorMatrix type="saturate" values="0"/></filter><rect width="1200" height="1200" filter="url(#m-grain)" opacity=".035"/>
 </svg>
