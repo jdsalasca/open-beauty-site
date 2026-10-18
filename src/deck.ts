@@ -1,5 +1,6 @@
 import type { DeckBrief, DeckSlide, DeckStat, StylePreset, StyleSubfamily } from './types.js';
 import { esc, normalizeBrief, safeHref, shell, t } from './page/common.js';
+import { accentTextColor, textOnAccent } from './a11y.js';
 import { motifFor } from './deck-motifs.js';
 import { applyMaxxing } from './maxxing.js';
 import { papercutScene } from './papercut.js';
@@ -160,6 +161,8 @@ export function renderDeck({ style, brief: input }: DeckOptions): DeckResult {
   const slides = normalizeSlides(style, input);
   const accent = style.palette[subfamily.accent];
   const ground = subfamily.ground ? style.palette[subfamily.ground] : style.palette.bg;
+  const accentOn = textOnAccent(style.palette, accent);
+  const accentText = accentTextColor(style.palette, accent);
   const cta = brief.cta ?? { label: t(locale, 'Gracias', 'Thank you'), href: '#' };
   const closingTitle = input.closing || t(locale, 'La conversación sigue.', 'The conversation continues.');
   const total = slides.length + 2;
@@ -203,16 +206,16 @@ export function renderDeck({ style, brief: input }: DeckOptions): DeckResult {
   </section>`;
 
   const css = `*{box-sizing:border-box}
-body.deck{--bg:${style.palette.bg};--surface:${style.palette.surface};--ink:${style.palette.ink};--muted:${style.palette.muted};--accent2:${style.palette.accent2};--accent3:${style.palette.accent3};--accent4:${style.palette.accent4};--deep:${style.palette.deep};--accent:${accent};--ground:${ground};--line:${line}px;--radius:${radius}px;margin:0;background:var(--ground);color:var(--ink);font-family:'${bodyFont}',sans-serif;overflow:hidden}
+body.deck{--bg:${style.palette.bg};--surface:${style.palette.surface};--ink:${style.palette.ink};--muted:${style.palette.muted};--accent2:${style.palette.accent2};--accent3:${style.palette.accent3};--accent4:${style.palette.accent4};--deep:${style.palette.deep};--accent:${accent};--accent-on:${accentOn};--accent-text:${accentText};--ground:${ground};--line:${line}px;--radius:${radius}px;margin:0;background:var(--ground);color:var(--ink);font-family:'${bodyFont}',sans-serif;overflow:hidden}
 .deck .display,.deck h1,.deck h2,.deck h3{font-family:'${display}',sans-serif;font-weight:400}
-.deck h1:focus,.deck h2:focus{outline:var(--line) solid var(--accent);outline-offset:10px}
+.deck h1:focus,.deck h2:focus{outline:var(--line) solid var(--focus-ring,var(--accent));outline-offset:10px}
 .deck .atmosphere{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .deck .atmosphere:before,.deck .atmosphere:after{content:"";position:absolute;display:block}
 .deck .deck-top{position:fixed;z-index:20;top:0;left:0;right:0;display:flex;justify-content:space-between;gap:20px;align-items:center;padding:18px 30px;border-bottom:var(--line) solid var(--muted);background:color-mix(in srgb,var(--ground) 78%,transparent);backdrop-filter:blur(12px);font-size:9px;letter-spacing:.16em;text-transform:uppercase}
 .deck .deck-brand{font-family:'${display}',sans-serif;font-size:15px;letter-spacing:.1em;color:var(--ink)}
-.deck .deck-brand span{color:var(--accent)}
+.deck .deck-brand span{color:var(--accent-text)}
 .deck .deck-title{color:var(--muted);max-width:50vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.deck .deck-count{color:var(--muted)}.deck .deck-count b{color:var(--accent);font-weight:400}
+.deck .deck-count{color:var(--muted)}.deck .deck-count b{color:var(--accent-text);font-weight:400}
 .deck .deck-stage{position:fixed;inset:0;z-index:2}
 .deck .slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:clamp(76px,8vh,120px) clamp(26px,7vw,110px) clamp(72px,10vh,100px);background:transparent;opacity:0;visibility:hidden;transform:translateY(22px) scale(.995);transition:opacity .7s var(--ease),transform .7s var(--ease),visibility .7s;overflow:hidden}
 .deck .slide.is-active{opacity:1;visibility:visible;transform:none}
@@ -240,7 +243,7 @@ body.deck{--bg:${style.palette.bg};--surface:${style.palette.surface};--ink:${st
 .deck .cover-orbit{position:absolute;inset:9%;border:var(--line) solid var(--accent);border-radius:50%;opacity:.65;transform:rotate(-18deg) scaleY(.38)}
 .deck .cover-orbit:after{content:"";position:absolute;inset:12%;border:var(--line) solid var(--muted);border-radius:50%;transform:rotate(32deg) scaleY(1.35)}
 .deck .cover-dot{width:38%;height:38%;border-radius:50%;background:var(--accent);opacity:.9}
-.deck .cover-index{position:absolute;right:0;bottom:2%;font-family:'${display}',sans-serif;font-size:clamp(42px,6vw,86px);color:var(--accent);opacity:.5}
+.deck .cover-index{position:absolute;right:0;bottom:2%;font-family:'${display}',sans-serif;font-size:clamp(42px,6vw,86px);color:var(--accent-text);opacity:.5}
 .deck .deck-body{font-size:clamp(15px,1.55vw,21px);line-height:1.65;color:var(--muted);max-width:68ch;margin:0}
 .deck .point-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:18px}
 .deck .point{border:var(--line) solid var(--muted);border-radius:var(--radius);padding:18px 16px;background:color-mix(in srgb,var(--surface) 82%,transparent);min-height:150px}
@@ -249,18 +252,18 @@ body.deck{--bg:${style.palette.bg};--surface:${style.palette.surface};--ink:${st
 .deck .point p{font-size:12px;line-height:1.55;color:var(--muted);margin:0}
 .deck .stat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:20px}
 .deck .stat{border-top:var(--line) solid var(--accent);padding-top:12px}
-.deck .stat strong{display:block;font-family:'${display}',sans-serif;font-size:clamp(30px,5vw,64px);line-height:1;color:var(--accent);font-weight:400}
+.deck .stat strong{display:block;font-family:'${display}',sans-serif;font-size:clamp(30px,5vw,64px);line-height:1;color:var(--accent-text);font-weight:400}
 .deck .stat span{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:8px}
 .deck .deck-quote{font-family:'${display}',sans-serif;font-size:clamp(30px,4.6vw,72px);line-height:1.08;letter-spacing:-.025em;margin:0;max-width:18ch;color:var(--ink)}
 .deck .deck-quote-author{margin:22px 0 0;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
 .deck .slide-closing .slide-inner{max-width:900px}
-.deck .deck-cta{display:inline-flex;align-self:flex-start;margin-top:26px;padding:12px 16px;background:var(--accent);color:var(--ground);font-size:10px;letter-spacing:.16em;text-transform:uppercase;border-radius:var(--radius)}
+.deck .deck-cta{display:inline-flex;align-self:flex-start;margin-top:26px;padding:12px 16px;background:var(--accent);color:var(--accent-on);font-size:10px;letter-spacing:.16em;text-transform:uppercase;border-radius:var(--radius)}
 .deck .slide-number{position:absolute;right:30px;bottom:24px;font-size:9px;letter-spacing:.16em;color:var(--muted)}
 .deck .deck-bottom{position:fixed;z-index:20;bottom:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 30px;border-top:var(--line) solid var(--muted);background:color-mix(in srgb,var(--ground) 82%,transparent);backdrop-filter:blur(12px);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .deck .deck-controls{display:flex;gap:6px}
 .deck .deck-controls button{min-width:44px;min-height:44px;border:var(--line) solid var(--muted);background:transparent;color:var(--ink);padding:7px 10px;font-size:12px;line-height:1;cursor:pointer;border-radius:var(--radius)}
 .deck .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
-.deck .deck-controls button:hover{background:var(--accent);color:var(--ground);border-color:var(--accent)}
+.deck .deck-controls button:hover{background:var(--accent);color:var(--accent-on);border-color:var(--accent)}
 .deck .deck-progress{position:fixed;z-index:21;top:0;left:0;right:0;height:2px;background:color-mix(in srgb,var(--muted) 25%,transparent)}
 .deck .deck-progress i{display:block;height:100%;width:0;background:var(--accent);transition:width .5s var(--ease)}
 .deck .anim{opacity:0;transform:translateY(14px);transition:opacity .7s var(--ease),transform .7s var(--ease);transition-delay:calc(var(--a,0) * 80ms)}

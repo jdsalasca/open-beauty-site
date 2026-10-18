@@ -204,7 +204,7 @@ const papercraft: StylePreset = {
     surface: '#FFF8EA',
     ink: '#4A3A32',
     muted: '#7A5F50',
-    accent: '#D9785B',
+    accent: '#CE7256',
     accent2: '#A9C3A0',
     accent3: '#B8D4E0',
     accent4: '#F2C879',

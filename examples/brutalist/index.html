@@ -6,6 +6,7 @@
 <title>Concrete Poetry — Concrete/Poetry</title>
 <meta name="description" content="A studio for loud ideas, hard edges and work that refuses to whisper.">
 <meta name="generator" content="open-beauty-site (brutalist)">
+<meta name="color-scheme" content="light">
 <meta name="theme-color" content="#F2EFE4">
 <meta property="og:title" content="Concrete Poetry — Concrete/Poetry">
 <meta property="og:description" content="A studio for loud ideas, hard edges and work that refuses to whisper.">
@@ -128,7 +129,9 @@ h1 .hl{display:inline-block;background:var(--acid);padding:0 .08em;line-height:1
   .btn,.card,.btn svg,.card-link svg{transition:none}
 }
 
-:root{--type-display-case:uppercase;--type-display-tracking:-.035em;--type-display-leading:.84;--type-body-size:18px;--type-body-leading:1.55;--type-label-tracking:.12em;--type-label-case:uppercase;--motion-enter:250ms;--motion-distance:20px;--motion-stagger:60ms;--motion-ease:cubic-bezier(.2,.8,.2,1);--motion-page:250ms}
+:root{--type-display-case:uppercase;--type-display-tracking:-.035em;--type-display-leading:.84;--type-body-size:18px;--type-body-leading:1.55;--type-label-tracking:.12em;--type-label-case:uppercase;--motion-enter:250ms;--motion-distance:20px;--motion-stagger:60ms;--motion-ease:cubic-bezier(.2,.8,.2,1);--motion-page:250ms;color-scheme:light;--focus-ring:#0B0B0B}
+.skip-link{position:fixed;left:14px;top:-64px;z-index:10000;background:#0B0B0B;color:#F2EFE4;padding:10px 16px;font:600 13px/1.2 system-ui,-apple-system,'Segoe UI',sans-serif;letter-spacing:.02em;text-decoration:none;outline:2px solid #D8FF00;outline-offset:-2px;transition:top .18s ease}
+.skip-link:focus,.skip-link:focus-visible{top:14px}
 html{overflow-x:hidden}
 html body,html body[class]{font-size:var(--type-body-size);line-height:var(--type-body-leading);font-kerning:normal;font-optical-sizing:auto;text-rendering:optimizeLegibility;overflow-x:hidden}
 html body :where(p,li),html body[class] :where(p,li){font-size:inherit}
@@ -144,7 +147,8 @@ html body .hero-note,html body[class] .hero-note{font-size:10px}
 .motion-toggle:hover,.motion-toggle:focus-visible{opacity:1;color:var(--ink);text-decoration-color:var(--accent)}
 body.motion-paused *,body.motion-paused *::before,body.motion-paused *::after{animation-play-state:paused!important;transition:none!important}
 a{text-underline-offset:.18em;text-decoration-thickness:1px}
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+img,svg,video,canvas{max-width:100%}
+:focus-visible{outline:3px solid var(--focus-ring,var(--accent));outline-offset:3px}
 ::selection{background:var(--accent);color:var(--ground,var(--bg))}
 @media (prefers-reduced-motion:no-preference){
   html{scroll-behavior:smooth}
@@ -153,6 +157,14 @@ a{text-underline-offset:.18em;text-decoration-thickness:1px}
   @keyframes beauty-page-in{from{opacity:0}to{opacity:1}}
 }
 @media (max-width:560px){html body .hero h1,html body[class] .hero h1{font-size:clamp(40px,11.5vw,56px)!important;letter-spacing:var(--type-display-tracking)}html body .style-vaporwave .hero h1,html body[class] .style-vaporwave .hero h1{font-size:clamp(24px,6.8vw,40px)!important}}
+@media (max-width:380px){
+  html,body{max-width:100%}
+  html body{overflow-wrap:anywhere;word-break:break-word}
+  html body :where(h1,h2,.display){font-size:clamp(30px,11vw,46px)!important;line-height:1.02;letter-spacing:0}
+  html body .style-vaporwave :where(h1,h2,.display){font-size:clamp(20px,7vw,34px)!important}
+  .page-frame,.nature-frame{inset:6px}
+  .top,.site-head,.nature-top,.xp-top,.story-top{padding-left:14px!important;padding-right:14px!important}
+}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   body{animation:none!important}
@@ -162,18 +174,23 @@ a{text-underline-offset:.18em;text-decoration-thickness:1px}
 @media print{
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .reveal,.js .reveal{opacity:1!important;transform:none!important;transition:none!important;animation:none!important}
-  .page-frame,.grain,.beauty-scroll,.motion-toggle{display:none!important}
+  .page-frame,.grain,.beauty-scroll,.motion-toggle,.skip-link{display:none!important}
   .site-head,.topbar{position:static!important}
   .ticker-track{animation:none!important}
+  figure,table,pre,blockquote{break-inside:avoid}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:.8em;word-break:break-all}
 }
 </style>
 </head>
 <body>
+<a class="skip-link" href="#top">Skip to content</a>
 <div class="page-frame" aria-hidden="true"></div>
 <header class="topbar">
   <a class="logo" href="#top">Concrete/Poetry<span class="reg">®</span></a>
   <p class="coord">BUENOS AIRES · 34°36′S / 58°22′W</p>
-  <a class="toplink" href="#contact">Start a project <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg></a>
+  <nav aria-label="Main navigation">
+    <a class="toplink" href="#contact">Start a project <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg></a>
+  </nav>
 </header>
 
 <main id="top">

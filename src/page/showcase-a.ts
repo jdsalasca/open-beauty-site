@@ -68,9 +68,8 @@ export function renderArtDeco(brief: Partial<Brief>, preset: StylePreset): strin
 .style-artdeco .quote cite{color:var(--accent)}
 .style-artdeco .cta{background:var(--accent);border:1px solid var(--accent);color:var(--bg);max-width:1080px}
 .style-artdeco .cta .kicker,.style-artdeco .cta h2{color:var(--bg)}
-.style-artdeco .cta .btn{background:var(--bg);color:var(--bg);border:1px solid var(--bg)}
-.style-artdeco .cta .btn{color:var(--bg);background:var(--deep)}
-.style-artdeco .cta .btn:hover{background:var(--bg);color:var(--deep)}
+.style-artdeco .cta .btn{background:var(--deep);color:var(--accent);border:1px solid var(--accent)}
+.style-artdeco .cta .btn:hover{background:var(--accent);color:var(--deep)}
 .style-artdeco .foot{border-color:rgba(200,164,92,.35)}
 @media (max-width:980px){.style-artdeco .hero{grid-template-columns:1fr;text-align:center}.style-artdeco h1{max-width:12ch;margin-left:auto;margin-right:auto}.style-artdeco .eyebrow,.style-artdeco .hero-actions{justify-content:center}.style-artdeco .hero-art{max-width:520px;margin:0 auto}.style-artdeco .deco-art{max-height:430px;margin:0 auto}}
 @media (prefers-reduced-motion:reduce){.style-artdeco .deco-rays{animation:none}}
@@ -119,7 +118,7 @@ export function renderIsotype(brief: Partial<Brief>, preset: StylePreset): strin
 .style-isotype .tagline{max-width:430px}
 .style-isotype .btn{background:var(--ink);color:var(--bg);border-radius:0}
 .style-isotype .btn:hover{background:var(--accent);color:var(--bg)}
-.style-isotype .nav-cta{border:1px solid var(--ink);background:var(--accent);color:var(--ink)}
+.style-isotype .nav-cta{border:1px solid var(--ink);background:var(--accent);color:var(--bg)}
 .style-isotype .iso-board{background:var(--surface);border:1px solid var(--ink);padding:18px 18px 14px;font-family:'IBM Plex Sans',sans-serif;box-shadow:8px 8px 0 var(--ink)}
 .style-isotype .iso-head,.style-isotype .iso-foot{display:flex;justify-content:space-between;gap:10px;font-size:9px;letter-spacing:.12em;text-transform:uppercase}
 .style-isotype .iso-head{border-bottom:1px solid var(--ink);padding-bottom:10px}
@@ -149,12 +148,12 @@ export function renderIsotype(brief: Partial<Brief>, preset: StylePreset): strin
 .style-isotype .card p{grid-column:2;font-size:13px;margin:0 0 12px}
 .style-isotype .card-link{grid-column:2;color:var(--accent)}
 .style-isotype .card:hover{background:var(--surface);transform:none}
-.style-isotype .quote{background:var(--accent);color:var(--ink);max-width:100%;padding-top:50px;padding-bottom:50px}
+.style-isotype .quote{background:var(--accent);color:var(--bg);max-width:100%;padding-top:50px;padding-bottom:50px}
 .style-isotype .quote blockquote{font-weight:500;letter-spacing:-.025em}
-.style-isotype .quote cite{color:var(--ink)}
+.style-isotype .quote cite{color:var(--bg)}
 .style-isotype .cta{border:1px solid var(--ink);background:var(--surface);box-shadow:10px 10px 0 var(--accent)}
 .style-isotype .cta .btn{background:var(--ink)}
-.style-isotype .cta .btn:hover{background:var(--accent);color:var(--ink)}
+.style-isotype .cta .btn:hover{background:var(--accent);color:var(--bg)}
 .style-isotype .foot{border-color:var(--ink)}
 @media (max-width:980px){.style-isotype .hero{grid-template-columns:1fr}.style-isotype .iso-board{max-width:560px;margin:0 auto}}
 `;
@@ -207,6 +206,7 @@ export function renderOpArt(brief: Partial<Brief>, preset: StylePreset): string 
 .style-opart .card:nth-child(3){background:var(--accent3)}\n.style-opart .card:nth-child(2) p,.style-opart .card:nth-child(3) p{color:var(--bg)}\n.style-opart .card:nth-child(2) .card-link,.style-opart .card:nth-child(3) .card-link{color:var(--bg)}
 .style-opart .card::after{content:"";position:absolute;left:0;right:0;top:0;height:12px;background:repeating-linear-gradient(90deg,var(--ink) 0 8px,transparent 8px 16px);opacity:.4}
 .style-opart .card:hover{transform:translate(-4px,-4px);box-shadow:8px 8px 0 var(--accent)}
+.style-opart .card-num,.style-opart .card-link,.style-opart .aside span{color:var(--bg)}
 .style-opart .quote{background:var(--accent);color:var(--bg);max-width:100%;padding-top:50px;padding-bottom:50px}
 .style-opart .quote blockquote{font-size:clamp(30px,4vw,52px);text-transform:uppercase;letter-spacing:-.03em}
 .style-opart .quote cite{color:var(--bg)}
@@ -300,6 +300,7 @@ export function renderUkiyoe(brief: Partial<Brief>, preset: StylePreset): string
 .style-ukiyoe .cta .btn:hover{background:var(--accent);color:var(--bg)}
 .style-ukiyoe .foot{border-color:rgba(34,32,29,.3)}
 @media (max-width:980px){.style-ukiyoe .hero{grid-template-columns:1fr}.style-ukiyoe .ukiyo-wrap{margin-right:0}.style-ukiyoe .ukiyo-art{max-height:520px}.style-ukiyoe .ukiyo-cartouche{font-size:13px}.style-ukiyoe .ukiyo-wave-back,.style-ukiyoe .ukiyo-wave-front,.style-ukiyoe .ukiyo-foam{animation:none}}
+@media (prefers-reduced-motion:reduce){.style-ukiyoe .ukiyo-wave-back,.style-ukiyoe .ukiyo-wave-front,.style-ukiyoe .ukiyo-foam{animation:none!important}}
 `;
   return renderShowcase(brief, preset, {
     art,

@@ -268,7 +268,7 @@ h1 em{font-style:normal;color:var(--terracotta);display:inline-block;transform:r
 .button svg{transition:transform .3s var(--ease)}
 .button:hover svg{transform:translateX(3px)}
 .text-link{font-family:'Nunito Sans',sans-serif;font-weight:800;font-size:12px;letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid rgba(122,95,80,.35);padding-bottom:3px}
-.text-link:hover{border-color:var(--terracotta);color:var(--terracotta)}
+.text-link:hover{border-color:var(--plum);color:var(--plum)}
 .hand-note{margin:34px 0 0;font-family:'Fraunces',Georgia,serif;font-weight:400;font-variation-settings:'SOFT' 100,'WONK' 1,'opsz' 144;font-size:18px;color:var(--muted)}
 .hero-art{position:relative}
 .variant-1 .hero{grid-template-columns:.98fr 1.02fr}
