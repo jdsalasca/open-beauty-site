@@ -7,6 +7,8 @@ import { createCanvas, createDeck, createExperience, createGifFile, createMotion
 import { createSprintKit } from './sprint.js';
 import { formatValidation, validateDeck, validateExperience, validateHtml, validateStory } from './validate.js';
 import { getStyle, isStyleSlug, styleSlugs } from './styles/presets.js';
+import { makeArtifact } from './make.js';
+import { MAKE_KINDS, isMakeKind } from './types/make.js';
 import { styleGuideMarkdown, stylesOverview } from './guide.js';
 import { ensureFonts } from './canvas.js';
 import { packageRoot } from './paths.js';
@@ -93,6 +95,9 @@ A design harness for small models: HTML pages + GIFs with an editorial line.
 Usage:
   beauty styles                              List the thirteen styles
   beauty guide <style> [--json]              Read the exact tokens and rules
+  beauty make <kind> --style <s> --idea "one sentence"
+      Create everything in one shot: page|deck|gif|story|experience|motion
+      [--locale es|en] [--out path]
   beauty page --style <s> --title "..."      Create a full HTML page
       [--tagline "..."] [--intro "..."] [--brand "..."] [--locale es|en]
       [--maxxing] [--brief brief.json] [--out file.html]
@@ -145,6 +150,33 @@ async function main(): Promise<void> {
         throw new Error(`Pass a style: ${styleSlugs.join(', ')}.`);
       }
       console.log(flags.json ? JSON.stringify(getStyle(style), null, 2) : styleGuideMarkdown(style));
+      return;
+    }
+
+    case 'make': {
+      const kind = positionals[1] ?? stringFlag(flags, 'kind');
+      if (!kind || !isMakeKind(kind)) {
+        throw new Error(`Pass a kind: ${MAKE_KINDS.join('|')}. Example: beauty make gif --style brutalist --idea "a poster for a night market".`);
+      }
+      const style = requireStyle(stringFlag(flags, 'style'));
+      const localeFlag = stringFlag(flags, 'locale');
+      if (localeFlag && localeFlag !== 'es' && localeFlag !== 'en') {
+        throw new Error('Pass --locale es|en.');
+      }
+      const result = await makeArtifact({
+        kind,
+        style,
+        idea: stringFlag(flags, 'idea') ?? '',
+        locale: localeFlag === 'en' ? 'en' : localeFlag === 'es' ? 'es' : undefined,
+        output: stringFlag(flags, 'out'),
+      });
+      console.log(result.summary);
+      console.log(result.path);
+      for (const issue of result.issues) {
+        console.log(`[${issue.severity}] ${issue.code}: ${issue.message}`);
+        if (issue.fix) console.log(`  fix: ${issue.fix}`);
+      }
+      console.log(result.next_step);
       return;
     }
 
