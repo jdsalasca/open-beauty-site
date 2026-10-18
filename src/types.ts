@@ -117,6 +117,34 @@ export interface StoryBrief extends Brief {
   format?: 'scroll' | 'storybook';
 }
 
+export type MotionScene = 'orbit' | 'bloom' | 'tide' | 'papercut' | 'constellation' | 'ribbon' | 'rain' | 'type';
+export type MotionSize = 'square' | 'portrait' | 'landscape';
+
+export interface MotionBrief {
+  style: StyleSlug;
+  title: string;
+  subtitle?: string;
+  eyebrow?: string;
+  brand?: string;
+  scene?: MotionScene;
+  size?: MotionSize;
+  /** Loop duration in seconds, 6–24. */
+  duration?: number;
+  seed?: number;
+  maxxing?: boolean;
+  footer?: string;
+}
+
+export interface MotionResult {
+  path: string;
+  width: number;
+  height: number;
+  scene: MotionScene;
+  duration: number;
+  bytes: number;
+  checks: { name: string; passed: boolean; detail: string }[];
+}
+
 export interface SprintMetric {
   label: string;
   value: string;

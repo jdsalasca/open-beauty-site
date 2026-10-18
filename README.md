@@ -101,15 +101,33 @@ La review reúne evidencia, cambios para usuarios y decisiones; la retro, aprend
 
 Una clase puede empezar con una pregunta, detenerse ante un objeto y avanzar por salas o capítulos. Mirá [La città ideale](examples/education/renaissance-perspective.html) y [Museo de las Cosas Pequeñas](examples/education/papercraft-museum.html). En historia, cada fecha, cita y atribución necesita fuente; separá el hecho de la interpretación y señalá lo que no se sabe. El texto sigue disponible con movimiento reducido y debe poder leerse en proyector.
 
-## Once herramientas MCP
+## Doce herramientas MCP
 
 El servidor trabaja por **stdio** y transforma briefs; no llama a un modelo ni navega la web.
 
 - **Orientar:** `beauty_list_styles`, `beauty_get_style`, `beauty_get_skill`.
-- **Crear:** `beauty_create_page`, `beauty_create_experience`, `beauty_create_story`, `beauty_create_deck`, `beauty_create_gif`, `beauty_create_sprint`.
+- **Crear:** `beauty_create_page`, `beauty_create_experience`, `beauty_create_story`, `beauty_create_deck`, `beauty_create_gif`, `beauty_create_sprint`, `beauty_create_motion`.
 - **Revisar y encontrar:** `beauty_validate`, `beauty_examples`.
 
-En total son once herramientas: elegir una gramática, cargar sus instrucciones, crear la pieza adecuada, validarla y consultar ejemplos.
+En total son doce herramientas: elegir una gramática, cargar sus instrucciones, crear la pieza adecuada, validarla y consultar ejemplos.
+
+## SVG en movimiento
+
+`beauty_create_motion` produce un **póster SVG animado** de un solo archivo: keyframes CSS, tipografía exacta del estilo, paleta exacta, fallback de movimiento reducido y una escena elegida. No es un GIF ni un video; es una pieza que se queda en pantalla y respira.
+
+```bash
+beauty motion --style nature --title "El jardín de las horas lentas" --scene bloom --size landscape --maxxing
+beauty motion --style galactic --title "Memoria orbital" --scene orbit --size square --maxxing
+```
+
+Escenas: `orbit`, `bloom`, `tide`, `papercut`, `constellation`, `ribbon`, `rain`, `type`. El skill `motion.md` explica cuándo usar cada una y qué no animar.
+
+[**Ver los trece pósters SVG**](examples/motions/index.html) — uno por estilo, con `bloom`, `orbit`, `ribbon`, `papercut`, `tide`, `type`, `constellation` y `rain`, todos con **maxxing**.
+<p align="center">
+  <a href="examples/motions/el-jardin-de-las-horas-lentas.svg"><img src="examples/motions/el-jardin-de-las-horas-lentas.svg" width="400" alt="Póster SVG Nature Memory"></a>
+  <a href="examples/motions/memoria-orbital.svg"><img src="examples/motions/memoria-orbital.svg" width="240" alt="Póster SVG Galactic"></a>
+</p>
+
 
 ## Modo maxxing
 
@@ -135,7 +153,7 @@ Luna usa las herramientas MCP; no necesita escribir HTML a mano. La calificació
 
 ## Evidencia disponible
 
-- [La suite documentada](docs/TESTING.md) registra **19/19 pruebas aprobadas**.
+- [La suite documentada](docs/TESTING.md) registra **21/21 pruebas aprobadas**.
 - La [ronda histórica de Luna](examples/agents/round-2026/index.html) reúne **12/12 páginas A/100 y visión 4/4**. Esa ronda corresponde a los doce estilos que existían entonces.
 - Nature Memory se evaluó en la matriz local: **A/100 y visión 4/4**; el estilo 13 también produce deck y GIF. La matriz actual de páginas cubre **13/13 estilos**.
 

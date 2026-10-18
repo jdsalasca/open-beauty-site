@@ -4,6 +4,7 @@ import type { Brief, DeckBrief, ExperienceBrief, GifOptions, GifResult, StoryBri
 import { renderPage } from './page/index.js';
 import { validateDeck, validateExperience, validateHtml, validateStory } from './validate.js';
 import { createGif } from './gif.js';
+import { motionChecks, renderMotion } from './motion.js';
 import { renderDeck } from './deck.js';
 import { renderExperience } from './page/experience.js';
 import { renderStory } from './page/story.js';
@@ -64,6 +65,32 @@ export async function createGifFile({ style, output, ...options }: CreateGifFile
   );
   await mkdir(path.dirname(target), { recursive: true });
   return createGif(style, options, target);
+}
+
+export interface CreateMotionOptions {
+  style: StyleSlug;
+  brief: import('./types.js').MotionBrief;
+  output?: string;
+}
+
+export async function createMotion({ style, brief, output }: CreateMotionOptions): Promise<import('./types.js').MotionResult> {
+  const svg = renderMotion({ ...brief, style });
+  const target = path.resolve(
+    process.cwd(),
+    output ?? path.join('beauty-output', `${style}-motion-${slugify(brief.title)}-${timestamp()}.svg`),
+  );
+  await mkdir(path.dirname(target), { recursive: true });
+  await writeFile(target, svg, 'utf8');
+  const dimensions = /viewBox="0 0 (\d+) (\d+)"/.exec(svg);
+  return {
+    path: target,
+    width: Number(dimensions?.[1] ?? 1600),
+    height: Number(dimensions?.[2] ?? 1000),
+    scene: brief.scene ?? 'orbit',
+    duration: brief.duration ?? 14,
+    bytes: Buffer.byteLength(svg, 'utf8'),
+    checks: motionChecks(svg, brief.scene ?? 'orbit'),
+  };
 }
 
 export interface CreateDeckOptions {

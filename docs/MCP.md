@@ -1,6 +1,6 @@
 # MCP server
 
-`open-beauty-site` exposes a stdio MCP server with eleven tools and nineteen resources. The server is deliberately narrow: it does not call an LLM, it does not browse the web, and it does not invent content. It turns a short brief into a complete, validated artefact.
+`open-beauty-site` exposes a stdio MCP server with twelve tools and twenty resources. The server is deliberately narrow: it does not call an LLM, it does not browse the web, and it does not invent content. It turns a short brief into a complete, validated artefact.
 
 ## Build
 
@@ -78,7 +78,7 @@ Returns the hard tokens: exact fonts, palette, border widths, radii, motion wind
 | Argument | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `style` | style slug | no | Appends that style guide to the skill. |
-| `format` | `page \| deck \| experience \| story \| agile \| sprint` | no | Appends the matching skill. |
+| `format` | `page \| deck \| experience \| story \| agile \| sprint \| motion` | no | Appends the matching skill. |
 
 Returns the contents of `skills/beauty.md` plus the matching skill (`presentation`, `experience`, `story` or `agile`). Load it into an agent's context before asking it to design.
 
@@ -188,6 +188,24 @@ Creates a chaptered story, history lesson or narrative essay: cover, chapter nav
 | `output` | string | no | Defaults to `beauty-output/<style>-<slug>-<timestamp>.gif`. |
 
 Returns path, dimensions, frame count, fps and file size. Frames are capped at 180.
+
+### `beauty_create_motion`
+
+Creates a single-file, looping **animated SVG poster**. It is not a GIF: it is an SVG with CSS keyframes, a reduced-motion fallback, exact style fonts, palette and a scene vocabulary.
+
+| Argument | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `style` | style slug | yes | |
+| `title` | string (≤90) | yes | 2–6 words; the renderer fits the width. |
+| `subtitle`, `eyebrow`, `brand`, `footer` | strings | no | Caption, label, signature, source. |
+| `scene` | `orbit \| bloom \| tide \| papercut \| constellation \| ribbon \| rain \| type` | no | Defaults to `orbit`. |
+| `size` | `square \| portrait \| landscape` | no | 1200², 1000×1400 or 1600×1000. |
+| `duration` | number (6–24) | no | Seconds; default 14. |
+| `seed` | integer | no | Deterministic ornament variation. |
+| `maxxing` | boolean | no | Grain, extra rings/particles and more type contrast. |
+| `output` | string | no | Defaults to `beauty-output/<style>-motion-<slug>-<timestamp>.svg`. |
+
+The SVG includes `<title>`, `<desc>`, `@keyframes`, `prefers-reduced-motion` and no external images or scripts. Google Fonts are imported by URL; if the SVG is offline, the font stack falls back to a system face.
 
 ### `beauty_validate`
 

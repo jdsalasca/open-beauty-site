@@ -48,6 +48,10 @@ Why not one generic template with token substitution? Because that produces reco
 
 Every page is single-file HTML: inline CSS, inline SVG, a ~15-line IntersectionObserver, no build step, no runtime dependency.
 
+### 3.5. Motion (`src/motion.ts`)
+
+`renderMotion` builds a single-file animated SVG from a style, a scene, a title and a duration. It composes style-specific texture, one of eight scenes, a typographic block and CSS keyframes with a reduced-motion fallback. `beauty_create_motion` and the `motion` skill expose it to models.
+
 ### 4. Validator (`src/validate.ts`)
 
 A pragmatic CSS audit. It extracts the `<style>` block and checks:
@@ -96,7 +100,7 @@ An optional second art direction. `applyMaxxing` injects a body class, one origi
 
 ### 10. MCP server (`src/mcp/server.ts`)
 
-`McpServer` over stdio. Eleven tools, nineteen resources, and an `instructions` string that repeats the workflow. The tools call the same `generate.ts` functions as the CLI, so the output is identical.
+`McpServer` over stdio. Twelve tools, twenty resources, and an `instructions` string that repeats the workflow. The tools call the same `generate.ts` functions as the CLI, so the output is identical.
 
 ### 11. CLI (`src/cli.ts`)
 

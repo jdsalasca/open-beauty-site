@@ -34,6 +34,7 @@ test('exposes the full tool surface', async () => {
     'beauty_create_deck',
     'beauty_create_experience',
     'beauty_create_gif',
+    'beauty_create_motion',
     'beauty_create_page',
     'beauty_create_sprint',
     'beauty_create_story',
@@ -226,4 +227,24 @@ test('creates an illustrated storybook over MCP', async () => {
   assert.match(text, /2-chapter/);
   assert.match(text, /grade: A/);
   assert.match(text, /vision: 4\/4/);
+});
+
+test('creates an animated SVG poster over MCP', async () => {
+  const result = await client.callTool({
+    name: 'beauty_create_motion',
+    arguments: {
+      style: 'nature',
+      title: 'El jardín de las horas lentas',
+      subtitle: 'Una hoja prensada también es una forma de mirar el tiempo.',
+      scene: 'bloom',
+      size: 'landscape',
+      duration: 12,
+      maxxing: true,
+      output: 'motion-test.svg',
+    },
+  });
+  const text = (result.content as Array<{ type: string; text: string }>)[0]?.text ?? '';
+  assert.match(text, /animated Nature Memory SVG/);
+  assert.match(text, /animated:ok/);
+  assert.match(text, /reduced-motion:ok/);
 });

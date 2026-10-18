@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import type { Brief, DeckBrief, ExperienceBrief, SprintBrief, StoryBrief, StyleSlug } from './types.js';
 import { VERSION } from './index.js';
-import { createDeck, createExperience, createGifFile, createPage, createStory, slugify, timestamp } from './generate.js';
+import { createDeck, createExperience, createGifFile, createMotion, createPage, createStory, slugify, timestamp } from './generate.js';
 import { createSprintKit } from './sprint.js';
 import { formatValidation, validateDeck, validateExperience, validateHtml, validateStory } from './validate.js';
 import { getStyle, isStyleSlug, styleSlugs } from './styles/presets.js';
@@ -101,6 +101,9 @@ Usage:
   beauty experience --style <s> --brief exp.json  Create a 3–8 room experience [--maxxing]
   beauty story --style <s> --brief story.json     Create a chaptered story/lesson [--maxxing]
   beauty sprint --style <s> --brief sprint.json   Create review + retrospective + planning + 3 GIFs
+  beauty motion --style <s> --title "..."      Create an animated SVG loop
+      [--scene orbit|bloom|tide|papercut|constellation|ribbon|rain|type]
+      [--size square|portrait|landscape] [--duration 14] [--maxxing] [--out loop.svg]
   beauty gif --style <s> --text "..."        Create a looping GIF
       [--subtitle "..."] [--template title|loop|poster] [--fps 20] [--duration 2.4]
       [--width 800] [--height 800] [--maxxing] [--out file.gif]
@@ -201,6 +204,38 @@ async function main(): Promise<void> {
       console.log(`${result.validation.grade} ${result.validation.score}/100 · vision ${result.validation.vision.score}/4`);
       console.log(result.path);
       if (result.validation.issues.length) console.log(formatValidation(result.validation));
+      return;
+    }
+
+    case 'motion': {
+      const style = requireStyle(stringFlag(flags, 'style'));
+      const title = stringFlag(flags, 'title');
+      if (!title) throw new Error('Pass --title "..." for the motion SVG.');
+      const sceneFlag = stringFlag(flags, 'scene');
+      const scene = sceneFlag === 'orbit' || sceneFlag === 'bloom' || sceneFlag === 'tide' || sceneFlag === 'papercut' || sceneFlag === 'constellation' || sceneFlag === 'ribbon' || sceneFlag === 'rain' || sceneFlag === 'type' ? sceneFlag : undefined;
+      const sizeFlag = stringFlag(flags, 'size');
+      const size = sizeFlag === 'square' || sizeFlag === 'portrait' || sizeFlag === 'landscape' ? sizeFlag : undefined;
+      const output = stringFlag(flags, 'out') ?? path.join('beauty-output', `${style}-motion-${slugify(title)}-${timestamp()}.svg`);
+      const result = await createMotion({
+        style,
+        brief: {
+          style,
+          title,
+          subtitle: stringFlag(flags, 'subtitle'),
+          eyebrow: stringFlag(flags, 'eyebrow'),
+          brand: stringFlag(flags, 'brand'),
+          footer: stringFlag(flags, 'footer'),
+          scene,
+          size,
+          duration: numberFlag(flags, 'duration'),
+          seed: numberFlag(flags, 'seed'),
+          maxxing: booleanFlag(flags, 'maxxing'),
+        },
+        output,
+      });
+      console.log(`${getStyle(style).name} motion · ${result.width}×${result.height} · ${result.scene} · ${result.duration}s`);
+      console.log(result.path);
+      console.log(result.checks.map((check) => `${check.passed ? 'ok' : 'missing'} ${check.name}`).join(' · '));
       return;
     }
 

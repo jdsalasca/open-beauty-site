@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { z } from 'zod';
 import type { Brief, DeckBrief, ExperienceBrief, StoryBrief, StyleSlug } from '../types.js';
 import { VERSION } from '../index.js';
-import { createDeck, createExperience, createGifFile, createPage, createStory, timestamp } from '../generate.js';
+import { createDeck, createExperience, createGifFile, createMotion, createPage, createStory, timestamp } from '../generate.js';
 import { createSprintKit } from '../sprint.js';
 import { formatValidation, validateDeck, validateExperience, validateHtml, validateStory } from '../validate.js';
 import { presets, styleSlugs } from '../styles/presets.js';
@@ -232,7 +232,7 @@ QUALITY BAR
         'Returns a copy-paste skill/prompt that teaches an agent the mandatory workflow and the quality bar. Optionally includes one style guide.',
       inputSchema: {
         style: styleEnum.optional().describe('Include a specific style guide after the skill instructions.'),
-        format: z.enum(['page', 'deck', 'experience', 'story', 'agile', 'sprint']).optional().describe('Append the deck, experience, story, agile or sprint skill.'),
+        format: z.enum(['page', 'deck', 'experience', 'story', 'agile', 'sprint', 'motion']).optional().describe('Append the matching format skill.'),
       },
     },
     async ({ style, format }) => {
@@ -243,7 +243,7 @@ QUALITY BAR
         // The generated fallback is intentionally equivalent.
       }
       if (format && format !== 'page') {
-        const file = format === 'deck' ? 'presentation.md' : format === 'experience' ? 'experience.md' : format === 'story' ? 'story.md' : 'agile.md';
+        const file = format === 'deck' ? 'presentation.md' : format === 'experience' ? 'experience.md' : format === 'story' ? 'story.md' : format === 'motion' ? 'motion.md' : 'agile.md';
         try {
           skill += `\n\n---\n\n${await readFile(path.join(packageRoot(), 'skills', file), 'utf8')}`;
         } catch {
@@ -583,6 +583,63 @@ QUALITY BAR
   );
 
   server.registerTool(
+    'beauty_create_motion',
+    {
+      title: 'Create an animated SVG poster',
+      description:
+        'Creates a single-file, looping animated SVG with the chosen style and a scene vocabulary: orbit, bloom, tide, papercut, constellation, ribbon, rain or type. Includes CSS motion, reduced-motion fallback, title, caption and source. Use maxxing for a hero loop.',
+      inputSchema: {
+        style: styleEnum.describe('Editorial system.'),
+        title: z.string().min(1).max(90).describe('2–6 words; the renderer fits the width.'),
+        subtitle: z.string().max(120).optional(),
+        eyebrow: z.string().max(60).optional(),
+        brand: z.string().max(50).optional(),
+        footer: z.string().max(120).optional(),
+        scene: z.enum(['orbit', 'bloom', 'tide', 'papercut', 'constellation', 'ribbon', 'rain', 'type']).optional(),
+        size: z.enum(['square', 'portrait', 'landscape']).optional(),
+        duration: z.number().min(6).max(24).optional(),
+        seed: z.number().int().min(0).max(9999).optional(),
+        maxxing: z.boolean().optional(),
+        output: z.string().max(260).optional().describe('File path. Defaults to ./beauty-output/<style>-motion-<slug>-<timestamp>.svg.'),
+        include_svg: z.boolean().optional(),
+      },
+    },
+    async (args) => {
+      try {
+        const output = args.output ?? path.join('beauty-output', `${args.style}-motion-${slugFromTitle(args.title)}-${timestamp()}.svg`);
+        const result = await createMotion({
+          style: args.style,
+          brief: {
+            style: args.style,
+            title: args.title,
+            subtitle: args.subtitle,
+            eyebrow: args.eyebrow,
+            brand: args.brand,
+            footer: args.footer,
+            scene: args.scene,
+            size: args.size,
+            duration: args.duration,
+            seed: args.seed,
+            maxxing: args.maxxing,
+          },
+          output,
+        });
+        const ok = result.checks.every((check) => check.passed);
+        const summary = [
+          `Created an animated ${presets[args.style].name} SVG (${result.scene}).`,
+          `file: ${result.path}`,
+          `${result.width}×${result.height} · ${result.duration}s`,
+          `checks: ${result.checks.map((check) => `${check.name}:${check.passed ? 'ok' : 'missing'}`).join(' · ')}`,
+          ok ? '\nOpen it in a browser; the loop respects prefers-reduced-motion.' : '\nOne check failed; inspect the SVG.',
+        ].join('\n');
+        return text(args.include_svg ? `${summary}\n\n--- SVG ---\n${await readFile(result.path, 'utf8')}` : summary);
+      } catch (error) {
+        return { content: [{ type: 'text' as const, text: `Motion failed: ${(error as Error).message}` }], isError: true };
+      }
+    },
+  );
+
+  server.registerTool(
     'beauty_validate',
     {
       title: 'Audit a page against one style',
@@ -638,6 +695,7 @@ QUALITY BAR
         ['Museo de lo invisible (museum)', 'examples/experiences/museo-invisible.html'],
         ['La casa que aprendió a respirar (story)', 'examples/stories/casa-respira.html'],
         ['El río que cambió de ciudad (history)', 'examples/stories/rio-1870.html'],
+        ['Motion SVG posters', 'examples/motions/index.html'],
         ['Atlas Sprint 14 review', 'examples/agile/sprint-14-review.html'],
         ['Atlas Sprint 14 retrospective', 'examples/agile/sprint-14-retro.html'],
         ['Atlas Sprint 15 planning', 'examples/agile/sprint-15-planning.html'],

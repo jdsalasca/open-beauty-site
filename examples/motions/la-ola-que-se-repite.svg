@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="m-title m-desc">
+  <title id="m-title">La ola que se repite</title>
+  <desc id="m-desc">Edo, 1831: el agua también tiene memoria. Animated SVG; respects reduced motion.</desc>
+  <style>@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;700&amp;family=Zen+Kaku+Gothic+New:wght@400;500&amp;display=swap');:root{--dur:16s}
+  .anim,.spin-slow,.drift-slow,.breathe,.twinkle,.rain-drop,.tide-band,.ribbon,.bloom-petal{transform-box:fill-box;transform-origin:center}
+  .title{animation:title-in 1.2s cubic-bezier(.22,.61,.36,1) both}
+  .kicker,.subtitle,.rule{animation:fade-in 1.4s ease both}
+  .subtitle{animation-delay:.25s}.rule{animation-delay:.45s}
+  .spin-slow{animation:spin var(--dur) linear infinite}
+  .drift-slow{animation:drift var(--dur) ease-in-out infinite alternate}
+  .breathe{animation:breathe calc(var(--dur) * .72) ease-in-out infinite}
+  .twinkle{animation:twinkle calc(var(--dur) * .45) ease-in-out infinite;animation-delay:calc(var(--i) * -.4s)}
+  .bloom-petal{animation:bloom calc(var(--dur) * .9) cubic-bezier(.22,.61,.36,1) infinite alternate;animation-delay:calc(var(--i) * -.18s)}
+  .tide-band{animation:tide calc(var(--dur) * .8) ease-in-out infinite alternate;animation-delay:calc(var(--i) * -.6s)}
+  .rain-drop{animation:rain calc(var(--dur) * .55) linear infinite;animation-delay:calc(var(--i) * -.2s)}
+  .ribbon{animation:ribbon calc(var(--dur) * .9) ease-in-out infinite alternate;animation-delay:calc(var(--i) * -.5s)}
+  .orbit-stage{animation:float calc(var(--dur) * 1.2) ease-in-out infinite alternate}
+  @keyframes title-in{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+  @keyframes fade-in{from{opacity:0}to{opacity:1}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes drift{from{transform:translate3d(-8px,4px,0)}to{transform:translate3d(12px,-8px,0)}}
+  @keyframes breathe{0%,100%{transform:scale(.96);opacity:.8}50%{transform:scale(1.04);opacity:1}}
+  @keyframes twinkle{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+  @keyframes bloom{from{transform:scale(.86) rotate(-3deg)}to{transform:scale(1.06) rotate(3deg)}}
+  @keyframes tide{from{transform:translateX(-12px)}to{transform:translateX(12px)}}
+  @keyframes rain{from{transform:translateY(-18px);opacity:.2}to{transform:translateY(22px);opacity:.8}}
+  @keyframes ribbon{from{transform:rotate(-.5deg)}to{transform:rotate(.8deg)}}
+  @keyframes float{from{transform:translateY(-4px)}to{transform:translateY(6px)}}
+  @media (prefers-reduced-motion:reduce){.anim,.spin-slow,.drift-slow,.breathe,.twinkle,.rain-drop,.tide-band,.ribbon,.bloom-petal,.orbit-stage,.title,.kicker,.subtitle,.rule{animation:none!important;transform:none!important;opacity:1!important}}</style>
+  <rect width="1600" height="1000" fill="#F3E9D2"/>
+  <g fill="none" stroke="#5B7C99" stroke-width="2" opacity=".3"><path d="M-80 740c240-120 400 80 640-40s480 40 720-40 480 20 720-60"/></g>
+  <g class="stage"><g class="tide-stage"><path class="tide-band" style="--i:0" d="M-160 580c288-80 480 60 768-20s480 50 768-30 448.00000000000006 20 704-70" fill="none" stroke="#C8402A" stroke-width="3" opacity="0.8"/><path class="tide-band" style="--i:1" d="M-160 649.9999999999999c288-80 480 60 768-20s480 50 768-30 448.00000000000006 20 704-70" fill="none" stroke="#5B7C99" stroke-width="3" opacity="0.68"/><path class="tide-band" style="--i:2" d="M-160 720c288-80 480 60 768-20s480 50 768-30 448.00000000000006 20 704-70" fill="none" stroke="#C8402A" stroke-width="3" opacity="0.56"/><path class="tide-band" style="--i:3" d="M-160 790c288-80 480 60 768-20s480 50 768-30 448.00000000000006 20 704-70" fill="none" stroke="#5B7C99" stroke-width="3" opacity="0.44000000000000006"/><circle class="breathe" cx="1024" cy="280" r="121.00000000000001" fill="#6E7F5C" opacity=".7"/><g opacity=".35" fill="none" stroke="#6E7F5C" stroke-width="1.5"><circle cx="1024" cy="440" r="319"/><circle cx="1024" cy="440" r="374"/></g></g></g>
+  <g class="title-block">
+    <text class="kicker anim" x="128" y="491.7333333333334" text-anchor="start" font-family="Zen Kaku Gothic New" font-size="15" letter-spacing="4" fill="#22201D" opacity=".7">UKIYO-E · ESTAMPA</text>
+    <text class="title anim" x="128" y="613.3333333333334" text-anchor="start" font-family="Shippori Mincho B1" font-size="106.66666666666666" letter-spacing=".02em" fill="#22201D" style="text-transform:none"><tspan x="128" dy="0">La ola que se</tspan><tspan x="128" dy="98.13333333333333">repite</tspan></text>
+    <text class="subtitle anim" x="128" y="810.1333333333333" text-anchor="start" font-family="Zen Kaku Gothic New" font-size="20.266666666666666" fill="#22201D" opacity=".78">Edo, 1831: el agua también tiene memoria</text>
+    <g class="rule anim" aria-hidden="true"><path d="M128 833.2h170" stroke="#1B3A5C" stroke-width="1"/></g>
+  </g>
+  <text x="1472" y="75" text-anchor="end" font-family="Zen Kaku Gothic New" font-size="13" letter-spacing="3" fill="#22201D" opacity=".7">OPEN/BEAUTY</text><text x="128" y="940" font-family="Zen Kaku Gothic New" font-size="12" letter-spacing="2" fill="#22201D" opacity=".6">SVG original · sin stock</text><filter id="m-grain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="7"/><feColorMatrix type="saturate" values="0"/></filter><rect width="1600" height="1000" filter="url(#m-grain)" opacity=".035"/>
+</svg>

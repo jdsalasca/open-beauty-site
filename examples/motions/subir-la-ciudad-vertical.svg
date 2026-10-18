@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1400" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="m-title m-desc">
+  <title id="m-title">Subir</title>
+  <desc id="m-desc">La ciudad vertical, 1930. Animated SVG; respects reduced motion.</desc>
+  <style>@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&amp;family=Poiret+One&amp;display=swap');:root{--dur:16s}
+  .anim,.spin-slow,.drift-slow,.breathe,.twinkle,.rain-drop,.tide-band,.ribbon,.bloom-petal{transform-box:fill-box;transform-origin:center}
+  .title{animation:title-in 1.2s cubic-bezier(.22,.61,.36,1) both}
+  .kicker,.subtitle,.rule{animation:fade-in 1.4s ease both}
+  .subtitle{animation-delay:.25s}.rule{animation-delay:.45s}
+  .spin-slow{animation:spin var(--dur) linear infinite}
+  .drift-slow{animation:drift var(--dur) ease-in-out infinite alternate}
+  .breathe{animation:breathe calc(var(--dur) * .72) ease-in-out infinite}
+  .twinkle{animation:twinkle calc(var(--dur) * .45) ease-in-out infinite;animation-delay:calc(var(--i) * -.4s)}
+  .bloom-petal{animation:bloom calc(var(--dur) * .9) cubic-bezier(.22,.61,.36,1) infinite alternate;animation-delay:calc(var(--i) * -.18s)}
+  .tide-band{animation:tide calc(var(--dur) * .8) ease-in-out infinite alternate;animation-delay:calc(var(--i) * -.6s)}
+  .rain-drop{animation:rain calc(var(--dur) * .55) linear infinite;animation-delay:calc(var(--i) * -.2s)}
+  .ribbon{animation:ribbon calc(var(--dur) * .9) ease-in-out infinite alternate;animation-delay:calc(var(--i) * -.5s)}
+  .orbit-stage{animation:float calc(var(--dur) * 1.2) ease-in-out infinite alternate}
+  @keyframes title-in{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+  @keyframes fade-in{from{opacity:0}to{opacity:1}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes drift{from{transform:translate3d(-8px,4px,0)}to{transform:translate3d(12px,-8px,0)}}
+  @keyframes breathe{0%,100%{transform:scale(.96);opacity:.8}50%{transform:scale(1.04);opacity:1}}
+  @keyframes twinkle{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+  @keyframes bloom{from{transform:scale(.86) rotate(-3deg)}to{transform:scale(1.06) rotate(3deg)}}
+  @keyframes tide{from{transform:translateX(-12px)}to{transform:translateX(12px)}}
+  @keyframes rain{from{transform:translateY(-18px);opacity:.2}to{transform:translateY(22px);opacity:.8}}
+  @keyframes ribbon{from{transform:rotate(-.5deg)}to{transform:rotate(.8deg)}}
+  @keyframes float{from{transform:translateY(-4px)}to{transform:translateY(6px)}}
+  @media (prefers-reduced-motion:reduce){.anim,.spin-slow,.drift-slow,.breathe,.twinkle,.rain-drop,.tide-band,.ribbon,.bloom-petal,.orbit-stage,.title,.kicker,.subtitle,.rule{animation:none!important;transform:none!important;opacity:1!important}}</style>
+  <rect width="1000" height="1400" fill="#0E0E10"/>
+  <g stroke="#C8A45C" stroke-width="1" opacity=".3"><path d="M500 588 1050 588"/><path d="M500 588 976.3139720814413 863"/><path d="M500 588 775 1064.3139720814413"/><path d="M500 588 500.00000000000006 1138"/><path d="M500 588 225.0000000000001 1064.3139720814413"/><path d="M500 588 23.686027918558693 863"/><path d="M500 588 -50 588.0000000000001"/><path d="M500 588 23.68602791855875 312.99999999999994"/><path d="M500 588 224.99999999999972 111.6860279185588"/><path d="M500 588 499.9999999999999 38"/><path d="M500 588 775 111.68602791855875"/><path d="M500 588 976.3139720814411 312.9999999999997"/></g>
+  <g class="stage"><g class="ribbon-stage"><path class="ribbon" style="--i:0" d="M560 112c200 168-160 350 20 560s200 392.00000000000006 -40 616" fill="none" stroke="#D9A6A0" stroke-width="18" opacity=".75"/><path class="ribbon" style="--i:1" d="M590.0000000000001 112c200 168-160 350 20 560s200 392.00000000000006 -40 616" fill="none" stroke="#1F5C4A" stroke-width="13" opacity=".75"/><path class="ribbon" style="--i:2" d="M620.0000000000001 112c200 168-160 350 20 560s200 392.00000000000006 -40 616" fill="none" stroke="#D9A6A0" stroke-width="8" opacity=".75"/><g opacity=".35" fill="none" stroke="#D9A6A0" stroke-width="1.5"><circle cx="640" cy="616" r="319"/><circle cx="640" cy="616" r="374"/></g></g></g>
+  <g class="title-block">
+    <text class="kicker anim" x="80" y="899.7" text-anchor="start" font-family="Josefin Sans" font-size="15" letter-spacing="4" fill="#F4EBD9" opacity=".7">THE CHRYSLER ROOM</text>
+    <text class="title anim" x="80" y="1008" text-anchor="start" font-family="Poiret One" font-size="95" letter-spacing=".06em" fill="#F4EBD9" style="text-transform:uppercase"><tspan x="80" dy="0">Subir</tspan></text>
+    <text class="subtitle anim" x="80" y="1090.9" text-anchor="start" font-family="Josefin Sans" font-size="18.05" fill="#F4EBD9" opacity=".78">La ciudad vertical, 1930</text>
+    <g class="rule anim" aria-hidden="true"><path d="M80 1112.1h160" stroke="#C8A45C" stroke-width="1"/></g>
+  </g>
+  <text x="920" y="105" text-anchor="end" font-family="Josefin Sans" font-size="13" letter-spacing="3" fill="#F4EBD9" opacity=".7">ART DECO</text><text x="80" y="1316" font-family="Josefin Sans" font-size="12" letter-spacing="2" fill="#F4EBD9" opacity=".6">SVG original · sin stock</text><filter id="m-grain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="7"/><feColorMatrix type="saturate" values="0"/></filter><rect width="1000" height="1400" filter="url(#m-grain)" opacity=".035"/>
+</svg>

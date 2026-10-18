@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="m-title m-desc">
+  <title id="m-title">Memoria orbital</title>
+  <desc id="m-desc">Una señal que tarda en llegar. Animated SVG; respects reduced motion.</desc>
+  <style>@import url('https://fonts.googleapis.com/css2?family=Michroma&amp;family=Space+Grotesk:wght@300;400;500&amp;display=swap');:root{--dur:16s}
+  .anim,.spin-slow,.drift-slow,.breathe,.twinkle,.rain-drop,.tide-band,.ribbon,.bloom-petal{transform-box:fill-box;transform-origin:center}
+  .title{animation:title-in 1.2s cubic-bezier(.22,.61,.36,1) both}
+  .kicker,.subtitle,.rule{animation:fade-in 1.4s ease both}
+  .subtitle{animation-delay:.25s}.rule{animation-delay:.45s}
+  .spin-slow{animation:spin var(--dur) linear infinite}
+  .drift-slow{animation:drift var(--dur) ease-in-out infinite alternate}
+  .breathe{animation:breathe calc(var(--dur) * .72) ease-in-out infinite}
+  .twinkle{animation:twinkle calc(var(--dur) * .45) ease-in-out infinite;animation-delay:calc(var(--i) * -.4s)}
+  .bloom-petal{animation:bloom calc(var(--dur) * .9) cubic-bezier(.22,.61,.36,1) infinite alternate;animation-delay:calc(var(--i) * -.18s)}
+  .tide-band{animation:tide calc(var(--dur) * .8) ease-in-out infinite alternate;animation-delay:calc(var(--i) * -.6s)}
+  .rain-drop{animation:rain calc(var(--dur) * .55) linear infinite;animation-delay:calc(var(--i) * -.2s)}
+  .ribbon{animation:ribbon calc(var(--dur) * .9) ease-in-out infinite alternate;animation-delay:calc(var(--i) * -.5s)}
+  .orbit-stage{animation:float calc(var(--dur) * 1.2) ease-in-out infinite alternate}
+  @keyframes title-in{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+  @keyframes fade-in{from{opacity:0}to{opacity:1}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes drift{from{transform:translate3d(-8px,4px,0)}to{transform:translate3d(12px,-8px,0)}}
+  @keyframes breathe{0%,100%{transform:scale(.96);opacity:.8}50%{transform:scale(1.04);opacity:1}}
+  @keyframes twinkle{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+  @keyframes bloom{from{transform:scale(.86) rotate(-3deg)}to{transform:scale(1.06) rotate(3deg)}}
+  @keyframes tide{from{transform:translateX(-12px)}to{transform:translateX(12px)}}
+  @keyframes rain{from{transform:translateY(-18px);opacity:.2}to{transform:translateY(22px);opacity:.8}}
+  @keyframes ribbon{from{transform:rotate(-.5deg)}to{transform:rotate(.8deg)}}
+  @keyframes float{from{transform:translateY(-4px)}to{transform:translateY(6px)}}
+  @media (prefers-reduced-motion:reduce){.anim,.spin-slow,.drift-slow,.breathe,.twinkle,.rain-drop,.tide-band,.ribbon,.bloom-petal,.orbit-stage,.title,.kicker,.subtitle,.rule{animation:none!important;transform:none!important;opacity:1!important}}</style>
+  <rect width="1200" height="1200" fill="#02030A"/>
+  <g fill="#0D1020" opacity=".6"><circle cx="0" cy="0" r="1"/><circle cx="173" cy="97" r="2"/><circle cx="346" cy="194" r="3"/><circle cx="519" cy="291" r="1"/><circle cx="692" cy="388" r="2"/><circle cx="865" cy="485" r="3"/><circle cx="1038" cy="582" r="1"/><circle cx="11" cy="679" r="2"/><circle cx="184" cy="776" r="3"/><circle cx="357" cy="873" r="1"/><circle cx="530" cy="970" r="2"/><circle cx="703" cy="1067" r="3"/><circle cx="876" cy="1164" r="1"/><circle cx="1049" cy="61" r="2"/><circle cx="22" cy="158" r="3"/><circle cx="195" cy="255" r="1"/><circle cx="368" cy="352" r="2"/><circle cx="541" cy="449" r="3"/><circle cx="714" cy="546" r="1"/><circle cx="887" cy="643" r="2"/><circle cx="1060" cy="740" r="3"/><circle cx="33" cy="837" r="1"/><circle cx="206" cy="934" r="2"/><circle cx="379" cy="1031" r="3"/></g>
+  <g class="stage"><g class="orbit-stage">
+        <g class="spin-slow" style="--dur:42s" transform-origin="768 528"><ellipse cx="768" cy="528" rx="448.8" ry="137.28" fill="none" stroke="#F5C86B" stroke-width="2" transform="rotate(-18 768 528)"/><ellipse cx="768" cy="528" rx="356.40000000000003" ry="105.60000000000001" fill="none" stroke="#FF6FAE" stroke-width="1.4" transform="rotate(32 768 528)"/></g>
+        <circle class="breathe" cx="768" cy="528" r="264" fill="#B388FF" opacity=".92"/>
+        <circle cx="704.64" cy="469.92" r="132" fill="#FF6FAE" opacity=".38"/>
+        <g class="drift-slow" style="--dur:16s"><circle cx="1190.4" cy="303.6" r="15.84" fill="#FF6FAE"/><circle cx="372" cy="686.4" r="7.92" fill="#F5C86B"/></g><g opacity=".35" fill="none" stroke="#FF6FAE" stroke-width="1.5"><circle cx="768" cy="528" r="382.8"/><circle cx="768" cy="528" r="448.8"/></g>
+      </g></g>
+  <g class="title-block">
+    <text class="kicker anim" x="96" y="784.96" text-anchor="start" font-family="Space Grotesk" font-size="15" letter-spacing="4" fill="#F2F4FF" opacity=".7">OBSERVATORIO ERIDU · 03:40</text>
+    <text class="title anim" x="96" y="864" text-anchor="start" font-family="Michroma" font-size="69.33333333333333" letter-spacing=".1em" fill="#F2F4FF" style="text-transform:uppercase"><tspan x="96" dy="0">Memoria orbital</tspan></text>
+    <text class="subtitle anim" x="96" y="930.9866666666667" text-anchor="start" font-family="Space Grotesk" font-size="18" fill="#F2F4FF" opacity=".78">Una señal que tarda en llegar</text>
+    <g class="rule anim" aria-hidden="true"><path d="M96 948.08h170" stroke="#79E8FF" stroke-width="1"/></g>
+  </g>
+  <text x="1104" y="90" text-anchor="end" font-family="Space Grotesk" font-size="13" letter-spacing="3" fill="#F2F4FF" opacity=".7">MUSEM</text><text x="96" y="1128" font-family="Space Grotesk" font-size="12" letter-spacing="2" fill="#F2F4FF" opacity=".6">SVG original · sin stock</text><filter id="m-grain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="7"/><feColorMatrix type="saturate" values="0"/></filter><rect width="1200" height="1200" filter="url(#m-grain)" opacity=".035"/>
+</svg>

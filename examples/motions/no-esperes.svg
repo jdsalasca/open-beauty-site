@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="m-title m-desc">
+  <title id="m-title">NO ESPERES</title>
+  <desc id="m-desc">Dirección de arte sin plantillas. Animated SVG; respects reduced motion.</desc>
+  <style>@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap');:root{--dur:16s}
+  .anim,.spin-slow,.drift-slow,.breathe,.twinkle,.rain-drop,.tide-band,.ribbon,.bloom-petal{transform-box:fill-box;transform-origin:center}
+  .title{animation:title-in 1.2s cubic-bezier(.22,.61,.36,1) both}
+  .kicker,.subtitle,.rule{animation:fade-in 1.4s ease both}
+  .subtitle{animation-delay:.25s}.rule{animation-delay:.45s}
+  .spin-slow{animation:spin var(--dur) linear infinite}
+  .drift-slow{animation:drift var(--dur) ease-in-out infinite alternate}
+  .breathe{animation:breathe calc(var(--dur) * .72) ease-in-out infinite}
+  .twinkle{animation:twinkle calc(var(--dur) * .45) ease-in-out infinite;animation-delay:calc(var(--i) * -.4s)}
+  .bloom-petal{animation:bloom calc(var(--dur) * .9) cubic-bezier(.22,.61,.36,1) infinite alternate;animation-delay:calc(var(--i) * -.18s)}
+  .tide-band{animation:tide calc(var(--dur) * .8) ease-in-out infinite alternate;animation-delay:calc(var(--i) * -.6s)}
+  .rain-drop{animation:rain calc(var(--dur) * .55) linear infinite;animation-delay:calc(var(--i) * -.2s)}
+  .ribbon{animation:ribbon calc(var(--dur) * .9) ease-in-out infinite alternate;animation-delay:calc(var(--i) * -.5s)}
+  .orbit-stage{animation:float calc(var(--dur) * 1.2) ease-in-out infinite alternate}
+  @keyframes title-in{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+  @keyframes fade-in{from{opacity:0}to{opacity:1}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes drift{from{transform:translate3d(-8px,4px,0)}to{transform:translate3d(12px,-8px,0)}}
+  @keyframes breathe{0%,100%{transform:scale(.96);opacity:.8}50%{transform:scale(1.04);opacity:1}}
+  @keyframes twinkle{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+  @keyframes bloom{from{transform:scale(.86) rotate(-3deg)}to{transform:scale(1.06) rotate(3deg)}}
+  @keyframes tide{from{transform:translateX(-12px)}to{transform:translateX(12px)}}
+  @keyframes rain{from{transform:translateY(-18px);opacity:.2}to{transform:translateY(22px);opacity:.8}}
+  @keyframes ribbon{from{transform:rotate(-.5deg)}to{transform:rotate(.8deg)}}
+  @keyframes float{from{transform:translateY(-4px)}to{transform:translateY(6px)}}
+  @media (prefers-reduced-motion:reduce){.anim,.spin-slow,.drift-slow,.breathe,.twinkle,.rain-drop,.tide-band,.ribbon,.bloom-petal,.orbit-stage,.title,.kicker,.subtitle,.rule{animation:none!important;transform:none!important;opacity:1!important}}</style>
+  <rect width="1200" height="1200" fill="#F2EFE4"/>
+  <g opacity=".16" stroke="#0B0B0B" stroke-width="1"><path d="M0 216h1200M0 432h1200M0 648h1200M0 864h1200M0 1080h1200"/><path d="M192 0v1200M384 0v1200M576 0v1200M768 0v1200M960 0v1200"/></g>
+  <g class="stage"><g class="type-stage" opacity=".18"><text x="96" y="360" font-family="Archivo Black" font-size="156" textLength="1008" lengthAdjust="spacingAndGlyphs" fill="#D8FF00">BRUTALIST</text><path d="M96 408.00000000000006h1008" stroke="#FF3D1F" stroke-width="2"/></g></g>
+  <g class="title-block">
+    <text class="kicker anim" x="600" y="505.44" text-anchor="middle" font-family="Space Mono" font-size="15" letter-spacing="4" fill="#0B0B0B" opacity=".7">CARTEL PÚBLICO · 2026</text>
+    <text class="title anim" x="600" y="624" text-anchor="middle" font-family="Archivo Black" font-size="104" letter-spacing="-.035em" fill="#0B0B0B" style="text-transform:uppercase"><tspan x="600" dy="0">NO ESPERES</tspan></text>
+    <text class="subtitle anim" x="600" y="712.48" text-anchor="middle" font-family="Space Mono" font-size="19.76" fill="#0B0B0B" opacity=".78">Dirección de arte sin plantillas</text>
+    <g class="rule anim" aria-hidden="true"><path d="M600 735.12h170" stroke="#D8FF00" stroke-width="3"/></g>
+  </g>
+  <text x="1104" y="90" text-anchor="end" font-family="Space Mono" font-size="13" letter-spacing="3" fill="#0B0B0B" opacity=".7">OPEN/BEAUTY</text><text x="96" y="1128" font-family="Space Mono" font-size="12" letter-spacing="2" fill="#0B0B0B" opacity=".6">SVG original · sin stock</text><filter id="m-grain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="7"/><feColorMatrix type="saturate" values="0"/></filter><rect width="1200" height="1200" filter="url(#m-grain)" opacity=".035"/>
+</svg>

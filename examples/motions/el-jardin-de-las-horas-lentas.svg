@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="m-title m-desc">
+  <title id="m-title">El jardín de las horas lentas</title>
+  <desc id="m-desc">Una hoja prensada también es una forma de mirar el tiempo. Animated SVG; respects reduced motion.</desc>
+  <style>@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&amp;family=IBM+Plex+Mono:wght@400&amp;family=Karla:wght@300;400;600&amp;display=swap');:root{--dur:16s}
+  .anim,.spin-slow,.drift-slow,.breathe,.twinkle,.rain-drop,.tide-band,.ribbon,.bloom-petal{transform-box:fill-box;transform-origin:center}
+  .title{animation:title-in 1.2s cubic-bezier(.22,.61,.36,1) both}
+  .kicker,.subtitle,.rule{animation:fade-in 1.4s ease both}
+  .subtitle{animation-delay:.25s}.rule{animation-delay:.45s}
+  .spin-slow{animation:spin var(--dur) linear infinite}
+  .drift-slow{animation:drift var(--dur) ease-in-out infinite alternate}
+  .breathe{animation:breathe calc(var(--dur) * .72) ease-in-out infinite}
+  .twinkle{animation:twinkle calc(var(--dur) * .45) ease-in-out infinite;animation-delay:calc(var(--i) * -.4s)}
+  .bloom-petal{animation:bloom calc(var(--dur) * .9) cubic-bezier(.22,.61,.36,1) infinite alternate;animation-delay:calc(var(--i) * -.18s)}
+  .tide-band{animation:tide calc(var(--dur) * .8) ease-in-out infinite alternate;animation-delay:calc(var(--i) * -.6s)}
+  .rain-drop{animation:rain calc(var(--dur) * .55) linear infinite;animation-delay:calc(var(--i) * -.2s)}
+  .ribbon{animation:ribbon calc(var(--dur) * .9) ease-in-out infinite alternate;animation-delay:calc(var(--i) * -.5s)}
+  .orbit-stage{animation:float calc(var(--dur) * 1.2) ease-in-out infinite alternate}
+  @keyframes title-in{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+  @keyframes fade-in{from{opacity:0}to{opacity:1}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes drift{from{transform:translate3d(-8px,4px,0)}to{transform:translate3d(12px,-8px,0)}}
+  @keyframes breathe{0%,100%{transform:scale(.96);opacity:.8}50%{transform:scale(1.04);opacity:1}}
+  @keyframes twinkle{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+  @keyframes bloom{from{transform:scale(.86) rotate(-3deg)}to{transform:scale(1.06) rotate(3deg)}}
+  @keyframes tide{from{transform:translateX(-12px)}to{transform:translateX(12px)}}
+  @keyframes rain{from{transform:translateY(-18px);opacity:.2}to{transform:translateY(22px);opacity:.8}}
+  @keyframes ribbon{from{transform:rotate(-.5deg)}to{transform:rotate(.8deg)}}
+  @keyframes float{from{transform:translateY(-4px)}to{transform:translateY(6px)}}
+  @media (prefers-reduced-motion:reduce){.anim,.spin-slow,.drift-slow,.breathe,.twinkle,.rain-drop,.tide-band,.ribbon,.bloom-petal,.orbit-stage,.title,.kicker,.subtitle,.rule{animation:none!important;transform:none!important;opacity:1!important}}</style>
+  <rect width="1600" height="1000" fill="#EFE9D8"/>
+  <g fill="none" stroke="#4B6B62" stroke-width="1" opacity=".35"><circle cx="1376" cy="200" r="208"/><circle cx="1376" cy="200" r="144"/><circle cx="1376" cy="200" r="80"/></g>
+  <g class="stage"><g class="bloom-stage" transform-origin="1024 440">
+        <ellipse cx="1116.4" cy="440" rx="92.39999999999999" ry="41.8" fill="#D8B56A" opacity=".82" transform="rotate(0 1024 440)" class="bloom-petal" style="--i:0"/><ellipse cx="1070.2" cy="520.0207473096821" rx="92.39999999999999" ry="41.8" fill="#7A8B4F" opacity=".82" transform="rotate(60 1024 440)" class="bloom-petal" style="--i:1"/><ellipse cx="977.8000000000001" cy="520.0207473096822" rx="92.39999999999999" ry="41.8" fill="#D8B56A" opacity=".82" transform="rotate(120 1024 440)" class="bloom-petal" style="--i:2"/><ellipse cx="931.6" cy="440" rx="92.39999999999999" ry="41.8" fill="#7A8B4F" opacity=".82" transform="rotate(180 1024 440)" class="bloom-petal" style="--i:3"/><ellipse cx="977.8" cy="359.9792526903179" rx="92.39999999999999" ry="41.8" fill="#D8B56A" opacity=".82" transform="rotate(240 1024 440)" class="bloom-petal" style="--i:4"/><ellipse cx="1070.2" cy="359.9792526903179" rx="92.39999999999999" ry="41.8" fill="#7A8B4F" opacity=".82" transform="rotate(300 1024 440)" class="bloom-petal" style="--i:5"/>
+        <circle cx="1024" cy="440" r="48.4" fill="#B55239"/><g opacity=".35" fill="none" stroke="#D8B56A" stroke-width="1.5"><circle cx="1024" cy="440" r="319"/><circle cx="1024" cy="440" r="374"/></g>
+        <g class="drift-slow" style="--dur:18s"><path d="M976 704v198" stroke="#243026" stroke-width="2"/><path d="M976 792c-66 0-88-44-88-77 44 0 88 22 88 77Z" fill="#4B6B62"/></g>
+      </g></g>
+  <g class="title-block">
+    <text class="kicker anim" x="128" y="534.5333333333334" text-anchor="start" font-family="IBM Plex Mono" font-size="15" letter-spacing="4" fill="#243026" opacity=".7">ARCHIVO BOTÁNICO · 2026</text>
+    <text class="title anim" x="128" y="633.3333333333334" text-anchor="start" font-family="Cormorant Garamond" font-size="86.66666666666667" letter-spacing=".005em" fill="#243026" style="text-transform:none"><tspan x="128" dy="0">El jardín de las</tspan><tspan x="128" dy="79.73333333333333">horas lentas</tspan></text>
+    <text class="subtitle anim" x="128" y="797.7333333333333" text-anchor="start" font-family="Karla" font-size="18" fill="#243026" opacity=".78">Una hoja prensada también es una forma de mirar el tiempo</text>
+    <g class="rule anim" aria-hidden="true"><path d="M128 817.6h170" stroke="#7A8B4F" stroke-width="1"/></g>
+  </g>
+  <text x="1472" y="75" text-anchor="end" font-family="IBM Plex Mono" font-size="13" letter-spacing="3" fill="#243026" opacity=".7">HERBARIO ERIDU</text><text x="128" y="940" font-family="IBM Plex Mono" font-size="12" letter-spacing="2" fill="#243026" opacity=".6">SVG original · sin stock</text><filter id="m-grain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="7"/><feColorMatrix type="saturate" values="0"/></filter><rect width="1600" height="1000" filter="url(#m-grain)" opacity=".035"/>
+</svg>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="m-title m-desc">
+  <title id="m-title">Mirá dos veces</title>
+  <desc id="m-desc">El ojo completa lo que falta. Animated SVG; respects reduced motion.</desc>
+  <style>@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=Space+Grotesk:wght@400;500&amp;display=swap');:root{--dur:16s}
+  .anim,.spin-slow,.drift-slow,.breathe,.twinkle,.rain-drop,.tide-band,.ribbon,.bloom-petal{transform-box:fill-box;transform-origin:center}
+  .title{animation:title-in 1.2s cubic-bezier(.22,.61,.36,1) both}
+  .kicker,.subtitle,.rule{animation:fade-in 1.4s ease both}
+  .subtitle{animation-delay:.25s}.rule{animation-delay:.45s}
+  .spin-slow{animation:spin var(--dur) linear infinite}
+  .drift-slow{animation:drift var(--dur) ease-in-out infinite alternate}
+  .breathe{animation:breathe calc(var(--dur) * .72) ease-in-out infinite}
+  .twinkle{animation:twinkle calc(var(--dur) * .45) ease-in-out infinite;animation-delay:calc(var(--i) * -.4s)}
+  .bloom-petal{animation:bloom calc(var(--dur) * .9) cubic-bezier(.22,.61,.36,1) infinite alternate;animation-delay:calc(var(--i) * -.18s)}
+  .tide-band{animation:tide calc(var(--dur) * .8) ease-in-out infinite alternate;animation-delay:calc(var(--i) * -.6s)}
+  .rain-drop{animation:rain calc(var(--dur) * .55) linear infinite;animation-delay:calc(var(--i) * -.2s)}
+  .ribbon{animation:ribbon calc(var(--dur) * .9) ease-in-out infinite alternate;animation-delay:calc(var(--i) * -.5s)}
+  .orbit-stage{animation:float calc(var(--dur) * 1.2) ease-in-out infinite alternate}
+  @keyframes title-in{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+  @keyframes fade-in{from{opacity:0}to{opacity:1}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes drift{from{transform:translate3d(-8px,4px,0)}to{transform:translate3d(12px,-8px,0)}}
+  @keyframes breathe{0%,100%{transform:scale(.96);opacity:.8}50%{transform:scale(1.04);opacity:1}}
+  @keyframes twinkle{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+  @keyframes bloom{from{transform:scale(.86) rotate(-3deg)}to{transform:scale(1.06) rotate(3deg)}}
+  @keyframes tide{from{transform:translateX(-12px)}to{transform:translateX(12px)}}
+  @keyframes rain{from{transform:translateY(-18px);opacity:.2}to{transform:translateY(22px);opacity:.8}}
+  @keyframes ribbon{from{transform:rotate(-.5deg)}to{transform:rotate(.8deg)}}
+  @keyframes float{from{transform:translateY(-4px)}to{transform:translateY(6px)}}
+  @media (prefers-reduced-motion:reduce){.anim,.spin-slow,.drift-slow,.breathe,.twinkle,.rain-drop,.tide-band,.ribbon,.bloom-petal,.orbit-stage,.title,.kicker,.subtitle,.rule{animation:none!important;transform:none!important;opacity:1!important}}</style>
+  <rect width="1200" height="1200" fill="#0A0A0A"/>
+  <g stroke="#F7F7F2" stroke-width="2" opacity=".2"><path d="M0 0  1200 1200"/><path d="M54.54545454545455 0  1145.4545454545455 1200"/><path d="M109.0909090909091 0  1090.909090909091 1200"/><path d="M163.63636363636363 0  1036.3636363636365 1200"/><path d="M218.1818181818182 0  981.8181818181818 1200"/><path d="M272.72727272727275 0  927.2727272727273 1200"/><path d="M327.27272727272725 0  872.7272727272727 1200"/><path d="M381.8181818181818 0  818.1818181818182 1200"/><path d="M436.3636363636364 0  763.6363636363636 1200"/><path d="M490.90909090909093 0  709.090909090909 1200"/><path d="M545.4545454545455 0  654.5454545454545 1200"/><path d="M600 0  600 1200"/><path d="M654.5454545454545 0  545.4545454545455 1200"/><path d="M709.0909090909091 0  490.9090909090909 1200"/><path d="M763.6363636363636 0  436.3636363636364 1200"/><path d="M818.1818181818181 0  381.81818181818187 1200"/><path d="M872.7272727272727 0  327.27272727272725 1200"/><path d="M927.2727272727273 0  272.72727272727275 1200"/><path d="M981.8181818181819 0  218.18181818181813 1200"/><path d="M1036.3636363636363 0  163.63636363636374 1200"/><path d="M1090.909090909091 0  109.09090909090901 1200"/><path d="M1145.4545454545455 0  54.545454545454504 1200"/></g>
+  <g class="stage"><g class="type-stage" opacity=".18"><text x="96" y="360" font-family="Archivo Black" font-size="156" textLength="1008" lengthAdjust="spacingAndGlyphs" fill="#E03C31">OP ART</text><path d="M96 408.00000000000006h1008" stroke="#1F4FD8" stroke-width="2"/></g></g>
+  <g class="title-block">
+    <text class="kicker anim" x="600" y="345.8" text-anchor="middle" font-family="Space Grotesk" font-size="15" letter-spacing="4" fill="#F7F7F2" opacity=".7">OP ART · 1964</text>
+    <text class="title anim" x="600" y="494" text-anchor="middle" font-family="Archivo Black" font-size="130" letter-spacing="-.03em" fill="#F7F7F2" style="text-transform:uppercase"><tspan x="600" dy="0">Mirá dos</tspan><tspan x="600" dy="119.60000000000001">veces</tspan></text>
+    <text class="subtitle anim" x="600" y="728.6" text-anchor="middle" font-family="Space Grotesk" font-size="24.7" fill="#F7F7F2" opacity=".78">El ojo completa lo que falta</text>
+    <g class="rule anim" aria-hidden="true"><path d="M600 755.4h170" stroke="#E03C31" stroke-width="1"/></g>
+  </g>
+  <text x="1104" y="90" text-anchor="end" font-family="Space Grotesk" font-size="13" letter-spacing="3" fill="#F7F7F2" opacity=".7">OPEN/BEAUTY</text><text x="96" y="1128" font-family="Space Grotesk" font-size="12" letter-spacing="2" fill="#F7F7F2" opacity=".6">SVG original · sin stock</text><filter id="m-grain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="7"/><feColorMatrix type="saturate" values="0"/></filter><rect width="1200" height="1200" filter="url(#m-grain)" opacity=".035"/>
+</svg>
