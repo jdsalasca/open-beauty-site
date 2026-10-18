@@ -113,14 +113,14 @@ test('a very long idea is truncated without losing the request', async () => {
   assert.match(html, /memoria/);
 });
 
-test('unicode, RTL and emoji survive escaping', async () => {
+test('unicode and RTL survive escaping; emoji are stripped so the page stays clean', async () => {
   const idea = 'مقهى صغير ✨ abre al amanecer 🌅';
   const output = path.join(dir, 'unicode.html');
   const result = await makeArtifact({ kind: 'page', style: 'nature', idea, locale: 'en', output });
   assert.deepEqual(result.issues, []);
   const html = await readFile(result.path, 'utf8');
   assert.ok(html.includes('مقهى'), 'RTL text was lost');
-  assert.ok(html.includes('✨'), 'emoji was lost');
+  assert.ok(!html.includes('✨') && !html.includes('🌅'), 'emoji leaked into the copy');
   assert.ok(html.includes('lang="en"'), 'locale was lost');
 });
 
