@@ -207,3 +207,49 @@ export function textOnAccent(palette: StylePalette, accent: string): string {
 export function accentTextColor(palette: StylePalette, accent: string): string {
   return readableOn(palette.bg, [accent, palette.ink, palette.accent2, palette.accent3, palette.accent4], 4.5);
 }
+
+function hexToRgb(hex: string): [number, number, number] | null {
+  const normalized = normalizeHex(hex).slice(1);
+  if (!/^[0-9a-f]{6}$/i.test(normalized)) return null;
+  return [
+    parseInt(normalized.slice(0, 2), 16),
+    parseInt(normalized.slice(2, 4), 16),
+    parseInt(normalized.slice(4, 6), 16),
+  ];
+}
+
+/** Squared Euclidean distance in sRGB. Good enough for snapping a stray hex. */
+function rgbDistance(a: [number, number, number], b: [number, number, number]): number {
+  return (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2 + (a[2] - b[2]) ** 2;
+}
+
+export interface PaletteToken {
+  role: PaletteRole;
+  hex: string;
+}
+
+/** Every palette token as a flat list, used by snapping and by the critic. */
+export function paletteTokens(palette: StylePalette): PaletteToken[] {
+  return (Object.keys(palette) as PaletteRole[]).map((role) => ({ role, hex: palette[role] }));
+}
+
+/**
+ * Snap a colour to the nearest palette token by sRGB distance. This is the
+ * automatic repair behind "off-palette colours": it keeps the hue family while
+ * guaranteeing the page stays inside the editorial system.
+ */
+export function nearestPaletteToken(hex: string, palette: StylePalette): PaletteToken {
+  const source = hexToRgb(hex);
+  let best: PaletteToken = { role: 'bg', hex: palette.bg };
+  let bestDistance = Number.POSITIVE_INFINITY;
+  for (const token of paletteTokens(palette)) {
+    const target = hexToRgb(token.hex);
+    if (!source || !target) continue;
+    const distance = rgbDistance(source, target);
+    if (distance < bestDistance) {
+      bestDistance = distance;
+      best = token;
+    }
+  }
+  return best;
+}
