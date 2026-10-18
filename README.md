@@ -47,6 +47,9 @@ El harness ya puede componer una página editorial, una experiencia de **3 a 8 s
 - [Casa Perla](examples/experiences/casa-perla.html): restaurante, mercado, carta y sobremesa en cuatro salas.
 - [Museo de lo invisible](examples/experiences/museo-invisible.html): cinco salas sobre aquello que sostiene la vida de un museo y suele quedar fuera de vitrina.
 - [Black Clover · La memoria del trébol](examples/experiences/black-clover.html): recorrido de homenaje fan, identificado como tal; no es una pieza oficial.
+- [Museo de las estaciones](examples/experiences/museo-estaciones.html): seis salas de ficción museográfica sobre tiempo, luz y memoria; Nature Memory con `maxxing`.
+<p align="center"><a href="examples/experiences/museo-estaciones.html"><img src="examples/experiences/museo-estaciones.png" width="760" alt="Museo de las estaciones: seis salas Nature Memory"></a></p>
+
 <p align="center"><a href="examples/experiences/black-clover.html"><img src="examples/experiences/black-clover.png" width="760" alt="Black Clover: sala Nature Memory con un trébol prensado"></a><br><sub>Black Clover · un archivo de tréboles, promesas y magia que no se rinde.</sub></p>
 
 
@@ -55,6 +58,9 @@ El harness ya puede componer una página editorial, una experiencia de **3 a 8 s
 - [La casa que aprendió a respirar](examples/stories/casa-respira.html): cuento por capítulos.
 - [El río que cambió de ciudad](examples/stories/rio-1870.html): relato histórico urbano con fuentes y hechos al margen.
 - [La semilla que esperó](examples/stories/dominio-publico.html): historia en Paper Craft; la propia página acredita «CC0 1.0 · texto original».
+- [El archivo de las hojas](examples/stories/archivo-hojas.html): ensayo narrativo en seis capítulos; ficción original CC0 y arte maxxing.
+<p align="center"><a href="examples/stories/archivo-hojas.html"><img src="examples/stories/archivo-hojas.png" width="420" alt="El archivo de las hojas: ensayo narrativo Nature Memory"></a></p>
+
 <p align="center"><a href="examples/stories/dominio-publico.html"><img src="examples/stories/dominio-publico.png" width="420" alt="La semilla que esperó: cuento CC0 en Paper Craft"></a></p>
 
 
@@ -62,6 +68,9 @@ El harness ya puede componer una página editorial, una experiencia de **3 a 8 s
 
 - [El té no se apura](examples/decks/tea.html): deck Nature Memory de ocho slides.
 - [Gaticos: una guía para no hacer nada](examples/decks/kittens.html): deck Paper Craft de ocho slides.
+- [Atlas de la memoria](examples/decks/atlas-memoria.html): ocho slides Galactic con `maxxing`; memoria, mapas y orientación.
+<p align="center"><a href="examples/decks/atlas-memoria.html"><img src="examples/decks/atlas-memoria.png" width="560" alt="Atlas de la memoria: deck Galactic maxxing"></a></p>
+
 - [La memoria del futuro](examples/luna-deck/memory-future.html): presentación creada por Luna para mostrar el flujo de trabajo.
 <p align="center">
   <a href="examples/decks/tea.html"><img src="examples/decks/tea.png" width="360" alt="El té no se apura, deck Nature Memory"></a>
@@ -71,11 +80,17 @@ El harness ya puede componer una página editorial, una experiencia de **3 a 8 s
 
 ## MUSEM
 
-El museo real que salió de esta casa sigue abierto: [**musem.eridu.top**](https://musem.eridu.top). La Sala 01, *Random Access Memories*, ahora tiene un vinilo que gira, una onda de audio y una ficha de archivo; la Sala 07 es **Black Clover · La memoria del trébol**, un homenaje fan con texto original y sin material oficial.
+El museo real que salió de esta casa sigue abierto: [**musem.eridu.top**](https://musem.eridu.top). La Sala 01, *Random Access Memories*, ahora tiene un vinilo que gira, una onda de audio y una ficha de archivo; la Sala 07 es **Black Clover · La memoria del trébol**, un homenaje fan con texto original y sin material oficial; la Sala 08 es **Museo de las estaciones**, seis salas de ficción museográfica con la capa maxxing.
 
 ## Para empresas
 
-Los rituales ágiles pueden ser conversaciones visuales, no formularios de estado. Hay tres decks acompañados por sus GIFs de entrada: [Sprint 14 · Review](examples/agile/sprint-14-review.html) ([GIF](examples/agile/sprint-14-review.gif)), [Sprint 14 · Retrospective](examples/agile/sprint-14-retro.html) ([GIF](examples/agile/sprint-14-retro.gif)) y [Sprint 15 · Planning](examples/agile/sprint-15-planning.html) ([GIF](examples/agile/sprint-15-planning.gif)).
+Los rituales ágiles pueden ser conversaciones visuales, no formularios de estado. Hay tres decks acompañados por sus GIFs de entrada: [Sprint 14 · Review](examples/agile/sprint-14-review.html) ([GIF](examples/agile/sprint-14-review.gif)), [Sprint 14 · Retrospective](examples/agile/sprint-14-retro.html) ([GIF](examples/agile/sprint-14-retro.gif)) y [Sprint 15 · Planning](examples/agile/sprint-15-planning.html) ([GIF](examples/agile/sprint-15-planning.gif)). Un kit completo con maxxing: [Sprint 16 · Review](examples/agile/sprint-16/sprint-16-review.html), [retro](examples/agile/sprint-16/sprint-16-retro.html), [planning](examples/agile/sprint-16/sprint-16-planning.html) y sus tres GIFs.
+
+### Un kit de sprint
+
+`beauty sprint --style nature --brief sprint.json` genera, en una sola carpeta, **review + retrospectiva + planning + tres GIFs**. El brief lleva sprint, equipo, métricas, highlights, blockers y próximos pasos; el estilo y `maxxing` se comparten. Así el ritual no empieza en una plantilla vacía ni termina en tres archivos que no se hablan.
+<p align="center"><a href="examples/agile/sprint-16/sprint-16-review.html"><img src="examples/agile/sprint-16/sprint-16-review.png" width="520" alt="Sprint 16 review, kit Art Deco maxxing"></a></p>
+
 
 La review reúne evidencia, cambios para usuarios y decisiones; la retro, aprendizajes y experimentos; la planificación, resultados esperados, capacidad y límites. Son ejemplos de formato: antes de una reunión real, reemplazá cifras, voces, fechas y responsables por información del equipo. El sistema no inventa métricas.
 
@@ -83,15 +98,26 @@ La review reúne evidencia, cambios para usuarios y decisiones; la retro, aprend
 
 Una clase puede empezar con una pregunta, detenerse ante un objeto y avanzar por salas o capítulos. Mirá [La città ideale](examples/education/renaissance-perspective.html) y [Museo de las Cosas Pequeñas](examples/education/papercraft-museum.html). En historia, cada fecha, cita y atribución necesita fuente; separá el hecho de la interpretación y señalá lo que no se sabe. El texto sigue disponible con movimiento reducido y debe poder leerse en proyector.
 
-## Diez herramientas MCP
+## Once herramientas MCP
 
 El servidor trabaja por **stdio** y transforma briefs; no llama a un modelo ni navega la web.
 
 - **Orientar:** `beauty_list_styles`, `beauty_get_style`, `beauty_get_skill`.
-- **Crear:** `beauty_create_page`, `beauty_create_experience`, `beauty_create_story`, `beauty_create_deck`, `beauty_create_gif`.
+- **Crear:** `beauty_create_page`, `beauty_create_experience`, `beauty_create_story`, `beauty_create_deck`, `beauty_create_gif`, `beauty_create_sprint`.
 - **Revisar y encontrar:** `beauty_validate`, `beauty_examples`.
 
-En total son diez herramientas: elegir una gramática, cargar sus instrucciones, crear la pieza adecuada, validarla y consultar ejemplos.
+En total son once herramientas: elegir una gramática, cargar sus instrucciones, crear la pieza adecuada, validarla y consultar ejemplos.
+
+## Modo maxxing
+
+`maxxing: true` —o `--maxxing`— es una segunda dirección de arte, no un filtro. Agrega una capa de ornamento original por estilo, más contraste tipográfico, alternativas de display y movimiento ambiental lento. La paleta y las fuentes siguen siendo las del estilo; el validador sigue exigiendo A/100 y visión 4/4. Funciona en página, deck, experiencia, cuento y GIF.
+
+```bash
+beauty page --style nature --title "El jardín de las horas lentas" --maxxing
+beauty gif --style artdeco --text "Subir" --subtitle "1930" --maxxing
+```
+
+Para un brief JSON, agregá `"maxxing": true`. En MCP, pasá `maxxing: true` a cualquiera de las herramientas de creación.
 
 ## El flujo de Luna
 
@@ -106,7 +132,7 @@ Luna usa las herramientas MCP; no necesita escribir HTML a mano. La calificació
 
 ## Evidencia disponible
 
-- [La suite documentada](docs/TESTING.md) registra **15/15 pruebas aprobadas**.
+- [La suite documentada](docs/TESTING.md) registra **17/17 pruebas aprobadas**.
 - La [ronda histórica de Luna](examples/agents/round-2026/index.html) reúne **12/12 páginas A/100 y visión 4/4**. Esa ronda corresponde a los doce estilos que existían entonces.
 - Nature Memory se evaluó en la matriz local: **A/100 y visión 4/4**; el estilo 13 también produce deck y GIF. La matriz actual de páginas cubre **13/13 estilos**.
 
@@ -137,6 +163,16 @@ El archivo completo, uno por estilo, está en [**examples/gifs/luna13/**](exampl
   <a href="examples/gifs/luna13/artdeco.gif"><img src="examples/gifs/luna13/artdeco.gif" width="180" alt="GIF Art Deco: Subir"></a>
   <a href="examples/gifs/luna13/papercraft.gif"><img src="examples/gifs/luna13/papercraft.gif" width="180" alt="GIF Paper Craft: Pequeñas cosas"></a>
   <a href="examples/gifs/luna13/nature.gif"><img src="examples/gifs/luna13/nature.gif" width="180" alt="GIF Nature Memory: Herbario"></a>
+</p>
+
+## Trece máximos
+
+La versión maxxing del archivo, con más ornamento, más contraste y más aire: [**examples/gifs/maxxing/**](examples/gifs/maxxing/index.html).
+
+<p align="center">
+  <a href="examples/gifs/maxxing/galactic.gif"><img src="examples/gifs/maxxing/galactic.gif" width="180" alt="GIF Galactic maxxing"></a>
+  <a href="examples/gifs/maxxing/nature.gif"><img src="examples/gifs/maxxing/nature.gif" width="180" alt="GIF Nature maxxing"></a>
+  <a href="examples/gifs/maxxing/artdeco.gif"><img src="examples/gifs/maxxing/artdeco.gif" width="180" alt="GIF Art Deco maxxing"></a>
 </p>
 
 ## Para curiosear

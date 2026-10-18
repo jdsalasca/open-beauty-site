@@ -7,6 +7,8 @@ export { createPage, createDeck, createExperience, createStory, createGifFile, s
 export { renderDeck } from './deck.js';
 export { renderExperience } from './page/experience.js';
 export { renderStory } from './page/story.js';
+export { createSprintKit } from './sprint.js';
+export type { SprintKitResult, SprintKitFile } from './sprint.js';
 export { sceneArt } from './art.js';
 export { BeautyError } from './page/common.js';
 

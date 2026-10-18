@@ -35,6 +35,7 @@ test('exposes the full tool surface', async () => {
     'beauty_create_experience',
     'beauty_create_gif',
     'beauty_create_page',
+    'beauty_create_sprint',
     'beauty_create_story',
     'beauty_examples',
     'beauty_get_skill',
@@ -181,4 +182,26 @@ test('creates a chaptered story over MCP', async () => {
   const text = (result.content as Array<{ type: string; text: string }>)[0]?.text ?? '';
   assert.match(text, /3-chapter/);
   assert.match(text, /grade: A/);
+});
+
+test('creates a coordinated sprint kit over MCP', async () => {
+  const result = await client.callTool({
+    name: 'beauty_create_sprint',
+    arguments: {
+      style: 'nature',
+      sprint: 'test',
+      team: 'Atlas',
+      maxxing: true,
+      summary: 'Un sprint que cambió el mapa.',
+      metrics: [{ label: 'Historias', value: '8' }],
+      highlights: ['Checkout más corto', 'Mapa de salas'],
+      blockers: ['Dependencia de diseño'],
+      next: ['Cerrar onboarding'],
+      output: 'sprint-test',
+    },
+  });
+  const text = (result.content as Array<{ type: string; text: string }>)[0]?.text ?? '';
+  assert.match(text, /Sprint kit created/);
+  assert.match(text, /review: A 100\/100/);
+  assert.match(text, /gifs: 3/);
 });

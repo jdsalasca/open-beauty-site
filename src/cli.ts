@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
-import type { Brief, DeckBrief, ExperienceBrief, StoryBrief, StyleSlug } from './types.js';
+import type { Brief, DeckBrief, ExperienceBrief, SprintBrief, StoryBrief, StyleSlug } from './types.js';
 import { VERSION } from './index.js';
 import { createDeck, createExperience, createGifFile, createPage, createStory, slugify, timestamp } from './generate.js';
+import { createSprintKit } from './sprint.js';
 import { formatValidation, validateDeck, validateExperience, validateHtml, validateStory } from './validate.js';
 import { getStyle, isStyleSlug, styleSlugs } from './styles/presets.js';
 import { styleGuideMarkdown, stylesOverview } from './guide.js';
@@ -43,6 +44,10 @@ function stringFlag(flags: Flags, name: string): string | undefined {
   return typeof value === 'string' ? value : undefined;
 }
 
+function booleanFlag(flags: Flags, name: string): boolean {
+  return flags[name] === true || flags[name] === 'true' || flags[name] === '1';
+}
+
 function numberFlag(flags: Flags, name: string): number | undefined {
   const value = stringFlag(flags, name);
   if (!value) return undefined;
@@ -77,6 +82,7 @@ function mergeBrief(fileBrief: Partial<Brief>, flags: Flags): Partial<Brief> {
   if (seed !== undefined) merged.seed = seed;
   const subfamily = stringFlag(flags, 'subfamily');
   if (subfamily) merged.subfamily = subfamily;
+  if (booleanFlag(flags, 'maxxing')) merged.maxxing = true;
   return merged;
 }
 
@@ -85,18 +91,19 @@ function help(): string {
 A design harness for small models: HTML pages + GIFs with an editorial line.
 
 Usage:
-  beauty styles                              List the twelve styles
+  beauty styles                              List the thirteen styles
   beauty guide <style> [--json]              Read the exact tokens and rules
   beauty page --style <s> --title "..."      Create a full HTML page
       [--tagline "..."] [--intro "..."] [--brand "..."] [--locale es|en]
-      [--brief brief.json] [--out file.html]
+      [--maxxing] [--brief brief.json] [--out file.html]
   beauty deck --style <s> --title "..."      Create an animated 16:9 presentation
-      --brief deck.json [--subfamily orbital] [--out deck.html]
-  beauty experience --style <s> --brief exp.json  Create a 3–8 room experience
-  beauty story --style <s> --brief story.json     Create a chaptered story/lesson
+      --brief deck.json [--subfamily orbital] [--maxxing] [--out deck.html]
+  beauty experience --style <s> --brief exp.json  Create a 3–8 room experience [--maxxing]
+  beauty story --style <s> --brief story.json     Create a chaptered story/lesson [--maxxing]
+  beauty sprint --style <s> --brief sprint.json   Create review + retrospective + planning + 3 GIFs
   beauty gif --style <s> --text "..."        Create a looping GIF
       [--subtitle "..."] [--template title|loop|poster] [--fps 20] [--duration 2.4]
-      [--width 800] [--height 800] [--out file.gif]
+      [--width 800] [--height 800] [--maxxing] [--out file.gif]
   beauty validate <file> --style <s> [--strict]
   beauty examples                            Show reference output
   beauty doctor                              Check fonts and runtime
@@ -215,10 +222,24 @@ async function main(): Promise<void> {
         height: numberFlag(flags, 'height'),
         fps: numberFlag(flags, 'fps'),
         duration: numberFlag(flags, 'duration'),
+        maxxing: booleanFlag(flags, 'maxxing'),
         output,
       });
       console.log(`${getStyle(style).name} GIF · ${result.width}×${result.height} · ${result.frames} frames · ${Math.round(result.bytes / 1024)} KB`);
       console.log(result.path);
+      return;
+    }
+
+    case 'sprint': {
+      const style = requireStyle(stringFlag(flags, 'style'));
+      const brief = mergeBrief(await loadBrief(stringFlag(flags, 'brief')), flags) as Partial<SprintBrief>;
+      if (!brief.sprint) throw new Error('Pass a sprint brief with { "sprint": "15", "style": "nature", ... }.');
+      const result = await createSprintKit({ ...brief, sprint: brief.sprint, style }, stringFlag(flags, 'out'));
+      for (const item of [result.review, result.retro, result.planning]) {
+        console.log(`${item.grade} ${item.score}/100 · vision ${item.vision}/4 · ${item.html}`);
+        console.log(`GIF · ${item.gif}`);
+      }
+      console.log(result.directory);
       return;
     }
 

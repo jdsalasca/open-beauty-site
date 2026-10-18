@@ -6,8 +6,9 @@ import { renderPapercraft } from './papercraft.js';
 import { renderArtDeco, renderIsotype, renderOpArt, renderUkiyoe } from './showcase-a.js';
 import { renderBestiary, renderGalactic, renderMemphis, renderPsychedelic, renderVaporwave } from './showcase-b.js';
 import { renderNatureMemory } from './nature-memory.js';
+import { applyMaxxing } from '../maxxing.js';
 
-export function renderPage(style: StyleSlug, brief: Partial<Brief>): string {
+function renderPageBase(style: StyleSlug, brief: Partial<Brief>): string {
   const preset = getStyle(style);
   switch (style) {
     case 'renaissance':
@@ -41,4 +42,11 @@ export function renderPage(style: StyleSlug, brief: Partial<Brief>): string {
       throw new Error(`Unknown style: ${String(exhaustive)}`);
     }
   }
+}
+
+
+export function renderPage(style: StyleSlug, brief: Partial<Brief>): string {
+  const preset = getStyle(style);
+  const html = renderPageBase(style, brief);
+  return brief.maxxing ? applyMaxxing(html, preset) : html;
 }

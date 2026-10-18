@@ -8,6 +8,7 @@ import { z } from 'zod';
 import type { Brief, DeckBrief, ExperienceBrief, StoryBrief, StyleSlug } from '../types.js';
 import { VERSION } from '../index.js';
 import { createDeck, createExperience, createGifFile, createPage, createStory, timestamp } from '../generate.js';
+import { createSprintKit } from '../sprint.js';
 import { formatValidation, validateDeck, validateExperience, validateHtml, validateStory } from '../validate.js';
 import { presets, styleSlugs } from '../styles/presets.js';
 import { SKILL_FALLBACK, styleGuideMarkdown, stylesOverview } from '../guide.js';
@@ -106,6 +107,7 @@ const briefFields = {
   seed: z.number().int().min(0).max(9999).optional().describe('Changes decorative variation deterministically.'),
   subfamily: z.string().max(40).optional().describe('Curated subfamily slug from beauty_get_style.'),
   audio: z.object({ src: z.string().max(300), title: z.string().max(80), subtitle: z.string().max(100).optional(), note: z.string().max(180).optional() }).optional().describe('Optional original audio, user-initiated.'),
+  maxxing: z.boolean().optional().describe('Push ornament, type and motion to the maximum; still palette-bound.'),
 };
 
 function briefFromArgs(args: Record<string, unknown>): Partial<Brief> {
@@ -123,6 +125,7 @@ function briefFromArgs(args: Record<string, unknown>): Partial<Brief> {
     seed: args.seed as number | undefined,
     subfamily: args.subfamily as string | undefined,
     audio: args.audio as Brief['audio'],
+    maxxing: args.maxxing as boolean | undefined,
   };
 }
 
@@ -138,6 +141,7 @@ function deckBriefFromArgs(args: Record<string, unknown>): Partial<DeckBrief> {
     cta: args.cta as Brief['cta'],
     locale: args.locale as Brief['locale'],
     subfamily: args.subfamily as string | undefined,
+    maxxing: args.maxxing as boolean | undefined,
   };
 }
 
@@ -160,7 +164,7 @@ MANDATORY WORKFLOW
 2. Call beauty_get_style for the chosen style and follow its hard tokens. Never invent fonts, hex colours, border widths or radii.
 3. Choose the artefact: beauty_create_page for a landing, beauty_create_deck for a talk, beauty_create_experience for a place with rooms, beauty_create_story for a cuento or history lesson.
 4. Call beauty_validate on the output file. Reach craft A (90+) and vision 4/4. If craft is lower, read the fix lines and adjust the brief or the HTML. If vision is 3/4, change the composition (seed), the image scale or the material.
-5. For motion, call beauty_create_gif with the same style. Use beauty_get_skill({ format: "deck" | "experience" | "story" | "agile" }) before briefing. For sprint review/retro/planning use the deck tool plus the agile skill.
+5. For motion, call beauty_create_gif with the same style. Add maxxing: true when the brief deserves the full art direction. Use beauty_get_skill({ format: "deck" | "experience" | "story" | "agile" | "sprint" }) before briefing. For a coordinated sprint review/retro/planning kit, use beauty_create_sprint.
 
 QUALITY BAR
 - No lorem ipsum, no placeholder names, no emoji, no stock photography.
@@ -210,7 +214,7 @@ QUALITY BAR
         'Returns a copy-paste skill/prompt that teaches an agent the mandatory workflow and the quality bar. Optionally includes one style guide.',
       inputSchema: {
         style: styleEnum.optional().describe('Include a specific style guide after the skill instructions.'),
-        format: z.enum(['page', 'deck', 'experience', 'story', 'agile']).optional().describe('Append the deck, experience, story or agile skill.'),
+        format: z.enum(['page', 'deck', 'experience', 'story', 'agile', 'sprint']).optional().describe('Append the deck, experience, story, agile or sprint skill.'),
       },
     },
     async ({ style, format }) => {
@@ -302,6 +306,7 @@ QUALITY BAR
         slides: z.array(deckSlideSchema).min(1).max(8).describe('Content slides. The cover and closing are generated automatically.'),
         closing: z.string().max(120).optional().describe('Closing headline; defaults to "La conversación sigue."'),
         subfamily: z.string().max(40).optional().describe('Curated subfamily slug from beauty_get_style.'),
+        maxxing: z.boolean().optional().describe('Richer ornament, type contrast and motion.'),
         cta: ctaSchema.optional(),
         locale: localeEnum.optional(),
         output: z.string().max(260).optional().describe('File path. Defaults to ./beauty-output/<style>-deck-<timestamp>.html.'),
@@ -332,6 +337,62 @@ QUALITY BAR
   );
 
   server.registerTool(
+    'beauty_create_sprint',
+    {
+      title: 'Create a sprint review, retrospective and planning kit',
+      description:
+        'Corpo pack: one brief produces three coordinated decks (review, retrospective, planning) and three matching GIFs in one folder. Use maxxing for the full art direction. Metrics are evidence, not decoration.',
+      inputSchema: {
+        style: styleEnum.describe('Editorial system for the whole kit.'),
+        sprint: z.string().min(1).max(40).describe('Sprint number or name.'),
+        team: z.string().max(50).optional(),
+        date: z.string().max(40).optional(),
+        maxxing: z.boolean().optional().describe('Richer ornament, type contrast and motion.'),
+        summary: z.string().max(240).optional().describe('One honest sentence that opens the review.'),
+        metrics: z.array(z.object({ label: z.string().max(40), value: z.string().max(18) })).max(3).optional(),
+        highlights: z.array(z.string().max(120)).max(4).optional().describe('Things that now exist; what the team can demo.'),
+        blockers: z.array(z.string().max(120)).max(4).optional().describe('Systemic friction, not personal blame.'),
+        next: z.array(z.string().max(120)).max(4).optional().describe('Small bets for the next sprint.'),
+        quote: quoteSchema.optional(),
+        subfamily: z.string().max(40).optional(),
+        output: z.string().max(260).optional().describe('Output folder. Defaults to ./beauty-output/sprint-<sprint>.'),
+      },
+    },
+    async (args) => {
+      try {
+        const result = await createSprintKit(
+          {
+            style: args.style,
+            sprint: args.sprint,
+            team: args.team,
+            date: args.date,
+            maxxing: args.maxxing,
+            summary: args.summary,
+            metrics: args.metrics,
+            highlights: args.highlights,
+            blockers: args.blockers,
+            next: args.next,
+            quote: args.quote,
+            subfamily: args.subfamily,
+          },
+          args.output,
+        );
+        const lines = [
+          `Sprint kit created in ${result.directory}`,
+          `review: ${result.review.grade} ${result.review.score}/100 · vision ${result.review.vision}/4`,
+          `retro: ${result.retro.grade} ${result.retro.score}/100 · vision ${result.retro.vision}/4`,
+          `planning: ${result.planning.grade} ${result.planning.score}/100 · vision ${result.planning.vision}/4`,
+          `gifs: 3`,
+          `\nNext: open the three decks, then drop the GIFs into the sprint channel.`,
+        ];
+        return text(lines.join('\n'));
+      } catch (error) {
+        return { content: [{ type: 'text' as const, text: `Sprint kit failed: ${(error as Error).message}` }], isError: true };
+      }
+    },
+  );
+
+  server.registerTool(
     'beauty_create_experience',
     {
       title: 'Create a digital experience with rooms',
@@ -350,6 +411,7 @@ QUALITY BAR
         address: z.string().max(140).optional(),
         source: z.string().max(240).optional(),
         closing: z.string().max(220).optional(),
+        maxxing: z.boolean().optional().describe('Richer ornament, type contrast and motion.'),
         cta: ctaSchema.optional(),
         locale: localeEnum.optional(),
         output: z.string().max(260).optional(),
@@ -375,6 +437,7 @@ QUALITY BAR
             address: args.address,
             source: args.source,
             closing: args.closing,
+            maxxing: args.maxxing,
             cta: args.cta as Brief['cta'],
             locale: args.locale,
           },
@@ -412,6 +475,7 @@ QUALITY BAR
         chapters: z.array(storyChapterSchema).min(2).max(8),
         source: z.string().max(300).optional(),
         readingTime: z.string().max(40).optional(),
+        maxxing: z.boolean().optional().describe('Richer ornament, type contrast and motion.'),
         cta: ctaSchema.optional(),
         locale: localeEnum.optional(),
         output: z.string().max(260).optional(),
@@ -435,6 +499,7 @@ QUALITY BAR
             chapters: args.chapters as StoryBrief['chapters'],
             source: args.source,
             readingTime: args.readingTime,
+            maxxing: args.maxxing,
             cta: args.cta as Brief['cta'],
             locale: args.locale,
           },
@@ -470,6 +535,7 @@ QUALITY BAR
         height: z.number().int().min(240).max(1200).optional(),
         fps: z.number().int().min(8).max(30).optional(),
         duration: z.number().min(1).max(6).optional(),
+        maxxing: z.boolean().optional().describe('Additional art marks and ambient movement.'),
         output: z.string().max(260).optional().describe('File path. Defaults to ./beauty-output/<style>-<slug>-<timestamp>.gif.'),
       },
     },
@@ -484,6 +550,7 @@ QUALITY BAR
           height: args.height,
           fps: args.fps,
           duration: args.duration,
+          maxxing: args.maxxing,
           output: args.output,
         });
         return text(

@@ -22,6 +22,7 @@ interface FrameEnv {
   template: Template;
   t: number;
   seed: number;
+  maxxing: boolean;
 }
 
 interface FontSpec {
@@ -1024,6 +1025,70 @@ function frameShowcase(env: FrameEnv): void {
 /* Public API                                                          */
 /* ------------------------------------------------------------------ */
 
+function drawMaxGif(ctx: SKRSContext2D, w: number, h: number, p: StylePreset, t: number): void {
+  const s = Math.min(w, h);
+  const ease = easeOutCubic(t);
+  ctx.save();
+  ctx.globalAlpha = 0.34;
+  ctx.strokeStyle = p.palette.accent3;
+  ctx.lineWidth = Math.max(1, s * 0.0015);
+  if (p.slug === 'nature') {
+    for (let i = 1; i <= 4; i += 1) {
+      ctx.beginPath();
+      ctx.arc(w * 0.12, h * 0.8, s * (0.025 + i * 0.025), 0, TAU);
+      ctx.stroke();
+    }
+    ctx.beginPath();
+    ctx.moveTo(w * 0.1, h * 0.18);
+    ctx.quadraticCurveTo(w * 0.16, h * 0.08, w * 0.24, h * 0.2);
+    ctx.stroke();
+  } else if (p.slug === 'brutalist') {
+    ctx.fillStyle = p.palette.accent;
+    ctx.fillRect(w * 0.04, h * 0.06, w * 0.11, s * 0.02);
+    ctx.fillRect(w * 0.84, h * 0.9, w * 0.12, s * 0.03);
+  } else if (p.slug === 'artdeco') {
+    for (let i = 0; i < 9; i += 1) {
+      const a = (i / 9) * TAU;
+      ctx.beginPath();
+      ctx.moveTo(w * 0.88, h * 0.12);
+      ctx.lineTo(w * 0.88 + Math.cos(a) * s * 0.15, h * 0.12 + Math.sin(a) * s * 0.15);
+      ctx.stroke();
+    }
+  } else if (p.slug === 'vaporwave') {
+    ctx.strokeStyle = p.palette.accent2;
+    for (let i = 0; i < 5; i += 1) {
+      const y = h * (0.82 + i * 0.035);
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(w, y);
+      ctx.stroke();
+    }
+  } else if (p.slug === 'galactic') {
+    for (let i = 0; i < 3; i += 1) {
+      ctx.beginPath();
+      ctx.ellipse(w * 0.18, h * 0.22, s * (0.08 + i * 0.04), s * (0.03 + i * 0.015), -0.5, 0, TAU);
+      ctx.stroke();
+    }
+  } else {
+    for (let i = 0; i < 7; i += 1) {
+      const a = (i / 7) * TAU + ease * 0.2;
+      ctx.beginPath();
+      ctx.arc(w * 0.12 + Math.cos(a) * s * 0.045, h * 0.86 + Math.sin(a) * s * 0.045, s * 0.005, 0, TAU);
+      ctx.stroke();
+    }
+  }
+  ctx.globalAlpha = 0.25;
+  ctx.fillStyle = p.palette.accent4;
+  for (let i = 0; i < 8; i += 1) {
+    const x = w * (0.72 + (i % 4) * 0.055);
+    const y = h * (0.78 + Math.floor(i / 4) * 0.045);
+    ctx.beginPath();
+    ctx.arc(x, y, s * 0.004, 0, TAU);
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
 const RENDERERS: Record<StyleSlug, (env: FrameEnv) => void> = {
   renaissance: frameRenaissance,
   brutalist: frameBrutalist,
@@ -1072,7 +1137,9 @@ export async function createGif(style: StyleSlug, options: GifOptions, output: s
       template,
       t,
       seed: options.seed ?? 7,
+      maxxing: options.maxxing ?? false,
     });
+    if (options.maxxing) drawMaxGif(ctx, width, height, preset, t);
     ctx.restore();
     return ctx.getImageData(0, 0, width, height).data;
   };

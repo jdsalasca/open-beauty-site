@@ -27,6 +27,10 @@ You are using a design harness, not a blank canvas. The harness owns the typogra
 
 Do not mix styles. Do not invent a fourteenth one.
 
+## Maxxing
+
+When the brief deserves the full art direction, pass `maxxing: true` (or `--maxxing`). It adds an original ornament layer, more type contrast, display ligatures and a slow ambient motion to pages, decks, experiences, stories and GIFs. It never changes the palette or the required fonts. Use it for a hero page, a launch, a museum room, a poster GIF or a sprint opener — not for every utility screen.
+
 ## Mandatory workflow
 
 ### 1. Choose and read the style

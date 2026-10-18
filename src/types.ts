@@ -92,6 +92,28 @@ export interface StoryBrief extends Brief {
   readingTime?: string;
 }
 
+export interface SprintMetric {
+  label: string;
+  value: string;
+}
+
+export interface SprintBrief {
+  /** Sprint number or name, e.g. "15" or "Orbital". */
+  sprint: string;
+  team?: string;
+  date?: string;
+  style: StyleSlug;
+  maxxing?: boolean;
+  /** One sentence that opens the review. */
+  summary?: string;
+  metrics?: SprintMetric[];
+  highlights?: string[];
+  blockers?: string[];
+  next?: string[];
+  quote?: QuoteBrief;
+  subfamily?: string;
+}
+
 export interface DeckBrief extends Brief {
   slides?: DeckSlide[];
   /** Optional closing headline; defaults to a generic door. */
@@ -163,6 +185,8 @@ export interface Brief {
   seed?: number;
   /** Optional curated subfamily slug; see the style guide. */
   subfamily?: string;
+  /** Push art direction, typography and motion to the maximum. */
+  maxxing?: boolean;
 }
 
 export interface StyleFonts {
@@ -283,6 +307,8 @@ export interface GifOptions {
   duration?: number;
   /** Deterministic variation. */
   seed?: number;
+  /** More layers, richer motion and a poster-grade frame. */
+  maxxing?: boolean;
 }
 
 export interface GifResult {

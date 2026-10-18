@@ -1,6 +1,6 @@
 # MCP server
 
-`open-beauty-site` exposes a stdio MCP server with ten tools and nineteen resources. The server is deliberately narrow: it does not call an LLM, it does not browse the web, and it does not invent content. It turns a short brief into a complete, validated artefact.
+`open-beauty-site` exposes a stdio MCP server with eleven tools and nineteen resources. The server is deliberately narrow: it does not call an LLM, it does not browse the web, and it does not invent content. It turns a short brief into a complete, validated artefact.
 
 ## Build
 
@@ -68,7 +68,7 @@ No arguments. Returns the thirteen styles with their display font, best use case
 
 | Argument | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `style` | one of `renaissance`, `brutalist`, `papercraft`, `artdeco`, `isotype`, `opart`, `ukiyoe`, `bestiary`, `psychedelic`, `memphis`, `vaporwave`, `galactic` | yes | |
+| `style` | one of `renaissance`, `brutalist`, `papercraft`, `artdeco`, `isotype`, `opart`, `ukiyoe`, `bestiary`, `psychedelic`, `memphis`, `vaporwave`, `galactic`, `nature` | yes | |
 | `format` | `markdown \| json` | no | Markdown by default; JSON returns the full preset. |
 
 Returns the hard tokens: exact fonts, palette, border widths, radii, motion window, shadow rule, layout rules, copy voice and a `Never` list. This is the single source of truth.
@@ -78,7 +78,7 @@ Returns the hard tokens: exact fonts, palette, border widths, radii, motion wind
 | Argument | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `style` | style slug | no | Appends that style guide to the skill. |
-| `format` | `page \| deck \| experience \| story \| agile` | no | Appends the matching skill. |
+| `format` | `page \| deck \| experience \| story \| agile \| sprint` | no | Appends the matching skill. |
 
 Returns the contents of `skills/beauty.md` plus the matching skill (`presentation`, `experience`, `story` or `agile`). Load it into an agent's context before asking it to design.
 
@@ -89,6 +89,7 @@ Creates a full HTML page and writes it to disk.
 | Argument | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `style` | style slug | yes | |
+| `maxxing` | boolean | no | Full art direction. |
 | `title` | string (≤120) | yes | The headline. |
 | `tagline` | string (≤200) | no | One sentence. |
 | `intro` | string (≤900) | no | Manifesto paragraph. |
@@ -113,6 +114,7 @@ Creates a 16:9 animated presentation. The cover and closing are generated; `slid
 | Argument | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `style` | style slug | yes | |
+| `maxxing` | boolean | no | Full art direction. |
 | `title` | string (≤120) | yes | Deck title on the cover. |
 | `tagline` | string (≤200) | no | One sentence under the title. |
 | `slides` | array (1–8) | yes | `{ layout?, kicker?, title, body?, points?, stats?, quote? }`. |
@@ -123,6 +125,24 @@ Creates a 16:9 animated presentation. The cover and closing are generated; `slid
 
 The deck includes keyboard/touch navigation, progress, fullscreen, print styles, `inert` hidden slides, `aria-live` and reduced-motion handling. Craft and the deck audit both run.
 
+### `beauty_create_sprint`
+
+Corpo pack. Takes one sprint brief and writes three coordinated decks and three matching GIFs into one folder: review, retrospective and planning. Metrics are evidence; never invent them.
+
+| Argument | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `style` | style slug | yes | One system for the whole kit. |
+| `sprint` | string | yes | Number or name. |
+| `team`, `date` | strings | no | Visible in the covers. |
+| `summary` | string | no | One honest sentence that opens the review. |
+| `metrics` | array (≤3) | no | `{ label, value }`; capacity or delivery evidence. |
+| `highlights`, `blockers`, `next` | string arrays (≤4) | no | Demoed work, systemic friction, small bets. |
+| `quote` | object | no | `{ text, author? }`. |
+| `maxxing` | boolean | no | Full ornament and type contrast. |
+| `output` | string | no | Folder; defaults to `beauty-output/sprint-<sprint>`. |
+
+Every deck is validated; the three GIFs use the same style. If a deck is not A/100 + 4/4, fix the brief and regenerate the kit.
+
 ### `beauty_create_experience`
 
 Creates a 3–8 room, single-file digital place: restaurant, museum, history room, studio, club or garden. Each room has a procedural scene, copy, optional objects and a room rail.
@@ -130,6 +150,7 @@ Creates a 3–8 room, single-file digital place: restaurant, museum, history roo
 | Argument | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `style` | style slug | yes | |
+| `maxxing` | boolean | no | Full art direction. |
 | `kind` | `restaurant \| museum \| history \| studio \| club \| garden` | no | Defaults to `studio`. |
 | `title`, `tagline`, `intro`, `brand` | strings | title yes | |
 | `rooms` | array (3–8) | yes | `{ kicker?, title, body?, display?, items?, quote?, note? }`. |
@@ -144,6 +165,7 @@ Creates a chaptered story, history lesson or narrative essay: cover, chapter nav
 | Argument | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `style` | style slug | yes | |
+| `maxxing` | boolean | no | Full art direction. |
 | `kind` | `story \| history \| lesson \| essay` | no | Changes the art register; history expects a source. |
 | `title`, `tagline`, `intro`, `brand` | strings | title yes | |
 | `chapters` | array (2–8) | yes | `{ kicker?, title, body, quote?, fact? }`; 80–250 words each. |

@@ -1,6 +1,7 @@
 import type { StoryBrief, StoryChapter, StylePreset } from '../types.js';
 import { esc, normalizeBrief, safeHref, shell, t, REVEAL_SCRIPT } from './common.js';
 import { sceneArt } from '../art.js';
+import { applyMaxxing } from '../maxxing.js';
 
 function cleanChapter(chapter: StoryChapter, index: number): StoryChapter {
   return {
@@ -183,7 +184,7 @@ ${preset.slug === 'brutalist' ? '.scene-art,.story-plate{box-shadow:8px 8px 0 va
   update();
 })();`;
 
-  return shell({
+  const html = shell({
     lang: locale,
     title: `${brief.title} — ${brand}`,
     description: brief.tagline || brief.intro || brief.title,
@@ -193,4 +194,5 @@ ${preset.slug === 'brutalist' ? '.scene-art,.story-plate{box-shadow:8px 8px 0 va
     bodyClass: `story-page style-${preset.slug}`,
     script: `${script}\n${REVEAL_SCRIPT}`,
   });
+  return brief.maxxing ? applyMaxxing(html, preset) : html;
 }

@@ -12,7 +12,7 @@ The suite runs with Node's test runner through `tsx`:
 - `test/core.test.ts` — every style renders a complete document, escapes user content, reaches A/100 and vision 4/4; the validator rejects generic AI design (Inter, invented colours, 8px radii, 5px borders, soft shadows in brutalist); `seed` changes the composition archetype.
 - `test/mcp.test.ts` — spawns the built MCP server over stdio, verifies the eight-tool surface, reads the Renaissance tokens, creates and audits a page, creates a valid GIF, creates an animated deck, a room experience and a chaptered story, and verifies the presentation skill and example routes.
 
-Current result: **15/15 passing** in ~1.5 s (plus MCP startup).
+Current result: **17/17 passing** in ~8 s (plus MCP startup).
 
 ```text
 ✔ every style renders a complete document and scores A
@@ -225,6 +225,13 @@ Result: **A · 100/100 · vision 4/4**, 8 slides (6 content + cover + closing), 
 - Log: `qa/luna-deck3.log` (local only; not published)
 
 The editorial auditor's P0 list drove the deck audit, the per-style atmosphere fix, `inert`/`aria-live`, print styles and the `sala | gabinete | cartel` composition modes. Figures and per-style motion profiles are still pending.
+
+## Maxxing y kit de sprint (2026)
+
+- `test/maxxing.test.ts` comprueba que una página Nature con `maxxing: true` conserva **A/100 y visión 4/4** y contiene la capa `max-layer`.
+- La matriz local `qa/max-matrix.ts` valida **13/13 estilos** con `maxxing` en A/100 y 4/4.
+- `test/mcp.test.ts` crea un kit de sprint completo por MCP: tres decks **A/100 + 4/4** y tres GIFs.
+- `examples/gifs/maxxing/` guarda **13 GIFs**, uno por estilo, generados por Luna con `maxxing: true`.
 
 ## Ronda 2026: 12 estilos con Luna 6 Max
 

@@ -1,6 +1,7 @@
 import type { DeckBrief, DeckSlide, DeckStat, StylePreset, StyleSubfamily } from './types.js';
 import { esc, normalizeBrief, safeHref, shell, t } from './page/common.js';
 import { motifFor } from './deck-motifs.js';
+import { applyMaxxing } from './maxxing.js';
 
 export interface DeckOptions {
   style: StylePreset;
@@ -342,17 +343,18 @@ ${motifFor(style.slug)}
   show(index);
 })();`;
 
+  const html = shell({
+    lang: locale,
+    title: `${brief.title} — ${brief.brand || style.name}`,
+    description: brief.tagline || brief.intro || brief.title,
+    preset: style,
+    css,
+    body,
+    bodyClass: `deck style-${style.slug} sub-${subfamily.slug} comp-${subfamily.composition ?? 'sala'}`,
+    script,
+  });
   return {
-    html: shell({
-      lang: locale,
-      title: `${brief.title} — ${brief.brand || style.name}`,
-      description: brief.tagline || brief.intro || brief.title,
-      preset: style,
-      css,
-      body,
-      bodyClass: `deck style-${style.slug} sub-${subfamily.slug} comp-${subfamily.composition ?? 'sala'}`,
-      script,
-    }),
+    html: brief.maxxing ? applyMaxxing(html, style) : html,
     slideCount: total,
     subfamily,
   };

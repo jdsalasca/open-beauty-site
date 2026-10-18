@@ -43,6 +43,12 @@ A plan is a bet, not a wish list. 6–8 content slides:
 6. `statement` — the first checkpoint and the decision rule.
 7. `closing` — who does what by when.
 
+## One brief, one kit
+
+Use `beauty_create_sprint` when the team wants the whole ritual in one move. It writes review, retrospective and planning decks plus three matching GIFs. The brief carries `sprint`, `team`, `date`, `summary`, `metrics`, `highlights`, `blockers`, `next`, `quote` and `maxxing`. Each deck is validated; if one is below A/100 or 4/4, fix the brief and regenerate the kit.
+
+Do not invent metrics or decisions. A missing number stays missing; the deck should ask for it, not decorate it.
+
 ## GIF teaser
 
 `beauty_create_gif` with `text: "Sprint 14"` (or “Review”, “Retro”, “Plan”) and a subtitle such as `"Viernes 10:00 · Sala 2"`. Template `title`. 800×800. The GIF is a door, not the agenda.

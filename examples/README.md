@@ -39,6 +39,11 @@ Generated with `pnpm showcase`:
 - [agile/sprint-14-retro.html](agile/sprint-14-retro.html) — retrospective deck + GIF.
 - [agile/sprint-15-planning.html](agile/sprint-15-planning.html) — planning deck + GIF.
 - [experiences/black-clover.html](experiences/black-clover.html) — Nature Memory museum room; fan tribute.
+- [experiences/museo-estaciones.html](experiences/museo-estaciones.html) — six-room Nature Memory maxxing museum.
+- [stories/archivo-hojas.html](stories/archivo-hojas.html) — six-chapter Nature Memory maxxing essay.
+- [decks/atlas-memoria.html](decks/atlas-memoria.html) — eight-slide Galactic maxxing deck.
+- [agile/sprint-16/sprint-16-review.html](agile/sprint-16/sprint-16-review.html) — Sprint 16 review (kit of three decks + GIFs).
+- [gifs/maxxing/index.html](gifs/maxxing/index.html) — 13 maxxing GIFs, one per style.
 - [decks/tea.html](decks/tea.html) — tea presentation, Nature Memory.
 - [decks/kittens.html](decks/kittens.html) — kittens presentation, Paper Craft.
 - [stories/dominio-publico.html](stories/dominio-publico.html) — CC0 open-domain story, Paper Craft.

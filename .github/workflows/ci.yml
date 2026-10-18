@@ -65,3 +65,9 @@ jobs:
           node dist/cli.js validate examples/decks/kittens.html --style papercraft --strict
           node dist/cli.js validate examples/stories/dominio-publico.html --style papercraft --strict
           node dist/cli.js validate examples/experiences/black-clover.html --style nature --strict
+          node dist/cli.js validate examples/experiences/museo-estaciones.html --style nature --strict
+          node dist/cli.js validate examples/stories/archivo-hojas.html --style nature --strict
+          node dist/cli.js validate examples/decks/atlas-memoria.html --style galactic --strict
+          node dist/cli.js validate examples/agile/sprint-16/sprint-16-review.html --style artdeco --strict
+          node dist/cli.js validate examples/agile/sprint-16/sprint-16-retro.html --style artdeco --strict
+          node dist/cli.js validate examples/agile/sprint-16/sprint-16-planning.html --style artdeco --strict

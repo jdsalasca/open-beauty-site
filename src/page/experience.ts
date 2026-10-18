@@ -1,6 +1,7 @@
 import type { ExperienceBrief, ExperienceItem, ExperienceKind, ExperienceRoom, StylePreset } from '../types.js';
 import { esc, normalizeBrief, safeHref, shell, t, REVEAL_SCRIPT } from './common.js';
 import { sceneArt } from '../art.js';
+import { applyMaxxing } from '../maxxing.js';
 
 const KIND_LABEL: Record<ExperienceKind, { es: string; en: string }> = {
   restaurant: { es: 'Restaurante', en: 'Restaurant' },
@@ -218,7 +219,7 @@ ${preset.slug === 'brutalist' ? '.scene-art,.xp-room-art .scene-art{box-shadow:8
   });
 })();`;
 
-  return shell({
+  const html = shell({
     lang: locale,
     title: `${brief.title} — ${brand}`,
     description: brief.tagline || brief.intro || `${kindLabel} ${brief.title}`,
@@ -228,6 +229,7 @@ ${preset.slug === 'brutalist' ? '.scene-art,.xp-room-art .scene-art{box-shadow:8
     bodyClass: `xp style-${preset.slug} kind-${kind}`,
     script: `${script}\n${REVEAL_SCRIPT}`,
   });
+  return brief.maxxing ? applyMaxxing(html, preset) : html;
 }
 
 function arrow(): string {

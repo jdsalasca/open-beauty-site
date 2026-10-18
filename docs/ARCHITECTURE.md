@@ -82,15 +82,23 @@ Each style has its own frame function: gold arch and sun (Renaissance), black pa
 
 These are not generic templates with colour substitution: each style supplies palette, type and motion through the shared shell, and each renderer has a different reading structure.
 
-### 7. MCP server (`src/mcp/server.ts`)
+### 7. Sprint kit (`src/sprint.ts`)
 
-`McpServer` over stdio. Ten tools, nineteen resources, and an `instructions` string that repeats the workflow. The tools call the same `generate.ts` functions as the CLI, so the output is identical.
+One `SprintBrief` becomes a coordinated corpo pack: review, retrospective and planning decks plus three GIFs. The module builds three `DeckBrief`s, delegates to `createDeck`, then to `createGifFile`. It is exposed as `beauty sprint` and `beauty_create_sprint`, so a team can go from a JSON brief to a full ritual without hand-writing HTML.
 
-### 7. CLI (`src/cli.ts`)
+### 8. Maxxing (`src/maxxing.ts`)
+
+An optional second art direction. `applyMaxxing` injects a body class, one original style-specific SVG layer and a small CSS/motion system into an already-rendered artefact. It never changes the palette or required fonts, so it can be applied to pages, decks, experiences and stories without weakening the validator. GIFs receive their own maxxing layer in `src/gif.ts`.
+
+### 9. MCP server (`src/mcp/server.ts`)
+
+`McpServer` over stdio. Eleven tools, nineteen resources, and an `instructions` string that repeats the workflow. The tools call the same `generate.ts` functions as the CLI, so the output is identical.
+
+### 10. CLI (`src/cli.ts`)
 
 `beauty styles | guide | page | gif | validate | examples | doctor | mcp`. Useful for humans, CI and agents that cannot load MCP.
 
-### 8. Skills (`skills/*.md`)
+### 11. Skills (`skills/*.md`)
 
 The natural-language half of the harness. `beauty.md` is the mandatory workflow; the thirteen style skills are generated from the presets so they cannot drift.
 
