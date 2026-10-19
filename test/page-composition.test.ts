@@ -64,6 +64,16 @@ test('composition variants add the section types below the hero for every style'
   }
 });
 
+test('the brief selects the variant; the seed never does', () => {
+  const band = (html: string): string =>
+    html.match(/<section class="composition-band"[\s\S]*?<\/section>\s*<section class="composition-band composition-cta"[\s\S]*?<\/section>/)?.[0] ?? '';
+  const first = page('papercraft', { composition: 'stepper', seed: 1 });
+  const second = page('papercraft', { composition: 'stepper', seed: 99 });
+  assert.match(first, /data-composition="stepper"/);
+  assert.equal(band(first), band(second), 'the same brief variant renders the same band regardless of seed');
+  assert.doesNotMatch(page('papercraft', { seed: 99 }), /class="composition-band"/, 'no composition field means editorial');
+});
+
 test('a CTA without a destination renders a visible limitation state', () => {
   for (const style of styleSlugs) {
     for (const href of [undefined, '', '#', 'https://example.com', 'placeholder']) {

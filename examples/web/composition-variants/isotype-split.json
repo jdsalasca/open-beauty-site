@@ -1,0 +1,52 @@
+{
+  "title": "Guía de la ficha de inventario",
+  "tagline": "Una fila duplicada se detecta, se rechaza y se corrige.",
+  "intro": "La guía explica cómo revisar la ficha de inventario del archivo. Esta edición se detiene en un caso concreto: una fila completamente duplicada que la validación detecta y rechaza, con una indicación para que la persona la corrija.",
+  "brand": "Inventario Abierto",
+  "eyebrow": "Método · Ficha de inventario",
+  "sections": [
+    {
+      "kicker": "01 / Contexto",
+      "title": "Una ficha, varias manos",
+      "body": "El inventario se completa entre varias personas. Cada fila se compara con las anteriores antes de publicar la versión del día.",
+      "kind": "explanation"
+    },
+    {
+      "kicker": "02 / Detección",
+      "title": "La fila completamente duplicada",
+      "body": "La validación compara el contenido completo de la fila con las anteriores. Cuando todos los campos coinciden, la marca como duplicada y no la deja pasar.",
+      "kind": "comparison"
+    },
+    {
+      "kicker": "03 / Rechazo",
+      "title": "El rechazo de la versión",
+      "body": "La ficha con la fila repetida se rechaza. La persona ve la fila señalada y el campo que coincide, sin que la guía afirme que se borró algo.",
+      "kind": "process"
+    },
+    {
+      "kicker": "04 / Corrección",
+      "title": "La indicación para corregir",
+      "body": "La indicación pide comprobar si la fila pertenece a otra hoja, completar el dato que falta o pedir revisión al archivo. Después se corrige y se vuelve a enviar.",
+      "kind": "process"
+    },
+    {
+      "kicker": "05 / Cierre",
+      "title": "Volver a la cola",
+      "body": "La ficha corregida vuelve a la cola de validación. La guía no promete que no haya más errores: solo confirma que esta versión ya no contiene la fila duplicada.",
+      "kind": "default"
+    }
+  ],
+  "quote": {
+    "text": "Un método claro deja ver el error sin convertirlo en castigo.",
+    "author": "Equipo de inventario"
+  },
+  "cta": {
+    "label": "Leer el método",
+    "href": "#contacto"
+  },
+  "footer": "Inventario Abierto · Material de trabajo",
+  "locale": "es",
+  "seed": 5,
+  "composition": "split",
+  "scene": "table"
+}

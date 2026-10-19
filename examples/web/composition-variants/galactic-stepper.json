@@ -1,0 +1,52 @@
+{
+  "title": "Guía de revisión del registro orbital",
+  "tagline": "Detección, rechazo y corrección de una fila duplicada.",
+  "intro": "La guía acompaña la revisión del registro orbital de la estación. Esta edición muestra el recorrido de una fila completamente duplicada: la validación la detecta, la rechaza y le devuelve a la persona una indicación para corregirla.",
+  "brand": "Estación Horizonte",
+  "eyebrow": "Bitácora · Registro orbital",
+  "sections": [
+    {
+      "kicker": "01 / Contexto",
+      "title": "El registro compartido",
+      "body": "Cada turno carga sus observaciones en una ficha común. Antes de publicar, las filas se comparan con las que ya están registradas.",
+      "kind": "explanation"
+    },
+    {
+      "kicker": "02 / Detección",
+      "title": "La fila repetida",
+      "body": "La validación compara el contenido completo de la fila con las anteriores. Si todos los campos coinciden, la marca como duplicada.",
+      "kind": "comparison"
+    },
+    {
+      "kicker": "03 / Rechazo",
+      "title": "La versión no se publica",
+      "body": "El registro con la fila repetida se rechaza. La validación muestra la fila señalada y el campo que coincide para que la persona pueda comprobarlo.",
+      "kind": "process"
+    },
+    {
+      "kicker": "04 / Corrección",
+      "title": "La indicación para corregir",
+      "body": "La persona recibe una indicación clara: verificar si la fila pertenece a otro turno, completar el dato que falta o pedir revisión. Después corrige y vuelve a enviar.",
+      "kind": "process"
+    },
+    {
+      "kicker": "05 / Cierre",
+      "title": "Nueva revisión",
+      "body": "La ficha corregida vuelve a la cola de validación. La guía no afirma que se haya borrado nada ni promete que el problema no reaparezca.",
+      "kind": "default"
+    }
+  ],
+  "quote": {
+    "text": "La distancia no corrige el registro: lo hace una persona.",
+    "author": "Turno de archivo"
+  },
+  "cta": {
+    "label": "Consultar la bitácora",
+    "href": "#contacto"
+  },
+  "footer": "Estación Horizonte · Documento de trabajo",
+  "locale": "es",
+  "seed": 12,
+  "composition": "stepper",
+  "scene": "window"
+}

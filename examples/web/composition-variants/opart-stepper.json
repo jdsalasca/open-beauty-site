@@ -1,0 +1,52 @@
+{
+  "title": "Guía de revisión de la ficha de señales",
+  "tagline": "Un recorrido por la detección y el rechazo de una fila duplicada.",
+  "intro": "La guía acompaña la revisión de la ficha de señales del taller. Esta edición muestra el recorrido de una fila completamente duplicada: la validación la detecta, la rechaza y la persona recibe una indicación para corregirla.",
+  "brand": "Taller de Señales",
+  "eyebrow": "Serie · Ficha de señales",
+  "sections": [
+    {
+      "kicker": "01 / Contexto",
+      "title": "La ficha del taller",
+      "body": "Las señales se registran en una ficha compartida. Cada fila se compara con las anteriores antes de publicar la versión del día.",
+      "kind": "explanation"
+    },
+    {
+      "kicker": "02 / Detección",
+      "title": "La fila repetida",
+      "body": "La validación compara el contenido completo de la fila con las anteriores. Si todos los campos coinciden, la marca como duplicada y la deja fuera.",
+      "kind": "comparison"
+    },
+    {
+      "kicker": "03 / Rechazo",
+      "title": "La ficha se rechaza",
+      "body": "La versión con la fila repetida no se publica. La validación señala la fila y el campo que coincide para que la persona pueda revisarlo.",
+      "kind": "process"
+    },
+    {
+      "kicker": "04 / Corrección",
+      "title": "La indicación para corregir",
+      "body": "La persona recibe una indicación concreta: comprobar si la fila pertenece a otra serie, completar el dato que falta o pedir revisión. Después corrige y vuelve a enviar.",
+      "kind": "process"
+    },
+    {
+      "kicker": "05 / Cierre",
+      "title": "La ficha vuelve a revisión",
+      "body": "La versión corregida vuelve a la cola de validación. La guía no afirma que se haya borrado nada ni promete que el problema no vuelva a aparecer.",
+      "kind": "default"
+    }
+  ],
+  "quote": {
+    "text": "Señalar es parte del trabajo; corregir también.",
+    "author": "Equipo de señales"
+  },
+  "cta": {
+    "label": "Ver la serie",
+    "href": "#contacto"
+  },
+  "footer": "Taller de Señales · Documento interno",
+  "locale": "es",
+  "seed": 6,
+  "composition": "stepper",
+  "scene": "table"
+}

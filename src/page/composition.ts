@@ -162,9 +162,14 @@ function sectionList(sections: SectionBrief[], kind: SectionBrief['kind'], fallb
 }
 
 function explanationBlock(context: BandContext): string {
-  const { brief, locale } = context;
+  const { brief, locale, sections } = context;
   const label = t(locale, 'Explicación', 'Explanation');
-  const body = brief.intro || brief.tagline || t(locale, 'Qué dice el brief y qué espera quien lo lee.', 'What the brief says and what its reader expects.');
+  const typed = sections.find((section) => section.kind === 'explanation');
+  const body =
+    typed?.body ||
+    brief.intro ||
+    brief.tagline ||
+    t(locale, 'Qué dice el brief y qué espera quien lo lee.', 'What the brief says and what its reader expects.');
   return `<div class="comp-block comp-explanation" data-section="explanation">
   <p class="comp-kicker">${esc(label)}</p>
   <p class="comp-text">${esc(body)}</p>
@@ -233,18 +238,20 @@ export function compositionCss(preset: StylePreset): string {
   const p = preset.palette;
   const semantic = ART_DIRECTION[preset.slug]?.color.semanticStates;
   const problem = semantic?.problem ?? p.accent;
+  const border = preset.rules.borderWidths[0] ?? 1;
+  const emphasis = preset.rules.borderWidths[1] ?? border;
   return `
-.composition-band{--comp-bg:${p.surface};--comp-ink:${p.ink};--comp-muted:${p.muted};--comp-accent:${p.accent};max-width:1180px;margin:0 auto;padding:64px 28px;display:grid;grid-template-columns:1fr 1fr;gap:40px;border-top:1px solid var(--comp-muted);border-bottom:1px solid var(--comp-muted)}
+.composition-band{--comp-bg:${p.surface};--comp-ink:${p.ink};--comp-muted:${p.muted};--comp-accent:${p.accent};max-width:1180px;margin:0 auto;padding:64px 28px;display:grid;grid-template-columns:1fr 1fr;gap:40px;border-top:${border}px solid var(--comp-muted);border-bottom:${border}px solid var(--comp-muted)}
 .composition-band[data-composition="stepper"]{grid-template-columns:1fr}
 .comp-kicker{margin:0 0 16px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--comp-accent);font-weight:700}
 .comp-text{margin:0;font-size:17px;line-height:1.7;color:var(--comp-ink);max-width:56ch}
 .comp-list{list-style:none;margin:0;padding:0;display:grid;gap:14px}
-.comp-list li{display:grid;grid-template-columns:96px 1fr;gap:14px;padding-bottom:14px;border-bottom:1px solid var(--comp-muted)}
+.comp-list li{display:grid;grid-template-columns:96px 1fr;gap:14px;padding-bottom:14px;border-bottom:${border}px solid var(--comp-muted)}
 .comp-list .comp-side{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--comp-accent)}
 .comp-list strong{display:block;font-size:16px;line-height:1.3}
 .comp-list li>span:last-child{font-size:13px;line-height:1.6;color:var(--comp-muted)}
 .comp-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:20px;counter-reset:step}
-.comp-steps li{position:relative;padding:20px;background:var(--comp-bg);border:1px solid var(--comp-muted);display:grid;gap:8px}
+.comp-steps li{position:relative;padding:20px;background:var(--comp-bg);border:${border}px solid var(--comp-muted);display:grid;gap:8px}
 .comp-step-num{font-size:11px;letter-spacing:.14em;color:var(--comp-accent);font-weight:700}
 .comp-steps strong{font-size:16px;line-height:1.3}
 .comp-steps li>span:last-child{font-size:13px;line-height:1.6;color:var(--comp-muted)}
@@ -253,8 +260,8 @@ export function compositionCss(preset: StylePreset): string {
 .comp-cta-title{margin:0;font-size:clamp(24px,3vw,38px);line-height:1.1}
 .comp-cta{display:inline-flex;align-items:center;gap:10px;background:var(--comp-ink);color:var(--comp-bg);padding:14px 20px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;font-weight:700}
 .comp-cta-limited{cursor:not-allowed;opacity:.55}
-.comp-cta-note{margin:6px 0 0;font-size:11px;line-height:1.5;color:var(--ink,var(--comp-ink,currentColor));border-left:2px solid var(--comp-warn,var(--accent,currentColor));padding-left:8px;max-width:34ch}
-.composition-warning{margin:12px 0 0;padding:10px 12px;border-left:3px solid ${problem};background:color-mix(in srgb,${problem} 12%,transparent);color:var(--comp-ink);font-size:11px;line-height:1.5}
+.comp-cta-note{margin:6px 0 0;font-size:11px;line-height:1.5;color:var(--ink,var(--comp-ink,currentColor));border-left:${emphasis}px solid var(--comp-warn,var(--accent,currentColor));padding-left:8px;max-width:34ch}
+.composition-warning{margin:12px 0 0;padding:10px 12px;border-left:${emphasis}px solid ${problem};background:color-mix(in srgb,${problem} 12%,transparent);color:var(--comp-ink);font-size:11px;line-height:1.5}
 .composition-cta .composition-warning{grid-column:1/-1}
 .scene-art svg{width:100%;height:auto;display:block;max-height:560px}
 @media (max-width:760px){.composition-band{grid-template-columns:1fr;padding:44px 18px;gap:26px}.composition-cta{grid-template-columns:1fr}.comp-list li{grid-template-columns:1fr;gap:6px}}

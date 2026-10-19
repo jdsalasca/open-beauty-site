@@ -12,7 +12,7 @@ Machine-readable contract: `src/styles/art-direction.ts` exports `ART_DIRECTION:
 
 ## Consumed vs. guidance only
 
-The contract itself is **not** imported by the renderers today. Engines consume `StylePreset` (`src/styles/presets.ts`), `TypeSystem`/`MotionSystem` (`src/styles/design-language.ts`) and `SUBFAMILIES` (`src/styles/subfamilies.ts`). Fields below are guidance unless noted.
+Most of the contract is **not** imported by the renderers today, except `color.semanticStates` in the page composition layer (`src/page/composition.ts`). Engines consume `StylePreset` (`src/styles/presets.ts`), `TypeSystem`/`MotionSystem` (`src/styles/design-language.ts`) and `SUBFAMILIES` (`src/styles/subfamilies.ts`). Fields below are guidance unless noted.
 
 | Field | Status |
 |---|---|
@@ -21,7 +21,7 @@ The contract itself is **not** imported by the renderers today. Engines consume 
 | typography.families/weights | guidance only (font source of truth: `src/styles/presets.ts` `fonts` + `src/narrative/fonts.ts`; consumed by `src/page/common.ts`, `src/make.ts`, `src/guide.ts`) |
 | typography.sizesByFormat/leading/readingWidth/displayUsage | guidance only |
 | typography.explicitFallback | guidance only (fallback map: `src/narrative/fonts.ts`) |
-| color.* | guidance only (palette source of truth: `src/styles/presets.ts` `palette`; consumed throughout `src/page/*`, `src/deck.ts`, `src/gif.ts`) |
+| color.* | palette is guidance only (source of truth: `src/styles/presets.ts` `palette`; consumed throughout `src/page/*`, `src/deck.ts`, `src/gif.ts`). `color.semanticStates.warn/problem` **is consumed** by `src/page/composition.ts` for the CTA limitation note and the scene warning. |
 | materiality.* | guidance only |
 | illustration.* | guidance only |
 | motion.* | guidance only (motion source of truth: `src/styles/design-language.ts` `MOTION_SYSTEMS`; consumed by `src/page/common.ts`) |

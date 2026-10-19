@@ -1,0 +1,52 @@
+{
+  "title": "Guía de validación de la ficha de stock",
+  "tagline": "Una fila duplicada se detecta, se rechaza y se explica.",
+  "intro": "La guía ordena el trabajo de la ficha de stock. Esta edición muestra el recorrido de una fila completamente duplicada: la validación la detecta, rechaza la versión y le da a la persona una indicación para corregirla.",
+  "brand": "Depósito Sur",
+  "eyebrow": "Procedimiento · Ficha de stock",
+  "sections": [
+    {
+      "kicker": "01 / Contexto",
+      "title": "La ficha compartida",
+      "body": "El equipo carga el stock en una ficha común. Antes de publicar, cada fila se compara con las que ya están cargadas.",
+      "kind": "explanation"
+    },
+    {
+      "kicker": "02 / Detección",
+      "title": "La fila repetida",
+      "body": "La validación compara el contenido completo de la fila con las anteriores. Si todos los campos coinciden, la marca como duplicada y no la deja pasar.",
+      "kind": "comparison"
+    },
+    {
+      "kicker": "03 / Rechazo",
+      "title": "La versión se rechaza",
+      "body": "La ficha no se publica con la fila repetida. La validación devuelve el rechazo con la fila señalada para que la persona sepa dónde mirar.",
+      "kind": "process"
+    },
+    {
+      "kicker": "04 / Corrección",
+      "title": "La indicación para corregir",
+      "body": "La persona recibe una indicación concreta: comprobar si la fila pertenece a otro depósito, completar el dato que falta o pedir revisión. Luego corrige y vuelve a enviar.",
+      "kind": "process"
+    },
+    {
+      "kicker": "05 / Cierre",
+      "title": "La ficha vuelve a revisión",
+      "body": "La versión corregida vuelve a la cola de validación. La guía no afirma que se haya borrado nada ni promete que el problema no vuelva a aparecer.",
+      "kind": "default"
+    }
+  ],
+  "quote": {
+    "text": "Validar no es limpiar: es mostrar qué necesita una decisión.",
+    "author": "Equipo de depósito"
+  },
+  "cta": {
+    "label": "Ver el procedimiento",
+    "href": "#contacto"
+  },
+  "footer": "Depósito Sur · Documento interno",
+  "locale": "es",
+  "seed": 1,
+  "composition": "stepper",
+  "scene": "table"
+}
