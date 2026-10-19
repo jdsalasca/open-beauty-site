@@ -1,46 +1,46 @@
 {
   "schemaVersion": 1,
-  "commit": "8a5269dd365762bec23ee93fb32f2d0cd975bef8",
+  "commit": "d78a1360e9619fa326d6ce513e19eaac3b08ec4e",
   "brief": {
     "style": "papercraft",
     "subfamily": "editorial",
     "kind": "narrative-gif",
     "locale": "es",
     "audience": "Producto en Sprint Review",
-    "title": "Lectura antes del cierre",
-    "status": "in-review",
+    "title": "Observación registrada",
+    "status": "done",
     "phases": [
       {
         "id": "before",
         "label": "Antes",
-        "text": "La ficha puede llegar sin una lectura compartida.",
+        "text": "La ficha no indicaba dónde revisar la advertencia.",
         "visual": {
-          "kind": "checklist",
+          "kind": "comparison",
           "state": "unreviewed"
         }
       },
       {
         "id": "change",
         "label": "Cambio",
-        "text": "Una lista deja visibles los puntos por comprobar.",
+        "text": "La observación queda señalada en el mismo documento.",
         "visual": {
-          "kind": "checklist",
+          "kind": "comparison",
           "state": "flagged"
         }
       },
       {
         "id": "result",
-        "label": "Resultado esperado",
-        "text": "El equipo termina la revisión antes de cerrar la ficha.",
+        "label": "Resultado observado",
+        "text": "La ficha queda lista para una nueva lectura.",
         "visual": {
-          "kind": "checklist",
-          "state": "review-ready"
+          "kind": "comparison",
+          "state": "reviewed"
         }
       }
     ],
     "playback": {
       "minReadableHoldMs": 5000,
-      "transitionMs": 650,
+      "transitionMs": 900,
       "loop": true
     },
     "output": {
@@ -52,17 +52,17 @@
       ],
       "preset": "review-1280x720"
     },
-    "seed": 29
+    "seed": 43
   },
-  "briefSha256": "151ae214fc8a5c6c9d4685c515deff8bfae79d1b6f5f9750cb1c83d406828d98",
+  "briefSha256": "34abb5716f4f6e1659849d238699d824b58f50489bd3c9d54f76bd65c18fcd0d",
   "style": "papercraft",
   "subfamily": "editorial",
-  "seed": 29,
+  "seed": 43,
   "renderer": {
     "narrative": "narrative-core/0.1.0",
     "canvas": "@napi-rs/canvas@1.0.11",
     "gif": "gifenc@1.0.3",
-    "scene": "papercraft-editorial/1.0.0"
+    "scene": "papercraft-editorial/1.1.0"
   },
   "fonts": {
     "bundleVersion": "repo-bundled-ofl-1",
@@ -100,13 +100,16 @@
   "decoded": {
     "width": 1280,
     "height": 720,
-    "frameCount": 33,
+    "frameCount": 42,
     "delaysMs": [
       80,
       5000,
       80,
       80,
-      70,
+      80,
+      80,
+      80,
+      80,
       70,
       70,
       70,
@@ -117,7 +120,10 @@
       5000,
       80,
       80,
-      70,
+      80,
+      80,
+      80,
+      80,
       70,
       70,
       70,
@@ -128,7 +134,10 @@
       5000,
       80,
       80,
-      70,
+      80,
+      80,
+      80,
+      80,
       70,
       70,
       70,
@@ -136,30 +145,30 @@
       70,
       70
     ],
-    "durationMs": 17190,
+    "durationMs": 17940,
     "loopCount": 0,
     "integrity": true
   },
   "ffprobe": {
     "available": true,
     "passed": true,
-    "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode."
+    "detail": "ffprobe 1280×720; 42 frames; 17940ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 849291,
-    "png": 75581,
-    "contactSheet": 63381
+    "gif": 1207417,
+    "png": 87690,
+    "contactSheet": 83184
   },
   "hashes": {
-    "briefSha256": "151ae214fc8a5c6c9d4685c515deff8bfae79d1b6f5f9750cb1c83d406828d98",
-    "gifSha256": "52fe2f9561d0263483616e9eebfd4cee9d2d9b5a130eefedfd4553a134243dff",
-    "pngSha256": "741788580d390e2ea8ca669e746c9c847b1877f5ca08a95baf59f35d22958764",
-    "contactSheetSha256": "7583549a046b70660bd5e3b40f21550e52d7faf4d8662efeb1f9a3e15d7367a6"
+    "briefSha256": "34abb5716f4f6e1659849d238699d824b58f50489bd3c9d54f76bd65c18fcd0d",
+    "gifSha256": "579278b6b1b3f4af15a68368415c8063a05c47b711e4269d9237ff8083d0866e",
+    "pngSha256": "dda03510a6a1535bb235b503af59554e502917684019420d4c86f17197e0f703",
+    "contactSheetSha256": "a130b08353413d728933909cb9e412401a78842ac28fcad9dfa102a6fad0d37b"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-136fcdc7\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-151ae214.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-136fcdc7\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-151ae214.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-136fcdc7\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-151ae214-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-34abb571.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-34abb571.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-34abb571-contact-sheet.png"
   },
   "controls": [
     {
@@ -177,13 +186,13 @@
     {
       "name": "frame-count",
       "passed": true,
-      "detail": "33 decoded frame(s)",
+      "detail": "42 decoded frame(s)",
       "source": "decoded"
     },
     {
       "name": "duration",
       "passed": true,
-      "detail": "17190ms decoded; holds exclude transitions",
+      "detail": "17940ms decoded; holds exclude transitions",
       "source": "decoded"
     },
     {
@@ -201,19 +210,19 @@
     {
       "name": "ffprobe-crosscheck",
       "passed": true,
-      "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode.",
+      "detail": "ffprobe 1280×720; 42 frames; 17940ms; matches the independent LZW decode.",
       "source": "decoded"
     },
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 849291B · PNG 75581B · contact 63381B",
+      "detail": "GIF 1207417B · PNG 87690B · contact 83184B",
       "source": "decoded"
     },
     {
       "name": "scene-renderer-registered",
       "passed": true,
-      "detail": "renderer papercraft/papercraft-editorial/1.0.0 exists; visual style likeness remains a separate review",
+      "detail": "renderer papercraft/papercraft-editorial/1.1.0 exists; visual style likeness remains a separate review",
       "source": "source"
     },
     {
@@ -237,19 +246,19 @@
     {
       "name": "distinct-frames",
       "passed": true,
-      "detail": "25 unique composited frame(s); a format-valid static GIF does not pass",
+      "detail": "35 unique composited frame(s); a format-valid static GIF does not pass",
       "source": "pixels"
     },
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "45 colors; mean channel loss 1.193, max 7; sampled 33 frames",
+      "detail": "52 colors; mean channel loss 2.239, max 11; sampled 42 frames",
       "source": "pixels"
     },
     {
       "name": "title-complete",
       "passed": true,
-      "detail": "Lectura antes del cierre",
+      "detail": "Observación registrada",
       "source": "source"
     },
     {
@@ -261,7 +270,7 @@
     {
       "name": "phase-before-text-complete",
       "passed": true,
-      "detail": "La ficha puede llegar sin una lectura / compartida.",
+      "detail": "La ficha no indicaba dónde revisar la / advertencia.",
       "source": "source"
     },
     {
@@ -273,19 +282,19 @@
     {
       "name": "phase-change-text-complete",
       "passed": true,
-      "detail": "Una lista deja visibles los puntos por / comprobar.",
+      "detail": "La observación queda señalada en el / mismo documento.",
       "source": "source"
     },
     {
       "name": "phase-result-label-complete",
       "passed": true,
-      "detail": "Resultado esperado",
+      "detail": "Resultado observado",
       "source": "source"
     },
     {
       "name": "phase-result-text-complete",
       "passed": true,
-      "detail": "El equipo termina la revisión antes de / cerrar la ficha.",
+      "detail": "La ficha queda lista para una nueva / lectura.",
       "source": "source"
     },
     {
@@ -345,7 +354,7 @@
     {
       "name": "result-follows-status",
       "passed": true,
-      "detail": "status=in-review; final label=\"Resultado esperado\"",
+      "detail": "status=done; final label=\"Resultado observado\"",
       "source": "source"
     }
   ],
@@ -368,13 +377,13 @@
         {
           "name": "frame-count",
           "passed": true,
-          "detail": "33 decoded frame(s)",
+          "detail": "42 decoded frame(s)",
           "source": "decoded"
         },
         {
           "name": "duration",
           "passed": true,
-          "detail": "17190ms decoded; holds exclude transitions",
+          "detail": "17940ms decoded; holds exclude transitions",
           "source": "decoded"
         },
         {
@@ -392,13 +401,13 @@
         {
           "name": "ffprobe-crosscheck",
           "passed": true,
-          "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode.",
+          "detail": "ffprobe 1280×720; 42 frames; 17940ms; matches the independent LZW decode.",
           "source": "decoded"
         },
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 849291B · PNG 75581B · contact 63381B",
+          "detail": "GIF 1207417B · PNG 87690B · contact 83184B",
           "source": "decoded"
         }
       ]
@@ -411,7 +420,7 @@
         {
           "name": "scene-renderer-registered",
           "passed": true,
-          "detail": "renderer papercraft/papercraft-editorial/1.0.0 exists; visual style likeness remains a separate review",
+          "detail": "renderer papercraft/papercraft-editorial/1.1.0 exists; visual style likeness remains a separate review",
           "source": "source"
         },
         {
@@ -435,13 +444,13 @@
         {
           "name": "distinct-frames",
           "passed": true,
-          "detail": "25 unique composited frame(s); a format-valid static GIF does not pass",
+          "detail": "35 unique composited frame(s); a format-valid static GIF does not pass",
           "source": "pixels"
         },
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "45 colors; mean channel loss 1.193, max 7; sampled 33 frames",
+          "detail": "52 colors; mean channel loss 2.239, max 11; sampled 42 frames",
           "source": "pixels"
         }
       ],
@@ -453,7 +462,7 @@
         {
           "name": "title-complete",
           "passed": true,
-          "detail": "Lectura antes del cierre",
+          "detail": "Observación registrada",
           "source": "source"
         },
         {
@@ -465,7 +474,7 @@
         {
           "name": "phase-before-text-complete",
           "passed": true,
-          "detail": "La ficha puede llegar sin una lectura / compartida.",
+          "detail": "La ficha no indicaba dónde revisar la / advertencia.",
           "source": "source"
         },
         {
@@ -477,19 +486,19 @@
         {
           "name": "phase-change-text-complete",
           "passed": true,
-          "detail": "Una lista deja visibles los puntos por / comprobar.",
+          "detail": "La observación queda señalada en el / mismo documento.",
           "source": "source"
         },
         {
           "name": "phase-result-label-complete",
           "passed": true,
-          "detail": "Resultado esperado",
+          "detail": "Resultado observado",
           "source": "source"
         },
         {
           "name": "phase-result-text-complete",
           "passed": true,
-          "detail": "El equipo termina la revisión antes de / cerrar la ficha.",
+          "detail": "La ficha queda lista para una nueva / lectura.",
           "source": "source"
         },
         {
@@ -555,7 +564,7 @@
         {
           "name": "result-follows-status",
           "passed": true,
-          "detail": "status=in-review; final label=\"Resultado esperado\"",
+          "detail": "status=done; final label=\"Resultado observado\"",
           "source": "source"
         }
       ],
@@ -581,35 +590,38 @@
       "labels": [
         "before · inicio",
         "before · pausa",
+        "before · transición media",
         "before · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-136fcdc7\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-151ae214-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-34abb571-contact-sheet.png"
     },
     {
       "phaseId": "change",
       "labels": [
         "change · inicio",
         "change · pausa",
+        "change · transición media",
         "change · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-136fcdc7\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-151ae214-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-34abb571-contact-sheet.png"
     },
     {
       "phaseId": "result",
       "labels": [
         "result · inicio",
         "result · pausa",
+        "result · transición media",
         "result · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-136fcdc7\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-151ae214-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-34abb571-contact-sheet.png"
     }
   ],
   "palette": {
-    "colors": 45,
-    "meanAbsoluteChannelError": 1.193,
-    "maximumChannelError": 7,
-    "sampledFrames": 33
+    "colors": 52,
+    "meanAbsoluteChannelError": 2.239,
+    "maximumChannelError": 11,
+    "sampledFrames": 42
   },
   "phaseHoldsVerified": [
     {
@@ -632,9 +644,9 @@
     }
   ],
   "resourceEstimate": {
-    "pixelFrames": 30412800,
+    "pixelFrames": 38707200,
     "maxPixelFrames": 96000000,
-    "memoryBytes": 107634688,
+    "memoryBytes": 124370944,
     "maxMemoryBytes": 268435456
   },
   "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed."

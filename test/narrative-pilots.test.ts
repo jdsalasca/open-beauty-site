@@ -14,6 +14,7 @@ import { layoutNarrative } from '../src/narrative/layout.js';
 import { getNarrativeScene } from '../src/narrative/scene.js';
 import { buildNarrativeTimeline } from '../src/narrative/timeline.js';
 import { verifyNarrativeGif } from '../src/narrative/verify-gif.js';
+import { papercraftStatusStampText } from '../src/narrative/scenes/papercraft.js';
 
 const STYLES = ['papercraft', 'brutalist'] as const;
 
@@ -54,6 +55,23 @@ function holdFrame(phaseIndex: number): NarrativeTimelineFrame {
   return { kind: 'hold', phaseIndex, fromPhaseIndex: phaseIndex, toPhaseIndex: phaseIndex, progress: 1, delayMs: 5_000 };
 }
 
+function alphaBoundsRatio(pixels: Uint8ClampedArray, width: number, height: number): number {
+  let left = width;
+  let top = height;
+  let right = -1;
+  let bottom = -1;
+  for (let y = 0; y < height; y += 1) {
+    for (let x = 0; x < width; x += 1) {
+      if (pixels[(y * width + x) * 4 + 3]! <= 8) continue;
+      left = Math.min(left, x);
+      top = Math.min(top, y);
+      right = Math.max(right, x);
+      bottom = Math.max(bottom, y);
+    }
+  }
+  return right < left || bottom < top ? 0 : ((right - left + 1) * (bottom - top + 1)) / (width * height);
+}
+
 function render(style: (typeof STYLES)[number], kind: string, phaseIndex: number, seed = 7, output = { width: 640, height: 360, preset: 'card-640x360', formats: ['gif', 'png'] }, subfamily?: string): Uint8ClampedArray {
   const normalized = normalizeNarrativeBrief(brief(style, kind, { seed, output, ...(subfamily ? { subfamily } : {}) })).brief;
   const scene = getNarrativeScene(style);
@@ -91,7 +109,20 @@ test('pilot font roles use the two requested bundled families and expose the doc
   assert.equal(normalizeNarrativeBrief(brief('brutalist', 'comparison', { subfamily: 'poster' })).brief.subfamily, 'poster');
 });
 
+test('papercraft status stamp follows the brief without inventing a completed review', () => {
+  assert.equal(papercraftStatusStampText('in-review'), 'EN REVISIÓN');
+  assert.equal(papercraftStatusStampText('done'), 'REVISADA');
+  assert.equal(papercraftStatusStampText('open'), 'PENDIENTE');
+});
+
 for (const style of STYLES) {
+  test(`${style} makes the 1280×720 art object occupy at least 24% of the canvas bounds`, () => {
+    const width = 1280;
+    const height = 720;
+    const pixels = render(style, 'comparison', 0, 7, { width, height, preset: 'review-1280x720', formats: ['gif', 'png'] });
+    assert.ok(alphaBoundsRatio(pixels, width, height) >= 0.24, 'the hero object must use the available vertical and horizontal art field');
+  });
+
   test(`${style} has two distinct curated compositions, persistent phase art and deterministic seeded variation`, () => {
     const first = render(style, 'comparison', 0);
     const same = render(style, 'comparison', 0);
@@ -109,12 +140,22 @@ for (const style of STYLES) {
     const scene = getNarrativeScene(style);
     assert.equal(scene.supportsAspect(16 / 9), true);
     assert.equal(scene.supportsAspect(1), true);
-    assert.equal(scene.supportsAspect(9 / 16), true);
+    assert.equal(scene.supportsAspect(9 / 16), false);
     assert.equal(scene.supportsAspect(4 / 3), false);
     const square = render(style, 'comparison', 2, 7, { width: 640, height: 640, preset: 'square-1080', formats: ['gif', 'png'] });
-    const portrait = render(style, 'checklist', 2, 7, { width: 360, height: 640, preset: 'story-1080x1920', formats: ['gif', 'png'] });
     assert.equal(square.length, 640 * 640 * 4);
-    assert.equal(portrait.length, 360 * 640 * 4);
+  });
+
+  test(`${style} returns an explicit unsupported-aspect diagnostic for 9:16`, async () => {
+    await assert.rejects(
+      createNarrative(brief(style, 'comparison', {
+        output: { width: 360, height: 640, preset: 'story-1080x1920', formats: ['gif', 'png'] },
+      })),
+      (error: unknown) => {
+        assert.equal((error as { code: string }).code, 'UNSUPPORTED_ASPECT');
+        return true;
+      },
+    );
   });
 
   test(`${style} writes a real 1280×720 review pack with independently decoded holds and honest review levels`, async () => {
@@ -164,11 +205,17 @@ for (const style of STYLES) {
       assert.equal(manifest.evaluation['style-conformance'].status, 'pending');
       assert.equal(manifest.evaluation['rendered-legibility'].status, 'pending');
       assert.equal(manifest.evaluation.narrative.status, 'pending');
+      for (const capture of manifest.phaseCaptures) {
+        for (const label of ['inicio', 'transición media', 'pausa', 'salida']) {
+          assert.ok(capture.labels.some((value: string) => value.includes(label)), `${capture.phaseId} includes ${label} in the contact sheet`);
+        }
+      }
+      assert.ok(manifest.phaseCaptures.some((capture: { labels: string[] }) => capture.labels.includes('reinicio del loop')));
       assert.match(manifest.deterministicScope, /pnpm-lock\.yaml/);
       assert.match(manifest.deterministicScope, /cross-platform byte equality is not claimed/);
       assert.equal(manifest.fonts.roles.display.family, style === 'papercraft' ? 'Fraunces' : 'Archivo Black');
       assert.equal(manifest.fonts.roles.reading.family, style === 'papercraft' ? 'Nunito Sans' : 'Space Mono');
-      assert.ok(manifest.phaseHoldsVerified.every((hold: { decodedMs: number; requiredMs: number; passed: boolean }) => hold.passed && hold.decodedMs >= 5_000 && hold.requiredMs >= 5_000));
+      assert.ok(manifest.phaseHoldsVerified.every((hold: { decodedMs: number; requiredMs: number; passed: boolean }) => hold.passed && hold.decodedMs === 5_000 && hold.requiredMs === 5_000));
       assert.ok(manifest.phaseCaptures.some((capture: { labels: string[] }) => capture.labels.includes('reinicio del loop')));
 
       const negativeDir = await mkdtemp(path.join(os.tmpdir(), `narrative-${style}-negative-`));
