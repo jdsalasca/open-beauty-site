@@ -328,7 +328,12 @@ function issuesForMotion(css: string): { issues: RichIssue[]; durations: number[
   return { issues, durations: [...new Set(durations)] };
 }
 
-function issuesForMarkup(html: string): RichIssue[] {
+interface MarkupOptions {
+  /** Page CTA integrity; decks own their own closing rules. Defaults to true. */
+  cta?: boolean;
+}
+
+function issuesForMarkup(html: string, options: MarkupOptions = {}): RichIssue[] {
   const issues: RichIssue[] = [];
   if (!/<meta[^>]+name="viewport"/i.test(html)) {
     issues.push(
@@ -479,24 +484,26 @@ function issuesForMarkup(html: string): RichIssue[] {
   // CTA integrity: a call to action must carry a real destination. An anchor
   // with an empty or placeholder href is flagged; the visible limitation state
   // (`<button aria-disabled>`) is the accepted alternative and is not an
-  // anchor, so it passes this check.
-  for (const match of html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi)) {
-    const attrs = match[1] ?? '';
-    const href = (/\bhref\s*=\s*"([^"]*)"/i.exec(attrs)?.[1] ?? '').trim();
-    if (ctaHasDestination(href)) continue;
-    const className = (/\bclass\s*=\s*"([^"]*)"/i.exec(attrs)?.[1] ?? '').toLowerCase();
-    if (!/\b(cta|btn|button|nav-cta|action)\b/.test(className)) continue;
-    issues.push(
-      mkIssue(
-        'error',
-        'cta-no-destination',
-        'A call to action has an empty or placeholder href.',
-        `the CTA link "${(match[2] ?? '').replace(/<[^>]+>/g, ' ').trim().slice(0, 48)}"`,
-        'A button or link with no destination is a broken promise: the reader clicks and nothing happens. Either give it a real href or render a visible limitation state.',
-        `<a class="btn" href="#contact">Empezar</a>`,
-        'Give the CTA a real destination, or replace it with a visible limitation state (`<button aria-disabled="true">` plus an explanatory note).',
-      ),
-    );
+  // anchor, so it passes this check. Decks keep their own closing rules.
+  if (options.cta !== false) {
+    for (const match of html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi)) {
+      const attrs = match[1] ?? '';
+      const href = (/\bhref\s*=\s*"([^"]*)"/i.exec(attrs)?.[1] ?? '').trim();
+      if (ctaHasDestination(href)) continue;
+      const className = (/\bclass\s*=\s*"([^"]*)"/i.exec(attrs)?.[1] ?? '').toLowerCase();
+      if (!/\b(cta|btn|button|nav-cta|action)\b/.test(className)) continue;
+      issues.push(
+        mkIssue(
+          'error',
+          'cta-no-destination',
+          'A call to action has an empty or placeholder href.',
+          `the CTA link "${(match[2] ?? '').replace(/<[^>]+>/g, ' ').trim().slice(0, 48)}"`,
+          'A button or link with no destination is a broken promise: the reader clicks and nothing happens. Either give it a real href or render a visible limitation state.',
+          `<a class="btn" href="#contact">Empezar</a>`,
+          'Give the CTA a real destination, or replace it with a visible limitation state (`<button aria-disabled="true">` plus an explanatory note).',
+        ),
+      );
+    }
   }
   const visibleText = html
     .replace(/<script[\s\S]*?<\/script>/gi, ' ')
@@ -790,7 +797,12 @@ export function visionReport(css: string, preset: StylePreset): VisionReport {
   };
 }
 
-export function validateHtml(html: string, style: StyleSlug): RichValidationResult {
+export interface ValidateHtmlOptions {
+  /** Page CTA integrity; decks own their own closing rules. Defaults to true. */
+  cta?: boolean;
+}
+
+export function validateHtml(html: string, style: StyleSlug, options: ValidateHtmlOptions = {}): RichValidationResult {
   if (!isStyleSlug(style)) {
     throw new Error(`Unknown style "${style}". Use one of: ${styleSlugs.join(', ')}.`);
   }
@@ -837,7 +849,7 @@ export function validateHtml(html: string, style: StyleSlug): RichValidationResu
   const borders = issuesForBorders(css, preset);
   const shadows = issuesForShadows(css, preset);
   const motion = issuesForMotion(css);
-  const markup = issuesForMarkup(html);
+  const markup = issuesForMarkup(html, options);
   const contrast = issuesForContrast(preset);
   const headline = issuesForHeadline(html, css);
   const repetition = issuesForRepetition(html);
@@ -937,7 +949,7 @@ function slideHeading(block: string): string {
 }
 
 export function validateDeck(html: string, style: StyleSlug): RichValidationResult {
-  const base = validateHtml(html, style);
+  const base = validateHtml(html, style, { cta: false });
   const issues: RichIssue[] = [...base.issues];
   const blocks = html.match(/<section class="slide[\s\S]*?<\/section>/g) ?? [];
 
