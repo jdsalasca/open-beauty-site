@@ -27,6 +27,7 @@ export const planInputSchema = z.object({
   message: z.string().min(1).max(1000),
   entities: z.array(z.string().min(1).max(120)).max(12).optional(),
   actions: z.array(z.string().min(1).max(80)).max(12).optional(),
+  verbose: z.boolean().optional(),
 });
 
 export type PlanInput = z.infer<typeof planInputSchema>;
@@ -35,11 +36,13 @@ export interface PlanStoryboardItem {
   id: string;
   kind: 'section' | 'slide' | 'scene';
   purpose: string;
-  text: string;
-  draftText: string;
+  draftText: string | null;
   visual: string;
   entity: string;
   action?: string;
+  lengthNote?: string;
+  headlineSuggestion?: null;
+  clauseIndex?: number;
 }
 
 export interface PlanCapabilityCell {
@@ -63,6 +66,13 @@ export interface PlanCapabilityCheck {
   summary: { supported: number; fallback: number; unsupported: number };
 }
 
+export interface PlanSuggestedItem {
+  id: string;
+  label: string;
+  source: 'message';
+  confirmed: false;
+}
+
 export interface PlanResult {
   format: PlanFormat;
   style: string;
@@ -71,8 +81,20 @@ export interface PlanResult {
   message: string;
   entities: string[];
   actions: string[];
-  capabilities: PlanCapabilityCheck;
-  capabilityCheck: PlanCapabilityCheck;
+  suggested: {
+    entities: PlanSuggestedItem[];
+    actions: PlanSuggestedItem[];
+  };
+  suggestedEntities: PlanSuggestedItem[];
+  suggestedActions: PlanSuggestedItem[];
+  capabilities: Omit<PlanCapabilityCheck, 'primitives' | 'summary'> & {
+    supportedPrimitives: string[];
+    fallbackPrimitives: string[];
+    unsupportedAspects: string[];
+    reasons: string[];
+    primitives?: PlanCapabilityCell[];
+    summary?: { supported: number; fallback: number; unsupported: number };
+  };
   artDirection: {
     intent: string;
     suitableFor: string[];
@@ -89,12 +111,8 @@ export interface PlanResult {
     warnings: string[];
   };
   textLengthGuidelines: string[];
-  recommendedNextCommand: string;
   nextCommand: string;
-  command: string;
   brief: Record<string, unknown>;
-  briefSkeleton: Record<string, unknown>;
-  skeleton: Record<string, unknown>;
   missing: string[];
   todo: string[];
 }

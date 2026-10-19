@@ -147,7 +147,7 @@ const COMMAND_HELP: Record<string, CommandHelpEntry> = {
   },
   plan: {
     summary: 'Plan an artifact without rendering: capabilities, storyboard, lint warnings and brief skeleton.',
-    usage: 'beauty plan --format web|deck|gif --style <s> --audience "..." --purpose "..." --message "..." [--entities "a,b"] [--actions "x,y"] [--brief plan-input.json]',
+    usage: 'beauty plan --format web|deck|gif --style <s> --audience "..." --purpose "..." --message "..." [--entities "a,b"] [--actions "x,y"] [--brief plan-input.json] [--verbose]',
     options: [
       '  --format web|deck|gif  Artifact format to plan',
       '  --style <s>            One of the thirteen styles',
@@ -158,8 +158,9 @@ const COMMAND_HELP: Record<string, CommandHelpEntry> = {
       '  --actions "x,y"       Comma-separated actions/transitions',
       '  --brief path          Read the plan input JSON from a file or stdin',
       '  --out path            Where to write the plan JSON (default: stdout)',
+      '  --verbose             Include the full capability cell list',
     ],
-    example: 'beauty plan --format gif --style papercraft --audience "Producto" --purpose "Explicar validación" --message "Una guía duplicada se detecta y se rechaza." --entities "guía,fila" --actions "detectar,rechazar"',
+    example: 'beauty plan --format gif --style papercraft --audience "Producto" --purpose "Explicar validaciï¿½n" --message "Una guï¿½a duplicada se detecta y se rechaza." --entities "guï¿½a,fila" --actions "detectar,rechazar"',
   },
   gallery: {
     summary: 'Build a self-contained review or before/after comparison gallery.',
@@ -780,6 +781,7 @@ async function main(): Promise<void> {
       if (entitiesFlag) raw.entities = entitiesFlag.split(',').map((value) => value.trim()).filter(Boolean);
       const actionsFlag = stringFlag(flags, 'actions');
       if (actionsFlag) raw.actions = actionsFlag.split(',').map((value) => value.trim()).filter(Boolean);
+      if (booleanFlag(flags, 'verbose')) raw.verbose = true;
       const parsed = planInputSchema.safeParse(raw);
       if (!parsed.success) throw new Error(`Invalid plan input: ${parsed.error.issues.map((issue) => `${issue.path.join('.')}: ${issue.message}`).join('; ')}`);
       const result = planArtifact(parsed.data);
