@@ -5,6 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import { distCliPath, distFixMessage } from '../src/cli.js';
+import { renderPage } from '../src/page/index.js';
 
 const root = process.cwd();
 const cli = distCliPath();
@@ -132,7 +133,65 @@ test('beauty doctor reports dist, node, fonts, canvas and playwright with fixes'
   for (const token of ['dist/cli.js', 'node', 'fonts', 'canvas', 'playwright']) {
     assert.ok(lower.includes(token), `doctor is missing "${token}"`);
   }
-  assert.match(result.stdout, /fix:/i, 'doctor does not print a one-line fix');
+  if (/playwright: found at/i.test(result.stdout)) {
+    assert.match(result.stdout, /\((env|project|global|sibling)\)/, 'doctor must name where Playwright was found');
+  } else {
+    assert.match(result.stdout, /fix:/i, 'doctor does not print a one-line install fix when Playwright is missing');
+  }
+});
+
+test('validate --strict exits non-zero below A and zero on an A page', async () => {
+  const dir = mkdtempSync(path.join(os.tmpdir(), 'beauty-strict-'));
+  const body = 'Publicar una lectura común cada viernes con el equipo completo.';
+  const bPage = path.join(dir, 'b.html');
+  writeFileSync(
+    bPage,
+    renderPage('nature', {
+      title: 'Repetición',
+      locale: 'es',
+      sections: [
+        { title: 'Uno', body },
+        { title: 'Dos', body },
+        { title: 'Tres', body },
+      ],
+    }),
+    'utf8',
+  );
+  const strict = await runCli(['validate', bPage, '--style', 'nature', '--strict']);
+  assert.equal(strict.code, 1, `strict should fail a B page: ${strict.stdout}`);
+  assert.match(strict.stdout, /B · 94\/100/);
+  assert.ok(strict.stdout.includes('repeated-filler'));
+
+  const loose = await runCli(['validate', bPage, '--style', 'nature']);
+  assert.equal(loose.code, 0, 'without --strict a B page still exits 0');
+
+  const aPage = path.join(dir, 'a.html');
+  writeFileSync(
+    aPage,
+    renderPage('nature', {
+      title: 'Limpia',
+      locale: 'es',
+      sections: [
+        { title: 'Uno', body: 'Publicar una lectura común cada viernes con el equipo completo.' },
+        { title: 'Dos', body: 'Rotar el rol de estación móvil entre las dos sedes del proyecto.' },
+        { title: 'Tres', body: 'Cerrar los acuerdos por escrito antes del viernes siguiente.' },
+      ],
+    }),
+    'utf8',
+  );
+  const ok = await runCli(['validate', aPage, '--style', 'nature', '--strict']);
+  assert.equal(ok.code, 0, `strict should pass an A page: ${ok.stdout}`);
+
+  const fixed = await runCli(['fix', bPage, '--style', 'nature', '--out', path.join(dir, 'fixed.html'), '--strict']);
+  assert.equal(fixed.code, 1, 'fix --strict must fail when the repaired file is still B');
+});
+
+test('validate --help documents the exit codes', async () => {
+  const result = await runCli(['validate', '--help']);
+  assert.equal(result.code, 0, result.stderr);
+  assert.match(result.stdout, /Exit codes: 0 ok/);
+  assert.ok(result.stdout.includes('--visual'));
+  assert.ok(result.stdout.includes('--shots'));
 });
 
 test('the prepare guard is a no-op when dist is already built', async () => {
