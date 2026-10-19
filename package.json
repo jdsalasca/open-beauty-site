@@ -65,6 +65,7 @@
     "gallery:compare": "tsx scripts/gallery-compare.ts",
     "capabilities:matrix": "tsx scripts/capabilities-matrix.ts",
     "docs:build": "tsx scripts/build-docs.ts",
+    "art-direction:docs": "tsx scripts/art-direction-docs.ts",
     "e2e:colmena": "tsx scripts/e2e-colmena.ts",
     "check": "tsc -p tsconfig.json --noEmit",
     "check:scripts": "tsc -p tsconfig.scripts.json --noEmit",
