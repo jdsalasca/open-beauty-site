@@ -105,6 +105,7 @@ export const STYLE_DITHER: Record<StyleSlug, GifDitherMode> = {
 const DEFAULT_DITHER: GifDitherMode = 'none';
 const DEFAULT_PALETTE = 128;
 const ORDERED_SPREAD = 34;
+const FS_TILE = 64;
 
 const BAYER8 = [
   0, 32, 8, 40, 2, 34, 10, 42,
@@ -183,43 +184,51 @@ export function mapIndices(
     return out;
   }
   const buffer = new Float32Array(data);
-  for (let y = 0; y < h; y += 1) {
-    for (let x = 0; x < w; x += 1) {
-      const o = (y * w + x) * 4;
-      const r = buffer[o]!;
-      const g = buffer[o + 1]!;
-      const b = buffer[o + 2]!;
-      // Diffused error can push channels outside 0..255; clamp before the LUT.
-      const index = lut[
-        ((clamp(r, 0, 255) >> 3) << 10) | ((clamp(g, 0, 255) >> 3) << 5) | (clamp(b, 0, 255) >> 3)
-      ]!;
-      const color = palette[index]!;
-      out[y * w + x] = index;
-      const er = r - color[0]!;
-      const eg = g - color[1]!;
-      const eb = b - color[2]!;
-      if (x + 1 < w) {
-        const p = o + 4;
-        buffer[p] = buffer[p]! + (er * 7) / 16;
-        buffer[p + 1] = buffer[p + 1]! + (eg * 7) / 16;
-        buffer[p + 2] = buffer[p + 2]! + (eb * 7) / 16;
-      }
-      if (y + 1 < h) {
-        const below = o + w * 4;
-        if (x > 0) {
-          const p = below - 4;
-          buffer[p] = buffer[p]! + (er * 3) / 16;
-          buffer[p + 1] = buffer[p + 1]! + (eg * 3) / 16;
-          buffer[p + 2] = buffer[p + 2]! + (eb * 3) / 16;
-        }
-        buffer[below] = buffer[below]! + (er * 5) / 16;
-        buffer[below + 1] = buffer[below + 1]! + (eg * 5) / 16;
-        buffer[below + 2] = buffer[below + 2]! + (eb * 5) / 16;
-        if (x + 1 < w) {
-          const p = below + 4;
-          buffer[p] = buffer[p]! + er / 16;
-          buffer[p + 1] = buffer[p + 1]! + eg / 16;
-          buffer[p + 2] = buffer[p + 2]! + eb / 16;
+  // Error diffusion runs in independent tiles: a change inside one tile never
+  // ripples into static neighbours, so frame deltas stay small and local.
+  for (let ty = 0; ty < h; ty += FS_TILE) {
+    const yEnd = Math.min(ty + FS_TILE, h);
+    for (let tx = 0; tx < w; tx += FS_TILE) {
+      const xEnd = Math.min(tx + FS_TILE, w);
+      for (let y = ty; y < yEnd; y += 1) {
+        for (let x = tx; x < xEnd; x += 1) {
+          const o = (y * w + x) * 4;
+          const r = buffer[o]!;
+          const g = buffer[o + 1]!;
+          const b = buffer[o + 2]!;
+          // Diffused error can push channels outside 0..255; clamp before the LUT.
+          const index = lut[
+            ((clamp(r, 0, 255) >> 3) << 10) | ((clamp(g, 0, 255) >> 3) << 5) | ((clamp(b, 0, 255) >> 3))
+          ]!;
+          const color = palette[index]!;
+          out[y * w + x] = index;
+          const er = r - color[0]!;
+          const eg = g - color[1]!;
+          const eb = b - color[2]!;
+          if (x + 1 < xEnd) {
+            const p = o + 4;
+            buffer[p] = buffer[p]! + (er * 7) / 16;
+            buffer[p + 1] = buffer[p + 1]! + (eg * 7) / 16;
+            buffer[p + 2] = buffer[p + 2]! + (eb * 7) / 16;
+          }
+          if (y + 1 < yEnd) {
+            const below = o + w * 4;
+            if (x > tx) {
+              const p = below - 4;
+              buffer[p] = buffer[p]! + (er * 3) / 16;
+              buffer[p + 1] = buffer[p + 1]! + (eg * 3) / 16;
+              buffer[p + 2] = buffer[p + 2]! + (eb * 3) / 16;
+            }
+            buffer[below] = buffer[below]! + (er * 5) / 16;
+            buffer[below + 1] = buffer[below + 1]! + (eg * 5) / 16;
+            buffer[below + 2] = buffer[below + 2]! + (eb * 5) / 16;
+            if (x + 1 < xEnd) {
+              const p = below + 4;
+              buffer[p] = buffer[p]! + er / 16;
+              buffer[p + 1] = buffer[p + 1]! + eg / 16;
+              buffer[p + 2] = buffer[p + 2]! + eb / 16;
+            }
+          }
         }
       }
     }
@@ -1437,9 +1446,9 @@ function resolveGif(options: GifQualityOptions, defaultDither: GifDitherMode): R
   if (requestedColors !== undefined && !Number.isFinite(requestedColors)) {
     note(`palette size ${String(requestedColors)} is not a valid number; used ${DEFAULT_PALETTE}`);
   }
-  const colors = clamp(colorValue, 16, 256);
+  const colors = clamp(colorValue, 16, 255);
   if (colors !== colorValue) {
-    note(`palette size ${colorValue} clamped to ${colors} (allowed 16–256)`);
+    note(`palette size ${colorValue} clamped to ${colors} (allowed 16–255, one slot is reserved for frame deltas)`);
   }
 
   const requestedDither = options.dither;
@@ -1482,19 +1491,31 @@ export async function createGif(style: StyleSlug, options: GifQualityOptions, ou
   }
   const palette = globalPalette(samples, colors);
   const lut = buildPaletteLut(palette);
+  // Reserve the slot right after the quantised colours for frame deltas: later
+  // frames mark unchanged pixels with it so LZW stores only what really moved.
+  // The LUT is built first, so the transparent slot is never picked for a pixel.
+  const transparentIndex = palette.length;
+  palette.push([0, 0, 0]);
 
   const gif = GIFEncoder();
+  let previous: Uint8Array | undefined;
   for (let frame = 0; frame < frames; frame += 1) {
     // t never reaches 1: the last frame sits one step before the first, so the
     // loop wraps seamlessly instead of repeating the opening frame.
     const t = frame / frames;
     const data = drawGifFrame(style, request, t, width, height);
     const index = mapIndices(data, palette, lut, width, height, ditherMode);
-    gif.writeFrame(index, width, height, {
-      palette,
-      delay: Math.round(1000 / resolved.fps),
-      repeat: frame === 0 ? 0 : undefined,
-    });
+    const delay = Math.round(1000 / resolved.fps);
+    if (!previous) {
+      gif.writeFrame(index, width, height, { palette, delay, repeat: 0 });
+    } else {
+      const delta = new Uint8Array(index.length);
+      for (let i = 0; i < index.length; i += 1) {
+        delta[i] = index[i] === previous[i] ? transparentIndex : index[i]!;
+      }
+      gif.writeFrame(delta, width, height, { delay, transparent: true, transparentIndex, dispose: 1 });
+    }
+    previous = index;
   }
 
   gif.finish();

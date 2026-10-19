@@ -13,6 +13,67 @@ async function tempDir(): Promise<string> {
   return mkdtemp(path.join(os.tmpdir(), 'beauty-gif-test-'));
 }
 
+interface FrameControl {
+  transparent: boolean;
+  disposal: number;
+}
+
+/** Minimal GIF89a scanner: returns frame count and one control record per frame. */
+function scanGif(bytes: Uint8Array): { frames: number; controls: FrameControl[] } {
+  let offset = 6;
+  const screenPacked = bytes[offset + 4]!;
+  offset += 7;
+  if (screenPacked & 0x80) offset += 3 * 2 ** ((screenPacked & 0x07) + 1);
+  const controls: FrameControl[] = [];
+  let frames = 0;
+  while (offset < bytes.length) {
+    const marker = bytes[offset]!;
+    if (marker === 0x3b) break;
+    if (marker === 0x21) {
+      const label = bytes[offset + 1]!;
+      offset += 2;
+      if (label === 0xf9) {
+        const size = bytes[offset]!;
+        const header = bytes[offset + 1]!;
+        controls.push({ transparent: (header & 1) === 1, disposal: (header >> 2) & 7 });
+        offset += 1 + size;
+      }
+      while (bytes[offset] !== 0) offset += 1 + bytes[offset]!;
+      offset += 1;
+    } else if (marker === 0x2c) {
+      frames += 1;
+      const descriptorPacked = bytes[offset + 9]!;
+      offset += 10;
+      if (descriptorPacked & 0x80) offset += 3 * 2 ** ((descriptorPacked & 0x07) + 1);
+      offset += 1;
+      while (bytes[offset] !== 0) offset += 1 + bytes[offset]!;
+      offset += 1;
+    } else {
+      throw new Error(`unknown GIF block 0x${marker.toString(16)} at ${offset}`);
+    }
+  }
+  return { frames, controls };
+}
+
+test('unchanged pixels are transparent in later frames so LZW can compress the delta', async () => {
+  const dir = await tempDir();
+  try {
+    const target = path.join(dir, 'delta.gif');
+    const result = await createGif('brutalist', { ...base, template: 'loop' }, target);
+    const { frames, controls } = scanGif(await readFile(target));
+    assert.equal(frames, result.frames, 'every frame is encoded');
+    assert.equal(controls.length, result.frames, 'every frame carries a graphic control block');
+    assert.equal(controls[0]!.transparent, false, 'first frame is a full opaque keyframe');
+    assert.equal(controls[0]!.disposal, 0, 'keyframe does not dispose');
+    for (const control of controls.slice(1)) {
+      assert.equal(control.transparent, true, 'delta frames mark unchanged pixels transparent');
+      assert.equal(control.disposal, 1, 'delta frames keep the previous frame');
+    }
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+});
+
 test('GIF encoding is deterministic: same input, same bytes', async () => {
   const dir = await tempDir();
   try {
@@ -146,14 +207,29 @@ test('flat-colour styles stay crisp: brutalist uses no dithering', async () => {
   }
 });
 
-test('GIFs stay reasonably sized at default settings', async () => {
+test('GIFs stay reasonably sized at 480x480', async () => {
   const dir = await tempDir();
   try {
     for (const style of ['renaissance', 'vaporwave', 'memphis'] as const) {
       const result = await createGif(style, { text: 'Luz y papel', subtitle: 'Medición', width: 480, height: 480, fps: 20, duration: 2, seed: 7 }, path.join(dir, `${style}.gif`));
-      // Error-diffused gradients trade bytes for smoothness: renaissance
-      // (floyd-steinberg) measures ~2.0 MB at these settings, flat styles ~0.25 MB.
-      assert.ok(result.bytes < 2_500_000, `${style}: ${(result.bytes / 1024).toFixed(0)} KB exceeds the 2.5 MB budget`);
+      // Measured with delta frames + tiled error diffusion: renaissance ~370 KB,
+      // ordered styles ~100 KB; 1 MB leaves room for small art changes.
+      assert.ok(result.bytes < 1_000_000, `${style}: ${(result.bytes / 1024).toFixed(0)} KB exceeds the 1 MB budget`);
+    }
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+});
+
+test('no style exceeds 2 MB with the default CLI settings (800x800, 24 fps, 2.4 s)', async () => {
+  const dir = await tempDir();
+  try {
+    for (const style of styleSlugs) {
+      const target = path.join(dir, `${style}.gif`);
+      const result = await createGif(style, { text: 'Plan del sprint' }, target);
+      assert.equal(result.width, 800, `${style}: default width`);
+      assert.equal(result.height, 800, `${style}: default height`);
+      assert.ok(result.bytes < 2_000_000, `${style}: ${(result.bytes / 1024).toFixed(0)} KB exceeds the 2 MB budget`);
     }
   } finally {
     await rm(dir, { recursive: true, force: true });
