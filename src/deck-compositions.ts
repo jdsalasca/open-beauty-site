@@ -295,6 +295,7 @@ export const COMPOSITION_CSS = `/* Purpose compositions: one focus, real structu
 .deck .comp-cover-mark i{width:34%;height:34%;border-radius:50%;background:var(--accent);opacity:.9}
 .deck .comp-cover-mark span{position:absolute;right:0;bottom:2%;font-family:var(--display-font,inherit);font-size:clamp(34px,5vw,72px);color:var(--accent-text);opacity:.5}
 .deck .comp-split{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(20px,4vw,64px);align-items:center}
+.deck .comp.mirror .comp-split{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr)}
 .deck .comp.mirror .comp-split>.comp-main{order:2}
 .deck .comp.mirror .comp-split>.comp-side{order:1}
 .deck .comp-signals{list-style:none;margin:var(--comp-gap) 0 0;padding:0;display:flex;flex-direction:column;gap:12px}
@@ -324,6 +325,7 @@ export const COMPOSITION_CSS = `/* Purpose compositions: one focus, real structu
 .deck .comp-step h3{font-size:clamp(14px,1.35vw,18px);line-height:1.2;margin:0 0 6px;letter-spacing:-.01em}
 .deck .comp-step p{font-size:13px;line-height:1.4;color:var(--muted);margin:0}
 .deck .comp-example{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr);gap:clamp(18px,3vw,42px);align-items:center}
+.deck .comp.mirror .comp-example{grid-template-columns:minmax(0,.65fr) minmax(0,1.35fr)}
 .deck .comp.mirror .comp-example .comp-example-figure{order:2}
 .deck .comp.mirror .comp-example .comp-example-note{order:1}
 .deck .comp-example-figure{margin:0;min-width:0}
