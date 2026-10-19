@@ -113,7 +113,7 @@ El CLI y MCP son la fuente de verdad; los comandos exactos están en `skills/bea
 
 - **Accesibilidad**: `prefers-reduced-motion`, landmarks, `alt`, contraste de los pares de tokens que llevan texto y controles de 44 px en decks.
 - **Determinismo**: la misma brief y estilo producen el mismo HTML (salvo timestamp) y los mismos frames; los ornamentos usan PRNG sembrado.
-- **Pruebas**: `pnpm test` (155/155) y `pnpm check`; el validador exige **A/100 y visión 4/4**.
+- **Pruebas**: `pnpm test` y `pnpm check` (todo en verde); el validador exige **A/100 y visión 4/4**.
 
 
 ## Trece maneras de mirar

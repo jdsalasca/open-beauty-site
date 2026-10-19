@@ -200,6 +200,21 @@ test('beauty make accepts --idea-file', async () => {
   assert.ok(existsSync(out), 'make with --idea-file did not write the file');
 });
 
+test('beauty make honours --title and --tagline over the derived ones', async () => {
+  const dir = mkdtempSync(path.join(os.tmpdir(), 'beauty-cli-title-'));
+  const out = path.join(dir, 'titled.html');
+  const result = await runCli([
+    'make', 'page', '--style', 'papercraft', '--locale', 'es',
+    '--idea', 'Landing editorial en español para el piloto Noche polinizadora: caminatas nocturnas vecinales',
+    '--title', 'Noche polinizadora', '--tagline', 'Caminatas vecinales con luz baja', '--out', out,
+  ]);
+  assert.equal(result.code, 0, result.stderr);
+  const html = readFileSync(out, 'utf8');
+  const h1 = /<h1[^>]*>([\s\S]*?)<\/h1>/.exec(html)?.[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+  assert.equal(h1, 'Noche polinizadora');
+  assert.ok(html.includes('Caminatas vecinales con luz baja'), 'tagline was lost');
+});
+
 test('help for make and sprint documents the stdin and file inputs', async () => {
   const make = await runCli(['make', '--help']);
   assert.match(make.stdout, /--idea-file/);

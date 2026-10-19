@@ -47,6 +47,8 @@ const COMMAND_HELP: Record<string, CommandHelpEntry> = {
       '  --idea "..."       One sentence describing the artefact',
       '  --idea-file path   Read the idea from a file (avoids long command lines)',
       '  --locale es|en     Language of the generated copy',
+      '  --title "..."      Short headline (default: derived from the idea, at most 5 words)',
+      '  --tagline "..."    One-line tagline under the headline',
       '  --out path         Where to write the artefact',
     ],
     example: 'beauty make gif --style brutalist --idea "a poster for a night market"',
@@ -523,6 +525,8 @@ async function main(): Promise<void> {
         style,
         idea,
         locale: localeFlag === 'en' ? 'en' : localeFlag === 'es' ? 'es' : undefined,
+        title: stringFlag(flags, 'title'),
+        tagline: stringFlag(flags, 'tagline'),
         output: stringFlag(flags, 'out'),
       });
       console.log(result.summary);
