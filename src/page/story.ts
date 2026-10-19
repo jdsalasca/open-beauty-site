@@ -126,7 +126,7 @@ html{scroll-behavior:smooth}
 body.story-page .motion-toggle{right:auto;left:12px;bottom:12px}
 body.story-page{margin:0;background:var(--st-bg);color:var(--st-ink);font-family:'${preset.fonts.body}',sans-serif;font-family:var(--st-body);font-size:${type?.bodySize ?? '18px'};line-height:${type?.bodyLeading ?? '1.7'};-webkit-font-smoothing:antialiased}
 body.story-page a{color:inherit;text-decoration:none}
-.story-top{font-family:'${preset.fonts.mono}',monospace;position:fixed;inset:0 0 auto;z-index:50;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:14px clamp(18px,4vw,56px);border-bottom:var(--st-line) solid color-mix(in srgb,var(--st-ink) 24%,transparent);background:color-mix(in srgb,var(--st-bg) 88%,transparent);backdrop-filter:blur(10px);font-family:var(--st-mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--st-muted)}
+.story-top{font-family:'${preset.fonts.mono}',monospace;position:absolute;inset:0 0 auto;z-index:50;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:14px clamp(18px,4vw,56px);border-bottom:var(--st-line) solid color-mix(in srgb,var(--st-ink) 24%,transparent);background:color-mix(in srgb,var(--st-bg) 88%,transparent);backdrop-filter:blur(10px);font-family:var(--st-mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--st-muted)}
 .story-brand{color:var(--st-ink);font-weight:700;letter-spacing:.16em}.story-top p{margin:0}.story-top p span{color:var(--st-accent2)}
 .story-cover{min-height:100svh;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);align-items:center;gap:clamp(24px,5vw,82px);padding:clamp(110px,14vh,170px) clamp(18px,7vw,110px) clamp(50px,8vh,100px)}
 .story-kicker{margin:0 0 16px;font-family:var(--st-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--st-muted)}
@@ -144,6 +144,7 @@ body.story-page a{color:inherit;text-decoration:none}
 .story-chapter.is-reverse .story-chapter-head{order:2}.story-chapter.is-reverse .story-prose{order:1}
 .story-chapter h2{font-size:clamp(38px,5.6vw,88px);max-width:12ch}
 .story-prose{max-width:62ch;font-size:clamp(19px,1.35vw,22px);line-height:1.72}
+.story-prose p{overflow-wrap:normal;word-break:normal;hyphens:manual}
 .story-prose p{margin:0 0 1.3em}.story-prose .story-lede{font-size:1.18em;line-height:1.58;color:var(--st-ink)}
 .story-lede:first-letter{float:left;font-family:var(--st-display);font-size:4.1em;line-height:.78;padding:.08em .12em 0 0;color:var(--st-accent2)}
 .story-quote{grid-column:2;margin:28px 0 0;padding:24px 0 0;border-top:var(--st-rule) solid var(--st-accent)}

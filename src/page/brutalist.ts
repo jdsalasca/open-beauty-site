@@ -1,6 +1,7 @@
 import type { PageBrief, StylePreset } from '../types.js';
 import {
   arrowSvg,
+  attr,
   esc,
   labels,
   normalizeBrief,
@@ -105,7 +106,7 @@ export function renderBrutalist(input: Partial<PageBrief>, preset: StylePreset):
   </section>
 
   <div class="ticker" aria-hidden="true">
-    <div class="ticker-track"><span>${esc(ticker)}</span><span>${esc(ticker)}</span></div>
+    <div class="ticker-track"><span data-text="${attr(ticker)}"></span><span data-text="${attr(ticker)}"></span></div>
   </div>
 
   ${
@@ -209,6 +210,7 @@ h1 .hl{display:inline-block;background:var(--acid);padding:0 .08em;line-height:1
 .ticker{overflow:hidden;background:var(--acid);border-bottom:3px solid var(--ink);height:52px;display:flex;align-items:center}
 .ticker-track{display:flex;width:max-content;animation:marquee 22s linear infinite}
 .ticker-track span{font-family:'Archivo Black',sans-serif;font-size:17px;letter-spacing:.02em;text-transform:uppercase;padding-right:18px;white-space:nowrap}
+.ticker-track span:before{content:attr(data-text)}
 @keyframes marquee{to{transform:translateX(-50%)}}
 .manifesto{padding:clamp(60px,8vw,104px) clamp(24px,6vw,96px);border-bottom:3px solid var(--ink);display:grid;grid-template-columns:220px 1fr;gap:40px}
 .sec-head{display:flex;align-items:flex-start;gap:14px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding-top:8px}
