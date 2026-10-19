@@ -109,7 +109,8 @@ test('art direction docs have no drift', () => {
   for (const slug of styleSlugs) {
     const expected = artDirectionMarkdown(slug);
     const filePath = path.join('docs', 'art-direction', `${slug}.md`);
-    const actual = readFileSync(filePath, 'utf8');
-    assert.equal(actual, expected, `${slug} doc drift`);
+    // Git on Windows may check the file out with CRLF; the content, not the line ending, is what must not drift.
+    const actual = readFileSync(filePath, 'utf8').replace(/\r\n/g, '\n');
+    assert.equal(actual, expected.replace(/\r\n/g, '\n'), `${slug} doc drift`);
   }
 });
