@@ -667,12 +667,12 @@ QUALITY BAR
     {
       title: 'Create a looping GIF',
       description:
-        'Renders an animated GIF with the same editorial system: title reveal, loop or poster. Text should be short (2–6 words).',
+        'Renders an animated GIF with the same editorial system. Every template opens on the composed poster frame; title and loop cycle an eased arc. Text should be short (2–6 words).',
       inputSchema: {
         style: styleEnum,
         text: z.string().min(1).max(48).describe('Short headline for the GIF.'),
         subtitle: z.string().max(64).optional().describe('Small caption below the title.'),
-        template: z.enum(['title', 'loop', 'poster']).optional().describe('title = reveal, loop = seamless marquee/float, poster = ambient shapes.'),
+        template: z.enum(['title', 'loop', 'poster']).optional().describe('title/loop = seamless eased loop that starts composed; poster = static composed frame.'),
         width: z.number().int().min(240).max(1200).optional(),
         height: z.number().int().min(240).max(1200).optional(),
         fps: z.number().int().min(8).max(30).optional(),

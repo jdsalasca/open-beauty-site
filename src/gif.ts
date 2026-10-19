@@ -20,10 +20,11 @@ interface FrameEnv {
   preset: StylePreset;
   text: string;
   subtitle?: string;
-  template: Template;
+  /** Loop position, 0..1. 'poster' frames are frozen at 0. */
   t: number;
+  /** Eased arc derived from `t`: 0 at both ends, 1 mid-loop (see loopPhase). */
+  phase: number;
   seed: number;
-  maxxing: boolean;
 }
 
 interface FontSpec {
@@ -45,40 +46,14 @@ function clamp(value: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, value));
 }
 
-function lerp(a: number, b: number, t: number): number {
-  return a + (b - a) * t;
-}
-
-function easeOutCubic(t: number): number {
-  return 1 - (1 - clamp(t, 0, 1)) ** 3;
-}
-
-function easeOutQuint(t: number): number {
-  return 1 - (1 - clamp(t, 0, 1)) ** 5;
-}
-
-function easeOutQuad(t: number): number {
-  return 1 - (1 - clamp(t, 0, 1)) ** 2;
-}
-
-function easeInOutCubic(t: number): number {
-  const value = clamp(t, 0, 1);
-  return value < 0.5 ? 4 * value * value * value : 1 - (-2 * value + 2) ** 3 / 2;
-}
-
-function easeOutBack(t: number): number {
-  const c1 = 1.70158;
-  const c3 = c1 + 1;
-  return 1 + c3 * (clamp(t, 0, 1) - 1) ** 3 + c1 * (clamp(t, 0, 1) - 1) ** 2;
-}
-
 /**
- * Progress (0..1) for item `index` of `count`: each item runs for `span` of the
- * timeline and items are spaced evenly, so entrances never all fire at once.
+ * Eased, near-symmetric arc over one loop: 0 at t=0 and t=1, 1 at the midpoint,
+ * with zero velocity at both ends. Every GIF therefore opens on the fully
+ * composed poster frame (t=0) and eases back into it, so the restart of the
+ * loop is imperceptible while the middle of the cycle carries the motion.
  */
-function stagger(t: number, index: number, count: number, span = 0.6): number {
-  const step = count > 1 ? (1 - span) / (count - 1) : 0;
-  return clamp((t - index * step) / span, 0, 1);
+function loopPhase(t: number): number {
+  return 0.5 - 0.5 * Math.cos(TAU * clamp(t, 0, 1));
 }
 
 /* ------------------------------------------------------------------ */
@@ -480,7 +455,7 @@ function drawSun(ctx: SKRSContext2D, x: number, y: number, radius: number, rotat
 /* ------------------------------------------------------------------ */
 
 function frameRenaissance(env: FrameEnv): void {
-  const { ctx, w, h, preset, text, subtitle, template, t, seed } = env;
+  const { ctx, w, h, preset, text, subtitle, t, phase, seed } = env;
   const p = preset.palette;
   const s = Math.min(w, h);
   const rng = mulberry32(seed * 31 + 7);
@@ -566,9 +541,10 @@ function frameRenaissance(env: FrameEnv): void {
   archPath();
   ctx.stroke();
 
-  const reveal = template === 'title' ? easeInOutCubic(clamp(t / 0.55, 0, 1)) : 1;
-  const sunRotation = template === 'loop' ? t * TAU : 0.18 + reveal * 0.15;
-  drawSun(ctx, w * 0.5, h * 0.3, s * 0.07, sunRotation, rgba(p.accent, template === 'loop' ? 0.6 : 0.55 + reveal * 0.25), Math.max(1, s * 0.0022));
+  // A full turn per loop: the 16-ray sun maps onto itself, so t=0 and t=1
+  // match exactly and the rotation keeps a constant, seamless velocity.
+  const sunRotation = 0.18 + t * TAU;
+  drawSun(ctx, w * 0.5, h * 0.3, s * 0.07, sunRotation, rgba(p.accent, 0.55 + phase * 0.25), Math.max(1, s * 0.0022));
 
   const layout = layoutTitle(ctx, text, {
     maxWidth: w * 0.72,
@@ -584,25 +560,23 @@ function frameRenaissance(env: FrameEnv): void {
   const firstBaseline = centerY - blockHeight / 2 + layout.size * 0.78;
 
   ctx.save();
-  ctx.globalAlpha = template === 'title' ? reveal : 1;
   drawTitleLines(
     ctx,
     layout.lines,
     w / 2,
-    firstBaseline + (template === 'title' ? (1 - reveal) * s * 0.02 : 0),
+    firstBaseline,
     layout.lineHeight,
     { family: titleFontFamily, size: layout.size, weight: 400, color: p.ink },
     { color: p.accent2, italic: true },
   );
   ctx.restore();
 
-  const ruleWidth = s * 0.19 * (template === 'loop' ? 0.85 + Math.sin(t * TAU) * 0.08 : reveal);
+  const ruleWidth = s * 0.19 * (1 - 0.15 * phase);
   const ruleY = firstBaseline + blockHeight + s * 0.035;
   ctx.fillStyle = p.accent;
   ctx.fillRect(w / 2 - ruleWidth / 2, ruleY, ruleWidth, Math.max(1, s * 0.0022));
 
   if (subtitle) {
-    ctx.globalAlpha = template === 'title' ? reveal : 1;
     drawTracked(
       ctx,
       subtitle.toUpperCase(),
@@ -611,7 +585,6 @@ function frameRenaissance(env: FrameEnv): void {
       { family: titleFontFamily, size: s * 0.024, weight: 600, color: p.muted },
       s * 0.006,
     );
-    ctx.globalAlpha = 1;
   }
 
   ctx.save();
@@ -634,10 +607,9 @@ function frameRenaissance(env: FrameEnv): void {
 /* ------------------------------------------------------------------ */
 
 function frameBrutalist(env: FrameEnv): void {
-  const { ctx, w, h, preset, text, subtitle, template, t, seed } = env;
+  const { ctx, w, h, preset, text, subtitle, t } = env;
   const p = preset.palette;
   const s = Math.min(w, h);
-  const rng = mulberry32(seed * 17 + 3);
 
   ctx.fillStyle = p.bg;
   ctx.fillRect(0, 0, w, h);
@@ -692,7 +664,9 @@ function frameBrutalist(env: FrameEnv): void {
   const cx = w - panelW / 2;
   const cy = panelTop + (panelBottom - panelTop) / 2;
   const radius = Math.min(panelW, panelBottom - panelTop) * 0.27;
-  const rotation = template === 'loop' ? t * TAU * 0.5 : Math.PI / 8;
+  // Half a turn per loop: the square + crosshair figure is 180°-symmetric, so
+  // the wrap is exact while the figure keeps turning at a constant speed.
+  const rotation = Math.PI / 8 + t * Math.PI;
 
   ctx.save();
   ctx.translate(cx, cy);
@@ -738,25 +712,15 @@ function frameBrutalist(env: FrameEnv): void {
     lineHeight: 0.84,
   });
   const blockHeight = layout.lines.length * layout.lineHeight;
-  const firstBaseline = h * 0.5 - blockHeight / 2 + layout.size * 0.8 + (template === 'title' ? (1 - easeOutQuint(t / 0.5)) * s * 0.04 : 0);
+  const firstBaseline = h * 0.5 - blockHeight / 2 + layout.size * 0.8;
 
   const lastLine = layout.lines[layout.lines.length - 1] ?? '';
   const lastWidth = widthOf(ctx, lastLine, { family: 'Archivo Black', size: layout.size, color: p.ink });
-  const highlightProgress = template === 'title' ? easeOutQuint(clamp((t - 0.08) / 0.45, 0, 1)) : 1;
   const highlightH = layout.lineHeight * 1.02;
   const highlightY = firstBaseline + (layout.lines.length - 1) * layout.lineHeight - layout.size * 0.78;
-  ctx.save();
-  ctx.beginPath();
-  ctx.rect(titleZoneW / 2 - lastWidth / 2 - s * 0.012, highlightY, (lastWidth + s * 0.024) * clamp(highlightProgress, 0, 1), highlightH);
-  ctx.clip();
   ctx.fillStyle = p.accent;
   ctx.fillRect(titleZoneW / 2 - lastWidth / 2 - s * 0.012, highlightY, lastWidth + s * 0.024, highlightH);
-  ctx.restore();
 
-  ctx.save();
-  ctx.beginPath();
-  ctx.rect(0, firstBaseline - layout.size * 1.1, titleZoneW, (blockHeight + layout.size) * (template === 'title' ? easeOutCubic(clamp(t / 0.45 + 0.08, 0, 1)) : 1));
-  ctx.clip();
   drawTitleLines(
     ctx,
     layout.lines,
@@ -765,16 +729,14 @@ function frameBrutalist(env: FrameEnv): void {
     layout.lineHeight,
     { family: 'Archivo Black', size: layout.size, weight: 400, color: p.ink },
   );
-  ctx.restore();
 
   const lineY = firstBaseline + blockHeight + s * 0.012;
   const lineW = titleZoneW * 0.72;
-  const lineGrow = template === 'title' ? easeInOutCubic(t / 0.55) : 1;
   ctx.fillStyle = p.ink;
-  ctx.fillRect(titleZoneW * 0.5 - (lineW * lineGrow) / 2, lineY, lineW * lineGrow, Math.max(3, s * 0.006));
+  ctx.fillRect(titleZoneW * 0.5 - lineW / 2, lineY, lineW, Math.max(3, s * 0.006));
 
   const metaY = lineY + s * 0.05;
-  ctx.globalAlpha = template === 'title' ? clamp((t - 0.35) / 0.3, 0, 1) : 0.8;
+  ctx.globalAlpha = 0.8;
   drawTracked(
     ctx,
     'EDITORIAL / MOTION / OPEN SOURCE',
@@ -797,7 +759,9 @@ function frameBrutalist(env: FrameEnv): void {
   const chunk = `${text.toUpperCase()} ///`;
   const tickerFont: FontSpec = { family: 'Archivo Black', size: tickerH * 0.36, weight: 400, color: p.ink };
   const step = widthOf(ctx, chunk, tickerFont) + s * 0.035;
-  const offset = (template === 'loop' ? t * step * 2 : t * step * 0.6) % step;
+  // The ticker scrolls exactly one chunk per loop: a periodic offset, so the
+  // wrap and every other step move it by the same amount.
+  const offset = (t * step) % step;
   setFont(ctx, tickerFont);
   ctx.textAlign = 'left';
   let x = -offset;
@@ -813,7 +777,7 @@ function frameBrutalist(env: FrameEnv): void {
 /* ------------------------------------------------------------------ */
 
 function framePapercraft(env: FrameEnv): void {
-  const { ctx, w, h, preset, text, subtitle, template, t, seed } = env;
+  const { ctx, w, h, preset, text, subtitle, t, phase, seed } = env;
   const p = preset.palette;
   const s = Math.min(w, h);
   const rng = mulberry32(seed * 13 + 11);
@@ -822,7 +786,9 @@ function framePapercraft(env: FrameEnv): void {
   ctx.fillRect(0, 0, w, h);
   drawNoise(ctx, w, h, p.ink, 1200, 0.04, rng);
 
-  const sway = template === 'loop' ? Math.sin(t * TAU) : Math.sin(t * Math.PI);
+  // Main layers drift with the eased arc: out at the middle of the loop, back
+  // to the poster position at both ends.
+  const sway = phase;
   const rngShape = mulberry32(seed * 7 + 5);
 
   ctx.save();
@@ -834,7 +800,7 @@ function framePapercraft(env: FrameEnv): void {
   ctx.fill();
   ctx.restore();
 
-  drawSun(ctx, w * 0.82, h * 0.2, s * 0.075, template === 'loop' ? t * TAU * 0.5 : 0.3, p.accent, Math.max(2, s * 0.007));
+  drawSun(ctx, w * 0.82, h * 0.2, s * 0.075, t * TAU, p.accent, Math.max(2, s * 0.007));
 
   ctx.save();
   ctx.fillStyle = p.accent3;
@@ -864,15 +830,12 @@ function framePapercraft(env: FrameEnv): void {
   const cardH = h * 0.5;
   const cardCX = w * 0.5;
   const cardCY = h * 0.5;
-  const pop = template === 'title' ? easeOutBack(clamp(t / 0.5 + 0.09, 0, 1)) : 1;
-  const cardScale = lerp(0.9, 1, pop);
-  const bob = template === 'loop' ? Math.sin(t * TAU) * s * 0.008 : 0;
-  const angle = -0.035 + (template === 'loop' ? Math.sin(t * TAU) * 0.006 : 0);
+  const bob = phase * s * 0.008;
+  const angle = -0.035 + phase * 0.006;
 
   ctx.save();
   ctx.translate(cardCX, cardCY + bob);
   ctx.rotate(angle);
-  ctx.scale(cardScale, cardScale);
 
   // A second sheet peeks out behind the card: the paper layer is visible.
   ctx.fillStyle = rgba(p.accent2, 0.55);
@@ -914,7 +877,6 @@ function framePapercraft(env: FrameEnv): void {
   const blockHeight = layout.lines.length * layout.lineHeight;
   const titleTop = -cardH * 0.16 - blockHeight / 2 + layout.size * 0.78;
 
-  ctx.globalAlpha = pop;
   drawTitleLines(
     ctx,
     layout.lines,
@@ -943,7 +905,6 @@ function framePapercraft(env: FrameEnv): void {
       s * 0.004,
     );
   }
-  ctx.globalAlpha = 1;
   ctx.restore();
 
   const confettiRng = mulberry32(seed * 23 + 19);
@@ -951,19 +912,17 @@ function framePapercraft(env: FrameEnv): void {
     const baseX = confettiRng() * w;
     const baseY = confettiRng() * h;
     const size = s * (0.006 + confettiRng() * 0.008);
-    const appear = template === 'title' ? easeOutQuad(stagger(t, index, 18, 0.55)) : 1;
-    if (appear <= 0) continue;
     const drift = Math.sin(t * TAU + index) * s * 0.008;
     ctx.save();
-    ctx.globalAlpha = 0.5 * appear;
+    ctx.globalAlpha = 0.5;
     ctx.fillStyle = index % 3 === 0 ? p.accent : index % 3 === 1 ? p.accent2 : p.accent3;
-    ctx.translate(baseX + drift, baseY + (template === 'loop' ? Math.cos(t * TAU + index) * s * 0.004 : 0));
-    ctx.rotate(index * 0.7 + t * (template === 'loop' ? TAU : 0));
+    ctx.translate(baseX + drift, baseY + Math.cos(t * TAU + index) * s * 0.004);
+    ctx.rotate(index * 0.7 + t * TAU);
     if (index % 2 === 0) {
-      ctx.fillRect((-size / 2) * appear, (-size / 2) * appear, size * appear, size * appear);
+      ctx.fillRect(-size / 2, -size / 2, size, size);
     } else {
       ctx.beginPath();
-      ctx.arc(0, 0, (size / 2) * appear, 0, TAU);
+      ctx.arc(0, 0, size / 2, 0, TAU);
       ctx.fill();
     }
     ctx.restore();
@@ -971,11 +930,8 @@ function framePapercraft(env: FrameEnv): void {
 }
 
 function frameShowcase(env: FrameEnv): void {
-  const { ctx, w, h, preset: p, text, subtitle, template, t } = env;
+  const { ctx, w, h, preset: p, text, subtitle, t, phase } = env;
   const s = Math.min(w, h);
-  // Only the title reveal animates in; loop/poster frames keep the text steady
-  // so the first and last frames of a loop are identical.
-  const e = template === 'title' ? easeOutCubic(t) : 1;
   const family =
     p.slug === 'vaporwave'
       ? 'Space Mono'
@@ -1003,7 +959,8 @@ function frameShowcase(env: FrameEnv): void {
       const side = i % 2 ? 1 : -1;
       ctx.save();
       ctx.translate(w * (0.95 + side * 0.03), y);
-      ctx.rotate(side * -0.55);
+      // Leaves sway with the eased arc; sin(0 + i) is the poster pose.
+      ctx.rotate(side * -0.55 + Math.sin(phase * Math.PI + i) * 0.05);
       ctx.beginPath();
       ctx.ellipse(side * s * 0.1, 0, s * 0.12, s * 0.045, 0, 0, TAU);
       ctx.fill();
@@ -1035,11 +992,11 @@ function frameShowcase(env: FrameEnv): void {
     }
     ctx.fillStyle = rgba(p.palette.accent, 0.2);
     ctx.beginPath();
-    ctx.arc(w / 2, h / 2, s * 0.22, 0, TAU);
+    ctx.arc(w / 2, h / 2, s * 0.22 * (1 + phase * 0.05), 0, TAU);
     ctx.fill();
     ctx.strokeStyle = p.palette.accent;
     ctx.beginPath();
-    ctx.arc(w / 2, h / 2, s * 0.15, 0, TAU);
+    ctx.arc(w / 2, h / 2, s * 0.15 * (1 + phase * 0.05), 0, TAU);
     ctx.stroke();
     ctx.fillStyle = p.palette.accent;
     for (let i = 0; i < 4; i += 1) {
@@ -1052,7 +1009,8 @@ function frameShowcase(env: FrameEnv): void {
       for (let col = 0; col < 9; col += 1) {
         if ((row + col) % 3 === 0) continue;
         const x = s * 0.08 + col * s * 0.095;
-        const y = h - s * 0.3 + row * s * 0.045;
+        // The pictogram crowd bobs with the eased arc; the poster pose is sin(i).
+        const y = h - s * 0.3 + row * s * 0.045 + Math.sin(phase * Math.PI + col * 0.6 + row * 0.35) * s * 0.005;
         ctx.beginPath();
         ctx.arc(x, y, s * 0.009, 0, TAU);
         ctx.fill();
@@ -1060,10 +1018,11 @@ function frameShowcase(env: FrameEnv): void {
       }
     }
     ctx.strokeStyle = rgba(p.palette.ink, 0.45);
+    const ruleDrift = Math.sin(phase * Math.PI) * s * 0.01;
     for (let i = 0; i < 7; i += 1) {
       ctx.beginPath();
-      ctx.moveTo(s * 0.06, s * 0.12 + i * s * 0.035);
-      ctx.lineTo(w - s * 0.06, s * 0.12 + i * s * 0.035);
+      ctx.moveTo(s * 0.06 + ruleDrift, s * 0.12 + i * s * 0.035);
+      ctx.lineTo(w - s * 0.06 + ruleDrift, s * 0.12 + i * s * 0.035);
       ctx.stroke();
     }
   } else if (p.slug === 'opart') {
@@ -1071,7 +1030,7 @@ function frameShowcase(env: FrameEnv): void {
     ctx.lineWidth = Math.max(1, s * 0.002);
     for (let i = 1; i < 14; i += 1) {
       ctx.beginPath();
-      ctx.arc(w / 2, h / 2, i * s * 0.026 + Math.sin(t * TAU + i) * s * 0.004, 0, TAU);
+      ctx.arc(w / 2, h / 2, i * s * 0.026 + Math.sin(phase * Math.PI + i) * s * 0.004, 0, TAU);
       ctx.stroke();
     }
     ctx.fillStyle = p.palette.accent;
@@ -1088,7 +1047,7 @@ function frameShowcase(env: FrameEnv): void {
     for (let i = 0; i < 5; i += 1) {
       ctx.beginPath();
       for (let x = -20; x <= w + 20; x += 12) {
-        const y = h * (0.56 + i * 0.07) + Math.sin(x / 90 + i + t * TAU) * s * 0.025;
+        const y = h * (0.56 + i * 0.07) + Math.sin(x / 90 + i + phase * TAU) * s * 0.025;
         if (x === -20) ctx.moveTo(x, y);
         else ctx.lineTo(x, y);
       }
@@ -1101,27 +1060,28 @@ function frameShowcase(env: FrameEnv): void {
       ctx.fill();
     }
   } else if (p.slug === 'bestiary') {
+    const breathe = 1 + Math.sin(phase * Math.PI) * 0.03;
     ctx.strokeStyle = p.palette.accent;
     ctx.lineWidth = Math.max(1, s * 0.002);
     ctx.strokeRect(s * 0.07, s * 0.06, w - s * 0.14, h - s * 0.12);
     ctx.strokeRect(s * 0.085, s * 0.075, w - s * 0.17, h - s * 0.15);
     ctx.fillStyle = rgba(p.palette.accent3, 0.18);
     ctx.beginPath();
-    ctx.arc(w / 2, h / 2, s * 0.27, 0, TAU);
+    ctx.arc(w / 2, h / 2, s * 0.27 * breathe, 0, TAU);
     ctx.fill();
     ctx.fillStyle = p.palette.ink;
     ctx.beginPath();
-    ctx.ellipse(w / 2, h * 0.52, s * 0.17, s * 0.12, 0, 0, TAU);
+    ctx.ellipse(w / 2, h * 0.52, s * 0.17 * breathe, s * 0.12 * breathe, 0, 0, TAU);
     ctx.fill();
     ctx.fillStyle = p.palette.accent3;
     ctx.beginPath();
-    ctx.arc(w / 2 - s * 0.06, h * 0.5, s * 0.018, 0, TAU);
-    ctx.arc(w / 2 + s * 0.06, h * 0.5, s * 0.018, 0, TAU);
+    ctx.arc(w / 2 - s * 0.06 * breathe, h * 0.5, s * 0.018, 0, TAU);
+    ctx.arc(w / 2 + s * 0.06 * breathe, h * 0.5, s * 0.018, 0, TAU);
     ctx.fill();
   } else if (p.slug === 'psychedelic') {
     const rng = mulberry32(env.seed || 7);
     for (let i = 0; i < 4; i += 1) {
-      const grow = template === 'title' ? 0.82 + 0.18 * easeOutBack(stagger(t, i, 4, 0.55)) : 1;
+      const grow = 1 + Math.sin(phase * Math.PI + i) * 0.05;
       const bx = s * (0.22 + i * 0.19);
       const by = s * (0.3 + (i % 2) * 0.28);
       ctx.save();
@@ -1141,22 +1101,24 @@ function frameShowcase(env: FrameEnv): void {
       ctx.stroke();
     }
   } else if (p.slug === 'memphis') {
+    // Eased drift: shapes float away from the poster position and return.
+    const drift = phase * s * 0.012;
     ctx.fillStyle = p.palette.accent;
     ctx.beginPath();
-    ctx.arc(w * 0.78, h * 0.2, s * 0.1, 0, TAU);
+    ctx.arc(w * 0.78 - drift * 0.4, h * 0.2 - drift, s * 0.1, 0, TAU);
     ctx.fill();
     ctx.fillStyle = p.palette.accent2;
-    ctx.fillRect(w * 0.58, h * 0.28, s * 0.18, s * 0.28);
+    ctx.fillRect(w * 0.58, h * 0.28 - drift * 0.7, s * 0.18, s * 0.28);
     ctx.fillStyle = p.palette.accent3;
-    ctx.fillRect(w * 0.08, h * 0.7, s * 0.3, s * 0.08);
+    ctx.fillRect(w * 0.08, h * 0.7 + drift * 0.5, s * 0.3, s * 0.08);
     ctx.fillStyle = p.palette.accent4;
-    ctx.fillRect(w * 0.15, h * 0.14, s * 0.13, s * 0.13);
+    ctx.fillRect(w * 0.15, h * 0.14 - drift * 0.9, s * 0.13, s * 0.13);
     ctx.strokeStyle = p.palette.ink;
     ctx.lineWidth = Math.max(3, s * 0.008);
     ctx.beginPath();
     for (let i = 0; i < 6; i += 1) {
       const x = w * 0.18 + i * s * 0.09;
-      const y = h * 0.84 + Math.sin(i * 1.8) * s * 0.035;
+      const y = h * 0.84 + Math.sin(i * 1.8) * s * 0.035 + drift * 0.3;
       if (i === 0) ctx.moveTo(x, y);
       else ctx.quadraticCurveTo(x - s * 0.045, y - s * 0.06, x, y);
     }
@@ -1172,7 +1134,7 @@ function frameShowcase(env: FrameEnv): void {
     }
     ctx.fillStyle = p.palette.accent2;
     ctx.beginPath();
-    ctx.arc(w / 2, h / 2, s * 0.16, 0, TAU);
+    ctx.arc(w / 2, h / 2, s * 0.16 * (1 + phase * 0.04), 0, TAU);
     ctx.fill();
     ctx.fillStyle = p.palette.accent3;
     ctx.beginPath();
@@ -1185,21 +1147,23 @@ function frameShowcase(env: FrameEnv): void {
       ctx.fill();
     }
   } else if (p.slug === 'vaporwave') {
+    // The sun and the horizon grid rise with the eased arc and settle back.
+    const rise = phase * s * 0.01;
     ctx.fillStyle = rgba(p.palette.accent, 0.75);
     ctx.beginPath();
-    ctx.arc(w * 0.76, h * 0.25, s * 0.12, 0, TAU);
+    ctx.arc(w * 0.76, h * 0.25 - rise * 0.6, s * 0.12 * (1 + phase * 0.03), 0, TAU);
     ctx.fill();
     ctx.fillStyle = p.palette.bg;
-    for (let i = 0; i < 6; i += 1) ctx.fillRect(w * 0.62, h * 0.17 + i * s * 0.025, s * 0.28, s * 0.008);
+    for (let i = 0; i < 6; i += 1) ctx.fillRect(w * 0.62, h * 0.17 + i * s * 0.025 - rise * 0.6, s * 0.28, s * 0.008);
     ctx.strokeStyle = rgba(p.palette.accent2, 0.7);
     ctx.lineWidth = Math.max(1, s * 0.0015);
     for (let i = 0; i < 12; i += 1) {
       ctx.beginPath();
-      ctx.moveTo(w * 0.5, h * 0.58);
+      ctx.moveTo(w * 0.5, h * 0.58 + rise * 0.4);
       ctx.lineTo(w * (0.05 + i * 0.085), h);
       ctx.stroke();
       ctx.beginPath();
-      const y = h * 0.58 + i * s * 0.03;
+      const y = h * 0.58 + i * s * 0.03 + rise * 0.4;
       ctx.moveTo(0, y);
       ctx.lineTo(w, y);
       ctx.stroke();
@@ -1208,8 +1172,6 @@ function frameShowcase(env: FrameEnv): void {
   ctx.restore();
 
   ctx.save();
-  ctx.globalAlpha = e;
-  ctx.translate(0, (1 - e) * s * 0.045);
   const layout = layoutTitle(ctx, text.toUpperCase(), {
     maxWidth: w * 0.72,
     maxLines: 3,
@@ -1240,9 +1202,8 @@ function frameShowcase(env: FrameEnv): void {
 /* Public API                                                          */
 /* ------------------------------------------------------------------ */
 
-function drawMaxGif(ctx: SKRSContext2D, w: number, h: number, p: StylePreset, t: number, template: Template): void {
+function drawMaxGif(ctx: SKRSContext2D, w: number, h: number, p: StylePreset, t: number): void {
   const s = Math.min(w, h);
-  const ease = easeOutCubic(t);
   ctx.save();
   ctx.globalAlpha = 0.34;
   ctx.strokeStyle = p.palette.accent3;
@@ -1286,7 +1247,7 @@ function drawMaxGif(ctx: SKRSContext2D, w: number, h: number, p: StylePreset, t:
     }
   } else {
     for (let i = 0; i < 7; i += 1) {
-      const a = (i / 7) * TAU + (template === 'loop' ? t * (TAU / 7) : ease * 0.2);
+      const a = (i / 7) * TAU + t * (TAU / 7);
       ctx.beginPath();
       ctx.arc(w * 0.12 + Math.cos(a) * s * 0.045, h * 0.86 + Math.sin(a) * s * 0.045, s * 0.005, 0, TAU);
       ctx.stroke();
@@ -1328,17 +1289,22 @@ export interface GifFrameRequest {
   maxxing?: boolean;
 }
 
-/** Render one frame at loop position t (0..1). Exported for tests and tooling. */
-export function drawGifFrame(
+/**
+ * Paint one frame on `ctx`. `position` is the loop position (0..1); the poster
+ * template is a still, so it always paints the composed frame at position 0.
+ */
+function paintFrame(
+  ctx: SKRSContext2D,
   style: StyleSlug,
   request: GifFrameRequest,
-  t: number,
+  template: Template,
+  position: number,
   width: number,
   height: number,
-): Uint8ClampedArray {
+): void {
   const preset = getStyle(style);
-  const { canvas, ctx } = canvasFor(width, height);
-  const template = request.template ?? 'title';
+  const poster = template === 'poster';
+  const t = poster ? 0 : clamp(position, 0, 1);
   ctx.clearRect(0, 0, width, height);
   ctx.save();
   RENDERERS[style]({
@@ -1348,14 +1314,48 @@ export function drawGifFrame(
     preset,
     text: request.text.trim(),
     subtitle: request.subtitle?.trim() || undefined,
-    template,
-    t: clamp(t, 0, 1),
+    t,
+    phase: loopPhase(t),
     seed: request.seed ?? 7,
-    maxxing: request.maxxing ?? false,
   });
-  if (request.maxxing) drawMaxGif(ctx, width, height, preset, t, template);
+  if (request.maxxing) drawMaxGif(ctx, width, height, preset, t);
   ctx.restore();
+}
+
+/** Render one frame at loop position t (0..1). Exported for tests and tooling. */
+export function drawGifFrame(
+  style: StyleSlug,
+  request: GifFrameRequest,
+  t: number,
+  width: number,
+  height: number,
+): Uint8ClampedArray {
+  const { ctx } = canvasFor(width, height);
+  paintFrame(ctx, style, request, request.template ?? 'title', t, width, height);
   return ctx.getImageData(0, 0, width, height).data;
+}
+
+/** Write the composed poster frame as a PNG (previews, og images). */
+export async function createGifPoster(style: StyleSlug, options: GifQualityOptions, output: string): Promise<string> {
+  if (!isStyleSlug(style)) {
+    throw new BeautyError(`Unknown style "${style}".`, 'UNKNOWN_STYLE');
+  }
+  if (!options.text?.trim()) {
+    throw new BeautyError('A GIF needs non-empty text.', 'MISSING_TEXT');
+  }
+  const resolved = resolveGif(options, STYLE_DITHER[style] ?? DEFAULT_DITHER);
+  const { canvas, ctx } = canvasFor(resolved.width, resolved.height);
+  paintFrame(
+    ctx,
+    style,
+    { text: options.text, subtitle: options.subtitle, seed: options.seed, maxxing: options.maxxing },
+    'poster',
+    0,
+    resolved.width,
+    resolved.height,
+  );
+  await writeFile(output, canvas.encodeSync('png'));
+  return output;
 }
 
 const MAX_WIDTH = 1200;
