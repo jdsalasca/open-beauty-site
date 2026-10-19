@@ -6,6 +6,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
+import { NARRATIVE_REVIEW_HELP } from '../src/narrative/review.js';
 
 const root = process.cwd();
 let client: Client;
@@ -45,12 +46,22 @@ test('exposes the full tool surface', async () => {
     'beauty_examples',
     'beauty_fix',
     'beauty_get_capabilities',
+    'beauty_get_review_state',
     'beauty_get_skill',
     'beauty_get_style',
     'beauty_list_styles',
     'beauty_make',
+    'beauty_review_artifact',
     'beauty_validate',
   ]);
+});
+
+test('review MCP help comes from the shared source', async () => {
+  const { tools } = await client.listTools();
+  const tool = tools.find((item) => item.name === 'beauty_review_artifact');
+  assert.ok(tool);
+  assert.ok(tool.description?.includes(NARRATIVE_REVIEW_HELP));
+  assert.match(tool.description ?? '', /GIF\/PNG\/manifest hashes/);
 });
 
 test('capabilities MCP returns per-style cells and exposes the shared narrative brief schema', async () => {
@@ -205,13 +216,32 @@ test('narrative MCP creates a real pilot pack and keeps visual review pending', 
   };
   assert.equal(structured.ok, true);
   assert.deepEqual(Object.keys(structured.evaluation).sort(), [
-    'technical-integrity', 'style-conformance', 'rendered-legibility', 'narrative', 'visual-review', 'publicationRecommendation',
+    'technical-integrity', 'style-conformance', 'rendered-legibility', 'narrative', 'visual-review', 'publicationRecommendation', 'automatedEvidence',
   ].sort());
   assert.equal(structured.evaluation['visual-review']?.status, 'pending');
   assert.ok(existsSync(structured.paths.gif));
   assert.ok(existsSync(structured.paths.png));
   assert.ok(existsSync(structured.paths.contactSheet));
   assert.ok(existsSync(structured.paths.manifest));
+
+  const reviewed = await client.callTool({
+    name: 'beauty_review_artifact',
+    arguments: {
+      pack: structured.paths.manifest,
+      reviewer: { id: 'mcp-human-reviewer', name: 'MCP Reviewer', kind: 'human' },
+      criteria: {
+        thumbnailIdentity: { verdict: 'pass' }, cardSizeReading: { verdict: 'pass' }, styleMaterial: { verdict: 'pass' },
+        phaseContinuity: { verdict: 'pass' }, loopRestart: { verdict: 'pass' }, artOnlyTransformationUnderstood: { verdict: 'pass' },
+      },
+      quality_levels: {
+        'technical-integrity': 'pass', 'style-conformance': 'pass', 'rendered-legibility': 'pass', narrative: 'pass', 'visual-review': 'pass',
+      },
+    },
+  });
+  assert.notEqual(reviewed.isError, true);
+  const state = await client.callTool({ name: 'beauty_get_review_state', arguments: { pack: structured.paths.manifest } });
+  assert.equal((state.structuredContent as { reviewState: string }).reviewState, 'approved');
+  assert.equal((state.structuredContent as { publicationRecommendation: string }).publicationRecommendation, 'consider-publication');
 });
 
 test('narrative MCP renders a registered Stage C style', async () => {

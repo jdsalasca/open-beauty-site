@@ -248,6 +248,26 @@ export interface NarrativeEvaluationLevel {
   note?: string;
 }
 
+export interface NarrativeAutomatedEvidence {
+  balanceByFrame: Array<{
+    frameIndex: number;
+    phaseId: string;
+    kind: 'hold' | 'transition' | 'loop-bridge';
+    label: string;
+    regions: NarrativeObjectRegion[];
+    metrics: { emptyCellRatio: number; textColumnFillRatio: number; objectAreaRatio: number; largestEmptyRectangleRatio: number };
+  }>;
+  objectTransformationByFrame: Array<{
+    frameIndex: number;
+    phaseId: string;
+    fromPhaseId?: string;
+    kind: 'hold' | 'transition' | 'loop-bridge';
+    measured: boolean;
+    passed: boolean;
+    regions: Array<{ entityId: string; bounds: NarrativeRect; fromState?: string; toState?: string; pixelDiffRatio: number; changed: boolean }>;
+  }>;
+}
+
 export interface NarrativeEvaluation {
   'technical-integrity': NarrativeEvaluationLevel;
   'style-conformance': NarrativeEvaluationLevel & { sourceStatus: NarrativeLevelStatus; pixelStatus: NarrativeLevelStatus };
@@ -261,4 +281,5 @@ export interface NarrativeEvaluation {
     feedback?: unknown[];
   };
   publicationRecommendation: 'none' | 'consider-publication';
+  automatedEvidence?: NarrativeAutomatedEvidence;
 }

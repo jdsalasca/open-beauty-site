@@ -131,7 +131,7 @@ test('five concise 2000ms phases decode to 11200ms and manifest separates each d
     assert.equal(decoded.integrity.valid, true);
     assert.equal(decoded.durationMs, 11_200);
     assert.ok(decoded.durationMs > 10_000, 'four transitions, loop bridge and entries add 1200ms to the five holds');
-    assert.equal(manifest.schemaVersion, 2);
+    assert.equal(manifest.schemaVersion, 3);
     assert.equal(manifest.timing.holdsRequestedMs, 10_000);
     assert.equal(manifest.timing.holdsDecodedMs, 10_000);
     assert.equal(manifest.timing.transitionsMs, 640);

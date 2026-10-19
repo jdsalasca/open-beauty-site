@@ -13,6 +13,17 @@ import { verifyNarrativeGif } from './verify-gif.js';
 
 type ReviewState = 'none' | 'pending' | 'approved' | 'revise' | 'stale';
 type PublicationRecommendation = 'none' | 'consider-publication';
+export const NARRATIVE_REVIEW_USAGE = 'beauty review <pack-or-manifest> [--reviewer id[:name]] [--reviewer-kind human|model] [--model-id id --model-version version --model-criteria text] [--criterion name=pass|revise|not-evaluated] [--level five-level=pass|revise|not-evaluated] [--feedback file.json] [--frames] [--note text]';
+export const NARRATIVE_REVIEW_HELP = [
+  NARRATIVE_REVIEW_USAGE,
+  `Criteria: ${NARRATIVE_REVIEW_CRITERIA.join(', ')}.`,
+  `Levels: ${NARRATIVE_REVIEW_LEVELS.join(', ')}.`,
+  'Model reviewers also require --model-id, --model-version and --model-criteria. Review hashes bind the exact GIF, PNG and normalized manifest.',
+  'Add --frames to decode each referenced GIF frame and crop into <pack>.frames/.',
+].join('\n');
+
+export const NARRATIVE_RERENDER_USAGE = 'beauty rerender <manifest> [--apply-feedback]';
+export const NARRATIVE_RERENDER_HELP = `${NARRATIVE_RERENDER_USAGE}\nReplays the stored normalized brief and seed. Feedback becomes fixed only when decoded pixels measurably change inside its recorded region.`;
 interface ReviewManifest extends Record<string, unknown> {
   brief?: { phases?: Array<{ id?: string }> };
   files?: { gif?: string; png?: string };
@@ -157,16 +168,17 @@ function latestAssessment(manifest: ReviewManifest, hashes: NarrativeReviewHashe
   });
 }
 
-function feedbackFrameLinks(ledger: NarrativeReviewLedger, manifestPath: string): Array<Record<string, unknown>> {
+function feedbackFrameLinks(ledger: NarrativeReviewLedger): Array<Record<string, unknown>> {
   const feedback = ledger.records.at(-1)?.feedback ?? [];
-  return feedback.filter((item) => item.status === 'open' && item.evidence.framePath && item.evidence.cropPath).map((item) => ({
+  return feedback.filter((item) => item.status === 'open').map((item) => ({
     id: item.id, phaseId: item.phaseId, frameIndex: item.frameIndex, problem: item.problem, severity: item.severity,
-    framePath: item.evidence.framePath, cropPath: item.evidence.cropPath,
+    ...(item.evidence.framePath ? { framePath: item.evidence.framePath } : {}),
+    ...(item.evidence.cropPath ? { cropPath: item.evidence.cropPath } : {}),
   }));
 }
 
 async function writeDerivedManifestState(manifestPath: string, manifest: ReviewManifest, assessment: NarrativeReviewAssessment, ledger: NarrativeReviewLedger): Promise<void> {
-  const openFeedback = feedbackFrameLinks(ledger, manifestPath);
+  const openFeedback = feedbackFrameLinks(ledger);
   manifest.reviewState = assessment.reviewState;
   manifest.openFeedbackCount = openFeedback.length;
   manifest.feedbackFrames = openFeedback;
@@ -214,26 +226,39 @@ export async function reviewNarrativeArtifact(input: {
   const criteria = normalizeCriteria(input.criteria);
   const qualityLevels = { ...emptyLevels, ...input.qualityLevels };
   const feedback = (input.feedback ?? []).map((item) => narrativeFeedbackSchema.parse(item));
+  const ledgerFile = ledgerPath(manifestPath);
+  const ledger = await readLedger(ledgerFile);
   const frameCount = manifest.decoded?.frameCount ?? 0;
   const phaseIds = new Set((manifest.brief?.phases ?? []).map((phase) => phase.id).filter((id): id is string => Boolean(id)));
   const width = manifest.dimensions?.width ?? 0;
   const height = manifest.dimensions?.height ?? 0;
-  for (const item of feedback) {
+  const incomingIds = new Set(feedback.map((item) => item.id));
+  if (incomingIds.size !== feedback.length) throw new Error('Feedback item ids must be unique within a review.');
+  const previousRecord = ledger.records.at(-1);
+  const sameArtifact = previousRecord !== undefined
+    && previousRecord.hashes.gifSha256 === hashes.gifSha256
+    && previousRecord.hashes.pngSha256 === hashes.pngSha256
+    && previousRecord.hashes.manifestSha256 === hashes.manifestSha256;
+  const inheritedFeedback = (previousRecord?.feedback ?? []).filter((item) => item.status === 'open' && !incomingIds.has(item.id))
+    .filter((item) => phaseIds.has(item.phaseId) && item.frameIndex < frameCount && item.region.x + item.region.w <= width && item.region.y + item.region.h <= height)
+    .map((item) => sameArtifact
+      ? item
+      : { ...item, evidence: { frameRef: item.frameIndex } });
+  const combinedFeedback = [...inheritedFeedback, ...feedback];
+  for (const item of combinedFeedback) {
     if (!phaseIds.has(item.phaseId)) throw new Error(`Feedback ${item.id} references unknown phase ${item.phaseId}.`);
     if (item.frameIndex >= frameCount) throw new Error(`Feedback ${item.id} references frame ${item.frameIndex}, but this GIF has ${frameCount} frames.`);
     if (item.region.x + item.region.w > width || item.region.y + item.region.h > height) throw new Error(`Feedback ${item.id} region exceeds the native ${width}×${height} frame.`);
   }
-  let finalFeedback = feedback;
-  if (input.extractFrames && feedback.length) {
-    const extracted = await extractFeedbackFrames(manifestPath, feedback);
+  let finalFeedback = combinedFeedback;
+  if (input.extractFrames && combinedFeedback.length) {
+    const extracted = await extractFeedbackFrames(manifestPath, combinedFeedback);
     const byId = new Map(extracted.map((frame) => [frame.id, frame]));
-    finalFeedback = feedback.map((item) => {
+    finalFeedback = combinedFeedback.map((item) => {
       const frame = byId.get(item.id)!;
       return { ...item, evidence: { ...item.evidence, frameRef: item.frameIndex, framePath: path.relative(path.dirname(manifestPath), frame.framePath).split(path.sep).join('/'), cropPath: path.relative(path.dirname(manifestPath), frame.cropPath).split(path.sep).join('/') } };
     });
   }
-  const ledgerFile = ledgerPath(manifestPath);
-  const ledger = await readLedger(ledgerFile);
   const record = narrativeReviewRecordSchema.parse({
     schemaVersion: 1,
     reviewer: input.reviewer,
@@ -287,6 +312,15 @@ export async function extractFeedbackFrames(packOrManifest: string, feedback: Na
   const frameIndices = [...new Set(feedback.map((item) => item.frameIndex))];
   const decoded = verifyNarrativeGif(await readFile(gifPath), frameIndices, { retainSamples: true });
   if (!decoded.integrity.valid) throw new Error(`Cannot extract review frames from invalid GIF: ${decoded.integrity.errors.join('; ')}`);
+  const ids = new Set<string>();
+  for (const item of feedback) {
+    if (ids.has(item.id)) throw new Error(`Duplicate feedback id ${item.id}; frame crop filenames must be unique.`);
+    ids.add(item.id);
+    if (item.frameIndex >= decoded.frames.length) throw new Error(`Feedback ${item.id} references frame ${item.frameIndex}, but this GIF has ${decoded.frames.length} frames.`);
+    if (item.region.x + item.region.w > decoded.width || item.region.y + item.region.h > decoded.height) {
+      throw new Error(`Feedback ${item.id} region exceeds the native ${decoded.width}×${decoded.height} frame.`);
+    }
+  }
   const sampled = new Map(decoded.sampledFrames.map((frame) => [frame.index, frame.rgb]));
   const directory = framesDirectory(manifestPath);
   await mkdir(directory, { recursive: true });

@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { writeFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import type { NarrativeControlResult, NarrativeEvaluation, NormalizedNarrativeBrief } from '../types/narrative.js';
 import type { NarrativeEncodedFiles } from './encode.js';
@@ -54,8 +54,9 @@ export interface NarrativeManifest {
   generatedBy: string;
   reviewState: 'none' | 'pending' | 'approved' | 'revise' | 'stale';
   openFeedbackCount: number;
-  feedbackFrames: Array<{ id: string; phaseId: string; frameIndex: number; problem: string; severity: string; framePath: string; cropPath: string }>;
+  feedbackFrames: Array<{ id: string; phaseId: string; frameIndex: number; problem: string; severity: string; framePath?: string; cropPath?: string }>;
   publicationRecommendation: 'none' | 'consider-publication';
+  renderRevision: number;
 }
 
 function currentCommit(): string | null {
@@ -90,6 +91,15 @@ export async function createNarrativeManifest(input: {
     ],
     contactSheet: encoded.paths.contactSheet,
   }));
+  const manifestPath = path.join(outputDir, `${path.basename(encoded.paths.gif, '.gif')}.manifest.json`);
+  let renderRevision = 0;
+  try {
+    const prior = JSON.parse(await readFile(manifestPath, 'utf8')) as { renderRevision?: unknown };
+    if (typeof prior.renderRevision === 'number' && Number.isSafeInteger(prior.renderRevision) && prior.renderRevision >= 0) renderRevision = prior.renderRevision + 1;
+    else renderRevision = 1;
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== 'ENOENT') renderRevision = 1;
+  }
   const manifest: NarrativeManifest = {
     schemaVersion: 3,
     commit: currentCommit(),
@@ -156,8 +166,8 @@ export async function createNarrativeManifest(input: {
     openFeedbackCount: 0,
     feedbackFrames: [],
     publicationRecommendation: 'none',
+    renderRevision,
   };
-  const manifestPath = path.join(outputDir, `${path.basename(encoded.paths.gif, '.gif')}.manifest.json`);
   await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
   return { manifest, path: manifestPath };
 }

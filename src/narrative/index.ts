@@ -8,6 +8,7 @@ export * from './i18n.js';
 export * from './layout.js';
 export * from './manifest.js';
 export * from './review.js';
+export * from './rerender.js';
 export * from './scene.js';
 export * from './timeline.js';
 export * from './verify-gif.js';
