@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 import { readFile, writeFile } from 'node:fs/promises';
+import { existsSync, statSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { createRequire } from 'node:module';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import type { Brief, DeckBrief, ExperienceBrief, SequenceBrief, SprintBrief, StoryBrief, StyleSlug } from './types.js';
 import { VERSION } from './index.js';
 import { createCanvas, createDeck, createExperience, createGifFile, createMotion, createPage, createSequence, createStory, slugify, timestamp } from './generate.js';
@@ -15,6 +19,195 @@ import { ensureFonts } from './canvas.js';
 import { packageRoot } from './paths.js';
 
 type Flags = Record<string, string | boolean>;
+
+interface CommandHelpEntry {
+  summary: string;
+  usage: string;
+  options: string[];
+  example: string;
+}
+
+const COMMAND_HELP: Record<string, CommandHelpEntry> = {
+  styles: {
+    summary: 'List the thirteen styles.',
+    usage: 'beauty styles',
+    options: ['  (none)'],
+    example: 'beauty styles',
+  },
+  guide: {
+    summary: 'Read the exact tokens and rules for one style.',
+    usage: 'beauty guide <style> [--json]',
+    options: ['  --json        Print the raw preset JSON instead of Markdown'],
+    example: 'beauty guide nature',
+  },
+  make: {
+    summary: 'Create page|deck|gif|story|experience|motion in one shot.',
+    usage: 'beauty make <kind> --style <s> --idea "one sentence" [--locale es|en] [--idea-file idea.txt] [--out path]',
+    options: [
+      '  --idea "..."       One sentence describing the artefact',
+      '  --idea-file path   Read the idea from a file (avoids long command lines)',
+      '  --locale es|en     Language of the generated copy',
+      '  --title "..."      Short headline (default: derived from the idea, at most 5 words)',
+      '  --tagline "..."    One-line tagline under the headline',
+      '  --out path         Where to write the artefact',
+    ],
+    example: 'beauty make gif --style brutalist --idea "a poster for a night market"',
+  },
+  page: {
+    summary: 'Create a full HTML page.',
+    usage: 'beauty page --style <s> --title "..." [--brief brief.json | --brief -] [--out file.html]',
+    options: [
+      '  --title "..."      Headline (or use a brief file with a title)',
+      '  --brief path       Read the brief from a JSON file',
+      '  --brief -          Read the brief JSON from stdin',
+      '  --tagline / --intro / --eyebrow / --brand / --footer "..."',
+      '  --locale es|en     Language of the generated copy',
+      '  --maxxing          Full art direction',
+      '  --out path         Where to write the HTML',
+    ],
+    example: 'beauty page --style nature --brief examples/recipes/nature/page.json --out out/nature.html',
+  },
+  deck: {
+    summary: 'Create an animated 16:9 presentation.',
+    usage: 'beauty deck --style <s> --title "..." --brief deck.json [--brief -] [--subfamily orbital] [--maxxing] [--out deck.html]',
+    options: [
+      '  --title "..."      Deck title on the cover',
+      '  --brief path       Read the deck brief from a JSON file',
+      '  --brief -          Read the deck brief JSON from stdin',
+      '  --subfamily slug   Curated structural family from the style guide',
+      '  --maxxing          Full art direction',
+      '  --out path         Where to write the HTML',
+    ],
+    example: 'beauty deck --style nature --brief examples/recipes/nature/deck.json --out out/nature-deck.html',
+  },
+  experience: {
+    summary: 'Create a 3–8 room experience.',
+    usage: 'beauty experience --style <s> --brief exp.json [--brief -] [--maxxing] [--out file.html]',
+    options: [
+      '  --brief path       Read the experience brief from a JSON file',
+      '  --brief -          Read the experience brief JSON from stdin',
+      '  --maxxing          Full art direction',
+      '  --out path         Where to write the HTML',
+    ],
+    example: 'beauty experience --style galactic --brief examples/recipes/galactic/experience.json --out out/galactic-exp.html',
+  },
+  story: {
+    summary: 'Create a chaptered story or lesson.',
+    usage: 'beauty story --style <s> --brief story.json [--brief -] [--maxxing] [--out file.html]',
+    options: [
+      '  --brief path       Read the story brief from a JSON file',
+      '  --brief -          Read the story brief JSON from stdin',
+      '  --maxxing          Full art direction',
+      '  --out path         Where to write the HTML',
+    ],
+    example: 'beauty story --style papercraft --brief examples/recipes/papercraft/story.json --out out/papercraft-story.html',
+  },
+  sprint: {
+    summary: 'Create review + retrospective + planning + 3 GIFs.',
+    usage: 'beauty sprint --style <s> --brief sprint.json [--brief -] [--out folder]',
+    options: [
+      '  --brief <file>     JSON brief: sprint (required), team, date, summary,',
+      '                     metrics[], highlights[], blockers[], next[], quote',
+      '  --brief -          Read the sprint brief JSON from stdin (avoids os error 206)',
+      '  --out path         Output folder (defaults to beauty-output/sprint-<id>)',
+    ],
+    example: 'beauty sprint --style artdeco --brief sprint.json',
+  },
+  sequence: {
+    summary: 'Create an SVG story + GIF from frames.',
+    usage: 'beauty sequence --style <s> --brief seq.json [--brief -] [--out base]',
+    options: [
+      '  --brief path       Read the sequence brief from a JSON file (2–12 frames)',
+      '  --brief -          Read the sequence brief JSON from stdin',
+      '  --out path         Base path; writes .svg and .gif',
+    ],
+    example: 'beauty sequence --style papercraft --brief seq.json --out out/sequence',
+  },
+  canvas: {
+    summary: 'Create an open animated SVG canvas.',
+    usage: 'beauty canvas --style <s> --brief canvas.json [--brief -] [--out file.svg]',
+    options: [
+      '  --brief path       Read the canvas brief from a JSON file (layers)',
+      '  --brief -          Read the canvas brief JSON from stdin',
+      '  --title "..."      Accessible title',
+      '  --maxxing          Full art direction',
+      '  --out path         Where to write the SVG',
+    ],
+    example: 'beauty canvas --style nature --brief canvas.json --out out/canvas.svg',
+  },
+  motion: {
+    summary: 'Create an animated SVG loop.',
+    usage: 'beauty motion --style <s> --title "..." [--scene orbit] [--size square] [--duration 14] [--maxxing] [--out loop.svg]',
+    options: [
+      '  --title "..."      2–6 word headline',
+      '  --scene name       orbit|bloom|tide|papercut|constellation|ribbon|rain|type',
+      '  --size name        square|portrait|landscape',
+      '  --duration n       Seconds (6–24)',
+      '  --maxxing          Full art direction',
+      '  --out path         Where to write the SVG',
+    ],
+    example: 'beauty motion --style nature --title "El jardín de las horas lentas" --scene bloom',
+  },
+  gif: {
+    summary: 'Create a looping GIF.',
+    usage: 'beauty gif --style <s> --text "..." [--subtitle "..."] [--template title] [--fps 20] [--out file.gif]',
+    options: [
+      '  --text "..."       2–5 word headline',
+      '  --subtitle "..."   Small caption',
+      '  --template name    title|loop|poster',
+      '  --width / --height Pixels (240–1200)',
+      '  --fps / --duration Frame rate and seconds',
+      '  --maxxing          Full art direction',
+      '  --out path         Where to write the GIF',
+    ],
+    example: 'beauty gif --style artdeco --text "Subir" --subtitle "1930"',
+  },
+  validate: {
+    summary: 'Audit HTML and return a grade, issues and fixes.',
+    usage: 'beauty validate <file> --style <s> [--strict]',
+    options: [
+      '  <file>             HTML file to audit',
+      '  --style <s>        Style the file must obey',
+      '  --strict            Exit 1 when the score is below 90',
+    ],
+    example: 'beauty validate out/nature.html --style nature --strict',
+  },
+  fix: {
+    summary: 'Apply safe repairs and re-validate.',
+    usage: 'beauty fix <file> --style <s> [--out f.html] [--strict]',
+    options: [
+      '  <file>             HTML file to repair',
+      '  --style <s>        Style the file must obey',
+      '  --out path         Write to a new file instead of overwriting',
+      '  --strict            Exit 1 when the score is below 90',
+    ],
+    example: 'beauty fix out/nature.html --style nature',
+  },
+  examples: {
+    summary: 'Show reference output paths.',
+    usage: 'beauty examples',
+    options: ['  (none)'],
+    example: 'beauty examples',
+  },
+  doctor: {
+    summary: 'Check fonts, runtime, dist freshness, canvas and Playwright.',
+    usage: 'beauty doctor',
+    options: ['  (none)'],
+    example: 'beauty doctor',
+  },
+  mcp: {
+    summary: 'Start the MCP server over stdio.',
+    usage: 'beauty mcp',
+    options: ['  (none)'],
+    example: 'beauty mcp',
+  },
+  version: {
+    summary: 'Print the package version.',
+    usage: 'beauty version',
+    options: ['  (none)'],
+    example: 'beauty version',
+  },
+};
 
 function parseArgs(argv: string[]): { positionals: string[]; flags: Flags } {
   const positionals: string[] = [];
@@ -65,10 +258,53 @@ function requireStyle(value: string | undefined): StyleSlug {
   return value;
 }
 
+/** Absolute path of the compiled CLI, used by the dist guard and doctor. */
+export function distCliPath(): string {
+  return path.join(packageRoot(), 'dist', 'cli.js');
+}
+
+/** The exact one-line fix printed when the compiled CLI is missing. */
+export function distFixMessage(): string {
+  return 'dist/cli.js is missing. Run `pnpm build` to compile it (or `pnpm setup` to install, build and test).';
+}
+
+/** True when the compiled CLI exists next to the package root. */
+export function ensureDistBuilt(): boolean {
+  return existsSync(distCliPath());
+}
+
+/** Build only when dist/cli.js is missing. Safe to run from `pnpm install`. */
+export function runPrepare(): void {
+  if (ensureDistBuilt()) return;
+  const root = packageRoot();
+  const tsc = path.join(root, 'node_modules', 'typescript', 'bin', 'tsc');
+  if (existsSync(tsc)) {
+    spawnSync(process.execPath, [tsc, '-p', 'tsconfig.json'], { cwd: root, stdio: 'inherit' });
+    return;
+  }
+  console.error(`beauty: ${distFixMessage()}`);
+}
+
+async function readStdin(): Promise<string> {
+  const chunks: Buffer[] = [];
+  for await (const chunk of process.stdin) {
+    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+  }
+  return Buffer.concat(chunks).toString('utf8');
+}
+
 async function loadBrief<T extends Partial<Brief>>(value: string | undefined): Promise<T> {
   if (!value) return {} as T;
+  if (value === '-') {
+    return JSON.parse((await readStdin()).trim()) as T;
+  }
   const raw = value.trim().startsWith('{') ? value : await readFile(path.resolve(process.cwd(), value), 'utf8');
   return JSON.parse(raw) as T;
+}
+
+async function readIdeaFile(value: string | undefined): Promise<string | undefined> {
+  if (!value) return undefined;
+  return (await readFile(path.resolve(process.cwd(), value), 'utf8')).trim();
 }
 
 function mergeBrief<T extends Partial<Brief>>(fileBrief: T, flags: Flags): T {
@@ -89,24 +325,46 @@ function mergeBrief<T extends Partial<Brief>>(fileBrief: T, flags: Flags): T {
   return merged;
 }
 
+function commandHelp(command: string, entry: CommandHelpEntry): string {
+  return `beauty ${command} — ${entry.summary}
+
+Usage:
+  ${entry.usage}
+
+Options:
+${entry.options.join('\n')}
+
+Example:
+  ${entry.example}
+
+Run \`beauty help\` for the full command list, or \`beauty <command> --help\` for one command.`;
+}
+
 function help(): string {
   return `open-beauty-site ${VERSION}
 A design harness for small models: HTML pages + GIFs with an editorial line.
 
 Usage:
+  beauty <command> [options]          Run a command
+  beauty <command> --help | -h        Show one command's options and an example
+  beauty help <command>               Same as above
+
+Commands:
   beauty styles                              List the thirteen styles
   beauty guide <style> [--json]              Read the exact tokens and rules
   beauty make <kind> --style <s> --idea "one sentence"
       Create everything in one shot: page|deck|gif|story|experience|motion
-      [--locale es|en] [--out path]
+      [--idea-file idea.txt] [--locale es|en] [--out path]
   beauty page --style <s> --title "..."      Create a full HTML page
+      [--brief brief.json] or [--brief -] reads the brief from a file or stdin
       [--tagline "..."] [--intro "..."] [--brand "..."] [--locale es|en]
-      [--maxxing] [--brief brief.json] [--out file.html]
+      [--maxxing] [--out file.html]
   beauty deck --style <s> --title "..."      Create an animated 16:9 presentation
-      --brief deck.json [--subfamily orbital] [--maxxing] [--out deck.html]
+      --brief deck.json [--brief -] [--subfamily orbital] [--maxxing] [--out deck.html]
   beauty experience --style <s> --brief exp.json  Create a 3–8 room experience [--maxxing]
   beauty story --style <s> --brief story.json     Create a chaptered story/lesson [--maxxing]
   beauty sprint --style <s> --brief sprint.json   Create review + retrospective + planning + 3 GIFs
+      [--out dir]
   beauty sequence --style <s> --brief seq.json   Create an SVG story + GIF from frames
   beauty canvas --style <s> --brief canvas.json  Create an open animated SVG canvas
   beauty motion --style <s> --title "..."      Create an animated SVG loop
@@ -117,25 +375,114 @@ Usage:
       [--width 800] [--height 800] [--maxxing] [--out file.gif]
   beauty validate <file> --style <s> [--strict]
   beauty fix <file> --style <s> [--out f.html]
-                                            Apply safe repairs and re-validate
+                                             Apply safe repairs and re-validate
   beauty examples                            Show reference output
-  beauty doctor                              Check fonts and runtime
+  beauty doctor                              Check dist, fonts, runtime and Playwright
   beauty mcp                                 Start the MCP server (stdio)
+  beauty version                             Print the package version
 
 Styles: ${styleSlugs.join(', ')}
 `;
 }
 
+async function doctorReport(): Promise<void> {
+  console.log(`open-beauty-site ${VERSION}`);
+  console.log(`node ${process.version}`);
+  console.log(`package root ${packageRoot()}`);
+
+  const distCli = distCliPath();
+  if (existsSync(distCli)) {
+    const minutes = Math.max(0, Math.round((Date.now() - statSync(distCli).mtimeMs) / 60000));
+    console.log(`dist/cli.js present (built ${minutes} min ago)`);
+  } else {
+    console.log(`dist/cli.js missing · fix: ${distFixMessage()}`);
+  }
+
+  const major = Number(process.versions.node.split('.')[0]);
+  if (major < 22) {
+    console.log(`node ${process.version} is below the required 22 · fix: install Node 22+ from https://nodejs.org`);
+  } else {
+    console.log(`node ${process.version} (>=22 ok)`);
+  }
+
+  try {
+    ensureFonts();
+    console.log('fonts: registered (EB Garamond, Archivo Black, Space Mono, Fraunces, Nunito Sans)');
+  } catch (error) {
+    console.log(`fonts: error · ${(error as Error).message} · fix: pnpm install`);
+  }
+
+  try {
+    const { canvas } = await import('./canvas.js').then((mod) => mod.canvasFor(2, 2));
+    console.log(`native canvas: ok (${canvas.width}×${canvas.height})`);
+  } catch (error) {
+    console.log(`native canvas: error · ${(error as Error).message} · fix: pnpm install`);
+  }
+
+  try {
+    const require = createRequire(import.meta.url);
+    require.resolve('playwright');
+    console.log('playwright: installed · screenshot with `pnpm exec playwright screenshot <file|url> out.png`');
+  } catch {
+    console.log('playwright: not installed · fix: pnpm add -D playwright && pnpm exec playwright install chromium');
+  }
+
+  console.log('status: ready');
+}
+
 async function main(): Promise<void> {
-  const { positionals, flags } = parseArgs(process.argv.slice(2));
+  const { positionals: rawPositionals, flags } = parseArgs(process.argv.slice(2));
+  const wantsHelp =
+    flags.help === true || rawPositionals.includes('-h') || rawPositionals.includes('--help');
+  const positionals = rawPositionals.filter((token) => token !== '-h' && token !== '--help');
   const command = positionals[0] ?? 'help';
 
-  switch (command) {
-    case 'help':
-    case '--help':
-    case '-h':
+  if (flags.prepare === true) {
+    runPrepare();
+    return;
+  }
+
+  if (wantsHelp) {
+    const target = command === 'help' ? positionals[1] : command;
+    if (!target || target === 'help') {
       console.log(help());
       return;
+    }
+    const entry = COMMAND_HELP[target];
+    if (!entry) {
+      console.error(`Unknown command "${target}".`);
+      process.exitCode = 1;
+      return;
+    }
+    console.log(commandHelp(target, entry));
+    return;
+  }
+
+  if (flags.version === true) {
+    console.log(VERSION);
+    return;
+  }
+
+  if (!ensureDistBuilt()) {
+    console.error(`beauty: ${distFixMessage()}`);
+  }
+
+  switch (command) {
+    case 'help': {
+      const target = positionals[1];
+      if (!target) {
+        console.log(help());
+        return;
+      }
+      const entry = COMMAND_HELP[target];
+      if (!entry) {
+        console.error(`Unknown command "${target}".`);
+        process.exitCode = 1;
+        return;
+      }
+      console.log(commandHelp(target, entry));
+      return;
+    }
 
     case 'version':
     case '--version':
@@ -144,9 +491,14 @@ async function main(): Promise<void> {
       return;
 
     case 'styles':
-    case 'list':
-      console.log(stylesOverview());
+    case 'list': {
+      const overview = stylesOverview().replace(
+        /Next: call beauty_get_style with one slug\./,
+        'Next: run `beauty guide <style>` to read one style, then `beauty page --style <style> --brief <file>`.',
+      );
+      console.log(overview);
       return;
+    }
 
     case 'guide': {
       const style = positionals[1];
@@ -167,11 +519,14 @@ async function main(): Promise<void> {
       if (localeFlag && localeFlag !== 'es' && localeFlag !== 'en') {
         throw new Error('Pass --locale es|en.');
       }
+      const idea = stringFlag(flags, 'idea') ?? (await readIdeaFile(stringFlag(flags, 'idea-file'))) ?? '';
       const result = await makeArtifact({
         kind,
         style,
-        idea: stringFlag(flags, 'idea') ?? '',
+        idea,
         locale: localeFlag === 'en' ? 'en' : localeFlag === 'es' ? 'es' : undefined,
+        title: stringFlag(flags, 'title'),
+        tagline: stringFlag(flags, 'tagline'),
         output: stringFlag(flags, 'out'),
       });
       console.log(result.summary);
@@ -338,7 +693,7 @@ async function main(): Promise<void> {
     case 'sprint': {
       const style = requireStyle(stringFlag(flags, 'style'));
       const brief = mergeBrief(await loadBrief<Partial<SprintBrief>>(stringFlag(flags, 'brief')), flags);
-      if (!brief.sprint) throw new Error('Pass a sprint brief with { "sprint": "15", "style": "nature", ... }.');
+      if (!brief.sprint) throw new Error('Pass a sprint brief with { "sprint": "15", "style": "nature", ... }. See `beauty sprint --help` for the schema.');
       const result = await createSprintKit({ ...brief, sprint: brief.sprint, style }, stringFlag(flags, 'out'));
       for (const item of [result.review, result.retro, result.planning]) {
         console.log(`${item.grade} ${item.score}/100 · vision ${item.vision}/4 · ${item.html}`);
@@ -394,13 +749,7 @@ async function main(): Promise<void> {
     }
 
     case 'doctor': {
-      console.log(`open-beauty-site ${VERSION}`);
-      console.log(`node ${process.version}`);
-      console.log(`package root ${packageRoot()}`);
-      ensureFonts();
-      console.log('fonts registered: EB Garamond, Archivo Black, Space Mono, Fraunces, Nunito Sans');
-      console.log('native canvas: ok');
-      console.log('status: ready');
+      await doctorReport();
       return;
     }
 
@@ -417,7 +766,13 @@ async function main(): Promise<void> {
   }
 }
 
-main().catch((error) => {
-  console.error(`beauty: ${(error as Error).message}`);
-  process.exitCode = 1;
-});
+const isMain =
+  process.argv[1] !== undefined &&
+  import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href;
+
+if (isMain) {
+  main().catch((error) => {
+    console.error(`beauty: ${(error as Error).message}`);
+    process.exitCode = 1;
+  });
+}

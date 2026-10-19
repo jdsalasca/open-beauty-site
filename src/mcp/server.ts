@@ -6,9 +6,20 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { z } from 'zod';
 import type { Brief, CanvasLayer, DeckBrief, ExperienceBrief, SequenceFrame, StoryBrief, StyleSlug } from '../types.js';
+import { DECK_CONTENT_SLIDE_LIMIT, DECK_STAT_LIMIT } from '../types/deck.js';
 import { VERSION } from '../index.js';
 import { createCanvas, createDeck, createExperience, createGifFile, createMotion, createPage, createSequence, createStory, timestamp } from '../generate.js';
 import { createSprintKit } from '../sprint.js';
+import {
+  sprintBurndownSchema,
+  sprintCapacitySchema,
+  sprintInfoSchema,
+  sprintRetroSchema,
+  sprintRiskSchema,
+  sprintStorySchema,
+  sprintTeamSchema,
+  sprintVelocitySchema,
+} from '../types/sprint.js';
 import { formatValidation, validateDeck, validateExperience, validateHtml, validateStory } from '../validate.js';
 import { fixHtml } from '../fix.js';
 import { presets, styleSlugs } from '../styles/presets.js';
@@ -88,7 +99,7 @@ const deckSlideSchema = z.object({
   title: z.string().min(1).max(120),
   body: z.string().max(300).optional(),
   points: z.array(deckPointSchema).max(4).optional(),
-  stats: z.array(deckStatSchema).max(3).optional(),
+  stats: z.array(deckStatSchema).max(DECK_STAT_LIMIT).optional(),
   quote: quoteSchema.optional(),
   figure: z.object({
     caption: z.string().max(140).optional(),
@@ -172,7 +183,9 @@ const deckInputSchema = z.object({
   intro: z.string().max(900).optional(),
   eyebrow: z.string().max(60).optional(),
   brand: z.string().max(50).optional(),
-  slides: z.array(deckSlideSchema).min(1).max(8).describe('Content slides. The cover and closing are generated automatically.'),
+  author: z.string().max(60).optional().describe('Author or team credited on the deck cover.'),
+  date: z.string().max(40).optional().describe('Date or date range credited on the deck cover.'),
+  slides: z.array(deckSlideSchema).min(1).max(DECK_CONTENT_SLIDE_LIMIT).describe('Content slides. The cover and closing are generated automatically.'),
   closing: z.string().max(120).optional().describe('Closing headline; defaults to "La conversación sigue."'),
   subfamily: z.string().max(40).optional().describe('Curated subfamily slug from beauty_get_style.'),
   maxxing: z.boolean().optional().describe('Richer ornament, type contrast and motion.'),
@@ -253,6 +266,8 @@ function deckBriefFromArgs(args: DeckInput): Partial<DeckBrief> {
     intro: args.intro,
     eyebrow: args.eyebrow,
     brand: args.brand,
+    author: args.author,
+    date: args.date,
     slides: args.slides,
     closing: args.closing,
     cta: args.cta,
@@ -379,6 +394,16 @@ QUALITY BAR
       .string()
       .describe('One sentence describing the subject or goal. Example: "A neighborhood bakery that bakes sourdough at dawn."'),
     locale: localeEnum.optional().describe('Microcopy language: "es" (default) or "en". Example: "en".'),
+    title: z
+      .string()
+      .max(90)
+      .optional()
+      .describe('Optional short headline override (5 words or fewer). Omit to derive it from the idea. Example: "Noche polinizadora".'),
+    tagline: z
+      .string()
+      .max(160)
+      .optional()
+      .describe('Optional one-line tagline override. Omit to derive it from the idea. Example: "Caminatas nocturnas que registran sonidos."'),
     output: z
       .string()
       .max(260)
@@ -495,45 +520,44 @@ QUALITY BAR
         'Corpo pack: one brief produces three coordinated decks (review, retrospective, planning) and three matching GIFs in one folder. Use maxxing for the full art direction. Metrics are evidence, not decoration.',
       inputSchema: {
         style: styleEnum.describe('Editorial system for the whole kit.'),
-        sprint: z.string().min(1).max(40).describe('Sprint number or name.'),
-        team: z.string().max(50).optional(),
+        sprint: z
+          .union([z.string().min(1).max(40), sprintInfoSchema])
+          .describe('Sprint id string, or { id, start?, end?, goal? }.'),
+        team: z
+          .union([z.string().min(1).max(60), sprintTeamSchema])
+          .optional()
+          .describe('Team name string, or { name, brand? }. The brand defaults to team.brand || team.name.'),
         date: z.string().max(40).optional(),
+        locale: localeEnum.optional(),
         maxxing: z.boolean().optional().describe('Richer ornament, type contrast and motion.'),
         summary: z.string().max(240).optional().describe('One honest sentence that opens the review.'),
-        metrics: z.array(z.object({ label: z.string().max(40), value: z.string().max(18) })).max(3).optional(),
-        highlights: z.array(z.string().max(120)).max(4).optional().describe('Things that now exist; what the team can demo.'),
-        blockers: z.array(z.string().max(120)).max(4).optional().describe('Systemic friction, not personal blame.'),
-        next: z.array(z.string().max(120)).max(4).optional().describe('Small bets for the next sprint.'),
+        metrics: z.array(z.object({ label: z.string().max(60), value: z.string().max(40) })).max(6).optional(),
+        highlights: z.array(z.string().max(160)).max(8).optional().describe('Things that now exist; what the team can demo.'),
+        blockers: z.array(z.string().max(160)).max(8).optional().describe('Systemic friction, not personal blame.'),
+        next: z.array(z.string().max(160)).max(8).optional().describe('Small bets for the next sprint.'),
         quote: quoteSchema.optional(),
+        stories: z.array(sprintStorySchema).max(40).optional().describe('Stories with title, points, status and owner.'),
+        velocity: z.array(sprintVelocitySchema).max(12).optional().describe('Committed vs done per sprint; the last 5 are charted.'),
+        burndown: z.array(sprintBurndownSchema).max(40).optional().describe('Remaining points per day.'),
+        risks: z.array(sprintRiskSchema).max(12).optional(),
+        retro: sprintRetroSchema.optional(),
+        capacity: z.array(sprintCapacitySchema).max(20).optional().describe('Days of focus per person for the next sprint.'),
+        nextGoal: z.string().max(240).optional(),
         subfamily: z.string().max(40).optional(),
-        output: z.string().max(260).optional().describe('Output folder. Defaults to ./beauty-output/sprint-<sprint>.'),
+        output: z.string().max(260).optional().describe('Output folder. Defaults to a unique beauty-output/sprint-<team>-<sprint>-<hash> folder.'),
       },
     },
     async (args) => {
       try {
-        const result = await createSprintKit(
-          {
-            style: args.style,
-            sprint: args.sprint,
-            team: args.team,
-            date: args.date,
-            maxxing: args.maxxing,
-            summary: args.summary,
-            metrics: args.metrics,
-            highlights: args.highlights,
-            blockers: args.blockers,
-            next: args.next,
-            quote: args.quote,
-            subfamily: args.subfamily,
-          },
-          args.output,
-        );
+        const result = await createSprintKit(args);
         const lines = [
           `Sprint kit created in ${result.directory}`,
           `review: ${result.review.grade} ${result.review.score}/100 · vision ${result.review.vision}/4`,
           `retro: ${result.retro.grade} ${result.retro.score}/100 · vision ${result.retro.vision}/4`,
           `planning: ${result.planning.grade} ${result.planning.score}/100 · vision ${result.planning.vision}/4`,
           `gifs: 3`,
+          result.issues.length ? `issues: ${result.issues.length}` : 'issues: none',
+          ...result.issues.slice(0, 8).map((issue) => `[${issue.severity}] ${issue.code}: ${issue.message}`),
           `\nNext: open the three decks, then drop the GIFs into the sprint channel.`,
         ];
         return text(lines.join('\n'));

@@ -1,5 +1,7 @@
 import type { DeckBrief, DeckSlide, DeckStat, StylePreset, StyleSubfamily } from './types.js';
-import { esc, normalizeBrief, safeHref, shell, t } from './page/common.js';
+import type { DeckBriefInput } from './types/deck.js';
+import { DECK_CONTENT_SLIDE_LIMIT, DECK_POINT_LIMIT, DECK_STAT_LIMIT } from './types/deck.js';
+import { BeautyError, clampText, esc, normalizeBrief, safeHref, shell, t } from './page/common.js';
 import { accentTextColor, textOnAccent } from './a11y.js';
 import { motifFor } from './deck-motifs.js';
 import { applyMaxxing } from './maxxing.js';
@@ -8,7 +10,7 @@ import { sceneArt } from './art.js';
 
 export interface DeckOptions {
   style: StylePreset;
-  brief: Partial<DeckBrief>;
+  brief: DeckBriefInput;
 }
 
 export interface DeckResult {
@@ -33,22 +35,34 @@ function subfamilyFor(preset: StylePreset, slug?: string): StyleSubfamily {
   return found;
 }
 
-function normalizePoints(value: DeckSlide['points']) {
-  return (value ?? [])
-    .slice(0, 4)
-    .map((point, index) => ({
-      title: String(point?.title ?? '').trim().slice(0, 80) || `Punto ${index + 1}`,
-      body: String(point?.body ?? '').trim().slice(0, 180) || undefined,
-    }));
+function normalizePoints(value: DeckSlide['points'], slide: string) {
+  const points = value ?? [];
+  if (points.length > DECK_POINT_LIMIT) {
+    throw new BeautyError(
+      `The slide "${slide}" has ${points.length} points; the points layout supports at most ${DECK_POINT_LIMIT}. ` +
+        'Move the extra points to another slide.',
+      'DECK_TOO_MANY_POINTS',
+    );
+  }
+  return points.map((point, index) => ({
+    title: String(point?.title ?? '').trim().slice(0, 80) || `Punto ${index + 1}`,
+    body: String(point?.body ?? '').trim().slice(0, 180) || undefined,
+  }));
 }
 
-function normalizeStats(value: DeckSlide['stats']): DeckStat[] {
-  return (value ?? [])
-    .slice(0, 3)
-    .map((stat) => ({
-      value: String(stat?.value ?? '').trim().slice(0, 18) || '—',
-      label: String(stat?.label ?? '').trim().slice(0, 48) || 'Dato',
-    }));
+function normalizeStats(value: DeckSlide['stats'], slide: string): DeckStat[] {
+  const stats = value ?? [];
+  if (stats.length > DECK_STAT_LIMIT) {
+    throw new BeautyError(
+      `The slide "${slide}" has ${stats.length} stats; the stats layout supports at most ${DECK_STAT_LIMIT}. ` +
+        'Split it into two slides so no figure is lost.',
+      'DECK_TOO_MANY_STATS',
+    );
+  }
+  return stats.map((stat) => ({
+    value: String(stat?.value ?? '').trim().slice(0, 18) || '—',
+    label: String(stat?.label ?? '').trim().slice(0, 48) || 'Dato',
+  }));
 }
 
 function normalizeSlides(preset: StylePreset, brief: Partial<DeckBrief>): DeckSlide[] {
@@ -72,9 +86,18 @@ function normalizeSlides(preset: StylePreset, brief: Partial<DeckBrief>): DeckSl
         ...(brief.quote ? [{ layout: 'quote' as const, kicker: 'Una voz', title: 'Cita', quote: brief.quote }] : []),
       ];
 
-  const slides = source.slice(0, 8).map((slide, index) => {
-    const points = normalizePoints(slide.points);
-    const stats = normalizeStats(slide.stats);
+  if (brief.slides && brief.slides.length > DECK_CONTENT_SLIDE_LIMIT) {
+    throw new BeautyError(
+      `The brief has ${brief.slides.length} content slides, but a deck supports at most ${DECK_CONTENT_SLIDE_LIMIT}. ` +
+        `Split it into two or more presentations of ${DECK_CONTENT_SLIDE_LIMIT} content slides or fewer; the cover and closing are added automatically.`,
+      'DECK_TOO_MANY_SLIDES',
+    );
+  }
+
+  const slides = source.slice(0, DECK_CONTENT_SLIDE_LIMIT).map((slide, index) => {
+    const label = String(slide.title ?? '').trim().slice(0, 80) || `slide ${index + 1}`;
+    const points = normalizePoints(slide.points, label);
+    const stats = normalizeStats(slide.stats, label);
     const layout =
       slide.layout ??
       (slide.figure ? 'figure' : slide.quote ? 'quote' : stats.length ? 'stats' : points.length ? 'points' : 'statement');
@@ -165,6 +188,9 @@ export function renderDeck({ style, brief: input }: DeckOptions): DeckResult {
   const accentText = accentTextColor(style.palette, accent);
   const cta = brief.cta ?? { label: t(locale, 'Gracias', 'Thank you'), href: '#' };
   const closingTitle = input.closing || t(locale, 'La conversación sigue.', 'The conversation continues.');
+  const brand = brief.brand || brief.title;
+  const author = clampText(input.author, 60) || undefined;
+  const date = clampText(input.date, 40) || undefined;
   const total = slides.length + 2;
   const display = style.fonts.display;
   const bodyFont = style.fonts.body;
@@ -187,7 +213,7 @@ export function renderDeck({ style, brief: input }: DeckOptions): DeckResult {
         <p class="kicker anim" style="--a:0">${esc(brief.eyebrow || style.name)}</p>
         <h1 class="anim" style="--a:1">${esc(brief.title)}</h1>
         ${brief.tagline ? `<p class="cover-tagline anim" style="--a:2">${esc(brief.tagline)}</p>` : ''}
-        <div class="cover-meta anim" style="--a:3"><span>${esc(style.name)}</span><span>${esc(subfamily.name)}</span><span>${String(total).padStart(2, '0')} slides</span></div>
+        <div class="cover-meta anim" style="--a:3"><span>${esc(brand)}</span>${author ? `<span>${esc(author)}</span>` : ''}${date ? `<span>${esc(date)}</span>` : ''}<span>${esc(style.name)}</span><span>${String(total).padStart(2, '0')} slides</span></div>
       </div>
       <div class="cover-mark" aria-hidden="true"><span class="cover-orbit"></span><span class="cover-dot"></span><span class="cover-index">${esc(String(total).padStart(2, '0'))}</span></div>
     </div>
@@ -250,7 +276,7 @@ body.deck{--bg:${style.palette.bg};--surface:${style.palette.surface};--ink:${st
 .deck .point>span{font-size:9px;letter-spacing:.16em;color:var(--muted)}
 .deck .point h3{font-size:clamp(15px,1.5vw,20px);line-height:1.25;margin:10px 0 8px;letter-spacing:-.01em}
 .deck .point p{font-size:12px;line-height:1.55;color:var(--muted);margin:0}
-.deck .stat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:20px}
+.deck .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(190px,100%),1fr));gap:16px;margin-top:20px}
 .deck .stat{border-top:var(--line) solid var(--accent);padding-top:12px}
 .deck .stat strong{display:block;font-family:'${display}',sans-serif;font-size:clamp(30px,5vw,64px);line-height:1;color:var(--accent-text);font-weight:400}
 .deck .stat span{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:8px}
@@ -292,7 +318,7 @@ ${motifFor(style.slug)}
   const body = `<div class="atmosphere" aria-hidden="true"></div>
 <div class="deck-progress"><i data-progress></i></div>
 <header class="deck-top">
-  <span class="deck-brand">${esc(brief.brand || 'OPEN/BEAUTY')}<span>.</span></span>
+  <span class="deck-brand">${esc(brand)}<span>.</span></span>
   <span class="deck-title">${esc(brief.title)}</span>
   <span class="deck-count"><b data-current>01</b> / ${String(total).padStart(2, '0')}</span>
 </header>

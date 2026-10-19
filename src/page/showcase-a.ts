@@ -1,4 +1,5 @@
 import type { Brief, StylePreset } from '../types.js';
+import { esc } from './common.js';
 import { renderShowcase } from './showcase.js';
 
 export function renderArtDeco(brief: Partial<Brief>, preset: StylePreset): string {
@@ -77,33 +78,47 @@ export function renderArtDeco(brief: Partial<Brief>, preset: StylePreset): strin
   return renderShowcase(brief, preset, {
     art,
     css,
-    eyebrow: brief.eyebrow || 'Una lección en oro y negro · 1925',
-    heroNote: '01 — Art Deco / Nueva York · París',
+    eyebrow: brief.eyebrow || 'Una lección en oro y negro',
+    heroNote: '01 — Art Deco',
     sectionTitle: { es: 'Tres maneras de mirar hacia arriba', en: 'Three ways of looking up' },
   });
 }
 
 export function renderIsotype(brief: Partial<Brief>, preset: StylePreset): string {
-  const person = `<svg class="picto" viewBox="0 0 20 30" aria-hidden="true"><circle cx="10" cy="4" r="3.2"/><path d="M6 10h8l2 9h-3l-1 11h-2l-1-11-1 11H6L5 19H2z"/></svg>`;
+  const locale = brief.locale === 'en' ? 'en' : 'es';
   const house = `<svg class="picto" viewBox="0 0 26 26" aria-hidden="true"><path d="M2 12L13 3l11 9h-3v11h-6v-7h-4v7H5V12z"/></svg>`;
   const tree = `<svg class="picto" viewBox="0 0 24 30" aria-hidden="true"><path d="M12 2c5 0 8 4 8 8 0 3-2 5-4 7h-2v11h-4V17H8c-2-2-4-4-4-7 0-4 3-8 8-8z"/></svg>`;
+  // The census panel derives its labels from the brief; with no sections it
+  // stays neutral instead of borrowing an unrelated dataset.
+  const brand = (brief.brand || brief.title || (locale === 'es' ? 'Censo visual' : 'Visual census')).slice(0, 40);
+  const sections = (brief.sections ?? []).slice(0, 3);
+  const labels = [0, 1, 2].map((index) =>
+    sections[index]?.title?.slice(0, 18) || (locale === 'es' ? `Grupo 0${index + 1}` : `Group 0${index + 1}`),
+  );
+  const counts = [7, 4, 3];
+  const rowsFor = (offset: number): string =>
+    labels
+      .map((label, index) => {
+        const count = (counts[index] ?? 0) + offset;
+        const picto = index === 2 ? tree : house;
+        return `<div class="iso-row"><span class="iso-label">${esc(label)}</span><div class="iso-pictos">${picto.repeat(count)}</div><b data-count="${count}">0</b></div>`;
+      })
+      .join('\n    ');
+  const tabNow = locale === 'es' ? 'Actual' : 'Now';
+  const tabCompare = locale === 'es' ? 'Comparación' : 'Comparison';
   const art = `<div class="iso-board">
-  <div class="iso-head"><span>WIEN · 1925</span><span>SOZIALBAUTEN</span></div>
-  <div class="iso-tabs" role="tablist" aria-label="Año del censo">
-    <button class="is-active" data-tab="1925">1925</button>
-    <button data-tab="1934">1934</button>
+  <div class="iso-head"><span>${esc(brand)}</span><span>${esc(locale === 'es' ? 'Serie' : 'Series')}</span></div>
+  <div class="iso-tabs" role="tablist" aria-label="${esc(tabCompare)}">
+    <button class="is-active" data-tab="now">${esc(tabNow)}</button>
+    <button data-tab="compare">${esc(tabCompare)}</button>
   </div>
-  <div class="iso-view is-active" data-view="1925">
-    <div class="iso-row"><span class="iso-label">VIVIENDA</span><div class="iso-pictos">${house.repeat(7)}</div><b data-count="68" data-suffix="%">0%</b></div>
-    <div class="iso-row"><span class="iso-label">ESCUELAS</span><div class="iso-pictos">${house.repeat(4)}</div><b data-count="42" data-suffix="%">0%</b></div>
-    <div class="iso-row"><span class="iso-label">PARQUES</span><div class="iso-pictos">${tree.repeat(3)}</div><b data-count="31" data-suffix="%">0%</b></div>
+  <div class="iso-view is-active" data-view="now">
+    ${rowsFor(0)}
   </div>
-  <div class="iso-view" data-view="1934">
-    <div class="iso-row"><span class="iso-label">VIVIENDA</span><div class="iso-pictos">${house.repeat(9)}</div><b data-count="81" data-suffix="%">0%</b></div>
-    <div class="iso-row"><span class="iso-label">ESCUELAS</span><div class="iso-pictos">${house.repeat(6)}</div><b data-count="57" data-suffix="%">0%</b></div>
-    <div class="iso-row"><span class="iso-label">PARQUES</span><div class="iso-pictos">${tree.repeat(5)}</div><b data-count="49" data-suffix="%">0%</b></div>
+  <div class="iso-view" data-view="compare">
+    ${rowsFor(2)}
   </div>
-  <div class="iso-foot"><span>1 pictograma = 10.000 unidades</span><span>01 / 03</span></div>
+  <div class="iso-foot"><span>${esc(locale === 'es' ? '1 pictograma = una unidad' : '1 pictogram = one unit')}</span><span>01 / 03</span></div>
 </div>`;
   const css = `
 .style-isotype{background:var(--bg);color:var(--ink)}
@@ -160,9 +175,9 @@ export function renderIsotype(brief: Partial<Brief>, preset: StylePreset): strin
   return renderShowcase(brief, preset, {
     art,
     css,
-    eyebrow: brief.eyebrow || 'Instituto de Viena · Método Isotype',
-    heroNote: '02 — Wien / 1925–1934',
-    sectionTitle: { es: 'La ciudad, contada en unidades', en: 'The city, counted in units' },
+    eyebrow: brief.eyebrow || 'Método Isotype',
+    heroNote: '02 — Isotype',
+    sectionTitle: { es: 'La idea, contada en unidades', en: 'The idea, counted in units' },
   });
 }
 
@@ -221,7 +236,7 @@ export function renderOpArt(brief: Partial<Brief>, preset: StylePreset): string 
     art,
     css,
     eyebrow: brief.eyebrow || 'Un ensayo sobre la percepción · Serie óptica',
-    heroNote: '03 — Op Art / Londres · 1964',
+    heroNote: '03 — Op Art',
     sectionTitle: { es: 'El ojo completa la imagen', en: 'The eye completes the image' },
   });
 }
@@ -305,8 +320,8 @@ export function renderUkiyoe(brief: Partial<Brief>, preset: StylePreset): string
   return renderShowcase(brief, preset, {
     art,
     css,
-    eyebrow: brief.eyebrow || 'Estampa del mundo flotante · Edición Meiji',
-    heroNote: '04 — Ukiyo-e / Edo · 1831',
-    sectionTitle: { es: 'El mundo flotante, en tres estampas', en: 'The floating world, in three prints' },
+    eyebrow: brief.eyebrow || 'Estampa del mundo flotante',
+    heroNote: '04 — Ukiyo-e',
+    sectionTitle: { es: 'Tres estampas para una misma orilla', en: 'Three prints from one shore' },
   });
 }

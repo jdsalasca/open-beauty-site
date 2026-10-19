@@ -1,5 +1,5 @@
 import type { Brief, Locale, SectionBrief, StylePreset } from '../types.js';
-import { focusRingColor, isDarkColor } from '../a11y.js';
+import { displayGlyphRatio, focusRingColor, headlineFitPx, HEADLINE_PREFERRED_VW, isDarkColor } from '../a11y.js';
 
 export class BeautyError extends Error {
   constructor(message: string, readonly code = 'BEAUTY_ERROR') {
@@ -153,8 +153,12 @@ function designLanguageCss(preset: StylePreset): string {
     ? `--type-display-case:${type.displayCase};--type-display-tracking:${type.displayTracking};--type-display-leading:${type.displayLeading};--type-body-size:${type.bodySize};--type-body-leading:${type.bodyLeading};--type-label-tracking:${type.labelTracking};--type-label-case:${type.labelCase};--motion-enter:${motion.enter};--motion-distance:${motion.distance};--motion-stagger:${motion.stagger};--motion-ease:${motion.easing};--motion-page:${motion.page};`
     : '';
   return `:root{${tokens}color-scheme:${scheme};--focus-ring:${focus}}
-.skip-link{position:fixed;left:14px;top:-64px;z-index:10000;background:${preset.palette.ink};color:${preset.palette.bg};padding:10px 16px;font:600 13px/1.2 system-ui,-apple-system,'Segoe UI',sans-serif;letter-spacing:.02em;text-decoration:none;outline:2px solid ${preset.palette.accent};outline-offset:-2px;transition:top .18s ease}
+.skip-link{position:absolute;left:14px;top:-64px;z-index:10000;background:${preset.palette.ink};color:${preset.palette.bg};padding:10px 16px;font:600 13px/1.2 system-ui,-apple-system,'Segoe UI',sans-serif;letter-spacing:.02em;text-decoration:none;outline:2px solid ${preset.palette.accent};outline-offset:-2px;transition:top .18s ease}
 .skip-link:focus,.skip-link:focus-visible{top:14px}
+html.is-capturing .skip-link{display:none!important}
+html.is-capturing .reveal,html.is-static .reveal{opacity:1!important;transform:none!important;transition:none!important;animation:none!important}
+html.is-capturing body,html.is-static body{animation:none!important}
+html.is-capturing{scroll-behavior:auto}
 html{overflow-x:hidden}
 html body,html body[class]{font-size:var(--type-body-size);line-height:var(--type-body-leading);font-kerning:normal;font-optical-sizing:auto;text-rendering:optimizeLegibility;overflow-x:hidden}
 html body :where(p,li),html body[class] :where(p,li){font-size:inherit}
@@ -196,6 +200,35 @@ img,svg,video,canvas{max-width:100%}
 `;
 }
 
+/** Visible text of the first <h1> in the body, used to size the headline. */
+function headlineText(markup: string): string {
+  const match = /<h1\b[^>]*>([\s\S]*?)<\/h1>/i.exec(markup);
+  if (!match) return '';
+  return (match[1] ?? '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&[a-z]+;/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * Length-aware headline typography. The generator computes the smallest font
+ * size at which the longest word of the real title still fits a 360px viewport
+ * and emits it as `--headline-fit`; the narrow-screen clamp never goes below
+ * that, so a headline can never break inside a word. The validator re-checks
+ * the same value (`headline-fits`).
+ */
+export function headlineFitCss(body: string, preset: StylePreset): string {
+  const text = headlineText(body);
+  const ratio = displayGlyphRatio(preset.fonts.display);
+  const fit = headlineFitPx(text, undefined, ratio);
+  if (!fit) return '';
+  return `:root{--headline-fit:${fit}px;--headline-ratio:${ratio}}
+html body :where(h1,h2,h3,.display){overflow-wrap:normal;word-break:normal;hyphens:manual;text-wrap:balance}
+@media (max-width:760px){html body[class] h1,html body h1{font-size:min(var(--headline-fit),${HEADLINE_PREFERRED_VW}vw)!important;line-height:1.04;letter-spacing:0;overflow-wrap:normal;word-break:normal;hyphens:manual}}
+`;
+}
+
 export interface ShellOptions {
   lang: Locale;
   title: string;
@@ -233,6 +266,7 @@ export function shell({ lang, title, description, preset, css, body, script, bod
 <style>
 ${css}
 ${designLanguageCss(preset)}
+${headlineFitCss(body, preset)}
 @media print{
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .reveal,.js .reveal{opacity:1!important;transform:none!important;transition:none!important;animation:none!important}
@@ -260,9 +294,18 @@ ${bodyClass?.includes('deck') ? '' : `<script>
 
 export const REVEAL_SCRIPT = `
 (() => {
+  const root = document.documentElement;
   const nodes = document.querySelectorAll('.reveal');
-  if (!('IntersectionObserver' in window)) {
-    nodes.forEach((node) => node.classList.add('is-in'));
+  const revealAll = () => nodes.forEach((node) => node.classList.add('is-in'));
+  const params = new URLSearchParams(location.search);
+  const staticMode =
+    params.has('static') ||
+    root.classList.contains('is-capturing') ||
+    navigator.webdriver === true ||
+    !('IntersectionObserver' in window);
+  if (staticMode) {
+    root.classList.add('is-static');
+    revealAll();
     return;
   }
   const io = new IntersectionObserver((entries) => {

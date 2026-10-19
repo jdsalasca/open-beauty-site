@@ -30,15 +30,75 @@ open-beauty-site removes those choices instead of asking for taste.
   `experience`) that already validate. Change words, not tokens.
 - Per-style skills open with a Quick recipe: three copy-paste commands, five hard
   rules, three common mistakes with fixes, and words/tone in es + en.
+- `beauty <cmd> --help` and `beauty help <cmd>` print that command's options and
+  one example. Every `--brief` flag accepts a file path or `-` for stdin, and
+  `beauty make` accepts `--idea-file`, so long briefs never hit the Windows
+  command-length limit (os error 206).
 
-## Coming in this release
+## Available one-shot and repair commands
 
-Marked as not available yet. Do not call them until shipped; use the commands in
-`skills/beauty.md` until then.
+These are shipped and tested; call them directly.
 
-- `beauty make <kind> --style <slug> --idea "..."`
-- `beauty fix <file> --style <slug>`
-- critic (automated review pass; command form to be announced)
+- `beauty make <kind> --style <slug> --idea "one sentence"` creates
+  page|deck|gif|story|experience|motion and validates in one step.
+- `beauty fix <file> --style <slug>` applies the safe automatic repairs and
+  re-validates.
+- `beauty sprint --style <slug> --brief sprint.json` writes review +
+  retrospective + planning plus three GIFs; run `beauty sprint --help` for the
+  brief schema (`sprint` is required, then team, date, summary, metrics,
+  highlights, blockers, next, quote) and the `--out` folder.
+
+## Register the MCP server for Codex/Claude
+
+`pnpm mcp:config` prints the exact snippet for your machine and never edits
+your config files. Copy the block you need:
+
+```bash
+pnpm mcp:config
+```
+
+It prints (your absolute path replaces `<repo>`):
+
+```toml
+# Codex CLI (~/.codex/config.toml)
+[mcp_servers.open_beauty]
+command = "node"
+args = ["<repo>/dist/mcp/server.js"]
+startup_timeout_sec = 30.0
+```
+
+```bash
+# Codex one-liner
+codex mcp add open-beauty -- node "<repo>/dist/mcp/server.js"
+
+# Claude Code one-liner
+claude mcp add -s user open-beauty -- node "<repo>/dist/mcp/server.js"
+```
+
+When a session has no MCP tools, fall back to the CLI: it is the same program.
+
+## How to look at your output
+
+The validator is a CSS audit, not a browser. Look at the real render before you
+ship:
+
+- `beauty validate <file> --style <s> --strict` for the craft grade and fixes.
+- Open the HTML in a browser at 360px, 768px and 1440px.
+- Screenshot with Playwright once it is installed:
+
+  ```bash
+  pnpm add -D playwright && pnpm exec playwright install chromium
+  pnpm exec playwright screenshot --full-page out/nature.html out/nature.png
+  ```
+
+- For a GIF, count frames and check the loop instead of trusting the file size:
+
+  ```bash
+  python -X utf8 -c "from PIL import Image; im=Image.open('out/n.gif'); print(im.n_frames, im.info.get('loop'))"
+  ```
+
+Scroll through a page before capturing it: sections reveal on scroll and a
+full-page screenshot can show blank bands.
 
 ## Troubleshooting
 

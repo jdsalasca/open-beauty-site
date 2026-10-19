@@ -12,6 +12,53 @@ pnpm examples
 
 `pnpm setup` instala, compila y corre la suite. `pnpm mcp:config` imprime el bloque para registrar el servidor MCP por stdio. `pnpm examples` regenera la galería de referencia.
 
+### Registrar el servidor MCP para Codex/Claude
+
+`pnpm mcp:config` imprime el snippet exacto para tu máquina y nunca edita tus archivos de configuración. Copiá el bloque que necesites:
+
+```bash
+pnpm mcp:config
+```
+
+Imprime (tu ruta absoluta reemplaza `<repo>`):
+
+```toml
+# Codex CLI (~/.codex/config.toml)
+[mcp_servers.open_beauty]
+command = "node"
+args = ["<repo>/dist/mcp/server.js"]
+startup_timeout_sec = 30.0
+```
+
+```bash
+# Codex one-liner
+codex mcp add open-beauty -- node "<repo>/dist/mcp/server.js"
+
+# Claude Code one-liner
+claude mcp add -s user open-beauty -- node "<repo>/dist/mcp/server.js"
+```
+
+### Cómo mirar tu salida
+
+El validador es una auditoría CSS, no un navegador. Mirá el render real antes de publicar:
+
+- `beauty validate <file> --style <s> --strict` para el grado y las correcciones.
+- Abrí el HTML en un navegador en 360px, 768px y 1440px.
+- Capturá con Playwright una vez instalado:
+
+  ```bash
+  pnpm add -D playwright && pnpm exec playwright install chromium
+  pnpm exec playwright screenshot --full-page out/nature.html out/nature.png
+  ```
+
+- Para un GIF, contá frames y verificá el loop en vez de confiar en el tamaño:
+
+  ```bash
+  python -X utf8 -c "from PIL import Image; im=Image.open('out/n.gif'); print(im.n_frames, im.info.get('loop'))"
+  ```
+
+Scroll-eá la página antes de capturar: las secciones aparecen al hacer scroll y una captura full-page puede mostrar bandas vacías.
+
 ## Herramientas MCP
 
 | Herramienta | Propósito | Llamada de ejemplo |
@@ -49,6 +96,7 @@ pnpm examples
 ## Solución de problemas
 
 - **Node.js 22 o superior** (`node --version`); `engines.node` lo exige.
+- **`dist/` ausente**: `pnpm install` ejecuta `prepare`, que compila `dist/` solo si falta; si corrés el CLI sin compilar, imprime la solución exacta (`pnpm build`).
 - **Fuentes**: están en `fonts/` y se registran con `@napi-rs/canvas`; no borres esa carpeta. Si falta un TTF, `beauty doctor` falla con `FONTS_MISSING`.
 - **`@napi-rs/canvas` en Windows**: reinstalá con `pnpm install` en Node 22+; usa binarios precompilados y no requiere compilación nativa. Si no carga, verificá la versión de Node y que `dist/` siga junto al repo.
 
@@ -65,7 +113,7 @@ El CLI y MCP son la fuente de verdad; los comandos exactos están en `skills/bea
 
 - **Accesibilidad**: `prefers-reduced-motion`, landmarks, `alt`, contraste de los pares de tokens que llevan texto y controles de 44 px en decks.
 - **Determinismo**: la misma brief y estilo producen el mismo HTML (salvo timestamp) y los mismos frames; los ornamentos usan PRNG sembrado.
-- **Pruebas**: `pnpm test` (19/19) y `pnpm check`; el validador exige **A/100 y visión 4/4**.
+- **Pruebas**: `pnpm test` y `pnpm check` (todo en verde); el validador exige **A/100 y visión 4/4**.
 
 
 ## Trece maneras de mirar
@@ -153,7 +201,12 @@ Los rituales ágiles pueden ser conversaciones visuales, no formularios de estad
 
 ### Un kit de sprint
 
-`beauty sprint --style nature --brief sprint.json` genera, en una sola carpeta, **review + retrospectiva + planning + tres GIFs**. El brief lleva sprint, equipo, métricas, highlights, blockers y próximos pasos; el estilo y `maxxing` se comparten. Así el ritual no empieza en una plantilla vacía ni termina en tres archivos que no se hablan.
+`beauty sprint --style nature --brief sprint.json --out out/sprint` genera, en una sola carpeta, **review + retrospectiva + planning + tres GIFs** construidos con los datos: gráfico de barras de velocidad (comprometido vs hecho), línea de burndown, tabla de historias con estado (`done`/`carried`/`dropped`), riesgos con mitigación y responsable, tres columnas de retro con acciones fechadas y barras de capacidad por persona. El brand sale de `team.brand || team.name` y el estilo y `maxxing` se comparten. Sin `--out` (ni `output` en MCP) la carpeta por defecto es `beauty-output/sprint-<equipo>-<sprint>-<hash>`, única por corrida, de modo que dos procesos en paralelo nunca colisionan.
+
+El esquema está documentado en [examples/recipes/README.md](examples/recipes/README.md#sprint-briefs) y hay un brief funcional por estilo en `examples/recipes/<style>/sprint.json`. El esquema es zod: los tipos incorrectos fallan con el campo exacto (por ejemplo `stories.0.points: expected number, received string`) y los campos desconocidos se reportan como warnings, nunca se ignoran en silencio. Los briefs legacy mínimos (`sprint`, `team`, `metrics`, `highlights`, `blockers`, `next`) siguen funcionando.
+
+Después de generar, el kit verifica fidelidad: cada título de historia, riesgo y acción provista tiene que aparecer en el HTML correspondiente; lo que falte se reporta como issue (`sprint-fidelity`). Los GIFs también son datos: la review anima las barras creciendo y el número de puntos, la retro cicla las acciones con responsable y fecha, y el planning llena las barras de capacidad.
+
 <p align="center"><a href="examples/agile/sprint-16/sprint-16-review.html"><img src="examples/agile/sprint-16/sprint-16-review.png" width="520" alt="Sprint 16 review, kit Art Deco maxxing"></a></p>
 
 

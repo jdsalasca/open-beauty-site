@@ -1,0 +1,54 @@
+{
+  "style": "renaissance",
+  "locale": "es",
+  "maxxing": true,
+  "team": { "name": "Taller del Aprendiz", "brand": "Taller del Aprendiz" },
+  "sprint": {
+    "id": "R7",
+    "start": "2026-09-28",
+    "end": "2026-10-09",
+    "goal": "Restaurar el fresco de la nave lateral sin perder la pátina"
+  },
+  "summary": "Un sprint de limpieza: menos capas, más pigmento visible.",
+  "stories": [
+    { "id": "FR-201", "title": "Cartografiar las humedades del muro norte", "points": 5, "status": "done", "owner": "Aurelia Sarto" },
+    { "id": "FR-202", "title": "Preparar el mortero de cal con árido del río", "points": 3, "status": "done", "owner": "Piero Alberti" },
+    { "id": "FR-203", "title": "Fotografiar cada estrato antes de tocar", "points": 2, "status": "done", "owner": "Nina Ferrante" },
+    { "id": "FR-204", "title": "Reintegrar el cielo con pigmento molido a mano", "points": 8, "status": "carried", "owner": "Aurelia Sarto" },
+    { "id": "FR-205", "title": "Colgar la nueva cartela de sala", "points": 2, "status": "dropped", "owner": "Piero Alberti" }
+  ],
+  "velocity": [
+    { "sprint": "R2", "committed": 12, "done": 9 },
+    { "sprint": "R3", "committed": 14, "done": 12 },
+    { "sprint": "R4", "committed": 13, "done": 11 },
+    { "sprint": "R5", "committed": 16, "done": 13 },
+    { "sprint": "R7", "committed": 20, "done": 10 }
+  ],
+  "burndown": [
+    { "day": "28/09", "remaining": 20 },
+    { "day": "30/09", "remaining": 19 },
+    { "day": "02/10", "remaining": 16 },
+    { "day": "04/10", "remaining": 14 },
+    { "day": "06/10", "remaining": 13 },
+    { "day": "08/10", "remaining": 11 },
+    { "day": "09/10", "remaining": 10 }
+  ],
+  "risks": [
+    { "title": "La humedad vuelve con la lluvia de octubre", "impact": "el pigmento recién aplicado se levanta", "mitigation": "monitorizar la cámara con registros diarios", "owner": "Nina Ferrante" },
+    { "title": "El andamio ocupa la nave durante el festival", "impact": "tres días sin acceso al muro", "mitigation": "adelantar el trabajo de laboratorio", "owner": "Piero Alberti" }
+  ],
+  "retro": {
+    "wentWell": ["Medir antes de tocar", "El laboratorio comparte pigmentos"],
+    "toImprove": ["Fotografía de estrato lenta", "Menos idas al almacén"],
+    "actions": [
+      { "what": "Publicar el registro fotográfico cada lunes", "owner": "Nina Ferrante", "due": "2026-10-19" },
+      { "what": "Reservar el andamio antes del festival", "owner": "Piero Alberti", "due": "2026-10-23" }
+    ]
+  },
+  "capacity": [
+    { "person": "Aurelia Sarto", "days": 8, "focus": "muro" },
+    { "person": "Piero Alberti", "days": 6, "focus": "morteros" },
+    { "person": "Nina Ferrante", "days": 5, "focus": "archivo" }
+  ],
+  "nextGoal": "Devolver el azul al cielo de la nave antes del festival."
+}

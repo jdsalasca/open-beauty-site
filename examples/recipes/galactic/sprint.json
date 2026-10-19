@@ -1,0 +1,54 @@
+{
+  "style": "galactic",
+  "locale": "en",
+  "maxxing": true,
+  "team": { "name": "Orbital Memory Lab", "brand": "ORBITAL" },
+  "sprint": {
+    "id": "GX11",
+    "start": "2026-10-05",
+    "end": "2026-10-16",
+    "goal": "Chart the first three months of the listening station"
+  },
+  "summary": "The station finally has a sky map that matches its logbook.",
+  "stories": [
+    { "id": "OM-101", "title": "Align the map grid with the station clock", "points": 5, "status": "done", "owner": "Iris Nakamura" },
+    { "id": "OM-102", "title": "Sonify the first 90 days of silence", "points": 8, "status": "done", "owner": "Paulo Estela" },
+    { "id": "OM-103", "title": "Publish the observing protocol", "points": 3, "status": "done", "owner": "Nadia Voss" },
+    { "id": "OM-104", "title": "Calibrate the deep-field camera", "points": 5, "status": "carried", "owner": "Iris Nakamura" },
+    { "id": "OM-105", "title": "Build a holographic projector", "points": 13, "status": "dropped", "owner": "Paulo Estela" }
+  ],
+  "velocity": [
+    { "sprint": "GX6", "committed": 18, "done": 14 },
+    { "sprint": "GX7", "committed": 20, "done": 17 },
+    { "sprint": "GX8", "committed": 19, "done": 16 },
+    { "sprint": "GX10", "committed": 26, "done": 19 },
+    { "sprint": "GX11", "committed": 34, "done": 16 }
+  ],
+  "burndown": [
+    { "day": "05/10", "remaining": 34 },
+    { "day": "07/10", "remaining": 31 },
+    { "day": "09/10", "remaining": 27 },
+    { "day": "11/10", "remaining": 24 },
+    { "day": "13/10", "remaining": 20 },
+    { "day": "15/10", "remaining": 18 },
+    { "day": "16/10", "remaining": 18 }
+  ],
+  "risks": [
+    { "title": "The station clock drifts 40 ms per day", "impact": "the map misaligns after two weeks", "mitigation": "resync against the atomic reference nightly", "owner": "Iris Nakamura" },
+    { "title": "The sonification toys with pareidolia", "impact": "listeners hear signals that are not there", "mitigation": "label the track as an interpretation", "owner": "Paulo Estela" }
+  ],
+  "retro": {
+    "wentWell": ["Logbook first, interface second", "One shared reference clock"],
+    "toImprove": ["Deep-field calibration rushed at night", "Too many instruments at once"],
+    "actions": [
+      { "what": "Schedule calibration in daylight hours", "owner": "Iris Nakamura", "due": "2026-10-23" },
+      { "what": "Add the interpretation label to every sonification", "owner": "Paulo Estela", "due": "2026-10-20" }
+    ]
+  },
+  "capacity": [
+    { "person": "Iris Nakamura", "days": 9, "focus": "map" },
+    { "person": "Paulo Estela", "days": 6, "focus": "sound" },
+    { "person": "Nadia Voss", "days": 5, "focus": "protocol" }
+  ],
+  "nextGoal": "A sky map the next observer can trust without asking us."
+}
