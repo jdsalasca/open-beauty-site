@@ -1,0 +1,641 @@
+{
+  "schemaVersion": 1,
+  "commit": "8a5269dd365762bec23ee93fb32f2d0cd975bef8",
+  "brief": {
+    "style": "brutalist",
+    "subfamily": "documentary",
+    "kind": "narrative-gif",
+    "locale": "es",
+    "audience": "Producto en Sprint Review",
+    "title": "Guías más confiables",
+    "status": "in-review",
+    "phases": [
+      {
+        "id": "before",
+        "label": "Antes",
+        "text": "Una medida inesperada podía pasar sin aviso.",
+        "visual": {
+          "kind": "comparison",
+          "state": "unreviewed"
+        }
+      },
+      {
+        "id": "change",
+        "label": "Cambio",
+        "text": "Ahora se señala para que pueda revisarse.",
+        "visual": {
+          "kind": "comparison",
+          "state": "flagged"
+        }
+      },
+      {
+        "id": "result",
+        "label": "Resultado esperado",
+        "text": "Detectar el problema antes de publicar.",
+        "visual": {
+          "kind": "comparison",
+          "state": "review-ready"
+        }
+      }
+    ],
+    "playback": {
+      "minReadableHoldMs": 5000,
+      "transitionMs": 650,
+      "loop": true
+    },
+    "output": {
+      "width": 1280,
+      "height": 720,
+      "formats": [
+        "gif",
+        "png"
+      ],
+      "preset": "review-1280x720"
+    },
+    "seed": 7
+  },
+  "briefSha256": "693b6de25ae5a00d972cfcec097b34cbf631f302ac7b050f71fb19c1aa3acbb9",
+  "style": "brutalist",
+  "subfamily": "documentary",
+  "seed": 7,
+  "renderer": {
+    "narrative": "narrative-core/0.1.0",
+    "canvas": "@napi-rs/canvas@1.0.11",
+    "gif": "gifenc@1.0.3",
+    "scene": "brutalist-documentary/1.0.0"
+  },
+  "fonts": {
+    "bundleVersion": "repo-bundled-ofl-1",
+    "roles": {
+      "display": {
+        "family": "Archivo Black",
+        "weight": 400
+      },
+      "reading": {
+        "family": "Space Mono",
+        "weight": 400
+      },
+      "label": {
+        "family": "Space Mono",
+        "weight": 700
+      },
+      "figure": {
+        "family": "Archivo Black",
+        "weight": 400
+      },
+      "annotation": {
+        "family": "Space Mono",
+        "weight": 400
+      }
+    }
+  },
+  "dimensions": {
+    "width": 1280,
+    "height": 720
+  },
+  "formats": [
+    "gif",
+    "png"
+  ],
+  "decoded": {
+    "width": 1280,
+    "height": 720,
+    "frameCount": 33,
+    "delaysMs": [
+      80,
+      5000,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      80,
+      5000,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      80,
+      5000,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70
+    ],
+    "durationMs": 17190,
+    "loopCount": 0,
+    "integrity": true
+  },
+  "ffprobe": {
+    "available": true,
+    "passed": true,
+    "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode."
+  },
+  "bytes": {
+    "gif": 715394,
+    "png": 53021,
+    "contactSheet": 53926
+  },
+  "hashes": {
+    "briefSha256": "693b6de25ae5a00d972cfcec097b34cbf631f302ac7b050f71fb19c1aa3acbb9",
+    "gifSha256": "9ba47104c2d57e4cd2dc573a002c98d046df354769a1c48c54c9a3288955cb6b",
+    "pngSha256": "0192e192386c13837252a0154032a9b314b221623d703c44ccee2883a55c1f86",
+    "contactSheetSha256": "0123ab7c745e5fb0b1531bf67062a0f09cfc0c159f932403267e773f39dc554d"
+  },
+  "files": {
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-136fcdc7\\docs\\narrative-gif\\pilots\\brutalist\\guias-mas-confiables\\guias-mas-confiables-693b6de2.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-136fcdc7\\docs\\narrative-gif\\pilots\\brutalist\\guias-mas-confiables\\guias-mas-confiables-693b6de2.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-136fcdc7\\docs\\narrative-gif\\pilots\\brutalist\\guias-mas-confiables\\guias-mas-confiables-693b6de2-contact-sheet.png"
+  },
+  "controls": [
+    {
+      "name": "gif-integrity",
+      "passed": true,
+      "detail": "Independent LZW decode and GIF trailer passed.",
+      "source": "decoded"
+    },
+    {
+      "name": "dimensions",
+      "passed": true,
+      "detail": "decoded 1280×720; requested 1280×720",
+      "source": "decoded"
+    },
+    {
+      "name": "frame-count",
+      "passed": true,
+      "detail": "33 decoded frame(s)",
+      "source": "decoded"
+    },
+    {
+      "name": "duration",
+      "passed": true,
+      "detail": "17190ms decoded; holds exclude transitions",
+      "source": "decoded"
+    },
+    {
+      "name": "loop",
+      "passed": true,
+      "detail": "repeat=0; result-to-before bridge is explicit",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-holds",
+      "passed": true,
+      "detail": "before 5000/5000ms, change 5000/5000ms, result 5000/5000ms",
+      "source": "decoded"
+    },
+    {
+      "name": "ffprobe-crosscheck",
+      "passed": true,
+      "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode.",
+      "source": "decoded"
+    },
+    {
+      "name": "files",
+      "passed": true,
+      "detail": "GIF 715394B · PNG 53021B · contact 53926B",
+      "source": "decoded"
+    },
+    {
+      "name": "scene-renderer-registered",
+      "passed": true,
+      "detail": "renderer brutalist/brutalist-documentary/1.0.0 exists; visual style likeness remains a separate review",
+      "source": "source"
+    },
+    {
+      "name": "type-system",
+      "passed": true,
+      "detail": "style typeSystem tokens are attached to raster role registry",
+      "source": "source"
+    },
+    {
+      "name": "narrative-subfamily",
+      "passed": true,
+      "detail": "brutalist/documentary selects an explicit narrative art direction",
+      "source": "source"
+    },
+    {
+      "name": "font-registration-and-glyphs",
+      "passed": true,
+      "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "distinct-frames",
+      "passed": true,
+      "detail": "21 unique composited frame(s); a format-valid static GIF does not pass",
+      "source": "pixels"
+    },
+    {
+      "name": "palette-loss",
+      "passed": true,
+      "detail": "44 colors; mean channel loss 0.022, max 8; sampled 33 frames",
+      "source": "pixels"
+    },
+    {
+      "name": "title-complete",
+      "passed": true,
+      "detail": "Guías más confiables",
+      "source": "source"
+    },
+    {
+      "name": "phase-before-label-complete",
+      "passed": true,
+      "detail": "Antes",
+      "source": "source"
+    },
+    {
+      "name": "phase-before-text-complete",
+      "passed": true,
+      "detail": "Una medida inesperada podía / pasar sin aviso.",
+      "source": "source"
+    },
+    {
+      "name": "phase-change-label-complete",
+      "passed": true,
+      "detail": "Cambio",
+      "source": "source"
+    },
+    {
+      "name": "phase-change-text-complete",
+      "passed": true,
+      "detail": "Ahora se señala para que pueda / revisarse.",
+      "source": "source"
+    },
+    {
+      "name": "phase-result-label-complete",
+      "passed": true,
+      "detail": "Resultado esperado",
+      "source": "source"
+    },
+    {
+      "name": "phase-result-text-complete",
+      "passed": true,
+      "detail": "Detectar el problema antes de / publicar.",
+      "source": "source"
+    },
+    {
+      "name": "registered-fonts",
+      "passed": true,
+      "detail": "all role faces and Spanish glyphs rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "review-size-thresholds",
+      "passed": true,
+      "detail": "title 69px; phase body >=36px; label >=24px",
+      "source": "source"
+    },
+    {
+      "name": "640x360-effective-size",
+      "passed": true,
+      "detail": "title 34.5px; body min 20.0px; label min 14.0px",
+      "source": "source"
+    },
+    {
+      "name": "contrast",
+      "passed": true,
+      "detail": "rendered text colors: ink 17.10:1; label 17.10:1 (not an OCR or per-pixel text measurement)",
+      "source": "source"
+    },
+    {
+      "name": "safe-zone-and-collisions",
+      "passed": true,
+      "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+      "source": "source"
+    },
+    {
+      "name": "stable-reading-holds",
+      "passed": true,
+      "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-count-and-copy",
+      "passed": true,
+      "detail": "3 complete phases; all copy retained",
+      "source": "source"
+    },
+    {
+      "name": "shared-object-identity",
+      "passed": true,
+      "detail": "One scene object instance is created and passed to every phase frame.",
+      "source": "source"
+    },
+    {
+      "name": "visual-state-change",
+      "passed": true,
+      "detail": "Phase states differ and exported frames are not identical.",
+      "source": "pixels"
+    },
+    {
+      "name": "result-follows-status",
+      "passed": true,
+      "detail": "status=in-review; final label=\"Resultado esperado\"",
+      "source": "source"
+    }
+  ],
+  "evaluation": {
+    "technical-integrity": {
+      "status": "pass",
+      "controls": [
+        {
+          "name": "gif-integrity",
+          "passed": true,
+          "detail": "Independent LZW decode and GIF trailer passed.",
+          "source": "decoded"
+        },
+        {
+          "name": "dimensions",
+          "passed": true,
+          "detail": "decoded 1280×720; requested 1280×720",
+          "source": "decoded"
+        },
+        {
+          "name": "frame-count",
+          "passed": true,
+          "detail": "33 decoded frame(s)",
+          "source": "decoded"
+        },
+        {
+          "name": "duration",
+          "passed": true,
+          "detail": "17190ms decoded; holds exclude transitions",
+          "source": "decoded"
+        },
+        {
+          "name": "loop",
+          "passed": true,
+          "detail": "repeat=0; result-to-before bridge is explicit",
+          "source": "decoded"
+        },
+        {
+          "name": "phase-holds",
+          "passed": true,
+          "detail": "before 5000/5000ms, change 5000/5000ms, result 5000/5000ms",
+          "source": "decoded"
+        },
+        {
+          "name": "ffprobe-crosscheck",
+          "passed": true,
+          "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode.",
+          "source": "decoded"
+        },
+        {
+          "name": "files",
+          "passed": true,
+          "detail": "GIF 715394B · PNG 53021B · contact 53926B",
+          "source": "decoded"
+        }
+      ]
+    },
+    "style-conformance": {
+      "status": "pending",
+      "sourceStatus": "pass",
+      "pixelStatus": "pass",
+      "controls": [
+        {
+          "name": "scene-renderer-registered",
+          "passed": true,
+          "detail": "renderer brutalist/brutalist-documentary/1.0.0 exists; visual style likeness remains a separate review",
+          "source": "source"
+        },
+        {
+          "name": "type-system",
+          "passed": true,
+          "detail": "style typeSystem tokens are attached to raster role registry",
+          "source": "source"
+        },
+        {
+          "name": "narrative-subfamily",
+          "passed": true,
+          "detail": "brutalist/documentary selects an explicit narrative art direction",
+          "source": "source"
+        },
+        {
+          "name": "font-registration-and-glyphs",
+          "passed": true,
+          "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "distinct-frames",
+          "passed": true,
+          "detail": "21 unique composited frame(s); a format-valid static GIF does not pass",
+          "source": "pixels"
+        },
+        {
+          "name": "palette-loss",
+          "passed": true,
+          "detail": "44 colors; mean channel loss 0.022, max 8; sampled 33 frames",
+          "source": "pixels"
+        }
+      ],
+      "note": "Source checks identify renderer/font tokens; pixel checks measure frame change and palette loss. Neither substitutes for visual review."
+    },
+    "rendered-legibility": {
+      "status": "pending",
+      "controls": [
+        {
+          "name": "title-complete",
+          "passed": true,
+          "detail": "Guías más confiables",
+          "source": "source"
+        },
+        {
+          "name": "phase-before-label-complete",
+          "passed": true,
+          "detail": "Antes",
+          "source": "source"
+        },
+        {
+          "name": "phase-before-text-complete",
+          "passed": true,
+          "detail": "Una medida inesperada podía / pasar sin aviso.",
+          "source": "source"
+        },
+        {
+          "name": "phase-change-label-complete",
+          "passed": true,
+          "detail": "Cambio",
+          "source": "source"
+        },
+        {
+          "name": "phase-change-text-complete",
+          "passed": true,
+          "detail": "Ahora se señala para que pueda / revisarse.",
+          "source": "source"
+        },
+        {
+          "name": "phase-result-label-complete",
+          "passed": true,
+          "detail": "Resultado esperado",
+          "source": "source"
+        },
+        {
+          "name": "phase-result-text-complete",
+          "passed": true,
+          "detail": "Detectar el problema antes de / publicar.",
+          "source": "source"
+        },
+        {
+          "name": "registered-fonts",
+          "passed": true,
+          "detail": "all role faces and Spanish glyphs rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "review-size-thresholds",
+          "passed": true,
+          "detail": "title 69px; phase body >=36px; label >=24px",
+          "source": "source"
+        },
+        {
+          "name": "640x360-effective-size",
+          "passed": true,
+          "detail": "title 34.5px; body min 20.0px; label min 14.0px",
+          "source": "source"
+        },
+        {
+          "name": "contrast",
+          "passed": true,
+          "detail": "rendered text colors: ink 17.10:1; label 17.10:1 (not an OCR or per-pixel text measurement)",
+          "source": "source"
+        },
+        {
+          "name": "safe-zone-and-collisions",
+          "passed": true,
+          "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+          "source": "source"
+        },
+        {
+          "name": "stable-reading-holds",
+          "passed": true,
+          "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+          "source": "decoded"
+        }
+      ],
+      "note": "Layout, contrast and decoded holds are measured; OCR and human reading at card size remain pending."
+    },
+    "narrative": {
+      "status": "pending",
+      "controls": [
+        {
+          "name": "phase-count-and-copy",
+          "passed": true,
+          "detail": "3 complete phases; all copy retained",
+          "source": "source"
+        },
+        {
+          "name": "shared-object-identity",
+          "passed": true,
+          "detail": "One scene object instance is created and passed to every phase frame.",
+          "source": "source"
+        },
+        {
+          "name": "visual-state-change",
+          "passed": true,
+          "detail": "Phase states differ and exported frames are not identical.",
+          "source": "pixels"
+        },
+        {
+          "name": "result-follows-status",
+          "passed": true,
+          "detail": "status=in-review; final label=\"Resultado esperado\"",
+          "source": "source"
+        }
+      ],
+      "note": "Automated checks verify phase/state structure and shared object identity; causal meaning still needs review."
+    },
+    "visual-review": {
+      "status": "pending",
+      "criteria": [
+        "identity at 200px thumbnail",
+        "full text and contrast at 640×360",
+        "style material in native frame",
+        "same object and causal change across phases",
+        "result faithful to status",
+        "deliberate loop restart"
+      ],
+      "evidence": []
+    },
+    "publicationRecommendation": "none"
+  },
+  "phaseCaptures": [
+    {
+      "phaseId": "before",
+      "labels": [
+        "before · inicio",
+        "before · pausa",
+        "before · salida",
+        "reinicio del loop"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-136fcdc7\\docs\\narrative-gif\\pilots\\brutalist\\guias-mas-confiables\\guias-mas-confiables-693b6de2-contact-sheet.png"
+    },
+    {
+      "phaseId": "change",
+      "labels": [
+        "change · inicio",
+        "change · pausa",
+        "change · salida"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-136fcdc7\\docs\\narrative-gif\\pilots\\brutalist\\guias-mas-confiables\\guias-mas-confiables-693b6de2-contact-sheet.png"
+    },
+    {
+      "phaseId": "result",
+      "labels": [
+        "result · inicio",
+        "result · pausa",
+        "result · salida"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-136fcdc7\\docs\\narrative-gif\\pilots\\brutalist\\guias-mas-confiables\\guias-mas-confiables-693b6de2-contact-sheet.png"
+    }
+  ],
+  "palette": {
+    "colors": 44,
+    "meanAbsoluteChannelError": 0.022,
+    "maximumChannelError": 8,
+    "sampledFrames": 33
+  },
+  "phaseHoldsVerified": [
+    {
+      "phaseId": "before",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    },
+    {
+      "phaseId": "change",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    },
+    {
+      "phaseId": "result",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    }
+  ],
+  "resourceEstimate": {
+    "pixelFrames": 30412800,
+    "maxPixelFrames": 96000000,
+    "memoryBytes": 107634688,
+    "maxMemoryBytes": 268435456
+  },
+  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed."
+}
