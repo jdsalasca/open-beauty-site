@@ -158,6 +158,11 @@ function createPlan(context: NarrativeRenderContext, box: NarrativeRect, measure
         shapes.push({ kind: 'checkbox', x: row.x + row.width * 0.91, y: row.y + row.height * 0.1, width: row.height * 0.25, height: row.height * 0.25, stroke: status === 'rejected' ? red : ink, lineWidth: 2, progress: 1 });
       }
     });
+    if (stateOf(semantic, tableId) === 'reviewed') {
+      const mark = rect(box.x + box.width * 0.075, box.y + box.height * 0.73, box.width * 0.69, box.height * 0.09);
+      addRect(mark.x, mark.y, mark.width, mark.height, paper, red, 1.5);
+      addText(tableId, sceneText('brutalist', context.brief.locale, 'semanticRetained'), mark.x + mark.width * 0.04, mark.y + mark.height * 0.72, mark.width * 0.92, 14, 'status', red);
+    }
     addLine(box.x + box.width * 0.075, contentBottom, box.width * 0.69, 0, ink, 2);
     // Keep the parent region authoritative for the shared ledger; the row regions prove row-level changes.
     addRegion(tableId, box);
@@ -215,6 +220,12 @@ function createPlan(context: NarrativeRenderContext, box: NarrativeRect, measure
       addRect(countBox.x, countBox.y, countBox.width, countBox.height, acid, ink, 3);
       addText(counter.id, String(count), countBox.x + countBox.width * 0.08, countBox.y + countBox.height * 0.73, countBox.width * 0.37, 28, 'headline', ink, 'Archivo Black');
       addText(counter.id, sceneText('brutalist', context.brief.locale, 'semanticTotal'), countBox.x + countBox.width * 0.48, countBox.y + countBox.height * 0.64, countBox.width * 0.48, 14, 'label', ink);
+      if (stateOf(semantic, counter.id) === 'pending') {
+        const mark = rect(box.x + box.width * 0.16, box.y + box.height * 0.83, box.width * 0.58, box.height * 0.08);
+        addRegion(counter.id, mark);
+        addRect(mark.x, mark.y, mark.width, mark.height, paper, red, 1.5);
+        addText(counter.id, sceneText('brutalist', context.brief.locale, 'semanticExpected'), mark.x + mark.width * 0.04, mark.y + mark.height * 0.72, mark.width * 0.92, 14, 'status', red);
+      }
     }
   } else if (semantic.primitive === 'file-download') {
     const file = semantic.entities.find((item) => item.kind === 'file');

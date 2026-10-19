@@ -115,6 +115,35 @@ test('papercraft and brutalist semantic primitives render decoded object changes
   }
 });
 
+test('review and expected-result state changes leave a decoded record in the object', async (t) => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'narrative-semantic-record-marks-'));
+  try {
+    for (const style of ['papercraft', 'brutalist'] as const) {
+      for (const locale of ['es', 'en'] as const) {
+        for (const primitive of ['table-rows', 'counter'] as const) {
+          await t.test(`${style}/${primitive}/${locale}`, async () => {
+            const brief = semanticBrief(primitive, locale, false, style);
+            const final = structuredClone(brief.phases.at(-1)!);
+            final.id = 'phase-recorded-result';
+            final.label = locale === 'en' ? 'Expected result' : 'Resultado esperado';
+            final.text = locale === 'en' ? 'Mark remains in the ledger.' : 'La marca queda en el registro.';
+            if (primitive === 'table-rows') final.visual.semantic.states.table = 'reviewed';
+            else final.visual.semantic.states.count = 'pending';
+            brief.phases.push(final);
+
+            const result = await createNarrative(brief, { outputDir: path.join(root, `${style}-${primitive}-${locale}`) });
+            const transformation = result.evaluation.narrative.controls.find((control) => control.name === 'semantic-object-transformation:phase-3 → phase-recorded-result hold');
+            assert.equal(transformation?.passed, true, transformation?.detail);
+            assert.match(transformation?.detail ?? '', primitive === 'table-rows' ? /changed-state entities: table/u : /changed-state entities: count/u);
+          });
+        }
+      }
+    }
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
 test('art-only creates a separate GIF without the narrative copy and retains object-region review', async () => {
   const root = await mkdtemp(path.join(os.tmpdir(), 'narrative-art-only-'));
   try {
