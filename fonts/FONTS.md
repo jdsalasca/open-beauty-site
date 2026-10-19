@@ -10,7 +10,7 @@ The narrative renderer registers only these repository-bundled families through 
 | Nunito Sans | Regular, Bold, ExtraBold | `OFL-nunitosans.txt` |
 | Space Mono | Regular, Bold | `OFL-spacemono.txt` |
 
-No font package or font binary was added for this foundation. The existing font files do not record upstream release versions; `repo-bundled-ofl-1` identifies this repository's current bundle, not an upstream release number. `pnpm fonts:check` verifies registered family/weight and renders/measures Spanish glyphs before a raster role is used. Missing faces fail with `FONT_MISSING`; system fallback is not an approved substitute. The bundled Fraunces Soft TTF has broken metrics and paints neither `4` nor `·`; raster roles therefore use the approved Nunito Sans ExtraBold substitute until a complete OFL Fraunces file can be packaged.
+No font package or font binary was added for this foundation. The existing font files do not record upstream release versions; `repo-bundled-ofl-1` identifies this repository's current bundle, not an upstream release number. `pnpm fonts:check` verifies registered family/weight and renders/measures Spanish glyphs before a raster role is used. Missing faces fail with `FONT_MISSING`; system fallback is not an approved substitute. Canvas misreads the bundled Fraunces Soft metrics when the exact registered CSS weight `560` is requested; raster drawing requests weight `400`, which selects the same bundled face with correct physical metrics. The runtime check confirms all 22 required Spanish glyphs, including digits and `·`, paint and measure without a substitute.
 
 ## Per-style role mapping
 
@@ -20,7 +20,7 @@ Role order is **display / reading / label / figure / annotation**. Guide familie
 |---|---|---|
 | Renaissance | EB Garamond / EB Garamond | EB Garamond / EB Garamond / EB Garamond / EB Garamond / EB Garamond |
 | Brutalist | Archivo Black / Space Mono | Archivo Black / Space Mono / Space Mono / Archivo Black / Space Mono |
-| Papercraft | Fraunces Soft / Nunito Sans | Nunito Sans / Nunito Sans / Nunito Sans / Nunito Sans / Space Mono |
+| Papercraft | Fraunces Soft / Nunito Sans | Fraunces Soft / Nunito Sans / Nunito Sans / Fraunces Soft / Space Mono |
 | Art Deco | Poiret One / Josefin Sans | Archivo Black / EB Garamond / Space Mono / EB Garamond / Space Mono |
 | Isotype | Jost / IBM Plex Sans | Archivo Black / Nunito Sans / Nunito Sans / Archivo Black / Space Mono |
 | Op Art | Archivo Black / Space Grotesk | Archivo Black / Nunito Sans / Nunito Sans / Archivo Black / Space Mono |
@@ -32,4 +32,4 @@ Role order is **display / reading / label / figure / annotation**. Guide familie
 | Galactic | Michroma / Space Grotesk | Space Mono / Nunito Sans / Nunito Sans / Space Mono / Space Mono |
 | Nature Memory | Cormorant Garamond / Karla | EB Garamond / Nunito Sans / Nunito Sans / EB Garamond / Space Mono |
 
-These raster alternatives are an implementation decision for the shared foundation. They do not claim per-style visual approval. Stage C must replace or confirm them with rendered evidence before a style scene is marked reviewed.
+Papercraft renders display and figure roles with bundled Fraunces Soft and reading/labels with bundled Nunito Sans. The remaining rows list effective bundled alternatives where the guide-preferred file is not present. The pilot review status is recorded per scene, separately from font registration.

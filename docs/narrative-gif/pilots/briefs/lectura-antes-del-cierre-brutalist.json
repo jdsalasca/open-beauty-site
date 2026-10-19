@@ -1,0 +1,17 @@
+{
+  "style": "brutalist",
+  "subfamily": "documentary",
+  "kind": "narrative-gif",
+  "locale": "es",
+  "audience": "Producto en Sprint Review",
+  "title": "Lectura antes del cierre",
+  "status": "in-review",
+  "phases": [
+    { "id": "before", "label": "Antes", "text": "La ficha puede llegar sin una lectura compartida.", "visual": { "kind": "checklist", "state": "unreviewed" } },
+    { "id": "change", "label": "Cambio", "text": "Una lista deja visibles los puntos por comprobar.", "visual": { "kind": "checklist", "state": "flagged" } },
+    { "id": "result", "label": "Resultado esperado", "text": "El equipo termina la revisión antes de cerrar la ficha.", "visual": { "kind": "checklist", "state": "review-ready" } }
+  ],
+  "playback": { "minReadableHoldMs": 5000, "transitionMs": 650, "loop": true },
+  "output": { "width": 1280, "height": 720, "formats": ["gif", "png"], "preset": "review-1280x720" },
+  "seed": 29
+}

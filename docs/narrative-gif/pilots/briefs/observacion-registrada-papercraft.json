@@ -1,0 +1,17 @@
+{
+  "style": "papercraft",
+  "subfamily": "editorial",
+  "kind": "narrative-gif",
+  "locale": "es",
+  "audience": "Producto en Sprint Review",
+  "title": "Observación registrada",
+  "status": "done",
+  "phases": [
+    { "id": "before", "label": "Antes", "text": "La ficha no indicaba dónde revisar la advertencia.", "visual": { "kind": "comparison", "state": "unreviewed" } },
+    { "id": "change", "label": "Cambio", "text": "La observación queda señalada en el mismo documento.", "visual": { "kind": "comparison", "state": "flagged" } },
+    { "id": "result", "label": "Resultado observado", "text": "La ficha queda lista para una nueva lectura.", "visual": { "kind": "comparison", "state": "reviewed" } }
+  ],
+  "playback": { "minReadableHoldMs": 5000, "transitionMs": 650, "loop": true },
+  "output": { "width": 1280, "height": 720, "formats": ["gif", "png"], "preset": "review-1280x720" },
+  "seed": 43
+}

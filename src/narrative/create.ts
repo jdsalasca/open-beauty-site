@@ -47,7 +47,7 @@ export async function createNarrative(input: NarrativeBriefInput | unknown, opti
     ...evaluation['rendered-legibility'].controls,
     ...evaluation.narrative.controls,
   ];
-  const { path: manifestPath } = await createNarrativeManifest({ brief, briefHash: hash, encoded, controls, outputDir });
+  const { path: manifestPath } = await createNarrativeManifest({ brief, briefHash: hash, encoded, controls, evaluation, outputDir });
   const diagnostics = [
     ...layout.warnings.map((message) => ({ code: 'LAYOUT_WARNING', message })),
     ...(evaluation['style-conformance'].status === 'pending' ? [{ code: 'STYLE_REVIEW_PENDING', message: 'Source and pixel controls do not replace human review of the rendered style.' }] : []),

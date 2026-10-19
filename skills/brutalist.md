@@ -14,7 +14,7 @@ node dist/cli.js gif --style brutalist --text "Brutalist Signal" --out out/bruta
 ```
 
 **5 hard rules**
-- Display font is `Archivo Black`; body and labels use it too. Never substitute.
+- Display font is bundled `Archivo Black`; reading copy and labels use bundled `Space Mono`. Keep body text typographic and legible; do not render it as pixels.
 - Border widths: 3, 6 px. Radius: 0–0 px.
 - Motion window: 0.15–0.7 s.
 - Shadow: Hard offset only: 8px 8px 0 #0B0B0B (zero blur). Hover can grow it to 12px 12px.
@@ -112,6 +112,12 @@ A loud poster that happens to be a website. Visible skeleton, 3px borders, hard 
 - No soft or blurred shadows.
 - No serif, no pastel, no centered-everything layouts.
 - No more than one acid block and one red stamp per screen.
+
+## Narrative subfamilies
+
+- `documentary`: original forms, blank stubs, ledger rules, a grid and a status margin. The same document moves through unreviewed, observation and review-ready states.
+- `poster`: the existing high-contrast poster direction remains available as a separate narrative composition.
+- Do not borrow any game sprites, interface, layout or assets for documentary work.
 
 ## Type system
 

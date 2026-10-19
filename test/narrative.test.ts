@@ -4,7 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { loadImage } from '@napi-rs/canvas';
 import test from 'node:test';
-import { checkAllNarrativeFonts, NARRATIVE_GLYPHS } from '../src/narrative/fonts.js';
+import { checkAllNarrativeFonts, getNarrativeFontProfile, NARRATIVE_GLYPHS } from '../src/narrative/fonts.js';
 import { normalizeContentSource, normalizeNarrativeBrief } from '../src/narrative/brief.js';
 import { layoutNarrative } from '../src/narrative/layout.js';
 import { buildNarrativeTimeline } from '../src/narrative/timeline.js';
@@ -60,6 +60,8 @@ test('brief normalizes defaults, hashes canonically and keeps the final state ho
     { id: 'result', label: 'Expected result', text: 'Review before release.', visual: { kind: 'document', state: 'ready' } },
   ] });
   assert.equal(normalizeNarrativeBrief(englishExpected).brief.phases[2]!.label, 'Expected result');
+  const open = brief({ status: 'open' });
+  assert.equal(normalizeNarrativeBrief(open).brief.phases[2]!.label, 'Resultado esperado');
 });
 
 test('brief failures use actionable typed codes and millisecond units', () => {
@@ -77,6 +79,9 @@ test('brief failures use actionable typed codes and millisecond units', () => {
   codeFrom(() => normalizeNarrativeBrief(brief({ output: { width: 2880, height: 1620, formats: ['gif', 'png'] } })), 'RESOURCE_LIMIT');
   codeFrom(() => normalizeNarrativeBrief(brief({ output: { width: 640, height: 400, formats: ['gif', 'png'] } })), 'UNSUPPORTED_ASPECT');
   codeFrom(() => normalizeNarrativeBrief(brief({ playback: { minReadableHoldMs: 700_000, transitionMs: 650, loop: true } })), 'BAD_DURATION');
+  codeFrom(() => normalizeNarrativeBrief(brief({ playback: { minReadableHoldMs: '7000ms', transitionMs: 650, loop: true } })), 'BAD_DURATION');
+  codeFrom(() => normalizeNarrativeBrief(brief({ output: { width: -1280, height: 720, formats: ['gif', 'png'] } })), 'IMPOSSIBLE_SIZE');
+  codeFrom(() => normalizeNarrativeBrief(brief({ output: { width: '1280px', height: 720, formats: ['gif', 'png'] } })), 'IMPOSSIBLE_SIZE');
 });
 
 test('external ContentSource adapts to the same validated contract without ticket coupling', async () => {
@@ -121,6 +126,13 @@ test('layout supports square and story ratios and rejects text it cannot fit', (
     assert.match((error as Error & { suggestion?: string }).suggestion ?? '', /Split the phase/);
     return true;
   });
+  const longText = brief() as Record<string, any>;
+  longText.phases[0].text = 'La guía reúne una medida, su explicación y una recomendación de lectura para que el equipo pueda volver sobre el dato antes de dejar constancia de su revisión. '.repeat(8);
+  assert.throws(() => layoutNarrative(normalizeNarrativeBrief(longText).brief), (error: unknown) => {
+    assert.equal((error as { code: string }).code, 'TEXT_OVERFLOW');
+    assert.match((error as Error & { suggestion?: string }).suggestion ?? '', /Split the phase/);
+    return true;
+  });
 });
 
 test('all 13 styles have registered role faces and rendered Spanish glyph coverage', () => {
@@ -128,6 +140,10 @@ test('all 13 styles have registered role faces and rendered Spanish glyph covera
   assert.equal(checks.length, 65);
   assert.equal(new Set(checks.map((check) => check.style)).size, 13);
   assert.ok(checks.every((check) => check.glyphs === 22 && check.measured === 22 && check.renderedPixels === 22));
+  const papercraft = getNarrativeFontProfile('papercraft');
+  assert.equal(papercraft.effective.display.family, 'Fraunces');
+  assert.equal(papercraft.effective.reading.family, 'Nunito Sans');
+  assert.equal(papercraft.preferred.display.family, 'Fraunces');
 });
 
 test('timeline gives each phase a separate readable hold and transitions at 12fps or faster', () => {
@@ -283,11 +299,11 @@ test('negative controls cannot pass on file format alone', async () => {
   }
 });
 
-test('unregistered styles return STYLE_NOT_SUPPORTED_YET and list current support', () => {
-  assert.deepEqual(supportedNarrativeStyles(), []);
-  assert.throws(() => getNarrativeScene('papercraft'), (error: unknown) => {
+test('only the two pilot renderers are registered; other styles retain the explicit limitation', () => {
+  assert.deepEqual(supportedNarrativeStyles(), ['brutalist', 'papercraft']);
+  assert.throws(() => getNarrativeScene('renaissance'), (error: unknown) => {
     assert.equal((error as { code: string }).code, 'STYLE_NOT_SUPPORTED_YET');
-    assert.match((error as Error).message, /Supported styles: none/);
+    assert.match((error as Error).message, /Supported styles: brutalist, papercraft/);
     return true;
   });
 });

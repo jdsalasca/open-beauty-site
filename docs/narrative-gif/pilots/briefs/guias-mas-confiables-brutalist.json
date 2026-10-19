@@ -1,0 +1,17 @@
+{
+  "style": "brutalist",
+  "subfamily": "documentary",
+  "kind": "narrative-gif",
+  "locale": "es",
+  "audience": "Producto en Sprint Review",
+  "title": "Guías más confiables",
+  "status": "in-review",
+  "phases": [
+    { "id": "before", "label": "Antes", "text": "Una medida inesperada podía pasar sin aviso.", "visual": { "kind": "comparison", "state": "unreviewed" } },
+    { "id": "change", "label": "Cambio", "text": "Ahora se señala para que pueda revisarse.", "visual": { "kind": "comparison", "state": "flagged" } },
+    { "id": "result", "label": "Resultado esperado", "text": "Detectar el problema antes de publicar.", "visual": { "kind": "comparison", "state": "review-ready" } }
+  ],
+  "playback": { "minReadableHoldMs": 5000, "transitionMs": 650, "loop": true },
+  "output": { "width": 1280, "height": 720, "formats": ["gif", "png"], "preset": "review-1280x720" },
+  "seed": 7
+}

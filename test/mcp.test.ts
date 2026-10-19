@@ -136,13 +136,14 @@ test('creates a valid GIF over MCP', async () => {
   assert.equal(file.subarray(0, 6).toString('ascii'), 'GIF89a');
 });
 
-test('narrative MCP reports structured unsupported-style diagnostics and separate levels', async () => {
+test('narrative MCP creates a real pilot pack and keeps visual review pending', async () => {
   const result = await client.callTool({
     name: 'beauty_create_narrative',
     arguments: {
       style: 'papercraft',
       brief: {
         style: 'papercraft',
+        subfamily: 'editorial',
         kind: 'narrative-gif',
         locale: 'es',
         audience: 'Producto',
@@ -157,20 +158,41 @@ test('narrative MCP reports structured unsupported-style diagnostics and separat
       output: 'out/narrative',
     },
   });
-  assert.equal(result.isError, true);
+  assert.notEqual(result.isError, true);
   const structured = result.structuredContent as {
     ok: boolean;
-    diagnostics: Array<{ code: string; message: string }>;
+    paths: { gif: string; png: string; contactSheet: string; manifest: string };
     evaluation: Record<string, { status: string }>;
   };
-  assert.equal(structured.ok, false);
-  assert.equal(structured.diagnostics[0]?.code, 'STYLE_NOT_SUPPORTED_YET');
-  assert.match(structured.diagnostics[0]?.message ?? '', /Supported styles: none/);
+  assert.equal(structured.ok, true);
   assert.deepEqual(Object.keys(structured.evaluation).sort(), [
     'technical-integrity', 'style-conformance', 'rendered-legibility', 'narrative', 'visual-review', 'publicationRecommendation',
   ].sort());
   assert.equal(structured.evaluation['visual-review']?.status, 'pending');
-  assert.ok(!existsSync(path.join(dir, 'out', 'narrative')));
+  assert.ok(existsSync(structured.paths.gif));
+  assert.ok(existsSync(structured.paths.png));
+  assert.ok(existsSync(structured.paths.contactSheet));
+  assert.ok(existsSync(structured.paths.manifest));
+});
+
+test('narrative MCP keeps non-pilot styles explicitly unsupported', async () => {
+  const result = await client.callTool({
+    name: 'beauty_create_narrative',
+    arguments: {
+      style: 'renaissance',
+      brief: { style: 'renaissance', kind: 'narrative-gif', audience: 'Producto', title: 'Revisión', status: 'in-review', phases: [
+        { id: 'before', label: 'Antes', text: 'Sin revisión.', visual: { kind: 'comparison', state: 'unreviewed' } },
+        { id: 'change', label: 'Cambio', text: 'Señal visible.', visual: { kind: 'comparison', state: 'flagged' } },
+        { id: 'result', label: 'Resultado esperado', text: 'Lista para revisar.', visual: { kind: 'comparison', state: 'review-ready' } },
+      ] },
+      output: 'out/unsupported-narrative',
+    },
+  });
+  const structured = result.structuredContent as { ok: boolean; diagnostics: Array<{ code: string; message: string }> };
+  assert.equal(structured.ok, false);
+  assert.equal(structured.diagnostics[0]?.code, 'STYLE_NOT_SUPPORTED_YET');
+  assert.match(structured.diagnostics[0]?.message ?? '', /Supported styles: brutalist, papercraft/);
+  assert.ok(!existsSync(path.join(dir, 'out', 'unsupported-narrative')));
 });
 test('aborts a GIF request instead of waiting for the render', async () => {
   const controller = new AbortController();

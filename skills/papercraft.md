@@ -14,7 +14,7 @@ node dist/cli.js gif --style papercraft --text "Paper Craft Taller" --out out/pa
 ```
 
 **5 hard rules**
-- Display font is `Fraunces`; body and labels use it too. Never substitute.
+- Display font is bundled `Fraunces Soft`; reading copy uses bundled `Nunito Sans`. Labels use Nunito Sans ExtraBold. Keep the family roles distinct.
 - Border widths: 1, 2 px. Radius: 10–48 px.
 - Motion window: 0.5–1.2 s.
 - Shadow: Soft and warm: 0 22px 40px rgba(74,58,50,.20) plus a 0 2px 0 edge. Never a hard offset.

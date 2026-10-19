@@ -29,6 +29,7 @@ export class NarrativeError extends Error {
 }
 
 export type NarrativeStatus = 'open' | 'in-review' | 'done';
+export type NarrativeSubfamily = 'editorial' | 'documentary' | 'poster';
 export type NarrativeOutputPreset = 'review-1280x720' | 'card-640x360' | 'square-1080' | 'story-1080x1920';
 export type NarrativeFormat = 'gif' | 'png';
 
@@ -54,6 +55,7 @@ export interface NarrativeOutput {
 
 export interface NarrativeBriefInput {
   style: StyleSlug;
+  subfamily?: NarrativeSubfamily;
   kind: 'narrative-gif';
   locale: 'es' | 'en';
   audience: string;
@@ -66,6 +68,7 @@ export interface NarrativeBriefInput {
 }
 
 export interface NormalizedNarrativeBrief extends NarrativeBriefInput {
+  subfamily?: NarrativeSubfamily;
   playback: NarrativePlayback;
   output: NarrativeOutput;
   seed: number;

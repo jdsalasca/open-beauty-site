@@ -1,6 +1,6 @@
 # Narrative GIF foundation: architecture decision
 
-**Status:** Stage A + Stage B foundation. No production style scene is registered.
+**Status:** Stage A and the Stage B foundation are complete. The two production pilots are papercraft/editorial and brutalist/documentary; brutalist/poster remains available. The other eleven styles have no production scene.
 
 ## Decision
 
@@ -16,7 +16,7 @@ brief.ts ──► normalized brief + canonical SHA-256
     ├──► fonts.ts ──► existing StylePreset.typeSystem + registered raster roles
     ├──► layout.ts ──► width/height fit, safe area, reserved art area, card-size measures
     ├──► timeline.ts ──► entry, visible hold, transition, explicit loop bridge
-    └──► scene.ts ──► NarrativeScene registry (empty in this foundation)
+    └──► scene.ts ──► NarrativeScene registry (papercraft + brutalist pilots)
                          │
                          ▼
                     encode.ts ──► GIF + PNG + contact sheet
@@ -26,7 +26,7 @@ brief.ts ──► normalized brief + canonical SHA-256
                          └──► manifest.ts (inputs, files, hashes, decode and controls)
 ```
 
-The scene gets the normalized brief, phase index, local time, safe boxes, all font roles and a seeded RNG. The engine creates one `object` once and passes that same reference to every phase. Production `supportedNarrativeStyles()` is currently empty; unsupported requests return `STYLE_NOT_SUPPORTED_YET` with the complete supported-style list. `test/support/narrative-scene.ts` injects one tiny renderer only in tests.
+The scene gets the normalized brief, phase index, local time, safe boxes, all font roles and a seeded RNG. The engine creates one `object` once and passes that same reference to every phase. Production `supportedNarrativeStyles()` is `brutalist, papercraft`; unsupported requests return `STYLE_NOT_SUPPORTED_YET` with that complete supported-style list. `test/support/narrative-scene.ts` injects one tiny renderer only in foundation-specific tests.
 
 ## Reuse and compatibility
 
@@ -40,11 +40,11 @@ The scene gets the normalized brief, phase index, local time, safe boxes, all fo
 
 `kind` is `narrative-gif`; a brief has 3–5 non-empty phases and `status` controls whether the last label must identify an observed or expected result. Holds use milliseconds, default to and cannot go below 5000ms, and are encoded as one GIF frame delay per phase. Transitions distribute GIF-centisecond delays across frames no longer than 80ms (at least 12.5fps); a 650ms request becomes `80,80,70,70,70,70,70,70,70ms` and does not consume the hold. Looping includes an explicit result-to-before bridge. The default 1280×720 preset and card check use 56px title, 36px body and 24px label minimums at native size; layout also checks ascent/descent, tracking, line height, five-percent safe margins and a reserved art region.
 
-The timeline rejects more than 360 frames, more than 96 million pixel-frames and an estimated working set over 256MiB (GIF output, raster buffers, samples and contact-sheet overhead). The brief rejects dimensions outside supported limits and does not silently resize substantial requests. Output includes GIF, a static PNG and a labeled contact sheet for phase start/hold/exit and loop restart. The manifest records the estimated resource use alongside decoded delays, duration, loop, dimensions, hashes, sizes, role faces, controls and source commit; it contains no credentials. A single `A` or technical pass does not imply style, legibility, narrative or visual approval, and `publicationRecommendation` is always `none`.
+The timeline rejects more than 360 frames, more than 96 million pixel-frames and an estimated working set over 256MiB (GIF output, raster buffers, samples and contact-sheet overhead). The brief rejects dimensions outside supported limits and does not silently resize substantial requests. Output includes GIF, a static PNG and a labeled contact sheet for phase start/hold/exit and loop restart. The manifest records independently decoded dimensions, frame delays, duration, loop, hashes, sizes, role faces, source controls, all five evaluation levels, and the source commit; it contains no credentials. A single `A` or technical pass does not imply style, legibility, narrative or visual approval, and `publicationRecommendation` is always `none`.
 
 ## Typography and licensing
 
-The role registry records each guide-preferred family and the approved bundled face used for raster output. It checks registered weights and draws/measures `á é í ó ú ü ñ ¿ ¡ 0–9 % → ·`; a missing role or glyph raises `FONT_MISSING`. `pnpm fonts:check` executes all 65 style/role checks. No fonts were downloaded or installed: only existing OFL files are used. `fonts/FONTS.md` lists effective role families, licenses and the Fraunces Soft metrics issue. Alternatives are implementation choices awaiting style-specific visual approval.
+The role registry records each guide-preferred family, effective bundled face and any approved per-glyph fallback. Papercraft display is Fraunces Soft and its reading face is Nunito Sans. Canvas misreads the Fraunces face's exact registered weight 560; the raster code requests weight 400 so the same bundled typeface renders at normal size. It checks registered roles and paints/measures `á é í ó ú ü ñ ¿ ¡ 0–9 % → ·`; unresolved roles or glyphs raise `FONT_MISSING`. `pnpm fonts:check` executes all 65 style/role checks. No fonts were downloaded or installed. `fonts/FONTS.md` records the measured faces and the raster weight workaround.
 
 ## Evaluation honesty
 
@@ -52,4 +52,11 @@ The five output keys are `technical-integrity`, `style-conformance`, `rendered-l
 
 ## Determinism and limits
 
-The E2E test requires byte-identical GIF, poster PNG and contact-sheet bytes for the same brief and seed in this environment; manifest paths reflect the chosen output directory. The manifest scopes rendering determinism to the same OS, architecture, Node/dependency lock and `@napi-rs/canvas`/`gifenc` versions; it makes no cross-platform byte-equality claim. The independent LZW decoder is compared with `ffprobe` where available. No production style renderer, full-animation visual review, 13-style GIF gallery, human legibility review or reference-board comparison is delivered in this foundation; those remain Stage C/D work.
+The pilot E2E tests require byte-identical GIF, poster PNG and contact-sheet bytes for the same brief and seed in this environment; manifest paths reflect the chosen output directory. The manifest scopes rendering determinism to the same OS, architecture, Node/dependency lock and `@napi-rs/canvas`/`gifenc` versions; it makes no cross-platform byte-equality claim. The independent LZW decoder is compared with `ffprobe` where available. Human visual review and 640×360 reading checks are recorded separately; they remain pending until an identified reviewer records evidence.
+
+## Stage B pilot renderers
+
+- **Papercraft/editorial:** one persistent `guía` card with controlled cut edges, a visible notch, layered paper shadows at 2/14/30px, and a torn butter ribbon. The `comparison` composition uses a marked editorial sheet; `checklist` uses the same sheet as a review list. Seeded changes are limited to cut variant, backing paper, small rotation and ribbon angle. State changes add a terracotta signal and a separate `EN REVISIÓN` mark; the card text remains unobscured.
+- **Brutalist/documentary:** one persistent form/ticket with sharp 3px borders, hard offset shadow, a ledger grid, blank fields and a dedicated status margin. `comparison` uses a form with a perforated blank stub; `checklist` uses ruled review rows. An observation stamp occupies a reserved footer and a separate checkbox records review-ready. No value, date, folio or measurement is invented. `poster` keeps a distinct high-contrast sign composition.
+- Both pilots support 16:9, 1:1 and 9:16. The object stays inside the shared safe/art areas; no square or portrait output is cropped or stretched. A layout overflow returns `TEXT_OVERFLOW` with the complete copy retained in the diagnostic source.
+- See `styles/papercraft.md`, `styles/brutalist.md` and `pilots/REVIEW.md` for composition contracts, rendered evidence, iterations and remaining weaknesses.

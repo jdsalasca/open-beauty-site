@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import type { NarrativeControlResult, NormalizedNarrativeBrief } from '../types/narrative.js';
+import type { NarrativeControlResult, NarrativeEvaluation, NormalizedNarrativeBrief } from '../types/narrative.js';
 import type { NarrativeEncodedFiles } from './encode.js';
 
 export const NARRATIVE_FONT_BUNDLE_VERSION = 'repo-bundled-ofl-1';
@@ -19,12 +19,13 @@ export interface NarrativeManifest {
   fonts: { bundleVersion: string; roles: NarrativeEncodedFiles['fonts']['effective'] };
   dimensions: { width: number; height: number };
   formats: string[];
-  decoded: { frameCount: number; delaysMs: number[]; durationMs: number; loopCount: number; integrity: boolean };
+  decoded: { width: number; height: number; frameCount: number; delaysMs: number[]; durationMs: number; loopCount: number; integrity: boolean };
   ffprobe: NarrativeEncodedFiles['ffprobe'];
   bytes: NarrativeEncodedFiles['bytes'];
   hashes: { briefSha256: string; gifSha256: string; pngSha256: string; contactSheetSha256: string };
   files: NarrativeEncodedFiles['paths'];
   controls: NarrativeControlResult[];
+  evaluation: NarrativeEvaluation;
   phaseCaptures: Array<{ phaseId: string; labels: string[]; contactSheet: string }>;
   palette: NarrativeEncodedFiles['palette'];
   phaseHoldsVerified: NarrativeEncodedFiles['phaseHoldsVerified'];
@@ -51,9 +52,10 @@ export async function createNarrativeManifest(input: {
   briefHash: string;
   encoded: NarrativeEncodedFiles;
   controls: NarrativeControlResult[];
+  evaluation: NarrativeEvaluation;
   outputDir: string;
 }): Promise<{ manifest: NarrativeManifest; path: string }> {
-  const { brief, briefHash, encoded, controls, outputDir } = input;
+  const { brief, briefHash, encoded, controls, evaluation, outputDir } = input;
   const phaseCaptures = brief.phases.map((phase, index) => ({
     phaseId: phase.id,
     labels: [
@@ -68,13 +70,15 @@ export async function createNarrativeManifest(input: {
     brief,
     briefSha256: briefHash,
     style: brief.style,
-    subfamily: null,
+    subfamily: brief.subfamily ?? null,
     seed: brief.seed,
     renderer: { narrative: encoded.rendererVersion, canvas: '@napi-rs/canvas@1.0.11', gif: 'gifenc@1.0.3', scene: encoded.sceneVersion },
     fonts: { bundleVersion: NARRATIVE_FONT_BUNDLE_VERSION, roles: encoded.fonts.effective },
     dimensions: { width: brief.output.width, height: brief.output.height },
     formats: [...brief.output.formats],
     decoded: {
+      width: encoded.decoded.width,
+      height: encoded.decoded.height,
       frameCount: encoded.decoded.frames.length,
       delaysMs: encoded.decoded.delaysMs,
       durationMs: encoded.decoded.durationMs,
@@ -91,11 +95,12 @@ export async function createNarrativeManifest(input: {
     },
     files: encoded.paths,
     controls,
+    evaluation,
     phaseCaptures,
     palette: encoded.palette,
     phaseHoldsVerified: encoded.phaseHoldsVerified,
     resourceEstimate: encoded.resourceEstimate,
-    deterministicScope: 'Byte-for-byte determinism is verified on the same OS, architecture, Node/npm dependency lock and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed.',
+    deterministicScope: 'Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed.',
   };
   const manifestPath = path.join(outputDir, `${path.basename(encoded.paths.gif, '.gif')}.manifest.json`);
   await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
