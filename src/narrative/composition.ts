@@ -1,4 +1,5 @@
 import type { StyleSlug } from '../types.js';
+import type { NarrativeRect, NarrativeSceneLayout } from '../types/narrative.js';
 
 /**
  * Per-style narrative composition ratios.
@@ -83,3 +84,130 @@ export function narrativeCompositionFor(style: StyleSlug, semantic = false): Nar
 export function narrativeLabelToneFor(style: StyleSlug): 'ink' | 'accent' {
   return NARRATIVE_LABEL_TONE_BY_STYLE[style];
 }
+
+/**
+ * Scene layouts are declared as data, not as per-style render branches. Every
+ * registered scene can mirror its existing composition (object-left/right);
+ * the two pilot styles additionally render the vertical and hero layouts.
+ */
+export const NARRATIVE_SCENE_LAYOUTS = [
+  'object-left', 'object-right', 'object-top', 'object-hero',
+] as const satisfies readonly NarrativeSceneLayout[];
+
+const NARRATIVE_LAYOUTS_BY_STYLE: Readonly<Partial<Record<StyleSlug, readonly NarrativeSceneLayout[]>>> = {
+  papercraft: NARRATIVE_SCENE_LAYOUTS,
+  brutalist: NARRATIVE_SCENE_LAYOUTS,
+};
+
+const NARRATIVE_ASPECTS_BY_STYLE: Readonly<Record<StyleSlug, readonly number[]>> = {
+  artdeco: [16 / 9, 1, 9 / 16],
+  bestiary: [16 / 9, 1],
+  brutalist: [16 / 9, 1],
+  galactic: [16 / 9],
+  isotype: [16 / 9, 1, 9 / 16],
+  memphis: [16 / 9, 1],
+  nature: [16 / 9],
+  opart: [16 / 9, 1, 9 / 16],
+  papercraft: [16 / 9, 1],
+  psychedelic: [16 / 9, 1],
+  renaissance: [16 / 9, 1, 9 / 16],
+  ukiyoe: [16 / 9, 1],
+  vaporwave: [16 / 9],
+};
+
+function supportsAspect(style: StyleSlug, aspect: number): boolean {
+  return NARRATIVE_ASPECTS_BY_STYLE[style]
+    .some((ratio) => Math.abs(aspect - ratio) / ratio < 0.015);
+}
+
+export function narrativeLayoutsFor(style: StyleSlug, aspect: number): NarrativeSceneLayout[] {
+  if (!supportsAspect(style, aspect)) return [];
+  const layouts = NARRATIVE_LAYOUTS_BY_STYLE[style];
+  return [...(layouts ?? ['object-left', 'object-right'])];
+}
+
+export interface NarrativeLayoutBoxes {
+  titleRatio: number;
+  labelRatio: number;
+  bodyRatio: number;
+  /** Gap as a ratio of the text area height. */
+  gapRatio: number;
+}
+
+export const NARRATIVE_LAYOUT_BOXES: Readonly<Record<NarrativeSceneLayout, NarrativeLayoutBoxes>> = {
+  'object-left': { titleRatio: 0.23, labelRatio: 0.10, bodyRatio: 0.56, gapRatio: 0.10 },
+  'object-right': { titleRatio: 0.23, labelRatio: 0.10, bodyRatio: 0.56, gapRatio: 0.10 },
+  'object-top': { titleRatio: 0.46, labelRatio: 0.21, bodyRatio: 0.28, gapRatio: 0.02 },
+  'object-hero': { titleRatio: 0.44, labelRatio: 0.28, bodyRatio: 0.20, gapRatio: 0.03 },
+};
+
+export interface NarrativeResolvedLayout {
+  layout: NarrativeSceneLayout;
+  textArea: NarrativeRect;
+  reservedArtArea: NarrativeRect;
+  boxes: NarrativeLayoutBoxes;
+}
+
+function safeArea(width: number, height: number): NarrativeRect {
+  return { x: width * 0.05, y: height * 0.05, width: width * 0.9, height: height * 0.9 };
+}
+
+/**
+ * Resolve one layout hint to frame geometry. Left/right reuse the per-style
+ * composition row; top/hero are shared vertical data and never mutate the
+ * committed default geometry.
+ */
+export function resolveNarrativeLayout(
+  style: StyleSlug,
+  layout: NarrativeSceneLayout,
+  semantic: boolean,
+  width: number,
+  height: number,
+): NarrativeResolvedLayout {
+  const safe = safeArea(width, height);
+  if (layout === 'object-top') {
+    return {
+      layout,
+      textArea: { x: safe.x, y: height * 0.55, width: safe.width, height: height * 0.40 },
+      reservedArtArea: { x: safe.x, y: safe.y, width: safe.width, height: height * 0.47 },
+      boxes: NARRATIVE_LAYOUT_BOXES[layout],
+    };
+  }
+  if (layout === 'object-hero') {
+    return {
+      layout,
+      textArea: { x: safe.x, y: safe.y, width: width * 0.29, height: safe.height },
+      reservedArtArea: { x: safe.x + width * 0.31, y: safe.y, width: width * 0.59, height: safe.height },
+      boxes: NARRATIVE_LAYOUT_BOXES[layout],
+    };
+  }
+  const composition = narrativeCompositionFor(style, semantic);
+  const textWidth = width * composition.textWidthRatio;
+  const artWidth = width * composition.artWidthRatio;
+  const artY = height * composition.artY;
+  const artHeight = height * composition.artHeight;
+  const gap = width * composition.artGapRatio;
+  if (layout === 'object-left') {
+    const art = { x: safe.x, y: artY, width: artWidth, height: artHeight };
+    return {
+      layout,
+      textArea: { x: art.x + art.width + gap, y: safe.y, width: textWidth, height: safe.height },
+      reservedArtArea: art,
+      boxes: {
+        ...NARRATIVE_LAYOUT_BOXES[layout],
+        labelRatio: semantic ? 0.18 : NARRATIVE_LAYOUT_BOXES[layout].labelRatio,
+      },
+    };
+  }
+  const text = { x: safe.x, y: safe.y, width: textWidth, height: safe.height };
+  return {
+    layout,
+    textArea: text,
+    reservedArtArea: { x: text.x + text.width + gap, y: artY, width: artWidth, height: artHeight },
+    boxes: {
+      ...NARRATIVE_LAYOUT_BOXES[layout],
+      labelRatio: semantic ? 0.18 : NARRATIVE_LAYOUT_BOXES[layout].labelRatio,
+    },
+  };
+}
+

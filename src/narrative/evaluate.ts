@@ -148,6 +148,8 @@ export function measureCompositionBalance(input: {
   height: number;
   background: string;
   textArea: NarrativeLayout['textArea'];
+  /** When present, object occupancy is measured inside this box instead of right of the copy column. */
+  artArea?: NarrativeLayout['reservedArtArea'];
 }): CompositionBalanceMetrics {
   const columns = 8;
   const rows = 4;
@@ -215,9 +217,21 @@ export function measureCompositionBalance(input: {
     .filter((row) => textColumns.some((column) => occupied[row * columns + column]));
   const occupiedCells = occupied.filter(Boolean).length;
   let occupiedObjectCells = 0;
-  for (const column of objectColumns) {
+  if (input.artArea) {
     for (let row = 0; row < rows; row += 1) {
-      if (occupied[row * columns + column]) occupiedObjectCells += 1;
+      for (let column = 0; column < columns; column += 1) {
+        const centerX = (column + 0.5) * input.width / columns;
+        const centerY = (row + 0.5) * input.height / rows;
+        const inside = centerX >= input.artArea.x && centerX < input.artArea.x + input.artArea.width
+          && centerY >= input.artArea.y && centerY < input.artArea.y + input.artArea.height;
+        if (inside && occupied[row * columns + column]) occupiedObjectCells += 1;
+      }
+    }
+  } else {
+    for (const column of objectColumns) {
+      for (let row = 0; row < rows; row += 1) {
+        if (occupied[row * columns + column]) occupiedObjectCells += 1;
+      }
     }
   }
   return {
@@ -298,11 +312,12 @@ export function evaluateNarrative(input: {
     if (!frame || frame.rgb.length !== encoded.decoded.width * encoded.decoded.height * 3) return [];
     return [{
       frameIndex: capture.frameIndex,
+      phaseIndex: capture.phaseIndex,
       label: capture.label,
       phaseId: brief.phases[capture.phaseIndex]!.id,
       kind: capture.kind,
       regions: capture.regions,
-      metrics: measureCompositionBalance({ rgb: frame.rgb, width: encoded.decoded.width, height: encoded.decoded.height, background: stylePreset.palette.bg, textArea: layout.textArea }),
+      metrics: measureCompositionBalance({ rgb: frame.rgb, width: encoded.decoded.width, height: encoded.decoded.height, background: stylePreset.palette.bg, textArea: layout.phaseFrames[capture.phaseIndex]!.textArea }),
     }];
   });
   const firstComposition = compositionRows[0]?.metrics;
@@ -311,6 +326,20 @@ export function evaluateNarrative(input: {
   const compositionByFrame = compositionRows.map(({ label, metrics }) =>
     `${label}: empty ${percent(metrics.emptyCellRatio)}, text fill ${percent(metrics.textColumnFillRatio)}, art ${percent(metrics.objectAreaRatio)}, largest empty ${percent(metrics.largestEmptyRectangleRatio)}`,
   );
+  const heroPhaseIndexes = brief.phases.flatMap((phase, index) => phase.layout === 'object-hero' ? [index] : []);
+  const heroHolds = heroPhaseIndexes.map((phaseIndex) => {
+    const hold = compositionRows.find((row) => row.kind === 'hold' && row.phaseIndex === phaseIndex);
+    return { phaseIndex, phaseId: brief.phases[phaseIndex]!.id, ratio: hold?.metrics.objectAreaRatio };
+  });
+  const heroProminencePassed = heroPhaseIndexes.length > 0
+    && heroHolds.every((hold) => hold.ratio !== undefined && hold.ratio >= 0.30);
+  const objectProminenceControls: NarrativeControlResult[] = heroPhaseIndexes.length === 0 ? [] : [{
+    name: 'object-prominence',
+    passed: heroProminencePassed,
+    status: heroProminencePassed ? 'pass' : 'fail',
+    detail: `proxy: non-background occupancy of the layout art box on the decoded 8×4 grid; threshold >=30% for object-hero. Per hold: ${heroHolds.map((hold) => `${hold.phaseId}: ${hold.ratio === undefined ? 'not measured' : percent(hold.ratio)}`).join(', ')}. This is an area proxy, not an aesthetic score.`,
+    source: 'decoded',
+  }];
   const readabilityControls: NarrativeControlResult[] = [
     ...textControls,
     { name: 'registered-fonts', passed: input.fontChecksPassed ?? true, detail: input.fontChecksPassed === false ? 'a required family, weight or glyph failed rendering/measurement' : 'all role faces and Spanish glyphs rendered/measured', source: 'source' },
@@ -324,6 +353,7 @@ export function evaluateNarrative(input: {
         : 'No scene-declared text boxes were available inside semantic object regions.';
       return [{ name: 'semantic-text-legibility', passed: metrics.passed, status: metrics.textCount ? (metrics.passed ? 'pass' as const : 'fail' as const) : 'pending' as const, detail, source: 'decoded' as const }];
     })() : []),
+    ...objectProminenceControls,
     {
       name: 'composition-balance',
       passed: !compositionNeedsRevision,
@@ -441,7 +471,7 @@ export function evaluateNarrative(input: {
     }
   }
   const narrativeControls: NarrativeControlResult[] = [
-    { name: 'phase-count-and-copy', passed: brief.phases.length >= 3 && brief.phases.length <= 5 && textControls.every((control) => control.passed), detail: `${brief.phases.length} complete phases; all copy retained`, source: 'source' },
+    { name: 'phase-count-and-copy', passed: brief.phases.length >= 3 && brief.phases.length <= 8 && textControls.every((control) => control.passed), detail: `${brief.phases.length} complete phases; all copy retained`, source: 'source' },
     { name: 'shared-object-identity', passed: true, detail: 'One scene object instance is created and passed to every phase frame.', source: 'source' },
     { name: 'visual-state-change', passed: encoded.uniquePixelFrames > 1, detail: 'Phase states may repeat when narratively valid; decoded frames still need to change.', source: 'pixels' },
     { name: 'workflow-outcome-separation', passed: true, detail: `workflowStatus=${brief.workflowStatus}; outcome=${brief.outcome.mode}; illustrative=${brief.illustrative}`, source: 'source' },

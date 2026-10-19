@@ -18,6 +18,7 @@ export const NARRATIVE_ERROR_CODES = [
   'UNSUPPORTED_VISUAL_KIND',
   'UNSUPPORTED_ACTION',
   'UNSUPPORTED_ENTITY',
+  'UNSUPPORTED_LAYOUT',
 ] as const;
 
 export type NarrativeErrorCode = (typeof NARRATIVE_ERROR_CODES)[number];
@@ -46,16 +47,19 @@ export type NarrativeStatus = 'open' | 'in-review' | 'done';
 export type NarrativeLocale = 'es' | 'en';
 export type NarrativeOutcomeMode = 'expected' | 'observed';
 export type NarrativeBadgePolicy = 'none' | 'custom' | 'workflow';
-export type NarrativePlaybackPreset = 'readable' | 'concise';
+export type NarrativePlaybackPreset = 'readable' | 'concise' | 'product-review';
 export type NarrativeSubfamily = 'editorial' | 'documentary' | 'poster';
 export type NarrativeOutputPreset = 'review-1280x720' | 'card-640x360' | 'square-1080' | 'story-1080x1920';
 export type NarrativeFormat = 'gif' | 'png';
+export type NarrativeSceneLayout = 'object-left' | 'object-right' | 'object-top' | 'object-hero';
 
 export interface NarrativePhase {
   id: string;
   label: string;
   text: string;
   visual: { kind: string; state: string; action?: string; semantic?: NarrativeSemanticSceneInput };
+  /** Optional per-scene geometry; omitted keeps the style's current left-copy/right-object layout. */
+  layout?: NarrativeSceneLayout;
   holdMs?: number;
 }
 
@@ -195,15 +199,42 @@ export interface NarrativeRect {
   height: number;
 }
 
+export interface NarrativeCopyPositions {
+  titleY: number;
+  labelY: number;
+  bodyY: number;
+  groupHeight: number;
+}
+
+export interface NarrativePhaseFrameLayout {
+  layout: NarrativeSceneLayout;
+  textArea: NarrativeRect;
+  reservedArtArea: NarrativeRect;
+  copyPositions: NarrativeCopyPositions;
+  title: NarrativeTextBlock;
+  label: NarrativeTextBlock;
+  body: NarrativeTextBlock;
+}
+
 export interface NarrativeLayout {
   safeZone: NarrativeRect;
   textArea: NarrativeRect;
   reservedArtArea: NarrativeRect;
-  copyPositions: { titleY: number; labelY: number; bodyY: number; groupHeight: number };
+  copyPositions: NarrativeCopyPositions;
   title: NarrativeTextBlock;
   phases: NarrativePhaseLayout[];
+  /** Per-scene resolved geometry; index matches `brief.phases`. */
+  phaseFrames: NarrativePhaseFrameLayout[];
   cardScale: number;
   warnings: string[];
+}
+
+export interface NarrativeEditorialWarning {
+  code: 'EDITORIAL_GUIDELINE' | 'CONTENT_LINT';
+  message: string;
+  suggestion: string;
+  field?: string;
+  phaseIndex?: number;
 }
 
 export interface NarrativeRenderContext {

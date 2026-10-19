@@ -1,8 +1,8 @@
 import type { SKRSContext2D } from '@napi-rs/canvas';
 import { canvasFor } from '../canvas.js';
-import { narrativeCompositionFor } from './composition.js';
+import { resolveNarrativeLayout, type NarrativeLayoutBoxes } from './composition.js';
 import { faceForNarrativeGlyph, getNarrativeFontProfile, checkNarrativeFontRoles, narrativeCanvasWeight } from './fonts.js';
-import { NarrativeError, type NormalizedNarrativeBrief, type NarrativeFontRole, type NarrativeLayout, type NarrativeRect, type NarrativeTextBlock } from '../types/narrative.js';
+import { NarrativeError, type NormalizedNarrativeBrief, type NarrativeFontRole, type NarrativeLayout, type NarrativeCopyPositions, type NarrativePhaseFrameLayout, type NarrativeRect, type NarrativeTextBlock } from '../types/narrative.js';
 
 interface FitTextOptions {
   text: string;
@@ -131,30 +131,26 @@ function assertSafeRect(rect: NarrativeRect, width: number, height: number): voi
   }
 }
 
-export function layoutNarrative(brief: NormalizedNarrativeBrief): NarrativeLayout {
-  checkNarrativeFontRoles(brief.style);
-  const fonts = getNarrativeFontProfile(brief.style);
-  const width = brief.output.width;
-  const height = brief.output.height;
-  const semantic = brief.phases.some((phase) => phase.visual.semantic.primitive !== 'legacy-illustration');
-  const composition = narrativeCompositionFor(brief.style, semantic);
-  const { ctx } = canvasFor(16, 16);
-  const safeZone: NarrativeRect = { x: width * 0.05, y: height * 0.05, width: width * 0.9, height: height * 0.9 };
-  const textArea: NarrativeRect = { x: safeZone.x, y: safeZone.y, width: width * composition.textWidthRatio, height: safeZone.height };
-  const reservedArtArea: NarrativeRect = {
-    x: textArea.x + textArea.width + width * composition.artGapRatio,
-    y: height * composition.artY,
-    width: width * composition.artWidthRatio,
-    height: height * composition.artHeight,
-  };
-  assertSafeRect(safeZone, width, height);
-  assertSafeRect(reservedArtArea, width, height);
-  const cardScale = Math.min(640 / width, 360 / height);
-  const scale = Math.min(width / 1280, height / 720);
-  const titleBox: NarrativeRect = { x: textArea.x, y: textArea.y, width: textArea.width, height: textArea.height * 0.23 };
-  const labelBox: NarrativeRect = { x: textArea.x, y: textArea.y, width: textArea.width, height: textArea.height * (semantic ? 0.18 : 0.10) };
-  const bodyBox: NarrativeRect = { x: textArea.x, y: textArea.y, width: textArea.width, height: textArea.height * 0.56 };
-  const titleSize = fitText({
+interface FittedCopy {
+  title: NarrativeTextBlock;
+  phases: Array<{ label: NarrativeTextBlock; body: NarrativeTextBlock }>;
+  copyPositions: NarrativeCopyPositions;
+}
+
+function fitCopy(
+  brief: NormalizedNarrativeBrief,
+  fonts: ReturnType<typeof getNarrativeFontProfile>,
+  ctx: SKRSContext2D,
+  textArea: NarrativeRect,
+  boxes: NarrativeLayoutBoxes,
+  gapHeight: number,
+  cardScale: number,
+  scale: number,
+): FittedCopy {
+  const titleBox: NarrativeRect = { x: textArea.x, y: textArea.y, width: textArea.width, height: textArea.height * boxes.titleRatio };
+  const labelBox: NarrativeRect = { x: textArea.x, y: textArea.y, width: textArea.width, height: textArea.height * boxes.labelRatio };
+  const bodyBox: NarrativeRect = { x: textArea.x, y: textArea.y, width: textArea.width, height: textArea.height * boxes.bodyRatio };
+  const title = fitText({
     text: brief.title,
     box: titleBox,
     face: fonts.effective.display,
@@ -195,15 +191,86 @@ export function layoutNarrative(brief: NormalizedNarrativeBrief): NarrativeLayou
   });
   const maxLabelHeight = Math.max(...phases.map((phase) => phase.label.height));
   const maxBodyHeight = Math.max(...phases.map((phase) => phase.body.height));
-  const titleLabelGap = height * 0.10;
-  const labelBodyGap = height * 0.10;
-  const groupHeight = titleSize.height + titleLabelGap + maxLabelHeight + labelBodyGap + maxBodyHeight;
+  const titleLabelGap = gapHeight;
+  const labelBodyGap = gapHeight;
+  const groupHeight = title.height + titleLabelGap + maxLabelHeight + labelBodyGap + maxBodyHeight;
   const groupTop = textArea.y + (textArea.height - groupHeight) / 2;
-  const copyPositions = {
-    titleY: groupTop,
-    labelY: groupTop + titleSize.height + titleLabelGap,
-    bodyY: groupTop + titleSize.height + titleLabelGap + maxLabelHeight + labelBodyGap,
-    groupHeight,
+  return {
+    title,
+    phases,
+    copyPositions: {
+      titleY: groupTop,
+      labelY: groupTop + title.height + titleLabelGap,
+      bodyY: groupTop + title.height + titleLabelGap + maxLabelHeight + labelBodyGap,
+      groupHeight,
+    },
   };
-  return { safeZone, textArea, reservedArtArea, copyPositions, title: titleSize, phases, cardScale, warnings: [] };
+}
+
+export function layoutNarrative(brief: NormalizedNarrativeBrief): NarrativeLayout {
+  checkNarrativeFontRoles(brief.style);
+  const fonts = getNarrativeFontProfile(brief.style);
+  const width = brief.output.width;
+  const height = brief.output.height;
+  const semantic = brief.phases.some((phase) => phase.visual.semantic.primitive !== 'legacy-illustration');
+  const { ctx } = canvasFor(16, 16);
+  const safeZone: NarrativeRect = { x: width * 0.05, y: height * 0.05, width: width * 0.9, height: height * 0.9 };
+  assertSafeRect(safeZone, width, height);
+  const cardScale = Math.min(640 / width, 360 / height);
+  const scale = Math.min(width / 1280, height / 720);
+
+  const baseline = resolveNarrativeLayout(brief.style, 'object-right', semantic, width, height);
+  assertSafeRect(baseline.reservedArtArea, width, height);
+  const baselineCopy = fitCopy(brief, fonts, ctx, baseline.textArea, baseline.boxes, height * 0.10, cardScale, scale);
+
+  const phaseFrames: NarrativePhaseFrameLayout[] = brief.phases.map((phase, index) => {
+    const hint = phase.layout ?? 'object-right';
+    if (hint === 'object-right') {
+      return {
+        layout: hint,
+        textArea: baseline.textArea,
+        reservedArtArea: baseline.reservedArtArea,
+        copyPositions: baselineCopy.copyPositions,
+        title: baselineCopy.title,
+        label: baselineCopy.phases[index]!.label,
+        body: baselineCopy.phases[index]!.body,
+      };
+    }
+    const resolved = resolveNarrativeLayout(brief.style, hint, semantic, width, height);
+    assertSafeRect(resolved.reservedArtArea, width, height);
+    if (hint === 'object-left') {
+      return {
+        layout: hint,
+        textArea: resolved.textArea,
+        reservedArtArea: resolved.reservedArtArea,
+        copyPositions: baselineCopy.copyPositions,
+        title: baselineCopy.title,
+        label: baselineCopy.phases[index]!.label,
+        body: baselineCopy.phases[index]!.body,
+      };
+    }
+    const fitted = fitCopy(brief, fonts, ctx, resolved.textArea, resolved.boxes, resolved.textArea.height * resolved.boxes.gapRatio, cardScale, scale);
+    return {
+      layout: hint,
+      textArea: resolved.textArea,
+      reservedArtArea: resolved.reservedArtArea,
+      copyPositions: fitted.copyPositions,
+      title: fitted.title,
+      label: fitted.phases[index]!.label,
+      body: fitted.phases[index]!.body,
+    };
+  });
+
+  const first = phaseFrames[0]!;
+  return {
+    safeZone,
+    textArea: first.textArea,
+    reservedArtArea: first.reservedArtArea,
+    copyPositions: first.copyPositions,
+    title: first.title,
+    phases: phaseFrames.map((frame) => ({ label: frame.label, body: frame.body })),
+    phaseFrames,
+    cardScale,
+    warnings: [],
+  };
 }

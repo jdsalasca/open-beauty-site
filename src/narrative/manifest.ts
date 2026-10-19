@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import type { NarrativeControlResult, NarrativeEvaluation, NormalizedNarrativeBrief } from '../types/narrative.js';
+import type { NarrativeControlResult, NarrativeEditorialWarning, NarrativeEvaluation, NormalizedNarrativeBrief } from '../types/narrative.js';
 import type { NarrativeEncodedFiles } from './encode.js';
 import type { NarrativeTimeline } from './timeline.js';
 
@@ -37,6 +37,7 @@ export interface NarrativeManifest {
   compositionByFrame: NonNullable<NarrativeEncodedFiles['compositionByFrame']>;
   palette: NarrativeEncodedFiles['palette'];
   phaseHoldsVerified: NarrativeEncodedFiles['phaseHoldsVerified'];
+  editorialWarnings: NarrativeEditorialWarning[];
   timing: {
     preset: NormalizedNarrativeBrief['playback']['preset'];
     holdsRequestedMs: number;
@@ -80,9 +81,10 @@ export async function createNarrativeManifest(input: {
   timeline: NarrativeTimeline;
   controls: NarrativeControlResult[];
   evaluation: NarrativeEvaluation;
+  editorialWarnings?: NarrativeEditorialWarning[];
   outputDir: string;
 }): Promise<{ manifest: NarrativeManifest; path: string }> {
-  const { brief, briefHash, encoded, timeline, controls, evaluation, outputDir } = input;
+  const { brief, briefHash, encoded, timeline, controls, evaluation, editorialWarnings = [], outputDir } = input;
   const phaseCaptures = brief.phases.map((phase, index) => ({
     phaseId: phase.id,
     labels: [
@@ -142,6 +144,7 @@ export async function createNarrativeManifest(input: {
     compositionByFrame: encoded.compositionByFrame ?? [],
     palette: encoded.palette,
     phaseHoldsVerified: encoded.phaseHoldsVerified,
+    editorialWarnings,
     timing: {
       preset: brief.playback.preset,
       holdsRequestedMs: timeline.durationBreakdown.holdsRequestedMs,

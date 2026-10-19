@@ -107,6 +107,19 @@ function sceneContext(
   };
 }
 
+function phaseFrameLayout(layout: NarrativeLayout, phaseIndex: number): NarrativeLayout {
+  const frame = layout.phaseFrames[phaseIndex];
+  if (!frame) return layout;
+  return {
+    ...layout,
+    textArea: frame.textArea,
+    reservedArtArea: frame.reservedArtArea,
+    copyPositions: frame.copyPositions,
+    title: frame.title,
+    phases: [{ label: frame.label, body: frame.body }],
+  };
+}
+
 function renderFramePixels(
   ctx: SKRSContext2D,
   brief: NormalizedNarrativeBrief,
@@ -122,7 +135,8 @@ function renderFramePixels(
   const width = brief.output.width;
   const height = brief.output.height;
   const phaseIndex = frame.phaseIndex;
-  const raw = scene.renderFrame(sceneContext(brief, layout, fonts, object, frame, index, localTimeMs));
+  const frameLayout = phaseFrameLayout(layout, phaseIndex);
+  const raw = scene.renderFrame(sceneContext(brief, frameLayout, fonts, object, frame, index, localTimeMs));
   if (!(raw instanceof Uint8ClampedArray) || raw.length !== width * height * 4) {
     throw new NarrativeError('RESOURCE_LIMIT', `Scene ${scene.style} returned ${raw?.length ?? 0} RGBA bytes; expected ${width * height * 4}.`, 'Return one complete RGBA canvas for every timeline frame.');
   }
@@ -137,13 +151,13 @@ function renderFramePixels(
   ctx.fillRect(0, 0, width, height);
   ctx.globalCompositeOperation = 'source-over';
 
-  const phaseLayout = layout.phases[phaseIndex]!;
-  const textArea = layout.textArea;
-  const { titleY, labelY, bodyY } = layout.copyPositions;
+  const phaseLayout = frameLayout.phases[0]!;
+  const textArea = frameLayout.textArea;
+  const { titleY, labelY, bodyY } = frameLayout.copyPositions;
   const palette = getStyle(brief.style).palette;
   const labelColor = palette[narrativeLabelToneFor(brief.style)];
   if (!artOnly) {
-    drawBlock(ctx, layout.title, textArea.x, titleY, fonts.effective.display, fonts.approvedAlternative.display, palette.ink);
+    drawBlock(ctx, frameLayout.title, textArea.x, titleY, fonts.effective.display, fonts.approvedAlternative.display, palette.ink);
     drawBlock(ctx, phaseLayout.label, textArea.x, labelY, fonts.effective.label, fonts.approvedAlternative.label, labelColor);
     drawBlock(ctx, phaseLayout.body, textArea.x, bodyY, fonts.effective.reading, fonts.approvedAlternative.reading, palette.ink);
   }
@@ -331,6 +345,7 @@ export interface NarrativeEncodedFiles {
   semanticObjectCaptures: Array<{ label: string; phaseIndex: number; fromPhaseIndex: number; frameIndex: number; kind: 'hold' | 'transition' | 'loop-bridge'; regions: ReturnType<NonNullable<NarrativeScene['objectRegions']>> }>;
   compositionByFrame?: Array<{
     frameIndex: number;
+    phaseIndex: number;
     label: string;
     phaseId: string;
     kind: 'hold' | 'transition' | 'loop-bridge';
@@ -378,7 +393,7 @@ export async function encodeNarrative(
     const pixels = renderFramePixels(renderContext, brief, layout, fonts, scene, object, frame, index, localTimeMs, artOnly);
     const spec = semanticSpecByFrame.get(index);
     if (spec) {
-      const context = sceneContext(brief, layout, fonts, object, frame, index, localTimeMs);
+      const context = sceneContext(brief, phaseFrameLayout(layout, frame.phaseIndex), fonts, object, frame, index, localTimeMs);
       semanticObjectCaptures.push({ ...spec, regions: scene.objectRegions?.(context) ?? [] });
     }
     phaseSamples.push(sampleRgba(pixels));
@@ -449,19 +464,30 @@ export async function encodeNarrative(
 
   const captureByFrame = new Map(semanticObjectCaptures.map((capture) => [capture.frameIndex, capture]));
   const compositionByFrame: NonNullable<NarrativeEncodedFiles['compositionByFrame']> = [];
-  const retainDecodedSamples = semanticObjectCaptures.some((capture) => capture.regions.length > 0);
+  const retainDecodedSamples = semanticObjectCaptures.some((capture) => capture.regions.length > 0)
+    || brief.phases.some((phase) => phase.layout !== undefined);
   const decoded = verifyNarrativeGif(gifBytes, semanticObjectCaptures.map((capture) => capture.frameIndex), {
     retainSamples: retainDecodedSamples,
     onSample: ({ index, rgb }) => {
       const capture = captureByFrame.get(index);
       if (!capture) return;
+      const frameGeometry = layout.phaseFrames[capture.phaseIndex]!;
+      const explicitLayout = brief.phases[capture.phaseIndex]!.layout !== undefined;
       compositionByFrame.push({
         frameIndex: capture.frameIndex,
+        phaseIndex: capture.phaseIndex,
         label: capture.label,
         phaseId: brief.phases[capture.phaseIndex]!.id,
         kind: capture.kind,
         regions: capture.regions,
-        metrics: measureCompositionBalance({ rgb, width, height, background: getStyle(brief.style).palette.bg, textArea: layout.textArea }),
+        metrics: measureCompositionBalance({
+          rgb,
+          width,
+          height,
+          background: getStyle(brief.style).palette.bg,
+          textArea: frameGeometry.textArea,
+          ...(explicitLayout ? { artArea: frameGeometry.reservedArtArea } : {}),
+        }),
       });
     },
   });
