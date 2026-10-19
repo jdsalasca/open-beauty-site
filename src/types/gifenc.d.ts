@@ -4,6 +4,7 @@ declare module 'gifenc' {
     delay?: number;
     repeat?: number;
     transparent?: boolean;
+    transparentIndex?: number;
     dispose?: number;
   }
   export interface Encoder {
