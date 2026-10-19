@@ -85,6 +85,15 @@ test('fix snaps off-palette colours to the nearest palette token', () => {
   for (const hex of hexes) assert.ok(palette.has(hex), `${hex} is not in the palette`);
 });
 
+test('fix snaps shorthand and long off-palette hexes alike', () => {
+  const palette = new Set(Object.values(getStyle('isotype').palette).map((hex) => hex.toUpperCase()));
+  for (const hex of ['#fff', '#ffffff']) {
+    const result = fixHtml(shell('<h1>X</h1>', `body{background:${hex}}`), 'isotype');
+    const found = [...result.html.matchAll(/#[0-9a-fA-F]{3,8}\b/g)].map((match) => match[0].toUpperCase());
+    for (const value of found) assert.ok(palette.has(value), `${hex}: ${value} is not in the palette`);
+  }
+});
+
 test('fix clamps an out-of-range border radius', () => {
   const result = fixHtml(shell('<h1>X</h1>', `.card{border-radius:24px}`), 'brutalist');
   assert.match(result.html, /border-radius:0px/);
