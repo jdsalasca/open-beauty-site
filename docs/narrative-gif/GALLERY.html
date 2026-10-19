@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
-  <title>Revisión de Sprint</title>
+  <title>Galería de revisión narrativa</title>
   <style>
     :root { color-scheme: light; --paper: #FBF1E2; --surface: #FFF8EA; --ink: #4A3A32; --muted: #7A5F50; --line: #7A5F50; --accent: #CE7256; --accent-ink: #FFF8EA; --highlight: #F2C879; --pending-ink: #4A3A32; --focus: #4A3A32; font-family: 'Nunito Sans', 'Trebuchet MS', sans-serif; background: var(--paper); color: var(--ink); }
     * { box-sizing: border-box; }
@@ -38,7 +38,9 @@
     .piece:nth-child(4n + 2) { margin-top: 0.65rem; }
     .piece-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.5rem; }
     .piece h2 { margin: 0; font-size: clamp(1.2rem, 2.6vw, 1.65rem); line-height: 1.2; }
-    .status-tag { padding: 0.18rem 0.55rem; border: 1px solid var(--ink); border-radius: 48px; font-size: 12px; font-weight: 700; }
+    .status-tag, .evidence-tag { padding: 0.18rem 0.55rem; border: 1px solid var(--ink); border-radius: 48px; font-size: 12px; font-weight: 700; }
+    .evidence-tag--illustrative { border-style: dashed; }
+    .evidence-tag--measured { background: var(--highlight); }
     .piece-meta { display: flex; flex-wrap: wrap; gap: 0.35rem 1rem; margin: 0.8rem 0; }
     .piece-meta div { display: flex; flex-wrap: wrap; gap: 0.25rem; min-width: 0; }
     .piece-meta dt { color: var(--muted); font-weight: 700; }
@@ -74,8 +76,8 @@
   <a class="skip-link" href="#main-content">Saltar al contenido</a>
   <header class="site-header">
     <p class="eyebrow">Open Beauty · revisión editorial</p>
-    <h1>Revisión de Sprint</h1>
-    <p class="intro">Cada pieza abre como imagen fija. Reproduce el GIF solo cuando quieras revisar el ritmo. Los estados de evaluación proceden de cada manifiesto; la revisión visual pendiente no aprueba la publicación.</p>
+    <h1>Galería de revisión narrativa</h1>
+    <p class="intro">Cada pieza abre como imagen fija. Reproduce el GIF solo cuando quieras revisar el ritmo. La galería distingue ejemplos ilustrativos, resultados esperados y resultados observados con evidencia; la revisión visual pendiente no aprueba la publicación.</p>
   </header>
   <main id="main-content">
     <section class="toolbar" aria-labelledby="filter-heading">
@@ -84,13 +86,11 @@
     <button type="button" class="filter-chip" data-filter="all" aria-pressed="true">Todos los estilos</button>
     <button type="button" class="filter-chip" data-filter="artdeco" aria-pressed="false">Art Deco</button>
 <button type="button" class="filter-chip" data-filter="bestiary" aria-pressed="false">Illuminated bestiary</button>
-<button type="button" class="filter-chip" data-filter="brutalist" aria-pressed="false">Brutalist</button>
 <button type="button" class="filter-chip" data-filter="galactic" aria-pressed="false">Galactic Futurism</button>
 <button type="button" class="filter-chip" data-filter="isotype" aria-pressed="false">Isotype</button>
 <button type="button" class="filter-chip" data-filter="memphis" aria-pressed="false">Memphis</button>
 <button type="button" class="filter-chip" data-filter="nature" aria-pressed="false">Nature Memory</button>
 <button type="button" class="filter-chip" data-filter="opart" aria-pressed="false">Op Art</button>
-<button type="button" class="filter-chip" data-filter="papercraft" aria-pressed="false">Paper Craft</button>
 <button type="button" class="filter-chip" data-filter="psychedelic" aria-pressed="false">Psychedelic poster</button>
 <button type="button" class="filter-chip" data-filter="renaissance" aria-pressed="false">Renaissance</button>
 <button type="button" class="filter-chip" data-filter="ukiyoe" aria-pressed="false">Ukiyo-e</button>
@@ -104,11 +104,13 @@
   <header class="piece-header">
     <h2 id="piece-artdeco-cambios-que-se-revisan-8e6b7a28-manifest-json-title">Cambios que se revisan</h2>
     <span class="status-tag">Estado: in-review</span>
+    <span class="evidence-tag evidence-tag--illustrative">Ilustrativo</span>
   </header>
   <dl class="piece-meta">
     <div><dt>Estilo</dt><dd>Art Deco</dd></div>
     <div><dt>Composición</dt><dd>comparison</dd></div>
     <div><dt>Estado</dt><dd>in-review</dd></div>
+    <div><dt>Resultado</dt><dd>Ilustrativo</dd></div>
   </dl>
   <figure class="artwork">
     <img class="poster" src="gallery/artdeco/comparison/cambios-que-se-revisan-8e6b7a28.png" data-poster="gallery/artdeco/comparison/cambios-que-se-revisan-8e6b7a28.png" data-gif="gallery/artdeco/comparison/cambios-que-se-revisan-8e6b7a28.gif" width="1280" height="720" alt="Cambios que se revisan · Art Deco · vista estática" loading="lazy">
@@ -139,11 +141,13 @@
   <header class="piece-header">
     <h2 id="piece-artdeco-ruta-para-revisar-el-cierre-022e1903-manifest-json-title">Ruta para revisar el cierre</h2>
     <span class="status-tag">Estado: in-review</span>
+    <span class="evidence-tag evidence-tag--illustrative">Ilustrativo</span>
   </header>
   <dl class="piece-meta">
     <div><dt>Estilo</dt><dd>Art Deco</dd></div>
     <div><dt>Composición</dt><dd>checklist</dd></div>
     <div><dt>Estado</dt><dd>in-review</dd></div>
+    <div><dt>Resultado</dt><dd>Ilustrativo</dd></div>
   </dl>
   <figure class="artwork">
     <img class="poster" src="gallery/artdeco/checklist/ruta-para-revisar-el-cierre-022e1903.png" data-poster="gallery/artdeco/checklist/ruta-para-revisar-el-cierre-022e1903.png" data-gif="gallery/artdeco/checklist/ruta-para-revisar-el-cierre-022e1903.gif" width="1280" height="720" alt="Ruta para revisar el cierre · Art Deco · vista estática" loading="lazy">
@@ -174,11 +178,13 @@
   <header class="piece-header">
     <h2 id="piece-bestiary-senal-85ee1938-manifest-json-title">Señal</h2>
     <span class="status-tag">Estado: in-review</span>
+    <span class="evidence-tag evidence-tag--illustrative">Ilustrativo</span>
   </header>
   <dl class="piece-meta">
     <div><dt>Estilo</dt><dd>Illuminated bestiary</dd></div>
     <div><dt>Composición</dt><dd>checklist</dd></div>
     <div><dt>Estado</dt><dd>in-review</dd></div>
+    <div><dt>Resultado</dt><dd>Ilustrativo</dd></div>
   </dl>
   <figure class="artwork">
     <img class="poster" src="gallery/bestiary/checklist/senal-85ee1938.png" data-poster="gallery/bestiary/checklist/senal-85ee1938.png" data-gif="gallery/bestiary/checklist/senal-85ee1938.gif" width="1280" height="720" alt="Señal · Illuminated bestiary · vista estática" loading="lazy">
@@ -209,11 +215,13 @@
   <header class="piece-header">
     <h2 id="piece-bestiary-senal-40bcabbc-manifest-json-title">Señal</h2>
     <span class="status-tag">Estado: in-review</span>
+    <span class="evidence-tag evidence-tag--illustrative">Ilustrativo</span>
   </header>
   <dl class="piece-meta">
     <div><dt>Estilo</dt><dd>Illuminated bestiary</dd></div>
     <div><dt>Composición</dt><dd>comparison</dd></div>
     <div><dt>Estado</dt><dd>in-review</dd></div>
+    <div><dt>Resultado</dt><dd>Ilustrativo</dd></div>
   </dl>
   <figure class="artwork">
     <img class="poster" src="gallery/bestiary/comparison/senal-40bcabbc.png" data-poster="gallery/bestiary/comparison/senal-40bcabbc.png" data-gif="gallery/bestiary/comparison/senal-40bcabbc.gif" width="1280" height="720" alt="Señal · Illuminated bestiary · vista estática" loading="lazy">
@@ -240,130 +248,27 @@
     <a href="gallery/bestiary/comparison/senal-40bcabbc.manifest.json">Manifiesto</a>
   </nav>
 </article>
-<article class="piece" data-style="brutalist" aria-labelledby="piece-brutalist-guias-mas-confiables-7df0f340-manifest-json-title">
+<article class="piece" data-style="galactic" aria-labelledby="piece-galactic-hitos-de-lectura-39477807-manifest-json-title">
   <header class="piece-header">
-    <h2 id="piece-brutalist-guias-mas-confiables-7df0f340-manifest-json-title">Guías más confiables</h2>
-    <span class="status-tag">Estado: in-review</span>
-  </header>
-  <dl class="piece-meta">
-    <div><dt>Estilo</dt><dd>Brutalist</dd></div>
-    <div><dt>Composición</dt><dd>comparison</dd></div>
-    <div><dt>Estado</dt><dd>in-review</dd></div>
-  </dl>
-  <figure class="artwork">
-    <img class="poster" src="pilots/brutalist/guias-mas-confiables/guias-mas-confiables-7df0f340.png" data-poster="pilots/brutalist/guias-mas-confiables/guias-mas-confiables-7df0f340.png" data-gif="pilots/brutalist/guias-mas-confiables/guias-mas-confiables-7df0f340.gif" width="1280" height="720" alt="Guías más confiables · Brutalist · vista estática" loading="lazy">
-    <figcaption>Vista estática · 1280 × 720. La animación solo carga cuando eliges Reproducir.</figcaption>
-  </figure>
-  <div class="playback-controls" role="group" aria-label="Controles de Guías más confiables">
-    <button type="button" data-action="play" aria-label="Reproducir GIF manualmente. No comienza automáticamente; respeta movimiento reducido.">Reproducir</button>
-    <button type="button" data-action="stop" aria-label="Detener y volver a la imagen estática">Detener</button>
-    <a class="button-link" href="pilots/brutalist/guias-mas-confiables/guias-mas-confiables-7df0f340.gif" download="guias-mas-confiables-7df0f340.gif">Descargar GIF</a>
-    <a class="button-link" href="pilots/brutalist/guias-mas-confiables/guias-mas-confiables-7df0f340.png" download="guias-mas-confiables-7df0f340.png">Descargar PNG</a>
-    <button type="button" data-action="enlarge" aria-label="Ampliar Guías más confiables a 1280 por 720">Ampliar</button>
-  </div>
-  <span class="piece-status visually-hidden" role="status" aria-live="polite"></span>
-  <section class="evaluation" aria-label="Evaluación de Guías más confiables">
-    <h3>Evaluación</h3>
-    <ul><li class="evaluation-level"><span>technical-integrity:</span><strong>pass</strong></li>
-<li class="evaluation-level"><span>style-conformance:</span><strong>pending</strong></li>
-<li class="evaluation-level"><span>rendered-legibility:</span><strong>pending</strong></li>
-<li class="evaluation-level"><span>narrative:</span><strong>pending</strong></li>
-<li class="evaluation-level level--pending" aria-label="visual-review: pending"><span>visual-review:</span><strong>pending</strong></li></ul>
-  </section>
-  <nav class="evidence-links" aria-label="Evidencia de Guías más confiables">
-    <a href="pilots/brutalist/guias-mas-confiables/guias-mas-confiables-7df0f340-contact-sheet.png">Hoja de contacto</a>
-    <a href="pilots/brutalist/guias-mas-confiables/guias-mas-confiables-7df0f340.manifest.json">Manifiesto</a>
-  </nav>
-</article>
-<article class="piece" data-style="brutalist" aria-labelledby="piece-brutalist-lectura-antes-del-cierre-b49056b8-manifest-json-title">
-  <header class="piece-header">
-    <h2 id="piece-brutalist-lectura-antes-del-cierre-b49056b8-manifest-json-title">Lectura antes del cierre</h2>
-    <span class="status-tag">Estado: in-review</span>
-  </header>
-  <dl class="piece-meta">
-    <div><dt>Estilo</dt><dd>Brutalist</dd></div>
-    <div><dt>Composición</dt><dd>checklist</dd></div>
-    <div><dt>Estado</dt><dd>in-review</dd></div>
-  </dl>
-  <figure class="artwork">
-    <img class="poster" src="pilots/brutalist/lectura-antes-del-cierre/lectura-antes-del-cierre-b49056b8.png" data-poster="pilots/brutalist/lectura-antes-del-cierre/lectura-antes-del-cierre-b49056b8.png" data-gif="pilots/brutalist/lectura-antes-del-cierre/lectura-antes-del-cierre-b49056b8.gif" width="1280" height="720" alt="Lectura antes del cierre · Brutalist · vista estática" loading="lazy">
-    <figcaption>Vista estática · 1280 × 720. La animación solo carga cuando eliges Reproducir.</figcaption>
-  </figure>
-  <div class="playback-controls" role="group" aria-label="Controles de Lectura antes del cierre">
-    <button type="button" data-action="play" aria-label="Reproducir GIF manualmente. No comienza automáticamente; respeta movimiento reducido.">Reproducir</button>
-    <button type="button" data-action="stop" aria-label="Detener y volver a la imagen estática">Detener</button>
-    <a class="button-link" href="pilots/brutalist/lectura-antes-del-cierre/lectura-antes-del-cierre-b49056b8.gif" download="lectura-antes-del-cierre-b49056b8.gif">Descargar GIF</a>
-    <a class="button-link" href="pilots/brutalist/lectura-antes-del-cierre/lectura-antes-del-cierre-b49056b8.png" download="lectura-antes-del-cierre-b49056b8.png">Descargar PNG</a>
-    <button type="button" data-action="enlarge" aria-label="Ampliar Lectura antes del cierre a 1280 por 720">Ampliar</button>
-  </div>
-  <span class="piece-status visually-hidden" role="status" aria-live="polite"></span>
-  <section class="evaluation" aria-label="Evaluación de Lectura antes del cierre">
-    <h3>Evaluación</h3>
-    <ul><li class="evaluation-level"><span>technical-integrity:</span><strong>pass</strong></li>
-<li class="evaluation-level"><span>style-conformance:</span><strong>pending</strong></li>
-<li class="evaluation-level"><span>rendered-legibility:</span><strong>pending</strong></li>
-<li class="evaluation-level"><span>narrative:</span><strong>pending</strong></li>
-<li class="evaluation-level level--pending" aria-label="visual-review: pending"><span>visual-review:</span><strong>pending</strong></li></ul>
-  </section>
-  <nav class="evidence-links" aria-label="Evidencia de Lectura antes del cierre">
-    <a href="pilots/brutalist/lectura-antes-del-cierre/lectura-antes-del-cierre-b49056b8-contact-sheet.png">Hoja de contacto</a>
-    <a href="pilots/brutalist/lectura-antes-del-cierre/lectura-antes-del-cierre-b49056b8.manifest.json">Manifiesto</a>
-  </nav>
-</article>
-<article class="piece" data-style="brutalist" aria-labelledby="piece-brutalist-observacion-registrada-903609f3-manifest-json-title">
-  <header class="piece-header">
-    <h2 id="piece-brutalist-observacion-registrada-903609f3-manifest-json-title">Observación registrada</h2>
+    <h2 id="piece-galactic-hitos-de-lectura-39477807-manifest-json-title">Hitos de lectura</h2>
     <span class="status-tag">Estado: done</span>
-  </header>
-  <dl class="piece-meta">
-    <div><dt>Estilo</dt><dd>Brutalist</dd></div>
-    <div><dt>Composición</dt><dd>comparison</dd></div>
-    <div><dt>Estado</dt><dd>done</dd></div>
-  </dl>
-  <figure class="artwork">
-    <img class="poster" src="pilots/brutalist/observacion-registrada/observacion-registrada-903609f3.png" data-poster="pilots/brutalist/observacion-registrada/observacion-registrada-903609f3.png" data-gif="pilots/brutalist/observacion-registrada/observacion-registrada-903609f3.gif" width="1280" height="720" alt="Observación registrada · Brutalist · vista estática" loading="lazy">
-    <figcaption>Vista estática · 1280 × 720. La animación solo carga cuando eliges Reproducir.</figcaption>
-  </figure>
-  <div class="playback-controls" role="group" aria-label="Controles de Observación registrada">
-    <button type="button" data-action="play" aria-label="Reproducir GIF manualmente. No comienza automáticamente; respeta movimiento reducido.">Reproducir</button>
-    <button type="button" data-action="stop" aria-label="Detener y volver a la imagen estática">Detener</button>
-    <a class="button-link" href="pilots/brutalist/observacion-registrada/observacion-registrada-903609f3.gif" download="observacion-registrada-903609f3.gif">Descargar GIF</a>
-    <a class="button-link" href="pilots/brutalist/observacion-registrada/observacion-registrada-903609f3.png" download="observacion-registrada-903609f3.png">Descargar PNG</a>
-    <button type="button" data-action="enlarge" aria-label="Ampliar Observación registrada a 1280 por 720">Ampliar</button>
-  </div>
-  <span class="piece-status visually-hidden" role="status" aria-live="polite"></span>
-  <section class="evaluation" aria-label="Evaluación de Observación registrada">
-    <h3>Evaluación</h3>
-    <ul><li class="evaluation-level"><span>technical-integrity:</span><strong>pass</strong></li>
-<li class="evaluation-level"><span>style-conformance:</span><strong>pending</strong></li>
-<li class="evaluation-level"><span>rendered-legibility:</span><strong>pending</strong></li>
-<li class="evaluation-level"><span>narrative:</span><strong>pending</strong></li>
-<li class="evaluation-level level--pending" aria-label="visual-review: pending"><span>visual-review:</span><strong>pending</strong></li></ul>
-  </section>
-  <nav class="evidence-links" aria-label="Evidencia de Observación registrada">
-    <a href="pilots/brutalist/observacion-registrada/observacion-registrada-903609f3-contact-sheet.png">Hoja de contacto</a>
-    <a href="pilots/brutalist/observacion-registrada/observacion-registrada-903609f3.manifest.json">Manifiesto</a>
-  </nav>
-</article>
-<article class="piece" data-style="galactic" aria-labelledby="piece-galactic-hitos-de-lectura-6d4776b9-manifest-json-title">
-  <header class="piece-header">
-    <h2 id="piece-galactic-hitos-de-lectura-6d4776b9-manifest-json-title">Hitos de lectura</h2>
-    <span class="status-tag">Estado: done</span>
+    <span class="evidence-tag evidence-tag--illustrative">Ilustrativo</span>
   </header>
   <dl class="piece-meta">
     <div><dt>Estilo</dt><dd>Galactic Futurism</dd></div>
     <div><dt>Composición</dt><dd>checklist</dd></div>
     <div><dt>Estado</dt><dd>done</dd></div>
+    <div><dt>Resultado</dt><dd>Ilustrativo</dd></div>
   </dl>
   <figure class="artwork">
-    <img class="poster" src="gallery/galactic/checklist/hitos-de-lectura-6d4776b9.png" data-poster="gallery/galactic/checklist/hitos-de-lectura-6d4776b9.png" data-gif="gallery/galactic/checklist/hitos-de-lectura-6d4776b9.gif" width="1280" height="720" alt="Hitos de lectura · Galactic Futurism · vista estática" loading="lazy">
+    <img class="poster" src="gallery/galactic/checklist/hitos-de-lectura-39477807.png" data-poster="gallery/galactic/checklist/hitos-de-lectura-39477807.png" data-gif="gallery/galactic/checklist/hitos-de-lectura-39477807.gif" width="1280" height="720" alt="Hitos de lectura · Galactic Futurism · vista estática" loading="lazy">
     <figcaption>Vista estática · 1280 × 720. La animación solo carga cuando eliges Reproducir.</figcaption>
   </figure>
   <div class="playback-controls" role="group" aria-label="Controles de Hitos de lectura">
     <button type="button" data-action="play" aria-label="Reproducir GIF manualmente. No comienza automáticamente; respeta movimiento reducido.">Reproducir</button>
     <button type="button" data-action="stop" aria-label="Detener y volver a la imagen estática">Detener</button>
-    <a class="button-link" href="gallery/galactic/checklist/hitos-de-lectura-6d4776b9.gif" download="hitos-de-lectura-6d4776b9.gif">Descargar GIF</a>
-    <a class="button-link" href="gallery/galactic/checklist/hitos-de-lectura-6d4776b9.png" download="hitos-de-lectura-6d4776b9.png">Descargar PNG</a>
+    <a class="button-link" href="gallery/galactic/checklist/hitos-de-lectura-39477807.gif" download="hitos-de-lectura-39477807.gif">Descargar GIF</a>
+    <a class="button-link" href="gallery/galactic/checklist/hitos-de-lectura-39477807.png" download="hitos-de-lectura-39477807.png">Descargar PNG</a>
     <button type="button" data-action="enlarge" aria-label="Ampliar Hitos de lectura a 1280 por 720">Ampliar</button>
   </div>
   <span class="piece-status visually-hidden" role="status" aria-live="polite"></span>
@@ -376,19 +281,21 @@
 <li class="evaluation-level level--pending" aria-label="visual-review: pending"><span>visual-review:</span><strong>pending</strong></li></ul>
   </section>
   <nav class="evidence-links" aria-label="Evidencia de Hitos de lectura">
-    <a href="gallery/galactic/checklist/hitos-de-lectura-6d4776b9-contact-sheet.png">Hoja de contacto</a>
-    <a href="gallery/galactic/checklist/hitos-de-lectura-6d4776b9.manifest.json">Manifiesto</a>
+    <a href="gallery/galactic/checklist/hitos-de-lectura-39477807-contact-sheet.png">Hoja de contacto</a>
+    <a href="gallery/galactic/checklist/hitos-de-lectura-39477807.manifest.json">Manifiesto</a>
   </nav>
 </article>
 <article class="piece" data-style="galactic" aria-labelledby="piece-galactic-ruta-de-lectura-2110868c-manifest-json-title">
   <header class="piece-header">
     <h2 id="piece-galactic-ruta-de-lectura-2110868c-manifest-json-title">Ruta de lectura</h2>
     <span class="status-tag">Estado: in-review</span>
+    <span class="evidence-tag evidence-tag--illustrative">Ilustrativo</span>
   </header>
   <dl class="piece-meta">
     <div><dt>Estilo</dt><dd>Galactic Futurism</dd></div>
     <div><dt>Composición</dt><dd>comparison</dd></div>
     <div><dt>Estado</dt><dd>in-review</dd></div>
+    <div><dt>Resultado</dt><dd>Ilustrativo</dd></div>
   </dl>
   <figure class="artwork">
     <img class="poster" src="gallery/galactic/comparison/ruta-de-lectura-2110868c.png" data-poster="gallery/galactic/comparison/ruta-de-lectura-2110868c.png" data-gif="gallery/galactic/comparison/ruta-de-lectura-2110868c.gif" width="1280" height="720" alt="Ruta de lectura · Galactic Futurism · vista estática" loading="lazy">
@@ -419,11 +326,13 @@
   <header class="piece-header">
     <h2 id="piece-isotype-cambios-que-se-revisan-98e5125e-manifest-json-title">Cambios que se revisan</h2>
     <span class="status-tag">Estado: in-review</span>
+    <span class="evidence-tag evidence-tag--illustrative">Ilustrativo</span>
   </header>
   <dl class="piece-meta">
     <div><dt>Estilo</dt><dd>Isotype</dd></div>
     <div><dt>Composición</dt><dd>comparison</dd></div>
     <div><dt>Estado</dt><dd>in-review</dd></div>
+    <div><dt>Resultado</dt><dd>Ilustrativo</dd></div>
   </dl>
   <figure class="artwork">
     <img class="poster" src="gallery/isotype/comparison/cambios-que-se-revisan-98e5125e.png" data-poster="gallery/isotype/comparison/cambios-que-se-revisan-98e5125e.png" data-gif="gallery/isotype/comparison/cambios-que-se-revisan-98e5125e.gif" width="1280" height="720" alt="Cambios que se revisan · Isotype · vista estática" loading="lazy">
@@ -454,11 +363,13 @@
   <header class="piece-header">
     <h2 id="piece-isotype-ruta-para-revisar-el-cierre-6150b5ca-manifest-json-title">Ruta para revisar el cierre</h2>
     <span class="status-tag">Estado: in-review</span>
+    <span class="evidence-tag evidence-tag--illustrative">Ilustrativo</span>
   </header>
   <dl class="piece-meta">
     <div><dt>Estilo</dt><dd>Isotype</dd></div>
     <div><dt>Composición</dt><dd>checklist</dd></div>
     <div><dt>Estado</dt><dd>in-review</dd></div>
+    <div><dt>Resultado</dt><dd>Ilustrativo</dd></div>
   </dl>
   <figure class="artwork">
     <img class="poster" src="gallery/isotype/checklist/ruta-para-revisar-el-cierre-6150b5ca.png" data-poster="gallery/isotype/checklist/ruta-para-revisar-el-cierre-6150b5ca.png" data-gif="gallery/isotype/checklist/ruta-para-revisar-el-cierre-6150b5ca.gif" width="1280" height="720" alt="Ruta para revisar el cierre · Isotype · vista estática" loading="lazy">
@@ -489,11 +400,13 @@
   <header class="piece-header">
     <h2 id="piece-memphis-senal-eccf1a4b-manifest-json-title">Señal</h2>
     <span class="status-tag">Estado: in-review</span>
+    <span class="evidence-tag evidence-tag--illustrative">Ilustrativo</span>
   </header>
   <dl class="piece-meta">
     <div><dt>Estilo</dt><dd>Memphis</dd></div>
     <div><dt>Composición</dt><dd>checklist</dd></div>
     <div><dt>Estado</dt><dd>in-review</dd></div>
+    <div><dt>Resultado</dt><dd>Ilustrativo</dd></div>
   </dl>
   <figure class="artwork">
     <img class="poster" src="gallery/memphis/checklist/senal-eccf1a4b.png" data-poster="gallery/memphis/checklist/senal-eccf1a4b.png" data-gif="gallery/memphis/checklist/senal-eccf1a4b.gif" width="1280" height="720" alt="Señal · Memphis · vista estática" loading="lazy">
@@ -524,11 +437,13 @@
   <header class="piece-header">
     <h2 id="piece-memphis-senal-831689be-manifest-json-title">Señal</h2>
     <span class="status-tag">Estado: in-review</span>
+    <span class="evidence-tag evidence-tag--illustrative">Ilustrativo</span>
   </header>
   <dl class="piece-meta">
     <div><dt>Estilo</dt><dd>Memphis</dd></div>
     <div><dt>Composición</dt><dd>comparison</dd></div>
     <div><dt>Estado</dt><dd>in-review</dd></div>
+    <div><dt>Resultado</dt><dd>Ilustrativo</dd></div>
   </dl>
   <figure class="artwork">
     <img class="poster" src="gallery/memphis/comparison/senal-831689be.png" data-poster="gallery/memphis/comparison/senal-831689be.png" data-gif="gallery/memphis/comparison/senal-831689be.gif" width="1280" height="720" alt="Señal · Memphis · vista estática" loading="lazy">
@@ -555,25 +470,27 @@
     <a href="gallery/memphis/comparison/senal-831689be.manifest.json">Manifiesto</a>
   </nav>
 </article>
-<article class="piece" data-style="nature" aria-labelledby="piece-nature-archivo-de-lectura-67e2c7da-manifest-json-title">
+<article class="piece" data-style="nature" aria-labelledby="piece-nature-archivo-de-lectura-35fe9099-manifest-json-title">
   <header class="piece-header">
-    <h2 id="piece-nature-archivo-de-lectura-67e2c7da-manifest-json-title">Archivo de lectura</h2>
+    <h2 id="piece-nature-archivo-de-lectura-35fe9099-manifest-json-title">Archivo de lectura</h2>
     <span class="status-tag">Estado: done</span>
+    <span class="evidence-tag evidence-tag--illustrative">Ilustrativo</span>
   </header>
   <dl class="piece-meta">
     <div><dt>Estilo</dt><dd>Nature Memory</dd></div>
     <div><dt>Composición</dt><dd>checklist</dd></div>
     <div><dt>Estado</dt><dd>done</dd></div>
+    <div><dt>Resultado</dt><dd>Ilustrativo</dd></div>
   </dl>
   <figure class="artwork">
-    <img class="poster" src="gallery/nature/checklist/archivo-de-lectura-67e2c7da.png" data-poster="gallery/nature/checklist/archivo-de-lectura-67e2c7da.png" data-gif="gallery/nature/checklist/archivo-de-lectura-67e2c7da.gif" width="1280" height="720" alt="Archivo de lectura · Nature Memory · vista estática" loading="lazy">
+    <img class="poster" src="gallery/nature/checklist/archivo-de-lectura-35fe9099.png" data-poster="gallery/nature/checklist/archivo-de-lectura-35fe9099.png" data-gif="gallery/nature/checklist/archivo-de-lectura-35fe9099.gif" width="1280" height="720" alt="Archivo de lectura · Nature Memory · vista estática" loading="lazy">
     <figcaption>Vista estática · 1280 × 720. La animación solo carga cuando eliges Reproducir.</figcaption>
   </figure>
   <div class="playback-controls" role="group" aria-label="Controles de Archivo de lectura">
     <button type="button" data-action="play" aria-label="Reproducir GIF manualmente. No comienza automáticamente; respeta movimiento reducido.">Reproducir</button>
     <button type="button" data-action="stop" aria-label="Detener y volver a la imagen estática">Detener</button>
-    <a class="button-link" href="gallery/nature/checklist/archivo-de-lectura-67e2c7da.gif" download="archivo-de-lectura-67e2c7da.gif">Descargar GIF</a>
-    <a class="button-link" href="gallery/nature/checklist/archivo-de-lectura-67e2c7da.png" download="archivo-de-lectura-67e2c7da.png">Descargar PNG</a>
+    <a class="button-link" href="gallery/nature/checklist/archivo-de-lectura-35fe9099.gif" download="archivo-de-lectura-35fe9099.gif">Descargar GIF</a>
+    <a class="button-link" href="gallery/nature/checklist/archivo-de-lectura-35fe9099.png" download="archivo-de-lectura-35fe9099.png">Descargar PNG</a>
     <button type="button" data-action="enlarge" aria-label="Ampliar Archivo de lectura a 1280 por 720">Ampliar</button>
   </div>
   <span class="piece-status visually-hidden" role="status" aria-live="polite"></span>
@@ -586,19 +503,21 @@
 <li class="evaluation-level level--pending" aria-label="visual-review: pending"><span>visual-review:</span><strong>pending</strong></li></ul>
   </section>
   <nav class="evidence-links" aria-label="Evidencia de Archivo de lectura">
-    <a href="gallery/nature/checklist/archivo-de-lectura-67e2c7da-contact-sheet.png">Hoja de contacto</a>
-    <a href="gallery/nature/checklist/archivo-de-lectura-67e2c7da.manifest.json">Manifiesto</a>
+    <a href="gallery/nature/checklist/archivo-de-lectura-35fe9099-contact-sheet.png">Hoja de contacto</a>
+    <a href="gallery/nature/checklist/archivo-de-lectura-35fe9099.manifest.json">Manifiesto</a>
   </nav>
 </article>
 <article class="piece" data-style="nature" aria-labelledby="piece-nature-observar-la-guia-e3d7c07f-manifest-json-title">
   <header class="piece-header">
     <h2 id="piece-nature-observar-la-guia-e3d7c07f-manifest-json-title">Observar la guía</h2>
     <span class="status-tag">Estado: in-review</span>
+    <span class="evidence-tag evidence-tag--illustrative">Ilustrativo</span>
   </header>
   <dl class="piece-meta">
     <div><dt>Estilo</dt><dd>Nature Memory</dd></div>
     <div><dt>Composición</dt><dd>comparison</dd></div>
     <div><dt>Estado</dt><dd>in-review</dd></div>
+    <div><dt>Resultado</dt><dd>Ilustrativo</dd></div>
   </dl>
   <figure class="artwork">
     <img class="poster" src="gallery/nature/comparison/observar-la-guia-e3d7c07f.png" data-poster="gallery/nature/comparison/observar-la-guia-e3d7c07f.png" data-gif="gallery/nature/comparison/observar-la-guia-e3d7c07f.gif" width="1280" height="720" alt="Observar la guía · Nature Memory · vista estática" loading="lazy">
@@ -629,11 +548,13 @@
   <header class="piece-header">
     <h2 id="piece-opart-cambios-que-se-revisan-f7428037-manifest-json-title">Cambios que se revisan</h2>
     <span class="status-tag">Estado: in-review</span>
+    <span class="evidence-tag evidence-tag--illustrative">Ilustrativo</span>
   </header>
   <dl class="piece-meta">
     <div><dt>Estilo</dt><dd>Op Art</dd></div>
     <div><dt>Composición</dt><dd>comparison</dd></div>
     <div><dt>Estado</dt><dd>in-review</dd></div>
+    <div><dt>Resultado</dt><dd>Ilustrativo</dd></div>
   </dl>
   <figure class="artwork">
     <img class="poster" src="gallery/opart/comparison/cambios-que-se-revisan-f7428037.png" data-poster="gallery/opart/comparison/cambios-que-se-revisan-f7428037.png" data-gif="gallery/opart/comparison/cambios-que-se-revisan-f7428037.gif" width="1280" height="720" alt="Cambios que se revisan · Op Art · vista estática" loading="lazy">
@@ -664,11 +585,13 @@
   <header class="piece-header">
     <h2 id="piece-opart-ruta-para-revisar-el-cierre-d58b7c58-manifest-json-title">Ruta para revisar el cierre</h2>
     <span class="status-tag">Estado: in-review</span>
+    <span class="evidence-tag evidence-tag--illustrative">Ilustrativo</span>
   </header>
   <dl class="piece-meta">
     <div><dt>Estilo</dt><dd>Op Art</dd></div>
     <div><dt>Composición</dt><dd>checklist</dd></div>
     <div><dt>Estado</dt><dd>in-review</dd></div>
+    <div><dt>Resultado</dt><dd>Ilustrativo</dd></div>
   </dl>
   <figure class="artwork">
     <img class="poster" src="gallery/opart/checklist/ruta-para-revisar-el-cierre-d58b7c58.png" data-poster="gallery/opart/checklist/ruta-para-revisar-el-cierre-d58b7c58.png" data-gif="gallery/opart/checklist/ruta-para-revisar-el-cierre-d58b7c58.gif" width="1280" height="720" alt="Ruta para revisar el cierre · Op Art · vista estática" loading="lazy">
@@ -695,120 +618,17 @@
     <a href="gallery/opart/checklist/ruta-para-revisar-el-cierre-d58b7c58.manifest.json">Manifiesto</a>
   </nav>
 </article>
-<article class="piece" data-style="papercraft" aria-labelledby="piece-papercraft-guias-mas-confiables-418d1d87-manifest-json-title">
-  <header class="piece-header">
-    <h2 id="piece-papercraft-guias-mas-confiables-418d1d87-manifest-json-title">Guías más confiables</h2>
-    <span class="status-tag">Estado: in-review</span>
-  </header>
-  <dl class="piece-meta">
-    <div><dt>Estilo</dt><dd>Paper Craft</dd></div>
-    <div><dt>Composición</dt><dd>comparison</dd></div>
-    <div><dt>Estado</dt><dd>in-review</dd></div>
-  </dl>
-  <figure class="artwork">
-    <img class="poster" src="pilots/papercraft/guias-mas-confiables/guias-mas-confiables-418d1d87.png" data-poster="pilots/papercraft/guias-mas-confiables/guias-mas-confiables-418d1d87.png" data-gif="pilots/papercraft/guias-mas-confiables/guias-mas-confiables-418d1d87.gif" width="1280" height="720" alt="Guías más confiables · Paper Craft · vista estática" loading="lazy">
-    <figcaption>Vista estática · 1280 × 720. La animación solo carga cuando eliges Reproducir.</figcaption>
-  </figure>
-  <div class="playback-controls" role="group" aria-label="Controles de Guías más confiables">
-    <button type="button" data-action="play" aria-label="Reproducir GIF manualmente. No comienza automáticamente; respeta movimiento reducido.">Reproducir</button>
-    <button type="button" data-action="stop" aria-label="Detener y volver a la imagen estática">Detener</button>
-    <a class="button-link" href="pilots/papercraft/guias-mas-confiables/guias-mas-confiables-418d1d87.gif" download="guias-mas-confiables-418d1d87.gif">Descargar GIF</a>
-    <a class="button-link" href="pilots/papercraft/guias-mas-confiables/guias-mas-confiables-418d1d87.png" download="guias-mas-confiables-418d1d87.png">Descargar PNG</a>
-    <button type="button" data-action="enlarge" aria-label="Ampliar Guías más confiables a 1280 por 720">Ampliar</button>
-  </div>
-  <span class="piece-status visually-hidden" role="status" aria-live="polite"></span>
-  <section class="evaluation" aria-label="Evaluación de Guías más confiables">
-    <h3>Evaluación</h3>
-    <ul><li class="evaluation-level"><span>technical-integrity:</span><strong>pass</strong></li>
-<li class="evaluation-level"><span>style-conformance:</span><strong>pending</strong></li>
-<li class="evaluation-level"><span>rendered-legibility:</span><strong>pending</strong></li>
-<li class="evaluation-level"><span>narrative:</span><strong>pending</strong></li>
-<li class="evaluation-level level--pending" aria-label="visual-review: pending"><span>visual-review:</span><strong>pending</strong></li></ul>
-  </section>
-  <nav class="evidence-links" aria-label="Evidencia de Guías más confiables">
-    <a href="pilots/papercraft/guias-mas-confiables/guias-mas-confiables-418d1d87-contact-sheet.png">Hoja de contacto</a>
-    <a href="pilots/papercraft/guias-mas-confiables/guias-mas-confiables-418d1d87.manifest.json">Manifiesto</a>
-  </nav>
-</article>
-<article class="piece" data-style="papercraft" aria-labelledby="piece-papercraft-lectura-antes-del-cierre-a789b538-manifest-json-title">
-  <header class="piece-header">
-    <h2 id="piece-papercraft-lectura-antes-del-cierre-a789b538-manifest-json-title">Lectura antes del cierre</h2>
-    <span class="status-tag">Estado: in-review</span>
-  </header>
-  <dl class="piece-meta">
-    <div><dt>Estilo</dt><dd>Paper Craft</dd></div>
-    <div><dt>Composición</dt><dd>checklist</dd></div>
-    <div><dt>Estado</dt><dd>in-review</dd></div>
-  </dl>
-  <figure class="artwork">
-    <img class="poster" src="pilots/papercraft/lectura-antes-del-cierre/lectura-antes-del-cierre-a789b538.png" data-poster="pilots/papercraft/lectura-antes-del-cierre/lectura-antes-del-cierre-a789b538.png" data-gif="pilots/papercraft/lectura-antes-del-cierre/lectura-antes-del-cierre-a789b538.gif" width="1280" height="720" alt="Lectura antes del cierre · Paper Craft · vista estática" loading="lazy">
-    <figcaption>Vista estática · 1280 × 720. La animación solo carga cuando eliges Reproducir.</figcaption>
-  </figure>
-  <div class="playback-controls" role="group" aria-label="Controles de Lectura antes del cierre">
-    <button type="button" data-action="play" aria-label="Reproducir GIF manualmente. No comienza automáticamente; respeta movimiento reducido.">Reproducir</button>
-    <button type="button" data-action="stop" aria-label="Detener y volver a la imagen estática">Detener</button>
-    <a class="button-link" href="pilots/papercraft/lectura-antes-del-cierre/lectura-antes-del-cierre-a789b538.gif" download="lectura-antes-del-cierre-a789b538.gif">Descargar GIF</a>
-    <a class="button-link" href="pilots/papercraft/lectura-antes-del-cierre/lectura-antes-del-cierre-a789b538.png" download="lectura-antes-del-cierre-a789b538.png">Descargar PNG</a>
-    <button type="button" data-action="enlarge" aria-label="Ampliar Lectura antes del cierre a 1280 por 720">Ampliar</button>
-  </div>
-  <span class="piece-status visually-hidden" role="status" aria-live="polite"></span>
-  <section class="evaluation" aria-label="Evaluación de Lectura antes del cierre">
-    <h3>Evaluación</h3>
-    <ul><li class="evaluation-level"><span>technical-integrity:</span><strong>pass</strong></li>
-<li class="evaluation-level"><span>style-conformance:</span><strong>pending</strong></li>
-<li class="evaluation-level"><span>rendered-legibility:</span><strong>pending</strong></li>
-<li class="evaluation-level"><span>narrative:</span><strong>pending</strong></li>
-<li class="evaluation-level level--pending" aria-label="visual-review: pending"><span>visual-review:</span><strong>pending</strong></li></ul>
-  </section>
-  <nav class="evidence-links" aria-label="Evidencia de Lectura antes del cierre">
-    <a href="pilots/papercraft/lectura-antes-del-cierre/lectura-antes-del-cierre-a789b538-contact-sheet.png">Hoja de contacto</a>
-    <a href="pilots/papercraft/lectura-antes-del-cierre/lectura-antes-del-cierre-a789b538.manifest.json">Manifiesto</a>
-  </nav>
-</article>
-<article class="piece" data-style="papercraft" aria-labelledby="piece-papercraft-observacion-registrada-34abb571-manifest-json-title">
-  <header class="piece-header">
-    <h2 id="piece-papercraft-observacion-registrada-34abb571-manifest-json-title">Observación registrada</h2>
-    <span class="status-tag">Estado: done</span>
-  </header>
-  <dl class="piece-meta">
-    <div><dt>Estilo</dt><dd>Paper Craft</dd></div>
-    <div><dt>Composición</dt><dd>comparison</dd></div>
-    <div><dt>Estado</dt><dd>done</dd></div>
-  </dl>
-  <figure class="artwork">
-    <img class="poster" src="pilots/papercraft/observacion-registrada/observacion-registrada-34abb571.png" data-poster="pilots/papercraft/observacion-registrada/observacion-registrada-34abb571.png" data-gif="pilots/papercraft/observacion-registrada/observacion-registrada-34abb571.gif" width="1280" height="720" alt="Observación registrada · Paper Craft · vista estática" loading="lazy">
-    <figcaption>Vista estática · 1280 × 720. La animación solo carga cuando eliges Reproducir.</figcaption>
-  </figure>
-  <div class="playback-controls" role="group" aria-label="Controles de Observación registrada">
-    <button type="button" data-action="play" aria-label="Reproducir GIF manualmente. No comienza automáticamente; respeta movimiento reducido.">Reproducir</button>
-    <button type="button" data-action="stop" aria-label="Detener y volver a la imagen estática">Detener</button>
-    <a class="button-link" href="pilots/papercraft/observacion-registrada/observacion-registrada-34abb571.gif" download="observacion-registrada-34abb571.gif">Descargar GIF</a>
-    <a class="button-link" href="pilots/papercraft/observacion-registrada/observacion-registrada-34abb571.png" download="observacion-registrada-34abb571.png">Descargar PNG</a>
-    <button type="button" data-action="enlarge" aria-label="Ampliar Observación registrada a 1280 por 720">Ampliar</button>
-  </div>
-  <span class="piece-status visually-hidden" role="status" aria-live="polite"></span>
-  <section class="evaluation" aria-label="Evaluación de Observación registrada">
-    <h3>Evaluación</h3>
-    <ul><li class="evaluation-level"><span>technical-integrity:</span><strong>pass</strong></li>
-<li class="evaluation-level"><span>style-conformance:</span><strong>pending</strong></li>
-<li class="evaluation-level"><span>rendered-legibility:</span><strong>pending</strong></li>
-<li class="evaluation-level"><span>narrative:</span><strong>pending</strong></li>
-<li class="evaluation-level level--pending" aria-label="visual-review: pending"><span>visual-review:</span><strong>pending</strong></li></ul>
-  </section>
-  <nav class="evidence-links" aria-label="Evidencia de Observación registrada">
-    <a href="pilots/papercraft/observacion-registrada/observacion-registrada-34abb571-contact-sheet.png">Hoja de contacto</a>
-    <a href="pilots/papercraft/observacion-registrada/observacion-registrada-34abb571.manifest.json">Manifiesto</a>
-  </nav>
-</article>
 <article class="piece" data-style="psychedelic" aria-labelledby="piece-psychedelic-senal-7295dc6a-manifest-json-title">
   <header class="piece-header">
     <h2 id="piece-psychedelic-senal-7295dc6a-manifest-json-title">Señal</h2>
     <span class="status-tag">Estado: in-review</span>
+    <span class="evidence-tag evidence-tag--illustrative">Ilustrativo</span>
   </header>
   <dl class="piece-meta">
     <div><dt>Estilo</dt><dd>Psychedelic poster</dd></div>
     <div><dt>Composición</dt><dd>checklist</dd></div>
     <div><dt>Estado</dt><dd>in-review</dd></div>
+    <div><dt>Resultado</dt><dd>Ilustrativo</dd></div>
   </dl>
   <figure class="artwork">
     <img class="poster" src="gallery/psychedelic/checklist/senal-7295dc6a.png" data-poster="gallery/psychedelic/checklist/senal-7295dc6a.png" data-gif="gallery/psychedelic/checklist/senal-7295dc6a.gif" width="1280" height="720" alt="Señal · Psychedelic poster · vista estática" loading="lazy">
@@ -839,11 +659,13 @@
   <header class="piece-header">
     <h2 id="piece-psychedelic-senal-ef174928-manifest-json-title">Señal</h2>
     <span class="status-tag">Estado: in-review</span>
+    <span class="evidence-tag evidence-tag--illustrative">Ilustrativo</span>
   </header>
   <dl class="piece-meta">
     <div><dt>Estilo</dt><dd>Psychedelic poster</dd></div>
     <div><dt>Composición</dt><dd>comparison</dd></div>
     <div><dt>Estado</dt><dd>in-review</dd></div>
+    <div><dt>Resultado</dt><dd>Ilustrativo</dd></div>
   </dl>
   <figure class="artwork">
     <img class="poster" src="gallery/psychedelic/comparison/senal-ef174928.png" data-poster="gallery/psychedelic/comparison/senal-ef174928.png" data-gif="gallery/psychedelic/comparison/senal-ef174928.gif" width="1280" height="720" alt="Señal · Psychedelic poster · vista estática" loading="lazy">
@@ -874,11 +696,13 @@
   <header class="piece-header">
     <h2 id="piece-renaissance-cambios-que-se-revisan-7cff1462-manifest-json-title">Cambios que se revisan</h2>
     <span class="status-tag">Estado: in-review</span>
+    <span class="evidence-tag evidence-tag--illustrative">Ilustrativo</span>
   </header>
   <dl class="piece-meta">
     <div><dt>Estilo</dt><dd>Renaissance</dd></div>
     <div><dt>Composición</dt><dd>comparison</dd></div>
     <div><dt>Estado</dt><dd>in-review</dd></div>
+    <div><dt>Resultado</dt><dd>Ilustrativo</dd></div>
   </dl>
   <figure class="artwork">
     <img class="poster" src="gallery/renaissance/comparison/cambios-que-se-revisan-7cff1462.png" data-poster="gallery/renaissance/comparison/cambios-que-se-revisan-7cff1462.png" data-gif="gallery/renaissance/comparison/cambios-que-se-revisan-7cff1462.gif" width="1280" height="720" alt="Cambios que se revisan · Renaissance · vista estática" loading="lazy">
@@ -909,11 +733,13 @@
   <header class="piece-header">
     <h2 id="piece-renaissance-ruta-para-revisar-el-cierre-66d5877c-manifest-json-title">Ruta para revisar el cierre</h2>
     <span class="status-tag">Estado: in-review</span>
+    <span class="evidence-tag evidence-tag--illustrative">Ilustrativo</span>
   </header>
   <dl class="piece-meta">
     <div><dt>Estilo</dt><dd>Renaissance</dd></div>
     <div><dt>Composición</dt><dd>checklist</dd></div>
     <div><dt>Estado</dt><dd>in-review</dd></div>
+    <div><dt>Resultado</dt><dd>Ilustrativo</dd></div>
   </dl>
   <figure class="artwork">
     <img class="poster" src="gallery/renaissance/checklist/ruta-para-revisar-el-cierre-66d5877c.png" data-poster="gallery/renaissance/checklist/ruta-para-revisar-el-cierre-66d5877c.png" data-gif="gallery/renaissance/checklist/ruta-para-revisar-el-cierre-66d5877c.gif" width="1280" height="720" alt="Ruta para revisar el cierre · Renaissance · vista estática" loading="lazy">
@@ -944,11 +770,13 @@
   <header class="piece-header">
     <h2 id="piece-ukiyoe-senal-e509628a-manifest-json-title">Señal</h2>
     <span class="status-tag">Estado: in-review</span>
+    <span class="evidence-tag evidence-tag--illustrative">Ilustrativo</span>
   </header>
   <dl class="piece-meta">
     <div><dt>Estilo</dt><dd>Ukiyo-e</dd></div>
     <div><dt>Composición</dt><dd>checklist</dd></div>
     <div><dt>Estado</dt><dd>in-review</dd></div>
+    <div><dt>Resultado</dt><dd>Ilustrativo</dd></div>
   </dl>
   <figure class="artwork">
     <img class="poster" src="gallery/ukiyoe/checklist/senal-e509628a.png" data-poster="gallery/ukiyoe/checklist/senal-e509628a.png" data-gif="gallery/ukiyoe/checklist/senal-e509628a.gif" width="1280" height="720" alt="Señal · Ukiyo-e · vista estática" loading="lazy">
@@ -979,11 +807,13 @@
   <header class="piece-header">
     <h2 id="piece-ukiyoe-senal-42f06804-manifest-json-title">Señal</h2>
     <span class="status-tag">Estado: in-review</span>
+    <span class="evidence-tag evidence-tag--illustrative">Ilustrativo</span>
   </header>
   <dl class="piece-meta">
     <div><dt>Estilo</dt><dd>Ukiyo-e</dd></div>
     <div><dt>Composición</dt><dd>comparison</dd></div>
     <div><dt>Estado</dt><dd>in-review</dd></div>
+    <div><dt>Resultado</dt><dd>Ilustrativo</dd></div>
   </dl>
   <figure class="artwork">
     <img class="poster" src="gallery/ukiyoe/comparison/senal-42f06804.png" data-poster="gallery/ukiyoe/comparison/senal-42f06804.png" data-gif="gallery/ukiyoe/comparison/senal-42f06804.gif" width="1280" height="720" alt="Señal · Ukiyo-e · vista estática" loading="lazy">
@@ -1014,11 +844,13 @@
   <header class="piece-header">
     <h2 id="piece-vaporwave-guias-claras-724d6684-manifest-json-title">Guías claras</h2>
     <span class="status-tag">Estado: in-review</span>
+    <span class="evidence-tag evidence-tag--illustrative">Ilustrativo</span>
   </header>
   <dl class="piece-meta">
     <div><dt>Estilo</dt><dd>Vaporwave / Y2K</dd></div>
     <div><dt>Composición</dt><dd>comparison</dd></div>
     <div><dt>Estado</dt><dd>in-review</dd></div>
+    <div><dt>Resultado</dt><dd>Ilustrativo</dd></div>
   </dl>
   <figure class="artwork">
     <img class="poster" src="gallery/vaporwave/comparison/guias-claras-724d6684.png" data-poster="gallery/vaporwave/comparison/guias-claras-724d6684.png" data-gif="gallery/vaporwave/comparison/guias-claras-724d6684.gif" width="1280" height="720" alt="Guías claras · Vaporwave / Y2K · vista estática" loading="lazy">
@@ -1045,25 +877,27 @@
     <a href="gallery/vaporwave/comparison/guias-claras-724d6684.manifest.json">Manifiesto</a>
   </nav>
 </article>
-<article class="piece" data-style="vaporwave" aria-labelledby="piece-vaporwave-lectura-ordenada-dd72dc2d-manifest-json-title">
+<article class="piece" data-style="vaporwave" aria-labelledby="piece-vaporwave-lectura-ordenada-aa2a8e46-manifest-json-title">
   <header class="piece-header">
-    <h2 id="piece-vaporwave-lectura-ordenada-dd72dc2d-manifest-json-title">Lectura ordenada</h2>
+    <h2 id="piece-vaporwave-lectura-ordenada-aa2a8e46-manifest-json-title">Lectura ordenada</h2>
     <span class="status-tag">Estado: done</span>
+    <span class="evidence-tag evidence-tag--illustrative">Ilustrativo</span>
   </header>
   <dl class="piece-meta">
     <div><dt>Estilo</dt><dd>Vaporwave / Y2K</dd></div>
     <div><dt>Composición</dt><dd>checklist</dd></div>
     <div><dt>Estado</dt><dd>done</dd></div>
+    <div><dt>Resultado</dt><dd>Ilustrativo</dd></div>
   </dl>
   <figure class="artwork">
-    <img class="poster" src="gallery/vaporwave/checklist/lectura-ordenada-dd72dc2d.png" data-poster="gallery/vaporwave/checklist/lectura-ordenada-dd72dc2d.png" data-gif="gallery/vaporwave/checklist/lectura-ordenada-dd72dc2d.gif" width="1280" height="720" alt="Lectura ordenada · Vaporwave / Y2K · vista estática" loading="lazy">
+    <img class="poster" src="gallery/vaporwave/checklist/lectura-ordenada-aa2a8e46.png" data-poster="gallery/vaporwave/checklist/lectura-ordenada-aa2a8e46.png" data-gif="gallery/vaporwave/checklist/lectura-ordenada-aa2a8e46.gif" width="1280" height="720" alt="Lectura ordenada · Vaporwave / Y2K · vista estática" loading="lazy">
     <figcaption>Vista estática · 1280 × 720. La animación solo carga cuando eliges Reproducir.</figcaption>
   </figure>
   <div class="playback-controls" role="group" aria-label="Controles de Lectura ordenada">
     <button type="button" data-action="play" aria-label="Reproducir GIF manualmente. No comienza automáticamente; respeta movimiento reducido.">Reproducir</button>
     <button type="button" data-action="stop" aria-label="Detener y volver a la imagen estática">Detener</button>
-    <a class="button-link" href="gallery/vaporwave/checklist/lectura-ordenada-dd72dc2d.gif" download="lectura-ordenada-dd72dc2d.gif">Descargar GIF</a>
-    <a class="button-link" href="gallery/vaporwave/checklist/lectura-ordenada-dd72dc2d.png" download="lectura-ordenada-dd72dc2d.png">Descargar PNG</a>
+    <a class="button-link" href="gallery/vaporwave/checklist/lectura-ordenada-aa2a8e46.gif" download="lectura-ordenada-aa2a8e46.gif">Descargar GIF</a>
+    <a class="button-link" href="gallery/vaporwave/checklist/lectura-ordenada-aa2a8e46.png" download="lectura-ordenada-aa2a8e46.png">Descargar PNG</a>
     <button type="button" data-action="enlarge" aria-label="Ampliar Lectura ordenada a 1280 por 720">Ampliar</button>
   </div>
   <span class="piece-status visually-hidden" role="status" aria-live="polite"></span>
@@ -1076,13 +910,13 @@
 <li class="evaluation-level level--pending" aria-label="visual-review: pending"><span>visual-review:</span><strong>pending</strong></li></ul>
   </section>
   <nav class="evidence-links" aria-label="Evidencia de Lectura ordenada">
-    <a href="gallery/vaporwave/checklist/lectura-ordenada-dd72dc2d-contact-sheet.png">Hoja de contacto</a>
-    <a href="gallery/vaporwave/checklist/lectura-ordenada-dd72dc2d.manifest.json">Manifiesto</a>
+    <a href="gallery/vaporwave/checklist/lectura-ordenada-aa2a8e46-contact-sheet.png">Hoja de contacto</a>
+    <a href="gallery/vaporwave/checklist/lectura-ordenada-aa2a8e46.manifest.json">Manifiesto</a>
   </nav>
 </article>
     </section>
   </main>
-  <footer class="site-footer">28 piezas · 13 estilos · cinco niveles de evaluación independientes.</footer>
+  <footer class="site-footer">22 piezas · 11 estilos · cinco niveles de evaluación independientes.</footer>
   <dialog id="lightbox" aria-labelledby="lightbox-title">
     <div class="dialog-header"><h2 id="lightbox-title">Vista ampliada</h2><button type="button" data-action="close-dialog" aria-label="Cerrar vista ampliada">Cerrar</button></div>
     <img class="dialog-art" alt="" width="1280" height="720">

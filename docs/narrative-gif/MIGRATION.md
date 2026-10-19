@@ -26,3 +26,5 @@ Contract v2 is used by the CLI, library and MCP. The brief schema is defined onc
 - All 28 committed pack manifests are regenerated as schema v2. Five old `done` packs without evidence intentionally change their final narrative label to expected; GIF/PNG/contact-sheet bytes for other packs remain unchanged. Their workflow stamps still reflect `workflowStatus`.
 
 See [ARCHITECTURE.md](ARCHITECTURE.md) for capability counts, timing formula and contract rationale. `test/narrative-gallery-repro.test.ts` checks committed pack bytes against their source briefs.
+
+- The five changed packs are gallery galactic/Hitos de lectura (GIF, contact sheet), nature/Archivo de lectura (GIF, contact sheet), and vaporwave/Lectura ordenada (GIF, PNG, contact sheet), plus pilot papercraft/Observación registrada and brutalist/Observación registrada (GIF, contact sheet each). The label is derived from outcome.mode=expected; no evidence or measurement was added.
