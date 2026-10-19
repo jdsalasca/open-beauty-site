@@ -115,6 +115,16 @@ function isMember(semantic: NarrativeSemanticScene, entityId: string, collection
 function membershipProgress(context: NarrativeRenderContext, entityId: string, collectionId: string): number {
   const { frame } = context;
   const semantic = context.semantic!;
+  if (semantic.legacyUpgrade) {
+    const progressFor = (phaseIndex: number): number => {
+      const state = semanticFor(context, phaseIndex).states[entityId];
+      return state === 'pending' ? 0.18 : state === 'flagged' ? 0.56 : state === 'ready-for-review' ? 0.9 : 0;
+    };
+    if (frame.kind === 'transition' || frame.kind === 'loop-bridge') {
+      return mix(progressFor(frame.fromPhaseIndex), progressFor(frame.toPhaseIndex), cubicBezierEase(frame.progress, 0.22, 0.61, 0.36, 1));
+    }
+    return progressFor(context.phaseIndex);
+  }
   if (frame.kind === 'transition' || frame.kind === 'loop-bridge') {
     const from = isMember(semanticFor(context, frame.fromPhaseIndex), entityId, collectionId) ? 1 : 0;
     const to = isMember(semanticFor(context, frame.toPhaseIndex), entityId, collectionId) ? 1 : 0;

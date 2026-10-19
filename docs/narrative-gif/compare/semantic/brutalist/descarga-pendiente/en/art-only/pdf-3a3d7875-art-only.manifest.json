@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "commit": "8e1695849bfeb327907de744a3b3f9168f063606",
+  "commit": "dffa62ed28fa2a3460e6cbfbbd009d809806de94",
   "brief": {
     "style": "brutalist",
     "subfamily": "documentary",
@@ -167,6 +167,11 @@
     "status": "in-review"
   },
   "briefSha256": "723aad946da2c9f47067f403f2e0610c36b13a70a02ef4cb45fa909afab44b0c",
+  "upgrade": {
+    "applied": false,
+    "mapping": "native-semantic",
+    "reason": "The brief already supplies semantic scene entities; they are retained as authored."
+  },
   "style": "brutalist",
   "subfamily": "documentary",
   "workflowStatus": "in-review",

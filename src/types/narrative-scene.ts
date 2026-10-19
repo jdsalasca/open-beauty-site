@@ -33,6 +33,8 @@ export interface NarrativeSemanticAction {
 export interface NarrativeSemanticScene {
   primitive: NarrativeSemanticPrimitive;
   illustrative: boolean;
+  /** Marks conservative semantics generated from a legacy kind/state-only brief. */
+  legacyUpgrade?: boolean;
   entities: NarrativeSemanticEntity[];
   relations: NarrativeSemanticRelation[];
   states: Record<string, string>;
@@ -42,6 +44,7 @@ export interface NarrativeSemanticScene {
 export interface NarrativeSemanticSceneInput {
   primitive: NarrativeSemanticPrimitive;
   illustrative?: boolean;
+  legacyUpgrade?: boolean;
   entities: NarrativeSemanticEntityInput[];
   relations?: NarrativeSemanticRelation[];
   states: Record<string, string>;

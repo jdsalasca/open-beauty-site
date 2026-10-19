@@ -344,7 +344,9 @@ test('test-only scene creates GIF, static PNG, contact sheet, manifest and decod
 test('negative controls cannot pass on file format alone', async () => {
   const directory = await mkdtemp(path.join(os.tmpdir(), 'narrative-negative-'));
   try {
-    const input = normalizeNarrativeBrief(brief());
+    // The test-only renderer declares no semantic text boxes; opt out so that
+    // its unrelated pending text-legibility evidence cannot mask balance.
+    const input = normalizeNarrativeBrief(brief({ legacyArt: true }));
     const layout = layoutNarrative(input.brief);
     // Read just enough internal evidence for the independent evaluator contract.
     const createModule = await import('../src/narrative/encode.js');
@@ -378,10 +380,15 @@ test('negative controls cannot pass on file format alone', async () => {
     }
     const crammed = {
       ...encoded,
+      compositionByFrame: undefined,
+      semanticObjectCaptures: [{ ...encoded.semanticObjectCaptures[0]!, frameIndex: 0 }],
       decoded: { ...encoded.decoded, sampledFrames: [{ index: 0, rgb }] },
     } as typeof encoded;
     const crammedResult = evaluateNarrative({ brief: input.brief, layout, encoded: crammed });
     const balanceControl = crammedResult['rendered-legibility'].controls.find((control) => control.name === 'composition-balance');
+    assert.equal(balanceControl?.severity, 'warning', 'the decoded occupancy measurement remains an actionable warning');
+    const largestEmptyRectangle = Number(balanceControl?.detail.match(/largest empty rectangle ([\d.]+)%/u)?.[1]);
+    assert.ok(largestEmptyRectangle > 22, `the top-left-only negative control must measure above 22%, got ${largestEmptyRectangle}%`);
     assert.equal(crammedResult['rendered-legibility'].status, 'revise', 'top-left-only content must request layout revision');
     assert.equal(balanceControl?.passed, false, 'the decoded-pixel negative control must flag the empty remainder');
 

@@ -5,6 +5,7 @@ import path from 'node:path';
 import type { NarrativeControlResult, NarrativeEditorialWarning, NarrativeEvaluation, NormalizedNarrativeBrief } from '../types/narrative.js';
 import type { NarrativeEncodedFiles } from './encode.js';
 import type { NarrativeTimeline } from './timeline.js';
+import type { NarrativeUpgradeMetadata } from './legacy-upgrade.js';
 
 export const NARRATIVE_FONT_BUNDLE_VERSION = 'repo-bundled-ofl-1';
 
@@ -13,6 +14,7 @@ export interface NarrativeManifest {
   commit: string | null;
   brief: NormalizedNarrativeBrief;
   briefSha256: string;
+  upgrade: NarrativeUpgradeMetadata;
   style: string;
   subfamily: string | null;
   workflowStatus: NormalizedNarrativeBrief['workflowStatus'];
@@ -83,8 +85,9 @@ export async function createNarrativeManifest(input: {
   evaluation: NarrativeEvaluation;
   editorialWarnings?: NarrativeEditorialWarning[];
   outputDir: string;
+  upgrade: NarrativeUpgradeMetadata;
 }): Promise<{ manifest: NarrativeManifest; path: string }> {
-  const { brief, briefHash, encoded, timeline, controls, evaluation, editorialWarnings = [], outputDir } = input;
+  const { brief, briefHash, encoded, timeline, controls, evaluation, editorialWarnings = [], outputDir, upgrade } = input;
   const phaseCaptures = brief.phases.map((phase, index) => ({
     phaseId: phase.id,
     labels: [
@@ -107,6 +110,7 @@ export async function createNarrativeManifest(input: {
     commit: currentCommit(),
     brief,
     briefSha256: briefHash,
+    upgrade,
     style: brief.style,
     subfamily: brief.subfamily ?? null,
     workflowStatus: brief.workflowStatus,

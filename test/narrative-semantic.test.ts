@@ -41,15 +41,23 @@ function semanticBrief() {
   };
 }
 
-test('legacy visual kind/state briefs normalize to a stable trivial semantic scene', () => {
-  const { brief } = normalizeNarrativeBrief(legacyBrief());
+test('legacy visual kind/state briefs upgrade to a stable illustrative semantic scene', () => {
+  const { brief, upgrade } = normalizeNarrativeBrief(legacyBrief());
   const semantics = brief.phases.map((phase) => phase.visual.semantic);
   assert.ok(semantics.every(Boolean));
   assert.deepEqual(semantics.map((scene) => scene!.entities.map((entity) => entity.id)), [
-    ['legacy-object'], ['legacy-object'], ['legacy-object'],
+    ['legacy-records', 'legacy-record-a', 'legacy-record-b', 'legacy-record-c', 'legacy-record-d'],
+    ['legacy-records', 'legacy-record-a', 'legacy-record-b', 'legacy-record-c', 'legacy-record-d'],
+    ['legacy-records', 'legacy-record-a', 'legacy-record-b', 'legacy-record-c', 'legacy-record-d'],
   ]);
-  assert.deepEqual(semantics.map((scene) => scene!.states['legacy-object']), ['before', 'flagged', 'review-ready']);
+  assert.deepEqual(semantics.map((scene) => scene!.states['legacy-record-a']), ['pending', 'flagged', 'ready-for-review']);
   assert.ok(semantics.every((scene) => scene!.illustrative === true));
+  assert.ok(semantics.every((scene) => scene!.entities.every((entity) => entity.illustrative === true)));
+  assert.deepEqual(upgrade, {
+    applied: true,
+    mapping: 'legacy-state-v1:papercraft:comparison',
+    reason: 'papercraft maps legacy comparison states to generic illustrative table-rows entities without counts, figures, or changes to narrative copy.',
+  });
 });
 
 test('explicit semantic entities keep identity and normalize per-phase states and actions', () => {

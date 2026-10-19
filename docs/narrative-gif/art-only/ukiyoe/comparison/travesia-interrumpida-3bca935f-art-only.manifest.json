@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 2,
-  "commit": "855da1385311d0eddc8ba47a4112963feb7d12b1",
+  "schemaVersion": 3,
+  "commit": "dffa62ed28fa2a3460e6cbfbbd009d809806de94",
   "brief": {
     "style": "ukiyoe",
     "kind": "narrative-gif",
@@ -158,6 +158,11 @@
     "status": "in-review"
   },
   "briefSha256": "320b7cc906e3dd78e4e3c30608bb8623c765fcb88d998e690ea47eb216f964d8",
+  "upgrade": {
+    "applied": false,
+    "mapping": "native-semantic",
+    "reason": "The brief already supplies semantic scene entities; they are retained as authored."
+  },
   "style": "ukiyoe",
   "subfamily": null,
   "workflowStatus": "in-review",
@@ -267,20 +272,20 @@
     "detail": "ffprobe 1280×720; 44 frames; 23620ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 831524,
-    "png": 43831,
-    "contactSheet": 83804
+    "gif": 860324,
+    "png": 44450,
+    "contactSheet": 84744
   },
   "hashes": {
     "briefSha256": "320b7cc906e3dd78e4e3c30608bb8623c765fcb88d998e690ea47eb216f964d8",
-    "gifSha256": "e174545e0bca265fef517be0f57a4dd76e4f61ea725904fc25c4bf8ef353f971",
-    "pngSha256": "17ea296e45654fb94f63bc593cd61b7e282e3851ea4a75a4e68f3a8384fc0e2c",
-    "contactSheetSha256": "806f94577cf7dd2c38c0168ea5be920a8654521ba43a0fa49eaff67cbd34cbb3"
+    "gifSha256": "62557d605147de643218898de31af37a5c78fe453c30d544b7dfca82ba020396",
+    "pngSha256": "8727126d8ed461339ff3f188788d531f319c88cbf90885705443c08e3cd7e169",
+    "contactSheetSha256": "0a2bb562b45037f3abb7df6b5984701ffb2cf3e3758249cd70454d259fd0a16f"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\ukiyoe\\comparison\\travesia-interrumpida-3bca935f-art-only.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\ukiyoe\\comparison\\travesia-interrumpida-3bca935f-art-only.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\ukiyoe\\comparison\\travesia-interrumpida-3bca935f-art-only-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0789573b\\docs\\narrative-gif\\art-only\\ukiyoe\\comparison\\travesia-interrumpida-3bca935f-art-only.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0789573b\\docs\\narrative-gif\\art-only\\ukiyoe\\comparison\\travesia-interrumpida-3bca935f-art-only.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0789573b\\docs\\narrative-gif\\art-only\\ukiyoe\\comparison\\travesia-interrumpida-3bca935f-art-only-contact-sheet.png"
   },
   "controls": [
     {
@@ -328,7 +333,7 @@
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 831524B · PNG 43831B · contact 83804B",
+      "detail": "GIF 860324B · PNG 44450B · contact 84744B",
       "source": "decoded"
     },
     {
@@ -364,7 +369,7 @@
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "74 colors; mean channel loss 0.011, max 11; sampled 44 frames",
+      "detail": "75 colors; mean channel loss 0.011, max 11; sampled 44 frames",
       "source": "pixels"
     },
     {
@@ -438,6 +443,13 @@
       "passed": true,
       "detail": "title 34.5px; body min 23.0px (requires >=20px); label min 15.0px",
       "source": "source"
+    },
+    {
+      "name": "semantic-text-legibility",
+      "passed": false,
+      "status": "pending",
+      "detail": "No scene-declared text boxes were available inside semantic object regions.",
+      "source": "decoded"
     },
     {
       "name": "composition-balance",
@@ -527,7 +539,7 @@
     {
       "name": "semantic-object-midpoint:reintento → pendiente · unión del ciclo",
       "passed": true,
-      "detail": "decoded object diff 25.2%; changed-state entities: bitacora; bitacora retrying→pending 25.2%",
+      "detail": "decoded object diff 25.1%; changed-state entities: bitacora; bitacora retrying→pending 25.1%",
       "source": "decoded"
     },
     {
@@ -539,7 +551,7 @@
     {
       "name": "semantic-object-transformation:avance → fallo hold",
       "passed": true,
-      "detail": "decoded object diff 0.6%; changed-state entities: bitacora; bitacora downloading→failed 0.6%",
+      "detail": "decoded object diff 0.7%; changed-state entities: bitacora; bitacora downloading→failed 0.7%",
       "source": "decoded"
     },
     {
@@ -551,7 +563,7 @@
     {
       "name": "semantic-object-transformation:reintento → pendiente loop join",
       "passed": true,
-      "detail": "decoded object diff 26.7%; changed-state entities: bitacora; bitacora retrying→pending 26.7%",
+      "detail": "decoded object diff 26.6%; changed-state entities: bitacora; bitacora retrying→pending 26.6%",
       "source": "decoded"
     }
   ],
@@ -604,7 +616,7 @@
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 831524B · PNG 43831B · contact 83804B",
+          "detail": "GIF 860324B · PNG 44450B · contact 84744B",
           "source": "decoded"
         }
       ]
@@ -647,14 +659,14 @@
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "74 colors; mean channel loss 0.011, max 11; sampled 44 frames",
+          "detail": "75 colors; mean channel loss 0.011, max 11; sampled 44 frames",
           "source": "pixels"
         }
       ],
       "note": "Source checks identify renderer/font tokens; pixel checks measure frame change and palette loss. Neither substitutes for visual review."
     },
     "rendered-legibility": {
-      "status": "revise",
+      "status": "pending",
       "controls": [
         {
           "name": "title-complete",
@@ -727,6 +739,13 @@
           "passed": true,
           "detail": "title 34.5px; body min 23.0px (requires >=20px); label min 15.0px",
           "source": "source"
+        },
+        {
+          "name": "semantic-text-legibility",
+          "passed": false,
+          "status": "pending",
+          "detail": "No scene-declared text boxes were available inside semantic object regions.",
+          "source": "decoded"
         },
         {
           "name": "composition-balance",
@@ -822,7 +841,7 @@
         {
           "name": "semantic-object-midpoint:reintento → pendiente · unión del ciclo",
           "passed": true,
-          "detail": "decoded object diff 25.2%; changed-state entities: bitacora; bitacora retrying→pending 25.2%",
+          "detail": "decoded object diff 25.1%; changed-state entities: bitacora; bitacora retrying→pending 25.1%",
           "source": "decoded"
         },
         {
@@ -834,7 +853,7 @@
         {
           "name": "semantic-object-transformation:avance → fallo hold",
           "passed": true,
-          "detail": "decoded object diff 0.6%; changed-state entities: bitacora; bitacora downloading→failed 0.6%",
+          "detail": "decoded object diff 0.7%; changed-state entities: bitacora; bitacora downloading→failed 0.7%",
           "source": "decoded"
         },
         {
@@ -846,7 +865,7 @@
         {
           "name": "semantic-object-transformation:reintento → pendiente loop join",
           "passed": true,
-          "detail": "decoded object diff 26.7%; changed-state entities: bitacora; bitacora retrying→pending 26.7%",
+          "detail": "decoded object diff 26.6%; changed-state entities: bitacora; bitacora retrying→pending 26.6%",
           "source": "decoded"
         }
       ],
@@ -854,17 +873,405 @@
     },
     "visual-review": {
       "status": "pending",
-      "criteria": [
-        "identity at 200px thumbnail",
-        "full text and contrast at 640×360",
-        "style material in native frame",
-        "same object and causal change across phases",
-        "result faithful to outcome and evidence scope",
-        "deliberate loop restart"
-      ],
+      "reviewer": null,
+      "criteria": {
+        "thumbnailIdentity": {
+          "verdict": "not-evaluated"
+        },
+        "cardSizeReading": {
+          "verdict": "not-evaluated"
+        },
+        "styleMaterial": {
+          "verdict": "not-evaluated"
+        },
+        "phaseContinuity": {
+          "verdict": "not-evaluated"
+        },
+        "loopRestart": {
+          "verdict": "not-evaluated"
+        },
+        "artOnlyTransformationUnderstood": {
+          "verdict": "not-evaluated"
+        }
+      },
+      "feedback": [],
       "evidence": []
     },
-    "publicationRecommendation": "none"
+    "publicationRecommendation": "none",
+    "automatedEvidence": {
+      "balanceByFrame": [
+        {
+          "frameIndex": 1,
+          "phaseId": "pendiente",
+          "kind": "hold",
+          "label": "pendiente · pausa",
+          "regions": [
+            {
+              "entityId": "bitacora",
+              "bounds": {
+                "x": 664.064,
+                "y": 265.248,
+                "width": 553.472,
+                "height": 399.31199999999995
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.5,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        },
+        {
+          "frameIndex": 5,
+          "phaseId": "avance",
+          "kind": "transition",
+          "label": "pendiente → avance · punto medio de transición",
+          "regions": [
+            {
+              "entityId": "bitacora",
+              "bounds": {
+                "x": 664.064,
+                "y": 265.248,
+                "width": 553.472,
+                "height": 399.31199999999995
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.5,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        },
+        {
+          "frameIndex": 12,
+          "phaseId": "avance",
+          "kind": "hold",
+          "label": "avance · pausa",
+          "regions": [
+            {
+              "entityId": "bitacora",
+              "bounds": {
+                "x": 664.064,
+                "y": 265.248,
+                "width": 553.472,
+                "height": 399.31199999999995
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.5,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        },
+        {
+          "frameIndex": 16,
+          "phaseId": "fallo",
+          "kind": "transition",
+          "label": "avance → fallo · punto medio de transición",
+          "regions": [
+            {
+              "entityId": "bitacora",
+              "bounds": {
+                "x": 664.064,
+                "y": 265.248,
+                "width": 553.472,
+                "height": 399.31199999999995
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.5,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        },
+        {
+          "frameIndex": 23,
+          "phaseId": "fallo",
+          "kind": "hold",
+          "label": "fallo · pausa",
+          "regions": [
+            {
+              "entityId": "bitacora",
+              "bounds": {
+                "x": 664.064,
+                "y": 265.248,
+                "width": 553.472,
+                "height": 399.31199999999995
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.5,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        },
+        {
+          "frameIndex": 27,
+          "phaseId": "reintento",
+          "kind": "transition",
+          "label": "fallo → reintento · punto medio de transición",
+          "regions": [
+            {
+              "entityId": "bitacora",
+              "bounds": {
+                "x": 664.064,
+                "y": 265.248,
+                "width": 553.472,
+                "height": 399.31199999999995
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.5,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        },
+        {
+          "frameIndex": 34,
+          "phaseId": "reintento",
+          "kind": "hold",
+          "label": "reintento · pausa",
+          "regions": [
+            {
+              "entityId": "bitacora",
+              "bounds": {
+                "x": 664.064,
+                "y": 265.248,
+                "width": 553.472,
+                "height": 399.31199999999995
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.5,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        },
+        {
+          "frameIndex": 38,
+          "phaseId": "pendiente",
+          "kind": "loop-bridge",
+          "label": "reintento → pendiente · unión del ciclo",
+          "regions": [
+            {
+              "entityId": "bitacora",
+              "bounds": {
+                "x": 664.064,
+                "y": 265.248,
+                "width": 553.472,
+                "height": 399.31199999999995
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.5,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        }
+      ],
+      "objectTransformationByFrame": [
+        {
+          "frameIndex": 5,
+          "phaseId": "avance",
+          "fromPhaseId": "pendiente",
+          "kind": "transition",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "bitacora",
+              "bounds": {
+                "x": 664.064,
+                "y": 265.248,
+                "width": 553.472,
+                "height": 399.31199999999995
+              },
+              "fromState": "pending",
+              "toState": "downloading",
+              "pixelDiffRatio": 0.28023916967509027,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 16,
+          "phaseId": "fallo",
+          "fromPhaseId": "avance",
+          "kind": "transition",
+          "measured": true,
+          "passed": false,
+          "regions": [
+            {
+              "entityId": "bitacora",
+              "bounds": {
+                "x": 664.064,
+                "y": 265.248,
+                "width": 553.472,
+                "height": 399.31199999999995
+              },
+              "fromState": "downloading",
+              "toState": "failed",
+              "pixelDiffRatio": 0,
+              "changed": false
+            }
+          ]
+        },
+        {
+          "frameIndex": 27,
+          "phaseId": "reintento",
+          "fromPhaseId": "fallo",
+          "kind": "transition",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "bitacora",
+              "bounds": {
+                "x": 664.064,
+                "y": 265.248,
+                "width": 553.472,
+                "height": 399.31199999999995
+              },
+              "fromState": "failed",
+              "toState": "retrying",
+              "pixelDiffRatio": 0.1384205776173285,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 38,
+          "phaseId": "pendiente",
+          "fromPhaseId": "reintento",
+          "kind": "loop-bridge",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "bitacora",
+              "bounds": {
+                "x": 664.064,
+                "y": 265.248,
+                "width": 553.472,
+                "height": 399.31199999999995
+              },
+              "fromState": "retrying",
+              "toState": "pending",
+              "pixelDiffRatio": 0.25074007220216604,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 12,
+          "phaseId": "avance",
+          "fromPhaseId": "pendiente",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "bitacora",
+              "bounds": {
+                "x": 664.064,
+                "y": 265.248,
+                "width": 553.472,
+                "height": 399.31199999999995
+              },
+              "fromState": "pending",
+              "toState": "downloading",
+              "pixelDiffRatio": 0.277870036101083,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 23,
+          "phaseId": "fallo",
+          "fromPhaseId": "avance",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "bitacora",
+              "bounds": {
+                "x": 664.064,
+                "y": 265.248,
+                "width": 553.472,
+                "height": 399.31199999999995
+              },
+              "fromState": "downloading",
+              "toState": "failed",
+              "pixelDiffRatio": 0.006629061371841155,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 34,
+          "phaseId": "reintento",
+          "fromPhaseId": "fallo",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "bitacora",
+              "bounds": {
+                "x": 664.064,
+                "y": 265.248,
+                "width": 553.472,
+                "height": 399.31199999999995
+              },
+              "fromState": "failed",
+              "toState": "retrying",
+              "pixelDiffRatio": 0.15388086642599277,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 1,
+          "phaseId": "pendiente",
+          "fromPhaseId": "reintento",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "bitacora",
+              "bounds": {
+                "x": 664.064,
+                "y": 265.248,
+                "width": 553.472,
+                "height": 399.31199999999995
+              },
+              "fromState": "retrying",
+              "toState": "pending",
+              "pixelDiffRatio": 0.2656678700361011,
+              "changed": true
+            }
+          ]
+        }
+      ]
+    }
   },
   "phaseCaptures": [
     {
@@ -876,7 +1283,7 @@
         "pendiente · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\ukiyoe\\comparison\\travesia-interrumpida-3bca935f-art-only-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0789573b\\docs\\narrative-gif\\art-only\\ukiyoe\\comparison\\travesia-interrumpida-3bca935f-art-only-contact-sheet.png"
     },
     {
       "phaseId": "avance",
@@ -886,7 +1293,7 @@
         "avance → fallo · punto medio de transición",
         "avance · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\ukiyoe\\comparison\\travesia-interrumpida-3bca935f-art-only-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0789573b\\docs\\narrative-gif\\art-only\\ukiyoe\\comparison\\travesia-interrumpida-3bca935f-art-only-contact-sheet.png"
     },
     {
       "phaseId": "fallo",
@@ -896,7 +1303,7 @@
         "fallo → reintento · punto medio de transición",
         "fallo · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\ukiyoe\\comparison\\travesia-interrumpida-3bca935f-art-only-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0789573b\\docs\\narrative-gif\\art-only\\ukiyoe\\comparison\\travesia-interrumpida-3bca935f-art-only-contact-sheet.png"
     },
     {
       "phaseId": "reintento",
@@ -906,7 +1313,7 @@
         "reintento → pendiente · unión del ciclo",
         "reintento · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\ukiyoe\\comparison\\travesia-interrumpida-3bca935f-art-only-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0789573b\\docs\\narrative-gif\\art-only\\ukiyoe\\comparison\\travesia-interrumpida-3bca935f-art-only-contact-sheet.png"
     }
   ],
   "semanticObjectCaptures": [
@@ -1057,7 +1464,21 @@
   ],
   "compositionByFrame": [
     {
+      "frameIndex": 1,
       "label": "pendiente · pausa",
+      "phaseId": "pendiente",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "bitacora",
+          "bounds": {
+            "x": 664.064,
+            "y": 265.248,
+            "width": 553.472,
+            "height": 399.31199999999995
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.5,
         "textColumnFillRatio": 0,
@@ -1066,7 +1487,21 @@
       }
     },
     {
+      "frameIndex": 5,
       "label": "pendiente → avance · punto medio de transición",
+      "phaseId": "avance",
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "bitacora",
+          "bounds": {
+            "x": 664.064,
+            "y": 265.248,
+            "width": 553.472,
+            "height": 399.31199999999995
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.5,
         "textColumnFillRatio": 0,
@@ -1075,7 +1510,21 @@
       }
     },
     {
+      "frameIndex": 12,
       "label": "avance · pausa",
+      "phaseId": "avance",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "bitacora",
+          "bounds": {
+            "x": 664.064,
+            "y": 265.248,
+            "width": 553.472,
+            "height": 399.31199999999995
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.5,
         "textColumnFillRatio": 0,
@@ -1084,7 +1533,21 @@
       }
     },
     {
+      "frameIndex": 16,
       "label": "avance → fallo · punto medio de transición",
+      "phaseId": "fallo",
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "bitacora",
+          "bounds": {
+            "x": 664.064,
+            "y": 265.248,
+            "width": 553.472,
+            "height": 399.31199999999995
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.5,
         "textColumnFillRatio": 0,
@@ -1093,7 +1556,21 @@
       }
     },
     {
+      "frameIndex": 23,
       "label": "fallo · pausa",
+      "phaseId": "fallo",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "bitacora",
+          "bounds": {
+            "x": 664.064,
+            "y": 265.248,
+            "width": 553.472,
+            "height": 399.31199999999995
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.5,
         "textColumnFillRatio": 0,
@@ -1102,7 +1579,21 @@
       }
     },
     {
+      "frameIndex": 27,
       "label": "fallo → reintento · punto medio de transición",
+      "phaseId": "reintento",
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "bitacora",
+          "bounds": {
+            "x": 664.064,
+            "y": 265.248,
+            "width": 553.472,
+            "height": 399.31199999999995
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.5,
         "textColumnFillRatio": 0,
@@ -1111,7 +1602,21 @@
       }
     },
     {
+      "frameIndex": 34,
       "label": "reintento · pausa",
+      "phaseId": "reintento",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "bitacora",
+          "bounds": {
+            "x": 664.064,
+            "y": 265.248,
+            "width": 553.472,
+            "height": 399.31199999999995
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.5,
         "textColumnFillRatio": 0,
@@ -1120,7 +1625,21 @@
       }
     },
     {
+      "frameIndex": 38,
       "label": "reintento → pendiente · unión del ciclo",
+      "phaseId": "pendiente",
+      "kind": "loop-bridge",
+      "regions": [
+        {
+          "entityId": "bitacora",
+          "bounds": {
+            "x": 664.064,
+            "y": 265.248,
+            "width": 553.472,
+            "height": 399.31199999999995
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.5,
         "textColumnFillRatio": 0,
@@ -1130,7 +1649,7 @@
     }
   ],
   "palette": {
-    "colors": 74,
+    "colors": 75,
     "meanAbsoluteChannelError": 0.011,
     "maximumChannelError": 11,
     "sampledFrames": 44
@@ -1221,5 +1740,11 @@
     "memoryBytes": 128090112,
     "maxMemoryBytes": 268435456
   },
-  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed."
+  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed.",
+  "generatedBy": "open-beauty-site",
+  "reviewState": "none",
+  "openFeedbackCount": 0,
+  "feedbackFrames": [],
+  "publicationRecommendation": "none",
+  "renderRevision": 1
 }

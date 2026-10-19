@@ -5,6 +5,7 @@ import test from 'node:test';
 import { getNarrativeFontProfile } from '../src/narrative/fonts.js';
 import { layoutNarrative } from '../src/narrative/layout.js';
 import { narrativeCapabilityReport } from '../src/narrative/capabilities.js';
+import { capabilitiesHtml } from '../scripts/capabilities-matrix.js';
 import { NARRATIVE_SCENE_TEXT_CATALOG, workflowBadgeText } from '../src/narrative/i18n.js';
 import { getNarrativeScene, supportedNarrativeStyles } from '../src/narrative/scene.js';
 import { normalizeNarrativeBrief } from '../src/narrative/brief.js';
@@ -102,6 +103,23 @@ test('capability registry is explicit and every fallback style/aspect/locale cel
     assert.ok(cell.allowed.semanticEntityKinds.length > 0);
   }
   assert.ok(report.cells.filter((cell) => cell.status === 'unsupported').every((cell) => cell.reason.length > 12));
+});
+
+test('capability HTML keeps evidence links readable and the paper layout accessible', () => {
+  const html = capabilitiesHtml(narrativeCapabilityReport());
+  assert.match(html, /href="#main"[^>]*>Saltar al contenido</u);
+  assert.match(html, /font-family:\s*'Fraunces'/u);
+  assert.match(html, /font-size:clamp\(48px,7vw,120px\)/u);
+  assert.match(html, /overflow-x:\s*hidden/u);
+  assert.match(html, /box-shadow:/u);
+  assert.match(html, /drop-shadow/u);
+  assert.match(html, /clip-path:/u);
+  assert.match(html, /class="upgrade-map"/u);
+  assert.match(html, /class="edition-stamp"/u);
+  assert.match(html, />Prueba<\/a>/u);
+  assert.match(html, />Pack<\/a>/u);
+  assert.doesNotMatch(html, /<a\b[^>]*>docs\/narrative-gif\//u, 'full repository paths are not displayed as unbroken link labels');
+  assert.doesNotMatch(html, />[^<]*test\/narrative-[^<]*\.test\.ts/u, 'proof sources remain linked instead of breaking rationale text mid-word');
 });
 
 test('all fixed illustration copy is catalogued in both locales and no renderer draws hard-coded Spanish copy', async () => {

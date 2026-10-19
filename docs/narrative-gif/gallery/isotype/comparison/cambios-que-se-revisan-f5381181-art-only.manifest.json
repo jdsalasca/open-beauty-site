@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 2,
-  "commit": "168194e754e50f69395a6101252afb6a3122acff",
+  "schemaVersion": 3,
+  "commit": "79b4fb96a2683faab4eaced59233b413b7aa98f1",
   "brief": {
     "style": "isotype",
     "kind": "narrative-gif",
@@ -319,6 +319,11 @@
     "status": "in-review"
   },
   "briefSha256": "6d699f17af8fe4f2aa997ed8b71fa250d2fb0b32a1129b959cd260fe79810834",
+  "upgrade": {
+    "applied": false,
+    "mapping": "native-semantic",
+    "reason": "The brief already supplies semantic scene entities; they are retained as authored."
+  },
   "style": "isotype",
   "subfamily": null,
   "workflowStatus": "in-review",
@@ -428,9 +433,9 @@
     "contactSheetSha256": "0a2d8787270f5bc81dc4ab9020b6061ff2d8d9c63519dc27161d4c5ba81bd47e"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6298d032\\docs\\narrative-gif\\gallery\\isotype\\comparison\\cambios-que-se-revisan-f5381181-art-only.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6298d032\\docs\\narrative-gif\\gallery\\isotype\\comparison\\cambios-que-se-revisan-f5381181-art-only.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6298d032\\docs\\narrative-gif\\gallery\\isotype\\comparison\\cambios-que-se-revisan-f5381181-art-only-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\AppData\\Local\\Temp\\narrative-legacy-upgrade-5JRy4p\\rendered\\04-isotype-art-only\\cambios-que-se-revisan-f5381181-art-only.gif",
+    "png": "C:\\Users\\jdsal\\AppData\\Local\\Temp\\narrative-legacy-upgrade-5JRy4p\\rendered\\04-isotype-art-only\\cambios-que-se-revisan-f5381181-art-only.png",
+    "contactSheet": "C:\\Users\\jdsal\\AppData\\Local\\Temp\\narrative-legacy-upgrade-5JRy4p\\rendered\\04-isotype-art-only\\cambios-que-se-revisan-f5381181-art-only-contact-sheet.png"
   },
   "controls": [
     {
@@ -576,6 +581,13 @@
       "passed": true,
       "detail": "title 34.5px; body min 27.0px (requires >=20px); label min 15.0px",
       "source": "source"
+    },
+    {
+      "name": "semantic-text-legibility",
+      "passed": false,
+      "status": "pending",
+      "detail": "No scene-declared text boxes were available inside semantic object regions.",
+      "source": "decoded"
     },
     {
       "name": "composition-balance",
@@ -780,7 +792,7 @@
       "note": "Source checks identify renderer/font tokens; pixel checks measure frame change and palette loss. Neither substitutes for visual review."
     },
     "rendered-legibility": {
-      "status": "revise",
+      "status": "pending",
       "controls": [
         {
           "name": "title-complete",
@@ -841,6 +853,13 @@
           "passed": true,
           "detail": "title 34.5px; body min 27.0px (requires >=20px); label min 15.0px",
           "source": "source"
+        },
+        {
+          "name": "semantic-text-legibility",
+          "passed": false,
+          "status": "pending",
+          "detail": "No scene-declared text boxes were available inside semantic object regions.",
+          "source": "decoded"
         },
         {
           "name": "composition-balance",
@@ -956,17 +975,1105 @@
     },
     "visual-review": {
       "status": "pending",
-      "criteria": [
-        "identity at 200px thumbnail",
-        "full text and contrast at 640×360",
-        "style material in native frame",
-        "same object and causal change across phases",
-        "result faithful to outcome and evidence scope",
-        "deliberate loop restart"
-      ],
+      "reviewer": null,
+      "criteria": {
+        "thumbnailIdentity": {
+          "verdict": "not-evaluated"
+        },
+        "cardSizeReading": {
+          "verdict": "not-evaluated"
+        },
+        "styleMaterial": {
+          "verdict": "not-evaluated"
+        },
+        "phaseContinuity": {
+          "verdict": "not-evaluated"
+        },
+        "loopRestart": {
+          "verdict": "not-evaluated"
+        },
+        "artOnlyTransformationUnderstood": {
+          "verdict": "not-evaluated"
+        }
+      },
+      "feedback": [],
       "evidence": []
     },
-    "publicationRecommendation": "none"
+    "publicationRecommendation": "none",
+    "automatedEvidence": {
+      "balanceByFrame": [
+        {
+          "frameIndex": 1,
+          "phaseId": "before",
+          "kind": "hold",
+          "label": "before · pausa",
+          "regions": [
+            {
+              "entityId": "unit-1",
+              "bounds": {
+                "x": 678.4480000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-2",
+              "bounds": {
+                "x": 805.1680000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-3",
+              "bounds": {
+                "x": 931.8880000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-4",
+              "bounds": {
+                "x": 678.4480000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-5",
+              "bounds": {
+                "x": 805.1680000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-6",
+              "bounds": {
+                "x": 931.8880000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "units",
+              "bounds": {
+                "x": 818.56,
+                "y": 104.03999999999999,
+                "width": 218.88,
+                "height": 55.080000000000005
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.625,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.375,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        },
+        {
+          "frameIndex": 5,
+          "phaseId": "change",
+          "kind": "transition",
+          "label": "before → change · punto medio de transición",
+          "regions": [
+            {
+              "entityId": "unit-1",
+              "bounds": {
+                "x": 678.4480000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-2",
+              "bounds": {
+                "x": 805.1680000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-3",
+              "bounds": {
+                "x": 931.8880000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-4",
+              "bounds": {
+                "x": 678.4480000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-5",
+              "bounds": {
+                "x": 805.1680000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-6",
+              "bounds": {
+                "x": 931.8880000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "units",
+              "bounds": {
+                "x": 818.56,
+                "y": 104.03999999999999,
+                "width": 218.88,
+                "height": 55.080000000000005
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.625,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.375,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        },
+        {
+          "frameIndex": 12,
+          "phaseId": "change",
+          "kind": "hold",
+          "label": "change · pausa",
+          "regions": [
+            {
+              "entityId": "unit-1",
+              "bounds": {
+                "x": 678.4480000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-2",
+              "bounds": {
+                "x": 805.1680000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-3",
+              "bounds": {
+                "x": 931.8880000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-4",
+              "bounds": {
+                "x": 678.4480000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-5",
+              "bounds": {
+                "x": 805.1680000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-6",
+              "bounds": {
+                "x": 931.8880000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "units",
+              "bounds": {
+                "x": 818.56,
+                "y": 104.03999999999999,
+                "width": 218.88,
+                "height": 55.080000000000005
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.625,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.375,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        },
+        {
+          "frameIndex": 16,
+          "phaseId": "result",
+          "kind": "transition",
+          "label": "change → result · punto medio de transición",
+          "regions": [
+            {
+              "entityId": "unit-1",
+              "bounds": {
+                "x": 678.4480000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-2",
+              "bounds": {
+                "x": 805.1680000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-3",
+              "bounds": {
+                "x": 931.8880000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-4",
+              "bounds": {
+                "x": 678.4480000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-5",
+              "bounds": {
+                "x": 805.1680000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-6",
+              "bounds": {
+                "x": 1058.608,
+                "y": 345.24,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "units",
+              "bounds": {
+                "x": 818.56,
+                "y": 104.03999999999999,
+                "width": 218.88,
+                "height": 55.080000000000005
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.59375,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.40625,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        },
+        {
+          "frameIndex": 23,
+          "phaseId": "result",
+          "kind": "hold",
+          "label": "result · pausa",
+          "regions": [
+            {
+              "entityId": "unit-1",
+              "bounds": {
+                "x": 678.4480000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-2",
+              "bounds": {
+                "x": 805.1680000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-3",
+              "bounds": {
+                "x": 931.8880000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-4",
+              "bounds": {
+                "x": 678.4480000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-5",
+              "bounds": {
+                "x": 805.1680000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-6",
+              "bounds": {
+                "x": 1058.608,
+                "y": 345.24,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "units",
+              "bounds": {
+                "x": 818.56,
+                "y": 104.03999999999999,
+                "width": 218.88,
+                "height": 55.080000000000005
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.625,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.375,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        },
+        {
+          "frameIndex": 27,
+          "phaseId": "before",
+          "kind": "loop-bridge",
+          "label": "result → before · unión del ciclo",
+          "regions": [
+            {
+              "entityId": "unit-1",
+              "bounds": {
+                "x": 678.4480000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-2",
+              "bounds": {
+                "x": 805.1680000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-3",
+              "bounds": {
+                "x": 931.8880000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-4",
+              "bounds": {
+                "x": 678.4480000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-5",
+              "bounds": {
+                "x": 805.1680000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "unit-6",
+              "bounds": {
+                "x": 931.8880000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              }
+            },
+            {
+              "entityId": "units",
+              "bounds": {
+                "x": 818.56,
+                "y": 104.03999999999999,
+                "width": 218.88,
+                "height": 55.080000000000005
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.625,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.375,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        }
+      ],
+      "objectTransformationByFrame": [
+        {
+          "frameIndex": 5,
+          "phaseId": "change",
+          "fromPhaseId": "before",
+          "kind": "transition",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "unit-1",
+              "bounds": {
+                "x": 678.4480000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-2",
+              "bounds": {
+                "x": 805.1680000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-3",
+              "bounds": {
+                "x": 931.8880000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-4",
+              "bounds": {
+                "x": 678.4480000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-5",
+              "bounds": {
+                "x": 805.1680000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-6",
+              "bounds": {
+                "x": 931.8880000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "flagged",
+              "pixelDiffRatio": 0.06621949479092336,
+              "changed": true
+            },
+            {
+              "entityId": "units",
+              "bounds": {
+                "x": 818.56,
+                "y": 104.03999999999999,
+                "width": 218.88,
+                "height": 55.080000000000005
+              },
+              "fromState": "value",
+              "toState": "value",
+              "pixelDiffRatio": 0,
+              "changed": false
+            }
+          ]
+        },
+        {
+          "frameIndex": 16,
+          "phaseId": "result",
+          "fromPhaseId": "change",
+          "kind": "transition",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "unit-1",
+              "bounds": {
+                "x": 678.4480000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-2",
+              "bounds": {
+                "x": 805.1680000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-3",
+              "bounds": {
+                "x": 931.8880000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-4",
+              "bounds": {
+                "x": 678.4480000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-5",
+              "bounds": {
+                "x": 805.1680000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-6",
+              "bounds": {
+                "x": 1058.608,
+                "y": 345.24,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "flagged",
+              "toState": "pending",
+              "pixelDiffRatio": 0.21963750535179108,
+              "changed": true
+            },
+            {
+              "entityId": "units",
+              "bounds": {
+                "x": 818.56,
+                "y": 104.03999999999999,
+                "width": 218.88,
+                "height": 55.080000000000005
+              },
+              "fromState": "value",
+              "toState": "value",
+              "pixelDiffRatio": 0,
+              "changed": false
+            }
+          ]
+        },
+        {
+          "frameIndex": 27,
+          "phaseId": "before",
+          "fromPhaseId": "result",
+          "kind": "loop-bridge",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "unit-1",
+              "bounds": {
+                "x": 678.4480000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-2",
+              "bounds": {
+                "x": 805.1680000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-3",
+              "bounds": {
+                "x": 931.8880000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-4",
+              "bounds": {
+                "x": 678.4480000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-5",
+              "bounds": {
+                "x": 805.1680000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-6",
+              "bounds": {
+                "x": 931.8880000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "pending",
+              "toState": "default",
+              "pixelDiffRatio": 0.15903144474573047,
+              "changed": true
+            },
+            {
+              "entityId": "units",
+              "bounds": {
+                "x": 818.56,
+                "y": 104.03999999999999,
+                "width": 218.88,
+                "height": 55.080000000000005
+              },
+              "fromState": "value",
+              "toState": "value",
+              "pixelDiffRatio": 0,
+              "changed": false
+            }
+          ]
+        },
+        {
+          "frameIndex": 12,
+          "phaseId": "change",
+          "fromPhaseId": "before",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "unit-1",
+              "bounds": {
+                "x": 678.4480000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-2",
+              "bounds": {
+                "x": 805.1680000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-3",
+              "bounds": {
+                "x": 931.8880000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-4",
+              "bounds": {
+                "x": 678.4480000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-5",
+              "bounds": {
+                "x": 805.1680000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-6",
+              "bounds": {
+                "x": 931.8880000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "flagged",
+              "pixelDiffRatio": 0.06621949479092336,
+              "changed": true
+            },
+            {
+              "entityId": "units",
+              "bounds": {
+                "x": 818.56,
+                "y": 104.03999999999999,
+                "width": 218.88,
+                "height": 55.080000000000005
+              },
+              "fromState": "value",
+              "toState": "value",
+              "pixelDiffRatio": 0,
+              "changed": false
+            }
+          ]
+        },
+        {
+          "frameIndex": 23,
+          "phaseId": "result",
+          "fromPhaseId": "change",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "unit-1",
+              "bounds": {
+                "x": 678.4480000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-2",
+              "bounds": {
+                "x": 805.1680000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-3",
+              "bounds": {
+                "x": 931.8880000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-4",
+              "bounds": {
+                "x": 678.4480000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-5",
+              "bounds": {
+                "x": 805.1680000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-6",
+              "bounds": {
+                "x": 1058.608,
+                "y": 345.24,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "flagged",
+              "toState": "pending",
+              "pixelDiffRatio": 0.08106179534750964,
+              "changed": true
+            },
+            {
+              "entityId": "units",
+              "bounds": {
+                "x": 818.56,
+                "y": 104.03999999999999,
+                "width": 218.88,
+                "height": 55.080000000000005
+              },
+              "fromState": "value",
+              "toState": "value",
+              "pixelDiffRatio": 0,
+              "changed": false
+            }
+          ]
+        },
+        {
+          "frameIndex": 1,
+          "phaseId": "before",
+          "fromPhaseId": "result",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "unit-1",
+              "bounds": {
+                "x": 678.4480000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-2",
+              "bounds": {
+                "x": 805.1680000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-3",
+              "bounds": {
+                "x": 931.8880000000001,
+                "y": 209.16000000000003,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-4",
+              "bounds": {
+                "x": 678.4480000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-5",
+              "bounds": {
+                "x": 805.1680000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "unit-6",
+              "bounds": {
+                "x": 931.8880000000001,
+                "y": 403.56,
+                "width": 141.98399999999998,
+                "height": 146.16
+              },
+              "fromState": "pending",
+              "toState": "default",
+              "pixelDiffRatio": 0.08011036582465154,
+              "changed": true
+            },
+            {
+              "entityId": "units",
+              "bounds": {
+                "x": 818.56,
+                "y": 104.03999999999999,
+                "width": 218.88,
+                "height": 55.080000000000005
+              },
+              "fromState": "value",
+              "toState": "value",
+              "pixelDiffRatio": 0,
+              "changed": false
+            }
+          ]
+        }
+      ]
+    }
   },
   "phaseCaptures": [
     {
@@ -978,7 +2085,7 @@
         "before · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6298d032\\docs\\narrative-gif\\gallery\\isotype\\comparison\\cambios-que-se-revisan-f5381181-art-only-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\AppData\\Local\\Temp\\narrative-legacy-upgrade-5JRy4p\\rendered\\04-isotype-art-only\\cambios-que-se-revisan-f5381181-art-only-contact-sheet.png"
     },
     {
       "phaseId": "change",
@@ -988,7 +2095,7 @@
         "change → result · punto medio de transición",
         "change · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6298d032\\docs\\narrative-gif\\gallery\\isotype\\comparison\\cambios-que-se-revisan-f5381181-art-only-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\AppData\\Local\\Temp\\narrative-legacy-upgrade-5JRy4p\\rendered\\04-isotype-art-only\\cambios-que-se-revisan-f5381181-art-only-contact-sheet.png"
     },
     {
       "phaseId": "result",
@@ -998,7 +2105,7 @@
         "result → before · unión del ciclo",
         "result · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6298d032\\docs\\narrative-gif\\gallery\\isotype\\comparison\\cambios-que-se-revisan-f5381181-art-only-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\AppData\\Local\\Temp\\narrative-legacy-upgrade-5JRy4p\\rendered\\04-isotype-art-only\\cambios-que-se-revisan-f5381181-art-only-contact-sheet.png"
     }
   ],
   "semanticObjectCaptures": [
@@ -1437,7 +2544,75 @@
   ],
   "compositionByFrame": [
     {
+      "frameIndex": 1,
       "label": "before · pausa",
+      "phaseId": "before",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "unit-1",
+          "bounds": {
+            "x": 678.4480000000001,
+            "y": 209.16000000000003,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-2",
+          "bounds": {
+            "x": 805.1680000000001,
+            "y": 209.16000000000003,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-3",
+          "bounds": {
+            "x": 931.8880000000001,
+            "y": 209.16000000000003,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-4",
+          "bounds": {
+            "x": 678.4480000000001,
+            "y": 403.56,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-5",
+          "bounds": {
+            "x": 805.1680000000001,
+            "y": 403.56,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-6",
+          "bounds": {
+            "x": 931.8880000000001,
+            "y": 403.56,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "units",
+          "bounds": {
+            "x": 818.56,
+            "y": 104.03999999999999,
+            "width": 218.88,
+            "height": 55.080000000000005
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.625,
         "textColumnFillRatio": 0,
@@ -1446,7 +2621,75 @@
       }
     },
     {
+      "frameIndex": 5,
       "label": "before → change · punto medio de transición",
+      "phaseId": "change",
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "unit-1",
+          "bounds": {
+            "x": 678.4480000000001,
+            "y": 209.16000000000003,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-2",
+          "bounds": {
+            "x": 805.1680000000001,
+            "y": 209.16000000000003,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-3",
+          "bounds": {
+            "x": 931.8880000000001,
+            "y": 209.16000000000003,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-4",
+          "bounds": {
+            "x": 678.4480000000001,
+            "y": 403.56,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-5",
+          "bounds": {
+            "x": 805.1680000000001,
+            "y": 403.56,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-6",
+          "bounds": {
+            "x": 931.8880000000001,
+            "y": 403.56,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "units",
+          "bounds": {
+            "x": 818.56,
+            "y": 104.03999999999999,
+            "width": 218.88,
+            "height": 55.080000000000005
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.625,
         "textColumnFillRatio": 0,
@@ -1455,7 +2698,75 @@
       }
     },
     {
+      "frameIndex": 12,
       "label": "change · pausa",
+      "phaseId": "change",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "unit-1",
+          "bounds": {
+            "x": 678.4480000000001,
+            "y": 209.16000000000003,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-2",
+          "bounds": {
+            "x": 805.1680000000001,
+            "y": 209.16000000000003,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-3",
+          "bounds": {
+            "x": 931.8880000000001,
+            "y": 209.16000000000003,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-4",
+          "bounds": {
+            "x": 678.4480000000001,
+            "y": 403.56,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-5",
+          "bounds": {
+            "x": 805.1680000000001,
+            "y": 403.56,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-6",
+          "bounds": {
+            "x": 931.8880000000001,
+            "y": 403.56,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "units",
+          "bounds": {
+            "x": 818.56,
+            "y": 104.03999999999999,
+            "width": 218.88,
+            "height": 55.080000000000005
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.625,
         "textColumnFillRatio": 0,
@@ -1464,7 +2775,75 @@
       }
     },
     {
+      "frameIndex": 16,
       "label": "change → result · punto medio de transición",
+      "phaseId": "result",
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "unit-1",
+          "bounds": {
+            "x": 678.4480000000001,
+            "y": 209.16000000000003,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-2",
+          "bounds": {
+            "x": 805.1680000000001,
+            "y": 209.16000000000003,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-3",
+          "bounds": {
+            "x": 931.8880000000001,
+            "y": 209.16000000000003,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-4",
+          "bounds": {
+            "x": 678.4480000000001,
+            "y": 403.56,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-5",
+          "bounds": {
+            "x": 805.1680000000001,
+            "y": 403.56,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-6",
+          "bounds": {
+            "x": 1058.608,
+            "y": 345.24,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "units",
+          "bounds": {
+            "x": 818.56,
+            "y": 104.03999999999999,
+            "width": 218.88,
+            "height": 55.080000000000005
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.59375,
         "textColumnFillRatio": 0,
@@ -1473,7 +2852,75 @@
       }
     },
     {
+      "frameIndex": 23,
       "label": "result · pausa",
+      "phaseId": "result",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "unit-1",
+          "bounds": {
+            "x": 678.4480000000001,
+            "y": 209.16000000000003,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-2",
+          "bounds": {
+            "x": 805.1680000000001,
+            "y": 209.16000000000003,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-3",
+          "bounds": {
+            "x": 931.8880000000001,
+            "y": 209.16000000000003,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-4",
+          "bounds": {
+            "x": 678.4480000000001,
+            "y": 403.56,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-5",
+          "bounds": {
+            "x": 805.1680000000001,
+            "y": 403.56,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-6",
+          "bounds": {
+            "x": 1058.608,
+            "y": 345.24,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "units",
+          "bounds": {
+            "x": 818.56,
+            "y": 104.03999999999999,
+            "width": 218.88,
+            "height": 55.080000000000005
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.625,
         "textColumnFillRatio": 0,
@@ -1482,7 +2929,75 @@
       }
     },
     {
+      "frameIndex": 27,
       "label": "result → before · unión del ciclo",
+      "phaseId": "before",
+      "kind": "loop-bridge",
+      "regions": [
+        {
+          "entityId": "unit-1",
+          "bounds": {
+            "x": 678.4480000000001,
+            "y": 209.16000000000003,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-2",
+          "bounds": {
+            "x": 805.1680000000001,
+            "y": 209.16000000000003,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-3",
+          "bounds": {
+            "x": 931.8880000000001,
+            "y": 209.16000000000003,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-4",
+          "bounds": {
+            "x": 678.4480000000001,
+            "y": 403.56,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-5",
+          "bounds": {
+            "x": 805.1680000000001,
+            "y": 403.56,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "unit-6",
+          "bounds": {
+            "x": 931.8880000000001,
+            "y": 403.56,
+            "width": 141.98399999999998,
+            "height": 146.16
+          }
+        },
+        {
+          "entityId": "units",
+          "bounds": {
+            "x": 818.56,
+            "y": 104.03999999999999,
+            "width": 218.88,
+            "height": 55.080000000000005
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.625,
         "textColumnFillRatio": 0,
@@ -1554,5 +3069,11 @@
     "memoryBytes": 107634688,
     "maxMemoryBytes": 268435456
   },
-  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed."
+  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed.",
+  "generatedBy": "open-beauty-site",
+  "reviewState": "none",
+  "openFeedbackCount": 0,
+  "feedbackFrames": [],
+  "publicationRecommendation": "none",
+  "renderRevision": 0
 }

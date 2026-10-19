@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 2,
-  "commit": "855da1385311d0eddc8ba47a4112963feb7d12b1",
+  "schemaVersion": 3,
+  "commit": "dffa62ed28fa2a3460e6cbfbbd009d809806de94",
   "brief": {
     "style": "ukiyoe",
     "kind": "narrative-gif",
@@ -212,6 +212,11 @@
     "status": "in-review"
   },
   "briefSha256": "f1f02f0863541a23a876843364a88060617c4a3bdb9934038631a4d93c351edb",
+  "upgrade": {
+    "applied": false,
+    "mapping": "native-semantic",
+    "reason": "The brief already supplies semantic scene entities; they are retained as authored."
+  },
   "style": "ukiyoe",
   "subfamily": null,
   "workflowStatus": "in-review",
@@ -310,20 +315,20 @@
     "detail": "ffprobe 1280×720; 33 frames; 17590ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 651588,
-    "png": 47093,
-    "contactSheet": 63154
+    "gif": 673190,
+    "png": 47682,
+    "contactSheet": 64146
   },
   "hashes": {
     "briefSha256": "f1f02f0863541a23a876843364a88060617c4a3bdb9934038631a4d93c351edb",
-    "gifSha256": "484006c09d3f1e32475c5ffe51e75df320970dadddc934e6c6b7949fa6cbafa8",
-    "pngSha256": "a602c6e82442f944e2d27b7d92a6d48fd23e65903d82549f95f72c8bb3186c7e",
-    "contactSheetSha256": "181833bd7fea0da75266bf642b1d51eaa1ec7822c542c46b7aa559fe088b4edb"
+    "gifSha256": "45cebc4d743911590849ee1d1eccc344b26b298fe1d2f07070cb2ca9397a3e49",
+    "pngSha256": "22cdb742316ada0eec7f683c24babf7b4fe14a357a30ea15a9ced4c979f90610",
+    "contactSheetSha256": "ee1476e62b4458794db341ddcf5b798fa84c64a084cc63e8b9f4bfa5c6da0fb5"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\ukiyoe\\checklist\\estaciones-de-la-costa-fa304104-art-only.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\ukiyoe\\checklist\\estaciones-de-la-costa-fa304104-art-only.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\ukiyoe\\checklist\\estaciones-de-la-costa-fa304104-art-only-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0789573b\\docs\\narrative-gif\\art-only\\ukiyoe\\checklist\\estaciones-de-la-costa-fa304104-art-only.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0789573b\\docs\\narrative-gif\\art-only\\ukiyoe\\checklist\\estaciones-de-la-costa-fa304104-art-only.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0789573b\\docs\\narrative-gif\\art-only\\ukiyoe\\checklist\\estaciones-de-la-costa-fa304104-art-only-contact-sheet.png"
   },
   "controls": [
     {
@@ -371,7 +376,7 @@
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 651588B · PNG 47093B · contact 63154B",
+      "detail": "GIF 673190B · PNG 47682B · contact 64146B",
       "source": "decoded"
     },
     {
@@ -407,7 +412,7 @@
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "71 colors; mean channel loss 0.017, max 11; sampled 33 frames",
+      "detail": "72 colors; mean channel loss 0.017, max 11; sampled 33 frames",
       "source": "pixels"
     },
     {
@@ -469,6 +474,13 @@
       "passed": true,
       "detail": "title 34.5px; body min 22.5px (requires >=20px); label min 15.0px",
       "source": "source"
+    },
+    {
+      "name": "semantic-text-legibility",
+      "passed": false,
+      "status": "pending",
+      "detail": "No scene-declared text boxes were available inside semantic object regions.",
+      "source": "decoded"
     },
     {
       "name": "composition-balance",
@@ -623,7 +635,7 @@
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 651588B · PNG 47093B · contact 63154B",
+          "detail": "GIF 673190B · PNG 47682B · contact 64146B",
           "source": "decoded"
         }
       ]
@@ -666,14 +678,14 @@
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "71 colors; mean channel loss 0.017, max 11; sampled 33 frames",
+          "detail": "72 colors; mean channel loss 0.017, max 11; sampled 33 frames",
           "source": "pixels"
         }
       ],
       "note": "Source checks identify renderer/font tokens; pixel checks measure frame change and palette loss. Neither substitutes for visual review."
     },
     "rendered-legibility": {
-      "status": "revise",
+      "status": "pending",
       "controls": [
         {
           "name": "title-complete",
@@ -734,6 +746,13 @@
           "passed": true,
           "detail": "title 34.5px; body min 22.5px (requires >=20px); label min 15.0px",
           "source": "source"
+        },
+        {
+          "name": "semantic-text-legibility",
+          "passed": false,
+          "status": "pending",
+          "detail": "No scene-declared text boxes were available inside semantic object regions.",
+          "source": "decoded"
         },
         {
           "name": "composition-balance",
@@ -849,17 +868,709 @@
     },
     "visual-review": {
       "status": "pending",
-      "criteria": [
-        "identity at 200px thumbnail",
-        "full text and contrast at 640×360",
-        "style material in native frame",
-        "same object and causal change across phases",
-        "result faithful to outcome and evidence scope",
-        "deliberate loop restart"
-      ],
+      "reviewer": null,
+      "criteria": {
+        "thumbnailIdentity": {
+          "verdict": "not-evaluated"
+        },
+        "cardSizeReading": {
+          "verdict": "not-evaluated"
+        },
+        "styleMaterial": {
+          "verdict": "not-evaluated"
+        },
+        "phaseContinuity": {
+          "verdict": "not-evaluated"
+        },
+        "loopRestart": {
+          "verdict": "not-evaluated"
+        },
+        "artOnlyTransformationUnderstood": {
+          "verdict": "not-evaluated"
+        }
+      },
+      "feedback": [],
       "evidence": []
     },
-    "publicationRecommendation": "none"
+    "publicationRecommendation": "none",
+    "automatedEvidence": {
+      "balanceByFrame": [
+        {
+          "frameIndex": 1,
+          "phaseId": "horizonte",
+          "kind": "hold",
+          "label": "horizonte · pausa",
+          "regions": [
+            {
+              "entityId": "ruta",
+              "bounds": {
+                "x": 640,
+                "y": 265.248,
+                "width": 601.5999999999999,
+                "height": 406.08
+              }
+            },
+            {
+              "entityId": "estacion-a",
+              "bounds": {
+                "x": 772.352,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              }
+            },
+            {
+              "entityId": "estacion-b",
+              "bounds": {
+                "x": 880.64,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              }
+            },
+            {
+              "entityId": "estacion-c",
+              "bounds": {
+                "x": 988.9279999999999,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.5,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        },
+        {
+          "frameIndex": 5,
+          "phaseId": "primera-estacion",
+          "kind": "transition",
+          "label": "horizonte → primera-estacion · punto medio de transición",
+          "regions": [
+            {
+              "entityId": "ruta",
+              "bounds": {
+                "x": 640,
+                "y": 265.248,
+                "width": 601.5999999999999,
+                "height": 406.08
+              }
+            },
+            {
+              "entityId": "estacion-a",
+              "bounds": {
+                "x": 772.352,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              }
+            },
+            {
+              "entityId": "estacion-b",
+              "bounds": {
+                "x": 880.64,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              }
+            },
+            {
+              "entityId": "estacion-c",
+              "bounds": {
+                "x": 988.9279999999999,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.5,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        },
+        {
+          "frameIndex": 12,
+          "phaseId": "primera-estacion",
+          "kind": "hold",
+          "label": "primera-estacion · pausa",
+          "regions": [
+            {
+              "entityId": "ruta",
+              "bounds": {
+                "x": 640,
+                "y": 265.248,
+                "width": 601.5999999999999,
+                "height": 406.08
+              }
+            },
+            {
+              "entityId": "estacion-a",
+              "bounds": {
+                "x": 772.352,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              }
+            },
+            {
+              "entityId": "estacion-b",
+              "bounds": {
+                "x": 880.64,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              }
+            },
+            {
+              "entityId": "estacion-c",
+              "bounds": {
+                "x": 988.9279999999999,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.5,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        },
+        {
+          "frameIndex": 16,
+          "phaseId": "ruta-ordenada",
+          "kind": "transition",
+          "label": "primera-estacion → ruta-ordenada · punto medio de transición",
+          "regions": [
+            {
+              "entityId": "ruta",
+              "bounds": {
+                "x": 640,
+                "y": 265.248,
+                "width": 601.5999999999999,
+                "height": 406.08
+              }
+            },
+            {
+              "entityId": "estacion-a",
+              "bounds": {
+                "x": 772.352,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              }
+            },
+            {
+              "entityId": "estacion-b",
+              "bounds": {
+                "x": 880.64,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              }
+            },
+            {
+              "entityId": "estacion-c",
+              "bounds": {
+                "x": 988.9279999999999,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.5,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        },
+        {
+          "frameIndex": 23,
+          "phaseId": "ruta-ordenada",
+          "kind": "hold",
+          "label": "ruta-ordenada · pausa",
+          "regions": [
+            {
+              "entityId": "ruta",
+              "bounds": {
+                "x": 640,
+                "y": 265.248,
+                "width": 601.5999999999999,
+                "height": 406.08
+              }
+            },
+            {
+              "entityId": "estacion-a",
+              "bounds": {
+                "x": 772.352,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              }
+            },
+            {
+              "entityId": "estacion-b",
+              "bounds": {
+                "x": 880.64,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              }
+            },
+            {
+              "entityId": "estacion-c",
+              "bounds": {
+                "x": 988.9279999999999,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.5,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        },
+        {
+          "frameIndex": 27,
+          "phaseId": "horizonte",
+          "kind": "loop-bridge",
+          "label": "ruta-ordenada → horizonte · unión del ciclo",
+          "regions": [
+            {
+              "entityId": "ruta",
+              "bounds": {
+                "x": 640,
+                "y": 265.248,
+                "width": 601.5999999999999,
+                "height": 406.08
+              }
+            },
+            {
+              "entityId": "estacion-a",
+              "bounds": {
+                "x": 772.352,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              }
+            },
+            {
+              "entityId": "estacion-b",
+              "bounds": {
+                "x": 880.64,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              }
+            },
+            {
+              "entityId": "estacion-c",
+              "bounds": {
+                "x": 988.9279999999999,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.5,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        }
+      ],
+      "objectTransformationByFrame": [
+        {
+          "frameIndex": 5,
+          "phaseId": "primera-estacion",
+          "fromPhaseId": "horizonte",
+          "kind": "transition",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "ruta",
+              "bounds": {
+                "x": 640,
+                "y": 265.248,
+                "width": 601.5999999999999,
+                "height": 406.08
+              },
+              "fromState": "open",
+              "toState": "counted",
+              "pixelDiffRatio": 0.030381937358681544,
+              "changed": true
+            },
+            {
+              "entityId": "estacion-a",
+              "bounds": {
+                "x": 772.352,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              },
+              "fromState": "default",
+              "toState": "member",
+              "pixelDiffRatio": 0.1529501708940457,
+              "changed": true
+            },
+            {
+              "entityId": "estacion-b",
+              "bounds": {
+                "x": 880.64,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "estacion-c",
+              "bounds": {
+                "x": 988.9279999999999,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            }
+          ]
+        },
+        {
+          "frameIndex": 16,
+          "phaseId": "ruta-ordenada",
+          "fromPhaseId": "primera-estacion",
+          "kind": "transition",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "ruta",
+              "bounds": {
+                "x": 640,
+                "y": 265.248,
+                "width": 601.5999999999999,
+                "height": 406.08
+              },
+              "fromState": "counted",
+              "toState": "counted",
+              "pixelDiffRatio": 0.11433224223921898,
+              "changed": false
+            },
+            {
+              "entityId": "estacion-a",
+              "bounds": {
+                "x": 772.352,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              },
+              "fromState": "member",
+              "toState": "member",
+              "pixelDiffRatio": 0.034403669724770644,
+              "changed": false
+            },
+            {
+              "entityId": "estacion-b",
+              "bounds": {
+                "x": 880.64,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              },
+              "fromState": "default",
+              "toState": "member",
+              "pixelDiffRatio": 0.14962223421478682,
+              "changed": true
+            },
+            {
+              "entityId": "estacion-c",
+              "bounds": {
+                "x": 988.9279999999999,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              },
+              "fromState": "default",
+              "toState": "member",
+              "pixelDiffRatio": 0.13966131907308377,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 27,
+          "phaseId": "horizonte",
+          "fromPhaseId": "ruta-ordenada",
+          "kind": "loop-bridge",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "ruta",
+              "bounds": {
+                "x": 640,
+                "y": 265.248,
+                "width": 601.5999999999999,
+                "height": 406.08
+              },
+              "fromState": "counted",
+              "toState": "open",
+              "pixelDiffRatio": 0.13415968067130857,
+              "changed": true
+            },
+            {
+              "entityId": "estacion-a",
+              "bounds": {
+                "x": 772.352,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              },
+              "fromState": "member",
+              "toState": "default",
+              "pixelDiffRatio": 0.18231696348264076,
+              "changed": true
+            },
+            {
+              "entityId": "estacion-b",
+              "bounds": {
+                "x": 880.64,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              },
+              "fromState": "member",
+              "toState": "default",
+              "pixelDiffRatio": 0.1601007375427235,
+              "changed": true
+            },
+            {
+              "entityId": "estacion-c",
+              "bounds": {
+                "x": 988.9279999999999,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              },
+              "fromState": "member",
+              "toState": "default",
+              "pixelDiffRatio": 0.15646167557932264,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 12,
+          "phaseId": "primera-estacion",
+          "fromPhaseId": "horizonte",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "ruta",
+              "bounds": {
+                "x": 640,
+                "y": 265.248,
+                "width": 601.5999999999999,
+                "height": 406.08
+              },
+              "fromState": "open",
+              "toState": "counted",
+              "pixelDiffRatio": 0.033879696670394345,
+              "changed": true
+            },
+            {
+              "entityId": "estacion-a",
+              "bounds": {
+                "x": 772.352,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              },
+              "fromState": "default",
+              "toState": "member",
+              "pixelDiffRatio": 0.1708490735743839,
+              "changed": true
+            },
+            {
+              "entityId": "estacion-b",
+              "bounds": {
+                "x": 880.64,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "estacion-c",
+              "bounds": {
+                "x": 988.9279999999999,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            }
+          ]
+        },
+        {
+          "frameIndex": 23,
+          "phaseId": "ruta-ordenada",
+          "fromPhaseId": "primera-estacion",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "ruta",
+              "bounds": {
+                "x": 640,
+                "y": 265.248,
+                "width": 601.5999999999999,
+                "height": 406.08
+              },
+              "fromState": "counted",
+              "toState": "counted",
+              "pixelDiffRatio": 0.11767490837258279,
+              "changed": false
+            },
+            {
+              "entityId": "estacion-a",
+              "bounds": {
+                "x": 772.352,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              },
+              "fromState": "member",
+              "toState": "member",
+              "pixelDiffRatio": 0.034763446663068895,
+              "changed": false
+            },
+            {
+              "entityId": "estacion-b",
+              "bounds": {
+                "x": 880.64,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              },
+              "fromState": "default",
+              "toState": "member",
+              "pixelDiffRatio": 0.16518258679618636,
+              "changed": true
+            },
+            {
+              "entityId": "estacion-c",
+              "bounds": {
+                "x": 988.9279999999999,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              },
+              "fromState": "default",
+              "toState": "member",
+              "pixelDiffRatio": 0.15570409982174688,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 1,
+          "phaseId": "horizonte",
+          "fromPhaseId": "ruta-ordenada",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "ruta",
+              "bounds": {
+                "x": 640,
+                "y": 265.248,
+                "width": 601.5999999999999,
+                "height": 406.08
+              },
+              "fromState": "counted",
+              "toState": "open",
+              "pixelDiffRatio": 0.1355106238827169,
+              "changed": true
+            },
+            {
+              "entityId": "estacion-a",
+              "bounds": {
+                "x": 772.352,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              },
+              "fromState": "member",
+              "toState": "default",
+              "pixelDiffRatio": 0.19180608023025725,
+              "changed": true
+            },
+            {
+              "entityId": "estacion-b",
+              "bounds": {
+                "x": 880.64,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              },
+              "fromState": "member",
+              "toState": "default",
+              "pixelDiffRatio": 0.16518258679618636,
+              "changed": true
+            },
+            {
+              "entityId": "estacion-c",
+              "bounds": {
+                "x": 988.9279999999999,
+                "y": 312.624,
+                "width": 108.28799999999998,
+                "height": 203.04
+              },
+              "fromState": "member",
+              "toState": "default",
+              "pixelDiffRatio": 0.15570409982174688,
+              "changed": true
+            }
+          ]
+        }
+      ]
+    }
   },
   "phaseCaptures": [
     {
@@ -871,7 +1582,7 @@
         "horizonte · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\ukiyoe\\checklist\\estaciones-de-la-costa-fa304104-art-only-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0789573b\\docs\\narrative-gif\\art-only\\ukiyoe\\checklist\\estaciones-de-la-costa-fa304104-art-only-contact-sheet.png"
     },
     {
       "phaseId": "primera-estacion",
@@ -881,7 +1592,7 @@
         "primera-estacion → ruta-ordenada · punto medio de transición",
         "primera-estacion · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\ukiyoe\\checklist\\estaciones-de-la-costa-fa304104-art-only-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0789573b\\docs\\narrative-gif\\art-only\\ukiyoe\\checklist\\estaciones-de-la-costa-fa304104-art-only-contact-sheet.png"
     },
     {
       "phaseId": "ruta-ordenada",
@@ -891,7 +1602,7 @@
         "ruta-ordenada → horizonte · unión del ciclo",
         "ruta-ordenada · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\ukiyoe\\checklist\\estaciones-de-la-costa-fa304104-art-only-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0789573b\\docs\\narrative-gif\\art-only\\ukiyoe\\checklist\\estaciones-de-la-costa-fa304104-art-only-contact-sheet.png"
     }
   ],
   "semanticObjectCaptures": [
@@ -1168,7 +1879,48 @@
   ],
   "compositionByFrame": [
     {
+      "frameIndex": 1,
       "label": "horizonte · pausa",
+      "phaseId": "horizonte",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "ruta",
+          "bounds": {
+            "x": 640,
+            "y": 265.248,
+            "width": 601.5999999999999,
+            "height": 406.08
+          }
+        },
+        {
+          "entityId": "estacion-a",
+          "bounds": {
+            "x": 772.352,
+            "y": 312.624,
+            "width": 108.28799999999998,
+            "height": 203.04
+          }
+        },
+        {
+          "entityId": "estacion-b",
+          "bounds": {
+            "x": 880.64,
+            "y": 312.624,
+            "width": 108.28799999999998,
+            "height": 203.04
+          }
+        },
+        {
+          "entityId": "estacion-c",
+          "bounds": {
+            "x": 988.9279999999999,
+            "y": 312.624,
+            "width": 108.28799999999998,
+            "height": 203.04
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.5,
         "textColumnFillRatio": 0,
@@ -1177,7 +1929,48 @@
       }
     },
     {
+      "frameIndex": 5,
       "label": "horizonte → primera-estacion · punto medio de transición",
+      "phaseId": "primera-estacion",
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "ruta",
+          "bounds": {
+            "x": 640,
+            "y": 265.248,
+            "width": 601.5999999999999,
+            "height": 406.08
+          }
+        },
+        {
+          "entityId": "estacion-a",
+          "bounds": {
+            "x": 772.352,
+            "y": 312.624,
+            "width": 108.28799999999998,
+            "height": 203.04
+          }
+        },
+        {
+          "entityId": "estacion-b",
+          "bounds": {
+            "x": 880.64,
+            "y": 312.624,
+            "width": 108.28799999999998,
+            "height": 203.04
+          }
+        },
+        {
+          "entityId": "estacion-c",
+          "bounds": {
+            "x": 988.9279999999999,
+            "y": 312.624,
+            "width": 108.28799999999998,
+            "height": 203.04
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.5,
         "textColumnFillRatio": 0,
@@ -1186,7 +1979,48 @@
       }
     },
     {
+      "frameIndex": 12,
       "label": "primera-estacion · pausa",
+      "phaseId": "primera-estacion",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "ruta",
+          "bounds": {
+            "x": 640,
+            "y": 265.248,
+            "width": 601.5999999999999,
+            "height": 406.08
+          }
+        },
+        {
+          "entityId": "estacion-a",
+          "bounds": {
+            "x": 772.352,
+            "y": 312.624,
+            "width": 108.28799999999998,
+            "height": 203.04
+          }
+        },
+        {
+          "entityId": "estacion-b",
+          "bounds": {
+            "x": 880.64,
+            "y": 312.624,
+            "width": 108.28799999999998,
+            "height": 203.04
+          }
+        },
+        {
+          "entityId": "estacion-c",
+          "bounds": {
+            "x": 988.9279999999999,
+            "y": 312.624,
+            "width": 108.28799999999998,
+            "height": 203.04
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.5,
         "textColumnFillRatio": 0,
@@ -1195,7 +2029,48 @@
       }
     },
     {
+      "frameIndex": 16,
       "label": "primera-estacion → ruta-ordenada · punto medio de transición",
+      "phaseId": "ruta-ordenada",
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "ruta",
+          "bounds": {
+            "x": 640,
+            "y": 265.248,
+            "width": 601.5999999999999,
+            "height": 406.08
+          }
+        },
+        {
+          "entityId": "estacion-a",
+          "bounds": {
+            "x": 772.352,
+            "y": 312.624,
+            "width": 108.28799999999998,
+            "height": 203.04
+          }
+        },
+        {
+          "entityId": "estacion-b",
+          "bounds": {
+            "x": 880.64,
+            "y": 312.624,
+            "width": 108.28799999999998,
+            "height": 203.04
+          }
+        },
+        {
+          "entityId": "estacion-c",
+          "bounds": {
+            "x": 988.9279999999999,
+            "y": 312.624,
+            "width": 108.28799999999998,
+            "height": 203.04
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.5,
         "textColumnFillRatio": 0,
@@ -1204,7 +2079,48 @@
       }
     },
     {
+      "frameIndex": 23,
       "label": "ruta-ordenada · pausa",
+      "phaseId": "ruta-ordenada",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "ruta",
+          "bounds": {
+            "x": 640,
+            "y": 265.248,
+            "width": 601.5999999999999,
+            "height": 406.08
+          }
+        },
+        {
+          "entityId": "estacion-a",
+          "bounds": {
+            "x": 772.352,
+            "y": 312.624,
+            "width": 108.28799999999998,
+            "height": 203.04
+          }
+        },
+        {
+          "entityId": "estacion-b",
+          "bounds": {
+            "x": 880.64,
+            "y": 312.624,
+            "width": 108.28799999999998,
+            "height": 203.04
+          }
+        },
+        {
+          "entityId": "estacion-c",
+          "bounds": {
+            "x": 988.9279999999999,
+            "y": 312.624,
+            "width": 108.28799999999998,
+            "height": 203.04
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.5,
         "textColumnFillRatio": 0,
@@ -1213,7 +2129,48 @@
       }
     },
     {
+      "frameIndex": 27,
       "label": "ruta-ordenada → horizonte · unión del ciclo",
+      "phaseId": "horizonte",
+      "kind": "loop-bridge",
+      "regions": [
+        {
+          "entityId": "ruta",
+          "bounds": {
+            "x": 640,
+            "y": 265.248,
+            "width": 601.5999999999999,
+            "height": 406.08
+          }
+        },
+        {
+          "entityId": "estacion-a",
+          "bounds": {
+            "x": 772.352,
+            "y": 312.624,
+            "width": 108.28799999999998,
+            "height": 203.04
+          }
+        },
+        {
+          "entityId": "estacion-b",
+          "bounds": {
+            "x": 880.64,
+            "y": 312.624,
+            "width": 108.28799999999998,
+            "height": 203.04
+          }
+        },
+        {
+          "entityId": "estacion-c",
+          "bounds": {
+            "x": 988.9279999999999,
+            "y": 312.624,
+            "width": 108.28799999999998,
+            "height": 203.04
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.5,
         "textColumnFillRatio": 0,
@@ -1223,7 +2180,7 @@
     }
   ],
   "palette": {
-    "colors": 71,
+    "colors": 72,
     "meanAbsoluteChannelError": 0.017,
     "maximumChannelError": 11,
     "sampledFrames": 33
@@ -1298,5 +2255,11 @@
     "memoryBytes": 107634688,
     "maxMemoryBytes": 268435456
   },
-  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed."
+  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed.",
+  "generatedBy": "open-beauty-site",
+  "reviewState": "none",
+  "openFeedbackCount": 0,
+  "feedbackFrames": [],
+  "publicationRecommendation": "none",
+  "renderRevision": 1
 }

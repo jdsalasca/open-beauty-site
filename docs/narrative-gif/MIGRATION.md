@@ -17,7 +17,8 @@ Contract v3 is used by the CLI, library and MCP. The brief schema is defined onc
 | one fixed text-left/object-right frame | optional `phases[].layout` | Values are `object-left`, `object-right`, `object-top` and `object-hero`. Omitted means `object-right`, so committed packs are byte-identical. All styles support the mirrored left/right pair; papercraft and brutalist also render top/hero at 16:9 and 1:1. Unsupported combinations return `UNSUPPORTED_LAYOUT` with alternatives from the capabilities registry. |
 | no editorial guard | `product-review` warnings and content lint | Warnings suggest a 3–7-word headline, one short sentence and removal of ticket codes, PR numbers, environment names and Jira states. They are non-destructive: copy is never truncated or rewritten. |
 | manifest schema v1 | manifest schema v2 | V2 adds work/outcome/evidence classification and separately reports holds, transitions, loop bridge, entries, total decoded time and per-phase requested/encoded/decoded holds. |
-| manifest schema v2 | manifest schema v3 | V3 adds `generatedBy`, `renderRevision`, `reviewState`, `openFeedbackCount`, `feedbackFrames` and a non-binding `publicationRecommendation`. Existing v2 manifests remain readable; without review metadata the gallery derives pending/none from the prior visual-review status. |
+| manifest schema v2 | manifest schema v3 | V3 adds `generatedBy`, `renderRevision`, `reviewState`, `openFeedbackCount`, `feedbackFrames`, a non-binding `publicationRecommendation` and `upgrade` provenance. Existing v2 manifests remain readable; without review metadata the gallery derives pending/none from the prior visual-review status. |
+| legacy kind/state-only brief | semantic illustration by default | Six styles upgrade using the table below. Set brief `legacyArt: true`, CLI `--legacy-art`, or MCP `legacyArt: true` to retain the previous illustration. |
 
 ## Semantic scenes (v3)
 
@@ -31,7 +32,28 @@ Add `visual.semantic` to each phase to describe a style-neutral object model:
 
 Entity IDs and kinds must match in every phase. Unknown entity references/kinds, states and actions fail before rendering with `UNSUPPORTED_ENTITY`, `UNSUPPORTED_STATE` or `UNSUPPORTED_ACTION`, including phase index, submitted value and valid alternatives. A numeric counter value must match its explicit `counts` links to visible rows/cards; if omitted, the renderer derives it from those links. A count never changes unless the relations or authored counter value change.
 
-Compatibility is automatic: an old phase with `visual.kind/state` and no `visual.semantic` becomes one stable `legacy-object` illustration with the old phase state and an inherited illustrative flag. Old briefs keep the existing style drawing; scenes without declared object regions report semantic transformation as `pending`.
+### Deterministic legacy upgrade (`legacy-state-v1`)
+
+Only kind/state-only briefs for the six styles below upgrade automatically. The selected primitive is declared by that style's renderer vocabulary and matches its existing semantic scene language.
+
+| Style | Legacy `visual.kind` family | Primitive | Generic illustrative entities in every phase |
+| --- | --- | --- | --- |
+| papercraft | comparison, document | `table-rows` | one `legacy-records` table and four stable `legacy-record-a`…`legacy-record-d` rows |
+| papercraft | checklist, process, lista, proceso | `card-collection` | one `legacy-collection` and four stable `legacy-item-a`…`legacy-item-d` cards |
+| brutalist | comparison, document | `table-rows` | one `legacy-records` table and four stable `legacy-record-a`…`legacy-record-d` rows |
+| brutalist | checklist, process, lista, proceso | `card-collection` | one `legacy-collection` and four stable `legacy-item-a`…`legacy-item-d` cards |
+| isotype | comparison, document | `card-collection` | one `legacy-collection` and four stable `legacy-item-a`…`legacy-item-d` cards |
+| isotype | checklist, process, lista, proceso | `card-collection` | one `legacy-collection` and four stable `legacy-item-a`…`legacy-item-d` cards |
+| opart | comparison, document | `card-collection` | one `legacy-collection` and four stable `legacy-item-a`…`legacy-item-d` cards |
+| opart | checklist, process, lista, proceso | `card-collection` | one `legacy-collection` and four stable `legacy-item-a`…`legacy-item-d` cards |
+| renaissance | comparison, document | `card-collection` | one `legacy-collection` and four stable `legacy-item-a`…`legacy-item-d` cards |
+| renaissance | checklist, process, lista, proceso | `card-collection` | one `legacy-collection` and four stable `legacy-item-a`…`legacy-item-d` cards |
+| ukiyoe | comparison, document | `card-collection` | one `legacy-collection` and four stable `legacy-item-a`…`legacy-item-d` cards |
+| ukiyoe | checklist, process, lista, proceso | `card-collection` | one `legacy-collection` and four stable `legacy-item-a`…`legacy-item-d` cards |
+
+Catalog labels are localized to `es` or `en`. Every generated entity and the scene itself are marked `illustrative: true`; IDs and entity kinds stay fixed across phases. The state mapping is `unreviewed`, `before`, `pending`, `list` → `pending`; `flagged`, `signal`, `observation`, `observacion` → `flagged`; and `review-ready`, `reviewed`, `ready`, `done`, `verified` → `ready-for-review`. Unknown states still fail with `UNSUPPORTED_STATE`.
+
+The upgrade creates no values, progress, relations, actions or counts. No item is added or removed between phases. Only the mapped visual state changes, and the brief's narrative text is copied unchanged. `legacyArt: true` keeps the prior `legacy-object` path. The seven styles without semantic scenes (`artdeco`, `bestiary`, `galactic`, `memphis`, `nature`, `psychedelic`, `vaporwave`) keep the previous drawing path. New manifests record `upgrade.applied`, `upgrade.mapping` and `upgrade.reason`; mappings include `legacy-state-v1:<style>:<comparison|checklist>`, `legacy-art-opt-out`, `legacy-renderer` and `native-semantic`.
 
 Papercraft implements all four primitives at 16:9 and 1:1 in es/en. Its 16 `supported` capability cells are covered by decoded object-region tests in `test/narrative-semantic-render.test.ts`. Isotype adds `counter` and `card-collection` in 16:9, 1:1 and 9:16 for es/en; its 12 cells are covered by `test/narrative-semantic-style-render.test.ts`. Op Art adds `card-collection` in all three ratios for es/en; its six cells use the same decoded optical-group tests. The matrix now has 34 `supported`, 182 `fallback` and 96 `unsupported` cells. No style/aspect/locale is marked supported from source inspection alone.
 

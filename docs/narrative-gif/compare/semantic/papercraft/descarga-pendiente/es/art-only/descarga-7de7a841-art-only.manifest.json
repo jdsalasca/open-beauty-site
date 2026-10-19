@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "commit": "8e1695849bfeb327907de744a3b3f9168f063606",
+  "commit": "dffa62ed28fa2a3460e6cbfbbd009d809806de94",
   "brief": {
     "style": "papercraft",
     "subfamily": "editorial",
@@ -167,6 +167,11 @@
     "status": "in-review"
   },
   "briefSha256": "9ec457462a8315fc9dea669ca83fcfe82941da800a51a14b3db400fe985bbefc",
+  "upgrade": {
+    "applied": false,
+    "mapping": "native-semantic",
+    "reason": "The brief already supplies semantic scene entities; they are retained as authored."
+  },
   "style": "papercraft",
   "subfamily": "editorial",
   "workflowStatus": "in-review",

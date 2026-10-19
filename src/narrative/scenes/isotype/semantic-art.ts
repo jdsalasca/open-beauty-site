@@ -2,7 +2,7 @@ import type { SKRSContext2D } from '@napi-rs/canvas';
 import type { NarrativeObjectRegion, NarrativeSemanticEntity, NarrativeSemanticScene } from '../../../types/narrative-scene.js';
 import type { NarrativeRect, NarrativeRenderContext } from '../../../types/narrative.js';
 import type { getStyle } from '../../../styles/presets.js';
-import { sceneText } from '../../i18n.js';
+import { legacySemanticStateText, sceneText } from '../../i18n.js';
 import { drawRoleText } from '../stage-c-common.js';
 
 type IsotypeComposition = 'comparison' | 'checklist';
@@ -121,7 +121,13 @@ function drawHeader(ctx: SKRSContext2D, context: NarrativeRenderContext, box: Na
   ctx.save();
   ctx.textAlign = 'center';
   drawRoleText(ctx, sceneText('isotype', context.brief.locale, 'illustrative'), box.x + box.width * 0.5, labelY, context.fonts.effective.annotation, 28, palette.ink);
-  drawRoleText(ctx, `${count.count} / ${count.total}`, box.x + box.width * 0.5, numberY, context.fonts.effective.figure, Math.max(28, Math.min(box.width * 0.12, 48)), palette.accent);
+  const stateful = context.semantic?.legacyUpgrade
+    ? context.semantic.entities.find((entity) => entity.kind === 'card' || entity.kind === 'row')
+    : undefined;
+  const header = stateful
+    ? legacySemanticStateText('isotype', context.brief.locale, context.semantic!.states[stateful.id] ?? 'pending')
+    : `${count.count} / ${count.total}`;
+  drawRoleText(ctx, header, box.x + box.width * 0.5, numberY, context.fonts.effective.figure, Math.max(28, Math.min(box.width * 0.12, 48)), palette.accent);
   ctx.restore();
   ctx.strokeStyle = palette.ink;
   ctx.lineWidth = Math.max(1.5, box.width * 0.004);

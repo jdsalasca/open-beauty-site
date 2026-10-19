@@ -4,7 +4,7 @@ import type { NarrativeObjectRegion, NarrativePhase, NarrativeRect, NarrativeRen
 import type { NarrativeSemanticEntity, NarrativeSemanticScene } from '../../types/narrative-scene.js';
 import { cubicBezierEase, drawText } from './common.js';
 import { sceneVocabulary } from '../vocabulary.js';
-import { sceneText } from '../i18n.js';
+import { legacySemanticStateText, sceneText } from '../i18n.js';
 
 interface CoastPrint {
   readonly identity: 'guia-en-recorrido-costero';
@@ -113,7 +113,7 @@ function drawCartouche(ctx: ReturnType<typeof canvasFor>['ctx'], field: Narrativ
   drawText(ctx, sceneText('ukiyoe', locale, 'review'), box.x + box.width * 0.10, box.y + box.height * 0.84, face, 500, 28, ink);
 }
 
-function drawReference(ctx: ReturnType<typeof canvasFor>['ctx'], field: NarrativeRect, ink: string, vermilion: string, face: string, locale: 'es' | 'en'): { x: number; y: number } {
+function drawReference(ctx: ReturnType<typeof canvasFor>['ctx'], field: NarrativeRect, ink: string, vermilion: string, face: string, locale: 'es' | 'en', semanticLabel = false): { x: number; y: number } {
   const point = { x: field.x + field.width * 0.94, y: field.y + field.height * 0.52 };
   ctx.fillStyle = vermilion;
   ctx.beginPath();
@@ -124,7 +124,18 @@ function drawReference(ctx: ReturnType<typeof canvasFor>['ctx'], field: Narrativ
   ctx.beginPath();
   ctx.arc(point.x, point.y, 4, 0, Math.PI * 2);
   ctx.stroke();
-  drawText(ctx, sceneText('ukiyoe', locale, 'signal'), point.x - 98, point.y - 20, face, 500, 28, ink);
+  if (semanticLabel) {
+    const panel = { x: point.x - 126, y: point.y + field.height * 0.17, width: 116, height: 38 };
+    ctx.fillStyle = '#F3E9D2';
+    ctx.fillRect(panel.x, panel.y, panel.width, panel.height);
+    ctx.strokeStyle = vermilion;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(panel.x, panel.y, panel.width, panel.height);
+    drawText(ctx, sceneText('ukiyoe', locale, 'signal'), panel.x + 8, panel.y + 27, face, 500, 28, ink);
+  } else {
+    // Preserve the historical legacy artwork exactly for opt-out and unsupported styles.
+    drawText(ctx, sceneText('ukiyoe', locale, 'signal'), point.x - 98, point.y - 20, face, 500, 28, ink);
+  }
   return point;
 }
 
@@ -206,6 +217,16 @@ function collectionMember(semantic: NarrativeSemanticScene, entityId: string, co
 
 function memberProgress(context: NarrativeRenderContext, entityId: string, collectionId: string): number {
   const { frame } = context;
+  if (context.semantic?.legacyUpgrade) {
+    const progressFor = (phaseIndex: number): number => {
+      const state = semanticAt(context, phaseIndex).states[entityId];
+      return state === 'pending' ? 0.12 : state === 'flagged' ? 0.52 : state === 'ready-for-review' ? 0.92 : 0;
+    };
+    if (frame.kind === 'transition' || frame.kind === 'loop-bridge') {
+      return progressFor(frame.fromPhaseIndex) + (progressFor(frame.toPhaseIndex) - progressFor(frame.fromPhaseIndex)) * frame.progress;
+    }
+    return progressFor(context.phaseIndex);
+  }
   if (frame.kind === 'transition' || frame.kind === 'loop-bridge') {
     const from = collectionMember(semanticAt(context, frame.fromPhaseIndex), entityId, collectionId) ? 1 : 0;
     const to = collectionMember(semanticAt(context, frame.toPhaseIndex), entityId, collectionId) ? 1 : 0;
@@ -451,7 +472,7 @@ function drawSemanticScene(context: NarrativeRenderContext, print: CoastPrint): 
   drawMountain(ctx, field, colors.blue, colors.mist);
   drawSea(ctx, field, 2, print, colors.blue, colors.mist, colors.moss);
   drawHorizon(ctx, field, preset.palette.ink);
-  drawReference(ctx, field, preset.palette.bg, colors.vermilion, context.fonts.effective.label.family, brief.locale);
+  drawReference(ctx, field, preset.palette.ink, colors.vermilion, context.fonts.effective.label.family, brief.locale, true);
   drawCartouche(ctx, field, preset.palette.ink, colors.vermilion, context.fonts.effective.label.family, brief.locale);
 
   if (semantic.primitive === 'file-download') {
@@ -485,6 +506,11 @@ function drawSemanticScene(context: NarrativeRenderContext, print: CoastPrint): 
     }
     const boat = collectionPoint(field, amount);
     drawLargeBoat(ctx, field, { x: boat.x, y: field.y + field.height * 0.87 }, colors, 0.55);
+    if (semantic.legacyUpgrade) {
+      const stateful = cards[0];
+      const state = stateful ? semantic.states[stateful.id] ?? 'pending' : 'pending';
+      drawText(ctx, legacySemanticStateText('ukiyoe', brief.locale, state), field.x + field.width * 0.69, field.y + field.height * 0.13, context.fonts.effective.label.family, 500, 28, preset.palette.ink);
+    }
   }
   // The sea horizon and review point are drawn from fixed field coordinates in every phase.
   return ctx.getImageData(0, 0, brief.output.width, brief.output.height).data;

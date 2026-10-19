@@ -34,6 +34,11 @@ test('committed before/after index covers every base brief and semantic fixture 
     }
     assert.equal(pair.phases.length, pair.before.metrics.phaseHolds.length);
     assert.equal(pair.phases.length, pair.after.metrics.phaseHolds.length);
+    assert.equal(pair.before.transformations.length, 0, `${pair.style}/${pair.composition} historical baseline has no semantic transformation evidence`);
+    assert.ok(pair.after.transformations.length > 0, `${pair.style}/${pair.composition} upgraded brief records decoded transformation controls`);
+    assert.ok(pair.after.transformations.every((control: string) => control.startsWith('pass ·')), `${pair.style}/${pair.composition} decoded object controls pass`);
+    assert.match(pair.after.objectRegionDiff, /^pass ·/u, `${pair.style}/${pair.composition} region diff passes from decoded object controls`);
+    assert.match(pair.before.objectRegionDiff, /^pending ·/u, `${pair.style}/${pair.composition} legacy baseline remains honest about undeclared regions`);
   }
   for (const fixture of index.semanticFixtures) {
     assert.ok(styles.has(fixture.style));

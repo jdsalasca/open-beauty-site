@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 2,
-  "commit": "d1c15e6e297174590339fbaea565f13c02210ba9",
+  "schemaVersion": 3,
+  "commit": "79b4fb96a2683faab4eaced59233b413b7aa98f1",
   "brief": {
     "style": "renaissance",
     "kind": "narrative-gif",
@@ -242,6 +242,11 @@
     "status": "in-review"
   },
   "briefSha256": "ddc3bb05875510e6b144dc2f4c196271c8846f47adafea0c25c00556af76ea28",
+  "upgrade": {
+    "applied": false,
+    "mapping": "native-semantic",
+    "reason": "The brief already supplies semantic scene entities; they are retained as authored."
+  },
   "style": "renaissance",
   "subfamily": null,
   "workflowStatus": "in-review",
@@ -351,9 +356,9 @@
     "contactSheetSha256": "1b0afa93c103a4082fa94ee15fbb04f68d599b9812e26ae8fd6e469806dbdaca"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\gallery\\renaissance\\comparison\\piezas-del-arco-e87a8a9d.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\gallery\\renaissance\\comparison\\piezas-del-arco-e87a8a9d.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\gallery\\renaissance\\comparison\\piezas-del-arco-e87a8a9d-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\AppData\\Local\\Temp\\narrative-legacy-upgrade-5JRy4p\\rendered\\10-renaissance-narrative\\piezas-del-arco-e87a8a9d.gif",
+    "png": "C:\\Users\\jdsal\\AppData\\Local\\Temp\\narrative-legacy-upgrade-5JRy4p\\rendered\\10-renaissance-narrative\\piezas-del-arco-e87a8a9d.png",
+    "contactSheet": "C:\\Users\\jdsal\\AppData\\Local\\Temp\\narrative-legacy-upgrade-5JRy4p\\rendered\\10-renaissance-narrative\\piezas-del-arco-e87a8a9d-contact-sheet.png"
   },
   "controls": [
     {
@@ -499,6 +504,13 @@
       "passed": true,
       "detail": "title 45.5px; body min 28.0px (requires >=20px); label min 15.0px",
       "source": "source"
+    },
+    {
+      "name": "semantic-text-legibility",
+      "passed": false,
+      "status": "pending",
+      "detail": "No scene-declared text boxes were available inside semantic object regions.",
+      "source": "decoded"
     },
     {
       "name": "composition-balance",
@@ -765,6 +777,13 @@
           "source": "source"
         },
         {
+          "name": "semantic-text-legibility",
+          "passed": false,
+          "status": "pending",
+          "detail": "No scene-declared text boxes were available inside semantic object regions.",
+          "source": "decoded"
+        },
+        {
           "name": "composition-balance",
           "passed": true,
           "detail": "proxy; 8×4 decoded-pixel grid against #F6EDDD: empty cells 12.5%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 6.3%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: hallazgo · pausa: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 6.3% | hallazgo → registro · punto medio de transición: empty 15.6%, text fill 100.0%, art 50.0%, largest empty 9.4% | registro · pausa: empty 15.6%, text fill 100.0%, art 50.0%, largest empty 9.4% | registro → composicion · punto medio de transición: empty 6.3%, text fill 100.0%, art 50.0%, largest empty 3.1% | composicion · pausa: empty 6.3%, text fill 100.0%, art 50.0%, largest empty 3.1% | composicion → hallazgo · unión del ciclo: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 6.3%",
@@ -877,17 +896,841 @@
     },
     "visual-review": {
       "status": "pending",
-      "criteria": [
-        "identity at 200px thumbnail",
-        "full text and contrast at 640×360",
-        "style material in native frame",
-        "same object and causal change across phases",
-        "result faithful to outcome and evidence scope",
-        "deliberate loop restart"
-      ],
+      "reviewer": null,
+      "criteria": {
+        "thumbnailIdentity": {
+          "verdict": "not-evaluated"
+        },
+        "cardSizeReading": {
+          "verdict": "not-evaluated"
+        },
+        "styleMaterial": {
+          "verdict": "not-evaluated"
+        },
+        "phaseContinuity": {
+          "verdict": "not-evaluated"
+        },
+        "loopRestart": {
+          "verdict": "not-evaluated"
+        },
+        "artOnlyTransformationUnderstood": {
+          "verdict": "not-evaluated"
+        }
+      },
+      "feedback": [],
       "evidence": []
     },
-    "publicationRecommendation": "none"
+    "publicationRecommendation": "none",
+    "automatedEvidence": {
+      "balanceByFrame": [
+        {
+          "frameIndex": 1,
+          "phaseId": "hallazgo",
+          "kind": "hold",
+          "label": "hallazgo · pausa",
+          "regions": [
+            {
+              "entityId": "arco",
+              "bounds": {
+                "x": 640,
+                "y": 36,
+                "width": 576,
+                "height": 648
+              }
+            },
+            {
+              "entityId": "pieza-a",
+              "bounds": {
+                "x": 648.64,
+                "y": 210.96,
+                "width": 267.84000000000003,
+                "height": 311.03999999999996
+              }
+            },
+            {
+              "entityId": "pieza-b",
+              "bounds": {
+                "x": 844.48,
+                "y": 222.624,
+                "width": 259.20000000000005,
+                "height": 299.376
+              }
+            },
+            {
+              "entityId": "pieza-c",
+              "bounds": {
+                "x": 648.64,
+                "y": 382.68000000000006,
+                "width": 278.2080000000001,
+                "height": 288.3599999999999
+              }
+            },
+            {
+              "entityId": "pieza-d",
+              "bounds": {
+                "x": 844.48,
+                "y": 394.34400000000005,
+                "width": 269.5680000000002,
+                "height": 276.6959999999999
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.125,
+            "textColumnFillRatio": 1,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.0625
+          }
+        },
+        {
+          "frameIndex": 5,
+          "phaseId": "registro",
+          "kind": "transition",
+          "label": "hallazgo → registro · punto medio de transición",
+          "regions": [
+            {
+              "entityId": "arco",
+              "bounds": {
+                "x": 640,
+                "y": 36,
+                "width": 576,
+                "height": 648
+              }
+            },
+            {
+              "entityId": "pieza-a",
+              "bounds": {
+                "x": 648.64,
+                "y": 210.96,
+                "width": 267.84000000000003,
+                "height": 311.03999999999996
+              }
+            },
+            {
+              "entityId": "pieza-b",
+              "bounds": {
+                "x": 844.48,
+                "y": 222.624,
+                "width": 259.20000000000005,
+                "height": 299.376
+              }
+            },
+            {
+              "entityId": "pieza-c",
+              "bounds": {
+                "x": 648.64,
+                "y": 382.68000000000006,
+                "width": 278.2080000000001,
+                "height": 288.3599999999999
+              }
+            },
+            {
+              "entityId": "pieza-d",
+              "bounds": {
+                "x": 844.48,
+                "y": 394.34400000000005,
+                "width": 269.5680000000002,
+                "height": 276.6959999999999
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.15625,
+            "textColumnFillRatio": 1,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.09375
+          }
+        },
+        {
+          "frameIndex": 12,
+          "phaseId": "registro",
+          "kind": "hold",
+          "label": "registro · pausa",
+          "regions": [
+            {
+              "entityId": "arco",
+              "bounds": {
+                "x": 640,
+                "y": 36,
+                "width": 576,
+                "height": 648
+              }
+            },
+            {
+              "entityId": "pieza-a",
+              "bounds": {
+                "x": 648.64,
+                "y": 210.96,
+                "width": 267.84000000000003,
+                "height": 311.03999999999996
+              }
+            },
+            {
+              "entityId": "pieza-b",
+              "bounds": {
+                "x": 844.48,
+                "y": 222.624,
+                "width": 259.20000000000005,
+                "height": 299.376
+              }
+            },
+            {
+              "entityId": "pieza-c",
+              "bounds": {
+                "x": 648.64,
+                "y": 382.68000000000006,
+                "width": 278.2080000000001,
+                "height": 288.3599999999999
+              }
+            },
+            {
+              "entityId": "pieza-d",
+              "bounds": {
+                "x": 844.48,
+                "y": 394.34400000000005,
+                "width": 269.5680000000002,
+                "height": 276.6959999999999
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.15625,
+            "textColumnFillRatio": 1,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.09375
+          }
+        },
+        {
+          "frameIndex": 16,
+          "phaseId": "composicion",
+          "kind": "transition",
+          "label": "registro → composicion · punto medio de transición",
+          "regions": [
+            {
+              "entityId": "arco",
+              "bounds": {
+                "x": 640,
+                "y": 36,
+                "width": 576,
+                "height": 648
+              }
+            },
+            {
+              "entityId": "pieza-a",
+              "bounds": {
+                "x": 648.64,
+                "y": 210.96,
+                "width": 267.84000000000003,
+                "height": 311.03999999999996
+              }
+            },
+            {
+              "entityId": "pieza-b",
+              "bounds": {
+                "x": 844.48,
+                "y": 222.624,
+                "width": 259.20000000000005,
+                "height": 299.376
+              }
+            },
+            {
+              "entityId": "pieza-c",
+              "bounds": {
+                "x": 648.64,
+                "y": 382.68000000000006,
+                "width": 278.2080000000001,
+                "height": 288.3599999999999
+              }
+            },
+            {
+              "entityId": "pieza-d",
+              "bounds": {
+                "x": 844.48,
+                "y": 394.34400000000005,
+                "width": 269.5680000000002,
+                "height": 276.6959999999999
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.0625,
+            "textColumnFillRatio": 1,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.03125
+          }
+        },
+        {
+          "frameIndex": 23,
+          "phaseId": "composicion",
+          "kind": "hold",
+          "label": "composicion · pausa",
+          "regions": [
+            {
+              "entityId": "arco",
+              "bounds": {
+                "x": 640,
+                "y": 36,
+                "width": 576,
+                "height": 648
+              }
+            },
+            {
+              "entityId": "pieza-a",
+              "bounds": {
+                "x": 648.64,
+                "y": 210.96,
+                "width": 267.84000000000003,
+                "height": 311.03999999999996
+              }
+            },
+            {
+              "entityId": "pieza-b",
+              "bounds": {
+                "x": 844.48,
+                "y": 222.624,
+                "width": 259.20000000000005,
+                "height": 299.376
+              }
+            },
+            {
+              "entityId": "pieza-c",
+              "bounds": {
+                "x": 648.64,
+                "y": 382.68000000000006,
+                "width": 278.2080000000001,
+                "height": 288.3599999999999
+              }
+            },
+            {
+              "entityId": "pieza-d",
+              "bounds": {
+                "x": 844.48,
+                "y": 394.34400000000005,
+                "width": 269.5680000000002,
+                "height": 276.6959999999999
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.0625,
+            "textColumnFillRatio": 1,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.03125
+          }
+        },
+        {
+          "frameIndex": 27,
+          "phaseId": "hallazgo",
+          "kind": "loop-bridge",
+          "label": "composicion → hallazgo · unión del ciclo",
+          "regions": [
+            {
+              "entityId": "arco",
+              "bounds": {
+                "x": 640,
+                "y": 36,
+                "width": 576,
+                "height": 648
+              }
+            },
+            {
+              "entityId": "pieza-a",
+              "bounds": {
+                "x": 648.64,
+                "y": 210.96,
+                "width": 267.84000000000003,
+                "height": 311.03999999999996
+              }
+            },
+            {
+              "entityId": "pieza-b",
+              "bounds": {
+                "x": 844.48,
+                "y": 222.624,
+                "width": 259.20000000000005,
+                "height": 299.376
+              }
+            },
+            {
+              "entityId": "pieza-c",
+              "bounds": {
+                "x": 648.64,
+                "y": 382.68000000000006,
+                "width": 278.2080000000001,
+                "height": 288.3599999999999
+              }
+            },
+            {
+              "entityId": "pieza-d",
+              "bounds": {
+                "x": 844.48,
+                "y": 394.34400000000005,
+                "width": 269.5680000000002,
+                "height": 276.6959999999999
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.125,
+            "textColumnFillRatio": 1,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.0625
+          }
+        }
+      ],
+      "objectTransformationByFrame": [
+        {
+          "frameIndex": 5,
+          "phaseId": "registro",
+          "fromPhaseId": "hallazgo",
+          "kind": "transition",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "arco",
+              "bounds": {
+                "x": 640,
+                "y": 36,
+                "width": 576,
+                "height": 648
+              },
+              "fromState": "open",
+              "toState": "counted",
+              "pixelDiffRatio": 0.09818672839506173,
+              "changed": true
+            },
+            {
+              "entityId": "pieza-a",
+              "bounds": {
+                "x": 648.64,
+                "y": 210.96,
+                "width": 267.84000000000003,
+                "height": 311.03999999999996
+              },
+              "fromState": "default",
+              "toState": "member",
+              "pixelDiffRatio": 0.43665999428081215,
+              "changed": true
+            },
+            {
+              "entityId": "pieza-b",
+              "bounds": {
+                "x": 844.48,
+                "y": 222.624,
+                "width": 259.20000000000005,
+                "height": 299.376
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0.07283333333333333,
+              "changed": false
+            },
+            {
+              "entityId": "pieza-c",
+              "bounds": {
+                "x": 648.64,
+                "y": 382.68000000000006,
+                "width": 278.2080000000001,
+                "height": 288.3599999999999
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0.225027808676307,
+              "changed": false
+            },
+            {
+              "entityId": "pieza-d",
+              "bounds": {
+                "x": 844.48,
+                "y": 394.34400000000005,
+                "width": 269.5680000000002,
+                "height": 276.6959999999999
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            }
+          ]
+        },
+        {
+          "frameIndex": 16,
+          "phaseId": "composicion",
+          "fromPhaseId": "registro",
+          "kind": "transition",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "arco",
+              "bounds": {
+                "x": 640,
+                "y": 36,
+                "width": 576,
+                "height": 648
+              },
+              "fromState": "counted",
+              "toState": "counted",
+              "pixelDiffRatio": 0.19559381430041153,
+              "changed": false
+            },
+            {
+              "entityId": "pieza-a",
+              "bounds": {
+                "x": 648.64,
+                "y": 210.96,
+                "width": 267.84000000000003,
+                "height": 311.03999999999996
+              },
+              "fromState": "member",
+              "toState": "member",
+              "pixelDiffRatio": 0.19727623677437803,
+              "changed": false
+            },
+            {
+              "entityId": "pieza-b",
+              "bounds": {
+                "x": 844.48,
+                "y": 222.624,
+                "width": 259.20000000000005,
+                "height": 299.376
+              },
+              "fromState": "default",
+              "toState": "member",
+              "pixelDiffRatio": 0.3033974358974359,
+              "changed": true
+            },
+            {
+              "entityId": "pieza-c",
+              "bounds": {
+                "x": 648.64,
+                "y": 382.68000000000006,
+                "width": 278.2080000000001,
+                "height": 288.3599999999999
+              },
+              "fromState": "default",
+              "toState": "member",
+              "pixelDiffRatio": 0.5614386355209492,
+              "changed": true
+            },
+            {
+              "entityId": "pieza-d",
+              "bounds": {
+                "x": 844.48,
+                "y": 394.34400000000005,
+                "width": 269.5680000000002,
+                "height": 276.6959999999999
+              },
+              "fromState": "default",
+              "toState": "member",
+              "pixelDiffRatio": 0.5548859805144815,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 27,
+          "phaseId": "hallazgo",
+          "fromPhaseId": "composicion",
+          "kind": "loop-bridge",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "arco",
+              "bounds": {
+                "x": 640,
+                "y": 36,
+                "width": 576,
+                "height": 648
+              },
+              "fromState": "counted",
+              "toState": "open",
+              "pixelDiffRatio": 0.28129822530864196,
+              "changed": true
+            },
+            {
+              "entityId": "pieza-a",
+              "bounds": {
+                "x": 648.64,
+                "y": 210.96,
+                "width": 267.84000000000003,
+                "height": 311.03999999999996
+              },
+              "fromState": "member",
+              "toState": "default",
+              "pixelDiffRatio": 0.6152058907635116,
+              "changed": true
+            },
+            {
+              "entityId": "pieza-b",
+              "bounds": {
+                "x": 844.48,
+                "y": 222.624,
+                "width": 259.20000000000005,
+                "height": 299.376
+              },
+              "fromState": "member",
+              "toState": "default",
+              "pixelDiffRatio": 0.4731410256410256,
+              "changed": true
+            },
+            {
+              "entityId": "pieza-c",
+              "bounds": {
+                "x": 648.64,
+                "y": 382.68000000000006,
+                "width": 278.2080000000001,
+                "height": 288.3599999999999
+              },
+              "fromState": "member",
+              "toState": "default",
+              "pixelDiffRatio": 0.6532443455691509,
+              "changed": true
+            },
+            {
+              "entityId": "pieza-d",
+              "bounds": {
+                "x": 844.48,
+                "y": 394.34400000000005,
+                "width": 269.5680000000002,
+                "height": 276.6959999999999
+              },
+              "fromState": "member",
+              "toState": "default",
+              "pixelDiffRatio": 0.5762297910748891,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 12,
+          "phaseId": "registro",
+          "fromPhaseId": "hallazgo",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "arco",
+              "bounds": {
+                "x": 640,
+                "y": 36,
+                "width": 576,
+                "height": 648
+              },
+              "fromState": "open",
+              "toState": "counted",
+              "pixelDiffRatio": 0.09818940757887518,
+              "changed": true
+            },
+            {
+              "entityId": "pieza-a",
+              "bounds": {
+                "x": 648.64,
+                "y": 210.96,
+                "width": 267.84000000000003,
+                "height": 311.03999999999996
+              },
+              "fromState": "default",
+              "toState": "member",
+              "pixelDiffRatio": 0.43664807930607186,
+              "changed": true
+            },
+            {
+              "entityId": "pieza-b",
+              "bounds": {
+                "x": 844.48,
+                "y": 222.624,
+                "width": 259.20000000000005,
+                "height": 299.376
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0.09573076923076923,
+              "changed": false
+            },
+            {
+              "entityId": "pieza-c",
+              "bounds": {
+                "x": 648.64,
+                "y": 382.68000000000006,
+                "width": 278.2080000000001,
+                "height": 288.3599999999999
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0.224966011617847,
+              "changed": false
+            },
+            {
+              "entityId": "pieza-d",
+              "bounds": {
+                "x": 844.48,
+                "y": 394.34400000000005,
+                "width": 269.5680000000002,
+                "height": 276.6959999999999
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            }
+          ]
+        },
+        {
+          "frameIndex": 23,
+          "phaseId": "composicion",
+          "fromPhaseId": "registro",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "arco",
+              "bounds": {
+                "x": 640,
+                "y": 36,
+                "width": 576,
+                "height": 648
+              },
+              "fromState": "counted",
+              "toState": "counted",
+              "pixelDiffRatio": 0.20310356652949246,
+              "changed": false
+            },
+            {
+              "entityId": "pieza-a",
+              "bounds": {
+                "x": 648.64,
+                "y": 210.96,
+                "width": 267.84000000000003,
+                "height": 311.03999999999996
+              },
+              "fromState": "member",
+              "toState": "member",
+              "pixelDiffRatio": 0.21729339433800401,
+              "changed": false
+            },
+            {
+              "entityId": "pieza-b",
+              "bounds": {
+                "x": 844.48,
+                "y": 222.624,
+                "width": 259.20000000000005,
+                "height": 299.376
+              },
+              "fromState": "default",
+              "toState": "member",
+              "pixelDiffRatio": 0.3732948717948718,
+              "changed": true
+            },
+            {
+              "entityId": "pieza-c",
+              "bounds": {
+                "x": 648.64,
+                "y": 382.68000000000006,
+                "width": 278.2080000000001,
+                "height": 288.3599999999999
+              },
+              "fromState": "default",
+              "toState": "member",
+              "pixelDiffRatio": 0.5705228031145717,
+              "changed": true
+            },
+            {
+              "entityId": "pieza-d",
+              "bounds": {
+                "x": 844.48,
+                "y": 394.34400000000005,
+                "width": 269.5680000000002,
+                "height": 276.6959999999999
+              },
+              "fromState": "default",
+              "toState": "member",
+              "pixelDiffRatio": 0.6046483846133426,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 1,
+          "phaseId": "hallazgo",
+          "fromPhaseId": "composicion",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "arco",
+              "bounds": {
+                "x": 640,
+                "y": 36,
+                "width": 576,
+                "height": 648
+              },
+              "fromState": "counted",
+              "toState": "open",
+              "pixelDiffRatio": 0.28972961676954734,
+              "changed": true
+            },
+            {
+              "entityId": "pieza-a",
+              "bounds": {
+                "x": 648.64,
+                "y": 210.96,
+                "width": 267.84000000000003,
+                "height": 311.03999999999996
+              },
+              "fromState": "member",
+              "toState": "default",
+              "pixelDiffRatio": 0.6025402726146221,
+              "changed": true
+            },
+            {
+              "entityId": "pieza-b",
+              "bounds": {
+                "x": 844.48,
+                "y": 222.624,
+                "width": 259.20000000000005,
+                "height": 299.376
+              },
+              "fromState": "member",
+              "toState": "default",
+              "pixelDiffRatio": 0.46902564102564104,
+              "changed": true
+            },
+            {
+              "entityId": "pieza-c",
+              "bounds": {
+                "x": 648.64,
+                "y": 382.68000000000006,
+                "width": 278.2080000000001,
+                "height": 288.3599999999999
+              },
+              "fromState": "member",
+              "toState": "default",
+              "pixelDiffRatio": 0.7421455938697318,
+              "changed": true
+            },
+            {
+              "entityId": "pieza-d",
+              "bounds": {
+                "x": 844.48,
+                "y": 394.34400000000005,
+                "width": 269.5680000000002,
+                "height": 276.6959999999999
+              },
+              "fromState": "member",
+              "toState": "default",
+              "pixelDiffRatio": 0.6046483846133426,
+              "changed": true
+            }
+          ]
+        }
+      ]
+    }
   },
   "phaseCaptures": [
     {
@@ -899,7 +1742,7 @@
         "hallazgo · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\gallery\\renaissance\\comparison\\piezas-del-arco-e87a8a9d-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\AppData\\Local\\Temp\\narrative-legacy-upgrade-5JRy4p\\rendered\\10-renaissance-narrative\\piezas-del-arco-e87a8a9d-contact-sheet.png"
     },
     {
       "phaseId": "registro",
@@ -909,7 +1752,7 @@
         "registro → composicion · punto medio de transición",
         "registro · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\gallery\\renaissance\\comparison\\piezas-del-arco-e87a8a9d-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\AppData\\Local\\Temp\\narrative-legacy-upgrade-5JRy4p\\rendered\\10-renaissance-narrative\\piezas-del-arco-e87a8a9d-contact-sheet.png"
     },
     {
       "phaseId": "composicion",
@@ -919,7 +1762,7 @@
         "composicion → hallazgo · unión del ciclo",
         "composicion · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\gallery\\renaissance\\comparison\\piezas-del-arco-e87a8a9d-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\AppData\\Local\\Temp\\narrative-legacy-upgrade-5JRy4p\\rendered\\10-renaissance-narrative\\piezas-del-arco-e87a8a9d-contact-sheet.png"
     }
   ],
   "semanticObjectCaptures": [
@@ -1250,7 +2093,57 @@
   ],
   "compositionByFrame": [
     {
+      "frameIndex": 1,
       "label": "hallazgo · pausa",
+      "phaseId": "hallazgo",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "arco",
+          "bounds": {
+            "x": 640,
+            "y": 36,
+            "width": 576,
+            "height": 648
+          }
+        },
+        {
+          "entityId": "pieza-a",
+          "bounds": {
+            "x": 648.64,
+            "y": 210.96,
+            "width": 267.84000000000003,
+            "height": 311.03999999999996
+          }
+        },
+        {
+          "entityId": "pieza-b",
+          "bounds": {
+            "x": 844.48,
+            "y": 222.624,
+            "width": 259.20000000000005,
+            "height": 299.376
+          }
+        },
+        {
+          "entityId": "pieza-c",
+          "bounds": {
+            "x": 648.64,
+            "y": 382.68000000000006,
+            "width": 278.2080000000001,
+            "height": 288.3599999999999
+          }
+        },
+        {
+          "entityId": "pieza-d",
+          "bounds": {
+            "x": 844.48,
+            "y": 394.34400000000005,
+            "width": 269.5680000000002,
+            "height": 276.6959999999999
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.125,
         "textColumnFillRatio": 1,
@@ -1259,7 +2152,57 @@
       }
     },
     {
+      "frameIndex": 5,
       "label": "hallazgo → registro · punto medio de transición",
+      "phaseId": "registro",
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "arco",
+          "bounds": {
+            "x": 640,
+            "y": 36,
+            "width": 576,
+            "height": 648
+          }
+        },
+        {
+          "entityId": "pieza-a",
+          "bounds": {
+            "x": 648.64,
+            "y": 210.96,
+            "width": 267.84000000000003,
+            "height": 311.03999999999996
+          }
+        },
+        {
+          "entityId": "pieza-b",
+          "bounds": {
+            "x": 844.48,
+            "y": 222.624,
+            "width": 259.20000000000005,
+            "height": 299.376
+          }
+        },
+        {
+          "entityId": "pieza-c",
+          "bounds": {
+            "x": 648.64,
+            "y": 382.68000000000006,
+            "width": 278.2080000000001,
+            "height": 288.3599999999999
+          }
+        },
+        {
+          "entityId": "pieza-d",
+          "bounds": {
+            "x": 844.48,
+            "y": 394.34400000000005,
+            "width": 269.5680000000002,
+            "height": 276.6959999999999
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.15625,
         "textColumnFillRatio": 1,
@@ -1268,7 +2211,57 @@
       }
     },
     {
+      "frameIndex": 12,
       "label": "registro · pausa",
+      "phaseId": "registro",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "arco",
+          "bounds": {
+            "x": 640,
+            "y": 36,
+            "width": 576,
+            "height": 648
+          }
+        },
+        {
+          "entityId": "pieza-a",
+          "bounds": {
+            "x": 648.64,
+            "y": 210.96,
+            "width": 267.84000000000003,
+            "height": 311.03999999999996
+          }
+        },
+        {
+          "entityId": "pieza-b",
+          "bounds": {
+            "x": 844.48,
+            "y": 222.624,
+            "width": 259.20000000000005,
+            "height": 299.376
+          }
+        },
+        {
+          "entityId": "pieza-c",
+          "bounds": {
+            "x": 648.64,
+            "y": 382.68000000000006,
+            "width": 278.2080000000001,
+            "height": 288.3599999999999
+          }
+        },
+        {
+          "entityId": "pieza-d",
+          "bounds": {
+            "x": 844.48,
+            "y": 394.34400000000005,
+            "width": 269.5680000000002,
+            "height": 276.6959999999999
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.15625,
         "textColumnFillRatio": 1,
@@ -1277,7 +2270,57 @@
       }
     },
     {
+      "frameIndex": 16,
       "label": "registro → composicion · punto medio de transición",
+      "phaseId": "composicion",
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "arco",
+          "bounds": {
+            "x": 640,
+            "y": 36,
+            "width": 576,
+            "height": 648
+          }
+        },
+        {
+          "entityId": "pieza-a",
+          "bounds": {
+            "x": 648.64,
+            "y": 210.96,
+            "width": 267.84000000000003,
+            "height": 311.03999999999996
+          }
+        },
+        {
+          "entityId": "pieza-b",
+          "bounds": {
+            "x": 844.48,
+            "y": 222.624,
+            "width": 259.20000000000005,
+            "height": 299.376
+          }
+        },
+        {
+          "entityId": "pieza-c",
+          "bounds": {
+            "x": 648.64,
+            "y": 382.68000000000006,
+            "width": 278.2080000000001,
+            "height": 288.3599999999999
+          }
+        },
+        {
+          "entityId": "pieza-d",
+          "bounds": {
+            "x": 844.48,
+            "y": 394.34400000000005,
+            "width": 269.5680000000002,
+            "height": 276.6959999999999
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.0625,
         "textColumnFillRatio": 1,
@@ -1286,7 +2329,57 @@
       }
     },
     {
+      "frameIndex": 23,
       "label": "composicion · pausa",
+      "phaseId": "composicion",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "arco",
+          "bounds": {
+            "x": 640,
+            "y": 36,
+            "width": 576,
+            "height": 648
+          }
+        },
+        {
+          "entityId": "pieza-a",
+          "bounds": {
+            "x": 648.64,
+            "y": 210.96,
+            "width": 267.84000000000003,
+            "height": 311.03999999999996
+          }
+        },
+        {
+          "entityId": "pieza-b",
+          "bounds": {
+            "x": 844.48,
+            "y": 222.624,
+            "width": 259.20000000000005,
+            "height": 299.376
+          }
+        },
+        {
+          "entityId": "pieza-c",
+          "bounds": {
+            "x": 648.64,
+            "y": 382.68000000000006,
+            "width": 278.2080000000001,
+            "height": 288.3599999999999
+          }
+        },
+        {
+          "entityId": "pieza-d",
+          "bounds": {
+            "x": 844.48,
+            "y": 394.34400000000005,
+            "width": 269.5680000000002,
+            "height": 276.6959999999999
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.0625,
         "textColumnFillRatio": 1,
@@ -1295,7 +2388,57 @@
       }
     },
     {
+      "frameIndex": 27,
       "label": "composicion → hallazgo · unión del ciclo",
+      "phaseId": "hallazgo",
+      "kind": "loop-bridge",
+      "regions": [
+        {
+          "entityId": "arco",
+          "bounds": {
+            "x": 640,
+            "y": 36,
+            "width": 576,
+            "height": 648
+          }
+        },
+        {
+          "entityId": "pieza-a",
+          "bounds": {
+            "x": 648.64,
+            "y": 210.96,
+            "width": 267.84000000000003,
+            "height": 311.03999999999996
+          }
+        },
+        {
+          "entityId": "pieza-b",
+          "bounds": {
+            "x": 844.48,
+            "y": 222.624,
+            "width": 259.20000000000005,
+            "height": 299.376
+          }
+        },
+        {
+          "entityId": "pieza-c",
+          "bounds": {
+            "x": 648.64,
+            "y": 382.68000000000006,
+            "width": 278.2080000000001,
+            "height": 288.3599999999999
+          }
+        },
+        {
+          "entityId": "pieza-d",
+          "bounds": {
+            "x": 844.48,
+            "y": 394.34400000000005,
+            "width": 269.5680000000002,
+            "height": 276.6959999999999
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.125,
         "textColumnFillRatio": 1,
@@ -1367,5 +2510,11 @@
     "memoryBytes": 107634688,
     "maxMemoryBytes": 268435456
   },
-  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed."
+  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed.",
+  "generatedBy": "open-beauty-site",
+  "reviewState": "none",
+  "openFeedbackCount": 0,
+  "feedbackFrames": [],
+  "publicationRecommendation": "none",
+  "renderRevision": 0
 }
