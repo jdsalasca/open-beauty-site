@@ -9,6 +9,11 @@ import type { RichIssue, RichValidationResult } from './types/validation.js';
 import type {
   AuditOptions,
   AuditReport,
+  DeckAuditArtifact,
+  DeckAuditEntry,
+  DeckAuditOptions,
+  DeckAuditReport,
+  DeckSlideAudit,
   PlaywrightLocation,
   PlaywrightSource,
   VisualAuditOptions,
@@ -30,6 +35,12 @@ export const VISUAL_VIEWPORTS: VisualViewport[] = [
   { width: 360, height: 780, label: '360x780' },
   { width: 1440, height: 900, label: '1440x900' },
 ];
+
+/** The real presentation size used by the per-slide deck audit. */
+export const DECK_SLIDE_VIEWPORT: VisualViewport = { width: 1280, height: 720, label: '1280x720' };
+
+/** Deck chrome is not slide content; its micro-labels are audited separately. */
+export const DECK_SLIDE_IGNORE = '.deck-top,.deck-bottom,.deck-progress,.slide-number,.sr-only,.skip-link';
 
 const VISUAL_SKIP_FIX =
   'set BEAUTY_PLAYWRIGHT_ROOT to a folder containing playwright/package.json, or run pnpm add -D playwright && pnpm exec playwright install chromium';
@@ -171,7 +182,14 @@ const ANIMATION_RESET =
  * Runs inside Chromium. It is deliberately self-contained: no imports and no
  * closures, because Playwright serialises the function into the page.
  */
-function inspectPage(args: { label: string; small: boolean; occlusionOnly: boolean }): RawFinding[] {
+function inspectPage(args: {
+  label: string;
+  small: boolean;
+  occlusionOnly: boolean;
+  minFontPx?: number;
+  ignore?: string;
+  clipBounds?: string;
+}): RawFinding[] {
   const out: RawFinding[] = [];
   const seen = new Set<string>();
   const viewportWidth = window.innerWidth;
@@ -232,6 +250,7 @@ function inspectPage(args: { label: string; small: boolean; occlusionOnly: boole
     if (value.length < 2) continue;
     const element = node.parentElement;
     if (!element) continue;
+    if (args.ignore && element.closest(args.ignore)) continue;
     if (element.closest('script,style,noscript,template,svg,canvas,[aria-hidden="true"]')) continue;
     if (!isVisible(element)) continue;
     const range = document.createRange();
@@ -322,17 +341,39 @@ function inspectPage(args: { label: string; small: boolean; occlusionOnly: boole
     }
   }
 
-  if (args.small) {
+  const minFontPx = args.minFontPx ?? (args.small ? 12 : 0);
+  if (minFontPx > 0) {
     for (const item of textNodes) {
       if (item.element.closest('select,option,small.sr-only')) continue;
       const size = Number.parseFloat(window.getComputedStyle(item.element).fontSize);
-      if (Number.isFinite(size) && size < 12) {
+      if (Number.isFinite(size) && size < minFontPx) {
         push(
           'text-too-small',
           selectorFor(item.element),
-          `computed font-size is ${size.toFixed(1)}px at 360px (minimum 12px)`,
+          `computed font-size is ${size.toFixed(1)}px at ${args.label} (minimum ${minFontPx}px)`,
           snippet(item.node.nodeValue ?? ''),
         );
+      }
+    }
+  }
+
+  if (args.clipBounds) {
+    const boundsElement = document.querySelector(args.clipBounds);
+    const bounds = boundsElement?.getBoundingClientRect();
+    if (bounds) {
+      for (const item of textNodes) {
+        if (!boundsElement!.contains(item.element)) continue;
+        for (const textRect of item.rects) {
+          if (textRect.top < bounds.top - 2 || textRect.bottom > bounds.bottom + 2) {
+            push(
+              'clipped-text',
+              selectorFor(item.element),
+              `text extends outside the ${args.clipBounds} box (${Math.round(textRect.top)}–${Math.round(textRect.bottom)} vs ${Math.round(bounds.top)}–${Math.round(bounds.bottom)})`,
+              snippet(item.node.nodeValue ?? ''),
+            );
+            break;
+          }
+        }
       }
     }
   }
@@ -791,6 +832,145 @@ export async function auditArtifactBatch(
     await browser?.close().catch(() => {});
     await rm(tempDir, { recursive: true, force: true });
   }
+}
+
+/**
+ * Walk every slide of a deck and run the same browser checks used by
+ * `auditArtifact` at presentation size. Hidden slides are skipped by the
+ * visibility rules; each slide is activated through the deck's own hash
+ * navigation, so the audit exercises the real keyboard/hash path.
+ */
+async function collectDeckSlides(
+  browser: BrowserLike,
+  file: string,
+  viewport: VisualViewport,
+  options: DeckAuditOptions,
+): Promise<{ slides: DeckSlideAudit[]; findings: VisualFinding[] }> {
+  const context = await browser.newContext({ viewport: { width: viewport.width, height: viewport.height } });
+  try {
+    await context.addInitScript(() => {
+      Object.defineProperty(navigator, 'webdriver', { get: () => true });
+    });
+    const page = await context.newPage();
+    await page.goto(`${pathToFileURL(file).href}?static`, { waitUntil: 'domcontentloaded', timeout: browserTimeoutMs() });
+    await page.evaluate<unknown, undefined>('window.__name = function (fn) { return fn; };', undefined);
+    await page.addStyleTag({ content: ANIMATION_RESET });
+    await page.evaluate(
+      () => Promise.race([document.fonts.ready, new Promise((resolve) => setTimeout(resolve, 1500))]),
+      undefined,
+    );
+    const count = await page.evaluate(() => document.querySelectorAll('.slide').length, undefined);
+    const slides: DeckSlideAudit[] = [];
+    for (let index = 1; index <= count; index += 1) {
+      await page.evaluate(
+        (slide) => {
+          const next = `#slide-${slide}`;
+          if (location.hash !== next) location.hash = next;
+        },
+        index,
+      );
+      for (let attempt = 0; attempt < 4; attempt += 1) {
+        const active = await page.evaluate(
+          () => document.querySelector('.slide.is-active')?.getAttribute('data-index') ?? null,
+          undefined,
+        );
+        if (active === String(index - 1)) break;
+        await page.waitForTimeout(50);
+      }
+      const raw = await page.evaluate(inspectPage, {
+        label: viewport.label,
+        small: false,
+        occlusionOnly: false,
+        minFontPx: options.minFontPx ?? 12,
+        ignore: DECK_SLIDE_IGNORE,
+        clipBounds: '.slide.is-active',
+      });
+      slides.push({
+        index,
+        findings: raw.map((finding) => ({ ...finding, viewport: viewport.label })),
+      });
+    }
+    return { slides, findings: slides.flatMap((slide) => slide.findings) };
+  } finally {
+    await context.close().catch(() => {});
+  }
+}
+
+/**
+ * Batch per-slide audit: one Chromium for all decks, one context per deck.
+ * Used by the 13-style composition audit so the matrix stays quick.
+ */
+export async function auditDeckSlidesBatch(items: DeckAuditArtifact[], options: DeckAuditOptions = {}): Promise<DeckAuditEntry[]> {
+  const location = locatePlaywright();
+  const viewport = options.viewport ?? DECK_SLIDE_VIEWPORT;
+  const skipped = (message: string): DeckAuditReport => ({
+    status: 'skipped',
+    message,
+    viewport,
+    slides: [],
+    findings: [],
+  });
+  if (!location) {
+    return items.map((item) => ({ label: item.label, report: skipped(visualSkipMessage()) }));
+  }
+
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'beauty-deck-audit-'));
+  const fileFor = async (item: DeckAuditArtifact): Promise<string> => {
+    if (item.filePath) return path.resolve(item.filePath);
+    const file = path.join(tempDir, `${item.label.replace(/[^a-z0-9_-]+/gi, '-')}.html`);
+    await writeFile(file, item.html, 'utf8');
+    return file;
+  };
+
+  let browser: BrowserLike | undefined;
+  try {
+    const chromium = await loadChromium(location);
+    browser = await launchWithRetry(chromium, { headless: true });
+    const entries = new Array<DeckAuditEntry>(items.length);
+    const queue = items.map((item, index) => ({ item, index }));
+    const concurrency = Math.max(1, Math.min(options.concurrency ?? 4, queue.length || 1));
+    const worker = async (): Promise<void> => {
+      for (;;) {
+        const next = queue.shift();
+        if (!next) return;
+        const { item, index } = next;
+        try {
+          const file = await fileFor(item);
+          const { slides, findings } = await collectDeckSlides(browser!, file, viewport, options);
+          entries[index] = {
+            label: item.label,
+            report: { status: 'ran', viewport, slides, findings, playwright: location },
+          };
+        } catch (error) {
+          const reason = error instanceof Error ? error.message.split('\n')[0] : String(error);
+          entries[index] = {
+            label: item.label,
+            report: skipped(visualSkipMessage(`Chromium failed on ${item.label}: ${reason}`)),
+          };
+        }
+      }
+    };
+    await Promise.all(Array.from({ length: concurrency }, worker));
+    return entries;
+  } catch (error) {
+    const reason = error instanceof Error ? error.message.split('\n')[0] : String(error);
+    return items.map((item) => ({
+      label: item.label,
+      report: skipped(visualSkipMessage(`playwright found at ${location.root} but Chromium failed: ${reason}`)),
+    }));
+  } finally {
+    await browser?.close().catch(() => {});
+    await rm(tempDir, { recursive: true, force: true });
+  }
+}
+
+export async function auditDeckSlides(
+  html: string,
+  style: StyleSlug,
+  options: DeckAuditOptions & { label?: string } = {},
+): Promise<DeckAuditReport> {
+  const [entry] = await auditDeckSlidesBatch([{ html, style, label: options.label ?? 'deck' }], options);
+  return entry!.report;
 }
 
 /**

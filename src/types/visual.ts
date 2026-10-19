@@ -1,4 +1,5 @@
 import type { RichIssue, RichValidationResult } from './validation.js';
+import type { StyleSlug } from '../types.js';
 
 /**
  * Real-browser checks. The static validator reads the markup and the CSS; it
@@ -57,6 +58,42 @@ export interface AuditOptions {
   visual?: boolean;
   shots?: string;
   filePath?: string;
+}
+
+/** Per-slide findings for a deck at presentation size. */
+export interface DeckSlideAudit {
+  /** 1-based slide number, matching the deck counter. */
+  index: number;
+  findings: VisualFinding[];
+}
+
+export interface DeckAuditReport {
+  status: 'ran' | 'skipped';
+  message?: string;
+  viewport: VisualViewport;
+  slides: DeckSlideAudit[];
+  findings: VisualFinding[];
+  playwright?: PlaywrightLocation;
+}
+
+export interface DeckAuditArtifact {
+  html: string;
+  style: StyleSlug;
+  label: string;
+  filePath?: string;
+}
+
+export interface DeckAuditOptions {
+  viewport?: VisualViewport;
+  /** Parallel pages sharing one browser. Defaults to 4. */
+  concurrency?: number;
+  /** Minimum computed font size inside a slide. Defaults to 12px. */
+  minFontPx?: number;
+}
+
+export interface DeckAuditEntry {
+  label: string;
+  report: DeckAuditReport;
 }
 
 /** A validation result plus the provenance of the optional browser pass. */

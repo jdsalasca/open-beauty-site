@@ -14,6 +14,7 @@ const TEST_DIR = path.join(ROOT, 'test');
  */
 export const BROWSER_SUITES: readonly string[] = [
   'deck-capture.test.ts',
+  'deck-composition-audit.test.ts',
   'min-text-visual.test.ts',
   'narrative-compare.browser.test.ts',
   'narrative-gallery.browser.test.ts',
