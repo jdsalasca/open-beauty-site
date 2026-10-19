@@ -12,6 +12,79 @@ node dist/mcp/server.js   # starts the stdio server; normally a client does this
 
 The server needs the bundled `fonts/` directory at runtime. It locates the package root by walking up from `dist/mcp/server.js`, so do not move `dist/` away from the repo.
 
+## Register the MCP server for Codex/Claude
+
+The one-command way to register the server is to print the exact snippet for
+your machine. It never edits your config files; you copy the block you need.
+
+```bash
+pnpm mcp:config
+```
+
+It prints the absolute path of `dist/mcp/server.js` plus the blocks below, with
+your real path in place of `<repo>`:
+
+```toml
+# Codex CLI (~/.codex/config.toml)
+[mcp_servers.open_beauty]
+command = "node"
+args = ["<repo>/dist/mcp/server.js"]
+startup_timeout_sec = 30.0
+```
+
+```bash
+# Codex one-liner
+codex mcp add open-beauty -- node "<repo>/dist/mcp/server.js"
+
+# Claude Code one-liner
+claude mcp add -s user open-beauty -- node "<repo>/dist/mcp/server.js"
+```
+
+```jsonc
+# Cursor / generic JSON
+{
+  "mcpServers": {
+    "open_beauty": {
+      "command": "node",
+      "args": [
+        "<repo>/dist/mcp/server.js"
+      ]
+    }
+  }
+}
+```
+
+Everything above is printed verbatim by the command (your absolute path replaces
+`<repo>`), including the closing reminder: `This script never edits your config files; copy the snippet you need.`
+
+Build `dist/` first when it is missing: `pnpm build`. The CLI prints the same
+one-line fix (`dist/cli.js is missing. Run \`pnpm build\` ...`) when it detects
+an unbuilt checkout.
+
+## How to look at your output
+
+The validator is a CSS audit, not a browser. Look at the real render before you
+ship:
+
+- `beauty_validate` (or `beauty validate <file> --style <s> --strict`) for the
+  craft grade and fixes.
+- Open the HTML in a browser at 360px, 768px and 1440px.
+- Screenshot with Playwright once it is installed:
+
+  ```bash
+  pnpm add -D playwright && pnpm exec playwright install chromium
+  pnpm exec playwright screenshot --full-page out/nature.html out/nature.png
+  ```
+
+- For a GIF, count frames and check the loop instead of trusting the file size:
+
+  ```bash
+  python -X utf8 -c "from PIL import Image; im=Image.open('out/n.gif'); print(im.n_frames, im.info.get('loop'))"
+  ```
+
+Scroll through a page before capturing it: sections reveal on scroll and a
+full-page screenshot can show blank bands.
+
 ## Client configuration
 
 ### Claude Code
