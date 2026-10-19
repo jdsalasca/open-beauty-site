@@ -21,6 +21,7 @@ import type { StyleSlug } from './types.js';
 import { packageRoot } from './paths.js';
 import { mergeIssues, validateDeck, validateExperience, validateHtml, validateStory } from './validate.js';
 import { applyPatches, type FixResult } from './fix.js';
+import { browserTimeoutMs, launchWithRetry } from './browser.js';
 
 const SIBLING_PLAYWRIGHT =
   'C:\\Users\\jdsal\\Documents\\Programming-personal\\open-civic-signal-os\\node_modules\\playwright';
@@ -160,7 +161,7 @@ interface BrowserLike {
 }
 
 interface ChromiumLike {
-  launch(options?: { headless?: boolean }): Promise<BrowserLike>;
+  launch(options?: { headless?: boolean; timeout?: number }): Promise<BrowserLike>;
 }
 
 const ANIMATION_RESET =
@@ -570,7 +571,7 @@ async function auditViewport(
       Object.defineProperty(navigator, 'webdriver', { get: () => true });
     });
     const page = await context.newPage();
-    await page.goto(`${pathToFileURL(file).href}?static`, { waitUntil: 'domcontentloaded', timeout: 15000 });
+    await page.goto(`${pathToFileURL(file).href}?static`, { waitUntil: 'domcontentloaded', timeout: browserTimeoutMs() });
     // tsx/esbuild's keepNames helper is not defined in the page context.
     await page.evaluate<unknown, undefined>('window.__name = function (fn) { return fn; };', undefined);
     await page.addStyleTag({ content: ANIMATION_RESET });
@@ -647,7 +648,7 @@ export async function runVisualAudit(
   let browser: BrowserLike | undefined;
   try {
     const chromium = await loadChromium(location);
-    browser = await chromium.launch({ headless: true });
+    browser = await launchWithRetry(chromium, { headless: true });
     const { findings, shots } = await collectFindings(
       browser,
       file,
@@ -730,7 +731,7 @@ export async function auditArtifactBatch(
   let browser: BrowserLike | undefined;
   try {
     const chromium = await loadChromium(location);
-    browser = await chromium.launch({ headless: true });
+    browser = await launchWithRetry(chromium, { headless: true });
     const queue = items.map((item, index) => ({ item, index }));
     const concurrency = Math.max(1, Math.min(options.concurrency ?? 4, queue.length || 1));
     const worker = async (): Promise<void> => {
