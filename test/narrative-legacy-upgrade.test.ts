@@ -5,6 +5,7 @@ import path from 'node:path';
 import test from 'node:test';
 import { narrativeHelpOptions, normalizeNarrativeBrief } from '../src/narrative/brief.js';
 import { createNarrative } from '../src/narrative/create.js';
+import { legacySemanticStateText } from '../src/narrative/i18n.js';
 import { NarrativeError, type NarrativeBriefInput } from '../src/types/narrative.js';
 import type { StyleSlug } from '../src/types.js';
 
@@ -16,6 +17,11 @@ const UPGRADE_STYLES: Array<{ style: StyleSlug; comparison: string; checklist: s
   { style: 'renaissance', comparison: 'card-collection', checklist: 'card-collection' },
   { style: 'ukiyoe', comparison: 'card-collection', checklist: 'card-collection' },
 ];
+
+test('Ukiyoe legacy state labels fit the map cartouche in both locales', () => {
+  assert.deepEqual(['pending', 'flagged', 'ready-for-review'].map((state) => legacySemanticStateText('ukiyoe', 'es', state)), ['EN ESPERA', 'SEÑALADO', 'LISTO']);
+  assert.deepEqual(['pending', 'flagged', 'ready-for-review'].map((state) => legacySemanticStateText('ukiyoe', 'en', state)), ['PENDING', 'FLAGGED', 'READY']);
+});
 
 function legacyBrief(style: StyleSlug, kind = 'comparison', states = ['unreviewed', 'flagged', 'review-ready']): NarrativeBriefInput {
   return {

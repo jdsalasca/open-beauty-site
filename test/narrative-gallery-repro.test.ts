@@ -164,6 +164,7 @@ test('every committed narrative pack regenerates byte-for-byte from its brief', 
   const styles = supportedNarrativeStyles();
   const compositionRows = new Set(packages.map((item) => `${item.brief.style}/${item.composition}`));
 
+  // The upgrade replaces artwork in the existing briefs; it adds no canonical gallery/pilot pack slots.
   assert.equal(galleryPackages.length, 22, 'gallery has two committed packs for each of its 11 styles');
   assert.equal(pilotPackages.length, 6, 'the two pilot styles each retain three committed examples');
   assert.equal(packages.length, 28, 'all 22 gallery packs and 6 pilot packs are checked');

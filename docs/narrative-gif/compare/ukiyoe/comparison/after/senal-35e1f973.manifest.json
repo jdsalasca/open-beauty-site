@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "commit": "3d564ec53ced99d824cc5680e3f3c2bb0694c0b4",
+  "commit": "502c595ccd9eff26357ccd836a6f5c7ef5315db9",
   "brief": {
     "style": "ukiyoe",
     "kind": "narrative-gif",
@@ -303,15 +303,15 @@
     "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 1089219,
-    "png": 83008,
-    "contactSheet": 99207
+    "gif": 1073211,
+    "png": 83551,
+    "contactSheet": 98081
   },
   "hashes": {
     "briefSha256": "cab0a5c77a4fd1156af52d681cf12fdaccec667ab8ad3331ec4effb27c625ee0",
-    "gifSha256": "a50012311f3efb7f22d1181ac669f68e1e10cc6cff66178a595568ed00467388",
-    "pngSha256": "ec62940eb5a448ced9e3fe56505de097785a0fc9437bc6823d9cf6eb130c2c12",
-    "contactSheetSha256": "b84eb556bdacdc70131a907e3469213d487069ba4c5313a653461ef80de0a8b2"
+    "gifSha256": "acd8089bcca3ccb5c20b5972c27e41477447aa30ecfae2cdbcb7ebc245ace0fd",
+    "pngSha256": "f50a14e094931e8a1edc79aca2f147d176709b0f761d2d7763c463e3af4da6ff",
+    "contactSheetSha256": "d31a37f813301bee6656929f5edc5863c624af574588636beddd3eb164460c2e"
   },
   "files": {
     "gif": "../../checklist/after/senal-68ae273f.gif",
@@ -364,7 +364,7 @@
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 1089219B · PNG 83008B · contact 99207B",
+      "detail": "GIF 1073211B · PNG 83551B · contact 98081B",
       "source": "decoded"
     },
     {
@@ -400,7 +400,7 @@
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "84 colors; mean channel loss 0.025, max 10; sampled 33 frames",
+      "detail": "84 colors; mean channel loss 0.023, max 10; sampled 33 frames",
       "source": "pixels"
     },
     {
@@ -545,13 +545,13 @@
     {
       "name": "semantic-object-midpoint:change → result · punto medio de transición",
       "passed": true,
-      "detail": "decoded object diff 6.7%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.7%, legacy-item-a flagged→ready-for-review 3.3%, legacy-item-b flagged→ready-for-review 5.9%, legacy-item-c flagged→ready-for-review 2.8%, legacy-item-d flagged→ready-for-review 3.2%",
+      "detail": "decoded object diff 6.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.8%, legacy-item-a flagged→ready-for-review 3.5%, legacy-item-b flagged→ready-for-review 6.0%, legacy-item-c flagged→ready-for-review 3.0%, legacy-item-d flagged→ready-for-review 3.3%",
       "source": "decoded"
     },
     {
       "name": "semantic-object-midpoint:result → before · unión del ciclo",
       "passed": true,
-      "detail": "decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.2%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.1%",
+      "detail": "decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.2%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.2%",
       "source": "decoded"
     },
     {
@@ -622,7 +622,7 @@
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 1089219B · PNG 83008B · contact 99207B",
+          "detail": "GIF 1073211B · PNG 83551B · contact 98081B",
           "source": "decoded"
         }
       ]
@@ -665,7 +665,7 @@
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "84 colors; mean channel loss 0.025, max 10; sampled 33 frames",
+          "detail": "84 colors; mean channel loss 0.023, max 10; sampled 33 frames",
           "source": "pixels"
         }
       ],
@@ -822,13 +822,13 @@
         {
           "name": "semantic-object-midpoint:change → result · punto medio de transición",
           "passed": true,
-          "detail": "decoded object diff 6.7%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.7%, legacy-item-a flagged→ready-for-review 3.3%, legacy-item-b flagged→ready-for-review 5.9%, legacy-item-c flagged→ready-for-review 2.8%, legacy-item-d flagged→ready-for-review 3.2%",
+          "detail": "decoded object diff 6.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.8%, legacy-item-a flagged→ready-for-review 3.5%, legacy-item-b flagged→ready-for-review 6.0%, legacy-item-c flagged→ready-for-review 3.0%, legacy-item-d flagged→ready-for-review 3.3%",
           "source": "decoded"
         },
         {
           "name": "semantic-object-midpoint:result → before · unión del ciclo",
           "passed": true,
-          "detail": "decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.2%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.1%",
+          "detail": "decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.2%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.2%",
           "source": "decoded"
         },
         {
@@ -1255,7 +1255,7 @@
               },
               "fromState": "default",
               "toState": "default",
-              "pixelDiffRatio": 0.02657399169027076,
+              "pixelDiffRatio": 0.026557666092549812,
               "changed": false
             },
             {
@@ -1268,7 +1268,7 @@
               },
               "fromState": "pending",
               "toState": "flagged",
-              "pixelDiffRatio": 0.04722072315164598,
+              "pixelDiffRatio": 0.047040834682496854,
               "changed": true
             },
             {
@@ -1307,7 +1307,7 @@
               },
               "fromState": "pending",
               "toState": "flagged",
-              "pixelDiffRatio": 0.021766504767044434,
+              "pixelDiffRatio": 0.02172153264975715,
               "changed": true
             }
           ]
@@ -1330,7 +1330,7 @@
               },
               "fromState": "default",
               "toState": "default",
-              "pixelDiffRatio": 0.07709355383773989,
+              "pixelDiffRatio": 0.07792615932150816,
               "changed": false
             },
             {
@@ -1343,7 +1343,7 @@
               },
               "fromState": "flagged",
               "toState": "ready-for-review",
-              "pixelDiffRatio": 0.03332433890987588,
+              "pixelDiffRatio": 0.034898363014930746,
               "changed": true
             },
             {
@@ -1356,7 +1356,7 @@
               },
               "fromState": "flagged",
               "toState": "ready-for-review",
-              "pixelDiffRatio": 0.0590933621154884,
+              "pixelDiffRatio": 0.060487497751394136,
               "changed": true
             },
             {
@@ -1369,7 +1369,7 @@
               },
               "fromState": "flagged",
               "toState": "ready-for-review",
-              "pixelDiffRatio": 0.02838680926916221,
+              "pixelDiffRatio": 0.029723707664884136,
               "changed": true
             },
             {
@@ -1382,7 +1382,7 @@
               },
               "fromState": "flagged",
               "toState": "ready-for-review",
-              "pixelDiffRatio": 0.03175031480482101,
+              "pixelDiffRatio": 0.0330095340888649,
               "changed": true
             }
           ]
@@ -1405,7 +1405,7 @@
               },
               "fromState": "default",
               "toState": "default",
-              "pixelDiffRatio": 0.10190846237357866,
+              "pixelDiffRatio": 0.10198192756332292,
               "changed": false
             },
             {
@@ -1418,7 +1418,7 @@
               },
               "fromState": "ready-for-review",
               "toState": "pending",
-              "pixelDiffRatio": 0.051897823349523295,
+              "pixelDiffRatio": 0.05221262817053427,
               "changed": true
             },
             {
@@ -1444,7 +1444,7 @@
               },
               "fromState": "ready-for-review",
               "toState": "pending",
-              "pixelDiffRatio": 0.059803921568627454,
+              "pixelDiffRatio": 0.059893048128342244,
               "changed": true
             },
             {
@@ -1457,7 +1457,7 @@
               },
               "fromState": "ready-for-review",
               "toState": "pending",
-              "pixelDiffRatio": 0.05135815794207591,
+              "pixelDiffRatio": 0.05153804641122504,
               "changed": true
             }
           ]
@@ -1480,7 +1480,7 @@
               },
               "fromState": "default",
               "toState": "default",
-              "pixelDiffRatio": 0.1127853918551593,
+              "pixelDiffRatio": 0.11278131045572906,
               "changed": false
             },
             {
@@ -1555,7 +1555,7 @@
               },
               "fromState": "default",
               "toState": "default",
-              "pixelDiffRatio": 0.10554090786648926,
+              "pixelDiffRatio": 0.10561437305623352,
               "changed": false
             },
             {
@@ -1568,7 +1568,7 @@
               },
               "fromState": "flagged",
               "toState": "ready-for-review",
-              "pixelDiffRatio": 0.0578341428314445,
+              "pixelDiffRatio": 0.0581039755351682,
               "changed": true
             },
             {
@@ -1594,7 +1594,7 @@
               },
               "fromState": "flagged",
               "toState": "ready-for-review",
-              "pixelDiffRatio": 0.06479500891265597,
+              "pixelDiffRatio": 0.06483957219251336,
               "changed": true
             },
             {
@@ -1607,7 +1607,7 @@
               },
               "fromState": "flagged",
               "toState": "ready-for-review",
-              "pixelDiffRatio": 0.055990286022665946,
+              "pixelDiffRatio": 0.05621514660910236,
               "changed": true
             }
           ]
@@ -1630,7 +1630,7 @@
               },
               "fromState": "default",
               "toState": "default",
-              "pixelDiffRatio": 0.14911800958312585,
+              "pixelDiffRatio": 0.14909760258597468,
               "changed": false
             },
             {
@@ -1643,7 +1643,7 @@
               },
               "fromState": "ready-for-review",
               "toState": "pending",
-              "pixelDiffRatio": 0.17561611800683577,
+              "pixelDiffRatio": 0.17557114588954847,
               "changed": true
             },
             {
@@ -1669,7 +1669,7 @@
               },
               "fromState": "ready-for-review",
               "toState": "pending",
-              "pixelDiffRatio": 0.1608288770053476,
+              "pixelDiffRatio": 0.1607843137254902,
               "changed": true
             },
             {
@@ -2407,7 +2407,7 @@
   ],
   "palette": {
     "colors": 84,
-    "meanAbsoluteChannelError": 0.025,
+    "meanAbsoluteChannelError": 0.023,
     "maximumChannelError": 10,
     "sampledFrames": 33
   },
@@ -2474,5 +2474,5 @@
   "openFeedbackCount": 0,
   "feedbackFrames": [],
   "publicationRecommendation": "none",
-  "renderRevision": 0
+  "renderRevision": 1
 }

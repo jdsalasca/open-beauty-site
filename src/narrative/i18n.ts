@@ -181,9 +181,9 @@ const PAIRS: Record<StyleSlug, Pairs> = {
     legacyCollection: ['COLECCIÓN ILUSTRATIVA', 'ILLUSTRATIVE COLLECTION'],
     legacyItem: ['ELEMENTO', 'ITEM'],
     legacyIllustrative: ['ESTADO ILUSTRATIVO', 'ILLUSTRATIVE STATE'],
-    legacyPending: ['PENDIENTE', 'PENDING'],
+    legacyPending: ['EN ESPERA', 'PENDING'],
     legacyFlagged: ['SEÑALADO', 'FLAGGED'],
-    legacyReady: ['LISTO PARA REVISIÓN', 'READY FOR REVIEW'],
+    legacyReady: ['LISTO', 'READY'],
   },
   vaporwave: {
     badgeOpen: ['PENDIENTE', 'PENDING'],

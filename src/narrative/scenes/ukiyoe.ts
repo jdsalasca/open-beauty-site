@@ -498,7 +498,7 @@ function drawSemanticScene(context: NarrativeRenderContext, print: CoastPrint): 
     if (semantic.legacyUpgrade) {
       const stateful = cards[0];
       const state = stateful ? semantic.states[stateful.id] ?? 'pending' : 'pending';
-      drawText(ctx, legacySemanticStateText('ukiyoe', brief.locale, state), field.x + field.width * 0.63, field.y + field.height * 0.13, context.fonts.effective.label.family, 500, 28, preset.palette.ink);
+      drawText(ctx, legacySemanticStateText('ukiyoe', brief.locale, state), field.x + field.width * 0.69, field.y + field.height * 0.13, context.fonts.effective.label.family, 500, 28, preset.palette.ink);
     }
   }
   // The sea horizon and review point are drawn from fixed field coordinates in every phase.

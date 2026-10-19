@@ -1319,24 +1319,30 @@
           "manifest": "ukiyoe/checklist/after/senal-68ae273f.manifest.json"
         },
         "metrics": {
-          "gifBytes": 1089219,
+          "gifBytes": 1073211,
           "frames": 33,
           "durationMs": 17190,
           "phaseHolds": [
             {
               "phaseId": "before",
+              "requestedMs": 5000,
+              "encodedMs": 5000,
               "decodedMs": 5000
             },
             {
               "phaseId": "change",
+              "requestedMs": 5000,
+              "encodedMs": 5000,
               "decodedMs": 5000
             },
             {
               "phaseId": "result",
+              "requestedMs": 5000,
+              "encodedMs": 5000,
               "decodedMs": 5000
             }
           ],
-          "renderMs": 7307
+          "renderMs": 8355
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -1374,17 +1380,17 @@
         "balance": "pass · proxy; 8×4 decoded-pixel grid against #F3E9D2: empty cells 12.5%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 12.5%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: before · pausa: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 12.5% | before → change · punto medio de transición: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 6.3% | change · pausa: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 6.3% | change → result · punto medio de transición: empty 6.3%, text fill 100.0%, art 50.0%, largest empty 6.3% | result · pausa: empty 6.3%, text fill 100.0%, art 50.0%, largest empty 6.3% | result → before · unión del ciclo: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 12.5%",
         "transformations": [
           "pass · semantic-object-midpoint:before → change · punto medio de transición · decoded object diff 2.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.2%",
-          "pass · semantic-object-midpoint:change → result · punto medio de transición · decoded object diff 6.7%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.7%, legacy-item-a flagged→ready-for-review 3.3%, legacy-item-b flagged→ready-for-review 5.9%, legacy-item-c flagged→ready-for-review 2.8%, legacy-item-d flagged→ready-for-review 3.2%",
-          "pass · semantic-object-midpoint:result → before · unión del ciclo · decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.2%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.1%",
+          "pass · semantic-object-midpoint:change → result · punto medio de transición · decoded object diff 6.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.8%, legacy-item-a flagged→ready-for-review 3.5%, legacy-item-b flagged→ready-for-review 6.0%, legacy-item-c flagged→ready-for-review 3.0%, legacy-item-d flagged→ready-for-review 3.3%",
+          "pass · semantic-object-midpoint:result → before · unión del ciclo · decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.2%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.2%",
           "pass · semantic-object-transformation:before → change hold · decoded object diff 11.5%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 11.3%, legacy-item-a pending→flagged 13.4%, legacy-item-b pending→flagged 13.2%, legacy-item-c pending→flagged 10.9%, legacy-item-d pending→flagged 10.7%",
           "pass · semantic-object-transformation:change → result hold · decoded object diff 9.4%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.6%, legacy-item-a flagged→ready-for-review 5.8%, legacy-item-b flagged→ready-for-review 6.4%, legacy-item-c flagged→ready-for-review 6.5%, legacy-item-d flagged→ready-for-review 5.6%",
           "pass · semantic-object-transformation:result → before loop join · decoded object diff 15.2%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 14.9%, legacy-item-a ready-for-review→pending 17.6%, legacy-item-b ready-for-review→pending 15.3%, legacy-item-c ready-for-review→pending 16.1%, legacy-item-d ready-for-review→pending 14.9%"
         ],
-        "objectRegionDiff": "pass · decoded object diff 2.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.2% | decoded object diff 6.7%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.7%, legacy-item-a flagged→ready-for-review 3.3%, legacy-item-b flagged→ready-for-review 5.9%, legacy-item-c flagged→ready-for-review 2.8%, legacy-item-d flagged→ready-for-review 3.2% | decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.2%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.1%",
+        "objectRegionDiff": "pass · decoded object diff 2.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.2% | decoded object diff 6.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.8%, legacy-item-a flagged→ready-for-review 3.5%, legacy-item-b flagged→ready-for-review 6.0%, legacy-item-c flagged→ready-for-review 3.0%, legacy-item-d flagged→ready-for-review 3.3% | decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.2%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.2%",
         "reviewState": "pending",
         "openFeedback": []
       },
-      "objectRegionDiff": "pass · decoded object diff 2.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.2% | decoded object diff 6.7%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.7%, legacy-item-a flagged→ready-for-review 3.3%, legacy-item-b flagged→ready-for-review 5.9%, legacy-item-c flagged→ready-for-review 2.8%, legacy-item-d flagged→ready-for-review 3.2% | decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.2%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.1%",
+      "objectRegionDiff": "pass · decoded object diff 2.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.2% | decoded object diff 6.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.8%, legacy-item-a flagged→ready-for-review 3.5%, legacy-item-b flagged→ready-for-review 6.0%, legacy-item-c flagged→ready-for-review 3.0%, legacy-item-d flagged→ready-for-review 3.3% | decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.2%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.2%",
       "openFeedback": [],
       "phases": [
         {
@@ -1436,7 +1442,7 @@
           }
         }
       ],
-      "renderDeltaMs": 4179,
+      "renderDeltaMs": 5227,
       "legacyArtMatchesHistoricalAssets": {
         "gif": false,
         "png": false,
@@ -1523,24 +1529,30 @@
           "manifest": "ukiyoe/comparison/after/senal-35e1f973.manifest.json"
         },
         "metrics": {
-          "gifBytes": 1089219,
+          "gifBytes": 1073211,
           "frames": 33,
           "durationMs": 17190,
           "phaseHolds": [
             {
               "phaseId": "before",
+              "requestedMs": 5000,
+              "encodedMs": 5000,
               "decodedMs": 5000
             },
             {
               "phaseId": "change",
+              "requestedMs": 5000,
+              "encodedMs": 5000,
               "decodedMs": 5000
             },
             {
               "phaseId": "result",
+              "requestedMs": 5000,
+              "encodedMs": 5000,
               "decodedMs": 5000
             }
           ],
-          "renderMs": 7230
+          "renderMs": 8249
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -1578,17 +1590,17 @@
         "balance": "pass · proxy; 8×4 decoded-pixel grid against #F3E9D2: empty cells 12.5%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 12.5%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: before · pausa: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 12.5% | before → change · punto medio de transición: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 6.3% | change · pausa: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 6.3% | change → result · punto medio de transición: empty 6.3%, text fill 100.0%, art 50.0%, largest empty 6.3% | result · pausa: empty 6.3%, text fill 100.0%, art 50.0%, largest empty 6.3% | result → before · unión del ciclo: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 12.5%",
         "transformations": [
           "pass · semantic-object-midpoint:before → change · punto medio de transición · decoded object diff 2.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.2%",
-          "pass · semantic-object-midpoint:change → result · punto medio de transición · decoded object diff 6.7%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.7%, legacy-item-a flagged→ready-for-review 3.3%, legacy-item-b flagged→ready-for-review 5.9%, legacy-item-c flagged→ready-for-review 2.8%, legacy-item-d flagged→ready-for-review 3.2%",
-          "pass · semantic-object-midpoint:result → before · unión del ciclo · decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.2%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.1%",
+          "pass · semantic-object-midpoint:change → result · punto medio de transición · decoded object diff 6.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.8%, legacy-item-a flagged→ready-for-review 3.5%, legacy-item-b flagged→ready-for-review 6.0%, legacy-item-c flagged→ready-for-review 3.0%, legacy-item-d flagged→ready-for-review 3.3%",
+          "pass · semantic-object-midpoint:result → before · unión del ciclo · decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.2%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.2%",
           "pass · semantic-object-transformation:before → change hold · decoded object diff 11.5%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 11.3%, legacy-item-a pending→flagged 13.4%, legacy-item-b pending→flagged 13.2%, legacy-item-c pending→flagged 10.9%, legacy-item-d pending→flagged 10.7%",
           "pass · semantic-object-transformation:change → result hold · decoded object diff 9.4%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.6%, legacy-item-a flagged→ready-for-review 5.8%, legacy-item-b flagged→ready-for-review 6.4%, legacy-item-c flagged→ready-for-review 6.5%, legacy-item-d flagged→ready-for-review 5.6%",
           "pass · semantic-object-transformation:result → before loop join · decoded object diff 15.2%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 14.9%, legacy-item-a ready-for-review→pending 17.6%, legacy-item-b ready-for-review→pending 15.3%, legacy-item-c ready-for-review→pending 16.1%, legacy-item-d ready-for-review→pending 14.9%"
         ],
-        "objectRegionDiff": "pass · decoded object diff 2.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.2% | decoded object diff 6.7%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.7%, legacy-item-a flagged→ready-for-review 3.3%, legacy-item-b flagged→ready-for-review 5.9%, legacy-item-c flagged→ready-for-review 2.8%, legacy-item-d flagged→ready-for-review 3.2% | decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.2%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.1%",
+        "objectRegionDiff": "pass · decoded object diff 2.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.2% | decoded object diff 6.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.8%, legacy-item-a flagged→ready-for-review 3.5%, legacy-item-b flagged→ready-for-review 6.0%, legacy-item-c flagged→ready-for-review 3.0%, legacy-item-d flagged→ready-for-review 3.3% | decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.2%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.2%",
         "reviewState": "pending",
         "openFeedback": []
       },
-      "objectRegionDiff": "pass · decoded object diff 2.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.2% | decoded object diff 6.7%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.7%, legacy-item-a flagged→ready-for-review 3.3%, legacy-item-b flagged→ready-for-review 5.9%, legacy-item-c flagged→ready-for-review 2.8%, legacy-item-d flagged→ready-for-review 3.2% | decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.2%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.1%",
+      "objectRegionDiff": "pass · decoded object diff 2.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.2% | decoded object diff 6.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.8%, legacy-item-a flagged→ready-for-review 3.5%, legacy-item-b flagged→ready-for-review 6.0%, legacy-item-c flagged→ready-for-review 3.0%, legacy-item-d flagged→ready-for-review 3.3% | decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.2%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.2%",
       "openFeedback": [],
       "phases": [
         {
@@ -1640,7 +1652,7 @@
           }
         }
       ],
-      "renderDeltaMs": 4121,
+      "renderDeltaMs": 5140,
       "legacyArtMatchesHistoricalAssets": {
         "gif": false,
         "png": false,
