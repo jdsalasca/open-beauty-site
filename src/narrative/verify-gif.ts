@@ -177,7 +177,11 @@ function paletteColor(palette: Uint8Array, index: number, errors: string[], fram
   return [palette[offset]!, palette[offset + 1]!, palette[offset + 2]!];
 }
 
-export function verifyNarrativeGif(data: Uint8Array, sampleFrameIndices: number[] = []): VerifiedGif {
+export function verifyNarrativeGif(
+  data: Uint8Array,
+  sampleFrameIndices: number[] = [],
+  options: { retainSamples?: boolean; onSample?: (frame: VerifiedGifPixelFrame) => void } = {},
+): VerifiedGif {
   const errors: string[] = [];
   if (data.length < 13) throw new Error('GIF is shorter than its logical screen descriptor');
   const signature = String.fromCharCode(...data.subarray(0, 6));
@@ -300,7 +304,10 @@ export function verifyNarrativeGif(data: Uint8Array, sampleFrameIndices: number[
         if (x < 0 || x >= width || y < 0 || y >= height) continue;
         screenPixels.set(paletteColor(colorTable, index, errors, frameIndex), (y * width + x) * 3);
       }
-      if (sampleSet.has(frameIndex)) sampledFrames.push({ index: frameIndex, rgb: screenPixels.slice() });
+      if (sampleSet.has(frameIndex)) {
+        options.onSample?.({ index: frameIndex, rgb: screenPixels });
+        if (options.retainSamples ?? true) sampledFrames.push({ index: frameIndex, rgb: screenPixels.slice() });
+      }
     }
     frames.push(frame);
     previousFrame = frame;

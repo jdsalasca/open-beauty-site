@@ -1,0 +1,92 @@
+{
+  "style": "papercraft",
+  "subfamily": "editorial",
+  "kind": "narrative-gif",
+  "locale": "es",
+  "audience": "Personas que descargan un informe",
+  "title": "Descarga",
+  "workflowStatus": "in-review",
+  "outcome": {
+    "mode": "expected",
+    "scopeNote": "El ejemplo trata un tiempo de espera agotado y muestra un reintento pendiente; no afirma que termine ni que resuelva otros tipos de fallo."
+  },
+  "illustrative": true,
+  "badgePolicy": "none",
+  "phases": [
+    {
+      "id": "descarga-iniciada",
+      "label": "Descarga iniciada",
+      "text": "Se solicita reporte.pdf y la descarga avanza.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "before",
+        "semantic": {
+          "primitive": "file-download",
+          "illustrative": true,
+          "entities": [{ "id": "archivo-reporte", "kind": "file", "label": "reporte.pdf", "progress": 0.18 }],
+          "relations": [],
+          "states": { "archivo-reporte": "downloading" },
+          "actions": [{ "entityId": "archivo-reporte", "type": "start-download" }]
+        }
+      }
+    },
+    {
+      "id": "tiempo-agotado",
+      "label": "Tiempo agotado",
+      "text": "El tiempo de espera vence en 42%.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "flagged",
+        "semantic": {
+          "primitive": "file-download",
+          "illustrative": true,
+          "entities": [{ "id": "archivo-reporte", "kind": "file", "label": "reporte.pdf", "progress": 0.42 }],
+          "relations": [],
+          "states": { "archivo-reporte": "failed" },
+          "actions": [{ "entityId": "archivo-reporte", "type": "fail" }]
+        }
+      }
+    },
+    {
+      "id": "reintento",
+      "label": "Reintento solicitado",
+      "text": "Se reintenta este fallo; el avance confirmado sigue en 42%.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "review-ready",
+        "semantic": {
+          "primitive": "file-download",
+          "illustrative": true,
+          "entities": [{ "id": "archivo-reporte", "kind": "file", "label": "reporte.pdf", "progress": 0.42 }],
+          "relations": [],
+          "states": { "archivo-reporte": "retrying" },
+          "actions": [{ "entityId": "archivo-reporte", "type": "retry" }]
+        }
+      }
+    },
+    {
+      "id": "resultado-pendiente",
+      "label": "Resultado pendiente",
+      "text": "El resultado sigue pendiente; otros fallos quedan fuera.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "review-ready",
+        "semantic": {
+          "primitive": "file-download",
+          "illustrative": true,
+          "entities": [{ "id": "archivo-reporte", "kind": "file", "label": "reporte.pdf", "progress": 0.42 }],
+          "relations": [],
+          "states": { "archivo-reporte": "pending" },
+          "actions": []
+        }
+      }
+    }
+  ],
+  "playback": { "preset": "concise", "minReadableHoldMs": 2200, "transitionMs": 400, "loop": true, "totalDurationBudgetMs": 20000 },
+  "output": { "width": 640, "height": 360, "formats": ["gif", "png"] },
+  "seed": 11
+}

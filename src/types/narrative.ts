@@ -1,4 +1,6 @@
 import type { StyleSlug, TypeSystem } from '../types.js';
+import type { NarrativeSemanticScene, NarrativeSemanticSceneInput, NarrativeObjectRegion } from './narrative-scene.js';
+export type { NarrativeObjectRegion, NarrativeSemanticAction, NarrativeSemanticEntity, NarrativeSemanticEntityInput, NarrativeSemanticEntityKind, NarrativeSemanticPrimitive, NarrativeSemanticRelation, NarrativeSemanticScene, NarrativeSemanticSceneInput } from './narrative-scene.js';
 
 export const NARRATIVE_ERROR_CODES = [
   'EMPTY_PHASE',
@@ -15,6 +17,7 @@ export const NARRATIVE_ERROR_CODES = [
   'UNSUPPORTED_STATE',
   'UNSUPPORTED_VISUAL_KIND',
   'UNSUPPORTED_ACTION',
+  'UNSUPPORTED_ENTITY',
 ] as const;
 
 export type NarrativeErrorCode = (typeof NARRATIVE_ERROR_CODES)[number];
@@ -52,9 +55,13 @@ export interface NarrativePhase {
   id: string;
   label: string;
   text: string;
-  visual: { kind: string; state: string; action?: string };
+  visual: { kind: string; state: string; action?: string; semantic?: NarrativeSemanticSceneInput };
   holdMs?: number;
 }
+
+export type NormalizedNarrativePhase = Omit<NarrativePhase, 'visual'> & {
+  visual: Omit<NarrativePhase['visual'], 'semantic'> & { semantic: NarrativeSemanticScene };
+};
 
 export interface NarrativeEvidenceRef {
   id: string;
@@ -117,7 +124,7 @@ export interface NarrativeBriefInput {
   seed?: number;
 }
 
-export interface NormalizedNarrativeBrief extends Omit<NarrativeBriefInput, 'status' | 'workflowStatus' | 'outcome' | 'illustrative' | 'badgePolicy' | 'badgeText'> {
+export interface NormalizedNarrativeBrief extends Omit<NarrativeBriefInput, 'status' | 'workflowStatus' | 'outcome' | 'illustrative' | 'badgePolicy' | 'badgeText' | 'phases'> {
   status: NarrativeStatus;
   workflowStatus: NarrativeStatus;
   outcome: NarrativeOutcome;
@@ -128,6 +135,7 @@ export interface NormalizedNarrativeBrief extends Omit<NarrativeBriefInput, 'sta
   playback: NarrativePlayback;
   output: NarrativeOutput;
   seed: number;
+  phases: NormalizedNarrativePhase[];
 }
 
 export type NarrativeTimelineKind = 'entry' | 'hold' | 'transition' | 'loop-bridge';
@@ -209,6 +217,7 @@ export interface NarrativeRenderContext {
   safeBoxes: { safe: NarrativeRect; text: NarrativeRect; art: NarrativeRect };
   fonts: NarrativeFontProfile;
   rng: () => number;
+  semantic?: NarrativeSemanticScene;
 }
 
 export interface NarrativeScene {
@@ -218,6 +227,7 @@ export interface NarrativeScene {
   vocabulary?: NarrativeSceneVocabulary;
   supportsAspect(aspect: number): boolean;
   createObject(brief: NormalizedNarrativeBrief, rng: () => number): unknown;
+  objectRegions?(context: NarrativeRenderContext): NarrativeObjectRegion[];
   renderFrame(context: NarrativeRenderContext): Uint8ClampedArray;
 }
 
@@ -229,6 +239,7 @@ export interface NarrativeControlResult {
   detail: string;
   source?: 'source' | 'pixels' | 'decoded' | 'human';
   severity?: 'warning' | 'error';
+  status?: 'pass' | 'pending' | 'fail';
 }
 
 export interface NarrativeEvaluationLevel {

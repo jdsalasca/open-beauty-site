@@ -5,11 +5,12 @@ import gifenc from 'gifenc';
 import { createCanvas, type Canvas, type SKRSContext2D } from '@napi-rs/canvas';
 import { ensureFonts } from '../canvas.js';
 import { getStyle } from '../styles/presets.js';
-import { NarrativeError, type NormalizedNarrativeBrief, type NarrativeFontProfile, type NarrativeLayout, type NarrativeScene, type NarrativeTimelineFrame } from '../types/narrative.js';
+import { NarrativeError, type NormalizedNarrativeBrief, type NarrativeFontProfile, type NarrativeLayout, type NarrativeRenderContext, type NarrativeScene, type NarrativeTimelineFrame } from '../types/narrative.js';
 import { NARRATIVE_CONTACT_MIDPOINT_STYLES, narrativeLabelToneFor } from './composition.js';
 import { faceForNarrativeGlyph, getNarrativeFontProfile, narrativeCanvasWeight } from './fonts.js';
 import { NARRATIVE_MAX_MEMORY_BYTES, NARRATIVE_MAX_PIXEL_FRAMES, type NarrativeTimeline } from './timeline.js';
 import { crossCheckWithFfprobe, verifyNarrativeGif, type FfprobeCrosscheck, type VerifiedGif } from './verify-gif.js';
+import { measureCompositionBalance, type CompositionBalanceMetrics } from './evaluate.js';
 
 const { GIFEncoder, applyPalette, quantize } = gifenc;
 export const NARRATIVE_RENDERER_VERSION = 'narrative-core/0.2.0';
@@ -80,22 +81,18 @@ function safeBoxes(layout: NarrativeLayout): { safe: NarrativeLayout['safeZone']
   return { safe: layout.safeZone, text: layout.textArea, art: layout.reservedArtArea };
 }
 
-function renderFramePixels(
-  ctx: SKRSContext2D,
+function sceneContext(
   brief: NormalizedNarrativeBrief,
   layout: NarrativeLayout,
   fonts: NarrativeFontProfile,
-  scene: NarrativeScene,
   object: unknown,
   frame: NarrativeTimelineFrame,
   index: number,
   localTimeMs: number,
-): Uint8ClampedArray {
-  const width = brief.output.width;
-  const height = brief.output.height;
+): NarrativeRenderContext {
   const phaseIndex = frame.phaseIndex;
   const phase = brief.phases[phaseIndex]!;
-  const raw = scene.renderFrame({
+  return {
     brief,
     layout,
     frame,
@@ -106,7 +103,26 @@ function renderFramePixels(
     safeBoxes: safeBoxes(layout),
     fonts,
     rng: seedRandom(frameSeed(brief.seed, index)),
-  });
+    semantic: phase.visual.semantic,
+  };
+}
+
+function renderFramePixels(
+  ctx: SKRSContext2D,
+  brief: NormalizedNarrativeBrief,
+  layout: NarrativeLayout,
+  fonts: NarrativeFontProfile,
+  scene: NarrativeScene,
+  object: unknown,
+  frame: NarrativeTimelineFrame,
+  index: number,
+  localTimeMs: number,
+  artOnly = false,
+): Uint8ClampedArray {
+  const width = brief.output.width;
+  const height = brief.output.height;
+  const phaseIndex = frame.phaseIndex;
+  const raw = scene.renderFrame(sceneContext(brief, layout, fonts, object, frame, index, localTimeMs));
   if (!(raw instanceof Uint8ClampedArray) || raw.length !== width * height * 4) {
     throw new NarrativeError('RESOURCE_LIMIT', `Scene ${scene.style} returned ${raw?.length ?? 0} RGBA bytes; expected ${width * height * 4}.`, 'Return one complete RGBA canvas for every timeline frame.');
   }
@@ -126,9 +142,11 @@ function renderFramePixels(
   const { titleY, labelY, bodyY } = layout.copyPositions;
   const palette = getStyle(brief.style).palette;
   const labelColor = palette[narrativeLabelToneFor(brief.style)];
-  drawBlock(ctx, layout.title, textArea.x, titleY, fonts.effective.display, fonts.approvedAlternative.display, palette.ink);
-  drawBlock(ctx, phaseLayout.label, textArea.x, labelY, fonts.effective.label, fonts.approvedAlternative.label, labelColor);
-  drawBlock(ctx, phaseLayout.body, textArea.x, bodyY, fonts.effective.reading, fonts.approvedAlternative.reading, palette.ink);
+  if (!artOnly) {
+    drawBlock(ctx, layout.title, textArea.x, titleY, fonts.effective.display, fonts.approvedAlternative.display, palette.ink);
+    drawBlock(ctx, phaseLayout.label, textArea.x, labelY, fonts.effective.label, fonts.approvedAlternative.label, labelColor);
+    drawBlock(ctx, phaseLayout.body, textArea.x, bodyY, fonts.effective.reading, fonts.approvedAlternative.reading, palette.ink);
+  }
   return ctx.getImageData(0, 0, width, height).data;
 }
 
@@ -191,10 +209,14 @@ function captureLabels(brief: NormalizedNarrativeBrief, timeline: NarrativeTimel
   const add = (index: number, label: string) => labels.set(index, [...(labels.get(index) ?? []), label]);
   for (let phaseIndex = 0; phaseIndex < brief.phases.length; phaseIndex += 1) {
     const phase = brief.phases[phaseIndex]!;
+    const semanticScene = phase.visual.semantic.primitive !== 'legacy-illustration';
+    const startWord = semanticScene && brief.locale === 'en' ? 'start' : 'inicio';
+    const holdWord = semanticScene && brief.locale === 'en' ? 'hold' : 'pausa';
+    const exitWord = semanticScene && brief.locale === 'en' ? 'exit' : 'salida';
     const startIndex = timeline.frames.findIndex((frame) => frame.kind === 'entry' && frame.phaseIndex === phaseIndex);
     const holdIndex = timeline.holds[phaseIndex]!.frameIndex;
-    add(startIndex, `${phase.id} · inicio`);
-    add(holdIndex, `${phase.id} · pausa`);
+    add(startIndex, `${phase.id} · ${semanticScene ? startWord : 'inicio'}`);
+    add(holdIndex, `${phase.id} · ${semanticScene ? holdWord : 'pausa'}`);
     const isLoopBridge = phaseIndex === brief.phases.length - 1;
     const midKind = isLoopBridge ? 'loop-bridge' : 'transition';
     const targetPhaseIndex = isLoopBridge ? 0 : phaseIndex + 1;
@@ -209,8 +231,12 @@ function captureLabels(brief: NormalizedNarrativeBrief, timeline: NarrativeTimel
         midIndex = index;
       }
     }
-    if (midIndex >= 0 && NARRATIVE_CONTACT_MIDPOINT_STYLES.has(brief.style)) {
-      add(midIndex, `${phase.id} · transición media`);
+    if (midIndex >= 0 && (NARRATIVE_CONTACT_MIDPOINT_STYLES.has(brief.style) || semanticScene)) {
+      add(midIndex, semanticScene
+        ? isLoopBridge
+          ? `${phase.id} → ${brief.phases[0]!.id} · ${brief.locale === 'en' ? 'loop join' : 'unión del ciclo'}`
+          : `${phase.id} → ${brief.phases[targetPhaseIndex]!.id} · ${brief.locale === 'en' ? 'transition midpoint' : 'punto medio de transición'}`
+        : `${phase.id} · transición media`);
     }
     let exitIndex = -1;
     for (let index = 0; index < timeline.frames.length; index += 1) {
@@ -221,10 +247,41 @@ function captureLabels(brief: NormalizedNarrativeBrief, timeline: NarrativeTimel
       if (isExit) exitIndex = index;
     }
     if (phaseIndex === brief.phases.length - 1 && exitIndex < 0) exitIndex = holdIndex;
-    if (exitIndex >= 0) add(exitIndex, `${phase.id} · salida`);
+    if (exitIndex >= 0) add(exitIndex, `${phase.id} · ${semanticScene ? exitWord : 'salida'}`);
   }
-  add(0, 'reinicio del loop');
+  const hasSemantic = brief.phases.some((phase) => phase.visual.semantic.primitive !== 'legacy-illustration');
+  add(0, hasSemantic && brief.locale === 'en' ? 'loop restart' : 'reinicio del loop');
   return labels;
+}
+
+function semanticCaptureSpecs(brief: NormalizedNarrativeBrief, timeline: NarrativeTimeline): Array<{ label: string; phaseIndex: number; fromPhaseIndex: number; frameIndex: number; kind: 'hold' | 'transition' | 'loop-bridge' }> {
+  const result: Array<{ label: string; phaseIndex: number; fromPhaseIndex: number; frameIndex: number; kind: 'hold' | 'transition' | 'loop-bridge' }> = [];
+  for (const hold of timeline.holds) {
+    const label = brief.locale === 'en' ? 'hold' : 'pausa';
+    result.push({ label: `${hold.phaseId} · ${label}`, phaseIndex: hold.phaseIndex, fromPhaseIndex: hold.phaseIndex, frameIndex: hold.frameIndex, kind: 'hold' });
+  }
+  for (const kind of ['transition', 'loop-bridge'] as const) {
+    const keys = new Set(timeline.frames.filter((frame) => frame.kind === kind).map((frame) => `${frame.fromPhaseIndex}:${frame.toPhaseIndex}`));
+    for (const key of keys) {
+      const [fromPhaseIndex, toPhaseIndex] = key.split(':').map(Number) as [number, number];
+      let bestIndex = -1;
+      let bestDistance = Number.POSITIVE_INFINITY;
+      for (let index = 0; index < timeline.frames.length; index += 1) {
+        const frame = timeline.frames[index]!;
+        if (frame.kind !== kind || frame.fromPhaseIndex !== fromPhaseIndex || frame.toPhaseIndex !== toPhaseIndex) continue;
+        const distance = Math.abs(frame.progress - 0.5);
+        if (distance < bestDistance) { bestDistance = distance; bestIndex = index; }
+      }
+      if (bestIndex >= 0) {
+        const phaseIndex = toPhaseIndex;
+        const label = kind === 'loop-bridge'
+          ? `${brief.phases[fromPhaseIndex]!.id} → ${brief.phases[toPhaseIndex]!.id} · ${brief.locale === 'en' ? 'loop join' : 'unión del ciclo'}`
+          : `${brief.phases[fromPhaseIndex]!.id} → ${brief.phases[toPhaseIndex]!.id} · ${brief.locale === 'en' ? 'transition midpoint' : 'punto medio de transición'}`;
+        result.push({ label, phaseIndex, fromPhaseIndex, frameIndex: bestIndex, kind });
+      }
+    }
+  }
+  return result;
 }
 
 function drawContactTile(
@@ -270,6 +327,9 @@ export interface NarrativeEncodedFiles {
   rendererVersion: string;
   sceneVersion: string;
   fonts: NarrativeFontProfile;
+  artOnly: boolean;
+  semanticObjectCaptures: Array<{ label: string; phaseIndex: number; fromPhaseIndex: number; frameIndex: number; kind: 'hold' | 'transition' | 'loop-bridge'; regions: ReturnType<NonNullable<NarrativeScene['objectRegions']>> }>;
+  compositionByFrame?: Array<{ label: string; metrics: CompositionBalanceMetrics }>;
 }
 
 export async function encodeNarrative(
@@ -279,6 +339,7 @@ export async function encodeNarrative(
   timeline: NarrativeTimeline,
   scene: NarrativeScene,
   outputDir: string,
+  artOnly = false,
 ): Promise<NarrativeEncodedFiles> {
   ensureFonts();
   const fonts = getNarrativeFontProfile(brief.style);
@@ -289,7 +350,7 @@ export async function encodeNarrative(
     throw new NarrativeError('UNSUPPORTED_ASPECT', `Scene ${scene.style} does not support aspect ${aspect.toFixed(3)} (${width}×${height}).`, 'Choose a ratio supported by this style scene.', 'output');
   }
   await mkdir(outputDir, { recursive: true });
-  const basename = `${slug(brief.title)}-${hash.slice(0, 8)}`;
+  const basename = `${slug(brief.title)}-${hash.slice(0, 8)}${artOnly ? '-art-only' : ''}`;
   const paths = {
     gif: path.join(outputDir, `${basename}.gif`),
     png: path.join(outputDir, `${basename}.png`),
@@ -299,11 +360,20 @@ export async function encodeNarrative(
   const renderContext = renderCanvas.getContext('2d');
   const seed = seedRandom(brief.seed ^ 0xa5a5a5a5);
   const object = scene.createObject(brief, seed);
+  const semanticSpecs = semanticCaptureSpecs(brief, timeline);
+  const semanticSpecByFrame = new Map(semanticSpecs.map((spec) => [spec.frameIndex, spec]));
+  const semanticObjectCaptures: NarrativeEncodedFiles['semanticObjectCaptures'] = [];
   let localTimeMs = 0;
   const phaseSamples: Uint8Array[] = [];
   const pixelHashes = new Set<string>();
   for (let index = 0; index < timeline.frames.length; index += 1) {
-    const pixels = renderFramePixels(renderContext, brief, layout, fonts, scene, object, timeline.frames[index]!, index, localTimeMs);
+    const frame = timeline.frames[index]!;
+    const pixels = renderFramePixels(renderContext, brief, layout, fonts, scene, object, frame, index, localTimeMs, artOnly);
+    const spec = semanticSpecByFrame.get(index);
+    if (spec) {
+      const context = sceneContext(brief, layout, fonts, object, frame, index, localTimeMs);
+      semanticObjectCaptures.push({ ...spec, regions: scene.objectRegions?.(context) ?? [] });
+    }
     phaseSamples.push(sampleRgba(pixels));
     pixelHashes.add(createHash('sha256').update(Buffer.from(pixels.buffer, pixels.byteOffset, pixels.byteLength)).digest('hex'));
     localTimeMs += timeline.frames[index]!.delayMs;
@@ -335,7 +405,7 @@ export async function encodeNarrative(
   let tileIndex = 0;
   for (let index = 0; index < timeline.frames.length; index += 1) {
     const frame = timeline.frames[index]!;
-    const pixels = renderFramePixels(renderContext, brief, layout, fonts, scene, object, frame, index, localTimeMs);
+    const pixels = renderFramePixels(renderContext, brief, layout, fonts, scene, object, frame, index, localTimeMs, artOnly);
     const rgbaSamples = applyPalette(pixels, gifPalette, 'rgb444');
     encoder.writeFrame(rgbaSamples, width, height, {
       palette: gifPalette,
@@ -370,7 +440,20 @@ export async function encodeNarrative(
   contactSourceCanvas.width = 1;
   contactSourceCanvas.height = 1;
 
-  const decoded = verifyNarrativeGif(gifBytes, [timeline.holds[0]!.frameIndex]);
+  const captureByFrame = new Map(semanticObjectCaptures.map((capture) => [capture.frameIndex, capture]));
+  const compositionByFrame: NonNullable<NarrativeEncodedFiles['compositionByFrame']> = [];
+  const retainDecodedSamples = semanticObjectCaptures.some((capture) => capture.regions.length > 0);
+  const decoded = verifyNarrativeGif(gifBytes, semanticObjectCaptures.map((capture) => capture.frameIndex), {
+    retainSamples: retainDecodedSamples,
+    onSample: ({ index, rgb }) => {
+      const capture = captureByFrame.get(index);
+      if (!capture) return;
+      compositionByFrame.push({
+        label: capture.label,
+        metrics: measureCompositionBalance({ rgb, width, height, background: getStyle(brief.style).palette.bg, textArea: layout.textArea }),
+      });
+    },
+  });
   const ffprobe = await crossCheckWithFfprobe(paths.gif, decoded);
   const phaseHoldsVerified = timeline.holds.map((hold) => {
     const decodedMs = decoded.delaysMs[hold.frameIndex] ?? 0;
@@ -414,5 +497,8 @@ export async function encodeNarrative(
     rendererVersion: NARRATIVE_RENDERER_VERSION,
     sceneVersion: scene.version,
     fonts,
+    artOnly,
+    semanticObjectCaptures,
+    compositionByFrame,
   };
 }

@@ -56,10 +56,11 @@ test('exposes the full tool surface', async () => {
 test('capabilities MCP returns per-style cells and exposes the shared narrative brief schema', async () => {
   const capabilities = await client.callTool({ name: 'beauty_get_capabilities', arguments: { style: 'papercraft' } });
   const report = capabilities.structuredContent as { contractVersion: number; cells: Array<{ style: string; allowed: { visualStates: unknown[] } }>; summary: Record<string, number> };
-  assert.equal(report.contractVersion, 2);
+  assert.equal(report.contractVersion, 3);
   assert.equal(report.cells.length, 24);
   assert.ok(report.cells.every((cell) => cell.style === 'papercraft' && cell.allowed.visualStates.length > 0));
-  assert.equal(report.summary.fallback + report.summary.unsupported, 24);
+  assert.equal(report.summary.fallback, 0);
+  assert.equal(report.summary.unsupported, 8);
 
   const { tools } = await client.listTools();
   const narrativeTool = tools.find((tool) => tool.name === 'beauty_create_narrative');
@@ -89,7 +90,7 @@ test('gallery MCP creates one manifest-driven static HTML file', async () => {
   });
   assert.notEqual(result.isError, true);
   const structured = result.structuredContent as { path: string; pieceCount: number; styles: string[] };
-  assert.equal(structured.pieceCount, 28);
+  assert.equal(structured.pieceCount, 40);
   assert.equal(structured.styles.length, 13);
   const html = await readFile(structured.path, 'utf8');
   assert.match(html, /<title>Revisión MCP<\/title>/);

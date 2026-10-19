@@ -1,10 +1,10 @@
-# Narrative brief migration: v1 to v2
+# Narrative brief migration: v1 to v3
 
-Contract v2 is used by the CLI, library and MCP. The brief schema is defined once in `src/narrative/brief.ts`; `beauty narrative --help` derives its field list from that schema, and `beauty_create_narrative` exposes the same Zod schema. Query `beauty capabilities [--style <s>] [--json]` or MCP `beauty_get_capabilities` before authoring visual values.
+Contract v3 is used by the CLI, library and MCP. The brief schema is defined once in `src/narrative/brief.ts`; `beauty narrative --help` derives its field list from that schema, and `beauty_create_narrative` exposes the same Zod schema. Query `beauty capabilities [--style <s>] [--json]` or MCP `beauty_get_capabilities` before authoring visual values.
 
 ## Field mapping
 
-| v1 field or behavior | v2 field or behavior | Migration |
+| v1 field or behavior | v2/v3 field or behavior | Migration |
 | --- | --- | --- |
 | `status: open\|in-review\|done` | `workflowStatus` | `status` remains an accepted deprecated alias and is normalized to both `workflowStatus` and `status`. If both are supplied, they must match. |
 | `status: done` implied an observed result | `outcome: { mode: "expected"\|"observed" }` | `workflowStatus: done` alone maps to `outcome.mode: expected`. A finished task can report an unmeasured expected benefit. |
@@ -12,9 +12,27 @@ Contract v2 is used by the CLI, library and MCP. The brief schema is defined onc
 | no evidence or scope field | `outcome.evidenceRefs` and `outcome.scopeNote` | `observed` requires at least one ref with a stable `id` and readable `label`, plus a scope note that explicitly says what the evidence does not claim. `source` and `date` are optional metadata. |
 | no illustrative marker | `illustrative: boolean` | Missing v1 values default to `true`, preserving example/demo content as illustrative. An evidence-backed observed result must set `illustrative:false`. |
 | implicit fixed workflow stamp | `badgePolicy` | Defaults to `workflow` to preserve v1 behavior. `none` suppresses workflow stamps/status marks. `custom` requires `badgeText`. |
-| arbitrary `visual.kind/state` strings | style-declared visual vocabulary | Existing `comparison`, `checklist`, and legacy `document`, `process`, `lista`, and `proceso` values remain supported. The current states include `unreviewed`, `before`, `pending`, `flagged`, `signal`, `observation`, `observacion`, `review-ready`, `reviewed`, `ready`, `done`, `verified`, and `list`; unknown values now fail before rendering with valid alternatives. Repeating the same state across phases is allowed. No scene currently declares an action. |
+| arbitrary `visual.kind/state` strings | style-declared visual vocabulary | Existing `comparison`, `checklist`, and legacy `document`, `process`, `lista`, and `proceso` values remain supported. The current states include `unreviewed`, `before`, `pending`, `flagged`, `signal`, `observation`, `observacion`, `review-ready`, `reviewed`, `ready`, `done`, `verified`, and `list`; unknown values now fail before rendering with valid alternatives. Repeating the same state across phases is allowed. Legacy visual-only briefs have no entity actions; v3 semantic actions are declared under `visual.semantic.actions`. |
 | `playback.minReadableHoldMs` only | `playback.preset` and `phases[].holdMs` | `readable` is the default and keeps a 5000ms minimum floor. `concise` allows explicit per-phase holds from 2000ms. Values are numeric milliseconds; units, non-finite values and holds below the selected floor return `BAD_DURATION`. |
 | manifest schema v1 | manifest schema v2 | V2 adds work/outcome/evidence classification and separately reports holds, transitions, loop bridge, entries, total decoded time and per-phase requested/encoded/decoded holds. |
+
+## Semantic scenes (v3)
+
+Add `visual.semantic` to each phase to describe a style-neutral object model:
+
+- `primitive`: `table-rows`, `card-collection`, `counter` or `file-download`.
+- `entities`: stable `id` and `kind`, with optional brief-authored `label`, `value` or `progress`.
+- `relations`: explicit `duplicate-of`, `member-of` or `counts` links.
+- `states`: a state keyed by every entity ID; `actions`: events keyed by entity ID with optional target.
+- `illustrative`: marks synthetic example data on the scene and, optionally, individual entities. Missing entity flags inherit the scene flag, which inherits the brief flag.
+
+Entity IDs and kinds must match in every phase. Unknown entity references/kinds, states and actions fail before rendering with `UNSUPPORTED_ENTITY`, `UNSUPPORTED_STATE` or `UNSUPPORTED_ACTION`, including phase index, submitted value and valid alternatives. A numeric counter value must match its explicit `counts` links to visible rows/cards; if omitted, the renderer derives it from those links. A count never changes unless the relations or authored counter value change.
+
+Compatibility is automatic: an old phase with `visual.kind/state` and no `visual.semantic` becomes one stable `legacy-object` illustration with the old phase state and an inherited illustrative flag. Old briefs keep the existing style drawing; scenes without declared object regions report semantic transformation as `pending`.
+
+Papercraft currently implements all four primitives at 16:9 and 1:1 in es/en. Its 16 `supported` capability cells are covered by decoded object-region tests in `test/narrative-semantic-render.test.ts`; other styles remain `fallback` or `unsupported`. The contract deliberately does not mark a style/aspect/locale supported from source inspection alone.
+
+The evaluator records per-entity bounding regions and independently decoded pixel diffs across consecutive holds, all transition midpoints and the last-to-first loop join. It reports which IDs changed state. Text-only, decoration-only and identical-object negative controls do not pass. Composition balance is recorded for every one of those captures. `beauty narrative --art-only` and MCP `artOnly: true` create a separate pack without the title, phase labels or body copy while retaining semantic labels that belong to the illustrated object. Manifest schema v2 remains at version 2 and adds `artOnly`, `semanticObjectCaptures` and `compositionByFrame`.
 
 ## Defaults and compatibility
 

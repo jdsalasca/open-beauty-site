@@ -1,6 +1,8 @@
 import type { StyleSlug } from '../types.js';
 import { getNarrativeScene, supportedNarrativeStyles } from './scene.js';
 import type { NarrativeLocale, NarrativeSceneValueDeclaration } from '../types/narrative.js';
+import type { NarrativeSemanticEntityKind } from '../types/narrative-scene.js';
+import { NARRATIVE_PRIMITIVE_ENTITY_KINDS, NARRATIVE_SEMANTIC_ACTIONS, NARRATIVE_SEMANTIC_STATES } from './semantic.js';
 
 export const NARRATIVE_PRIMITIVES = ['table-rows', 'card-collection', 'counter', 'file-download'] as const;
 export type NarrativePrimitive = (typeof NARRATIVE_PRIMITIVES)[number];
@@ -14,10 +16,10 @@ const ASPECTS: Array<{ id: NarrativeAspect; width: number; height: number }> = [
 ];
 
 const PRIMITIVE_REASONS: Record<NarrativePrimitive, string> = {
-  'table-rows': 'The current scene provides its existing comparison or checklist composition; semantic rows and row-level actions are deferred to a later stage.',
-  'card-collection': 'The current scene provides its existing illustration; identified cards and collection membership are not represented yet.',
-  counter: 'The current scene provides its existing illustration; no count is derived or shown for this primitive.',
-  'file-download': 'The current scene provides its existing illustration; download state, file identity, and failure recovery are not represented yet.',
+  'table-rows': 'This renderer does not yet draw identified semantic rows or row-level actions.',
+  'card-collection': 'This renderer does not yet draw identified cards or collection membership.',
+  counter: 'This renderer does not yet draw a count tied to visible semantic elements.',
+  'file-download': 'This renderer does not yet draw file identity, progress, failure and retry state.',
 };
 
 export interface NarrativeCapabilityCell {
@@ -31,11 +33,14 @@ export interface NarrativeCapabilityCell {
     visualKinds: NarrativeSceneValueDeclaration[];
     visualStates: NarrativeSceneValueDeclaration[];
     actions: NarrativeSceneValueDeclaration[];
+    semanticEntityKinds: NarrativeSemanticEntityKind[];
+    semanticStates: Partial<Record<NarrativeSemanticEntityKind, string[]>>;
+    semanticActions: Partial<Record<NarrativeSemanticEntityKind, string[]>>;
   };
 }
 
 export interface NarrativeCapabilityReport {
-  contractVersion: 2;
+  contractVersion: 3;
   cells: NarrativeCapabilityCell[];
   summary: Record<NarrativeCapabilityStatus, number>;
 }
@@ -49,23 +54,34 @@ export function narrativeCapabilityReport(filter: NarrativeCapabilityFilter = {}
   const cells = styles.flatMap((style) => {
     const scene = getNarrativeScene(style);
     const vocabulary = scene.vocabulary;
-    const allowed = {
+    const visualAllowed = {
       visualKinds: vocabulary?.visualKinds ?? [],
       visualStates: vocabulary?.states ?? [],
       actions: vocabulary?.actions ?? [],
     };
     return NARRATIVE_PRIMITIVES.flatMap((primitive) => ASPECTS.flatMap((aspect) => (['es', 'en'] as const).map((locale) => {
       const supportsAspect = scene.supportsAspect(aspect.width / aspect.height);
-      const status: NarrativeCapabilityStatus = supportsAspect ? 'fallback' : 'unsupported';
-      const reason = supportsAspect
-        ? PRIMITIVE_REASONS[primitive]
-        : `${style} has no narrative renderer for ${aspect.id}; the primitive cannot be rendered in this aspect.`;
+      const semanticSupported = style === 'papercraft' && supportsAspect;
+      const status: NarrativeCapabilityStatus = !supportsAspect ? 'unsupported' : semanticSupported ? 'supported' : 'fallback';
+      const semanticEntityKinds = NARRATIVE_PRIMITIVE_ENTITY_KINDS[primitive];
+      const semanticKinds = semanticEntityKinds.filter((kind): kind is Exclude<NarrativeSemanticEntityKind, 'illustration'> => kind !== 'illustration');
+      const allowed = {
+        ...visualAllowed,
+        semanticEntityKinds,
+        semanticStates: Object.fromEntries(semanticKinds.map((kind) => [kind, NARRATIVE_SEMANTIC_STATES[kind]])),
+        semanticActions: Object.fromEntries(semanticKinds.map((kind) => [kind, NARRATIVE_SEMANTIC_ACTIONS[kind]])),
+      };
+      const reason = !supportsAspect
+        ? `${style} has no narrative renderer for ${aspect.id}; the primitive cannot be rendered in this aspect.`
+        : semanticSupported
+          ? `Papercraft renders ${primitive} with stable entity regions; decoded state changes are exercised in test/narrative-semantic-render.test.ts for ${aspect.id}/${locale}.`
+          : `${style} fallback: ${PRIMITIVE_REASONS[primitive]}`;
       return { style, primitive, aspect: aspect.id, locale, status, reason, allowed };
     })));
   });
   const summary: Record<NarrativeCapabilityStatus, number> = { supported: 0, unsupported: 0, fallback: 0 };
   for (const cell of cells) summary[cell.status] += 1;
-  return { contractVersion: 2, cells, summary };
+  return { contractVersion: 3, cells, summary };
 }
 
 export function narrativeCapabilities(style?: StyleSlug): NarrativeCapabilityReport {

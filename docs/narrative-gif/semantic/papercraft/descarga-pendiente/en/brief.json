@@ -1,0 +1,92 @@
+{
+  "style": "papercraft",
+  "subfamily": "editorial",
+  "kind": "narrative-gif",
+  "locale": "en",
+  "audience": "People downloading a report",
+  "title": "Download",
+  "workflowStatus": "in-review",
+  "outcome": {
+    "mode": "expected",
+    "scopeNote": "This example covers one timeout and shows a pending retry; it does not claim the retry will finish or resolve other failure types."
+  },
+  "illustrative": true,
+  "badgePolicy": "none",
+  "phases": [
+    {
+      "id": "download-started",
+      "label": "Download started",
+      "text": "report.pdf is requested and the download advances.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "before",
+        "semantic": {
+          "primitive": "file-download",
+          "illustrative": true,
+          "entities": [{ "id": "report-file", "kind": "file", "label": "report.pdf", "progress": 0.18 }],
+          "relations": [],
+          "states": { "report-file": "downloading" },
+          "actions": [{ "entityId": "report-file", "type": "start-download" }]
+        }
+      }
+    },
+    {
+      "id": "timeout",
+      "label": "Timed out",
+      "text": "The request times out at 42%.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "flagged",
+        "semantic": {
+          "primitive": "file-download",
+          "illustrative": true,
+          "entities": [{ "id": "report-file", "kind": "file", "label": "report.pdf", "progress": 0.42 }],
+          "relations": [],
+          "states": { "report-file": "failed" },
+          "actions": [{ "entityId": "report-file", "type": "fail" }]
+        }
+      }
+    },
+    {
+      "id": "retry-requested",
+      "label": "Retry requested",
+      "text": "This failure is retried; confirmed progress remains at 42%.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "review-ready",
+        "semantic": {
+          "primitive": "file-download",
+          "illustrative": true,
+          "entities": [{ "id": "report-file", "kind": "file", "label": "report.pdf", "progress": 0.42 }],
+          "relations": [],
+          "states": { "report-file": "retrying" },
+          "actions": [{ "entityId": "report-file", "type": "retry" }]
+        }
+      }
+    },
+    {
+      "id": "result-pending",
+      "label": "Result pending",
+      "text": "The result is pending; other failures remain out of scope.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "review-ready",
+        "semantic": {
+          "primitive": "file-download",
+          "illustrative": true,
+          "entities": [{ "id": "report-file", "kind": "file", "label": "report.pdf", "progress": 0.42 }],
+          "relations": [],
+          "states": { "report-file": "pending" },
+          "actions": []
+        }
+      }
+    }
+  ],
+  "playback": { "preset": "concise", "minReadableHoldMs": 2200, "transitionMs": 400, "loop": true, "totalDurationBudgetMs": 20000 },
+  "output": { "width": 640, "height": 360, "formats": ["gif", "png"] },
+  "seed": 11
+}
