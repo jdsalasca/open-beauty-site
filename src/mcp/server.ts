@@ -100,13 +100,25 @@ const deckStatSchema = z.object({
   label: z.string().min(1).max(48),
 });
 
+const deckTableSchema = z.object({
+  caption: z.string().max(120).optional().describe('Visible table caption. Defaults to the slide title.'),
+  columns: z.array(z.string().min(1).max(40)).min(2).max(4),
+  rows: z.array(z.array(z.string().min(1).max(80)).min(2).max(4)).min(1).max(6),
+});
+
 const deckSlideSchema = z.object({
-  layout: z.enum(['statement', 'points', 'stats', 'quote', 'figure']).optional(),
+  layout: z.enum(['statement', 'points', 'stats', 'quote', 'figure']).optional().describe('Legacy layout. Ignored when purpose is present.'),
+  purpose: z
+    .enum(['cover', 'problem', 'comparison', 'process', 'example', 'result', 'next-steps', 'table'])
+    .optional()
+    .describe('Composition chosen by the slide\'s job. Absent keeps the legacy layout.'),
   kicker: z.string().max(40).optional(),
   title: z.string().min(1).max(120),
   body: z.string().max(300).optional(),
-  points: z.array(deckPointSchema).max(4).optional(),
+  points: z.array(deckPointSchema).max(4).optional().describe('Comparison: before/after columns. Next steps: action + owner/when. Problem: optional signals.'),
   stats: z.array(deckStatSchema).max(DECK_STAT_LIMIT).optional(),
+  steps: z.array(deckPointSchema).min(3).max(5).optional().describe('Process composition: 3–5 steps along a path.'),
+  table: deckTableSchema.optional().describe('Table/result composition: at most 6 rows × 4 columns.'),
   quote: quoteSchema.optional(),
   figure: z.object({
     caption: z.string().max(140).optional(),
@@ -503,7 +515,7 @@ QUALITY BAR
     {
       title: 'Create an animated 16:9 presentation',
       description:
-        'Builds a complete keyboard-navigable deck with transitions, progress, cover and closing. Use 4–8 slides, one idea per slide, 1–2 sentences per body. Supports curated subfamilies. Returns craft/vision and the file path.',
+        'Builds a complete keyboard-navigable deck with transitions, progress, cover and closing. Use 4–8 slides, one idea per slide, 1–2 sentences per body. Set slide.purpose (cover, problem, comparison, process, example, result, next-steps, table) to choose a real composition instead of a card grid; purpose is optional and legacy layouts still work. Supports curated subfamilies. Returns craft/vision and the file path.',
       inputSchema: deckInputSchema,
     },
     async (args) => {

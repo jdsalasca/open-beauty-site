@@ -1,10 +1,22 @@
-import type { DeckBrief } from '../types.js';
+import type { DeckBrief, DeckPurpose } from '../types.js';
 
 /**
  * Deck limits shared by the generator and the validator so a deck can never
  * silently drop or exceed content: the generator fails loudly and the
  * validator reports the same numbers.
  */
+
+/** Purpose-driven compositions accepted by the deck engine. */
+export const DECK_PURPOSES: readonly DeckPurpose[] = [
+  'cover',
+  'problem',
+  'comparison',
+  'process',
+  'example',
+  'result',
+  'next-steps',
+  'table',
+];
 
 /** Maximum authored content slides; the cover and closing are added on top. */
 export const DECK_CONTENT_SLIDE_LIMIT = 14;
@@ -20,6 +32,14 @@ export const DECK_WORD_LIMIT = 55;
 
 /** Maximum points allowed on one points slide. */
 export const DECK_POINT_LIMIT = 4;
+
+/** The process composition is a path, so it accepts 3–5 steps. */
+export const DECK_STEP_MIN = 3;
+export const DECK_STEP_LIMIT = 5;
+
+/** A deck table stays simple: at most 6 rows × 4 columns. */
+export const DECK_TABLE_ROW_LIMIT = 6;
+export const DECK_TABLE_COLUMN_LIMIT = 4;
 
 /**
  * Character limits for authored deck copy. They match the MCP schemas and are
@@ -45,7 +65,12 @@ export const DECK_TEXT_LIMITS = {
   statLabel: 48,
   quoteText: 320,
   quoteAuthor: 90,
+  tableCaption: 120,
+  tableColumn: 40,
+  tableCell: 80,
 } as const;
+
+export type { DeckPurpose } from '../types.js';
 
 /**
  * A deck brief as accepted by the generator. `author` and `date` already live

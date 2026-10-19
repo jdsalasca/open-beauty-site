@@ -46,9 +46,9 @@ Current result: **65/65 passing** in ~8 s (plus MCP startup).
 ## Browser suites and timeouts
 
 The browser suites are `test/deck-capture.test.ts`,
-`test/min-text-visual.test.ts`, `test/narrative-compare.browser.test.ts`,
-`test/narrative-gallery.browser.test.ts`, `test/page-geometry.test.ts`,
-`test/visual-matrix.test.ts` and `test/visual.test.ts`. They import Playwright
+`test/deck-composition-audit.test.ts`, `test/min-text-visual.test.ts`,
+`test/narrative-compare.browser.test.ts`, `test/narrative-gallery.browser.test.ts`,
+`test/page-geometry.test.ts`, `test/visual-matrix.test.ts` and `test/visual.test.ts`. They import Playwright
 from `BEAUTY_PLAYWRIGHT_ROOT` (or the shared sibling checkout) and skip when it
 is absent, so the suite stays green on machines without browsers. Each file
 reuses a single Chromium; `min-text-visual.test.ts` and the fixture rules in

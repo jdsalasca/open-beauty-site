@@ -1,12 +1,40 @@
-import type { DeckBrief, DeckFigure, DeckSlide, DeckStat, SceneSubject, StorySceneKind, StylePreset, StyleSubfamily } from './types.js';
+import type {
+  DeckBrief,
+  DeckFigure,
+  DeckPurpose,
+  DeckSlide,
+  DeckStat,
+  DeckTable,
+  Locale,
+  SceneSubject,
+  StorySceneKind,
+  StylePreset,
+  StyleSubfamily,
+} from './types.js';
 import type { DeckBriefInput } from './types/deck.js';
-import { DECK_CONTENT_SLIDE_LIMIT, DECK_POINT_LIMIT, DECK_STAT_LIMIT, DECK_TEXT_LIMITS } from './types/deck.js';
+import {
+  DECK_CONTENT_SLIDE_LIMIT,
+  DECK_POINT_LIMIT,
+  DECK_PURPOSES,
+  DECK_STAT_LIMIT,
+  DECK_STEP_LIMIT,
+  DECK_STEP_MIN,
+  DECK_TABLE_COLUMN_LIMIT,
+  DECK_TABLE_ROW_LIMIT,
+  DECK_TEXT_LIMITS,
+} from './types/deck.js';
 import { BeautyError, esc, safeHref, shell, t } from './page/common.js';
 import { accentTextColor, displayGlyphRatio, textOnAccent } from './a11y.js';
 import { motifFor } from './deck-motifs.js';
 import { applyMaxxing } from './maxxing.js';
 import { papercutScene } from './papercut.js';
 import { sceneArt } from './art.js';
+import {
+  COMPOSITION_CSS,
+  compositionPlan,
+  renderComposition,
+  type CompositionFigure,
+} from './deck-compositions.js';
 
 export interface DeckOptions {
   style: StylePreset;
@@ -93,6 +121,125 @@ function normalizePoints(value: DeckSlide['points'], slide: string) {
   }));
 }
 
+function normalizePurpose(value: unknown, slide: string): DeckPurpose | undefined {
+  if (value === undefined || value === null || value === '') return undefined;
+  const purpose = String(value).trim();
+  if (!(DECK_PURPOSES as readonly string[]).includes(purpose)) {
+    throw new BeautyError(
+      `The slide "${slide}" requests purpose "${purpose}", which the deck engine does not support. ` +
+        `Use one of: ${DECK_PURPOSES.join(', ')}.`,
+      'DECK_UNKNOWN_PURPOSE',
+    );
+  }
+  return purpose as DeckPurpose;
+}
+
+function normalizeSteps(value: DeckSlide['steps'], slide: string) {
+  const steps = value ?? [];
+  if (steps.length > DECK_STEP_LIMIT) {
+    throw new BeautyError(
+      `The slide "${slide}" has ${steps.length} steps; the process composition supports at most ${DECK_STEP_LIMIT}. ` +
+        'Split the path across two slides.',
+      'DECK_TOO_MANY_STEPS',
+    );
+  }
+  return steps.map((step, index) => ({
+    title:
+      normalizeText(step?.title, DECK_TEXT_LIMITS.pointTitle, { slide, field: `steps[${index}].title` }, 'Shorten the step or move part of it to another step.') ||
+      `Paso ${index + 1}`,
+    body: optionalText(step?.body, DECK_TEXT_LIMITS.pointBody, `steps[${index}].body`, 'Shorten the step body or split it across two steps.', slide),
+  }));
+}
+
+function normalizeTable(value: DeckSlide['table'], slide: string): DeckTable | undefined {
+  if (value === undefined || value === null) return undefined;
+  const columns = value.columns ?? [];
+  const rows = value.rows ?? [];
+  if (columns.length < 2 || columns.length > DECK_TABLE_COLUMN_LIMIT) {
+    throw new BeautyError(
+      `The slide "${slide}" has a table with ${columns.length} columns; a deck table needs 2–${DECK_TABLE_COLUMN_LIMIT}. ` +
+        'Split the table or move the extra columns to another slide.',
+      'DECK_TABLE_SHAPE',
+    );
+  }
+  if (rows.length < 1 || rows.length > DECK_TABLE_ROW_LIMIT) {
+    throw new BeautyError(
+      `The slide "${slide}" has a table with ${rows.length} rows; a deck table supports 1–${DECK_TABLE_ROW_LIMIT}. ` +
+        'Split the table across two slides.',
+      'DECK_TABLE_SHAPE',
+    );
+  }
+  rows.forEach((row, rowIndex) => {
+    if ((row ?? []).length !== columns.length) {
+      throw new BeautyError(
+        `The slide "${slide}" has a table row ${rowIndex + 1} with ${(row ?? []).length} cells but ${columns.length} columns. ` +
+          'Every row must have exactly one cell per column.',
+        'DECK_TABLE_SHAPE',
+      );
+    }
+  });
+  return {
+    caption: optionalText(value.caption, DECK_TEXT_LIMITS.tableCaption, 'table.caption', 'Shorten the table caption or move it to the slide body.', slide),
+    columns: columns.map((column, index) =>
+      normalizeText(column, DECK_TEXT_LIMITS.tableColumn, { slide, field: `table.columns[${index}]` }, 'Shorten the column header.'),
+    ),
+    rows: rows.map((row, rowIndex) =>
+      row.map((cell, columnIndex) =>
+        normalizeText(cell, DECK_TEXT_LIMITS.tableCell, { slide, field: `table.rows[${rowIndex}][${columnIndex}]` }, 'Shorten the cell or split the table.'),
+      ),
+    ),
+  };
+}
+
+function assertPurposeContent(slide: DeckSlide, title: string): void {
+  const use = (purpose: DeckPurpose): string => `The slide "${title}" uses purpose "${purpose}"`;
+  switch (slide.purpose) {
+    case 'comparison':
+      if ((slide.points ?? []).length < 2) {
+        throw new BeautyError(
+          `${use('comparison')}, which needs two points: one column for before and one for after. ` +
+            'Pass two points with a title and a body.',
+          'DECK_PURPOSE_CONTENT',
+        );
+      }
+      return;
+    case 'process':
+      if ((slide.steps ?? slide.points ?? []).length < DECK_STEP_MIN) {
+        throw new BeautyError(
+          `${use('process')}, which needs ${DECK_STEP_MIN}–${DECK_STEP_LIMIT} steps along a path. ` +
+            `Pass steps (or points) with at least ${DECK_STEP_MIN} items so no part of the path is invented.`,
+          'DECK_PURPOSE_CONTENT',
+        );
+      }
+      return;
+    case 'next-steps':
+      if (!slide.points?.length) {
+        throw new BeautyError(
+          `${use('next-steps')}, which needs at least one point with the action and its owner or date. ` +
+            'Pass points; each body is rendered as plain text next to the action.',
+          'DECK_PURPOSE_CONTENT',
+        );
+      }
+      return;
+    case 'table':
+      if (!slide.table) {
+        throw new BeautyError(`${use('table')}, which needs a table with 2–${DECK_TABLE_COLUMN_LIMIT} columns and 1–${DECK_TABLE_ROW_LIMIT} rows.`, 'DECK_PURPOSE_CONTENT');
+      }
+      return;
+    case 'example':
+      if (!slide.figure || (!slide.figure.scene?.kind && !slide.figure.subject) || slide.figure.subject === 'none') {
+        throw new BeautyError(
+          `${use('example')}, which needs one concrete object. Pass figure.subject (or figure.scene) and a caption; ` +
+            'the object is drawn large and is the focus of the slide.',
+          'DECK_PURPOSE_CONTENT',
+        );
+      }
+      return;
+    default:
+      return;
+  }
+}
+
 function normalizeStats(value: DeckSlide['stats'], slide: string): DeckStat[] {
   const stats = value ?? [];
   if (stats.length > DECK_STAT_LIMIT) {
@@ -159,14 +306,18 @@ function normalizeSlides(preset: StylePreset, brief: Partial<DeckBrief>): DeckSl
 
   const slides = source.slice(0, DECK_CONTENT_SLIDE_LIMIT).map((slide, index) => {
     const label = String(slide.title ?? '').trim().slice(0, 80) || `slide ${index + 1}`;
+    const purpose = normalizePurpose(slide.purpose, label);
     const points = normalizePoints(slide.points, label);
     const stats = normalizeStats(slide.stats, label);
+    const steps = normalizeSteps(slide.steps, label);
+    const table = normalizeTable(slide.table, label);
     const layout =
       slide.layout ??
       (slide.figure ? 'figure' : slide.quote ? 'quote' : stats.length ? 'stats' : points.length ? 'points' : 'statement');
     const quoteText = optionalText(slide.quote?.text, DECK_TEXT_LIMITS.quoteText, 'quote.text', 'Shorten the quote or split it across two slides.', label);
-    return {
+    const normalized = {
       layout,
+      purpose,
       kicker:
         normalizeText(slide.kicker, DECK_TEXT_LIMITS.kicker, { slide: label, field: 'kicker' }, 'Shorten the kicker or move part of it to the title.') ||
         `${String(index + 2).padStart(2, '0')} / ${preset.name}`,
@@ -181,12 +332,17 @@ function normalizeSlides(preset: StylePreset, brief: Partial<DeckBrief>): DeckSl
           }
         : undefined,
       figure: slide.figure,
+      steps: steps.length ? steps : points.length ? points : undefined,
+      table,
     } satisfies DeckSlide;
+    assertPurposeContent(normalized, label);
+    return normalized;
   });
 
   if (slides.length === 0) {
     slides.push({
       layout: 'statement',
+      purpose: undefined,
       kicker: 'La idea',
       title: fallbackTitle,
       body: brief.tagline || 'Una idea que merece su propio tiempo.',
@@ -194,6 +350,8 @@ function normalizeSlides(preset: StylePreset, brief: Partial<DeckBrief>): DeckSl
       stats: undefined,
       quote: undefined,
       figure: undefined,
+      steps: undefined,
+      table: undefined,
     });
   }
   return slides;
@@ -254,29 +412,58 @@ function resolveFigureSubject(figure: DeckFigure, style: StylePreset, slide: str
   return subject;
 }
 
-function renderSlideContent(slide: DeckSlide, index: number, style: StylePreset, warnings: string[]): string {
-  const kicker = `<p class="kicker anim" style="--a:0">${esc(slide.kicker ?? '')}</p>`;
-  if (slide.layout === 'figure' && slide.figure) {
-    const scene = slide.figure.scene ?? { kind: 'meadow', characters: ['rabbit'], props: ['pine', 'tree', 'flowers'] };
-    let art: string;
-    let subjectAttribute = '';
-    if (style.slug === 'papercraft') {
-      if (slide.figure.subject !== undefined) {
-        warnings.push(
-          `The slide "${slide.title}" uses the papercraft style, which renders figure.scene; ` +
-            `figure.subject "${String(slide.figure.subject)}" was ignored.`,
-        );
-      }
-      art = papercutScene(style, scene, index + 2);
-    } else {
-      const subject = resolveFigureSubject(slide.figure, style, slide.title, warnings);
-      art = sceneArt(style, index + 2, slide.kicker || 'FIGURA', subject);
-      subjectAttribute = ` data-scene-subject="${subject}"`;
+interface RenderedFigure {
+  art: string;
+  subjectAttribute: string;
+}
+
+function renderFigureArt(figure: DeckFigure, index: number, style: StylePreset, slideTitle: string, warnings: string[]): RenderedFigure {
+  const scene = figure.scene ?? { kind: 'meadow', characters: ['rabbit'], props: ['pine', 'tree', 'flowers'] };
+  if (style.slug === 'papercraft') {
+    if (figure.subject !== undefined && !figure.scene) {
+      warnings.push(
+        `The slide "${slideTitle}" uses the papercraft style, which renders figure.scene; ` +
+          `figure.subject "${String(figure.subject)}" was ignored.`,
+      );
     }
+    return { art: papercutScene(style, scene, index + 2), subjectAttribute: '' };
+  }
+  const subject = resolveFigureSubject(figure, style, slideTitle, warnings);
+  return {
+    art: sceneArt(style, index + 2, figure.caption || 'FIGURA', subject),
+    subjectAttribute: ` data-scene-subject="${subject}"`,
+  };
+}
+
+function renderSlideContent(
+  slide: DeckSlide,
+  index: number,
+  style: StylePreset,
+  warnings: string[],
+  locale: Locale,
+  seed: number,
+): string {
+  const kicker = `<p class="kicker anim" style="--a:0">${esc(slide.kicker ?? '')}</p>`;
+  if (slide.purpose) {
+    const plan = compositionPlan(slide, index, seed, style);
+    let figure: CompositionFigure | undefined;
+    if (slide.purpose === 'example' && slide.figure) {
+      const rendered = renderFigureArt(slide.figure, index, style, slide.title, warnings);
+      figure = {
+        art: rendered.art,
+        subjectAttribute: rendered.subjectAttribute,
+        caption: slide.figure.caption,
+        source: slide.figure.source,
+      };
+    }
+    return renderComposition({ slide, index, plan, locale, figure });
+  }
+  if (slide.layout === 'figure' && slide.figure) {
+    const rendered = renderFigureArt(slide.figure, index, style, slide.title, warnings);
     return `<div class="slide-inner">
       ${kicker}
       <h2 class="anim" style="--a:1">${esc(slide.title)}</h2>
-      <figure class="deck-figure anim" style="--a:2"${subjectAttribute}>${art}<figcaption>${esc(slide.figure.caption || '')}${slide.figure.source ? `<span>${esc(slide.figure.source)}</span>` : ''}</figcaption></figure>
+      <figure class="deck-figure anim" style="--a:2"${rendered.subjectAttribute}>${rendered.art}<figcaption>${esc(slide.figure.caption || '')}${slide.figure.source ? `<span>${esc(slide.figure.source)}</span>` : ''}</figcaption></figure>
     </div>`;
   }
   if (slide.layout === 'quote' && slide.quote) {
@@ -349,9 +536,9 @@ export function renderDeck({ style, brief: input }: DeckOptions): DeckResult {
 
   const contentSlides = slides
     .map(
-      (slide, index) => `<section class="slide layout-${slide.layout}" data-index="${index + 1}" aria-hidden="true" aria-roledescription="slide" aria-label="Diapositiva ${index + 2} de ${total}" inert>
+      (slide, index) => `<section class="slide layout-${slide.purpose ?? slide.layout}" data-index="${index + 1}" aria-hidden="true" aria-roledescription="slide" aria-label="Diapositiva ${index + 2} de ${total}" inert>
         <span class="slide-watermark" aria-hidden="true">${String(index + 2).padStart(2, '0')}</span>
-        ${renderSlideContent(slide, index, style, warnings)}
+        ${renderSlideContent(slide, index, style, warnings, locale, Math.abs(Math.trunc(input.seed ?? 0)))}
         <span class="slide-number">${String(index + 2).padStart(2, '0')} / ${String(total).padStart(2, '0')}</span>
       </section>`,
     )
@@ -382,7 +569,7 @@ export function renderDeck({ style, brief: input }: DeckOptions): DeckResult {
   </section>`;
 
   const css = `*{box-sizing:border-box}
-body.deck{--bg:${style.palette.bg};--surface:${style.palette.surface};--ink:${style.palette.ink};--muted:${style.palette.muted};--accent2:${style.palette.accent2};--accent3:${style.palette.accent3};--accent4:${style.palette.accent4};--deep:${style.palette.deep};--accent:${accent};--accent-on:${accentOn};--accent-text:${accentText};--ground:${ground};--line:${line}px;--radius:${radius}px;margin:0;background:var(--ground);color:var(--ink);font-family:'${bodyFont}',sans-serif;overflow:hidden}
+body.deck{--bg:${style.palette.bg};--surface:${style.palette.surface};--ink:${style.palette.ink};--muted:${style.palette.muted};--accent2:${style.palette.accent2};--accent3:${style.palette.accent3};--accent4:${style.palette.accent4};--deep:${style.palette.deep};--accent:${accent};--accent-on:${accentOn};--accent-text:${accentText};--ground:${ground};--line:${line}px;--radius:${radius}px;--display-font:'${display}';--body-font:'${bodyFont}';margin:0;background:var(--ground);color:var(--ink);font-family:'${bodyFont}',sans-serif;overflow:hidden}
 .deck .display,.deck h1,.deck h2,.deck h3{font-family:'${display}',sans-serif;font-weight:400}
 .deck h1:focus,.deck h2:focus{outline:var(--line) solid var(--focus-ring,var(--accent));outline-offset:10px}
 .deck .atmosphere{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
@@ -399,7 +586,8 @@ body.deck{--bg:${style.palette.bg};--surface:${style.palette.surface};--ink:${st
 .deck .slide:not(.slide-cover):not(.slide-closing) .slide-inner{border-left:var(--line) solid color-mix(in srgb,var(--muted) 55%,transparent);padding-left:clamp(22px,4vw,58px)}
 .deck .slide-watermark{position:absolute;z-index:0;right:clamp(8px,3vw,42px);bottom:4vh;font-family:'${display}',sans-serif;font-size:clamp(150px,24vw,360px);line-height:.7;color:var(--accent);opacity:.075;pointer-events:none}
 .deck .layout-statement .deck-body{font-size:clamp(20px,2.1vw,32px);line-height:1.45;max-width:28ch;color:var(--ink);opacity:.82}
-.deck .kicker{margin:0 0 16px;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.deck .kicker{margin:0 0 16px;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.deck .slide .kicker{font-size:12px}
 .deck h1{font-size:${coverH1Fit};line-height:.92;letter-spacing:-.035em;margin:0;max-width:12ch;text-wrap:balance}
 .deck h2{font-size:clamp(30px,4.5vw,68px);line-height:1.02;letter-spacing:-.025em;margin:0 0 18px;max-width:18ch;text-wrap:balance}
 .deck .cover-grid{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:30px;align-items:center;width:min(1260px,100%)}
@@ -412,8 +600,9 @@ body.deck{--bg:${style.palette.bg};--surface:${style.palette.surface};--ink:${st
 .deck.comp-cartel .cover-tagline{margin-left:auto;margin-right:auto}
 .deck.comp-cartel .cover-meta{justify-content:center}
 .deck.comp-cartel .point-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-height:760px){.deck h1{font-size:min(${coverH1Fit},9vh)}.deck.comp-cartel h1{font-size:min(${coverH1FitCartel},9vh)}.deck.comp-gabinete h1{font-size:min(${coverH1FitGabinete},9vh)}}
 .deck .cover-tagline{font-size:clamp(17px,2vw,24px);line-height:1.5;color:var(--muted);max-width:520px;margin:22px 0 0}
-.deck .cover-meta{display:flex;flex-wrap:wrap;gap:18px;margin-top:30px;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.deck .cover-meta{display:flex;flex-wrap:wrap;gap:18px;margin-top:30px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
 .deck .cover-meta span+span:before{content:"·";margin-right:18px;color:var(--accent)}
 .deck .cover-mark{position:relative;aspect-ratio:1;display:grid;place-items:center}
 .deck .cover-mark:before{content:"";position:absolute;inset:9%;border:var(--line) solid var(--accent);border-radius:50%;opacity:.65;transform:rotate(-18deg) scaleY(.38)}
@@ -423,18 +612,18 @@ body.deck{--bg:${style.palette.bg};--surface:${style.palette.surface};--ink:${st
 .deck .deck-body{font-size:clamp(15px,1.55vw,21px);line-height:1.65;color:var(--muted);max-width:68ch;margin:0}
 .deck .point-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:18px}
 .deck .point{border:var(--line) solid var(--muted);border-radius:var(--radius);padding:18px 16px;background:color-mix(in srgb,var(--surface) 82%,transparent);min-height:150px}
-.deck .point>span{font-size:9px;letter-spacing:.16em;color:var(--muted)}
+.deck .point>span{font-size:12px;letter-spacing:.16em;color:var(--muted)}
 .deck .point h3{font-size:clamp(15px,1.5vw,20px);line-height:1.25;margin:10px 0 8px;letter-spacing:-.01em}
 .deck .point p{font-size:12px;line-height:1.55;color:var(--muted);margin:0}
 .deck .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(190px,100%),1fr));gap:16px;margin-top:20px}
 .deck .stat{border-top:var(--line) solid var(--accent);padding-top:12px}
 .deck .stat strong{display:block;font-family:'${display}',sans-serif;font-size:clamp(30px,5vw,64px);line-height:1;color:var(--accent-text);font-weight:400}
-.deck .stat span{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+.deck .stat span{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:8px}
 .deck .deck-quote{font-family:'${display}',sans-serif;font-size:clamp(30px,4.6vw,72px);line-height:1.08;letter-spacing:-.025em;margin:0;max-width:18ch;color:var(--ink)}
-.deck .deck-quote-author{margin:22px 0 0;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.deck .deck-quote-author{margin:22px 0 0;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
 .deck .slide-closing .slide-inner{max-width:900px}
-.deck .deck-cta{display:inline-flex;align-self:flex-start;margin-top:26px;padding:12px 16px;background:var(--accent);color:var(--accent-on);font-size:10px;letter-spacing:.16em;text-transform:uppercase;border-radius:var(--radius)}
-.deck .slide-number{position:absolute;right:30px;bottom:88px;font-size:9px;letter-spacing:.16em;color:var(--muted)}
+.deck .deck-cta{display:inline-flex;align-self:flex-start;margin-top:26px;padding:12px 16px;background:var(--accent);color:var(--accent-on);font-size:12px;letter-spacing:.16em;text-transform:uppercase;border-radius:var(--radius)}
+.deck .slide-number{position:absolute;right:30px;bottom:88px;font-size:12px;letter-spacing:.16em;color:var(--muted)}
 .deck .deck-bottom{position:absolute;z-index:20;bottom:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 30px;border-top:var(--line) solid var(--muted);background:color-mix(in srgb,var(--ground) 82%,transparent);backdrop-filter:blur(12px);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .deck .deck-controls{display:flex;gap:6px}
 .deck .deck-controls button{min-width:44px;min-height:44px;border:var(--line) solid var(--muted);background:transparent;color:var(--ink);padding:7px 10px;font-size:12px;line-height:1;cursor:pointer;border-radius:var(--radius)}
@@ -447,6 +636,7 @@ body.deck{--bg:${style.palette.bg};--surface:${style.palette.surface};--ink:${st
 .deck .deck-hint{font-size:8px;letter-spacing:.12em;color:var(--muted)}
 .deck .atmosphere .orb-a,.deck .atmosphere .orb-b{position:absolute;border-radius:50%}
 ${motifFor(style.slug)}
+${COMPOSITION_CSS}
 @media (max-width:820px){
   .deck .deck-top{padding:14px 16px}.deck .deck-title{display:none}.deck .deck-bottom{padding:10px 16px}.deck .deck-hint{display:none}
   .deck .slide{padding:86px 20px 88px}.deck .cover-grid{grid-template-columns:1fr}.deck .cover-mark{display:none}
@@ -459,7 +649,7 @@ ${motifFor(style.slug)}
 .deck-figure{margin:18px 0 0;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(14px,2.4vw,34px);align-items:end;min-height:0}
 .deck-figure svg{width:100%;aspect-ratio:8/5;display:block;border:var(--line) solid color-mix(in srgb,var(--ink) 28%,transparent);border-radius:var(--radius);background:var(--surface)}
 .deck-figure figcaption{display:flex;flex-direction:column;gap:6px;padding-bottom:3px;color:var(--muted);font-family:var(--body);font-size:12px;line-height:1.45;max-width:25ch}
-.deck-figure figcaption span{font-family:var(--mono);font-size:8px;letter-spacing:.1em;text-transform:uppercase}
+.deck-figure figcaption span{font-family:var(--body-font);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
 .deck.layout-figure .slide-inner{max-width:1180px}
 @media(max-width:820px){.deck-figure{grid-template-columns:1fr}.deck-figure figcaption{max-width:none}}
 @media print{.deck .anim{opacity:1!important;transform:none!important}body.deck{overflow:visible;background:var(--ground)}.deck .deck-top,.deck .deck-bottom,.deck .deck-progress,.deck .deck-hint{display:none}.deck .deck-stage{position:static;inset:auto;background:var(--ground)}.deck .slide{position:relative;inset:auto;width:1600px;height:900px;opacity:1;visibility:visible;transform:none;padding:80px}.deck .slide:not(:first-of-type){page-break-before:always;break-before:page}.deck .slide[aria-hidden=true]{display:flex}}

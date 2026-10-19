@@ -30,6 +30,32 @@ No se ejecutó `pnpm check:all` (el brief lo prohíbe); los timeouts se investig
 | Evaluación | `validateDeck` reutiliza `validateHtml` y añade topes/palabras por slide. | `src/generate.ts:168`, `src/validate.ts:916`, `src/types/deck.ts:10` |
 | Revisión | Igual que web: `beauty validate --visual`; no existe ledger de deck. | `src/cli.ts:941`, `src/visual.ts:799` |
 
+#### Biblioteca de composiciones por propósito (estado actual)
+
+`src/deck-compositions.ts` elige la composición por `slide.purpose`, no por azar:
+`cover`, `problem`, `comparison` (dos columnas antes/después con divisor y lado en foco),
+`process` (3–5 pasos sobre una línea de recorrido, no tarjetas), `example` (un objeto
+grande con caption), `result` (una afirmación + línea de apoyo + tabla opcional),
+`next-steps` (lista ordenada con responsable/cuándo en texto plano) y `table`
+(tabla semántica de hasta 6 filas × 4 columnas con `<caption>`, `scope` y scroll
+horizontal propio). `slide.purpose` es opcional: sin él se conserva el comportamiento
+de `layout` (`statement/points/stats/quote/figure`).
+
+Regla de ritmo determinista: el propósito fija composición y escala base; el índice
+alterna posición y reduce la escala un 8 % en las láminas impares; la semilla solo
+invierte el eje cuando el estilo admite asimetría (nunca cambia contenido ni tipo de
+composición). Campos de `src/styles/art-direction.ts` que la biblioteca consume de
+verdad: `composition.density` (texto → aireado/regular/denso) y
+`composition.allowedAsymmetry` (permite o no espejar el eje). El resto entra por los
+tokens del preset (paleta, fuentes, reglas, motivos).
+
+Texto: los límites de `DECK_TEXT_LIMITS` siguen lanzando `DECK_TEXT_TOO_LONG`; las
+tablas validan forma con `DECK_TABLE_SHAPE`; una lámina por encima de
+`DECK_WORD_LIMIT` recibe `deck-word-count` con la sugerencia de dividirla o mover el
+detalle a un resumen separado, sin tocar el original. La auditoría por lámina
+(`auditDeckSlidesBatch` en `src/visual.ts`, 1280×720) recorre cada slide con la
+navegación real del deck y aplica overflow, texto recortado, texto diminuto y oclusión.
+
 ### (c) GIF narrativos
 
 | Etapa | Qué pasa de verdad | Evidencia |
