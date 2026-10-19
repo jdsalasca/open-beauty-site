@@ -27,10 +27,10 @@ function groupProgress(state: string | undefined): number {
   return 0;
 }
 
-function unitPlacement(box: NarrativeRect, composition: OpticalComposition, index: number, state: string | undefined): OpticalUnit {
+function unitPlacement(box: NarrativeRect, composition: OpticalComposition, index: number, state: string | undefined, legacyUpgrade = false): OpticalUnit {
   const columns = [0.16, 0.45, 0.72];
   const isLowerGroup = index >= 3;
-  const progress = isLowerGroup ? groupProgress(state) : 0;
+  const progress = isLowerGroup || legacyUpgrade ? groupProgress(state) : 0;
   const radius = Math.min(box.width * (composition === 'comparison' ? 0.085 : 0.082), box.height * 0.11);
   const centerX = box.x + box.width * (columns[index % 3]! + progress * 0.13);
   const centerY = box.y + box.height * (isLowerGroup ? 0.71 : 0.29);
@@ -48,10 +48,10 @@ function placementFor(context: NarrativeRenderContext, box: NarrativeRect, compo
   const fromSemantic = context.brief.phases[context.frame.fromPhaseIndex]!.visual.semantic;
   const toSemantic = context.brief.phases[context.frame.toPhaseIndex]!.visual.semantic;
   if (context.frame.kind !== 'transition' && context.frame.kind !== 'loop-bridge') {
-    return unitPlacement(box, composition, index, context.semantic?.states[entity.id]);
+    return unitPlacement(box, composition, index, context.semantic?.states[entity.id], context.semantic?.legacyUpgrade === true);
   }
-  const from = unitPlacement(box, composition, index, fromSemantic.states[entity.id]);
-  const to = unitPlacement(box, composition, index, toSemantic.states[entity.id]);
+  const from = unitPlacement(box, composition, index, fromSemantic.states[entity.id], fromSemantic.legacyUpgrade === true);
+  const to = unitPlacement(box, composition, index, toSemantic.states[entity.id], toSemantic.legacyUpgrade === true);
   const t = Math.max(0, Math.min(1, context.frame.progress));
   const mix = (start: number, end: number): number => start + (end - start) * t;
   return {

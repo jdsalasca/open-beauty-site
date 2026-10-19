@@ -112,6 +112,9 @@ test('table-row and card-collection upgrades pass decoded object controls and re
       const objectControls = result.evaluation.narrative.controls.filter((control) => control.name.startsWith('semantic-object-transformation:'));
       assert.ok(objectControls.length > 0, `${style}/${kind} declares decoded object transformation controls`);
       assert.ok(objectControls.every((control) => control.passed), `${style}/${kind} passes every decoded object transformation control: ${objectControls.map((control) => control.detail).join(' | ')}`);
+      if (style === 'opart') {
+        assert.ok(objectControls.every((control) => control.detail.includes('changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d')), 'opart changes each illustrative unit across every hold and loop join');
+      }
       const midpointControls = result.evaluation.narrative.controls.filter((control) => control.name.startsWith('semantic-object-midpoint:'));
       assert.ok(midpointControls.every((control) => control.passed), `${style}/${kind} passes each decoded transition midpoint control`);
       assert.ok(result.evaluation.automatedEvidence?.objectTransformationByFrame?.some((frame) => frame.measured && frame.passed), `${style}/${kind} records decoded region evidence`);
@@ -144,7 +147,7 @@ test('text-only changes fail the object control for an upgraded legacy brief', a
   }
 });
 
-test('legacyArt reproduces the previous papercraft comparison art byte-for-byte', async () => {
+test('legacyArt reproduces the previous papercraft art byte-for-byte', async () => {
   const narrativeRoot = path.resolve('docs/narrative-gif');
   const index = JSON.parse(await readFile(path.join(narrativeRoot, 'compare', 'index.json'), 'utf8')) as {
     pairs: Array<{ style: StyleSlug; composition: string; before: { assets: { gif: string; png: string; contactSheet: string; manifest: string } } }>;
