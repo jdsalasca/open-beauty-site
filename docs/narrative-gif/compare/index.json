@@ -34,7 +34,7 @@
               "decodedMs": 5000
             }
           ],
-          "renderMs": 2404
+          "renderMs": null
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -100,7 +100,7 @@
               "decodedMs": 5000
             }
           ],
-          "renderMs": 3649
+          "renderMs": 3752
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -199,13 +199,7 @@
             "visual-review": "pending"
           }
         }
-      ],
-      "renderDeltaMs": 1245,
-      "legacyArtMatchesHistoricalAssets": {
-        "gif": true,
-        "png": true,
-        "contactSheet": true
-      }
+      ]
     },
     {
       "style": "isotype",
@@ -238,7 +232,7 @@
               "decodedMs": 5000
             }
           ],
-          "renderMs": 2588
+          "renderMs": null
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -304,7 +298,7 @@
               "decodedMs": 5000
             }
           ],
-          "renderMs": 3756
+          "renderMs": 4027
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -403,13 +397,7 @@
             "visual-review": "pending"
           }
         }
-      ],
-      "renderDeltaMs": 1168,
-      "legacyArtMatchesHistoricalAssets": {
-        "gif": true,
-        "png": true,
-        "contactSheet": true
-      }
+      ]
     },
     {
       "style": "opart",
@@ -442,7 +430,7 @@
               "decodedMs": 5000
             }
           ],
-          "renderMs": 3462
+          "renderMs": null
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -497,24 +485,18 @@
           "phaseHolds": [
             {
               "phaseId": "before",
-              "requestedMs": 5000,
-              "encodedMs": 5000,
               "decodedMs": 5000
             },
             {
               "phaseId": "change",
-              "requestedMs": 5000,
-              "encodedMs": 5000,
               "decodedMs": 5000
             },
             {
               "phaseId": "result",
-              "requestedMs": 5000,
-              "encodedMs": 5000,
               "decodedMs": 5000
             }
           ],
-          "renderMs": 3689
+          "renderMs": 3488
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -613,13 +595,7 @@
             "visual-review": "pending"
           }
         }
-      ],
-      "renderDeltaMs": 227,
-      "legacyArtMatchesHistoricalAssets": {
-        "gif": false,
-        "png": false,
-        "contactSheet": false
-      }
+      ]
     },
     {
       "style": "opart",
@@ -652,7 +628,7 @@
               "decodedMs": 5000
             }
           ],
-          "renderMs": 3646
+          "renderMs": null
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -707,24 +683,18 @@
           "phaseHolds": [
             {
               "phaseId": "before",
-              "requestedMs": 5000,
-              "encodedMs": 5000,
               "decodedMs": 5000
             },
             {
               "phaseId": "change",
-              "requestedMs": 5000,
-              "encodedMs": 5000,
               "decodedMs": 5000
             },
             {
               "phaseId": "result",
-              "requestedMs": 5000,
-              "encodedMs": 5000,
               "decodedMs": 5000
             }
           ],
-          "renderMs": 3561
+          "renderMs": 3874
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -823,13 +793,7 @@
             "visual-review": "pending"
           }
         }
-      ],
-      "renderDeltaMs": -85,
-      "legacyArtMatchesHistoricalAssets": {
-        "gif": false,
-        "png": false,
-        "contactSheet": false
-      }
+      ]
     },
     {
       "style": "renaissance",
@@ -862,7 +826,7 @@
               "decodedMs": 5000
             }
           ],
-          "renderMs": 3374
+          "renderMs": null
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -928,7 +892,7 @@
               "decodedMs": 5000
             }
           ],
-          "renderMs": 5939
+          "renderMs": 3397
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -1027,13 +991,7 @@
             "visual-review": "pending"
           }
         }
-      ],
-      "renderDeltaMs": 2565,
-      "legacyArtMatchesHistoricalAssets": {
-        "gif": true,
-        "png": true,
-        "contactSheet": true
-      }
+      ]
     },
     {
       "style": "renaissance",
@@ -1066,7 +1024,7 @@
               "decodedMs": 5000
             }
           ],
-          "renderMs": 3139
+          "renderMs": null
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -1132,7 +1090,7 @@
               "decodedMs": 5000
             }
           ],
-          "renderMs": 6899
+          "renderMs": 3588
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -1231,13 +1189,7 @@
             "visual-review": "pending"
           }
         }
-      ],
-      "renderDeltaMs": 3760,
-      "legacyArtMatchesHistoricalAssets": {
-        "gif": true,
-        "png": true,
-        "contactSheet": true
-      }
+      ]
     },
     {
       "style": "ukiyoe",
@@ -1270,7 +1222,7 @@
               "decodedMs": 5000
             }
           ],
-          "renderMs": 3128
+          "renderMs": null
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -1319,30 +1271,24 @@
           "manifest": "ukiyoe/checklist/after/senal-68ae273f.manifest.json"
         },
         "metrics": {
-          "gifBytes": 1073211,
+          "gifBytes": 1098186,
           "frames": 33,
           "durationMs": 17190,
           "phaseHolds": [
             {
               "phaseId": "before",
-              "requestedMs": 5000,
-              "encodedMs": 5000,
               "decodedMs": 5000
             },
             {
               "phaseId": "change",
-              "requestedMs": 5000,
-              "encodedMs": 5000,
               "decodedMs": 5000
             },
             {
               "phaseId": "result",
-              "requestedMs": 5000,
-              "encodedMs": 5000,
               "decodedMs": 5000
             }
           ],
-          "renderMs": 8355
+          "renderMs": 3389
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -1379,18 +1325,18 @@
         ],
         "balance": "pass · proxy; 8×4 decoded-pixel grid against #F3E9D2: empty cells 12.5%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 12.5%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: before · pausa: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 12.5% | before → change · punto medio de transición: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 6.3% | change · pausa: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 6.3% | change → result · punto medio de transición: empty 6.3%, text fill 100.0%, art 50.0%, largest empty 6.3% | result · pausa: empty 6.3%, text fill 100.0%, art 50.0%, largest empty 6.3% | result → before · unión del ciclo: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 12.5%",
         "transformations": [
-          "pass · semantic-object-midpoint:before → change · punto medio de transición · decoded object diff 2.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.2%",
-          "pass · semantic-object-midpoint:change → result · punto medio de transición · decoded object diff 6.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.8%, legacy-item-a flagged→ready-for-review 3.5%, legacy-item-b flagged→ready-for-review 6.0%, legacy-item-c flagged→ready-for-review 3.0%, legacy-item-d flagged→ready-for-review 3.3%",
-          "pass · semantic-object-midpoint:result → before · unión del ciclo · decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.2%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.2%",
-          "pass · semantic-object-transformation:before → change hold · decoded object diff 11.5%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 11.3%, legacy-item-a pending→flagged 13.4%, legacy-item-b pending→flagged 13.2%, legacy-item-c pending→flagged 10.9%, legacy-item-d pending→flagged 10.7%",
-          "pass · semantic-object-transformation:change → result hold · decoded object diff 9.4%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.6%, legacy-item-a flagged→ready-for-review 5.8%, legacy-item-b flagged→ready-for-review 6.4%, legacy-item-c flagged→ready-for-review 6.5%, legacy-item-d flagged→ready-for-review 5.6%",
-          "pass · semantic-object-transformation:result → before loop join · decoded object diff 15.2%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 14.9%, legacy-item-a ready-for-review→pending 17.6%, legacy-item-b ready-for-review→pending 15.3%, legacy-item-c ready-for-review→pending 16.1%, legacy-item-d ready-for-review→pending 14.9%"
+          "pass · semantic-object-midpoint:before → change · punto medio de transición · decoded object diff 2.9%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.4%",
+          "pass · semantic-object-midpoint:change → result · punto medio de transición · decoded object diff 6.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.9%, legacy-item-a flagged→ready-for-review 3.5%, legacy-item-b flagged→ready-for-review 6.0%, legacy-item-c flagged→ready-for-review 3.0%, legacy-item-d flagged→ready-for-review 3.6%",
+          "pass · semantic-object-midpoint:result → before · unión del ciclo · decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.3%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.2%",
+          "pass · semantic-object-transformation:before → change hold · decoded object diff 11.5%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 11.3%, legacy-item-a pending→flagged 13.4%, legacy-item-b pending→flagged 13.2%, legacy-item-c pending→flagged 11.0%, legacy-item-d pending→flagged 11.0%",
+          "pass · semantic-object-transformation:change → result hold · decoded object diff 9.4%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.6%, legacy-item-a flagged→ready-for-review 5.8%, legacy-item-b flagged→ready-for-review 6.4%, legacy-item-c flagged→ready-for-review 6.5%, legacy-item-d flagged→ready-for-review 5.9%",
+          "pass · semantic-object-transformation:result → before loop join · decoded object diff 15.2%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 15.0%, legacy-item-a ready-for-review→pending 17.6%, legacy-item-b ready-for-review→pending 15.3%, legacy-item-c ready-for-review→pending 16.1%, legacy-item-d ready-for-review→pending 14.9%"
         ],
-        "objectRegionDiff": "pass · decoded object diff 2.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.2% | decoded object diff 6.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.8%, legacy-item-a flagged→ready-for-review 3.5%, legacy-item-b flagged→ready-for-review 6.0%, legacy-item-c flagged→ready-for-review 3.0%, legacy-item-d flagged→ready-for-review 3.3% | decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.2%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.2%",
+        "objectRegionDiff": "pass · decoded object diff 2.9%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.4% | decoded object diff 6.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.9%, legacy-item-a flagged→ready-for-review 3.5%, legacy-item-b flagged→ready-for-review 6.0%, legacy-item-c flagged→ready-for-review 3.0%, legacy-item-d flagged→ready-for-review 3.6% | decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.3%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.2%",
         "reviewState": "pending",
         "openFeedback": []
       },
-      "objectRegionDiff": "pass · decoded object diff 2.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.2% | decoded object diff 6.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.8%, legacy-item-a flagged→ready-for-review 3.5%, legacy-item-b flagged→ready-for-review 6.0%, legacy-item-c flagged→ready-for-review 3.0%, legacy-item-d flagged→ready-for-review 3.3% | decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.2%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.2%",
+      "objectRegionDiff": "pass · decoded object diff 2.9%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.4% | decoded object diff 6.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.9%, legacy-item-a flagged→ready-for-review 3.5%, legacy-item-b flagged→ready-for-review 6.0%, legacy-item-c flagged→ready-for-review 3.0%, legacy-item-d flagged→ready-for-review 3.6% | decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.3%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.2%",
       "openFeedback": [],
       "phases": [
         {
@@ -1441,13 +1387,7 @@
             "visual-review": "pending"
           }
         }
-      ],
-      "renderDeltaMs": 5227,
-      "legacyArtMatchesHistoricalAssets": {
-        "gif": false,
-        "png": false,
-        "contactSheet": false
-      }
+      ]
     },
     {
       "style": "ukiyoe",
@@ -1480,7 +1420,7 @@
               "decodedMs": 5000
             }
           ],
-          "renderMs": 3109
+          "renderMs": null
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -1529,30 +1469,24 @@
           "manifest": "ukiyoe/comparison/after/senal-35e1f973.manifest.json"
         },
         "metrics": {
-          "gifBytes": 1073211,
+          "gifBytes": 1098186,
           "frames": 33,
           "durationMs": 17190,
           "phaseHolds": [
             {
               "phaseId": "before",
-              "requestedMs": 5000,
-              "encodedMs": 5000,
               "decodedMs": 5000
             },
             {
               "phaseId": "change",
-              "requestedMs": 5000,
-              "encodedMs": 5000,
               "decodedMs": 5000
             },
             {
               "phaseId": "result",
-              "requestedMs": 5000,
-              "encodedMs": 5000,
               "decodedMs": 5000
             }
           ],
-          "renderMs": 8249
+          "renderMs": 3593
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -1589,18 +1523,18 @@
         ],
         "balance": "pass · proxy; 8×4 decoded-pixel grid against #F3E9D2: empty cells 12.5%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 12.5%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: before · pausa: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 12.5% | before → change · punto medio de transición: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 6.3% | change · pausa: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 6.3% | change → result · punto medio de transición: empty 6.3%, text fill 100.0%, art 50.0%, largest empty 6.3% | result · pausa: empty 6.3%, text fill 100.0%, art 50.0%, largest empty 6.3% | result → before · unión del ciclo: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 12.5%",
         "transformations": [
-          "pass · semantic-object-midpoint:before → change · punto medio de transición · decoded object diff 2.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.2%",
-          "pass · semantic-object-midpoint:change → result · punto medio de transición · decoded object diff 6.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.8%, legacy-item-a flagged→ready-for-review 3.5%, legacy-item-b flagged→ready-for-review 6.0%, legacy-item-c flagged→ready-for-review 3.0%, legacy-item-d flagged→ready-for-review 3.3%",
-          "pass · semantic-object-midpoint:result → before · unión del ciclo · decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.2%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.2%",
-          "pass · semantic-object-transformation:before → change hold · decoded object diff 11.5%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 11.3%, legacy-item-a pending→flagged 13.4%, legacy-item-b pending→flagged 13.2%, legacy-item-c pending→flagged 10.9%, legacy-item-d pending→flagged 10.7%",
-          "pass · semantic-object-transformation:change → result hold · decoded object diff 9.4%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.6%, legacy-item-a flagged→ready-for-review 5.8%, legacy-item-b flagged→ready-for-review 6.4%, legacy-item-c flagged→ready-for-review 6.5%, legacy-item-d flagged→ready-for-review 5.6%",
-          "pass · semantic-object-transformation:result → before loop join · decoded object diff 15.2%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 14.9%, legacy-item-a ready-for-review→pending 17.6%, legacy-item-b ready-for-review→pending 15.3%, legacy-item-c ready-for-review→pending 16.1%, legacy-item-d ready-for-review→pending 14.9%"
+          "pass · semantic-object-midpoint:before → change · punto medio de transición · decoded object diff 2.9%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.4%",
+          "pass · semantic-object-midpoint:change → result · punto medio de transición · decoded object diff 6.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.9%, legacy-item-a flagged→ready-for-review 3.5%, legacy-item-b flagged→ready-for-review 6.0%, legacy-item-c flagged→ready-for-review 3.0%, legacy-item-d flagged→ready-for-review 3.6%",
+          "pass · semantic-object-midpoint:result → before · unión del ciclo · decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.3%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.2%",
+          "pass · semantic-object-transformation:before → change hold · decoded object diff 11.5%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 11.3%, legacy-item-a pending→flagged 13.4%, legacy-item-b pending→flagged 13.2%, legacy-item-c pending→flagged 11.0%, legacy-item-d pending→flagged 11.0%",
+          "pass · semantic-object-transformation:change → result hold · decoded object diff 9.4%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.6%, legacy-item-a flagged→ready-for-review 5.8%, legacy-item-b flagged→ready-for-review 6.4%, legacy-item-c flagged→ready-for-review 6.5%, legacy-item-d flagged→ready-for-review 5.9%",
+          "pass · semantic-object-transformation:result → before loop join · decoded object diff 15.2%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 15.0%, legacy-item-a ready-for-review→pending 17.6%, legacy-item-b ready-for-review→pending 15.3%, legacy-item-c ready-for-review→pending 16.1%, legacy-item-d ready-for-review→pending 14.9%"
         ],
-        "objectRegionDiff": "pass · decoded object diff 2.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.2% | decoded object diff 6.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.8%, legacy-item-a flagged→ready-for-review 3.5%, legacy-item-b flagged→ready-for-review 6.0%, legacy-item-c flagged→ready-for-review 3.0%, legacy-item-d flagged→ready-for-review 3.3% | decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.2%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.2%",
+        "objectRegionDiff": "pass · decoded object diff 2.9%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.4% | decoded object diff 6.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.9%, legacy-item-a flagged→ready-for-review 3.5%, legacy-item-b flagged→ready-for-review 6.0%, legacy-item-c flagged→ready-for-review 3.0%, legacy-item-d flagged→ready-for-review 3.6% | decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.3%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.2%",
         "reviewState": "pending",
         "openFeedback": []
       },
-      "objectRegionDiff": "pass · decoded object diff 2.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.2% | decoded object diff 6.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.8%, legacy-item-a flagged→ready-for-review 3.5%, legacy-item-b flagged→ready-for-review 6.0%, legacy-item-c flagged→ready-for-review 3.0%, legacy-item-d flagged→ready-for-review 3.3% | decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.2%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.2%",
+      "objectRegionDiff": "pass · decoded object diff 2.9%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.4% | decoded object diff 6.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.9%, legacy-item-a flagged→ready-for-review 3.5%, legacy-item-b flagged→ready-for-review 6.0%, legacy-item-c flagged→ready-for-review 3.0%, legacy-item-d flagged→ready-for-review 3.6% | decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.3%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.2%",
       "openFeedback": [],
       "phases": [
         {
@@ -1651,13 +1585,7 @@
             "visual-review": "pending"
           }
         }
-      ],
-      "renderDeltaMs": 5140,
-      "legacyArtMatchesHistoricalAssets": {
-        "gif": false,
-        "png": false,
-        "contactSheet": false
-      }
+      ]
     },
     {
       "style": "brutalist",
@@ -1690,7 +1618,7 @@
               "decodedMs": 5000
             }
           ],
-          "renderMs": 4054
+          "renderMs": null
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -1756,7 +1684,7 @@
               "decodedMs": 5000
             }
           ],
-          "renderMs": 7945
+          "renderMs": 4120
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -1855,13 +1783,7 @@
             "visual-review": "pending"
           }
         }
-      ],
-      "renderDeltaMs": 3891,
-      "legacyArtMatchesHistoricalAssets": {
-        "gif": true,
-        "png": true,
-        "contactSheet": true
-      }
+      ]
     },
     {
       "style": "papercraft",
@@ -1894,7 +1816,7 @@
               "decodedMs": 5000
             }
           ],
-          "renderMs": 3920
+          "renderMs": null
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -1960,7 +1882,7 @@
               "decodedMs": 5000
             }
           ],
-          "renderMs": 7448
+          "renderMs": 4902
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -2059,13 +1981,7 @@
             "visual-review": "pending"
           }
         }
-      ],
-      "renderDeltaMs": 3528,
-      "legacyArtMatchesHistoricalAssets": {
-        "gif": true,
-        "png": true,
-        "contactSheet": true
-      }
+      ]
     },
     {
       "style": "brutalist",
@@ -2098,7 +2014,7 @@
               "decodedMs": 5000
             }
           ],
-          "renderMs": 3393
+          "renderMs": null
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -2164,7 +2080,7 @@
               "decodedMs": 5000
             }
           ],
-          "renderMs": 4695
+          "renderMs": 4318
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -2263,13 +2179,7 @@
             "visual-review": "pending"
           }
         }
-      ],
-      "renderDeltaMs": 1302,
-      "legacyArtMatchesHistoricalAssets": {
-        "gif": true,
-        "png": true,
-        "contactSheet": true
-      }
+      ]
     },
     {
       "style": "papercraft",
@@ -2302,7 +2212,7 @@
               "decodedMs": 5000
             }
           ],
-          "renderMs": 3777
+          "renderMs": null
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -2368,7 +2278,7 @@
               "decodedMs": 5000
             }
           ],
-          "renderMs": 4956
+          "renderMs": 5095
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -2467,13 +2377,7 @@
             "visual-review": "pending"
           }
         }
-      ],
-      "renderDeltaMs": 1179,
-      "legacyArtMatchesHistoricalAssets": {
-        "gif": true,
-        "png": true,
-        "contactSheet": true
-      }
+      ]
     },
     {
       "style": "brutalist",
@@ -2506,7 +2410,7 @@
               "decodedMs": 5000
             }
           ],
-          "renderMs": 3496
+          "renderMs": null
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -2572,7 +2476,7 @@
               "decodedMs": 5000
             }
           ],
-          "renderMs": 4437
+          "renderMs": 3994
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -2671,13 +2575,7 @@
             "visual-review": "pending"
           }
         }
-      ],
-      "renderDeltaMs": 941,
-      "legacyArtMatchesHistoricalAssets": {
-        "gif": false,
-        "png": true,
-        "contactSheet": false
-      }
+      ]
     },
     {
       "style": "papercraft",
@@ -2710,7 +2608,7 @@
               "decodedMs": 5000
             }
           ],
-          "renderMs": 3969
+          "renderMs": null
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -2776,7 +2674,7 @@
               "decodedMs": 5000
             }
           ],
-          "renderMs": 4827
+          "renderMs": 5149
         },
         "evaluation": {
           "technical-integrity": "pass",
@@ -2875,13 +2773,7 @@
             "visual-review": "pending"
           }
         }
-      ],
-      "renderDeltaMs": 858,
-      "legacyArtMatchesHistoricalAssets": {
-        "gif": false,
-        "png": true,
-        "contactSheet": false
-      }
+      ]
     }
   ],
   "semanticFixtures": [
@@ -2988,7 +2880,7 @@
             "decodedMs": 2200
           }
         ],
-        "renderMs": 1123
+        "renderMs": 1222
       },
       "artOnlyMetrics": {
         "gifBytes": 123191,
@@ -3008,7 +2900,7 @@
             "decodedMs": 2200
           }
         ],
-        "renderMs": 1094
+        "renderMs": 1240
       },
       "balance": "pass · proxy; 8×4 decoded-pixel grid against #F2EFE4: empty cells 12.5%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 9.4%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: scope-of-two · hold: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 9.4% | scope-of-two → third-card-included · transition midpoint: empty 21.9%, text fill 100.0%, art 50.0%, largest empty 18.8% | third-card-included · hold: empty 21.9%, text fill 100.0%, art 50.0%, largest empty 18.8% | third-card-included → set-of-three · transition midpoint: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 6.3% | set-of-three · hold: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 6.3% | set-of-three → scope-of-two · loop join: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 9.4%",
       "transformations": [
@@ -3135,7 +3027,7 @@
             "decodedMs": 2200
           }
         ],
-        "renderMs": 1224
+        "renderMs": 1338
       },
       "artOnlyMetrics": {
         "gifBytes": 124920,
@@ -3155,7 +3047,7 @@
             "decodedMs": 2200
           }
         ],
-        "renderMs": 1081
+        "renderMs": 1188
       },
       "balance": "pass · proxy; 8×4 decoded-pixel grid against #F2EFE4: empty cells 18.8%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 9.4%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: alcance-de-dos · pausa: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 9.4% | alcance-de-dos → tercera-ficha-incluida · punto medio de transición: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 6.3% | tercera-ficha-incluida · pausa: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 6.3% | tercera-ficha-incluida → conjunto-de-tres · punto medio de transición: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 9.4% | conjunto-de-tres · pausa: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 9.4% | conjunto-de-tres → alcance-de-dos · unión del ciclo: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 9.4%",
       "transformations": [
@@ -3302,7 +3194,7 @@
             "decodedMs": 2200
           }
         ],
-        "renderMs": 1176
+        "renderMs": 1366
       },
       "artOnlyMetrics": {
         "gifBytes": 164680,
@@ -3326,7 +3218,7 @@
             "decodedMs": 2200
           }
         ],
-        "renderMs": 1278
+        "renderMs": 1266
       },
       "balance": "pass · proxy; 8×4 decoded-pixel grid against #F2EFE4: empty cells 18.8%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 12.5%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: download-started · hold: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 12.5% | download-started → timeout · transition midpoint: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 12.5% | timeout · hold: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 12.5% | timeout → retry-requested · transition midpoint: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 12.5% | retry-requested · hold: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 12.5% | retry-requested → result-pending · transition midpoint: empty 15.6%, text fill 100.0%, art 50.0%, largest empty 6.3% | result-pending · hold: empty 15.6%, text fill 100.0%, art 50.0%, largest empty 6.3% | result-pending → download-started · loop join: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 12.5%",
       "transformations": [
@@ -3477,7 +3369,7 @@
             "decodedMs": 2200
           }
         ],
-        "renderMs": 1328
+        "renderMs": 1389
       },
       "artOnlyMetrics": {
         "gifBytes": 174788,
@@ -3501,7 +3393,7 @@
             "decodedMs": 2200
           }
         ],
-        "renderMs": 1186
+        "renderMs": 1295
       },
       "balance": "pass · proxy; 8×4 decoded-pixel grid against #F2EFE4: empty cells 12.5%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 12.5%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: descarga-iniciada · pausa: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 12.5% | descarga-iniciada → tiempo-agotado · punto medio de transición: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 12.5% | tiempo-agotado · pausa: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 12.5% | tiempo-agotado → reintento · punto medio de transición: empty 15.6%, text fill 100.0%, art 50.0%, largest empty 6.3% | reintento · pausa: empty 15.6%, text fill 100.0%, art 50.0%, largest empty 6.3% | reintento → resultado-pendiente · punto medio de transición: empty 15.6%, text fill 100.0%, art 50.0%, largest empty 12.5% | resultado-pendiente · pausa: empty 15.6%, text fill 100.0%, art 50.0%, largest empty 12.5% | resultado-pendiente → descarga-iniciada · unión del ciclo: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 12.5%",
       "transformations": [
@@ -3652,7 +3544,7 @@
             "decodedMs": 2200
           }
         ],
-        "renderMs": 1876
+        "renderMs": 1384
       },
       "artOnlyMetrics": {
         "gifBytes": 184434,
@@ -3676,7 +3568,7 @@
             "decodedMs": 2200
           }
         ],
-        "renderMs": 1268
+        "renderMs": 1254
       },
       "balance": "pass · proxy; 8×4 decoded-pixel grid against #F2EFE4: empty cells 12.5%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 12.5%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: repetition-visible · hold: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 12.5% | repetition-visible → duplicate-identified · transition midpoint: empty 15.6%, text fill 100.0%, art 50.0%, largest empty 12.5% | duplicate-identified · hold: empty 15.6%, text fill 100.0%, art 50.0%, largest empty 12.5% | duplicate-identified → authorized-rejection · transition midpoint: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 6.3% | authorized-rejection · hold: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 6.3% | authorized-rejection → beneficio-esperado · transition midpoint: empty 6.3%, text fill 100.0%, art 50.0%, largest empty 3.1% | beneficio-esperado · hold: empty 6.3%, text fill 100.0%, art 50.0%, largest empty 3.1% | beneficio-esperado → repetition-visible · loop join: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 12.5%",
       "transformations": [
@@ -3827,7 +3719,7 @@
             "decodedMs": 2200
           }
         ],
-        "renderMs": 1188
+        "renderMs": 1350
       },
       "artOnlyMetrics": {
         "gifBytes": 189411,
@@ -3851,7 +3743,7 @@
             "decodedMs": 2200
           }
         ],
-        "renderMs": 1100
+        "renderMs": 1262
       },
       "balance": "pass · proxy; 8×4 decoded-pixel grid against #F2EFE4: empty cells 12.5%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 6.3%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: repeticion-visible · pausa: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 6.3% | repeticion-visible → duplicado-identificado · punto medio de transición: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 12.5% | duplicado-identificado · pausa: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 12.5% | duplicado-identificado → rechazo-autorizado · punto medio de transición: empty 15.6%, text fill 100.0%, art 50.0%, largest empty 12.5% | rechazo-autorizado · pausa: empty 15.6%, text fill 100.0%, art 50.0%, largest empty 12.5% | rechazo-autorizado → beneficio-esperado · punto medio de transición: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 6.3% | beneficio-esperado · pausa: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 6.3% | beneficio-esperado → repeticion-visible · unión del ciclo: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 6.3%",
       "transformations": [
@@ -3982,7 +3874,7 @@
             "decodedMs": 2200
           }
         ],
-        "renderMs": 1295
+        "renderMs": 1315
       },
       "artOnlyMetrics": {
         "gifBytes": 230676,
@@ -4002,7 +3894,7 @@
             "decodedMs": 2200
           }
         ],
-        "renderMs": 1169
+        "renderMs": 1293
       },
       "balance": "pass · proxy; 8×4 decoded-pixel grid against #FBF1E2: empty cells 15.6%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 9.4%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: scope-of-two · hold: empty 15.6%, text fill 100.0%, art 50.0%, largest empty 9.4% | scope-of-two → third-card-included · transition midpoint: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 3.1% | third-card-included · hold: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 3.1% | third-card-included → set-of-three · transition midpoint: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 9.4% | set-of-three · hold: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 9.4% | set-of-three → scope-of-two · loop join: empty 15.6%, text fill 100.0%, art 50.0%, largest empty 9.4%",
       "transformations": [
@@ -4129,7 +4021,7 @@
             "decodedMs": 2200
           }
         ],
-        "renderMs": 1392
+        "renderMs": 1335
       },
       "artOnlyMetrics": {
         "gifBytes": 239433,
@@ -4149,7 +4041,7 @@
             "decodedMs": 2200
           }
         ],
-        "renderMs": 1273
+        "renderMs": 1303
       },
       "balance": "pass · proxy; 8×4 decoded-pixel grid against #FBF1E2: empty cells 12.5%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 6.3%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: alcance-de-dos · pausa: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 6.3% | alcance-de-dos → tercera-ficha-incluida · punto medio de transición: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 6.3% | tercera-ficha-incluida · pausa: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 6.3% | tercera-ficha-incluida → conjunto-de-tres · punto medio de transición: empty 15.6%, text fill 100.0%, art 50.0%, largest empty 9.4% | conjunto-de-tres · pausa: empty 15.6%, text fill 100.0%, art 50.0%, largest empty 9.4% | conjunto-de-tres → alcance-de-dos · unión del ciclo: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 6.3%",
       "transformations": [
@@ -4296,7 +4188,7 @@
             "decodedMs": 2200
           }
         ],
-        "renderMs": 1347
+        "renderMs": 1518
       },
       "artOnlyMetrics": {
         "gifBytes": 295027,
@@ -4320,7 +4212,7 @@
             "decodedMs": 2200
           }
         ],
-        "renderMs": 1317
+        "renderMs": 1468
       },
       "balance": "pass · proxy; 8×4 decoded-pixel grid against #FBF1E2: empty cells 21.9%, text-column vertical fill 75.0%, art/object area outside the text column 43.8%, largest empty rectangle 12.5%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: download-started · hold: empty 21.9%, text fill 75.0%, art 43.8%, largest empty 12.5% | download-started → timeout · transition midpoint: empty 15.6%, text fill 75.0%, art 50.0%, largest empty 12.5% | timeout · hold: empty 15.6%, text fill 75.0%, art 50.0%, largest empty 12.5% | timeout → retry-requested · transition midpoint: empty 15.6%, text fill 75.0%, art 50.0%, largest empty 12.5% | retry-requested · hold: empty 15.6%, text fill 75.0%, art 50.0%, largest empty 12.5% | retry-requested → result-pending · transition midpoint: empty 9.4%, text fill 100.0%, art 43.8%, largest empty 6.3% | result-pending · hold: empty 9.4%, text fill 100.0%, art 43.8%, largest empty 6.3% | result-pending → download-started · loop join: empty 21.9%, text fill 75.0%, art 43.8%, largest empty 12.5%",
       "transformations": [
@@ -4471,7 +4363,7 @@
             "decodedMs": 2200
           }
         ],
-        "renderMs": 1339
+        "renderMs": 1672
       },
       "artOnlyMetrics": {
         "gifBytes": 296735,
@@ -4495,7 +4387,7 @@
             "decodedMs": 2200
           }
         ],
-        "renderMs": 1332
+        "renderMs": 1420
       },
       "balance": "pass · proxy; 8×4 decoded-pixel grid against #FBF1E2: empty cells 15.6%, text-column vertical fill 100.0%, art/object area outside the text column 43.8%, largest empty rectangle 6.3%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: descarga-iniciada · pausa: empty 15.6%, text fill 100.0%, art 43.8%, largest empty 6.3% | descarga-iniciada → tiempo-agotado · punto medio de transición: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 6.3% | tiempo-agotado · pausa: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 6.3% | tiempo-agotado → reintento · punto medio de transición: empty 3.1%, text fill 100.0%, art 50.0%, largest empty 3.1% | reintento · pausa: empty 3.1%, text fill 100.0%, art 50.0%, largest empty 3.1% | reintento → resultado-pendiente · punto medio de transición: empty 9.4%, text fill 100.0%, art 43.8%, largest empty 6.3% | resultado-pendiente · pausa: empty 9.4%, text fill 100.0%, art 43.8%, largest empty 6.3% | resultado-pendiente → descarga-iniciada · unión del ciclo: empty 15.6%, text fill 100.0%, art 43.8%, largest empty 6.3%",
       "transformations": [
@@ -4646,7 +4538,7 @@
             "decodedMs": 2200
           }
         ],
-        "renderMs": 1713
+        "renderMs": 1591
       },
       "artOnlyMetrics": {
         "gifBytes": 360533,
@@ -4670,7 +4562,7 @@
             "decodedMs": 2200
           }
         ],
-        "renderMs": 1631
+        "renderMs": 1545
       },
       "balance": "pass · proxy; 8×4 decoded-pixel grid against #FBF1E2: empty cells 12.5%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 6.3%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: repetition-visible · hold: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 6.3% | repetition-visible → duplicate-identified · transition midpoint: empty 18.8%, text fill 75.0%, art 50.0%, largest empty 12.5% | duplicate-identified · hold: empty 18.8%, text fill 75.0%, art 50.0%, largest empty 12.5% | duplicate-identified → authorized-rejection · transition midpoint: empty 21.9%, text fill 75.0%, art 50.0%, largest empty 12.5% | authorized-rejection · hold: empty 21.9%, text fill 75.0%, art 50.0%, largest empty 12.5% | authorized-rejection → beneficio-esperado · transition midpoint: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 6.3% | beneficio-esperado · hold: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 6.3% | beneficio-esperado → repetition-visible · loop join: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 6.3%",
       "transformations": [
@@ -4821,7 +4713,7 @@
             "decodedMs": 2200
           }
         ],
-        "renderMs": 1768
+        "renderMs": 1540
       },
       "artOnlyMetrics": {
         "gifBytes": 367680,
@@ -4845,7 +4737,7 @@
             "decodedMs": 2200
           }
         ],
-        "renderMs": 1639
+        "renderMs": 1640
       },
       "balance": "pass · proxy; 8×4 decoded-pixel grid against #FBF1E2: empty cells 6.3%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 6.3%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: repeticion-visible · pausa: empty 6.3%, text fill 100.0%, art 50.0%, largest empty 6.3% | repeticion-visible → duplicado-identificado · punto medio de transición: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 6.3% | duplicado-identificado · pausa: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 6.3% | duplicado-identificado → rechazo-autorizado · punto medio de transición: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 6.3% | rechazo-autorizado · pausa: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 6.3% | rechazo-autorizado → beneficio-esperado · punto medio de transición: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 6.3% | beneficio-esperado · pausa: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 6.3% | beneficio-esperado → repeticion-visible · unión del ciclo: empty 6.3%, text fill 100.0%, art 50.0%, largest empty 6.3%",
       "transformations": [

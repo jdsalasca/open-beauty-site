@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "commit": "333611c69af02ff251b757214263ecdc5d98ab4d",
+  "commit": "dffa62ed28fa2a3460e6cbfbbd009d809806de94",
   "brief": {
     "style": "opart",
     "kind": "narrative-gif",
@@ -314,9 +314,9 @@
     "contactSheetSha256": "07b7fbe812b2fd1ffc295d3ca2b6df7bee6f78258f238d722dd65a2d94b4a726"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0789573b\\docs\\narrative-gif\\compare\\opart\\checklist\\after\\ruta-para-revisar-el-cierre-5acf0cd7.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0789573b\\docs\\narrative-gif\\compare\\opart\\checklist\\after\\ruta-para-revisar-el-cierre-5acf0cd7.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0789573b\\docs\\narrative-gif\\compare\\opart\\checklist\\after\\ruta-para-revisar-el-cierre-5acf0cd7-contact-sheet.png"
+    "gif": "ruta-para-revisar-el-cierre-5acf0cd7.gif",
+    "png": "ruta-para-revisar-el-cierre-5acf0cd7.png",
+    "contactSheet": "ruta-para-revisar-el-cierre-5acf0cd7-contact-sheet.png"
   },
   "controls": [
     {
@@ -1700,7 +1700,7 @@
         "before · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0789573b\\docs\\narrative-gif\\compare\\opart\\checklist\\after\\ruta-para-revisar-el-cierre-5acf0cd7-contact-sheet.png"
+      "contactSheet": "ruta-para-revisar-el-cierre-5acf0cd7-contact-sheet.png"
     },
     {
       "phaseId": "change",
@@ -1710,7 +1710,7 @@
         "change → result · punto medio de transición",
         "change · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0789573b\\docs\\narrative-gif\\compare\\opart\\checklist\\after\\ruta-para-revisar-el-cierre-5acf0cd7-contact-sheet.png"
+      "contactSheet": "ruta-para-revisar-el-cierre-5acf0cd7-contact-sheet.png"
     },
     {
       "phaseId": "result",
@@ -1720,7 +1720,7 @@
         "result → before · unión del ciclo",
         "result · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0789573b\\docs\\narrative-gif\\compare\\opart\\checklist\\after\\ruta-para-revisar-el-cierre-5acf0cd7-contact-sheet.png"
+      "contactSheet": "ruta-para-revisar-el-cierre-5acf0cd7-contact-sheet.png"
     }
   ],
   "semanticObjectCaptures": [
@@ -2474,5 +2474,5 @@
   "openFeedbackCount": 0,
   "feedbackFrames": [],
   "publicationRecommendation": "none",
-  "renderRevision": 1
+  "renderRevision": 0
 }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "commit": "79b4fb96a2683faab4eaced59233b413b7aa98f1",
+  "commit": "dffa62ed28fa2a3460e6cbfbbd009d809806de94",
   "brief": {
     "style": "ukiyoe",
     "kind": "narrative-gif",
@@ -315,20 +315,20 @@
     "detail": "ffprobe 1280×720; 33 frames; 17590ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 1377339,
-    "png": 113215,
-    "contactSheet": 119194
+    "gif": 1386941,
+    "png": 113410,
+    "contactSheet": 120113
   },
   "hashes": {
     "briefSha256": "f1f02f0863541a23a876843364a88060617c4a3bdb9934038631a4d93c351edb",
-    "gifSha256": "578776fa7d39fba4b98c845779dd4697f84af5ae4c97c69c634961bb9c365dfe",
-    "pngSha256": "4c288aab981fa968eac5d0520612f76ede0c33ae14b51b0c0b362c37347c5b42",
-    "contactSheetSha256": "3c0a4e8153e6bb5e65e127d8bf3b373c8859616f538df191e3b092af3d3ff74f"
+    "gifSha256": "b66215f61b06e1b25dd3dd89e6b1c6c0d5b6812ce516cd3f4c4ae88788042a86",
+    "pngSha256": "828f01545d2cc26ae010a714996b8df26701819bb67521be4822d64c15a9c11c",
+    "contactSheetSha256": "30eede6d01d78cfa8c1f2fcd535dc205fbe5bf59a759be356ecd0c4e780d82f0"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\AppData\\Local\\Temp\\narrative-legacy-upgrade-5JRy4p\\rendered\\11-ukiyoe-narrative\\estaciones-de-la-costa-fa304104.gif",
-    "png": "C:\\Users\\jdsal\\AppData\\Local\\Temp\\narrative-legacy-upgrade-5JRy4p\\rendered\\11-ukiyoe-narrative\\estaciones-de-la-costa-fa304104.png",
-    "contactSheet": "C:\\Users\\jdsal\\AppData\\Local\\Temp\\narrative-legacy-upgrade-5JRy4p\\rendered\\11-ukiyoe-narrative\\estaciones-de-la-costa-fa304104-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0789573b\\docs\\narrative-gif\\gallery\\ukiyoe\\checklist\\estaciones-de-la-costa-fa304104.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0789573b\\docs\\narrative-gif\\gallery\\ukiyoe\\checklist\\estaciones-de-la-costa-fa304104.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0789573b\\docs\\narrative-gif\\gallery\\ukiyoe\\checklist\\estaciones-de-la-costa-fa304104-contact-sheet.png"
   },
   "controls": [
     {
@@ -376,7 +376,7 @@
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 1377339B · PNG 113215B · contact 119194B",
+      "detail": "GIF 1386941B · PNG 113410B · contact 120113B",
       "source": "decoded"
     },
     {
@@ -412,7 +412,7 @@
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "86 colors; mean channel loss 0.044, max 11; sampled 33 frames",
+      "detail": "87 colors; mean channel loss 0.044, max 11; sampled 33 frames",
       "source": "pixels"
     },
     {
@@ -569,13 +569,13 @@
     {
       "name": "semantic-object-transformation:horizonte → primera-estacion hold",
       "passed": true,
-      "detail": "decoded object diff 3.9%; changed-state entities: ruta, estacion-a; ruta open→counted 3.5%, estacion-a default→member 17.1%, estacion-b default→default 0.0%, estacion-c default→default 0.0%",
+      "detail": "decoded object diff 3.9%; changed-state entities: ruta, estacion-a; ruta open→counted 3.4%, estacion-a default→member 17.1%, estacion-b default→default 0.0%, estacion-c default→default 0.0%",
       "source": "decoded"
     },
     {
       "name": "semantic-object-transformation:primera-estacion → ruta-ordenada hold",
       "passed": true,
-      "detail": "decoded object diff 11.8%; changed-state entities: estacion-b, estacion-c; ruta counted→counted 11.7%, estacion-a member→member 3.4%, estacion-b default→member 16.4%, estacion-c default→member 15.5%",
+      "detail": "decoded object diff 11.7%; changed-state entities: estacion-b, estacion-c; ruta counted→counted 11.7%, estacion-a member→member 3.4%, estacion-b default→member 16.4%, estacion-c default→member 15.5%",
       "source": "decoded"
     },
     {
@@ -634,7 +634,7 @@
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 1377339B · PNG 113215B · contact 119194B",
+          "detail": "GIF 1386941B · PNG 113410B · contact 120113B",
           "source": "decoded"
         }
       ]
@@ -677,7 +677,7 @@
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "86 colors; mean channel loss 0.044, max 11; sampled 33 frames",
+          "detail": "87 colors; mean channel loss 0.044, max 11; sampled 33 frames",
           "source": "pixels"
         }
       ],
@@ -846,13 +846,13 @@
         {
           "name": "semantic-object-transformation:horizonte → primera-estacion hold",
           "passed": true,
-          "detail": "decoded object diff 3.9%; changed-state entities: ruta, estacion-a; ruta open→counted 3.5%, estacion-a default→member 17.1%, estacion-b default→default 0.0%, estacion-c default→default 0.0%",
+          "detail": "decoded object diff 3.9%; changed-state entities: ruta, estacion-a; ruta open→counted 3.4%, estacion-a default→member 17.1%, estacion-b default→default 0.0%, estacion-c default→default 0.0%",
           "source": "decoded"
         },
         {
           "name": "semantic-object-transformation:primera-estacion → ruta-ordenada hold",
           "passed": true,
-          "detail": "decoded object diff 11.8%; changed-state entities: estacion-b, estacion-c; ruta counted→counted 11.7%, estacion-a member→member 3.4%, estacion-b default→member 16.4%, estacion-c default→member 15.5%",
+          "detail": "decoded object diff 11.7%; changed-state entities: estacion-b, estacion-c; ruta counted→counted 11.7%, estacion-a member→member 3.4%, estacion-b default→member 16.4%, estacion-c default→member 15.5%",
           "source": "decoded"
         },
         {
@@ -1213,7 +1213,7 @@
               },
               "fromState": "open",
               "toState": "counted",
-              "pixelDiffRatio": 0.031039042666949644,
+              "pixelDiffRatio": 0.030998228672647277,
               "changed": true
             },
             {
@@ -1275,7 +1275,7 @@
               },
               "fromState": "counted",
               "toState": "counted",
-              "pixelDiffRatio": 0.11404246287967218,
+              "pixelDiffRatio": 0.11398124188821863,
               "changed": false
             },
             {
@@ -1337,7 +1337,7 @@
               },
               "fromState": "counted",
               "toState": "open",
-              "pixelDiffRatio": 0.134029075889541,
+              "pixelDiffRatio": 0.13391887810492462,
               "changed": true
             },
             {
@@ -1399,7 +1399,7 @@
               },
               "fromState": "open",
               "toState": "counted",
-              "pixelDiffRatio": 0.03452863917980197,
+              "pixelDiffRatio": 0.0344878251854996,
               "changed": true
             },
             {
@@ -1461,7 +1461,7 @@
               },
               "fromState": "counted",
               "toState": "counted",
-              "pixelDiffRatio": 0.117385129013036,
+              "pixelDiffRatio": 0.11732390802158243,
               "changed": false
             },
             {
@@ -1523,7 +1523,7 @@
               },
               "fromState": "counted",
               "toState": "open",
-              "pixelDiffRatio": 0.13570653105536826,
+              "pixelDiffRatio": 0.13561265886847282,
               "changed": true
             },
             {
@@ -1580,7 +1580,7 @@
         "horizonte · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\AppData\\Local\\Temp\\narrative-legacy-upgrade-5JRy4p\\rendered\\11-ukiyoe-narrative\\estaciones-de-la-costa-fa304104-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0789573b\\docs\\narrative-gif\\gallery\\ukiyoe\\checklist\\estaciones-de-la-costa-fa304104-contact-sheet.png"
     },
     {
       "phaseId": "primera-estacion",
@@ -1590,7 +1590,7 @@
         "primera-estacion → ruta-ordenada · punto medio de transición",
         "primera-estacion · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\AppData\\Local\\Temp\\narrative-legacy-upgrade-5JRy4p\\rendered\\11-ukiyoe-narrative\\estaciones-de-la-costa-fa304104-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0789573b\\docs\\narrative-gif\\gallery\\ukiyoe\\checklist\\estaciones-de-la-costa-fa304104-contact-sheet.png"
     },
     {
       "phaseId": "ruta-ordenada",
@@ -1600,7 +1600,7 @@
         "ruta-ordenada → horizonte · unión del ciclo",
         "ruta-ordenada · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\AppData\\Local\\Temp\\narrative-legacy-upgrade-5JRy4p\\rendered\\11-ukiyoe-narrative\\estaciones-de-la-costa-fa304104-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0789573b\\docs\\narrative-gif\\gallery\\ukiyoe\\checklist\\estaciones-de-la-costa-fa304104-contact-sheet.png"
     }
   ],
   "semanticObjectCaptures": [
@@ -2178,7 +2178,7 @@
     }
   ],
   "palette": {
-    "colors": 86,
+    "colors": 87,
     "meanAbsoluteChannelError": 0.044,
     "maximumChannelError": 11,
     "sampledFrames": 33
@@ -2259,5 +2259,5 @@
   "openFeedbackCount": 0,
   "feedbackFrames": [],
   "publicationRecommendation": "none",
-  "renderRevision": 0
+  "renderRevision": 1
 }

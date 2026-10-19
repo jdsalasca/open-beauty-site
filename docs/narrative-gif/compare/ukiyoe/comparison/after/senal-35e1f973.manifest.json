@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "commit": "502c595ccd9eff26357ccd836a6f5c7ef5315db9",
+  "commit": "dffa62ed28fa2a3460e6cbfbbd009d809806de94",
   "brief": {
     "style": "ukiyoe",
     "kind": "narrative-gif",
@@ -303,15 +303,15 @@
     "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 1073211,
-    "png": 83551,
-    "contactSheet": 98081
+    "gif": 1098186,
+    "png": 84443,
+    "contactSheet": 99154
   },
   "hashes": {
     "briefSha256": "cab0a5c77a4fd1156af52d681cf12fdaccec667ab8ad3331ec4effb27c625ee0",
-    "gifSha256": "acd8089bcca3ccb5c20b5972c27e41477447aa30ecfae2cdbcb7ebc245ace0fd",
-    "pngSha256": "f50a14e094931e8a1edc79aca2f147d176709b0f761d2d7763c463e3af4da6ff",
-    "contactSheetSha256": "d31a37f813301bee6656929f5edc5863c624af574588636beddd3eb164460c2e"
+    "gifSha256": "8ca2fe1aa9d4c64d239fcc8e2ebdb12b82ca498b96919e225f801d97e07e6507",
+    "pngSha256": "9133c7a9bc7591e44065eee071879a00ce7c05eff51bca447216ce11b4e03a1d",
+    "contactSheetSha256": "fb1d99591d5820ba88bcd7cd3a4f9eeca91b9c458622adb9b966a87e802730da"
   },
   "files": {
     "gif": "../../checklist/after/senal-68ae273f.gif",
@@ -364,7 +364,7 @@
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 1073211B · PNG 83551B · contact 98081B",
+      "detail": "GIF 1098186B · PNG 84443B · contact 99154B",
       "source": "decoded"
     },
     {
@@ -400,7 +400,7 @@
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "84 colors; mean channel loss 0.023, max 10; sampled 33 frames",
+      "detail": "85 colors; mean channel loss 0.023, max 10; sampled 33 frames",
       "source": "pixels"
     },
     {
@@ -539,37 +539,37 @@
     {
       "name": "semantic-object-midpoint:before → change · punto medio de transición",
       "passed": true,
-      "detail": "decoded object diff 2.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.2%",
+      "detail": "decoded object diff 2.9%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.4%",
       "source": "decoded"
     },
     {
       "name": "semantic-object-midpoint:change → result · punto medio de transición",
       "passed": true,
-      "detail": "decoded object diff 6.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.8%, legacy-item-a flagged→ready-for-review 3.5%, legacy-item-b flagged→ready-for-review 6.0%, legacy-item-c flagged→ready-for-review 3.0%, legacy-item-d flagged→ready-for-review 3.3%",
+      "detail": "decoded object diff 6.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.9%, legacy-item-a flagged→ready-for-review 3.5%, legacy-item-b flagged→ready-for-review 6.0%, legacy-item-c flagged→ready-for-review 3.0%, legacy-item-d flagged→ready-for-review 3.6%",
       "source": "decoded"
     },
     {
       "name": "semantic-object-midpoint:result → before · unión del ciclo",
       "passed": true,
-      "detail": "decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.2%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.2%",
+      "detail": "decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.3%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.2%",
       "source": "decoded"
     },
     {
       "name": "semantic-object-transformation:before → change hold",
       "passed": true,
-      "detail": "decoded object diff 11.5%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 11.3%, legacy-item-a pending→flagged 13.4%, legacy-item-b pending→flagged 13.2%, legacy-item-c pending→flagged 10.9%, legacy-item-d pending→flagged 10.7%",
+      "detail": "decoded object diff 11.5%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 11.3%, legacy-item-a pending→flagged 13.4%, legacy-item-b pending→flagged 13.2%, legacy-item-c pending→flagged 11.0%, legacy-item-d pending→flagged 11.0%",
       "source": "decoded"
     },
     {
       "name": "semantic-object-transformation:change → result hold",
       "passed": true,
-      "detail": "decoded object diff 9.4%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.6%, legacy-item-a flagged→ready-for-review 5.8%, legacy-item-b flagged→ready-for-review 6.4%, legacy-item-c flagged→ready-for-review 6.5%, legacy-item-d flagged→ready-for-review 5.6%",
+      "detail": "decoded object diff 9.4%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.6%, legacy-item-a flagged→ready-for-review 5.8%, legacy-item-b flagged→ready-for-review 6.4%, legacy-item-c flagged→ready-for-review 6.5%, legacy-item-d flagged→ready-for-review 5.9%",
       "source": "decoded"
     },
     {
       "name": "semantic-object-transformation:result → before loop join",
       "passed": true,
-      "detail": "decoded object diff 15.2%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 14.9%, legacy-item-a ready-for-review→pending 17.6%, legacy-item-b ready-for-review→pending 15.3%, legacy-item-c ready-for-review→pending 16.1%, legacy-item-d ready-for-review→pending 14.9%",
+      "detail": "decoded object diff 15.2%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 15.0%, legacy-item-a ready-for-review→pending 17.6%, legacy-item-b ready-for-review→pending 15.3%, legacy-item-c ready-for-review→pending 16.1%, legacy-item-d ready-for-review→pending 14.9%",
       "source": "decoded"
     }
   ],
@@ -622,7 +622,7 @@
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 1073211B · PNG 83551B · contact 98081B",
+          "detail": "GIF 1098186B · PNG 84443B · contact 99154B",
           "source": "decoded"
         }
       ]
@@ -665,7 +665,7 @@
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "84 colors; mean channel loss 0.023, max 10; sampled 33 frames",
+          "detail": "85 colors; mean channel loss 0.023, max 10; sampled 33 frames",
           "source": "pixels"
         }
       ],
@@ -816,37 +816,37 @@
         {
           "name": "semantic-object-midpoint:before → change · punto medio de transición",
           "passed": true,
-          "detail": "decoded object diff 2.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.2%",
+          "detail": "decoded object diff 2.9%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 2.7%, legacy-item-a pending→flagged 4.7%, legacy-item-b pending→flagged 3.4%, legacy-item-c pending→flagged 3.2%, legacy-item-d pending→flagged 2.4%",
           "source": "decoded"
         },
         {
           "name": "semantic-object-midpoint:change → result · punto medio de transición",
           "passed": true,
-          "detail": "decoded object diff 6.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.8%, legacy-item-a flagged→ready-for-review 3.5%, legacy-item-b flagged→ready-for-review 6.0%, legacy-item-c flagged→ready-for-review 3.0%, legacy-item-d flagged→ready-for-review 3.3%",
+          "detail": "decoded object diff 6.8%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 7.9%, legacy-item-a flagged→ready-for-review 3.5%, legacy-item-b flagged→ready-for-review 6.0%, legacy-item-c flagged→ready-for-review 3.0%, legacy-item-d flagged→ready-for-review 3.6%",
           "source": "decoded"
         },
         {
           "name": "semantic-object-midpoint:result → before · unión del ciclo",
           "passed": true,
-          "detail": "decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.2%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.2%",
+          "detail": "decoded object diff 9.0%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.3%, legacy-item-a ready-for-review→pending 5.2%, legacy-item-b ready-for-review→pending 6.0%, legacy-item-c ready-for-review→pending 6.0%, legacy-item-d ready-for-review→pending 5.2%",
           "source": "decoded"
         },
         {
           "name": "semantic-object-transformation:before → change hold",
           "passed": true,
-          "detail": "decoded object diff 11.5%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 11.3%, legacy-item-a pending→flagged 13.4%, legacy-item-b pending→flagged 13.2%, legacy-item-c pending→flagged 10.9%, legacy-item-d pending→flagged 10.7%",
+          "detail": "decoded object diff 11.5%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 11.3%, legacy-item-a pending→flagged 13.4%, legacy-item-b pending→flagged 13.2%, legacy-item-c pending→flagged 11.0%, legacy-item-d pending→flagged 11.0%",
           "source": "decoded"
         },
         {
           "name": "semantic-object-transformation:change → result hold",
           "passed": true,
-          "detail": "decoded object diff 9.4%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.6%, legacy-item-a flagged→ready-for-review 5.8%, legacy-item-b flagged→ready-for-review 6.4%, legacy-item-c flagged→ready-for-review 6.5%, legacy-item-d flagged→ready-for-review 5.6%",
+          "detail": "decoded object diff 9.4%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 10.6%, legacy-item-a flagged→ready-for-review 5.8%, legacy-item-b flagged→ready-for-review 6.4%, legacy-item-c flagged→ready-for-review 6.5%, legacy-item-d flagged→ready-for-review 5.9%",
           "source": "decoded"
         },
         {
           "name": "semantic-object-transformation:result → before loop join",
           "passed": true,
-          "detail": "decoded object diff 15.2%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 14.9%, legacy-item-a ready-for-review→pending 17.6%, legacy-item-b ready-for-review→pending 15.3%, legacy-item-c ready-for-review→pending 16.1%, legacy-item-d ready-for-review→pending 14.9%",
+          "detail": "decoded object diff 15.2%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-collection default→default 15.0%, legacy-item-a ready-for-review→pending 17.6%, legacy-item-b ready-for-review→pending 15.3%, legacy-item-c ready-for-review→pending 16.1%, legacy-item-d ready-for-review→pending 14.9%",
           "source": "decoded"
         }
       ],
@@ -1255,7 +1255,7 @@
               },
               "fromState": "default",
               "toState": "default",
-              "pixelDiffRatio": 0.026557666092549812,
+              "pixelDiffRatio": 0.02730048078885288,
               "changed": false
             },
             {
@@ -1294,7 +1294,7 @@
               },
               "fromState": "pending",
               "toState": "flagged",
-              "pixelDiffRatio": 0.031684491978609626,
+              "pixelDiffRatio": 0.03199643493761141,
               "changed": true
             },
             {
@@ -1307,7 +1307,7 @@
               },
               "fromState": "pending",
               "toState": "flagged",
-              "pixelDiffRatio": 0.02172153264975715,
+              "pixelDiffRatio": 0.024284943335132217,
               "changed": true
             }
           ]
@@ -1330,7 +1330,7 @@
               },
               "fromState": "default",
               "toState": "default",
-              "pixelDiffRatio": 0.07792615932150816,
+              "pixelDiffRatio": 0.07867305541724147,
               "changed": false
             },
             {
@@ -1369,7 +1369,7 @@
               },
               "fromState": "flagged",
               "toState": "ready-for-review",
-              "pixelDiffRatio": 0.029723707664884136,
+              "pixelDiffRatio": 0.029946524064171122,
               "changed": true
             },
             {
@@ -1382,7 +1382,7 @@
               },
               "fromState": "flagged",
               "toState": "ready-for-review",
-              "pixelDiffRatio": 0.0330095340888649,
+              "pixelDiffRatio": 0.0357528332433891,
               "changed": true
             }
           ]
@@ -1405,7 +1405,7 @@
               },
               "fromState": "default",
               "toState": "default",
-              "pixelDiffRatio": 0.10198192756332292,
+              "pixelDiffRatio": 0.10251250948925368,
               "changed": false
             },
             {
@@ -1444,7 +1444,7 @@
               },
               "fromState": "ready-for-review",
               "toState": "pending",
-              "pixelDiffRatio": 0.059893048128342244,
+              "pixelDiffRatio": 0.060249554367201426,
               "changed": true
             },
             {
@@ -1457,7 +1457,7 @@
               },
               "fromState": "ready-for-review",
               "toState": "pending",
-              "pixelDiffRatio": 0.05153804641122504,
+              "pixelDiffRatio": 0.05180787911494873,
               "changed": true
             }
           ]
@@ -1480,7 +1480,7 @@
               },
               "fromState": "default",
               "toState": "default",
-              "pixelDiffRatio": 0.11278131045572906,
+              "pixelDiffRatio": 0.11306700841584562,
               "changed": false
             },
             {
@@ -1519,7 +1519,7 @@
               },
               "fromState": "pending",
               "toState": "flagged",
-              "pixelDiffRatio": 0.10949197860962567,
+              "pixelDiffRatio": 0.10980392156862745,
               "changed": true
             },
             {
@@ -1532,7 +1532,7 @@
               },
               "fromState": "pending",
               "toState": "flagged",
-              "pixelDiffRatio": 0.10716855549559273,
+              "pixelDiffRatio": 0.1099568267674042,
               "changed": true
             }
           ]
@@ -1555,7 +1555,7 @@
               },
               "fromState": "default",
               "toState": "default",
-              "pixelDiffRatio": 0.10561437305623352,
+              "pixelDiffRatio": 0.10634902495367611,
               "changed": false
             },
             {
@@ -1594,7 +1594,7 @@
               },
               "fromState": "flagged",
               "toState": "ready-for-review",
-              "pixelDiffRatio": 0.06483957219251336,
+              "pixelDiffRatio": 0.06506238859180036,
               "changed": true
             },
             {
@@ -1607,7 +1607,7 @@
               },
               "fromState": "flagged",
               "toState": "ready-for-review",
-              "pixelDiffRatio": 0.05621514660910236,
+              "pixelDiffRatio": 0.058823529411764705,
               "changed": true
             }
           ]
@@ -1630,7 +1630,7 @@
               },
               "fromState": "default",
               "toState": "default",
-              "pixelDiffRatio": 0.14909760258597468,
+              "pixelDiffRatio": 0.14962818451190543,
               "changed": false
             },
             {
@@ -1669,7 +1669,7 @@
               },
               "fromState": "ready-for-review",
               "toState": "pending",
-              "pixelDiffRatio": 0.1607843137254902,
+              "pixelDiffRatio": 0.16114081996434937,
               "changed": true
             },
             {
@@ -1682,7 +1682,7 @@
               },
               "fromState": "ready-for-review",
               "toState": "pending",
-              "pixelDiffRatio": 0.14930742939377586,
+              "pixelDiffRatio": 0.149487317862925,
               "changed": true
             }
           ]
@@ -2406,7 +2406,7 @@
     }
   ],
   "palette": {
-    "colors": 84,
+    "colors": 85,
     "meanAbsoluteChannelError": 0.023,
     "maximumChannelError": 10,
     "sampledFrames": 33
@@ -2474,5 +2474,5 @@
   "openFeedbackCount": 0,
   "feedbackFrames": [],
   "publicationRecommendation": "none",
-  "renderRevision": 1
+  "renderRevision": 0
 }
