@@ -1,5 +1,6 @@
 import type { Locale, PageBrief, PageClosingBrief, SectionBrief, StylePreset } from '../types.js';
 import { displayGlyphRatio, focusRingColor, headlineFitPx, HEADLINE_PREFERRED_VW, isDarkColor } from '../a11y.js';
+import { ensureMinTextSize } from './min-text.js';
 
 export class BeautyError extends Error {
   constructor(message: string, readonly code = 'BEAUTY_ERROR') {
@@ -311,6 +312,24 @@ export function shell({ lang, title, description, preset, css, body, script, bod
   const safeTitle = esc(title);
   const scheme = isDarkColor(preset.palette.bg) ? 'dark' : 'light';
   const skipLabel = lang === 'es' ? 'Saltar al contenido' : 'Skip to content';
+  // Every renderer (page, deck, story, experience) assembles its final <style>
+  // here, so the phone readability pass is applied once, over the full sheet.
+  const styleCss = ensureMinTextSize(
+    `${css}
+${designLanguageCss(preset)}
+${headlineFitCss(body, preset)}
+${closingFitCss(closing ?? '', preset)}
+@media print{
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .reveal,.js .reveal{opacity:1!important;transform:none!important;transition:none!important;animation:none!important}
+  .page-frame,.grain,.beauty-scroll,.motion-toggle,.motion-dock,.skip-link{display:none!important}
+  .site-head,.topbar{position:static!important}
+  .ticker-track{animation:none!important}
+  figure,table,pre,blockquote{break-inside:avoid}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:.8em;word-break:break-all}
+}`,
+    { minPx: 12, maxWidth: 720 },
+  );
   return `<!doctype html>
 <html lang="${lang}">
 <head>
@@ -330,19 +349,7 @@ export function shell({ lang, title, description, preset, css, body, script, bod
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='${encodeURIComponent(preset.palette.ink)}'/%3E%3Crect x='12' y='12' width='40' height='40' fill='${encodeURIComponent(preset.palette.accent)}'/%3E%3C/svg%3E">
 <script>document.documentElement.classList.add('js')</script>
 <style>
-${css}
-${designLanguageCss(preset)}
-${headlineFitCss(body, preset)}
-${closingFitCss(closing ?? '', preset)}
-@media print{
-  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .reveal,.js .reveal{opacity:1!important;transform:none!important;transition:none!important;animation:none!important}
-  .page-frame,.grain,.beauty-scroll,.motion-toggle,.motion-dock,.skip-link{display:none!important}
-  .site-head,.topbar{position:static!important}
-  .ticker-track{animation:none!important}
-  figure,table,pre,blockquote{break-inside:avoid}
-  a[href^="http"]::after{content:" (" attr(href) ")";font-size:.8em;word-break:break-all}
-}
+${styleCss}
 </style>
 </head>
 <body${bodyClass ? ` class="${attr(bodyClass)}"` : ''}>
