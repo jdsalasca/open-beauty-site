@@ -7,6 +7,7 @@ import { createNarrativeManifest } from './manifest.js';
 import { normalizeNarrativeBrief } from './brief.js';
 import { resolveNarrativeScene } from './scene.js';
 import { buildNarrativeTimeline } from './timeline.js';
+import { refreshNarrativeReviewMetadata } from './review.js';
 
 export interface CreateNarrativeOptions {
   outputDir?: string;
@@ -49,6 +50,7 @@ export async function createNarrative(input: NarrativeBriefInput | unknown, opti
     ...evaluation.narrative.controls,
   ];
   const { path: manifestPath } = await createNarrativeManifest({ brief, briefHash: hash, encoded, timeline, controls, evaluation, outputDir });
+  await refreshNarrativeReviewMetadata(manifestPath);
   encoded.decoded.sampledFrames.length = 0;
   const diagnostics = [
     ...timeline.warnings.map((warning) => ({ code: warning.code, message: warning.message })),

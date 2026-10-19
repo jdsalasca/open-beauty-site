@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { writeFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import type { NarrativeControlResult, NarrativeEvaluation, NormalizedNarrativeBrief } from '../types/narrative.js';
 import type { NarrativeEncodedFiles } from './encode.js';
@@ -9,7 +9,7 @@ import type { NarrativeTimeline } from './timeline.js';
 export const NARRATIVE_FONT_BUNDLE_VERSION = 'repo-bundled-ofl-1';
 
 export interface NarrativeManifest {
-  schemaVersion: 2;
+  schemaVersion: 3;
   commit: string | null;
   brief: NormalizedNarrativeBrief;
   briefSha256: string;
@@ -51,6 +51,12 @@ export interface NarrativeManifest {
   };
   resourceEstimate: NarrativeEncodedFiles['resourceEstimate'];
   deterministicScope: string;
+  generatedBy: string;
+  reviewState: 'none' | 'pending' | 'approved' | 'revise' | 'stale';
+  openFeedbackCount: number;
+  feedbackFrames: Array<{ id: string; phaseId: string; frameIndex: number; problem: string; severity: string; framePath?: string; cropPath?: string }>;
+  publicationRecommendation: 'none' | 'consider-publication';
+  renderRevision: number;
 }
 
 function currentCommit(): string | null {
@@ -85,8 +91,17 @@ export async function createNarrativeManifest(input: {
     ],
     contactSheet: encoded.paths.contactSheet,
   }));
+  const manifestPath = path.join(outputDir, `${path.basename(encoded.paths.gif, '.gif')}.manifest.json`);
+  let renderRevision = 0;
+  try {
+    const prior = JSON.parse(await readFile(manifestPath, 'utf8')) as { renderRevision?: unknown };
+    if (typeof prior.renderRevision === 'number' && Number.isSafeInteger(prior.renderRevision) && prior.renderRevision >= 0) renderRevision = prior.renderRevision + 1;
+    else renderRevision = 1;
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== 'ENOENT') renderRevision = 1;
+  }
   const manifest: NarrativeManifest = {
-    schemaVersion: 2,
+    schemaVersion: 3,
     commit: currentCommit(),
     brief,
     briefSha256: briefHash,
@@ -146,8 +161,13 @@ export async function createNarrativeManifest(input: {
     },
     resourceEstimate: encoded.resourceEstimate,
     deterministicScope: 'Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed.',
+    generatedBy: process.env.BEAUTY_GENERATOR_ID?.trim() || 'open-beauty-site',
+    reviewState: 'none',
+    openFeedbackCount: 0,
+    feedbackFrames: [],
+    publicationRecommendation: 'none',
+    renderRevision,
   };
-  const manifestPath = path.join(outputDir, `${path.basename(encoded.paths.gif, '.gif')}.manifest.json`);
   await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
   return { manifest, path: manifestPath };
 }

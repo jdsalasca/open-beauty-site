@@ -15,6 +15,7 @@ Contract v3 is used by the CLI, library and MCP. The brief schema is defined onc
 | arbitrary `visual.kind/state` strings | style-declared visual vocabulary | Existing `comparison`, `checklist`, and legacy `document`, `process`, `lista`, and `proceso` values remain supported. The current states include `unreviewed`, `before`, `pending`, `flagged`, `signal`, `observation`, `observacion`, `review-ready`, `reviewed`, `ready`, `done`, `verified`, and `list`; unknown values now fail before rendering with valid alternatives. Repeating the same state across phases is allowed. Legacy visual-only briefs have no entity actions; v3 semantic actions are declared under `visual.semantic.actions`. |
 | `playback.minReadableHoldMs` only | `playback.preset` and `phases[].holdMs` | `readable` is the default and keeps a 5000ms minimum floor. `concise` allows explicit per-phase holds from 2000ms. Values are numeric milliseconds; units, non-finite values and holds below the selected floor return `BAD_DURATION`. |
 | manifest schema v1 | manifest schema v2 | V2 adds work/outcome/evidence classification and separately reports holds, transitions, loop bridge, entries, total decoded time and per-phase requested/encoded/decoded holds. |
+| manifest schema v2 | manifest schema v3 | V3 adds `generatedBy`, `renderRevision`, `reviewState`, `openFeedbackCount`, `feedbackFrames` and a non-binding `publicationRecommendation`. Existing v2 manifests remain readable; without review metadata the gallery derives pending/none from the prior visual-review status. |
 
 ## Semantic scenes (v3)
 
@@ -46,7 +47,15 @@ The gallery generator discovers every manifest below `docs/narrative-gif`. The f
 
 `pnpm test` sets Node's test-file concurrency to 1 because the full parallel run caused unrelated CLI, Chromium and GIF-rendering workers to exit before their suites completed on this loaded machine. The affected Isotype and papercraft semantic suites, CLI suite and 52-case browser legibility audit all passed when run alone. Serial execution retains every test and assertion; it avoids competing browser, renderer and child-process work.
 
-The evaluator records per-entity bounding regions and independently decoded pixel diffs across consecutive holds, all transition midpoints and the last-to-first loop join. It reports which IDs changed state. Text-only, decoration-only and identical-object negative controls do not pass. Composition balance is recorded for every one of those captures. `beauty narrative --art-only` and MCP `artOnly: true` create a separate pack without the title, phase labels or body copy while retaining semantic labels that belong to the illustrated object. Manifest schema v2 remains at version 2 and adds `artOnly`, `semanticObjectCaptures` and `compositionByFrame`.
+The evaluator records per-entity bounding regions and independently decoded pixel diffs across consecutive holds, all transition midpoints and the last-to-first loop join. It reports which IDs changed state. Text-only, decoration-only and identical-object negative controls do not pass. Composition balance is recorded for every one of those captures. `beauty narrative --art-only` and MCP `artOnly: true` create a separate pack without the title, phase labels or body copy while retaining semantic labels that belong to the illustrated object. Manifest v3 retains `artOnly`, `semanticObjectCaptures` and structured `compositionByFrame` evidence, and adds per-frame/phase/region transformation evidence under `evaluation.automatedEvidence`.
+
+## Ledger de revisión (manifest v3)
+
+El ciclo detallado está en [REVIEW-PROCESS.md](REVIEW-PROCESS.md). `beauty review` añade un registro a `<pack>.review.json` con reviewer, fecha, seis criterios visuales, los cinco niveles, feedback y hashes exactos de GIF/PNG/manifiesto canónico. `beauty review-state` comprueba esos hashes; una diferencia devuelve `stale` y conserva los registros históricos. La auto-revisión no aprueba.
+
+Los campos de galería derivados (`reviewState`, número de comentarios abiertos, enlaces, recomendación y `evaluation.visual-review`) quedan excluidos del hash canónico para evitar ciclos. Cambiar brief, renderer, controles u otros datos estáticos del manifiesto sí cambia el hash. Cada render existente incrementa `renderRevision`, incluso con píxeles deterministas idénticos, y deja obsoleta la aprobación previa. Las rutas de `feedbackFrames` son relativas al manifiesto; se crean únicamente al usar `--frames` y apuntan a PNG decodificados de forma independiente.
+
+`beauty rerender <manifest> [--apply-feedback]` reutiliza el brief normalizado y seed conservados. Cada ejecución añade una entrada de cambio con hashes, feedback atendido, diferencias de frames/regiones, tiempo y bytes. Solo feedback con diferencia medida dentro de su frame y región puede pasar de `open` a `fixed`; un render idéntico no lo resuelve. Las evaluaciones automáticas son proxies; la recomendación `consider-publication`, cuando exista, exige revisión humana independiente y cinco niveles en pass, y nunca publica el artefacto.
 
 ## Defaults and compatibility
 
@@ -55,7 +64,7 @@ The evaluator records per-entity bounding regions and independently decoded pixe
 - Old `document` composition is an alias for `comparison`. Existing gallery and pilot briefs use declared state values and continue to render.
 - The default readable hold formula is preserved: `max(minReadableHoldMs, bodyWordCount × 300ms)`, rounded up to a 10ms GIF delay. Transitions and loop bridge add time beyond phase holds.
 - Default `badgePolicy:workflow` retains the previous stamps. New `none` and `custom` policies change pixels only when requested.
-- All 28 committed pack manifests are regenerated as schema v2. Five old `done` packs without evidence intentionally change their final narrative label to expected; GIF/PNG/contact-sheet bytes for other packs remain unchanged. Their workflow stamps still reflect `workflowStatus`.
+- Los manifiestos v2 comprometidos siguen siendo reproducibles desde sus briefs. Los packs no se regeneran por esta migración de contrato: el manifiesto v3 aparece en nuevas salidas. Cinco antiguos packs `done` sin evidencia ya cambiaron su etiqueta final a resultado esperado en la etapa anterior; no se altera esa evidencia aquí.
 
 See [ARCHITECTURE.md](ARCHITECTURE.md) for capability counts, timing formula and contract rationale. `test/narrative-gallery-repro.test.ts` checks committed pack bytes against their source briefs.
 

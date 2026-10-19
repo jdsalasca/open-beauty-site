@@ -61,7 +61,7 @@ copy de fase escrito por el autor se conserva en el idioma proporcionado.
   5000 ms por pausa. `concise` permite `phases[].holdMs` desde 2000 ms. Todas
   las duraciones son números en milisegundos; no añadas unidades.
 - Las pausas no equivalen al tiempo total. Transiciones, entradas y el puente
-  de loop suman duración. El manifiesto v2 separa cada suma y cada hold por
+  de loop suman duración. El manifiesto v3 separa cada suma y cada hold por
   fase. Un aviso de lectura se activa sobre 3 palabras/segundo, usando
   `(palabras de etiqueta + palabras de texto) / segundos decodificados`.
 
@@ -82,11 +82,33 @@ el PNG nativo y la vista 640 × 360.
 | `style-conformance` | Tokens, escena, fuentes registradas, cambio de frames y pérdida de paleta. | Una coincidencia de tokens no prueba parecido visual suficiente. |
 | `rendered-legibility` | Copy completo, tamaños, contraste, área segura y pausas decodificadas. | OCR y lectura humana a 640 × 360 pueden seguir pendientes. |
 | `narrative` | Cantidad de fases, estados declarados, continuidad del objeto, outcome y evidencia requerida. | El sentido causal y la veracidad necesitan revisión. |
-| `visual-review` | Revisión humana o de un modelo visual identificado, con criterios y evidencia. | Empieza en `pending` y no cambia sin registrar esa revisión. |
+| `visual-review` | Revisión humana o de un modelo identificado, con seis criterios visuales y evidencia ligada a hashes. | Empieza sin registro; una revisión independiente debe pasar los seis criterios para aprobarla. |
 
-Ningún nivel aprueba la publicación. `publicationRecommendation` permanece en
-`none`. Valida el HTML de galería, mira las piezas en una pantalla real y deja
-registrada aparte cualquier revisión visual.
+Los controles técnicos no sustituyen el juicio visual. `publicationRecommendation`
+permanece en `none` salvo revisión humana independiente, los seis criterios
+visuales en pass y los cinco niveles en pass. `consider-publication` es una
+señal para deliberación humana, nunca una publicación automática.
+
+## Registrar y resolver feedback
+
+1. Genera y abre el GIF, el PNG, la hoja de contacto y la vista de tarjeta.
+2. Registra cada criterio visual con `beauty review <pack> --reviewer id:name --criterion nombre=pass|revise|not-evaluated`. Los seis nombres son
+   `thumbnailIdentity`, `cardSizeReading`, `styleMaterial`,
+   `phaseContinuity`, `loopRestart` y `artOnlyTransformationUnderstood`.
+3. Adjunta feedback JSON con `phaseId`, índice del frame, región nativa `{x,y,w,h}`,
+   problema, severidad, evidencia y `allowedAdjustment`. Añade `--frames` para
+   guardar el frame decodificado y su recorte en `<pack>.frames/`.
+4. Usa `beauty review-state <pack>` para revisar hashes actuales. Un cambio en
+   GIF, PNG o manifiesto estático marca el registro anterior `stale` y conserva
+   su historial.
+5. `beauty rerender <manifest> --apply-feedback` vuelve a renderizar con el
+   brief normalizado y seed guardados. Solo marca `fixed` si los píxeles de la
+   misma región/frame cambiaron por encima del umbral documentado; un render
+   idéntico mantiene el comentario abierto.
+
+El hash de manifiesto excluye únicamente campos derivados de revisión para
+evitar una dependencia circular. Consulta el proceso completo y el JSON de
+ejemplo en [`docs/narrative-gif/REVIEW-PROCESS.md`](../docs/narrative-gif/REVIEW-PROCESS.md).
 
 ## Comandos
 
@@ -104,5 +126,5 @@ PNG se carga al abrir la página; el GIF solo se solicita después de pulsar
 conserva el foco y muestra la imagen a su resolución declarada. No hay autoplay;
 la preferencia `prefers-reduced-motion` se mantiene visible y respetada.
 
-La guía de migración completa de v1 a v2 está en
+La guía de migración completa de briefs v1 y manifiestos v2/v3 está en
 [`docs/narrative-gif/MIGRATION.md`](../docs/narrative-gif/MIGRATION.md).

@@ -31,6 +31,8 @@ import { narrativeBriefSchema } from '../narrative/brief.js';
 import { narrativeCapabilityReport } from '../narrative/capabilities.js';
 import { NarrativeError } from '../types/narrative.js';
 import { createNarrativeGallery } from '../narrative/gallery.js';
+import { getNarrativeReviewState, NARRATIVE_REVIEW_HELP, reviewNarrativeArtifact } from '../narrative/review.js';
+import { narrativeFeedbackSchema, reviewCriteriaSchema, reviewLevelsSchema, reviewerSchema } from '../types/narrative-review.js';
 
 const styleEnum = z.enum([
   'renaissance',
@@ -838,6 +840,54 @@ QUALITY BAR
         content: [{ type: 'text' as const, text: JSON.stringify(report) }],
         structuredContent: { ...report },
       };
+    },
+  );
+
+  server.registerTool(
+    'beauty_review_artifact',
+    {
+      title: 'Record a narrative visual review',
+      description: `Stores reviewer, six visual-matrix verdicts, five evaluation levels, feedback and exact GIF/PNG/manifest hashes. Only an independent valid review can approve visual-review. Publication remains a human recommendation signal and never publishes automatically.\n\n${NARRATIVE_REVIEW_HELP}`,
+      inputSchema: {
+        pack: z.string().min(1).max(500).describe('Narrative manifest path, GIF/PNG pack path, or pack base path.'),
+        reviewer: reviewerSchema.describe('Human reviewer, or model reviewer with model id, version and criteria.'),
+        criteria: reviewCriteriaSchema.optional().describe('Six required visual matrix verdicts; omitted criteria remain not-evaluated.'),
+        quality_levels: reviewLevelsSchema.partial().optional().describe('Five-level review structure. Publication recommendation requires all five pass and a human reviewer.'),
+        feedback: z.array(narrativeFeedbackSchema).optional().describe('Structured frame-indexed problems and allowed adjustments.'),
+        frames: z.boolean().optional().describe('Extract independently decoded frames and native-pixel crops into <pack>.frames/.'),
+        note: z.string().max(4000).optional(),
+      },
+    },
+    async ({ pack, reviewer, criteria, quality_levels, feedback, frames, note }) => {
+      try {
+        const result = await reviewNarrativeArtifact({
+          manifestPath: pack, reviewer, criteria, qualityLevels: quality_levels,
+          feedback, extractFrames: frames, overallNote: note,
+        });
+        return {
+          content: [{ type: 'text' as const, text: JSON.stringify({ reviewPath: result.reviewPath, ...result.assessment }, null, 2) }],
+          structuredContent: { reviewPath: result.reviewPath, ...result.assessment },
+        };
+      } catch (error) {
+        return { content: [{ type: 'text' as const, text: `Review failed: ${(error as Error).message}` }], isError: true };
+      }
+    },
+  );
+
+  server.registerTool(
+    'beauty_get_review_state',
+    {
+      title: 'Check narrative review freshness',
+      description: 'Checks the latest ledger record against current GIF, PNG and normalized manifest hashes; returns none, pending, approved, revise or stale.',
+      inputSchema: { pack: z.string().min(1).max(500).describe('Narrative manifest, pack file or pack base path.') },
+    },
+    async ({ pack }) => {
+      try {
+        const state = await getNarrativeReviewState(pack);
+        return { content: [{ type: 'text' as const, text: JSON.stringify(state, null, 2) }], structuredContent: { ...state } };
+      } catch (error) {
+        return { content: [{ type: 'text' as const, text: `Review state failed: ${(error as Error).message}` }], isError: true };
+      }
     },
   );
 

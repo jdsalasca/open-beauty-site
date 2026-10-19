@@ -329,7 +329,14 @@ export interface NarrativeEncodedFiles {
   fonts: NarrativeFontProfile;
   artOnly: boolean;
   semanticObjectCaptures: Array<{ label: string; phaseIndex: number; fromPhaseIndex: number; frameIndex: number; kind: 'hold' | 'transition' | 'loop-bridge'; regions: ReturnType<NonNullable<NarrativeScene['objectRegions']>> }>;
-  compositionByFrame?: Array<{ label: string; metrics: CompositionBalanceMetrics }>;
+  compositionByFrame?: Array<{
+    frameIndex: number;
+    label: string;
+    phaseId: string;
+    kind: 'hold' | 'transition' | 'loop-bridge';
+    regions: ReturnType<NonNullable<NarrativeScene['objectRegions']>>;
+    metrics: CompositionBalanceMetrics;
+  }>;
 }
 
 export async function encodeNarrative(
@@ -449,7 +456,11 @@ export async function encodeNarrative(
       const capture = captureByFrame.get(index);
       if (!capture) return;
       compositionByFrame.push({
+        frameIndex: capture.frameIndex,
         label: capture.label,
+        phaseId: brief.phases[capture.phaseIndex]!.id,
+        kind: capture.kind,
+        regions: capture.regions,
         metrics: measureCompositionBalance({ rgb, width, height, background: getStyle(brief.style).palette.bg, textArea: layout.textArea }),
       });
     },

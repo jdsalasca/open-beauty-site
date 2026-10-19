@@ -296,7 +296,14 @@ export function evaluateNarrative(input: {
   const compositionRows = encoded.compositionByFrame ?? encoded.semanticObjectCaptures.flatMap((capture) => {
     const frame = decodedByIndex.get(capture.frameIndex);
     if (!frame || frame.rgb.length !== encoded.decoded.width * encoded.decoded.height * 3) return [];
-    return [{ label: capture.label, metrics: measureCompositionBalance({ rgb: frame.rgb, width: encoded.decoded.width, height: encoded.decoded.height, background: stylePreset.palette.bg, textArea: layout.textArea }) }];
+    return [{
+      frameIndex: capture.frameIndex,
+      label: capture.label,
+      phaseId: brief.phases[capture.phaseIndex]!.id,
+      kind: capture.kind,
+      regions: capture.regions,
+      metrics: measureCompositionBalance({ rgb: frame.rgb, width: encoded.decoded.width, height: encoded.decoded.height, background: stylePreset.palette.bg, textArea: layout.textArea }),
+    }];
   });
   const firstComposition = compositionRows[0]?.metrics;
   const compositionNeedsRevision = compositionRows.length === 0 || compositionRows.some(({ metrics }) =>
@@ -335,6 +342,33 @@ export function evaluateNarrative(input: {
   const lastLabelMatchesOutcome = narrativeResultLabelMatches(brief.phases.at(-1)!.label, brief.outcome.mode, brief.locale);
   const holdCaptures = encoded.semanticObjectCaptures.filter((capture) => capture.kind === 'hold').sort((a, b) => a.phaseIndex - b.phaseIndex);
   const objectTransformationControls: NarrativeControlResult[] = [];
+  const objectTransformationByFrame: NonNullable<NarrativeEvaluation['automatedEvidence']>['objectTransformationByFrame'] = [];
+  const addObjectEvidence = (
+    capture: typeof encoded.semanticObjectCaptures[number],
+    fromPhaseId: string | undefined,
+    comparison: SemanticObjectFrameComparison | undefined,
+  ) => {
+    const differences = new Map(comparison?.entityDiffs.map((difference) => [difference.entityId, difference]) ?? []);
+    objectTransformationByFrame.push({
+      frameIndex: capture.frameIndex,
+      phaseId: brief.phases[capture.phaseIndex]!.id,
+      ...(fromPhaseId ? { fromPhaseId } : {}),
+      kind: capture.kind,
+      measured: Boolean(comparison),
+      passed: comparison?.passed ?? false,
+      regions: capture.regions.map((region) => {
+        const difference = differences.get(region.entityId);
+        return {
+          entityId: region.entityId,
+          bounds: region.bounds,
+          ...(difference?.fromState === undefined ? {} : { fromState: difference.fromState }),
+          ...(difference?.toState === undefined ? {} : { toState: difference.toState }),
+          pixelDiffRatio: difference?.pixelDiffRatio ?? 0,
+          changed: difference?.passed ?? false,
+        };
+      }),
+    });
+  };
   const hasDeclaredObjectRegions = encoded.semanticObjectCaptures.some((capture) => capture.regions.length > 0);
   if (!hasDeclaredObjectRegions || holdCaptures.length !== brief.phases.length) {
     objectTransformationControls.push({
@@ -344,6 +378,7 @@ export function evaluateNarrative(input: {
       detail: 'Pending: this scene did not declare object regions for every phase hold; full-frame or text changes cannot substitute.',
       source: 'decoded',
     });
+    for (const capture of encoded.semanticObjectCaptures) addObjectEvidence(capture, undefined, undefined);
   } else {
     const pairSpecs: Array<{ from: typeof holdCaptures[number]; to: typeof holdCaptures[number]; label: string }> = [];
     for (let index = 0; index < holdCaptures.length - 1; index += 1) {
@@ -374,6 +409,7 @@ export function evaluateNarrative(input: {
           : 'Midpoint or source hold was not available in decoded pixels.',
         source: 'decoded',
       });
+      addObjectEvidence(capture, fromPhase.id, comparison);
     }
     for (const pair of pairSpecs) {
       const before = decodedByIndex.get(pair.from.frameIndex);
@@ -397,6 +433,11 @@ export function evaluateNarrative(input: {
           : 'Consecutive decoded hold frame was not available.',
         source: 'decoded',
       });
+      addObjectEvidence(pair.to, brief.phases[pair.from.phaseIndex]!.id, comparison);
+    }
+    const measuredFrames = new Set(objectTransformationByFrame.map((evidence) => evidence.frameIndex));
+    for (const hold of holdCaptures) {
+      if (!measuredFrames.has(hold.frameIndex)) addObjectEvidence(hold, undefined, undefined);
     }
   }
   const narrativeControls: NarrativeControlResult[] = [
@@ -429,5 +470,9 @@ export function evaluateNarrative(input: {
     narrative: level(narrativeStatus, narrativeControls, 'Automated checks separate work status from expected/observed outcome and confirm required evidence fields; causal meaning and evidence scope still need human review.'),
     'visual-review': visualReview,
     publicationRecommendation: 'none',
+    automatedEvidence: {
+      balanceByFrame: compositionRows.map(({ frameIndex, phaseId, kind, label, regions, metrics }) => ({ frameIndex, phaseId, kind, label, regions, metrics })),
+      objectTransformationByFrame,
+    },
   };
 }

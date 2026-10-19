@@ -248,11 +248,38 @@ export interface NarrativeEvaluationLevel {
   note?: string;
 }
 
+export interface NarrativeAutomatedEvidence {
+  balanceByFrame: Array<{
+    frameIndex: number;
+    phaseId: string;
+    kind: 'hold' | 'transition' | 'loop-bridge';
+    label: string;
+    regions: NarrativeObjectRegion[];
+    metrics: { emptyCellRatio: number; textColumnFillRatio: number; objectAreaRatio: number; largestEmptyRectangleRatio: number };
+  }>;
+  objectTransformationByFrame: Array<{
+    frameIndex: number;
+    phaseId: string;
+    fromPhaseId?: string;
+    kind: 'hold' | 'transition' | 'loop-bridge';
+    measured: boolean;
+    passed: boolean;
+    regions: Array<{ entityId: string; bounds: NarrativeRect; fromState?: string; toState?: string; pixelDiffRatio: number; changed: boolean }>;
+  }>;
+}
+
 export interface NarrativeEvaluation {
   'technical-integrity': NarrativeEvaluationLevel;
   'style-conformance': NarrativeEvaluationLevel & { sourceStatus: NarrativeLevelStatus; pixelStatus: NarrativeLevelStatus };
   'rendered-legibility': NarrativeEvaluationLevel;
   narrative: NarrativeEvaluationLevel;
-  'visual-review': { status: 'pending' | 'not-evaluated' | `model:${string}` | 'human'; criteria: string[]; evidence?: string[] };
-  publicationRecommendation: 'none';
+  'visual-review': {
+    status: 'pending' | 'not-evaluated' | 'approved' | 'revise' | 'stale' | `model:${string}` | 'human';
+    criteria: string[];
+    evidence?: string[];
+    reviewer?: unknown;
+    feedback?: unknown[];
+  };
+  publicationRecommendation: 'none' | 'consider-publication';
+  automatedEvidence?: NarrativeAutomatedEvidence;
 }

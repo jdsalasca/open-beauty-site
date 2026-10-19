@@ -2,19 +2,24 @@
 
 Open Beauty es un arnés de diseño y servidor MCP que convierte un brief corto en una página HTML, experiencia, cuento, presentación, kit de sprint o GIF completo y validado, en uno de trece sistemas editoriales. El modelo aporta contenido y juicio; el arnés aporta fuentes, paleta, composición, movimiento y la puerta de calidad.
 
-La ruta `beauty narrative` define briefs de tres a cinco fases y genera GIF, PNG, hoja de contacto y manifiesto v2 para los trece estilos. `workflowStatus` describe el trabajo; `outcome` separa el resultado esperado del observado con evidencia. Antes de escribir el brief, consulta `beauty capabilities` para conocer los valores válidos y los límites de cada escena. Cada pieza separa integridad técnica, fidelidad al estilo, legibilidad, narrativa y revisión visual; esta última empieza pendiente y ninguna evaluación autoriza publicar.
+La ruta `beauty narrative` define briefs de tres a cinco fases y genera GIF, PNG, hoja de contacto y manifiesto v3 para los trece estilos. `workflowStatus` describe el trabajo; `outcome` separa el resultado esperado del observado con evidencia. Antes de escribir el brief, consulta `beauty capabilities` para conocer los valores válidos y los límites de cada escena. Los cinco niveles de evaluación y la revisión visual permanecen separados. La revisión empieza sin registro y solo una revisión independiente con criterios completos puede aprobarla.
 
 Para una historia de Sprint Review, copia `examples/recipes/<style>/narrative.json`, conserva **Antes → Cambio → Resultado esperado** mientras el resultado no tenga evidencia observada, genera y revisa la galería:
 
 ```bash
 beauty capabilities --style papercraft --json
 beauty narrative --style papercraft --brief examples/recipes/papercraft/narrative.json --out out/papercraft
+beauty review "out/papercraft/<pack>.manifest.json" --reviewer reviewer-17:Ada --criterion thumbnailIdentity=pass --frames
+beauty review-state "out/papercraft/<pack>.manifest.json"
+beauty rerender "out/papercraft/<pack>.manifest.json" --apply-feedback
 beauty gallery docs/narrative-gif --out docs/narrative-gif/GALLERY.html --title "Sprint Review"
 beauty validate docs/narrative-gif/GALLERY.html --style papercraft --visual
 pnpm narrative:recipes
 ```
 
 La galería usa PNG estáticos al abrir, carga el GIF solo al pulsar **Reproducir**, permite detener, descargar y ampliar, filtrar por estilo y activar una vista de 640 × 360. La salida generada está en [GALLERY.html](docs/narrative-gif/GALLERY.html); los pasos reproducibles desde un checkout limpio están en [REPRODUCE.md](docs/narrative-gif/REPRODUCE.md).
+
+`beauty review` guarda criterios visuales y feedback enlazados a hashes del GIF, PNG y manifiesto. `--frames` extrae frames y recortes verificados para la galería. `beauty rerender` reutiliza brief y seed y solo marca comentarios como corregidos cuando la región indicada cambió de forma medible. Una recomendación humana de publicación es una señal editorial, nunca una publicación automática. El procedimiento y el formato del feedback están en [REVIEW-PROCESS.md](docs/narrative-gif/REVIEW-PROCESS.md).
 
 ## Inicio rápido
 
@@ -93,6 +98,8 @@ Scroll-eá la página antes de capturar: las secciones aparecen al hacer scroll 
 | `beauty_create_sprint` | Genera review + retro + planning + 3 GIFs | `beauty_create_sprint({ style: "artdeco", sprint: "16" })` |
 | `beauty_create_gif` | Genera un GIF editorial | `beauty_create_gif({ style: "artdeco", text: "Subir" })` |
 | `beauty_create_narrative` | Valida vocabulario, workflow, outcome y holds, y renderiza un pack en los 13 estilos | `beauty_create_narrative({ style: "papercraft", brief: { kind: "narrative-gif", ... } })` |
+| `beauty_review_artifact` | Registra revisión, feedback y hashes del artefacto exacto | `beauty_review_artifact({ pack: "out/pack.manifest.json", reviewer: { id: "reviewer-17", name: "Ada", kind: "human" } })` |
+| `beauty_get_review_state` | Comprueba si el ledger aún coincide con los hashes actuales | `beauty_get_review_state({ pack: "out/pack.manifest.json" })` |
 | `beauty_create_gallery` | Genera una galería HTML desde los manifiestos de una carpeta | `beauty_create_gallery({ directory: "docs/narrative-gif", output: "out/gallery.html" })` |
 | `beauty_validate` | Audita HTML y devuelve grado y fixes (`visual: true` incluye el pase de navegador) | `beauty_validate({ style: "nature", path: "page.html", visual: true })` |
 | `beauty_fix` | Repara y revalida con las mismas opciones | `beauty_fix({ style: "nature", path: "page.html", visual: true })` |
