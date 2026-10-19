@@ -2,7 +2,7 @@ import type { DeckBrief, DeckSlide, DeckStat, StylePreset, StyleSubfamily } from
 import type { DeckBriefInput } from './types/deck.js';
 import { DECK_CONTENT_SLIDE_LIMIT, DECK_POINT_LIMIT, DECK_STAT_LIMIT } from './types/deck.js';
 import { BeautyError, clampText, esc, normalizeBrief, safeHref, shell, t } from './page/common.js';
-import { accentTextColor, textOnAccent } from './a11y.js';
+import { accentTextColor, displayGlyphRatio, textOnAccent } from './a11y.js';
 import { motifFor } from './deck-motifs.js';
 import { applyMaxxing } from './maxxing.js';
 import { papercutScene } from './papercut.js';
@@ -196,6 +196,17 @@ export function renderDeck({ style, brief: input }: DeckOptions): DeckResult {
   const bodyFont = style.fonts.body;
   const line = style.rules.borderWidths[0] ?? 1;
   const radius = style.rules.radius[0] ?? 0;
+  // The cover headline is the only h1 in a deck: cap its desktop size by the
+  // longest word so a wide display face never pushes copy off the viewport.
+  const coverWord = brief.title.trim().split(/\s+/).reduce((max, word) => Math.max(max, word.length), 0);
+  const coverFit = (base: string): string =>
+    coverWord > 0
+      ? `min(${base},calc(84vw / ${(coverWord * displayGlyphRatio(display)).toFixed(2)}))`
+      : base;
+  const coverH1Fit = coverFit('clamp(50px,9.2vw,138px)');
+  const coverH1FitCartel = coverFit('clamp(52px,10vw,150px)');
+  const coverH1FitGabinete = coverFit('clamp(44px,7.4vw,108px)');
+  const coverH1FitPhone = coverFit('clamp(42px,13vw,74px)');
 
   const contentSlides = slides
     .map(
@@ -250,15 +261,15 @@ body.deck{--bg:${style.palette.bg};--surface:${style.palette.surface};--ink:${st
 .deck .slide-watermark{position:absolute;z-index:0;right:clamp(8px,3vw,42px);bottom:4vh;font-family:'${display}',sans-serif;font-size:clamp(150px,24vw,360px);line-height:.7;color:var(--accent);opacity:.075;pointer-events:none}
 .deck .layout-statement .deck-body{font-size:clamp(20px,2.1vw,32px);line-height:1.45;max-width:28ch;color:var(--ink);opacity:.82}
 .deck .kicker{margin:0 0 16px;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
-.deck h1{font-size:clamp(50px,9.2vw,138px);line-height:.92;letter-spacing:-.035em;margin:0;max-width:12ch;text-wrap:balance}
+.deck h1{font-size:${coverH1Fit};line-height:.92;letter-spacing:-.035em;margin:0;max-width:12ch;text-wrap:balance}
 .deck h2{font-size:clamp(30px,4.5vw,68px);line-height:1.02;letter-spacing:-.025em;margin:0 0 18px;max-width:18ch;text-wrap:balance}
 .deck .cover-grid{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:30px;align-items:center;width:min(1260px,100%)}
 .deck.comp-gabinete .cover-grid{grid-template-columns:1.35fr .65fr}
-.deck.comp-gabinete h1{font-size:clamp(44px,7.4vw,108px)}
+.deck.comp-gabinete h1{font-size:${coverH1FitGabinete}}
 .deck.comp-cartel .cover-grid{grid-template-columns:1fr;text-align:center;max-width:1000px;margin:0 auto}
 .deck.comp-cartel .cover-copy{display:flex;flex-direction:column;align-items:center}
 .deck.comp-cartel .cover-mark{position:absolute;inset:0;opacity:.18;z-index:0;pointer-events:none}
-.deck.comp-cartel h1{font-size:clamp(52px,10vw,150px);max-width:12ch;text-align:center}
+.deck.comp-cartel h1{font-size:${coverH1FitCartel};max-width:12ch;text-align:center}
 .deck.comp-cartel .cover-tagline{margin-left:auto;margin-right:auto}
 .deck.comp-cartel .cover-meta{justify-content:center}
 .deck.comp-cartel .point-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -300,7 +311,7 @@ ${motifFor(style.slug)}
 @media (max-width:820px){
   .deck .deck-top{padding:14px 16px}.deck .deck-title{display:none}.deck .deck-bottom{padding:10px 16px}.deck .deck-hint{display:none}
   .deck .slide{padding:86px 20px 88px}.deck .cover-grid{grid-template-columns:1fr}.deck .cover-mark{display:none}
-  .deck h1{font-size:clamp(42px,13vw,74px)}.deck h2{font-size:clamp(27px,7vw,44px)}
+  .deck h1{font-size:${coverH1FitPhone}}.deck h2{font-size:clamp(27px,7vw,44px)}
   .deck .point-grid,.deck .stat-grid{grid-template-columns:1fr;gap:8px}.deck .point{min-height:0;padding:12px 14px}.deck .point p{font-size:11px}
   .deck .deck-quote{font-size:clamp(26px,7vw,44px)}.deck .slide-number{right:18px;bottom:80px}
 }
