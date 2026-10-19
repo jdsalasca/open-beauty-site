@@ -1,6 +1,6 @@
 # Narrative GIF foundation: architecture decision
 
-**Status:** Stage A and the Stage B foundation are complete. Production scenes cover the papercraft/editorial and brutalist/documentary pilots plus vaporwave, galactic, and nature. Brutalist/poster remains available. Eight styles have no production scene yet.
+**Status:** Stage A, the Stage B foundation, and the Stage C style renderers are complete. Visual sign-off for Stage C remains pending. Production scenes cover the papercraft/editorial and brutalist/documentary pilots plus vaporwave, galactic, and nature. Brutalist/poster remains available. Eight styles have no production scene yet.
 
 ## Decision
 
@@ -65,4 +65,4 @@ The pilot E2E tests require byte-identical GIF, poster PNG and contact-sheet byt
 - **Nature:** one original, genus-free leaf specimen stays fixed on a flat herbarium plate while a fine annotation arrives and its record settles. `comparison` uses one callout; `checklist` uses observation, annotation and archive rows. Cormorant Garamond and Karla carry display and reading roles. No date, location or provenance is shown because none was supplied.
 - Vaporwave, galactic and nature currently support landscape 16:9 only; square and portrait layouts are explicitly rejected instead of being cropped or deformed.
 - Both pilots support 16:9, 1:1 and 9:16. The object stays inside the shared safe/art areas; no square or portrait output is cropped or stretched. A layout overflow returns `TEXT_OVERFLOW` with the complete copy retained in the diagnostic source.
-- See `styles/papercraft.md`, `styles/brutalist.md` and `pilots/REVIEW.md` for composition contracts, rendered evidence, iterations and remaining weaknesses.
+- See `styles/papercraft.md`, `styles/brutalist.md`, `styles/vaporwave.md`, `styles/galactic.md`, `styles/nature.md`, `pilots/REVIEW.md` and `gallery/REVIEW-stage-c-vaporwave-galactic-nature.md` for composition contracts, rendered evidence, iterations and remaining weaknesses. The Stage C exports and their manifests are indexed in `gallery/README.md`.
