@@ -167,6 +167,30 @@ test('loop templates wrap seamlessly: frame at t=0 matches frame at t=1 for ever
   }
 });
 
+test('every animated template of every style has perceptible motion at its peak', async () => {
+  const dir = await tempDir();
+  try {
+    for (const style of styleSlugs) {
+      for (const template of ['title', 'loop'] as const) {
+        const target = path.join(dir, `${style}-${template}.gif`);
+        await createGif(
+          style,
+          { text: 'Luz y papel', subtitle: 'Prueba', template, width: 240, height: 240, fps: 8, duration: 1.25, seed: 7 },
+          target,
+        );
+        const decoded = decodeGif(await readFile(target));
+        let peak = 0;
+        for (const frame of decoded.frames.slice(1)) {
+          peak = Math.max(peak, meanFrameDiff(decoded.frames[0]!, frame));
+        }
+        assert.ok(peak >= 3, `${style}/${template}: peak motion ${peak.toFixed(2)} is below the 3.0 threshold`);
+      }
+    }
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+});
+
 function frameDiff(a: Uint8ClampedArray, b: Uint8ClampedArray): number {
   let sum = 0;
   for (let i = 0; i < a.length; i += 1) sum += Math.abs(a[i]! - b[i]!);

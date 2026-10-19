@@ -106,7 +106,7 @@ const COMMAND_HELP: Record<string, CommandHelpEntry> = {
   },
   sprint: {
     summary: 'Create review + retrospective + planning + 3 GIFs.',
-    usage: 'beauty sprint --style <s> --brief sprint.json [--brief -] [--out folder]',
+    usage: 'beauty sprint --style <s> --brief sprint.json [--brief -] [--size 640] [--fps 12] [--frames 29] [--out folder]',
     options: sprintHelpOptions(),
     example: `beauty sprint --style isotype --brief sprint.json\n\n${SPRINT_BRIEF_EXAMPLE}`,
   },
@@ -707,11 +707,16 @@ async function main(): Promise<void> {
       const style = requireStyle(stringFlag(flags, 'style'));
       const brief = mergeBrief(await loadBrief<Partial<SprintBrief>>(stringFlag(flags, 'brief')), flags);
       if (!brief.sprint) throw new Error('Pass a sprint brief with { "sprint": "15", "style": "nature", ... }. See `beauty sprint --help` for the schema.');
-      const result = await createSprintKit({ ...brief, sprint: brief.sprint, style }, stringFlag(flags, 'out'));
+      const result = await createSprintKit({ ...brief, sprint: brief.sprint, style }, stringFlag(flags, 'out'), {
+        size: numberFlag(flags, 'size'),
+        fps: numberFlag(flags, 'fps'),
+        frames: numberFlag(flags, 'frames'),
+      });
       for (const item of [result.review, result.retro, result.planning]) {
         console.log(`${item.grade} ${item.score}/100 · vision ${item.vision}/4 · ${item.html}`);
         console.log(`GIF · ${item.gif}`);
       }
+      for (const issue of result.issues) console.log(`${issue.severity.toUpperCase()} ${issue.code} · ${issue.message}`);
       console.log(result.directory);
       return;
     }

@@ -95,7 +95,10 @@ export const sprintBriefSchema = z.object({
   summary: optionalText(240),
   metrics: z.array(sprintMetricSchema).max(6).optional(),
   highlights: z.array(text(160)).max(8).optional(),
-  blockers: z.array(text(160)).max(8).optional(),
+  blockers: z
+    .array(z.string().min(1).max(300, 'Blockers are limited to 300 characters; move the rest into the sprint summary.'))
+    .max(8)
+    .optional(),
   next: z.array(text(160)).max(8).optional(),
   quote: z.object({ text: text(320), author: optionalText(90) }).optional(),
   stories: z.array(sprintStorySchema).max(40).optional(),
@@ -145,6 +148,9 @@ export function sprintHelpOptions(): string[] {
   return [
     '  --brief <file>     Read the JSON brief from a file',
     '  --brief -          Read the sprint brief JSON from stdin (avoids os error 206)',
+    '  --size n           Square GIF side in px (240–1200, default 640)',
+    '  --fps n            GIF frames per second (8–30, default 12)',
+    '  --frames n         Encoded GIF frames (8–180, default 29)',
     '  --out path         Output folder (defaults to beauty-output/sprint-<id>)',
     '',
     '  JSON brief fields (only sprint is required):',

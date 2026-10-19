@@ -4,6 +4,7 @@ import type { SprintData } from './data.js';
 import { sprintBrand } from './data.js';
 import {
   backlogBlock,
+  blockersBlock,
   burndownChart,
   capacityChart,
   retroActions,
@@ -26,7 +27,8 @@ export interface SprintDocument {
 }
 
 const WORD_BUDGET = 50;
-const MAX_AUTHORED_SLIDES = 8;
+/** A deck adds cover and closing, so it accepts 14 authored slides at most. */
+const MAX_AUTHORED_SLIDES = 14;
 export const TOKEN_PREFIX = '[[sprint:';
 
 /**
@@ -76,6 +78,11 @@ function paginate(items: number, render: (offset: number, size: number) => strin
     guard += 1;
   }
   return sizes;
+}
+
+/** Default deck titles name the team and the sprint instead of a generic phrase. */
+function sprintHeading(data: SprintData, label: string): string {
+  return `${sprintBrand(data)} · ${label} ${data.sprint.id}`;
 }
 
 function baseBrief(data: SprintData, title: string, closing: string): Partial<DeckBrief> {
@@ -181,32 +188,6 @@ export function buildReviewDocument(preset: StylePreset, data: SprintData): Spri
     blocks.push(block.block);
   }
 
-  if (data.stories.length) {
-    const fixed =
-      wordsOf(translate(data.locale, 'Historias', 'Stories')) +
-      wordsOf(translate(data.locale, 'El estado real del backlog', 'The real shape of the backlog')) +
-      4;
-    const sizes = paginate(
-      data.stories.length,
-      (offset, size) => storiesTable(preset, data.locale, data.stories.slice(offset, offset + size), true),
-      fixed,
-    );
-    let cursor = 0;
-    sizes.forEach((size, page) => {
-      const chunk = data.stories.slice(cursor, cursor + size);
-      cursor += size;
-      const suffix = sizes.length > 1 ? ` ${page + 1}/${sizes.length}` : '';
-      const block = tokenSlide(
-        translate(data.locale, 'Historias', 'Stories'),
-        `${translate(data.locale, 'El estado real del backlog', 'The real shape of the backlog')}${suffix}`,
-        `stories-${page + 1}`,
-        storiesTable(preset, data.locale, chunk, true),
-      );
-      slides.push(block.slide);
-      blocks.push(block.block);
-    });
-  }
-
   if (data.risks.length) {
     const fixed =
       wordsOf(translate(data.locale, 'Riesgos', 'Risks')) +
@@ -227,6 +208,58 @@ export function buildReviewDocument(preset: StylePreset, data: SprintData): Spri
         `${translate(data.locale, 'Lo que puede romper el próximo sprint', 'What can break the next sprint')}${suffix}`,
         `risks-${page + 1}`,
         risksBlock(preset, data.locale, chunk, true),
+      );
+      slides.push(block.slide);
+      blocks.push(block.block);
+    });
+  }
+
+  if (data.blockers.length) {
+    const fixed =
+      wordsOf(translate(data.locale, 'Bloqueos', 'Blockers')) +
+      wordsOf(translate(data.locale, 'Lo que frenó el sprint', 'What slowed the sprint')) +
+      4;
+    const sizes = paginate(
+      data.blockers.length,
+      (offset, size) => blockersBlock(data.locale, data.blockers.slice(offset, offset + size), true),
+      fixed,
+    );
+    let cursor = 0;
+    sizes.forEach((size, page) => {
+      const chunk = data.blockers.slice(cursor, cursor + size);
+      cursor += size;
+      const suffix = sizes.length > 1 ? ` ${page + 1}/${sizes.length}` : '';
+      const block = tokenSlide(
+        translate(data.locale, 'Bloqueos', 'Blockers'),
+        `${translate(data.locale, 'Lo que frenó el sprint', 'What slowed the sprint')}${suffix}`,
+        `blockers-${page + 1}`,
+        blockersBlock(data.locale, chunk, true),
+      );
+      slides.push(block.slide);
+      blocks.push(block.block);
+    });
+  }
+
+  if (data.stories.length) {
+    const fixed =
+      wordsOf(translate(data.locale, 'Historias', 'Stories')) +
+      wordsOf(translate(data.locale, 'El estado real del backlog', 'The real shape of the backlog')) +
+      4;
+    const sizes = paginate(
+      data.stories.length,
+      (offset, size) => storiesTable(preset, data.locale, data.stories.slice(offset, offset + size), true),
+      fixed,
+    );
+    let cursor = 0;
+    sizes.forEach((size, page) => {
+      const chunk = data.stories.slice(cursor, cursor + size);
+      cursor += size;
+      const suffix = sizes.length > 1 ? ` ${page + 1}/${sizes.length}` : '';
+      const block = tokenSlide(
+        translate(data.locale, 'Historias', 'Stories'),
+        `${translate(data.locale, 'El estado real del backlog', 'The real shape of the backlog')}${suffix}`,
+        `stories-${page + 1}`,
+        storiesTable(preset, data.locale, chunk, true),
       );
       slides.push(block.slide);
       blocks.push(block.block);
@@ -265,11 +298,12 @@ export function buildReviewDocument(preset: StylePreset, data: SprintData): Spri
 
 export function buildRetroDocument(preset: StylePreset, data: SprintData): SprintDocument {
   const id = data.sprint.id;
+  const retroTitle = sprintHeading(data, translate(data.locale, 'Retrospectiva', 'Retrospective'));
   const slides: DeckSlide[] = [
     {
       layout: 'statement',
       kicker: `Sprint ${id} · ${translate(data.locale, 'Retrospectiva', 'Retrospective')}`,
-      title: translate(data.locale, 'Qué aprendimos cuando el plan se movió.', 'What we learned when the plan moved.'),
+      title: retroTitle,
       body: translate(
         data.locale,
         'Una lectura del sistema: lo que funcionó, lo que dolió y lo que probamos después.',
@@ -366,7 +400,7 @@ export function buildRetroDocument(preset: StylePreset, data: SprintData): Sprin
   return assemble(
     data,
     'retro',
-    `Sprint ${id} · ${translate(data.locale, 'Retrospectiva', 'Retrospective')}`,
+    retroTitle,
     translate(data.locale, 'Lo que sigue se construye entre todos.', 'What comes next is built together.'),
     slides,
     blocks,

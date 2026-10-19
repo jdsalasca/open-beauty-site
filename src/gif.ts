@@ -52,7 +52,7 @@ function clamp(value: number, min: number, max: number): number {
  * composed poster frame (t=0) and eases back into it, so the restart of the
  * loop is imperceptible while the middle of the cycle carries the motion.
  */
-function loopPhase(t: number): number {
+export function loopPhase(t: number): number {
   return 0.5 - 0.5 * Math.cos(TAU * clamp(t, 0, 1));
 }
 
@@ -60,9 +60,15 @@ function loopPhase(t: number): number {
 /* Per-style rendering profiles                                        */
 /* ------------------------------------------------------------------ */
 
-/** Per-style dithering: gradients get error diffusion, flat styles stay crisp. */
+/**
+ * Per-style dithering profile. Ordered dithering is position-locked, so
+ * gradient styles that move keep delta frames compressible; flat styles stay
+ * crisp. `--dither floyd-steinberg` is still available per call.
+ */
 export const STYLE_DITHER: Record<StyleSlug, GifDitherMode> = {
-  renaissance: 'floyd-steinberg',
+  // Moving clouds and the aureole re-dither every touched pixel under error
+  // diffusion, which blew the size budget; ordered keeps the fresco small.
+  renaissance: 'ordered',
   vaporwave: 'ordered',
   galactic: 'ordered',
   ukiyoe: 'ordered',
@@ -530,6 +536,17 @@ function frameRenaissance(env: FrameEnv): void {
   ctx.closePath();
   ctx.fill();
 
+  // Two large pigment clouds drift across the sky and return to the poster.
+  const cloudShift = phase * w * 0.16;
+  ctx.fillStyle = rgba(p.accent2, 0.55);
+  ctx.beginPath();
+  ctx.ellipse(w * 0.4 + cloudShift, h * 0.38, w * 0.3, h * 0.07, 0, 0, TAU);
+  ctx.fill();
+  ctx.fillStyle = rgba(p.accent4, 0.62);
+  ctx.beginPath();
+  ctx.ellipse(w * 0.62 - cloudShift, h * 0.5, w * 0.26, h * 0.06, 0, 0, TAU);
+  ctx.fill();
+
   ctx.beginPath();
   ctx.arc(w * 0.5, h * 0.3, s * 0.062, 0, TAU);
   ctx.fillStyle = rgba(p.accent2, 0.55);
@@ -540,6 +557,14 @@ function frameRenaissance(env: FrameEnv): void {
   ctx.lineWidth = Math.max(1, s * 0.0022);
   archPath();
   ctx.stroke();
+
+  // A slow cinnabar aureole breathes over the plate: the fresco light gathers
+  // and recedes across the eased arc, giving the whole scene a visible pulse.
+  const glory = ctx.createRadialGradient(w * 0.5, h * 0.36, 0, w * 0.5, h * 0.36, s * (0.22 + phase * 0.14));
+  glory.addColorStop(0, rgba(p.accent2, 0.36 - phase * 0.32));
+  glory.addColorStop(1, rgba(p.accent2, 0));
+  ctx.fillStyle = glory;
+  ctx.fillRect(0, 0, w, h);
 
   // A full turn per loop: the 16-ray sun maps onto itself, so t=0 and t=1
   // match exactly and the rotation keeps a constant, seamless velocity.
@@ -558,12 +583,14 @@ function frameRenaissance(env: FrameEnv): void {
   const blockHeight = layout.lines.length * layout.lineHeight;
   const centerY = h * 0.51;
   const firstBaseline = centerY - blockHeight / 2 + layout.size * 0.78;
+  // The hand-set title drifts a hair off centre and returns: a breathing page.
+  const titleX = w / 2 + phase * s * 0.022;
 
   ctx.save();
   drawTitleLines(
     ctx,
     layout.lines,
-    w / 2,
+    titleX,
     firstBaseline,
     layout.lineHeight,
     { family: titleFontFamily, size: layout.size, weight: 400, color: p.ink },
@@ -574,13 +601,13 @@ function frameRenaissance(env: FrameEnv): void {
   const ruleWidth = s * 0.19 * (1 - 0.15 * phase);
   const ruleY = firstBaseline + blockHeight + s * 0.035;
   ctx.fillStyle = p.accent;
-  ctx.fillRect(w / 2 - ruleWidth / 2, ruleY, ruleWidth, Math.max(1, s * 0.0022));
+  ctx.fillRect(titleX - ruleWidth / 2, ruleY, ruleWidth, Math.max(1, s * 0.0022));
 
   if (subtitle) {
     drawTracked(
       ctx,
       subtitle.toUpperCase(),
-      w / 2,
+      titleX,
       ruleY + s * 0.055,
       { family: titleFontFamily, size: s * 0.024, weight: 600, color: p.muted },
       s * 0.006,
@@ -607,7 +634,7 @@ function frameRenaissance(env: FrameEnv): void {
 /* ------------------------------------------------------------------ */
 
 function frameBrutalist(env: FrameEnv): void {
-  const { ctx, w, h, preset, text, subtitle, t } = env;
+  const { ctx, w, h, preset, text, subtitle, t, phase } = env;
   const p = preset.palette;
   const s = Math.min(w, h);
 
@@ -661,12 +688,20 @@ function frameBrutalist(env: FrameEnv): void {
   ctx.fillStyle = p.ink;
   ctx.fillRect(w - panelW, panelTop, panelW, panelBottom - panelTop);
 
+  // A registration bar scans the black plate as the eased arc advances.
+  const scanY = panelTop + s * 0.08 + phase * (panelBottom - panelTop - s * 0.18);
+  ctx.fillStyle = p.accent;
+  ctx.globalAlpha = 0.85;
+  ctx.fillRect(w - panelW, scanY, panelW, Math.max(4, s * 0.028));
+  ctx.globalAlpha = 1;
+
   const cx = w - panelW / 2;
   const cy = panelTop + (panelBottom - panelTop) / 2;
   const radius = Math.min(panelW, panelBottom - panelTop) * 0.27;
-  // Half a turn per loop: the square + crosshair figure is 180°-symmetric, so
-  // the wrap is exact while the figure keeps turning at a constant speed.
-  const rotation = Math.PI / 8 + t * Math.PI;
+  // The square + crosshair figure is 90°-symmetric, so a full turn would look
+  // frozen at the midpoint. The eased arc instead swings it 60° out and back,
+  // which reads as a mechanical sweep and closes on the poster pose.
+  const rotation = Math.PI / 8 + phase * (Math.PI / 3);
 
   ctx.save();
   ctx.translate(cx, cy);
@@ -796,7 +831,7 @@ function framePapercraft(env: FrameEnv): void {
   ctx.shadowColor = 'rgba(58,46,40,.14)';
   ctx.shadowBlur = s * 0.03;
   ctx.shadowOffsetY = s * 0.012;
-  blobPath(ctx, w * 0.22 + sway * s * 0.008, h * 0.32, w * 0.23, h * 0.24, rngShape, 7);
+  blobPath(ctx, w * 0.22 + sway * s * 0.024, h * 0.32 - sway * s * 0.01, w * 0.23, h * 0.24, rngShape, 7);
   ctx.fill();
   ctx.restore();
 
@@ -830,8 +865,8 @@ function framePapercraft(env: FrameEnv): void {
   const cardH = h * 0.5;
   const cardCX = w * 0.5;
   const cardCY = h * 0.5;
-  const bob = phase * s * 0.008;
-  const angle = -0.035 + phase * 0.006;
+  const bob = phase * s * 0.03;
+  const angle = -0.035 + phase * 0.028;
 
   ctx.save();
   ctx.translate(cardCX, cardCY + bob);
@@ -946,12 +981,12 @@ function frameShowcase(env: FrameEnv): void {
 
   if (p.slug === 'nature') {
     ctx.fillStyle = p.palette.surface;
-    ctx.fillRect(0, h * 0.7, w, h * 0.3);
+    ctx.fillRect(0, h * (0.7 - phase * 0.04), w, h * (0.3 + phase * 0.04));
     ctx.strokeStyle = p.palette.ink;
     ctx.lineWidth = Math.max(2, s * 0.004);
     ctx.beginPath();
     ctx.moveTo(w * 0.70, h * 0.88);
-    ctx.quadraticCurveTo(w * 0.67, h * 0.48, w * 0.74, h * 0.18);
+    ctx.quadraticCurveTo(w * 0.67 + phase * s * 0.02, h * 0.48, w * 0.74 - phase * s * 0.015, h * 0.18);
     ctx.stroke();
     ctx.fillStyle = p.palette.accent;
     for (let i = 0; i < 4; i += 1) {
@@ -959,8 +994,8 @@ function frameShowcase(env: FrameEnv): void {
       const side = i % 2 ? 1 : -1;
       ctx.save();
       ctx.translate(w * (0.95 + side * 0.03), y);
-      // Leaves sway with the eased arc; sin(0 + i) is the poster pose.
-      ctx.rotate(side * -0.55 + Math.sin(phase * Math.PI + i) * 0.05);
+      // Leaves sway broadly with the eased arc; sin(0 + i) is the poster pose.
+      ctx.rotate(side * -0.55 + Math.sin(phase * Math.PI + i) * 0.4);
       ctx.beginPath();
       ctx.ellipse(side * s * 0.1, 0, s * 0.12, s * 0.045, 0, 0, TAU);
       ctx.fill();
@@ -992,25 +1027,30 @@ function frameShowcase(env: FrameEnv): void {
     }
     ctx.fillStyle = rgba(p.palette.accent, 0.2);
     ctx.beginPath();
-    ctx.arc(w / 2, h / 2, s * 0.22 * (1 + phase * 0.05), 0, TAU);
+    ctx.arc(w / 2, h / 2, s * 0.22 * (1 + phase * 0.1), 0, TAU);
     ctx.fill();
     ctx.strokeStyle = p.palette.accent;
     ctx.beginPath();
-    ctx.arc(w / 2, h / 2, s * 0.15 * (1 + phase * 0.05), 0, TAU);
+    ctx.arc(w / 2, h / 2, s * 0.15 * (1 + phase * 0.1), 0, TAU);
     ctx.stroke();
     ctx.fillStyle = p.palette.accent;
     for (let i = 0; i < 4; i += 1) {
       const x = s * 0.1 + i * s * 0.22;
-      ctx.fillRect(x, h - s * 0.21, s * 0.12, s * (0.06 + i * 0.025));
+      // The skyline grows upward with the arc, one column at a time.
+      const baseHeight = s * (0.06 + i * 0.025);
+      const height = baseHeight * (1 + phase * 0.5);
+      ctx.fillRect(x, h - s * 0.21 - (height - baseHeight), s * 0.12, height);
     }
   } else if (p.slug === 'isotype') {
     ctx.fillStyle = p.palette.accent;
+    // The pictogram crowd marches one column across the page and settles back:
+    // a public-data procession rather than a decorative bob.
+    const march = phase * s * 0.095;
     for (let row = 0; row < 5; row += 1) {
       for (let col = 0; col < 9; col += 1) {
         if ((row + col) % 3 === 0) continue;
-        const x = s * 0.08 + col * s * 0.095;
-        // The pictogram crowd bobs with the eased arc; the poster pose is sin(i).
-        const y = h - s * 0.3 + row * s * 0.045 + Math.sin(phase * Math.PI + col * 0.6 + row * 0.35) * s * 0.005;
+        const x = s * 0.08 + col * s * 0.095 + march;
+        const y = h - s * 0.3 + row * s * 0.045 + Math.sin(phase * Math.PI + col * 0.6 + row * 0.35) * s * 0.01;
         ctx.beginPath();
         ctx.arc(x, y, s * 0.009, 0, TAU);
         ctx.fill();
@@ -1018,7 +1058,7 @@ function frameShowcase(env: FrameEnv): void {
       }
     }
     ctx.strokeStyle = rgba(p.palette.ink, 0.45);
-    const ruleDrift = Math.sin(phase * Math.PI) * s * 0.01;
+    const ruleDrift = Math.sin(phase * Math.PI) * s * 0.02;
     for (let i = 0; i < 7; i += 1) {
       ctx.beginPath();
       ctx.moveTo(s * 0.06 + ruleDrift, s * 0.12 + i * s * 0.035);
@@ -1060,30 +1100,35 @@ function frameShowcase(env: FrameEnv): void {
       ctx.fill();
     }
   } else if (p.slug === 'bestiary') {
-    const breathe = 1 + Math.sin(phase * Math.PI) * 0.03;
+    const breathe = 1 + Math.sin(phase * Math.PI) * 0.05;
+    // The creature prowls across the page and returns to its poster spot; the
+    // halo and eyes follow so the movement reads as one animal.
+    const prowl = Math.sin(phase * Math.PI) * s * 0.08;
+    const cx = w / 2 + prowl;
     ctx.strokeStyle = p.palette.accent;
     ctx.lineWidth = Math.max(1, s * 0.002);
     ctx.strokeRect(s * 0.07, s * 0.06, w - s * 0.14, h - s * 0.12);
     ctx.strokeRect(s * 0.085, s * 0.075, w - s * 0.17, h - s * 0.15);
     ctx.fillStyle = rgba(p.palette.accent3, 0.18);
     ctx.beginPath();
-    ctx.arc(w / 2, h / 2, s * 0.27 * breathe, 0, TAU);
+    ctx.arc(cx, h / 2 + prowl * 0.2, s * 0.27 * breathe, 0, TAU);
     ctx.fill();
     ctx.fillStyle = p.palette.ink;
     ctx.beginPath();
-    ctx.ellipse(w / 2, h * 0.52, s * 0.17 * breathe, s * 0.12 * breathe, 0, 0, TAU);
+    ctx.ellipse(cx, h * 0.52, s * 0.17 * breathe, s * 0.12 * breathe, 0, 0, TAU);
     ctx.fill();
     ctx.fillStyle = p.palette.accent3;
     ctx.beginPath();
-    ctx.arc(w / 2 - s * 0.06 * breathe, h * 0.5, s * 0.018, 0, TAU);
-    ctx.arc(w / 2 + s * 0.06 * breathe, h * 0.5, s * 0.018, 0, TAU);
+    ctx.arc(cx - s * 0.06 * breathe, h * 0.5, s * 0.018, 0, TAU);
+    ctx.arc(cx + s * 0.06 * breathe, h * 0.5, s * 0.018, 0, TAU);
     ctx.fill();
   } else if (p.slug === 'psychedelic') {
     const rng = mulberry32(env.seed || 7);
     for (let i = 0; i < 4; i += 1) {
-      const grow = 1 + Math.sin(phase * Math.PI + i) * 0.05;
-      const bx = s * (0.22 + i * 0.19);
-      const by = s * (0.3 + (i % 2) * 0.28);
+      const grow = 1 + Math.sin(phase * Math.PI + i) * 0.12;
+      const drift = Math.sin(phase * Math.PI + i) * s * 0.025;
+      const bx = s * (0.22 + i * 0.19) + drift;
+      const by = s * (0.3 + (i % 2) * 0.28) - drift * 0.6;
       ctx.save();
       ctx.translate(bx, by);
       ctx.scale(grow, grow);
@@ -1102,7 +1147,7 @@ function frameShowcase(env: FrameEnv): void {
     }
   } else if (p.slug === 'memphis') {
     // Eased drift: shapes float away from the poster position and return.
-    const drift = phase * s * 0.012;
+    const drift = phase * s * 0.05;
     ctx.fillStyle = p.palette.accent;
     ctx.beginPath();
     ctx.arc(w * 0.78 - drift * 0.4, h * 0.2 - drift, s * 0.1, 0, TAU);
@@ -1132,13 +1177,15 @@ function frameShowcase(env: FrameEnv): void {
       ctx.ellipse(w / 2, h / 2, s * (0.24 + i * 0.08), s * (0.08 + i * 0.045), i * 0.36 + t * Math.PI, 0, TAU);
       ctx.stroke();
     }
+    // The planet rides a slow arc across its rings and returns to the poster.
+    const orbit = Math.sin(phase * Math.PI);
     ctx.fillStyle = p.palette.accent2;
     ctx.beginPath();
-    ctx.arc(w / 2, h / 2, s * 0.16 * (1 + phase * 0.04), 0, TAU);
+    ctx.arc(w / 2 + orbit * s * 0.09, h / 2 - orbit * s * 0.035, s * 0.16 * (1 + phase * 0.04), 0, TAU);
     ctx.fill();
     ctx.fillStyle = p.palette.accent3;
     ctx.beginPath();
-    ctx.arc(w * 0.76, h * 0.24, s * 0.018, 0, TAU);
+    ctx.arc(w * 0.76 - orbit * s * 0.05, h * 0.24 + orbit * s * 0.04, s * 0.018, 0, TAU);
     ctx.fill();
     ctx.fillStyle = p.palette.ink;
     for (let i = 0; i < 28; i += 1) {
