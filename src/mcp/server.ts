@@ -533,7 +533,11 @@ QUALITY BAR
         summary: z.string().max(240).optional().describe('One honest sentence that opens the review.'),
         metrics: z.array(z.object({ label: z.string().max(60), value: z.string().max(40) })).max(6).optional(),
         highlights: z.array(z.string().max(160)).max(8).optional().describe('Things that now exist; what the team can demo.'),
-        blockers: z.array(z.string().max(160)).max(8).optional().describe('Systemic friction, not personal blame.'),
+        blockers: z
+          .array(z.string().max(300, 'Blockers are limited to 300 characters; move the rest into the sprint summary.'))
+          .max(8)
+          .optional()
+          .describe('Systemic friction, not personal blame. Rendered as a risk-like list in the review.'),
         next: z.array(z.string().max(160)).max(8).optional().describe('Small bets for the next sprint.'),
         quote: quoteSchema.optional(),
         stories: z.array(sprintStorySchema).max(40).optional().describe('Stories with title, points, status and owner.'),
@@ -544,12 +548,16 @@ QUALITY BAR
         capacity: z.array(sprintCapacitySchema).max(20).optional().describe('Days of focus per person for the next sprint.'),
         nextGoal: z.string().max(240).optional(),
         subfamily: z.string().max(40).optional(),
+        size: z.number().int().min(240).max(1200).optional().describe('Square sprint GIF side in px; defaults to 640.'),
+        fps: z.number().int().min(8).max(30).optional().describe('Sprint GIF frames per second; defaults to 12.'),
+        frames: z.number().int().min(8).max(180).optional().describe('Encoded sprint GIF frames; defaults to fps × 2.4 s.'),
         output: z.string().max(260).optional().describe('Output folder. Defaults to a unique beauty-output/sprint-<team>-<sprint>-<hash> folder.'),
       },
     },
     async (args) => {
       try {
-        const result = await createSprintKit(args);
+        const { size, fps, frames, ...brief } = args;
+        const result = await createSprintKit(brief, args.output, { size, fps, frames });
         const lines = [
           `Sprint kit created in ${result.directory}`,
           `review: ${result.review.grade} ${result.review.score}/100 · vision ${result.review.vision}/4`,

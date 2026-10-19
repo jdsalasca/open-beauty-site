@@ -4,11 +4,12 @@ import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { checkSprintFidelity, createSprintKit, drawSprintFrame, parseSprintBrief } from '../src/sprint.js';
+import { checkSprintFidelity, createSprintGif, createSprintKit, drawSprintFrame, parseSprintBrief } from '../src/sprint.js';
 import { styleSlugs } from '../src/styles/presets.js';
-import { RICH_SPRINT } from './support/sprint-fixture.js';
+import { decodeGif, meanFrameDiff } from './support/gif-frames.js';
+import { LONG_SPRINT, RICH_SPRINT } from './support/sprint-fixture.js';
 
-const SMALL_GIF = { gifWidth: 240, gifHeight: 240, gifFps: 8, gifDuration: 1 };
+const SMALL_GIF = { size: 240, fps: 8, frames: 8 };
 
 async function tempDir(prefix: string): Promise<string> {
   return mkdtemp(path.join(os.tmpdir(), prefix));
@@ -156,15 +157,131 @@ test('every style produces an A kit with its data and GIFs', async () => {
 test('the review GIF animates the velocity data, not only the decoration', () => {
   const { data } = parseSprintBrief(RICH_SPRINT);
   const start = drawSprintFrame('isotype', 'review', data, 0, 320, 320);
-  const end = drawSprintFrame('isotype', 'review', data, 0.9, 320, 320);
+  const end = drawSprintFrame('isotype', 'review', data, 0.25, 320, 320);
   assert.ok(!start.every((value, index) => value === end[index]), 'review frames must animate');
 
   const different = parseSprintBrief({
     ...RICH_SPRINT,
     velocity: RICH_SPRINT.velocity.map((item) => ({ ...item, done: Math.max(0, item.committed - item.done) })),
   }).data;
-  const changed = drawSprintFrame('isotype', 'review', different, 0.9, 320, 320);
+  const changed = drawSprintFrame('isotype', 'review', different, 0.25, 320, 320);
   assert.ok(!end.every((value, index) => value === changed[index]), 'different velocity data must change the frame');
+});
+
+test('the review renders every risk even when the stories fill the deck', async () => {
+  const dir = await tempDir('sprint-risks-');
+  try {
+    const kit = await createSprintKit(LONG_SPRINT, dir, SMALL_GIF);
+    const review = await readFile(kit.review.html, 'utf8');
+    const cards = review.match(/<article class="sprint-risk">/g) ?? [];
+    assert.equal(cards.length, LONG_SPRINT.risks.length, 'every risk must keep its card');
+    for (const risk of LONG_SPRINT.risks) assert.ok(review.includes(risk.title), `review is missing risk "${risk.title}"`);
+    assert.deepEqual(
+      kit.issues.filter((issue) => issue.severity === 'error'),
+      [],
+      'fidelity must not report missing risks',
+    );
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+});
+
+test('legacy blockers are rendered as a risk-like list, not dropped', async () => {
+  const dir = await tempDir('sprint-blockers-');
+  try {
+    const blocker = 'El tablero heredado duplica la fuente de verdad y frena cada cierre.';
+    const kit = await createSprintKit({ ...RICH_SPRINT, blockers: [blocker] }, dir, SMALL_GIF);
+    const review = await readFile(kit.review.html, 'utf8');
+    assert.ok(review.includes(blocker), 'blockers must reach the review HTML');
+    assert.ok(review.includes('data-sprint="blockers"'), 'blockers get their own labelled block');
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+});
+
+test('the retrospective title is derived from the team and sprint', async () => {
+  const dir = await tempDir('sprint-retro-title-');
+  try {
+    const kit = await createSprintKit(RICH_SPRINT, dir, SMALL_GIF);
+    const retro = await readFile(kit.retro.html, 'utf8');
+    assert.ok(retro.includes('Umbral · Retrospectiva S14'), 'retro title should name brand and sprint');
+    assert.ok(!retro.includes('Qué aprendimos cuando el plan se movió.'), 'the generic default title is gone');
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+});
+
+test('every sprint GIF opens composed and wraps within 1.5x the median step', async () => {
+  const dir = await tempDir('sprint-loop-');
+  try {
+    const { data } = parseSprintBrief(LONG_SPRINT);
+    for (const style of styleSlugs) {
+      for (const kind of ['review', 'retro', 'planning'] as const) {
+        const target = path.join(dir, `${style}-${kind}.gif`);
+        const result = await createSprintGif(style, kind, data, target, { size: 240, fps: 10, frames: 12 });
+        const decoded = decodeGif(await readFile(target));
+        assert.equal(decoded.frames.length, result.frames, `${style}/${kind}: every frame is encoded`);
+        const consecutive: number[] = [];
+        for (let index = 1; index < decoded.frames.length; index += 1) {
+          consecutive.push(meanFrameDiff(decoded.frames[index - 1]!, decoded.frames[index]!));
+        }
+        const sorted = [...consecutive].sort((a, b) => a - b);
+        const median = sorted[Math.floor(sorted.length / 2)]!;
+        const wrap = meanFrameDiff(decoded.frames[decoded.frames.length - 1]!, decoded.frames[0]!);
+        assert.ok(median > 0.02, `${style}/${kind}: the sprint data must animate (median ${median.toFixed(3)})`);
+        assert.ok(
+          wrap <= median * 1.5,
+          `${style}/${kind}: wrap diff ${wrap.toFixed(2)} exceeds 1.5x the median step ${median.toFixed(2)}`,
+        );
+        const middle = decoded.frames[Math.floor(decoded.frames.length / 2)]!;
+        assert.ok(
+          meanFrameDiff(decoded.frames[0]!, middle) > 0.2,
+          `${style}/${kind}: frame 0 must be the composed poster, not a blank start`,
+        );
+      }
+    }
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+});
+
+test('one style of sprint GIFs stays under 2.5 MiB at default settings', async () => {
+  const dir = await tempDir('sprint-size-');
+  try {
+    const { data } = parseSprintBrief(LONG_SPRINT);
+    for (const style of styleSlugs) {
+      let total = 0;
+      for (const kind of ['review', 'retro', 'planning'] as const) {
+        const result = await createSprintGif(style, kind, data, path.join(dir, `${style}-${kind}.gif`));
+        assert.equal(result.width, 640, `${style}: default width`);
+        assert.equal(result.height, 640, `${style}: default height`);
+        total += result.bytes;
+      }
+      assert.ok(total <= 2.5 * 1024 * 1024, `${style}: ${(total / 1024).toFixed(0)} KiB exceeds the 2.5 MiB budget`);
+    }
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+});
+
+test('sprint GIF size, fps and frame count are clamped', async () => {
+  const dir = await tempDir('sprint-clamp-');
+  try {
+    const { data } = parseSprintBrief(RICH_SPRINT);
+    const target = path.join(dir, 'clamped.gif');
+    const result = await createSprintGif('isotype', 'review', data, target, { size: 10, fps: 99, frames: 2 });
+    assert.equal(result.width, 240);
+    assert.equal(result.height, 240);
+    assert.equal(result.fps, 30);
+    assert.equal(result.frames, 8);
+    const custom = await createSprintGif('isotype', 'review', data, target, { width: 480, height: 240, fps: 12, frames: 9 });
+    assert.equal(custom.width, 480);
+    assert.equal(custom.height, 240);
+    assert.equal(custom.fps, 12);
+    assert.equal(custom.frames, 9);
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
 });
 
 test('fidelity issues list every missing story, risk and action', () => {
