@@ -572,6 +572,95 @@ function headingText(html: string): string {
     .trim();
 }
 
+function normalizeCopy(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function tokenSet(value: string): Set<string> {
+  return new Set(value.split(' ').filter(Boolean));
+}
+
+function nearIdenticalCopy(a: string, b: string): boolean {
+  if (a === b) return true;
+  const left = tokenSet(a);
+  const right = tokenSet(b);
+  if (left.size === 0 || right.size === 0) return false;
+  if (Math.abs(left.size - right.size) > 2) return false;
+  let shared = 0;
+  for (const token of left) if (right.has(token)) shared += 1;
+  return shared / Math.max(left.size, right.size) >= 0.9;
+}
+
+/**
+ * Filler detector: a template that repeats the same card body or paragraph
+ * three times is not editorial content, it is a placeholder loop. Near-identical
+ * copies (same words, different punctuation) count as one repeated block.
+ */
+function issuesForRepetition(html: string): RichIssue[] {
+  const bodies = Array.from(html.matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/gi))
+    .map((match) => plainCopy(match[1] ?? ''))
+    .filter((text) => text.length >= 24)
+    .slice(0, 200);
+  if (bodies.length < 3) return [];
+
+  const issues: RichIssue[] = [];
+  const grouped = new Set<number>();
+  const exact = new Map<string, number[]>();
+  bodies.forEach((body, index) => {
+    const list = exact.get(normalizeCopy(body)) ?? [];
+    list.push(index);
+    exact.set(normalizeCopy(body), list);
+  });
+  for (const indexes of exact.values()) {
+    if (indexes.length < 3) continue;
+    indexes.forEach((index) => grouped.add(index));
+    issues.push(repeatedFillerIssue(bodies[indexes[0]!]!, indexes.length));
+  }
+
+  const remaining = bodies.map((body, index) => ({ body, index })).filter((entry) => !grouped.has(entry.index));
+  for (let i = 0; i < remaining.length; i += 1) {
+    const entry = remaining[i]!;
+    if (grouped.has(entry.index)) continue;
+    const cluster = [entry];
+    for (let j = i + 1; j < remaining.length; j += 1) {
+      const candidate = remaining[j]!;
+      if (grouped.has(candidate.index)) continue;
+      if (nearIdenticalCopy(normalizeCopy(entry.body), normalizeCopy(candidate.body))) cluster.push(candidate);
+    }
+    if (cluster.length < 3) continue;
+    cluster.forEach((item) => grouped.add(item.index));
+    issues.push(repeatedFillerIssue(entry.body, cluster.length));
+  }
+  return issues;
+}
+
+function plainCopy(block: string): string {
+  return block
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&[a-z]+;/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function repeatedFillerIssue(sample: string, count: number): RichIssue {
+  const shortened = sample.length > 64 ? `${sample.slice(0, 61).trimEnd()}…` : sample;
+  return mkIssue(
+    'warn',
+    'repeated-filler',
+    `The same body appears ${count} times: "${shortened}"`,
+    `the <p> blocks (${count} identical or near-identical copies)`,
+    'A repeated paragraph is template filler: it tells the reader that the content was not written for this page, and it flattens the rhythm of the layout.',
+    '<p>Publicar una lectura común cada viernes.</p>',
+    'Write one specific sentence per card, action or section; if the same sentence fits everywhere, cut all but one.',
+  );
+}
+
 /**
  * Two headline checks that keep a prompt from becoming the page title and keep
  * the title from breaking inside a word on a 360px phone.
@@ -728,6 +817,7 @@ export function validateHtml(html: string, style: StyleSlug): RichValidationResu
   const markup = issuesForMarkup(html);
   const contrast = issuesForContrast(preset);
   const headline = issuesForHeadline(html, css);
+  const repetition = issuesForRepetition(html);
 
   issues.push(
     ...colors.issues,
@@ -739,6 +829,7 @@ export function validateHtml(html: string, style: StyleSlug): RichValidationResu
     ...markup,
     ...contrast,
     ...headline,
+    ...repetition,
   );
 
   return finalize(style, preset, css, html, issues, colors, fonts, radii, motion);
@@ -1206,4 +1297,14 @@ function finalizeFrom(base: RichValidationResult, style: StyleSlug, html: string
   const score = Math.max(0, Math.min(100, 100 - errors * 18 - warnings * 6 - infos));
   const grade: RichValidationResult['grade'] = gradeForScore(score, warnings);
   return { ...base, score, grade, issues };
+}
+
+/**
+ * Adds issues found after the static pass (visual geometry, repetition, …) and
+ * rescores with the documented weights, so an open warning still caps the grade
+ * at B and a visual issue can never leave an "A 100" standing.
+ */
+export function mergeIssues(base: RichValidationResult, extra: RichIssue[]): RichValidationResult {
+  if (extra.length === 0) return base;
+  return finalizeFrom(base, base.style, '', [...base.issues, ...extra]);
 }
