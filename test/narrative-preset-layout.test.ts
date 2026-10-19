@@ -243,7 +243,10 @@ test('object prominence proxy reports the art-box area ratio and object-hero ren
 
   const root = await mkdtemp(path.join(os.tmpdir(), 'narrative-hero-'));
   try {
+    // legacyArt: this test measures the layout engine on the original illustration; the semantic upgrade of
+    // legacy briefs (default since issue 7) has its own geometry and is covered by the semantic suites.
     const result = await createNarrative(base({
+      legacyArt: true,
       output: { width: 640, height: 360, preset: 'card-640x360', formats: ['gif', 'png'] },
       playback: { preset: 'product-review', loop: true },
       phases: [
@@ -298,8 +301,17 @@ test('object-hero keeps the existing semantic object-text legibility control gre
   }
 });
 
+test('a no-hint legacy brief is auto-upgraded to the semantic composition; legacyArt keeps the source one', () => {
+  const upgraded = normalizeNarrativeBrief(base());
+  assert.equal(upgraded.upgrade.applied, true);
+  assert.equal(normalizeNarrativeBrief(base({ legacyArt: true })).upgrade.applied, false);
+  const wide = layoutNarrative(upgraded.brief).reservedArtArea;
+  const legacy = layoutNarrative(normalizeNarrativeBrief(base({ legacyArt: true })).brief).reservedArtArea;
+  assert.ok(wide.width > legacy.width, 'the upgraded semantic scene gets the wider art column');
+});
+
 test('object-right remains the no-hint default and keeps its source composition', () => {
-  const noHint = normalizeNarrativeBrief(base()).brief;
+  const noHint = normalizeNarrativeBrief(base({ legacyArt: true })).brief;
   assert.equal(noHint.phases[0]!.layout, undefined);
   const layout = layoutNarrative(noHint);
   assert.equal(layout.phaseFrames[0]!.layout, 'object-right');
