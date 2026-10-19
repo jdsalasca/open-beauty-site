@@ -1,30 +1,29 @@
-# Renaissance · fresco narrativo
+# Renaissance · piezas halladas en un fresco
 
 ## Intención
 
-Campos planos de yeso, polvo azul y verdaccio sostienen un arco desplazado. Un fragmento de cinabrio aparece fuera de orden, llega a una repisa y queda asentado en el registro. La escala del arco domina; solo hay una anotación, `PIEZA`. No se usan gradientes, glow, marcos de invitación ni simetría de portada.
+Un arco desplazado organiza un fresco de yeso, verdaccio, polvo azul y cinabrio. Cuatro fragmentos pintados conservan su identidad: aparecen sin asiento, se reúnen y terminan dentro del arco en una composición estable y asimétrica. La pieza principal se dibuja como pintura plana con motivos distintos; no usa sombras, marcos de papel, viñeta ni glow radial.
 
 ## Composiciones
 
-- **comparison:** arco asimétrico con un nicho y una repisa. La misma pieza roja se descubre abajo, se lleva a la repisa y se ordena en el nicho.
-- **checklist:** el arco permanece, pero tres campos de catálogo organizan la pieza en una columna de lectura.
+- **comparison · Piezas del arco:** emplea `card-collection`. Los cuatro fragmentos tienen IDs persistentes y su pertenencia al registro cambia de ninguna pieza a una pieza y luego a las cuatro. El arco y los campos de pintura permanecen fijos. No se presenta un número porque esta historia describe orden, no un conteo solicitado.
+- **checklist · Cuenta del fresco:** emplea `counter`. Los paneles A–D conservan su identidad; las relaciones `counts` fijan los valores 1, 2 y 4. El número grande solo cambia cuando cambian esas relaciones y el brief declara el valor correspondiente.
 
-La variación del seed se limita al campo pastel, la curvatura del arco, el tamaño del fragmento y su asiento final. El evento se mueve con easing lento; el objeto y el copy permanecen inmóviles durante cada pausa.
+Las pausas muestran estados estables. El movimiento de transición desplaza y asienta los mismos fragmentos, y el último puente devuelve cada pieza a su ubicación inicial para cerrar el loop.
 
 ## Tipografía y límites
 
-EB Garamond 600 para display, etiqueta y cifra; EB Garamond 400 para lectura y anotación. La etiqueta de fase usa tinta para conservar contraste; el ocre queda en reglas y acentos pequeños. Se admiten 16:9, 1:1 y 9:16 sin deformar la composición. La placa ocupa 45% del ancho por 94% de alto del marco de arte; su caja visible equivale a aproximadamente 42.3% del cuadro completo.
+- Display y anotación: EB Garamond. Lectura y etiqueta: los roles tipográficos Renaissance ya registrados en el preset.
+- Título, cuerpo y etiqueta conservan los mínimos globales de 56px, 36px y 24px a 1280×720. La única anotación de arte, `PIEZA`/`FRAGMENT`, usa 32px nativos (16px efectivos a 640×360). El contador usa una cifra de mayor tamaño.
+- El marco de arte reservado es 45% × 90% = 40.5% del lienzo. El arco ocupa ese campo sin centrar el conjunto como una portada.
+- 16:9 está cubierto por las pruebas semánticas en español e inglés. Los otros aspectos conservan fallback semántico hasta tener prueba de render y decodificación propia.
 
-La anotación es secundaria y pequeña. El texto de fase conserva 36px nativos como mínimo (18px a 640×360); los controles miden geometría y contraste, pero no sustituyen lectura humana a tamaño de tarjeta.
+## Evidencia reproducible
 
-## Rechaza
+- Renderer y regiones de objeto: [`renaissance.ts`](../../../src/narrative/scenes/renaissance.ts).
+- Composiciones: [`comparison`](../gallery/renaissance/comparison/) y [`checklist`](../gallery/renaissance/checklist/).
+- Solo arte, sin título ni copy narrativo: [`comparison`](../art-only/renaissance/comparison/) y [`checklist`](../art-only/renaissance/checklist/).
+- Prueba de render, transformación en píxeles decodificados y control negativo de texto-only: [`narrative-style-semantic.test.ts`](../../../test/narrative-style-semantic.test.ts).
+- Registro de iteraciones, defectos y métricas: [`REVIEW-renaissance-ukiyoe.md`](../gallery/REVIEW-renaissance-ukiyoe.md).
 
-Glow radial, viñetas, marcos nupciales, paletas saturadas, centrado automático, más de una anotación y movimiento de ornamentos durante la pausa.
-
-## Evidencia
-
-- Renderer: [`src/narrative/scenes/renaissance.ts`](../../../src/narrative/scenes/renaissance.ts).
-- Composiciones y briefs: [`comparison`](../gallery/renaissance/comparison/) y [`checklist`](../gallery/renaissance/checklist/).
-- GIF, PNG, contacto y manifest: [`galería Renaissance`](../gallery/README.md).
-- Iteraciones y observaciones: [`REVIEW-stage-c.md`](../gallery/REVIEW-stage-c.md).
-- La evaluación `visual-review` se conserva como `pending`; la inspección registrada no es aprobación independiente.
+El manifiesto mantiene `visual-review: pending` y `publicationRecommendation: none`: la revisión interna confirma cambios concretos de objeto, no reemplaza una aprobación independiente.

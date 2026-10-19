@@ -2,15 +2,83 @@
   "style": "ukiyoe",
   "kind": "narrative-gif",
   "locale": "es",
-  "audience": "Producto en Sprint Review",
-  "title": "Señal",
-  "status": "in-review",
+  "audience": "Equipo que revisa el estado de una descarga",
+  "title": "Travesía interrumpida",
+  "workflowStatus": "in-review",
+  "outcome": { "mode": "expected" },
+  "illustrative": true,
+  "badgePolicy": "none",
   "phases": [
-    { "id": "before", "label": "Antes", "text": "La medida puede quedar sin señal.", "visual": { "kind": "comparison", "state": "unreviewed" } },
-    { "id": "change", "label": "Cambio", "text": "La guía marca qué requiere revisión.", "visual": { "kind": "comparison", "state": "flagged" } },
-    { "id": "result", "label": "Resultado esperado", "text": "Revisarla antes del cierre de la sprint.", "visual": { "kind": "comparison", "state": "review-ready" } }
+    {
+      "id": "pendiente",
+      "label": "Pendiente",
+      "text": "El bote parte con un archivo de bitácora; la ruta costera y su llegada siguen pendientes de revisión.",
+      "visual": {
+        "kind": "comparison",
+        "state": "unreviewed",
+        "semantic": {
+          "primitive": "file-download",
+          "illustrative": true,
+          "entities": [{ "id": "bitacora", "kind": "file", "label": "bitacora-costera.pdf", "progress": 0 }],
+          "relations": [],
+          "states": { "bitacora": "pending" },
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "avance",
+      "label": "En camino",
+      "text": "El archivo avanza hacia el faro de referencia y deja un progreso visible sobre el mar azul.",
+      "visual": {
+        "kind": "comparison",
+        "state": "flagged",
+        "semantic": {
+          "primitive": "file-download",
+          "illustrative": true,
+          "entities": [{ "id": "bitacora", "kind": "file", "label": "bitacora-costera.pdf", "progress": 0.55 }],
+          "relations": [],
+          "states": { "bitacora": "downloading" },
+          "actions": [{ "entityId": "bitacora", "type": "start-download" }]
+        }
+      }
+    },
+    {
+      "id": "fallo",
+      "label": "Fallo en ruta",
+      "text": "La descarga falla al cincuenta y cinco por ciento; el bote se detiene en ese mismo punto.",
+      "visual": {
+        "kind": "comparison",
+        "state": "flagged",
+        "semantic": {
+          "primitive": "file-download",
+          "illustrative": true,
+          "entities": [{ "id": "bitacora", "kind": "file", "label": "bitacora-costera.pdf", "progress": 0.55 }],
+          "relations": [],
+          "states": { "bitacora": "failed" },
+          "actions": [{ "entityId": "bitacora", "type": "fail" }]
+        }
+      }
+    },
+    {
+      "id": "reintento",
+      "label": "Reintento en curso",
+      "text": "El reintento supera la señal del fallo, pero el archivo sigue en curso y aún no llega.",
+      "visual": {
+        "kind": "comparison",
+        "state": "review-ready",
+        "semantic": {
+          "primitive": "file-download",
+          "illustrative": true,
+          "entities": [{ "id": "bitacora", "kind": "file", "label": "bitacora-costera.pdf", "progress": 0.72 }],
+          "relations": [],
+          "states": { "bitacora": "retrying" },
+          "actions": [{ "entityId": "bitacora", "type": "retry" }]
+        }
+      }
+    }
   ],
-  "playback": { "minReadableHoldMs": 5000, "transitionMs": 650, "loop": true },
-  "output": { "width": 1280, "height": 720, "preset": "review-1280x720", "formats": ["gif", "png"] },
-  "seed": 7
+  "playback": { "preset": "readable", "transitionMs": 650, "loop": true },
+  "output": { "width": 1280, "height": 720, "formats": ["gif", "png"], "preset": "review-1280x720" },
+  "seed": 29
 }

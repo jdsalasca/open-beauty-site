@@ -22,6 +22,13 @@ const PRIMITIVE_REASONS: Record<NarrativePrimitive, string> = {
   'file-download': 'This renderer does not yet draw file identity, progress, failure and retry state.',
 };
 
+const SEMANTIC_STYLE_PRIMITIVES: Partial<Record<StyleSlug, ReadonlySet<NarrativePrimitive>>> = {
+  papercraft: new Set(NARRATIVE_PRIMITIVES),
+  brutalist: new Set(NARRATIVE_PRIMITIVES),
+  renaissance: new Set(['card-collection', 'counter']),
+  ukiyoe: new Set(['card-collection', 'file-download']),
+};
+
 export interface NarrativeCapabilityCell {
   style: StyleSlug;
   primitive: NarrativePrimitive;
@@ -61,7 +68,9 @@ export function narrativeCapabilityReport(filter: NarrativeCapabilityFilter = {}
     };
     return NARRATIVE_PRIMITIVES.flatMap((primitive) => ASPECTS.flatMap((aspect) => (['es', 'en'] as const).map((locale) => {
       const supportsAspect = scene.supportsAspect(aspect.width / aspect.height);
-      const semanticSupported = (style === 'papercraft' || style === 'brutalist') && supportsAspect;
+      // papercraft and brutalist render the semantic primitives in every aspect their scene supports (16:9 and 1:1);
+      // the other styles only claim 16:9, where their render + decoded-change tests live.
+      const semanticSupported = Boolean(SEMANTIC_STYLE_PRIMITIVES[style]?.has(primitive)) && supportsAspect && (style === 'papercraft' || style === 'brutalist' || aspect.id === '16:9');
       const status: NarrativeCapabilityStatus = !supportsAspect ? 'unsupported' : semanticSupported ? 'supported' : 'fallback';
       const semanticEntityKinds = NARRATIVE_PRIMITIVE_ENTITY_KINDS[primitive];
       const semanticKinds = semanticEntityKinds.filter((kind): kind is Exclude<NarrativeSemanticEntityKind, 'illustration'> => kind !== 'illustration');
@@ -74,7 +83,7 @@ export function narrativeCapabilityReport(filter: NarrativeCapabilityFilter = {}
       const reason = !supportsAspect
         ? `${style} has no narrative renderer for ${aspect.id}; the primitive cannot be rendered in this aspect.`
         : semanticSupported
-          ? `${style} documentary semantics render ${primitive} with stable entity regions; decoded state changes are exercised in test/narrative-semantic-render.test.ts for ${aspect.id}/${locale}.`
+          ? `${style} renders ${primitive} with stable entity regions; decoded state changes are exercised in test/${style === 'papercraft' || style === 'brutalist' ? 'narrative-semantic-render' : 'narrative-style-semantic'}.test.ts for ${aspect.id}/${locale}.`
           : `${style} fallback: ${PRIMITIVE_REASONS[primitive]}`;
       return { style, primitive, aspect: aspect.id, locale, status, reason, allowed };
     })));

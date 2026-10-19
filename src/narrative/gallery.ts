@@ -82,11 +82,11 @@ function levelStatus(manifest: ManifestShape, level: EvaluationLevel): string {
   return typeof status === 'string' && status.trim() ? status : 'not-evaluated';
 }
 
-async function manifestsUnder(directory: string): Promise<string[]> {
+async function manifestsUnder(directory: string, excludedDirectory: string): Promise<string[]> {
   const files: string[] = [];
   for (const entry of await readdir(directory, { withFileTypes: true })) {
     const file = path.join(directory, entry.name);
-    if (entry.isDirectory()) files.push(...await manifestsUnder(file));
+    if (entry.isDirectory() && path.resolve(file) !== excludedDirectory) files.push(...await manifestsUnder(file, excludedDirectory));
     else if (entry.isFile() && (entry.name === 'manifest.json' || entry.name.endsWith('.manifest.json'))) files.push(file);
   }
   return files.sort((a, b) => a.localeCompare(b, 'en'));
@@ -384,7 +384,7 @@ export async function createNarrativeGallery(options: NarrativeGalleryOptions): 
   const sourceInfo = await stat(sourceDirectory);
   if (!sourceInfo.isDirectory()) throw new Error(`Narrative gallery: input is not a directory: ${sourceDirectory}`);
 
-  const manifestPaths = await manifestsUnder(sourceDirectory);
+  const manifestPaths = await manifestsUnder(sourceDirectory, path.join(sourceDirectory, 'art-only'));
   if (manifestPaths.length === 0) throw new Error(`Narrative gallery: no manifest files found under ${sourceDirectory}.`);
   const packs = await Promise.all(manifestPaths.map(readPack));
   packs.sort((a, b) => a.style.localeCompare(b.style, 'en') || a.title.localeCompare(b.title, 'es'));
