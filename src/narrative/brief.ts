@@ -24,6 +24,7 @@ const phaseSchema = z.object({
 
 export const narrativeBriefSchema = z.object({
   style: z.enum(styleSlugs),
+  subfamily: z.enum(['editorial', 'documentary', 'poster']).optional(),
   kind: z.literal('narrative-gif'),
   locale: z.enum(['es', 'en']).default('es'),
   audience: z.string().trim().min(1).max(120),
@@ -45,7 +46,8 @@ export const narrativeBriefSchema = z.object({
 }).strict();
 
 const NARRATIVE_FIELD_HELP: Record<string, string> = {
-  style: 'One of the 13 existing styles; production scene renderers are added per style.',
+  style: 'Pilots: papercraft (editorial) and brutalist (documentary or poster). Other styles still return STYLE_NOT_SUPPORTED_YET.',
+  subfamily: 'papercraft: editorial; brutalist: documentary (default) or poster. Poster preserves the existing high-contrast brutalist direction.',
   kind: 'Must be "narrative-gif".',
   locale: 'es|en; defaults to es.',
   audience: 'Who needs to understand the story.',
@@ -53,13 +55,13 @@ const NARRATIVE_FIELD_HELP: Record<string, string> = {
   status: 'open|in-review|done; controls the final expected/observed label.',
   phases: '3–5 { id, label, text, visual: { kind, state } } phases.',
   playback: '{ minReadableHoldMs, transitionMs, loop }; holds default to 5000ms.',
-  output: '{ width, height, formats, preset }; supports 16:9, 1:1 and 9:16.',
+  output: '{ width, height, formats, preset }; the two pilot scenes support 16:9, 1:1 and 9:16.',
   seed: 'Integer seed for deterministic scene variation; defaults to 7.',
 };
 
 export function narrativeHelpOptions(): string[] {
   return [
-    '  --style <s>        Must match brief.style; call beauty styles for the list',
+    '  --style <s>        papercraft/editorial or brutalist/documentary|poster',
     '  --brief <file>     Read the JSON narrative brief',
     '  --out <dir>        Output folder (GIF, PNG, contact sheet and manifest)',
     '',
@@ -70,6 +72,7 @@ export function narrativeHelpOptions(): string[] {
 
 export const NARRATIVE_BRIEF_EXAMPLE = `{
   "style": "papercraft",
+  "subfamily": "editorial",
   "kind": "narrative-gif",
   "locale": "es",
   "audience": "Producto",
@@ -167,8 +170,23 @@ export function normalizeNarrativeBrief(input: unknown): ParsedNarrativeBrief {
       const playback = candidate.playback as Record<string, unknown>;
       for (const key of ['minReadableHoldMs', 'transitionMs'] as const) {
         const duration = playback[key];
+        if (typeof duration === 'string') {
+          fail('BAD_DURATION', `${key} must be a number of milliseconds, not "${duration}".`, 'Provide a positive numeric millisecond value, for example 7000.', `playback.${key}`);
+        }
         if (typeof duration === 'number' && Number.isFinite(duration) && duration <= 0) {
           fail('BAD_DURATION', `${key} uses milliseconds and must be greater than 0; received ${duration}ms.`, 'Provide a positive millisecond duration.', `playback.${key}`);
+        }
+      }
+    }
+    if (candidate.output && typeof candidate.output === 'object') {
+      const output = candidate.output as Record<string, unknown>;
+      for (const key of ['width', 'height'] as const) {
+        const dimension = output[key];
+        if (typeof dimension === 'string') {
+          fail('IMPOSSIBLE_SIZE', `output.${key} must be a number of pixels, not "${dimension}".`, 'Provide positive integer pixel dimensions without units.', `output.${key}`);
+        }
+        if (typeof dimension === 'number' && Number.isFinite(dimension) && dimension <= 0) {
+          fail('IMPOSSIBLE_SIZE', `output.${key} must be positive pixels; received ${dimension}.`, 'Provide a positive integer pixel dimension within 320–4096.', `output.${key}`);
         }
       }
     }
@@ -178,11 +196,25 @@ export function normalizeNarrativeBrief(input: unknown): ParsedNarrativeBrief {
   if (!parsed.success) {
     const issue = parsed.error.issues[0];
     const field = issue?.path.join('.') || 'brief';
+    if (field.startsWith('playback.') && issue?.code === 'invalid_type') {
+      fail('BAD_DURATION', `${field} must be a numeric duration in milliseconds.`, 'Provide a finite positive number of milliseconds, for example 7000.', field);
+    }
+    if (field === 'output.width' || field === 'output.height') {
+      fail('IMPOSSIBLE_SIZE', `${field} must be a positive integer pixel dimension.`, 'Provide positive integer pixel dimensions without units, within 320–4096.', field);
+    }
     fail('INVALID_STATE', `${field}: ${issue?.message ?? 'brief does not match the narrative contract.'}`, 'Correct the named field and retry.', field);
   }
   const value = parsed.data;
   if (!styleSlugs.includes(value.style)) {
     fail('INVALID_STATE', `Unknown style "${value.style}".`, `Choose one of: ${styleSlugs.join(', ')}.`, 'style');
+  }
+  const allowedSubfamilies = value.style === 'papercraft'
+    ? ['editorial']
+    : value.style === 'brutalist'
+      ? ['documentary', 'poster']
+      : undefined;
+  if (value.subfamily && allowedSubfamilies && !allowedSubfamilies.includes(value.subfamily)) {
+    fail('INVALID_STATE', `Subfamily "${value.subfamily}" is not available for ${value.style}.`, `Use one of: ${allowedSubfamilies.join(', ')}.`, 'subfamily');
   }
   if (value.phases.some((phase) => !phase.text.trim())) {
     const index = value.phases.findIndex((phase) => !phase.text.trim());
@@ -229,6 +261,8 @@ export function normalizeNarrativeBrief(input: unknown): ParsedNarrativeBrief {
 
   const brief: NormalizedNarrativeBrief = {
     ...value,
+    ...(value.style === 'papercraft' ? { subfamily: value.subfamily ?? 'editorial' } : {}),
+    ...(value.style === 'brutalist' ? { subfamily: value.subfamily ?? 'documentary' } : {}),
     phases: value.phases.map((phase) => ({ ...phase, text: phase.text.trim() })),
     playback: { ...value.playback },
     output: { ...value.output, width, height, formats: [...value.output.formats] },

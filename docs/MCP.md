@@ -264,13 +264,14 @@ Returns path, dimensions, frame count, fps and file size. Frames are capped at 1
 
 ### `beauty_create_narrative`
 
-Accepts the same normalized `narrative-gif` brief as `beauty narrative`. A brief has 3–5 phases, a work status, playback holds in milliseconds and a supported output aspect. When a reviewed scene renderer is registered, the tool returns real GIF, PNG, contact-sheet and manifest paths, decoded timing, structured diagnostics and five separate evaluation levels. The current foundation has no production narrative scenes: requests return `STYLE_NOT_SUPPORTED_YET` with `Supported styles: none` and create no output files. It never substitutes another style or treats format checks as visual approval.
+Accepts the same normalized `narrative-gif` brief as `beauty narrative`. The production pilots are `papercraft` with `subfamily: "editorial"` (default), and `brutalist` with `subfamily: "documentary"` (default) or `"poster"` to keep the existing high-contrast poster direction available. Both pilot scenes support 16:9, 1:1 and 9:16 without cropping or stretching. The other eleven styles still return `STYLE_NOT_SUPPORTED_YET` and name the two supported styles. Exports include a real GIF, PNG, contact sheet and manifest with independently decoded timing and five separate evaluation levels; visual review remains pending until inspected.
 
 ```json
 {
   "style": "papercraft",
   "brief": {
     "style": "papercraft",
+    "subfamily": "editorial",
     "kind": "narrative-gif",
     "locale": "es",
     "audience": "Producto",

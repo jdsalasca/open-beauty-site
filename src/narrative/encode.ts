@@ -6,7 +6,7 @@ import { createCanvas, type Canvas, type SKRSContext2D } from '@napi-rs/canvas';
 import { ensureFonts } from '../canvas.js';
 import { getStyle } from '../styles/presets.js';
 import { NarrativeError, type NormalizedNarrativeBrief, type NarrativeFontProfile, type NarrativeLayout, type NarrativeScene, type NarrativeTimelineFrame } from '../types/narrative.js';
-import { getNarrativeFontProfile } from './fonts.js';
+import { faceForNarrativeGlyph, getNarrativeFontProfile, narrativeCanvasWeight } from './fonts.js';
 import { NARRATIVE_MAX_MEMORY_BYTES, NARRATIVE_MAX_PIXEL_FRAMES, type NarrativeTimeline } from './timeline.js';
 import { crossCheckWithFfprobe, verifyNarrativeGif, type FfprobeCrosscheck, type VerifiedGif } from './verify-gif.js';
 
@@ -35,26 +35,44 @@ function slug(value: string): string {
   return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 56) || 'narrative';
 }
 
-function drawLine(ctx: SKRSContext2D, text: string, x: number, baseline: number, family: string, weight: number, size: number, tracking: number): void {
-  ctx.font = `${weight} ${size}px "${family}"`;
+function drawLine(
+  ctx: SKRSContext2D,
+  text: string,
+  x: number,
+  baseline: number,
+  face: { family: string; weight: number },
+  fallback: { family: string; weight: number },
+  size: number,
+  tracking: number,
+): void {
   ctx.textBaseline = 'alphabetic';
   let cursor = x;
   for (const glyph of text) {
+    const glyphFace = faceForNarrativeGlyph(face, fallback, glyph);
+    ctx.font = `${narrativeCanvasWeight(glyphFace)} ${size}px "${glyphFace.family}"`;
     ctx.fillText(glyph, cursor, baseline);
     cursor += ctx.measureText(glyph).width + tracking;
   }
 }
 
-function blockBaselines(ctx: SKRSContext2D, block: { lines: string[]; size: number; lineHeight: number }, y: number, family: string, weight: number): number[] {
-  ctx.font = `${weight} ${block.size}px "${family}"`;
+function blockBaselines(ctx: SKRSContext2D, block: { lines: string[]; size: number; lineHeight: number }, y: number, face: { family: string; weight: number }): number[] {
+  ctx.font = `${narrativeCanvasWeight(face)} ${block.size}px "${face.family}"`;
   const ascent = ctx.measureText('ÁÉgjpq').actualBoundingBoxAscent || block.size * 0.8;
   return block.lines.map((_, index) => y + ascent + index * block.lineHeight);
 }
 
-function drawBlock(ctx: SKRSContext2D, block: { lines: string[]; size: number; lineHeight: number; tracking: number }, x: number, y: number, face: { family: string; weight: number }, color: string): void {
-  const baselines = blockBaselines(ctx, block, y, face.family, face.weight);
+function drawBlock(
+  ctx: SKRSContext2D,
+  block: { lines: string[]; size: number; lineHeight: number; tracking: number },
+  x: number,
+  y: number,
+  face: { family: string; weight: number },
+  fallback: { family: string; weight: number },
+  color: string,
+): void {
+  const baselines = blockBaselines(ctx, block, y, face);
   ctx.fillStyle = color;
-  block.lines.forEach((line, index) => drawLine(ctx, line, x, baselines[index]!, face.family, face.weight, block.size, block.tracking));
+  block.lines.forEach((line, index) => drawLine(ctx, line, x, baselines[index]!, face, fallback, block.size, block.tracking));
 }
 
 function safeBoxes(layout: NarrativeLayout): { safe: NarrativeLayout['safeZone']; text: NarrativeLayout['textArea']; art: NarrativeLayout['reservedArtArea'] } {
@@ -107,9 +125,11 @@ function renderFramePixels(
   const titleY = height * 0.10;
   const labelY = height * 0.34;
   const bodyY = height * 0.43;
-  drawBlock(ctx, layout.title, textArea.x, titleY, fonts.effective.display, getStyle(brief.style).palette.ink);
-  drawBlock(ctx, phaseLayout.label, textArea.x, labelY, fonts.effective.label, getStyle(brief.style).palette.accent);
-  drawBlock(ctx, phaseLayout.body, textArea.x, bodyY, fonts.effective.reading, getStyle(brief.style).palette.ink);
+  const palette = getStyle(brief.style).palette;
+  const labelColor = brief.style === 'brutalist' ? palette.ink : palette.accent;
+  drawBlock(ctx, layout.title, textArea.x, titleY, fonts.effective.display, fonts.approvedAlternative.display, palette.ink);
+  drawBlock(ctx, phaseLayout.label, textArea.x, labelY, fonts.effective.label, fonts.approvedAlternative.label, labelColor);
+  drawBlock(ctx, phaseLayout.body, textArea.x, bodyY, fonts.effective.reading, fonts.approvedAlternative.reading, palette.ink);
   return ctx.getImageData(0, 0, width, height).data;
 }
 

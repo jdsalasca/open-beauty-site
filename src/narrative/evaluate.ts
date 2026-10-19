@@ -75,6 +75,7 @@ export function evaluateNarrative(input: {
   const sourceStyleControls: NarrativeControlResult[] = [
     { name: 'scene-renderer-registered', passed: encoded.sceneVersion.length > 0, detail: `renderer ${brief.style}/${encoded.sceneVersion} exists; visual style likeness remains a separate review`, source: 'source' },
     { name: 'type-system', passed: Boolean(stylePreset.typeSystem), detail: stylePreset.typeSystem ? 'style typeSystem tokens are attached to raster role registry' : 'missing typeSystem tokens', source: 'source' },
+    { name: 'narrative-subfamily', passed: brief.style === 'papercraft' ? brief.subfamily === 'editorial' : brief.style === 'brutalist' ? brief.subfamily === 'documentary' || brief.subfamily === 'poster' : true, detail: `${brief.style}/${brief.subfamily ?? 'default'} selects an explicit narrative art direction`, source: 'source' },
     { name: 'font-registration-and-glyphs', passed: input.fontChecksPassed ?? true, detail: input.fontChecksPassed === false ? 'bundled font role or glyph check failed' : 'registered bundled role faces and required Spanish glyphs were rendered/measured', source: 'source' },
   ];
   const pixelControls: NarrativeControlResult[] = [
@@ -94,12 +95,13 @@ export function evaluateNarrative(input: {
   ];
   const fontThresholdsPassed = layout.title.size >= 56 && layout.phases.every((phase) => phase.label.size >= 24 && phase.body.size >= 36);
   const cardThresholdsPassed = layout.phases.every((phase) => phase.label.effectiveCardSize >= 12 && phase.body.effectiveCardSize >= 18) && layout.title.effectiveCardSize >= 28;
+  const labelColor = brief.style === 'brutalist' ? stylePreset.palette.ink : stylePreset.palette.accent;
   const readabilityControls: NarrativeControlResult[] = [
     ...textControls,
     { name: 'registered-fonts', passed: input.fontChecksPassed ?? true, detail: input.fontChecksPassed === false ? 'a required family, weight or glyph failed rendering/measurement' : 'all role faces and Spanish glyphs rendered/measured', source: 'source' },
     { name: 'review-size-thresholds', passed: fontThresholdsPassed, detail: `title ${layout.title.size}px; phase body >=36px; label >=24px`, source: 'source' },
     { name: '640x360-effective-size', passed: cardThresholdsPassed, detail: `title ${layout.title.effectiveCardSize.toFixed(1)}px; body min ${Math.min(...layout.phases.map((phase) => phase.body.effectiveCardSize)).toFixed(1)}px; label min ${Math.min(...layout.phases.map((phase) => phase.label.effectiveCardSize)).toFixed(1)}px`, source: 'source' },
-    { name: 'contrast', passed: contrast(stylePreset.palette.ink, stylePreset.palette.bg) >= 4.5 && contrast(stylePreset.palette.accent, stylePreset.palette.bg) >= 3, detail: `style token contrast: ink ${contrast(stylePreset.palette.ink, stylePreset.palette.bg).toFixed(2)}:1; accent ${contrast(stylePreset.palette.accent, stylePreset.palette.bg).toFixed(2)}:1 (not an OCR or per-pixel text measurement)`, source: 'source' },
+    { name: 'contrast', passed: contrast(stylePreset.palette.ink, stylePreset.palette.bg) >= 4.5 && contrast(labelColor, stylePreset.palette.bg) >= 3, detail: `rendered text colors: ink ${contrast(stylePreset.palette.ink, stylePreset.palette.bg).toFixed(2)}:1; label ${contrast(labelColor, stylePreset.palette.bg).toFixed(2)}:1 (not an OCR or per-pixel text measurement)`, source: 'source' },
     { name: 'safe-zone-and-collisions', passed: layout.safeZone.x >= brief.output.width * 0.05 && layout.safeZone.y >= brief.output.height * 0.05 && layout.reservedArtArea.x >= layout.textArea.x + layout.textArea.width, detail: '5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed', source: 'source' },
     { name: 'stable-reading-holds', passed: encoded.phaseHoldsVerified.every((hold) => hold.passed), detail: 'Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.', source: 'decoded' },
   ];

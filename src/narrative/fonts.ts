@@ -33,10 +33,9 @@ const PREFERRED: Record<StyleSlug, NarrativeFontMap> = {
 const EFFECTIVE: Record<StyleSlug, NarrativeFontMap> = {
   renaissance: roles(face('EB Garamond', 600), face('EB Garamond'), face('EB Garamond', 600), face('EB Garamond', 600), face('EB Garamond')),
   brutalist: roles(face('Archivo Black'), face('Space Mono'), face('Space Mono', 700), face('Archivo Black'), face('Space Mono')),
-  // The repository's Fraunces Soft TTF has broken raster metrics for "4" and
-  // "·". Use the explicitly approved Nunito alternative until a complete OFL
-  // face is bundled; do not let Skia substitute those glyphs silently.
-  papercraft: roles(face('Nunito Sans', 800), face('Nunito Sans'), face('Nunito Sans', 800), face('Nunito Sans', 800), face('Space Mono')),
+  // Fraunces Soft is the display face. Its bundled build omits the middle dot,
+  // which is explicitly drawn from the bundled Nunito Sans fallback below.
+  papercraft: roles(face('Fraunces', 560), face('Nunito Sans'), face('Nunito Sans', 800), face('Fraunces', 560), face('Space Mono')),
   artdeco: roles(face('Archivo Black'), face('EB Garamond'), face('Space Mono', 700), face('EB Garamond'), face('Space Mono')),
   isotype: roles(face('Archivo Black'), face('Nunito Sans'), face('Nunito Sans', 700), face('Archivo Black'), face('Space Mono')),
   opart: roles(face('Archivo Black'), face('Nunito Sans'), face('Nunito Sans', 700), face('Archivo Black'), face('Space Mono')),
@@ -49,6 +48,11 @@ const EFFECTIVE: Record<StyleSlug, NarrativeFontMap> = {
   nature: roles(face('EB Garamond', 600), face('Nunito Sans'), face('Nunito Sans', 700), face('EB Garamond'), face('Space Mono')),
 };
 
+const ALTERNATIVES: Record<StyleSlug, NarrativeFontMap> = {
+  ...EFFECTIVE,
+  papercraft: roles(face('Nunito Sans', 800), face('Nunito Sans'), face('Nunito Sans', 800), face('Nunito Sans', 800), face('Space Mono')),
+};
+
 export const NARRATIVE_GLYPHS = 'áéíóúüñ¿¡0123456789%→·';
 
 export interface FontGlyphCheck {
@@ -59,6 +63,48 @@ export interface FontGlyphCheck {
   glyphs: number;
   measured: number;
   renderedPixels: number;
+  fallbackGlyphs: string[];
+}
+
+/** Canvas misreads this bundled face's metrics at its registered weight 560; 400 selects the same face with correct metrics. */
+export function narrativeCanvasWeight(face: NarrativeFontRole): number {
+  return face.family === 'Fraunces' ? 400 : face.weight;
+}
+
+const glyphInkCache = new Map<string, boolean>();
+
+function hasGlyphInk(face: NarrativeFontRole, glyph: string): boolean {
+  const key = `${face.family}/${face.weight}/${glyph}`;
+  const cached = glyphInkCache.get(key);
+  if (cached !== undefined) return cached;
+  const { ctx } = canvasFor(80, 96);
+  ctx.clearRect(0, 0, 80, 96);
+  ctx.font = `${narrativeCanvasWeight(face)} 64px "${face.family}"`;
+  ctx.fillStyle = '#000000';
+  ctx.fillText(glyph, 8, 76);
+  const pixels = ctx.getImageData(0, 0, 80, 96).data;
+  let ink = false;
+  for (let index = 3; index < pixels.length; index += 4) {
+    if (pixels[index]! > 0) {
+      ink = true;
+      break;
+    }
+  }
+  glyphInkCache.set(key, ink);
+  return ink;
+}
+
+/** Resolve one glyph explicitly when the primary bundled face lacks its outline. */
+export function faceForNarrativeGlyph(primary: NarrativeFontRole, fallback: NarrativeFontRole, glyph: string): NarrativeFontRole {
+  if (/^\s+$/u.test(glyph)) return primary;
+  if (hasGlyphInk(primary, glyph)) return primary;
+  if (hasGlyphInk(fallback, glyph)) return fallback;
+  throw new NarrativeError(
+    'FONT_MISSING',
+    `Bundled ${primary.family} and approved fallback ${fallback.family} do not render required glyph "${glyph}".`,
+    'Use bundled OFL faces that paint every required Spanish glyph; system fallback is not accepted.',
+    `fonts.${primary.family}`,
+  );
 }
 
 export function getNarrativeFontProfile(style: StyleSlug): NarrativeFontProfile {
@@ -69,7 +115,7 @@ export function getNarrativeFontProfile(style: StyleSlug): NarrativeFontProfile 
   return {
     preferred: PREFERRED[style],
     effective: EFFECTIVE[style],
-    approvedAlternative: EFFECTIVE[style],
+    approvedAlternative: ALTERNATIVES[style],
     typeSystem: preset.typeSystem,
     source: 'bundled-ofl',
   };
@@ -95,6 +141,7 @@ export function checkNarrativeFontRoles(style: StyleSlug): FontGlyphCheck[] {
   const result: FontGlyphCheck[] = [];
   for (const role of Object.keys(profile.effective) as NarrativeFontRoleName[]) {
     const { family, weight } = profile.effective[role];
+    const fallback = profile.approvedAlternative[role];
     if (!GlobalFonts.has(family) || !familyHasWeight(family, weight)) {
       throw new NarrativeError(
         'FONT_MISSING',
@@ -103,28 +150,22 @@ export function checkNarrativeFontRoles(style: StyleSlug): FontGlyphCheck[] {
         `fonts.${style}.${role}`,
       );
     }
-    const { ctx } = canvasFor(80, 96);
-    ctx.font = `${weight} 64px "${family}"`;
-    ctx.fillStyle = '#000000';
     let measured = 0;
     let renderedPixels = 0;
+    const fallbackGlyphs: string[] = [];
     const missingGlyphs: string[] = [];
+    const { ctx } = canvasFor(80, 96);
     for (const glyph of NARRATIVE_GLYPHS) {
+      const primaryFace = { family, weight };
+      const face = hasGlyphInk(primaryFace, glyph) ? primaryFace : fallback;
+      if (face.family !== primaryFace.family || face.weight !== primaryFace.weight) fallbackGlyphs.push(glyph);
+      ctx.clearRect(0, 0, 80, 96);
+      ctx.font = `${narrativeCanvasWeight(face)} 64px "${face.family}"`;
       const metrics = ctx.measureText(glyph);
       if (Number.isFinite(metrics.width) && metrics.width > 0 && Number.isFinite(metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent)) {
         measured += 1;
       }
-      ctx.clearRect(0, 0, 80, 96);
-      ctx.fillText(glyph, 8, 76);
-      const pixels = ctx.getImageData(0, 0, 80, 96).data;
-      let ink = false;
-      for (let index = 3; index < pixels.length; index += 4) {
-        if (pixels[index]! > 0) {
-          ink = true;
-          break;
-        }
-      }
-      if (ink) renderedPixels += 1;
+      if (hasGlyphInk(face, glyph)) renderedPixels += 1;
       else missingGlyphs.push(glyph);
     }
     if (measured !== [...NARRATIVE_GLYPHS].length || renderedPixels !== [...NARRATIVE_GLYPHS].length) {
@@ -135,7 +176,7 @@ export function checkNarrativeFontRoles(style: StyleSlug): FontGlyphCheck[] {
         `fonts.${style}.${role}`,
       );
     }
-    result.push({ style, role, family, weight, glyphs: [...NARRATIVE_GLYPHS].length, measured, renderedPixels });
+    result.push({ style, role, family, weight, glyphs: [...NARRATIVE_GLYPHS].length, measured, renderedPixels, fallbackGlyphs });
   }
   return result;
 }

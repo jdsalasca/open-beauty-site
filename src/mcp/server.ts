@@ -797,9 +797,9 @@ QUALITY BAR
     {
       title: 'Create a narrative GIF review pack',
       description:
-        'Validates one narrative-gif brief and, when a reviewed scene renderer exists for the style, returns real GIF/PNG/contact-sheet/manifest paths plus separate integrity, style, legibility, narrative and visual-review levels. The current foundation has no production scene renderers yet and reports STYLE_NOT_SUPPORTED_YET instead of substituting a generic style.',
+        'Creates a narrative GIF review pack for the papercraft editorial pilot or brutalist documentary pilot. Brutalist also accepts the poster subfamily. Other eleven styles still return STYLE_NOT_SUPPORTED_YET with the supported pilot list; no generic renderer is substituted. Returns GIF/PNG/contact-sheet/manifest paths and separate integrity, style, legibility, narrative and visual-review levels.',
       inputSchema: {
-        style: styleEnum.describe('One of the 13 existing styles; must match brief.style.'),
+        style: styleEnum.describe('Supported narrative pilots: papercraft/editorial and brutalist/documentary or poster. Other styles remain explicitly unsupported; must match brief.style.'),
         brief: z.record(z.string(), z.unknown()).describe('The normalized narrative-gif JSON brief with 3–5 phases.'),
         output: z.string().max(260).optional().describe('Output directory; defaults to beauty-output/narrative/<style>-<brief-hash>.'),
       },
