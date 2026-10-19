@@ -30,6 +30,8 @@ export interface SprintKitResult {
 export interface SprintKitOptions extends SprintGifOptions {
   /** Injected in tests; defaults to a random UUID fragment. */
   runId?: string;
+  /** Skip the three GIF encodes (the HTML kit is still written); used by the visual matrix. */
+  skipGifs?: boolean;
 }
 
 const FILE_NAMES: Record<SprintDocument['kind'], { html: string; gif: string }> = {
@@ -89,7 +91,7 @@ export async function createSprintKit(raw: unknown, output?: string, options: Sp
     const htmlPath = path.join(directory, names.html);
     const gifPath = path.join(directory, names.gif);
     await writeFile(htmlPath, html, 'utf8');
-    await createSprintGif(data.style, document.kind, data, gifPath, options);
+    if (!options.skipGifs) await createSprintGif(data.style, document.kind, data, gifPath, options);
     htmls[document.kind] = html;
     files[document.kind] = {
       html: htmlPath,

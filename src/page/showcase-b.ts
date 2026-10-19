@@ -247,7 +247,6 @@ export function renderVaporwave(brief: Partial<PageBrief>, preset: StylePreset):
     .map((name, index) => `<div class="vapor-file${index === 1 ? ' is-selected' : ''}"><span class="vapor-icon">▣</span><span>${esc(name)}</span></div>`)
     .join('\n      ');
   const art = `<div class="vapor-scene">
-  <div class="vapor-sun"></div>
   <div class="vapor-grid"></div>
   <div class="vapor-window" data-drag>
     <div class="vapor-bar"><span>${esc(winName)}.EXE</span><span class="vapor-dots"><i></i><i></i><i></i></span></div>
@@ -277,8 +276,8 @@ export function renderVaporwave(brief: Partial<PageBrief>, preset: StylePreset):
 .style-vaporwave .nav-cta{border:2px solid var(--accent2);color:var(--accent2);background:var(--deep)}
 .style-vaporwave .hero-art{position:relative;z-index:2}
 .style-vaporwave .vapor-scene{position:relative;min-height:530px;width:100%}
-.style-vaporwave .vapor-sun{position:absolute;right:8%;top:3%;width:240px;height:240px;border-radius:50%;background:linear-gradient(180deg,var(--accent) 0 50%,var(--accent2) 50% 100%);opacity:.85;filter:blur(.2px)}
-.style-vaporwave .vapor-sun::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(180deg,transparent 0 12px,var(--bg) 12px 18px);opacity:.6}
+.style-vaporwave .vapor-scene:before{content:"";position:absolute;right:8%;top:3%;width:240px;height:240px;border-radius:50%;background:linear-gradient(180deg,var(--accent) 0 50%,var(--accent2) 50% 100%);opacity:.85;filter:blur(.2px)}
+.style-vaporwave .vapor-scene:after{content:"";position:absolute;right:8%;top:3%;width:240px;height:240px;border-radius:50%;background:repeating-linear-gradient(180deg,transparent 0 12px,var(--bg) 12px 18px);opacity:.6}
 .style-vaporwave .vapor-grid{position:absolute;right:0;bottom:0;width:100%;height:45%;transform:perspective(300px) rotateX(60deg);transform-origin:bottom;background-image:linear-gradient(rgba(255,79,163,.5) 2px,transparent 2px),linear-gradient(90deg,rgba(79,227,227,.5) 2px,transparent 2px);background-size:48px 48px;opacity:.5}
 .style-vaporwave .vapor-window{position:absolute;left:0;top:20%;width:92%;border:2px solid var(--ink);background:var(--accent3);box-shadow:6px 6px 0 var(--deep);cursor:grab;user-select:none}
 .style-vaporwave .vapor-window:active{cursor:grabbing}
@@ -339,7 +338,6 @@ export function renderVaporwave(brief: Partial<PageBrief>, preset: StylePreset):
 
 export function renderGalactic(brief: Partial<PageBrief>, preset: StylePreset): string {
   const art = `<div class="galaxy-stage">
-  <div class="galaxy-stars" aria-hidden="true"></div>
   <svg class="galaxy-svg" viewBox="0 0 760 760" role="img" aria-label="Planeta anillado con órbitas y estrellas">
     <defs>
       <radialGradient id="planetBody" cx="38%" cy="32%" r="72%">
@@ -398,7 +396,7 @@ export function renderGalactic(brief: Partial<PageBrief>, preset: StylePreset): 
 .style-galactic .nav-cta{border:1px solid var(--accent);color:var(--accent);background:rgba(121,232,255,.05)}
 .style-galactic .hero-art{position:relative;z-index:2;min-width:0}
 .style-galactic .galaxy-stage{position:relative;width:112%;max-width:760px;margin-left:-2%;aspect-ratio:1}
-.style-galactic .galaxy-stars{position:absolute;inset:0;background-image:radial-gradient(circle at 18% 22%,rgba(242,244,255,.8) 0 1px,transparent 1.5px),radial-gradient(circle at 72% 16%,rgba(121,232,255,.8) 0 1px,transparent 1.6px),radial-gradient(circle at 84% 68%,rgba(242,244,255,.55) 0 1px,transparent 1.4px),radial-gradient(circle at 34% 82%,rgba(179,136,255,.65) 0 1px,transparent 1.5px);background-size:170px 190px,230px 210px,190px 240px,260px 200px;opacity:.8;animation:star-drift 70s linear infinite}
+.style-galactic .galaxy-stage:before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 18% 22%,rgba(242,244,255,.8) 0 1px,transparent 1.5px),radial-gradient(circle at 72% 16%,rgba(121,232,255,.8) 0 1px,transparent 1.6px),radial-gradient(circle at 84% 68%,rgba(242,244,255,.55) 0 1px,transparent 1.4px),radial-gradient(circle at 34% 82%,rgba(179,136,255,.65) 0 1px,transparent 1.5px);background-size:170px 190px,230px 210px,190px 240px,260px 200px;opacity:.8;animation:star-drift 70s linear infinite}
 .style-galactic .galaxy-svg{position:relative;z-index:2;width:100%;height:auto;overflow:hidden}
 .style-galactic .orbit-one{transform-origin:380px 380px;animation:orbit 62s linear infinite}
 .style-galactic .orbit-two{transform-origin:380px 380px;animation:orbit 44s linear infinite reverse}
@@ -442,7 +440,7 @@ export function renderGalactic(brief: Partial<PageBrief>, preset: StylePreset): 
 .style-galactic .foot{border-color:rgba(121,232,255,.22);color:var(--muted)}
 @media (max-width:980px){.style-galactic .hero{grid-template-columns:1fr;min-height:auto}.style-galactic .galaxy-stage{width:100%;max-width:560px;margin:0 auto}.style-galactic h1{max-width:16ch}.style-galactic .music-room{grid-template-columns:1fr}.style-galactic .music-room .player{grid-template-columns:56px 1fr}}
 @media (min-width:981px) and (max-width:1340px){.style-galactic .galaxy-stage{width:100%;margin-left:0}}
-@media (prefers-reduced-motion:reduce){.style-galactic .orbit-one,.style-galactic .orbit-two,.style-galactic .orbit-three,.style-galactic .galaxy-moon,.style-galactic .galaxy-stars{animation:none}}
+@media (prefers-reduced-motion:reduce){.style-galactic .orbit-one,.style-galactic .orbit-two,.style-galactic .orbit-three,.style-galactic .galaxy-moon,.style-galactic .galaxy-stage:before{animation:none}}
 `;
   return renderShowcase(brief, preset, {
     art,

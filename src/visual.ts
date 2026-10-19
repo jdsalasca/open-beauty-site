@@ -607,6 +607,23 @@ async function auditViewport(
   }
 }
 
+/** One file, every viewport, on a browser the caller already launched. */
+async function collectFindings(
+  browser: BrowserLike,
+  file: string,
+  viewports: VisualViewport[],
+  shots: string | undefined,
+): Promise<{ findings: VisualFinding[]; shots: string[] }> {
+  const findings: VisualFinding[] = [];
+  const shotPaths: string[] = [];
+  for (const viewport of viewports) {
+    const result = await auditViewport(browser, file, viewport, shots);
+    findings.push(...result.findings);
+    if (result.shot) shotPaths.push(result.shot);
+  }
+  return { findings: dedupeFindings(findings), shots: shotPaths };
+}
+
 export async function runVisualAudit(
   html: string,
   _style: StyleSlug,
@@ -631,18 +648,16 @@ export async function runVisualAudit(
   try {
     const chromium = await loadChromium(location);
     browser = await chromium.launch({ headless: true });
-    const findings: VisualFinding[] = [];
-    const shots: string[] = [];
-    for (const viewport of options.viewports ?? VISUAL_VIEWPORTS) {
-      const result = await auditViewport(browser, file, viewport, options.shots ? path.resolve(options.shots) : undefined);
-      findings.push(...result.findings);
-      if (result.shot) shots.push(result.shot);
-    }
-    const deduped = dedupeFindings(findings);
+    const { findings, shots } = await collectFindings(
+      browser,
+      file,
+      options.viewports ?? VISUAL_VIEWPORTS,
+      options.shots ? path.resolve(options.shots) : undefined,
+    );
     return {
       status: 'ran',
-      issues: deduped.map(issueFor),
-      findings: deduped,
+      issues: findings.map(issueFor),
+      findings,
       playwright: location,
       shots: shots.length ? shots : undefined,
     };
@@ -658,6 +673,122 @@ export async function runVisualAudit(
   } finally {
     await browser?.close().catch(() => {});
     if (tempDir) await rm(tempDir, { recursive: true, force: true });
+  }
+}
+
+export interface BatchAuditArtifact {
+  html: string;
+  style: StyleSlug;
+  /** Stable, filesystem-safe name used for the temp file and the report. */
+  label: string;
+  /** Absolute path; when present the html is read from this file instead. */
+  filePath?: string;
+}
+
+export interface BatchAuditOptions {
+  /** Parallel pages sharing one browser. Defaults to 4. */
+  concurrency?: number;
+  viewports?: VisualViewport[];
+}
+
+export interface BatchAuditEntry {
+  label: string;
+  result: RichValidationResult;
+  visual: VisualAuditReport;
+}
+
+/**
+ * The same audit as `auditArtifact`, batched: one Chromium for the whole
+ * matrix and a small pool of pages. Used by `pnpm visual:matrix` and its test
+ * so 91 artefacts stay under a couple of minutes.
+ */
+export async function auditArtifactBatch(
+  items: BatchAuditArtifact[],
+  options: BatchAuditOptions = {},
+): Promise<BatchAuditEntry[]> {
+  const entries = new Array<BatchAuditEntry>(items.length);
+  const location = locatePlaywright();
+  if (!location) {
+    items.forEach((item, index) => {
+      entries[index] = {
+        label: item.label,
+        result: validateArtifact(item.html, item.style),
+        visual: { status: 'skipped', message: visualSkipMessage(), issues: [], findings: [] },
+      };
+    });
+    return entries;
+  }
+
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'beauty-visual-batch-'));
+  const fileFor = async (item: BatchAuditArtifact): Promise<string> => {
+    if (item.filePath) return path.resolve(item.filePath);
+    const file = path.join(tempDir, `${item.label.replace(/[^a-z0-9_-]+/gi, '-')}.html`);
+    await writeFile(file, item.html, 'utf8');
+    return file;
+  };
+
+  let browser: BrowserLike | undefined;
+  try {
+    const chromium = await loadChromium(location);
+    browser = await chromium.launch({ headless: true });
+    const queue = items.map((item, index) => ({ item, index }));
+    const concurrency = Math.max(1, Math.min(options.concurrency ?? 4, queue.length || 1));
+    const worker = async (): Promise<void> => {
+      for (;;) {
+        const next = queue.shift();
+        if (!next) return;
+        const { item, index } = next;
+        try {
+          const file = await fileFor(item);
+          const { findings } = await collectFindings(browser!, file, options.viewports ?? VISUAL_VIEWPORTS, undefined);
+          const visual: VisualAuditReport = {
+            status: 'ran',
+            issues: findings.map(issueFor),
+            findings,
+            playwright: location,
+          };
+          const base = validateArtifact(item.html, item.style);
+          entries[index] = {
+            label: item.label,
+            result: visual.issues.length ? mergeIssues(base, visual.issues) : base,
+            visual,
+          };
+        } catch (error) {
+          const reason = error instanceof Error ? error.message.split('\n')[0] : String(error);
+          entries[index] = {
+            label: item.label,
+            result: validateArtifact(item.html, item.style),
+            visual: {
+              status: 'skipped',
+              message: visualSkipMessage(`Chromium failed on ${item.label}: ${reason}`),
+              issues: [],
+              findings: [],
+              playwright: location,
+            },
+          };
+        }
+      }
+    };
+    await Promise.all(Array.from({ length: concurrency }, worker));
+    return entries;
+  } catch (error) {
+    const reason = error instanceof Error ? error.message.split('\n')[0] : String(error);
+    const skipped: VisualAuditReport = {
+      status: 'skipped',
+      message: visualSkipMessage(`playwright found at ${location.root} but Chromium failed: ${reason}`),
+      issues: [],
+      findings: [],
+      playwright: location,
+    };
+    items.forEach((item, index) => {
+      if (!entries[index]) {
+        entries[index] = { label: item.label, result: validateArtifact(item.html, item.style), visual: skipped };
+      }
+    });
+    return entries;
+  } finally {
+    await browser?.close().catch(() => {});
+    await rm(tempDir, { recursive: true, force: true });
   }
 }
 

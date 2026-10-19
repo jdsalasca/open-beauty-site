@@ -2,7 +2,7 @@ import type { DeckBrief, DeckSlide, DeckStat, StylePreset, StyleSubfamily } from
 import type { DeckBriefInput } from './types/deck.js';
 import { DECK_CONTENT_SLIDE_LIMIT, DECK_POINT_LIMIT, DECK_STAT_LIMIT } from './types/deck.js';
 import { BeautyError, clampText, esc, normalizeBrief, safeHref, shell, t } from './page/common.js';
-import { accentTextColor, textOnAccent } from './a11y.js';
+import { accentTextColor, displayGlyphRatio, textOnAccent } from './a11y.js';
 import { motifFor } from './deck-motifs.js';
 import { applyMaxxing } from './maxxing.js';
 import { papercutScene } from './papercut.js';
@@ -196,6 +196,17 @@ export function renderDeck({ style, brief: input }: DeckOptions): DeckResult {
   const bodyFont = style.fonts.body;
   const line = style.rules.borderWidths[0] ?? 1;
   const radius = style.rules.radius[0] ?? 0;
+  // The cover headline is the only h1 in a deck: cap its desktop size by the
+  // longest word so a wide display face never pushes copy off the viewport.
+  const coverWord = brief.title.trim().split(/\s+/).reduce((max, word) => Math.max(max, word.length), 0);
+  const coverFit = (base: string): string =>
+    coverWord > 0
+      ? `min(${base},calc(84vw / ${(coverWord * displayGlyphRatio(display)).toFixed(2)}))`
+      : base;
+  const coverH1Fit = coverFit('clamp(50px,9.2vw,138px)');
+  const coverH1FitCartel = coverFit('clamp(52px,10vw,150px)');
+  const coverH1FitGabinete = coverFit('clamp(44px,7.4vw,108px)');
+  const coverH1FitPhone = coverFit('clamp(42px,13vw,74px)');
 
   const contentSlides = slides
     .map(
@@ -215,7 +226,7 @@ export function renderDeck({ style, brief: input }: DeckOptions): DeckResult {
         ${brief.tagline ? `<p class="cover-tagline anim" style="--a:2">${esc(brief.tagline)}</p>` : ''}
         <div class="cover-meta anim" style="--a:3"><span>${esc(brand)}</span>${author ? `<span>${esc(author)}</span>` : ''}${date ? `<span>${esc(date)}</span>` : ''}<span>${esc(style.name)}</span><span>${String(total).padStart(2, '0')} slides</span></div>
       </div>
-      <div class="cover-mark" aria-hidden="true"><span class="cover-orbit"></span><span class="cover-dot"></span><span class="cover-index">${esc(String(total).padStart(2, '0'))}</span></div>
+      <div class="cover-mark" aria-hidden="true"><span class="cover-dot"></span><span class="cover-index">${esc(String(total).padStart(2, '0'))}</span></div>
     </div>
     <span class="slide-number">01 / ${String(total).padStart(2, '0')}</span>
   </section>`;
@@ -237,12 +248,12 @@ body.deck{--bg:${style.palette.bg};--surface:${style.palette.surface};--ink:${st
 .deck h1:focus,.deck h2:focus{outline:var(--line) solid var(--focus-ring,var(--accent));outline-offset:10px}
 .deck .atmosphere{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .deck .atmosphere:before,.deck .atmosphere:after{content:"";position:absolute;display:block}
-.deck .deck-top{position:fixed;z-index:20;top:0;left:0;right:0;display:flex;justify-content:space-between;gap:20px;align-items:center;padding:18px 30px;border-bottom:var(--line) solid var(--muted);background:color-mix(in srgb,var(--ground) 78%,transparent);backdrop-filter:blur(12px);font-size:9px;letter-spacing:.16em;text-transform:uppercase}
+.deck .deck-top{position:absolute;z-index:20;top:0;left:0;right:0;display:flex;justify-content:space-between;gap:20px;align-items:center;padding:18px 30px;border-bottom:var(--line) solid var(--muted);background:color-mix(in srgb,var(--ground) 78%,transparent);backdrop-filter:blur(12px);font-size:9px;letter-spacing:.16em;text-transform:uppercase}
 .deck .deck-brand{font-family:'${display}',sans-serif;font-size:15px;letter-spacing:.1em;color:var(--ink)}
 .deck .deck-brand span{color:var(--accent-text)}
 .deck .deck-title{color:var(--muted);max-width:50vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .deck .deck-count{color:var(--muted)}.deck .deck-count b{color:var(--accent-text);font-weight:400}
-.deck .deck-stage{position:fixed;inset:0;z-index:2}
+.deck .deck-stage{position:absolute;inset:0;z-index:2;overflow:hidden}
 .deck .slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:clamp(76px,8vh,120px) clamp(26px,7vw,110px) clamp(72px,10vh,100px);background:transparent;opacity:0;visibility:hidden;transform:translateY(22px) scale(.995);transition:opacity .7s var(--ease),transform .7s var(--ease),visibility .7s;overflow:hidden}
 .deck .slide.is-active{opacity:1;visibility:visible;transform:none}
 .deck .slide-inner{position:relative;z-index:2;width:min(1180px,100%);max-height:100%;display:flex;flex-direction:column;justify-content:center}
@@ -250,15 +261,15 @@ body.deck{--bg:${style.palette.bg};--surface:${style.palette.surface};--ink:${st
 .deck .slide-watermark{position:absolute;z-index:0;right:clamp(8px,3vw,42px);bottom:4vh;font-family:'${display}',sans-serif;font-size:clamp(150px,24vw,360px);line-height:.7;color:var(--accent);opacity:.075;pointer-events:none}
 .deck .layout-statement .deck-body{font-size:clamp(20px,2.1vw,32px);line-height:1.45;max-width:28ch;color:var(--ink);opacity:.82}
 .deck .kicker{margin:0 0 16px;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
-.deck h1{font-size:clamp(50px,9.2vw,138px);line-height:.92;letter-spacing:-.035em;margin:0;max-width:12ch;text-wrap:balance}
+.deck h1{font-size:${coverH1Fit};line-height:.92;letter-spacing:-.035em;margin:0;max-width:12ch;text-wrap:balance}
 .deck h2{font-size:clamp(30px,4.5vw,68px);line-height:1.02;letter-spacing:-.025em;margin:0 0 18px;max-width:18ch;text-wrap:balance}
 .deck .cover-grid{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:30px;align-items:center;width:min(1260px,100%)}
 .deck.comp-gabinete .cover-grid{grid-template-columns:1.35fr .65fr}
-.deck.comp-gabinete h1{font-size:clamp(44px,7.4vw,108px)}
+.deck.comp-gabinete h1{font-size:${coverH1FitGabinete}}
 .deck.comp-cartel .cover-grid{grid-template-columns:1fr;text-align:center;max-width:1000px;margin:0 auto}
 .deck.comp-cartel .cover-copy{display:flex;flex-direction:column;align-items:center}
 .deck.comp-cartel .cover-mark{position:absolute;inset:0;opacity:.18;z-index:0;pointer-events:none}
-.deck.comp-cartel h1{font-size:clamp(52px,10vw,150px);max-width:12ch;text-align:center}
+.deck.comp-cartel h1{font-size:${coverH1FitCartel};max-width:12ch;text-align:center}
 .deck.comp-cartel .cover-tagline{margin-left:auto;margin-right:auto}
 .deck.comp-cartel .cover-meta{justify-content:center}
 .deck.comp-cartel .point-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -266,8 +277,8 @@ body.deck{--bg:${style.palette.bg};--surface:${style.palette.surface};--ink:${st
 .deck .cover-meta{display:flex;flex-wrap:wrap;gap:18px;margin-top:30px;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
 .deck .cover-meta span+span:before{content:"·";margin-right:18px;color:var(--accent)}
 .deck .cover-mark{position:relative;aspect-ratio:1;display:grid;place-items:center}
-.deck .cover-orbit{position:absolute;inset:9%;border:var(--line) solid var(--accent);border-radius:50%;opacity:.65;transform:rotate(-18deg) scaleY(.38)}
-.deck .cover-orbit:after{content:"";position:absolute;inset:12%;border:var(--line) solid var(--muted);border-radius:50%;transform:rotate(32deg) scaleY(1.35)}
+.deck .cover-mark:before{content:"";position:absolute;inset:9%;border:var(--line) solid var(--accent);border-radius:50%;opacity:.65;transform:rotate(-18deg) scaleY(.38)}
+.deck .cover-mark:after{content:"";position:absolute;inset:18.8%;border:var(--line) solid var(--muted);border-radius:50%;transform:rotate(32deg) scaleY(1.35)}
 .deck .cover-dot{width:38%;height:38%;border-radius:50%;background:var(--accent);opacity:.9}
 .deck .cover-index{position:absolute;right:0;bottom:2%;font-family:'${display}',sans-serif;font-size:clamp(42px,6vw,86px);color:var(--accent-text);opacity:.5}
 .deck .deck-body{font-size:clamp(15px,1.55vw,21px);line-height:1.65;color:var(--muted);max-width:68ch;margin:0}
@@ -284,11 +295,11 @@ body.deck{--bg:${style.palette.bg};--surface:${style.palette.surface};--ink:${st
 .deck .deck-quote-author{margin:22px 0 0;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
 .deck .slide-closing .slide-inner{max-width:900px}
 .deck .deck-cta{display:inline-flex;align-self:flex-start;margin-top:26px;padding:12px 16px;background:var(--accent);color:var(--accent-on);font-size:10px;letter-spacing:.16em;text-transform:uppercase;border-radius:var(--radius)}
-.deck .slide-number{position:absolute;right:30px;bottom:24px;font-size:9px;letter-spacing:.16em;color:var(--muted)}
-.deck .deck-bottom{position:fixed;z-index:20;bottom:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 30px;border-top:var(--line) solid var(--muted);background:color-mix(in srgb,var(--ground) 82%,transparent);backdrop-filter:blur(12px);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.deck .slide-number{position:absolute;right:30px;bottom:88px;font-size:9px;letter-spacing:.16em;color:var(--muted)}
+.deck .deck-bottom{position:absolute;z-index:20;bottom:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 30px;border-top:var(--line) solid var(--muted);background:color-mix(in srgb,var(--ground) 82%,transparent);backdrop-filter:blur(12px);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .deck .deck-controls{display:flex;gap:6px}
 .deck .deck-controls button{min-width:44px;min-height:44px;border:var(--line) solid var(--muted);background:transparent;color:var(--ink);padding:7px 10px;font-size:12px;line-height:1;cursor:pointer;border-radius:var(--radius)}
-.deck .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+.deck .sr-only{position:absolute;left:0;top:50%;width:100%;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .deck .deck-controls button:hover{background:var(--accent);color:var(--accent-on);border-color:var(--accent)}
 .deck .deck-progress{position:fixed;z-index:21;top:0;left:0;right:0;height:2px;background:color-mix(in srgb,var(--muted) 25%,transparent)}
 .deck .deck-progress i{display:block;height:100%;width:0;background:var(--accent);transition:width .5s var(--ease)}
@@ -299,10 +310,10 @@ body.deck{--bg:${style.palette.bg};--surface:${style.palette.surface};--ink:${st
 ${motifFor(style.slug)}
 @media (max-width:820px){
   .deck .deck-top{padding:14px 16px}.deck .deck-title{display:none}.deck .deck-bottom{padding:10px 16px}.deck .deck-hint{display:none}
-  .deck .slide{padding:86px 20px 66px}.deck .cover-grid{grid-template-columns:1fr}.deck .cover-mark{display:none}
-  .deck h1{font-size:clamp(42px,13vw,74px)}.deck h2{font-size:clamp(27px,7vw,44px)}
+  .deck .slide{padding:86px 20px 88px}.deck .cover-grid{grid-template-columns:1fr}.deck .cover-mark{display:none}
+  .deck h1{font-size:${coverH1FitPhone}}.deck h2{font-size:clamp(27px,7vw,44px)}
   .deck .point-grid,.deck .stat-grid{grid-template-columns:1fr;gap:8px}.deck .point{min-height:0;padding:12px 14px}.deck .point p{font-size:11px}
-  .deck .deck-quote{font-size:clamp(26px,7vw,44px)}.deck .slide-number{right:18px;bottom:18px}
+  .deck .deck-quote{font-size:clamp(26px,7vw,44px)}.deck .slide-number{right:18px;bottom:80px}
 }
 @media (prefers-reduced-motion:reduce){.deck .slide,.deck .anim{transition:none!important}.deck .deck-progress i{transition:none}}
 @page{size:1600px 900px;margin:0}
@@ -326,6 +337,7 @@ ${motifFor(style.slug)}
   ${cover}
   ${contentSlides}
   ${closing}
+  <p class="sr-only" aria-live="polite" data-live></p>
 </main>
 <footer class="deck-bottom">
   <span class="deck-hint">${esc(t(locale, '← → para navegar · F pantalla completa', '← → to navigate · F fullscreen'))}</span>
@@ -334,8 +346,7 @@ ${motifFor(style.slug)}
     <button type="button" data-next aria-label="${esc(t(locale, 'Siguiente', 'Next'))}">→</button>
     <button type="button" data-full aria-label="${esc(t(locale, 'Pantalla completa', 'Fullscreen'))}">⛶</button>
   </div>
-</footer>
-<p class="sr-only" aria-live="polite" data-live></p>`;
+</footer>`;
 
   const script = `(() => {
   const slides = Array.from(document.querySelectorAll('.slide'));
