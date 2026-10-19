@@ -1,4 +1,4 @@
-import type { Brief, Locale, SectionBrief, StylePreset } from '../types.js';
+import type { Locale, PageBrief, PageClosingBrief, SectionBrief, StylePreset } from '../types.js';
 import { displayGlyphRatio, focusRingColor, headlineFitPx, HEADLINE_PREFERRED_VW, isDarkColor } from '../a11y.js';
 
 export class BeautyError extends Error {
@@ -76,7 +76,7 @@ export function labels(locale: Locale): Labels {
   return LABELS[locale];
 }
 
-export function normalizeBrief(input: Partial<Brief>): Brief {
+export function normalizeBrief(input: Partial<PageBrief> & { closing?: PageClosingBrief | string }): PageBrief {
   const title = clampText(input.title, 90);
   if (!title) {
     throw new BeautyError('A page needs a title. Pass at least { title }.', 'MISSING_TITLE');
@@ -93,6 +93,10 @@ export function normalizeBrief(input: Partial<Brief>): Brief {
     .filter((section) => section.title.length > 0);
 
   const ctaLabel = clampText(input.cta?.label, 30);
+  const closingInput = typeof input.closing === 'object' && input.closing !== null ? input.closing : undefined;
+  const closingTitle = clampText(closingInput?.title, 90);
+  const closingText = clampText(closingInput?.text, 240);
+  const closingLabel = clampText(closingInput?.cta?.label, 30);
 
   return {
     title,
@@ -108,6 +112,14 @@ export function normalizeBrief(input: Partial<Brief>): Brief {
         }
       : undefined,
     cta: ctaLabel ? { label: ctaLabel, href: clampText(input.cta?.href, 200) || '#' } : undefined,
+    closing:
+      closingTitle || closingText || closingLabel
+        ? {
+            title: closingTitle || undefined,
+            text: closingText || undefined,
+            cta: closingLabel ? { label: closingLabel, href: clampText(closingInput?.cta?.href, 200) || '#' } : undefined,
+          }
+        : undefined,
     audio:
       input.audio?.src && input.audio?.title
         ? {
@@ -143,6 +155,30 @@ export function brandInitial(brand: string): string {
     .toUpperCase();
 }
 
+export interface ClosingCopy {
+  title: string;
+  text?: string;
+  cta: { label: string; href: string };
+}
+
+/**
+ * Resolve the closing section from `brief.closing`, then `brief.cta`, then the
+ * style default. Keeps every renderer on the same precedence order.
+ */
+export function resolveClosing(
+  brief: PageBrief,
+  defaults: { title: string; text?: string; label: string; href: string },
+): ClosingCopy {
+  return {
+    title: brief.closing?.title || defaults.title,
+    text: brief.closing?.text || defaults.text,
+    cta: {
+      label: brief.closing?.cta?.label || brief.cta?.label || defaults.label,
+      href: brief.closing?.cta?.href || brief.cta?.href || defaults.href,
+    },
+  };
+}
+
 
 function designLanguageCss(preset: StylePreset): string {
   const type = preset.typeSystem;
@@ -160,8 +196,11 @@ html.is-capturing .reveal,html.is-static .reveal{opacity:1!important;transform:n
 html.is-capturing body,html.is-static body{animation:none!important}
 html.is-capturing{scroll-behavior:auto}
 html{overflow-x:hidden}
-html body,html body[class]{font-size:var(--type-body-size);line-height:var(--type-body-leading);font-kerning:normal;font-optical-sizing:auto;text-rendering:optimizeLegibility;overflow-x:hidden}
+html body,html body[class]{font-size:var(--type-body-size);line-height:var(--type-body-leading);font-kerning:normal;font-optical-sizing:auto;text-rendering:optimizeLegibility;overflow-x:hidden;overflow-wrap:break-word;hyphens:manual}
 html body :where(p,li),html body[class] :where(p,li){font-size:inherit}
+html body :where(p,li,blockquote,figcaption,td,th){overflow-wrap:break-word;hyphens:manual}
+html body :where(.hero-copy,.hero-main,.card,.work,.nature-drawer,.aside,.section-head>div,.about-card,.cta-card,.player-main,.music-room>div,.xp-room-copy,.story-chapter-main){min-width:0}
+html body :where(.works-count,.section-head>span,.aside>span,.folio,.nature-count,.nature-plate-head>span,.iso-head>span:last-child,.iso-foot>span,.works-meta,.hero-strip>span,.vapor-status>span,.vapor-bar>span,.galaxy-coord,.galaxy-scale,.est,.sec-num){white-space:nowrap;overflow-wrap:normal}
 :where(h1,h2,h3,.display){line-height:var(--type-display-leading);letter-spacing:var(--type-display-tracking);text-transform:var(--type-display-case);text-wrap:${type?.wrap ?? 'balance'};font-feature-settings:${type?.features ?? 'normal'}}
 :where(p,li,blockquote){text-wrap:pretty;font-feature-settings:${type?.features ?? 'normal'}}
 :where(.eyebrow,.kicker,.label,.meta,.micro,.tag){letter-spacing:var(--type-label-tracking);text-transform:var(--type-label-case)}
@@ -170,8 +209,10 @@ html body .quote cite,html body[class] .quote cite{font-size:11px}
 html body .top nav,html body[class] .top nav,html body .eyebrow,html body[class] .eyebrow,html body .kicker,html body[class] .kicker,html body .link,html body[class] .link,html body .card-link,html body[class] .card-link{font-size:11px}
 html body .hero-note,html body[class] .hero-note{font-size:10px}
 .beauty-scroll{position:fixed;top:0;left:0;z-index:9999;width:100%;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:0 50%;pointer-events:none;opacity:.9}
-.motion-toggle{position:fixed;right:12px;bottom:12px;z-index:9998;border:0;background:var(--bg);color:var(--muted);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;font:10px/1 ui-monospace,'Courier New',monospace;letter-spacing:.1em;text-transform:uppercase;padding:8px 10px;opacity:.55;cursor:pointer;border-radius:0}
+.motion-dock{position:relative;z-index:40;display:flex;justify-content:flex-end;padding:0 max(14px,4vw) calc(18px + env(safe-area-inset-bottom))}
+.motion-toggle{display:inline-flex;align-items:center;gap:8px;border:0;background:var(--bg);color:var(--muted);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;font:10px/1 ui-monospace,'Courier New',monospace;letter-spacing:.1em;text-transform:uppercase;padding:8px 10px;opacity:.7;cursor:pointer;border-radius:0}
 .motion-toggle:hover,.motion-toggle:focus-visible{opacity:1;color:var(--ink);text-decoration-color:var(--accent)}
+@media (max-width:720px){.motion-dock{justify-content:center;padding-bottom:calc(24px + env(safe-area-inset-bottom))}.motion-toggle{opacity:.9;padding:10px 12px}}
 body.motion-paused *,body.motion-paused *::before,body.motion-paused *::after{animation-play-state:paused!important;transition:none!important}
 a{text-underline-offset:.18em;text-decoration-thickness:1px}
 img,svg,video,canvas{max-width:100%}
@@ -183,10 +224,10 @@ img,svg,video,canvas{max-width:100%}
   .js .reveal{transition-duration:var(--motion-enter);transition-timing-function:var(--motion-ease);transition-delay:calc(var(--i,0) * var(--motion-stagger))}
   @keyframes beauty-page-in{from{opacity:0}to{opacity:1}}
 }
-@media (max-width:560px){html body .hero h1,html body[class] .hero h1{font-size:clamp(40px,11.5vw,56px)!important;letter-spacing:var(--type-display-tracking)}html body .style-vaporwave .hero h1,html body[class] .style-vaporwave .hero h1{font-size:clamp(24px,6.8vw,40px)!important}}
+@media (max-width:560px){html body .hero h1,html body[class] .hero h1{font-size:min(var(--headline-fit,11.5vw),clamp(40px,11.5vw,56px))!important;letter-spacing:var(--type-display-tracking)}html body .style-vaporwave .hero h1,html body[class] .style-vaporwave .hero h1{font-size:min(var(--headline-fit,6.8vw),clamp(24px,6.8vw,40px))!important}}
 @media (max-width:380px){
   html,body{max-width:100%}
-  html body{overflow-wrap:anywhere;word-break:break-word}
+  html body{overflow-wrap:anywhere;hyphens:manual}
   html body :where(h1,h2,.display){font-size:clamp(30px,11vw,46px)!important;line-height:1.02;letter-spacing:0}
   html body .style-vaporwave :where(h1,h2,.display){font-size:clamp(20px,7vw,34px)!important}
   .page-frame,.nature-frame{inset:6px}
@@ -211,6 +252,13 @@ function headlineText(markup: string): string {
     .trim();
 }
 
+/** Positive display tracking in em, added to the measured glyph ratio. */
+function trackingEm(preset: StylePreset): number {
+  const match = /^(-?\d*\.?\d+)em/.exec(preset.typeSystem?.displayTracking ?? '');
+  const value = match ? Number(match[1]) : 0;
+  return Number.isFinite(value) ? Math.max(0, value) : 0;
+}
+
 /**
  * Length-aware headline typography. The generator computes the smallest font
  * size at which the longest word of the real title still fits a 360px viewport
@@ -220,12 +268,12 @@ function headlineText(markup: string): string {
  */
 export function headlineFitCss(body: string, preset: StylePreset): string {
   const text = headlineText(body);
-  const ratio = displayGlyphRatio(preset.fonts.display);
+  const ratio = Number((displayGlyphRatio(preset.fonts.display) + trackingEm(preset)).toFixed(3));
   const fit = headlineFitPx(text, undefined, ratio);
   if (!fit) return '';
   return `:root{--headline-fit:${fit}px;--headline-ratio:${ratio}}
 html body :where(h1,h2,h3,.display){overflow-wrap:normal;word-break:normal;hyphens:manual;text-wrap:balance}
-@media (max-width:760px){html body[class] h1,html body h1{font-size:min(var(--headline-fit),${HEADLINE_PREFERRED_VW}vw)!important;line-height:1.04;letter-spacing:0;overflow-wrap:normal;word-break:normal;hyphens:manual}}
+@media (max-width:760px){html body[class] .hero h1,html body .hero h1,html body[class] h1,html body h1{font-size:min(var(--headline-fit),${HEADLINE_PREFERRED_VW}vw)!important;line-height:1.04;letter-spacing:0;overflow-wrap:normal;word-break:normal;hyphens:manual}}
 `;
 }
 
@@ -239,9 +287,27 @@ export interface ShellOptions {
   script?: string;
   bodyClass?: string;
   skipHref?: string;
+  /** Visible text of the closing CTA headline, used for length-aware sizing. */
+  closing?: string;
 }
 
-export function shell({ lang, title, description, preset, css, body, script, bodyClass, skipHref = '#top' }: ShellOptions): string {
+/**
+ * Length-aware sizing for the closing CTA headline. It reuses the same fit
+ * computation as the hero so a long word never breaks inside the container,
+ * and the closing headline stays readable at 360px.
+ */
+export function closingFitCss(text: string, preset: StylePreset): string {
+  const clean = text.replace(/\s+/g, ' ').trim();
+  if (!clean) return '';
+  const ratio = Number((displayGlyphRatio(preset.fonts.display) + trackingEm(preset)).toFixed(3));
+  const fit = headlineFitPx(clean, undefined, ratio);
+  if (!fit) return '';
+  return `:root{--closing-fit:${fit}px;--closing-ratio:${ratio}}
+@media (max-width:760px){html body :where(.cta,.nature-cta,.cta-card) h2{font-size:min(var(--closing-fit),${HEADLINE_PREFERRED_VW}vw)!important;line-height:1.06;letter-spacing:0;overflow-wrap:normal;word-break:normal;hyphens:manual}}
+`;
+}
+
+export function shell({ lang, title, description, preset, css, body, script, bodyClass, skipHref = '#top', closing }: ShellOptions): string {
   const safeTitle = esc(title);
   const scheme = isDarkColor(preset.palette.bg) ? 'dark' : 'light';
   const skipLabel = lang === 'es' ? 'Saltar al contenido' : 'Skip to content';
@@ -267,10 +333,11 @@ export function shell({ lang, title, description, preset, css, body, script, bod
 ${css}
 ${designLanguageCss(preset)}
 ${headlineFitCss(body, preset)}
+${closingFitCss(closing ?? '', preset)}
 @media print{
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .reveal,.js .reveal{opacity:1!important;transform:none!important;transition:none!important;animation:none!important}
-  .page-frame,.grain,.beauty-scroll,.motion-toggle,.skip-link{display:none!important}
+  .page-frame,.grain,.beauty-scroll,.motion-toggle,.motion-dock,.skip-link{display:none!important}
   .site-head,.topbar{position:static!important}
   .ticker-track{animation:none!important}
   figure,table,pre,blockquote{break-inside:avoid}
@@ -282,10 +349,31 @@ ${headlineFitCss(body, preset)}
 <a class="skip-link" href="${attr(skipHref)}">${esc(skipLabel)}</a>
 ${body}
 ${bodyClass?.includes('deck') ? '' : `<div class="beauty-scroll" aria-hidden="true"></div>
-<button class="motion-toggle" type="button" aria-pressed="false">${lang === 'es' ? 'Pausar movimiento' : 'Pause motion'}</button>`}
+<div class="motion-dock">
+<button class="motion-toggle" type="button" aria-pressed="false">${lang === 'es' ? 'Pausar movimiento' : 'Pause motion'}</button>
+</div>`}
 ${script ? `<script>\n${script}\n</script>` : ''}
 ${bodyClass?.includes('deck') ? '' : `<script>
-(() => { const bar = document.querySelector('.beauty-scroll'); const toggle = document.querySelector('.motion-toggle'); if (toggle) { toggle.addEventListener('click', () => { const paused = document.body.classList.toggle('motion-paused'); toggle.setAttribute('aria-pressed', String(paused)); toggle.textContent = paused ? (document.documentElement.lang === 'es' ? 'Reanudar movimiento' : 'Resume motion') : (document.documentElement.lang === 'es' ? 'Pausar movimiento' : 'Pause motion'); }); } if (!bar) return; const update = () => { const max = document.documentElement.scrollHeight - innerHeight; bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, scrollY / max) : 0) + ')'; }; addEventListener('scroll', update, { passive: true }); addEventListener('resize', update); update(); })();
+(() => {
+  const bar = document.querySelector('.beauty-scroll');
+  const toggle = document.querySelector('.motion-toggle');
+  if (toggle) {
+    const es = document.documentElement.lang === 'es';
+    const labels = es ? ['Pausar movimiento', 'Reanudar movimiento'] : ['Pause motion', 'Resume motion'];
+    const render = (paused) => {
+      document.body.classList.toggle('motion-paused', paused);
+      toggle.setAttribute('aria-pressed', String(paused));
+      toggle.textContent = paused ? labels[1] : labels[0];
+    };
+    render(matchMedia('(prefers-reduced-motion: reduce)').matches);
+    toggle.addEventListener('click', () => render(!document.body.classList.contains('motion-paused')));
+  }
+  if (!bar) return;
+  const update = () => { const max = document.documentElement.scrollHeight - innerHeight; bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, scrollY / max) : 0) + ')'; };
+  addEventListener('scroll', update, { passive: true });
+  addEventListener('resize', update);
+  update();
+})();
 </script>`}
 </body>
 </html>

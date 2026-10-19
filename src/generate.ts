@@ -1,6 +1,6 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import type { Brief, ExperienceBrief, GifOptions, GifResult, StoryBrief, StyleSlug, ValidationResult } from './types.js';
+import type { ExperienceBrief, GifOptions, GifResult, PageBrief, StoryBrief, StyleSlug, ValidationResult } from './types.js';
 import { renderPage } from './page/index.js';
 import { validateDeck, validateExperience, validateHtml, validateStory } from './validate.js';
 import { createGif } from './gif.js';
@@ -20,7 +20,7 @@ export interface PageResult {
 
 export interface CreatePageOptions {
   style: StyleSlug;
-  brief: Partial<Brief>;
+  brief: Partial<PageBrief>;
   /** Absolute path or a path relative to process.cwd(). Omit to return HTML only. */
   output?: string;
 }

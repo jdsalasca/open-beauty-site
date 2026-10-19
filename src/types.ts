@@ -13,6 +13,8 @@ export type StyleSlug =
   | 'galactic'
   | 'nature';
 
+export type { PageClosingBrief, PageBrief } from './types/page-brief.js';
+
 export type Locale = 'es' | 'en';
 
 export interface SectionBrief {

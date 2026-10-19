@@ -5,7 +5,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { z } from 'zod';
-import type { Brief, CanvasLayer, DeckBrief, ExperienceBrief, SequenceFrame, StoryBrief, StyleSlug } from '../types.js';
+import type { Brief, CanvasLayer, DeckBrief, ExperienceBrief, PageBrief, SequenceFrame, StoryBrief, StyleSlug } from '../types.js';
 import { DECK_CONTENT_SLIDE_LIMIT, DECK_STAT_LIMIT } from '../types/deck.js';
 import { VERSION } from '../index.js';
 import { createCanvas, createDeck, createExperience, createGifFile, createMotion, createPage, createSequence, createStory, timestamp } from '../generate.js';
@@ -155,6 +155,14 @@ const briefFields = {
   sections: z.array(sectionSchema).max(6).optional().describe('2–3 cards work best. Omit for a one-screen page.'),
   quote: quoteSchema.optional(),
   cta: ctaSchema.optional().describe('Final call to action. Defaults to a sensible label.'),
+  closing: z
+    .object({
+      title: z.string().min(1).max(120).optional().describe('Closing headline; replaces the style default.'),
+      text: z.string().max(400).optional().describe('Supporting sentence under the closing headline.'),
+      cta: z.object({ label: z.string().min(1).max(40).optional(), href: z.string().max(200).optional() }).optional(),
+    })
+    .optional()
+    .describe('Closing section copy for the final call to action.'),
   footer: z.string().max(160).optional(),
   locale: localeEnum.optional().describe('Microcopy language. Defaults to Spanish.'),
   seed: z.number().int().min(0).max(9999).optional().describe('Changes decorative variation deterministically.'),
@@ -240,7 +248,7 @@ const storyInputSchema = z.object({
 
 type StoryInput = z.infer<typeof storyInputSchema>;
 
-function briefFromArgs(args: PageInput): Partial<Brief> {
+function briefFromArgs(args: PageInput): Partial<PageBrief> {
   return {
     title: args.title,
     tagline: args.tagline,
@@ -250,6 +258,7 @@ function briefFromArgs(args: PageInput): Partial<Brief> {
     sections: args.sections,
     quote: args.quote,
     cta: args.cta,
+    closing: args.closing,
     footer: args.footer,
     locale: args.locale,
     seed: args.seed,

@@ -1,9 +1,10 @@
-import type { Brief, StylePreset } from '../types.js';
+import type { PageBrief, StylePreset } from '../types.js';
 import {
   arrowSvg,
   esc,
   labels,
   normalizeBrief,
+  resolveClosing,
   REVEAL_SCRIPT,
   safeHref,
   shell,
@@ -27,7 +28,7 @@ function glyphSvg(): string {
 </svg>`;
 }
 
-export function renderBrutalist(input: Partial<Brief>, preset: StylePreset): string {
+export function renderBrutalist(input: Partial<PageBrief>, preset: StylePreset): string {
   const brief = normalizeBrief(input);
   const locale = brief.locale ?? 'es';
   const l = labels(locale);
@@ -41,6 +42,11 @@ export function renderBrutalist(input: Partial<Brief>, preset: StylePreset): str
   const sections = brief.sections ?? [];
   const quote = brief.quote;
   const cta = brief.cta ?? { label: t(locale, 'Hablemos', 'Let’s talk'), href: '#contact' };
+  const closing = resolveClosing(brief, {
+    title: t(locale, 'HACÉ ALGO QUE NO SE OLVIDE.', 'MAKE SOMETHING THEY WON’T FORGET.'),
+    label: cta.label,
+    href: cta.href,
+  });
   const year = new Date().getFullYear();
   const worksHref = sections.length ? '#works' : '#contact';
   const ticker = t(
@@ -126,7 +132,7 @@ export function renderBrutalist(input: Partial<Brief>, preset: StylePreset): str
       <div><span class="sec-num">02</span><h2>${esc(l.works)}</h2></div>
       <span class="works-meta">${esc(l.selectedWorks)} · ${String(sections.length).padStart(2, '0')}</span>
     </header>
-    <div class="cards">${cards}</div>
+    <div class="cards" data-count="${sections.length}">${cards}</div>
   </section>`
       : ''
   }
@@ -143,8 +149,8 @@ export function renderBrutalist(input: Partial<Brief>, preset: StylePreset): str
 
   <section id="contact" class="cta reveal">
     <p class="cta-label">${esc(t(locale, '¿EMPEZAMOS?', 'SHALL WE START?'))}</p>
-    <h2>${esc(t(locale, 'HACÉ ALGO QUE NO SE OLVIDE.', 'MAKE SOMETHING THEY WON’T FORGET.'))}</h2>
-    <a class="btn btn-ink" href="${safeHref(cta.href)}">${esc(cta.label)} ${arrowSvg(18)}</a>
+    <h2>${esc(closing.title)}</h2>
+    <a class="btn btn-ink" href="${safeHref(closing.cta.href)}">${esc(closing.cta.label)} ${arrowSvg(18)}</a>
   </section>
 </main>
 
@@ -167,7 +173,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;bac
 a{color:inherit;text-decoration:none}
 svg{display:block;max-width:100%}
 header,main,footer{position:relative;z-index:2}
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:16px 28px;border-bottom:3px solid var(--ink);background:var(--paper);position:sticky;top:0;z-index:50}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:16px 28px;border-bottom:3px solid var(--ink);background:var(--paper);position:relative;z-index:50}
 .logo{font-family:'Archivo Black',Impact,'Arial Black',sans-serif;font-size:22px;text-transform:uppercase;letter-spacing:-.02em;display:flex;align-items:flex-start;gap:4px}
 .logo .reg{font-family:'Space Mono',monospace;font-size:9px;margin-top:3px}
 .coord{font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin:0;color:var(--muted)}
@@ -219,7 +225,14 @@ h1 .hl{display:inline-block;background:var(--acid);padding:0 .08em;line-height:1
 .sec-num{font-size:11px;letter-spacing:.14em;color:var(--ink);border-bottom:3px solid var(--red);padding-bottom:2px;margin-top:8px}
 .works-head h2{font-family:'Archivo Black',sans-serif;font-weight:400;font-size:clamp(42px,6vw,84px);line-height:.85;letter-spacing:-.04em;text-transform:uppercase;margin:0}
 .works-meta{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-align:right}
-.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:24px}
+@media (min-width:981px){
+  .cards[data-count="1"]{grid-template-columns:minmax(0,1fr)}
+  .cards[data-count="2"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cards[data-count="3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .cards[data-count="4"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cards[data-count="5"],.cards[data-count="6"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
 .card{border:3px solid var(--ink);background:var(--paper);padding:24px;display:flex;flex-direction:column;box-shadow:8px 8px 0 var(--ink);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s cubic-bezier(.2,.8,.2,1),background .3s}
 .card:hover{transform:translate(-4px,-4px);box-shadow:12px 12px 0 var(--ink);background:var(--surface)}
 .card-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:34px}
@@ -249,6 +262,9 @@ h1 .hl{display:inline-block;background:var(--acid);padding:0 .08em;line-height:1
   .works-head{flex-direction:column;align-items:flex-start;gap:10px}
   .works-meta{text-align:left}
 }
+@media (max-width:720px){
+  .facts{grid-template-columns:1fr}
+}
 @media (max-width:640px){
   .topbar{padding:12px 16px}
   .coord{display:none}
@@ -256,7 +272,6 @@ h1 .hl{display:inline-block;background:var(--acid);padding:0 .08em;line-height:1
   .hero-copy{padding:34px 20px 44px}
   .hero-aside{padding:14px}
   .manifesto,.works,.quote,.cta{padding-left:20px;padding-right:20px}
-  .facts{grid-template-columns:1fr 1fr}
   .page-frame{border-width:3px}
   .site-foot{flex-direction:column;align-items:flex-start}
 }
@@ -275,5 +290,6 @@ h1 .hl{display:inline-block;background:var(--acid);padding:0 .08em;line-height:1
     css,
     body,
     script: REVEAL_SCRIPT,
+    closing: closing.title,
   });
 }
