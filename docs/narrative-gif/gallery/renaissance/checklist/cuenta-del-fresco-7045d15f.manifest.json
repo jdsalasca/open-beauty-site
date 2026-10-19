@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 2,
-  "commit": "d1c15e6e297174590339fbaea565f13c02210ba9",
+  "schemaVersion": 3,
+  "commit": "79b4fb96a2683faab4eaced59233b413b7aa98f1",
   "brief": {
     "style": "renaissance",
     "kind": "narrative-gif",
@@ -262,6 +262,11 @@
     "status": "in-review"
   },
   "briefSha256": "8598e7872faeb95f3525c35d5c741dae266496f06ddca3c3adbba6ddae873e02",
+  "upgrade": {
+    "applied": false,
+    "mapping": "native-semantic",
+    "reason": "The brief already supplies semantic scene entities; they are retained as authored."
+  },
   "style": "renaissance",
   "subfamily": null,
   "workflowStatus": "in-review",
@@ -371,9 +376,9 @@
     "contactSheetSha256": "8b66baeed37c491c3f16f76fbb14f7192b713bc7f44c3a4903ad89d244ed067f"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\gallery\\renaissance\\checklist\\cuenta-del-fresco-7045d15f.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\gallery\\renaissance\\checklist\\cuenta-del-fresco-7045d15f.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\gallery\\renaissance\\checklist\\cuenta-del-fresco-7045d15f-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\AppData\\Local\\Temp\\narrative-legacy-upgrade-5JRy4p\\rendered\\09-renaissance-narrative\\cuenta-del-fresco-7045d15f.gif",
+    "png": "C:\\Users\\jdsal\\AppData\\Local\\Temp\\narrative-legacy-upgrade-5JRy4p\\rendered\\09-renaissance-narrative\\cuenta-del-fresco-7045d15f.png",
+    "contactSheet": "C:\\Users\\jdsal\\AppData\\Local\\Temp\\narrative-legacy-upgrade-5JRy4p\\rendered\\09-renaissance-narrative\\cuenta-del-fresco-7045d15f-contact-sheet.png"
   },
   "controls": [
     {
@@ -519,6 +524,13 @@
       "passed": true,
       "detail": "title 38.0px; body min 28.0px (requires >=20px); label min 15.0px",
       "source": "source"
+    },
+    {
+      "name": "semantic-text-legibility",
+      "passed": false,
+      "status": "pending",
+      "detail": "No scene-declared text boxes were available inside semantic object regions.",
+      "source": "decoded"
     },
     {
       "name": "composition-balance",
@@ -785,6 +797,13 @@
           "source": "source"
         },
         {
+          "name": "semantic-text-legibility",
+          "passed": false,
+          "status": "pending",
+          "detail": "No scene-declared text boxes were available inside semantic object regions.",
+          "source": "decoded"
+        },
+        {
           "name": "composition-balance",
           "passed": true,
           "detail": "proxy; 8×4 decoded-pixel grid against #F6EDDD: empty cells 18.8%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 9.4%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: primera-pieza · pausa: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 9.4% | primera-pieza → dos-piezas · punto medio de transición: empty 6.3%, text fill 100.0%, art 50.0%, largest empty 6.3% | dos-piezas · pausa: empty 6.3%, text fill 100.0%, art 50.0%, largest empty 6.3% | dos-piezas → composicion-estable · punto medio de transición: empty 6.3%, text fill 100.0%, art 50.0%, largest empty 3.1% | composicion-estable · pausa: empty 6.3%, text fill 100.0%, art 50.0%, largest empty 3.1% | composicion-estable → primera-pieza · unión del ciclo: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 9.4%",
@@ -897,17 +916,841 @@
     },
     "visual-review": {
       "status": "pending",
-      "criteria": [
-        "identity at 200px thumbnail",
-        "full text and contrast at 640×360",
-        "style material in native frame",
-        "same object and causal change across phases",
-        "result faithful to outcome and evidence scope",
-        "deliberate loop restart"
-      ],
+      "reviewer": null,
+      "criteria": {
+        "thumbnailIdentity": {
+          "verdict": "not-evaluated"
+        },
+        "cardSizeReading": {
+          "verdict": "not-evaluated"
+        },
+        "styleMaterial": {
+          "verdict": "not-evaluated"
+        },
+        "phaseContinuity": {
+          "verdict": "not-evaluated"
+        },
+        "loopRestart": {
+          "verdict": "not-evaluated"
+        },
+        "artOnlyTransformationUnderstood": {
+          "verdict": "not-evaluated"
+        }
+      },
+      "feedback": [],
       "evidence": []
     },
-    "publicationRecommendation": "none"
+    "publicationRecommendation": "none",
+    "automatedEvidence": {
+      "balanceByFrame": [
+        {
+          "frameIndex": 1,
+          "phaseId": "primera-pieza",
+          "kind": "hold",
+          "label": "primera-pieza · pausa",
+          "regions": [
+            {
+              "entityId": "conteo",
+              "bounds": {
+                "x": 640,
+                "y": 36,
+                "width": 576,
+                "height": 648
+              }
+            },
+            {
+              "entityId": "panel-a",
+              "bounds": {
+                "x": 651.52,
+                "y": 230.4,
+                "width": 385.9200000000001,
+                "height": 375.84000000000003
+              }
+            },
+            {
+              "entityId": "panel-b",
+              "bounds": {
+                "x": 786.88,
+                "y": 327.6,
+                "width": 260.928,
+                "height": 278.64
+              }
+            },
+            {
+              "entityId": "panel-c",
+              "bounds": {
+                "x": 795.52,
+                "y": 424.8,
+                "width": 241.92000000000007,
+                "height": 181.44
+              }
+            },
+            {
+              "entityId": "panel-d",
+              "bounds": {
+                "x": 805.888,
+                "y": 522,
+                "width": 355.39199999999994,
+                "height": 84.24000000000001
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.1875,
+            "textColumnFillRatio": 1,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.09375
+          }
+        },
+        {
+          "frameIndex": 5,
+          "phaseId": "dos-piezas",
+          "kind": "transition",
+          "label": "primera-pieza → dos-piezas · punto medio de transición",
+          "regions": [
+            {
+              "entityId": "conteo",
+              "bounds": {
+                "x": 640,
+                "y": 36,
+                "width": 576,
+                "height": 648
+              }
+            },
+            {
+              "entityId": "panel-a",
+              "bounds": {
+                "x": 651.52,
+                "y": 230.4,
+                "width": 385.9200000000001,
+                "height": 375.84000000000003
+              }
+            },
+            {
+              "entityId": "panel-b",
+              "bounds": {
+                "x": 786.88,
+                "y": 327.6,
+                "width": 260.928,
+                "height": 278.64
+              }
+            },
+            {
+              "entityId": "panel-c",
+              "bounds": {
+                "x": 795.52,
+                "y": 424.8,
+                "width": 241.92000000000007,
+                "height": 181.44
+              }
+            },
+            {
+              "entityId": "panel-d",
+              "bounds": {
+                "x": 805.888,
+                "y": 522,
+                "width": 355.39199999999994,
+                "height": 84.24000000000001
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.0625,
+            "textColumnFillRatio": 1,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.0625
+          }
+        },
+        {
+          "frameIndex": 12,
+          "phaseId": "dos-piezas",
+          "kind": "hold",
+          "label": "dos-piezas · pausa",
+          "regions": [
+            {
+              "entityId": "conteo",
+              "bounds": {
+                "x": 640,
+                "y": 36,
+                "width": 576,
+                "height": 648
+              }
+            },
+            {
+              "entityId": "panel-a",
+              "bounds": {
+                "x": 651.52,
+                "y": 230.4,
+                "width": 385.9200000000001,
+                "height": 375.84000000000003
+              }
+            },
+            {
+              "entityId": "panel-b",
+              "bounds": {
+                "x": 786.88,
+                "y": 327.6,
+                "width": 260.928,
+                "height": 278.64
+              }
+            },
+            {
+              "entityId": "panel-c",
+              "bounds": {
+                "x": 795.52,
+                "y": 424.8,
+                "width": 241.92000000000007,
+                "height": 181.44
+              }
+            },
+            {
+              "entityId": "panel-d",
+              "bounds": {
+                "x": 805.888,
+                "y": 522,
+                "width": 355.39199999999994,
+                "height": 84.24000000000001
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.0625,
+            "textColumnFillRatio": 1,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.0625
+          }
+        },
+        {
+          "frameIndex": 16,
+          "phaseId": "composicion-estable",
+          "kind": "transition",
+          "label": "dos-piezas → composicion-estable · punto medio de transición",
+          "regions": [
+            {
+              "entityId": "conteo",
+              "bounds": {
+                "x": 640,
+                "y": 36,
+                "width": 576,
+                "height": 648
+              }
+            },
+            {
+              "entityId": "panel-a",
+              "bounds": {
+                "x": 651.52,
+                "y": 230.4,
+                "width": 385.9200000000001,
+                "height": 375.84000000000003
+              }
+            },
+            {
+              "entityId": "panel-b",
+              "bounds": {
+                "x": 786.88,
+                "y": 327.6,
+                "width": 260.928,
+                "height": 278.64
+              }
+            },
+            {
+              "entityId": "panel-c",
+              "bounds": {
+                "x": 795.52,
+                "y": 424.8,
+                "width": 241.92000000000007,
+                "height": 181.44
+              }
+            },
+            {
+              "entityId": "panel-d",
+              "bounds": {
+                "x": 805.888,
+                "y": 522,
+                "width": 355.39199999999994,
+                "height": 84.24000000000001
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.0625,
+            "textColumnFillRatio": 1,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.03125
+          }
+        },
+        {
+          "frameIndex": 23,
+          "phaseId": "composicion-estable",
+          "kind": "hold",
+          "label": "composicion-estable · pausa",
+          "regions": [
+            {
+              "entityId": "conteo",
+              "bounds": {
+                "x": 640,
+                "y": 36,
+                "width": 576,
+                "height": 648
+              }
+            },
+            {
+              "entityId": "panel-a",
+              "bounds": {
+                "x": 651.52,
+                "y": 230.4,
+                "width": 385.9200000000001,
+                "height": 375.84000000000003
+              }
+            },
+            {
+              "entityId": "panel-b",
+              "bounds": {
+                "x": 786.88,
+                "y": 327.6,
+                "width": 260.928,
+                "height": 278.64
+              }
+            },
+            {
+              "entityId": "panel-c",
+              "bounds": {
+                "x": 795.52,
+                "y": 424.8,
+                "width": 241.92000000000007,
+                "height": 181.44
+              }
+            },
+            {
+              "entityId": "panel-d",
+              "bounds": {
+                "x": 805.888,
+                "y": 522,
+                "width": 355.39199999999994,
+                "height": 84.24000000000001
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.0625,
+            "textColumnFillRatio": 1,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.03125
+          }
+        },
+        {
+          "frameIndex": 27,
+          "phaseId": "primera-pieza",
+          "kind": "loop-bridge",
+          "label": "composicion-estable → primera-pieza · unión del ciclo",
+          "regions": [
+            {
+              "entityId": "conteo",
+              "bounds": {
+                "x": 640,
+                "y": 36,
+                "width": 576,
+                "height": 648
+              }
+            },
+            {
+              "entityId": "panel-a",
+              "bounds": {
+                "x": 651.52,
+                "y": 230.4,
+                "width": 385.9200000000001,
+                "height": 375.84000000000003
+              }
+            },
+            {
+              "entityId": "panel-b",
+              "bounds": {
+                "x": 786.88,
+                "y": 327.6,
+                "width": 260.928,
+                "height": 278.64
+              }
+            },
+            {
+              "entityId": "panel-c",
+              "bounds": {
+                "x": 795.52,
+                "y": 424.8,
+                "width": 241.92000000000007,
+                "height": 181.44
+              }
+            },
+            {
+              "entityId": "panel-d",
+              "bounds": {
+                "x": 805.888,
+                "y": 522,
+                "width": 355.39199999999994,
+                "height": 84.24000000000001
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.1875,
+            "textColumnFillRatio": 1,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.09375
+          }
+        }
+      ],
+      "objectTransformationByFrame": [
+        {
+          "frameIndex": 5,
+          "phaseId": "dos-piezas",
+          "fromPhaseId": "primera-pieza",
+          "kind": "transition",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "conteo",
+              "bounds": {
+                "x": 640,
+                "y": 36,
+                "width": 576,
+                "height": 648
+              },
+              "fromState": "value",
+              "toState": "increased",
+              "pixelDiffRatio": 0.009202996399176955,
+              "changed": true
+            },
+            {
+              "entityId": "panel-a",
+              "bounds": {
+                "x": 651.52,
+                "y": 230.4,
+                "width": 385.9200000000001,
+                "height": 375.84000000000003
+              },
+              "fromState": "member",
+              "toState": "member",
+              "pixelDiffRatio": 0.02015092632574589,
+              "changed": false
+            },
+            {
+              "entityId": "panel-b",
+              "bounds": {
+                "x": 786.88,
+                "y": 327.6,
+                "width": 260.928,
+                "height": 278.64
+              },
+              "fromState": "default",
+              "toState": "member",
+              "pixelDiffRatio": 0.04007633587786259,
+              "changed": true
+            },
+            {
+              "entityId": "panel-c",
+              "bounds": {
+                "x": 795.52,
+                "y": 424.8,
+                "width": 241.92000000000007,
+                "height": 181.44
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0.03874609278373699,
+              "changed": false
+            },
+            {
+              "entityId": "panel-d",
+              "bounds": {
+                "x": 805.888,
+                "y": 522,
+                "width": 355.39199999999994,
+                "height": 84.24000000000001
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0.03713956170703576,
+              "changed": false
+            }
+          ]
+        },
+        {
+          "frameIndex": 16,
+          "phaseId": "composicion-estable",
+          "fromPhaseId": "dos-piezas",
+          "kind": "transition",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "conteo",
+              "bounds": {
+                "x": 640,
+                "y": 36,
+                "width": 576,
+                "height": 648
+              },
+              "fromState": "increased",
+              "toState": "increased",
+              "pixelDiffRatio": 0.08506944444444445,
+              "changed": false
+            },
+            {
+              "entityId": "panel-a",
+              "bounds": {
+                "x": 651.52,
+                "y": 230.4,
+                "width": 385.9200000000001,
+                "height": 375.84000000000003
+              },
+              "fromState": "member",
+              "toState": "member",
+              "pixelDiffRatio": 0.17056319782863488,
+              "changed": false
+            },
+            {
+              "entityId": "panel-b",
+              "bounds": {
+                "x": 786.88,
+                "y": 327.6,
+                "width": 260.928,
+                "height": 278.64
+              },
+              "fromState": "member",
+              "toState": "member",
+              "pixelDiffRatio": 0.34794165757906215,
+              "changed": false
+            },
+            {
+              "entityId": "panel-c",
+              "bounds": {
+                "x": 795.52,
+                "y": 424.8,
+                "width": 241.92000000000007,
+                "height": 181.44
+              },
+              "fromState": "default",
+              "toState": "member",
+              "pixelDiffRatio": 0.5596033191661607,
+              "changed": true
+            },
+            {
+              "entityId": "panel-d",
+              "bounds": {
+                "x": 805.888,
+                "y": 522,
+                "width": 355.39199999999994,
+                "height": 84.24000000000001
+              },
+              "fromState": "default",
+              "toState": "member",
+              "pixelDiffRatio": 0.6057999670456418,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 27,
+          "phaseId": "primera-pieza",
+          "fromPhaseId": "composicion-estable",
+          "kind": "loop-bridge",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "conteo",
+              "bounds": {
+                "x": 640,
+                "y": 36,
+                "width": 576,
+                "height": 648
+              },
+              "fromState": "increased",
+              "toState": "value",
+              "pixelDiffRatio": 0.10010770318930041,
+              "changed": true
+            },
+            {
+              "entityId": "panel-a",
+              "bounds": {
+                "x": 651.52,
+                "y": 230.4,
+                "width": 385.9200000000001,
+                "height": 375.84000000000003
+              },
+              "fromState": "member",
+              "toState": "member",
+              "pixelDiffRatio": 0.2155121008368803,
+              "changed": false
+            },
+            {
+              "entityId": "panel-b",
+              "bounds": {
+                "x": 786.88,
+                "y": 327.6,
+                "width": 260.928,
+                "height": 278.64
+              },
+              "fromState": "member",
+              "toState": "default",
+              "pixelDiffRatio": 0.43654580152671757,
+              "changed": true
+            },
+            {
+              "entityId": "panel-c",
+              "bounds": {
+                "x": 795.52,
+                "y": 424.8,
+                "width": 241.92000000000007,
+                "height": 181.44
+              },
+              "fromState": "member",
+              "toState": "default",
+              "pixelDiffRatio": 0.6677910454473903,
+              "changed": true
+            },
+            {
+              "entityId": "panel-d",
+              "bounds": {
+                "x": 805.888,
+                "y": 522,
+                "width": 355.39199999999994,
+                "height": 84.24000000000001
+              },
+              "fromState": "member",
+              "toState": "default",
+              "pixelDiffRatio": 0.6625803262481463,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 12,
+          "phaseId": "dos-piezas",
+          "fromPhaseId": "primera-pieza",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "conteo",
+              "bounds": {
+                "x": 640,
+                "y": 36,
+                "width": 576,
+                "height": 648
+              },
+              "fromState": "value",
+              "toState": "increased",
+              "pixelDiffRatio": 0.009553969478737998,
+              "changed": true
+            },
+            {
+              "entityId": "panel-a",
+              "bounds": {
+                "x": 651.52,
+                "y": 230.4,
+                "width": 385.9200000000001,
+                "height": 375.84000000000003
+              },
+              "fromState": "member",
+              "toState": "member",
+              "pixelDiffRatio": 0.020993975284271996,
+              "changed": false
+            },
+            {
+              "entityId": "panel-b",
+              "bounds": {
+                "x": 786.88,
+                "y": 327.6,
+                "width": 260.928,
+                "height": 278.64
+              },
+              "fromState": "default",
+              "toState": "member",
+              "pixelDiffRatio": 0.041834787350054525,
+              "changed": true
+            },
+            {
+              "entityId": "panel-c",
+              "bounds": {
+                "x": 795.52,
+                "y": 424.8,
+                "width": 241.92000000000007,
+                "height": 181.44
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0.027637230430187322,
+              "changed": false
+            },
+            {
+              "entityId": "panel-d",
+              "bounds": {
+                "x": 805.888,
+                "y": 522,
+                "width": 355.39199999999994,
+                "height": 84.24000000000001
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0.03713956170703576,
+              "changed": false
+            }
+          ]
+        },
+        {
+          "frameIndex": 23,
+          "phaseId": "composicion-estable",
+          "fromPhaseId": "dos-piezas",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "conteo",
+              "bounds": {
+                "x": 640,
+                "y": 36,
+                "width": 576,
+                "height": 648
+              },
+              "fromState": "increased",
+              "toState": "increased",
+              "pixelDiffRatio": 0.09507083762002744,
+              "changed": false
+            },
+            {
+              "entityId": "panel-a",
+              "bounds": {
+                "x": 651.52,
+                "y": 230.4,
+                "width": 385.9200000000001,
+                "height": 375.84000000000003
+              },
+              "fromState": "member",
+              "toState": "member",
+              "pixelDiffRatio": 0.20398357768045017,
+              "changed": false
+            },
+            {
+              "entityId": "panel-b",
+              "bounds": {
+                "x": 786.88,
+                "y": 327.6,
+                "width": 260.928,
+                "height": 278.64
+              },
+              "fromState": "member",
+              "toState": "member",
+              "pixelDiffRatio": 0.4057933478735005,
+              "changed": false
+            },
+            {
+              "entityId": "panel-c",
+              "bounds": {
+                "x": 795.52,
+                "y": 424.8,
+                "width": 241.92000000000007,
+                "height": 181.44
+              },
+              "fromState": "default",
+              "toState": "member",
+              "pixelDiffRatio": 0.6692527378623311,
+              "changed": true
+            },
+            {
+              "entityId": "panel-d",
+              "bounds": {
+                "x": 805.888,
+                "y": 522,
+                "width": 355.39199999999994,
+                "height": 84.24000000000001
+              },
+              "fromState": "default",
+              "toState": "member",
+              "pixelDiffRatio": 0.6677871148459383,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 1,
+          "phaseId": "primera-pieza",
+          "fromPhaseId": "composicion-estable",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "conteo",
+              "bounds": {
+                "x": 640,
+                "y": 36,
+                "width": 576,
+                "height": 648
+              },
+              "fromState": "increased",
+              "toState": "value",
+              "pixelDiffRatio": 0.10046671382030178,
+              "changed": true
+            },
+            {
+              "entityId": "panel-a",
+              "bounds": {
+                "x": 651.52,
+                "y": 230.4,
+                "width": 385.9200000000001,
+                "height": 375.84000000000003
+              },
+              "fromState": "member",
+              "toState": "member",
+              "pixelDiffRatio": 0.21836338837140762,
+              "changed": false
+            },
+            {
+              "entityId": "panel-b",
+              "bounds": {
+                "x": 786.88,
+                "y": 327.6,
+                "width": 260.928,
+                "height": 278.64
+              },
+              "fromState": "member",
+              "toState": "default",
+              "pixelDiffRatio": 0.43447382769901854,
+              "changed": true
+            },
+            {
+              "entityId": "panel-c",
+              "bounds": {
+                "x": 795.52,
+                "y": 424.8,
+                "width": 241.92000000000007,
+                "height": 181.44
+              },
+              "fromState": "member",
+              "toState": "default",
+              "pixelDiffRatio": 0.675189457824552,
+              "changed": true
+            },
+            {
+              "entityId": "panel-d",
+              "bounds": {
+                "x": 805.888,
+                "y": 522,
+                "width": 355.39199999999994,
+                "height": 84.24000000000001
+              },
+              "fromState": "member",
+              "toState": "default",
+              "pixelDiffRatio": 0.673125720876586,
+              "changed": true
+            }
+          ]
+        }
+      ]
+    }
   },
   "phaseCaptures": [
     {
@@ -919,7 +1762,7 @@
         "primera-pieza · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\gallery\\renaissance\\checklist\\cuenta-del-fresco-7045d15f-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\AppData\\Local\\Temp\\narrative-legacy-upgrade-5JRy4p\\rendered\\09-renaissance-narrative\\cuenta-del-fresco-7045d15f-contact-sheet.png"
     },
     {
       "phaseId": "dos-piezas",
@@ -929,7 +1772,7 @@
         "dos-piezas → composicion-estable · punto medio de transición",
         "dos-piezas · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\gallery\\renaissance\\checklist\\cuenta-del-fresco-7045d15f-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\AppData\\Local\\Temp\\narrative-legacy-upgrade-5JRy4p\\rendered\\09-renaissance-narrative\\cuenta-del-fresco-7045d15f-contact-sheet.png"
     },
     {
       "phaseId": "composicion-estable",
@@ -939,7 +1782,7 @@
         "composicion-estable → primera-pieza · unión del ciclo",
         "composicion-estable · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\gallery\\renaissance\\checklist\\cuenta-del-fresco-7045d15f-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\AppData\\Local\\Temp\\narrative-legacy-upgrade-5JRy4p\\rendered\\09-renaissance-narrative\\cuenta-del-fresco-7045d15f-contact-sheet.png"
     }
   ],
   "semanticObjectCaptures": [
@@ -1270,7 +2113,57 @@
   ],
   "compositionByFrame": [
     {
+      "frameIndex": 1,
       "label": "primera-pieza · pausa",
+      "phaseId": "primera-pieza",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "conteo",
+          "bounds": {
+            "x": 640,
+            "y": 36,
+            "width": 576,
+            "height": 648
+          }
+        },
+        {
+          "entityId": "panel-a",
+          "bounds": {
+            "x": 651.52,
+            "y": 230.4,
+            "width": 385.9200000000001,
+            "height": 375.84000000000003
+          }
+        },
+        {
+          "entityId": "panel-b",
+          "bounds": {
+            "x": 786.88,
+            "y": 327.6,
+            "width": 260.928,
+            "height": 278.64
+          }
+        },
+        {
+          "entityId": "panel-c",
+          "bounds": {
+            "x": 795.52,
+            "y": 424.8,
+            "width": 241.92000000000007,
+            "height": 181.44
+          }
+        },
+        {
+          "entityId": "panel-d",
+          "bounds": {
+            "x": 805.888,
+            "y": 522,
+            "width": 355.39199999999994,
+            "height": 84.24000000000001
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.1875,
         "textColumnFillRatio": 1,
@@ -1279,7 +2172,57 @@
       }
     },
     {
+      "frameIndex": 5,
       "label": "primera-pieza → dos-piezas · punto medio de transición",
+      "phaseId": "dos-piezas",
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "conteo",
+          "bounds": {
+            "x": 640,
+            "y": 36,
+            "width": 576,
+            "height": 648
+          }
+        },
+        {
+          "entityId": "panel-a",
+          "bounds": {
+            "x": 651.52,
+            "y": 230.4,
+            "width": 385.9200000000001,
+            "height": 375.84000000000003
+          }
+        },
+        {
+          "entityId": "panel-b",
+          "bounds": {
+            "x": 786.88,
+            "y": 327.6,
+            "width": 260.928,
+            "height": 278.64
+          }
+        },
+        {
+          "entityId": "panel-c",
+          "bounds": {
+            "x": 795.52,
+            "y": 424.8,
+            "width": 241.92000000000007,
+            "height": 181.44
+          }
+        },
+        {
+          "entityId": "panel-d",
+          "bounds": {
+            "x": 805.888,
+            "y": 522,
+            "width": 355.39199999999994,
+            "height": 84.24000000000001
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.0625,
         "textColumnFillRatio": 1,
@@ -1288,7 +2231,57 @@
       }
     },
     {
+      "frameIndex": 12,
       "label": "dos-piezas · pausa",
+      "phaseId": "dos-piezas",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "conteo",
+          "bounds": {
+            "x": 640,
+            "y": 36,
+            "width": 576,
+            "height": 648
+          }
+        },
+        {
+          "entityId": "panel-a",
+          "bounds": {
+            "x": 651.52,
+            "y": 230.4,
+            "width": 385.9200000000001,
+            "height": 375.84000000000003
+          }
+        },
+        {
+          "entityId": "panel-b",
+          "bounds": {
+            "x": 786.88,
+            "y": 327.6,
+            "width": 260.928,
+            "height": 278.64
+          }
+        },
+        {
+          "entityId": "panel-c",
+          "bounds": {
+            "x": 795.52,
+            "y": 424.8,
+            "width": 241.92000000000007,
+            "height": 181.44
+          }
+        },
+        {
+          "entityId": "panel-d",
+          "bounds": {
+            "x": 805.888,
+            "y": 522,
+            "width": 355.39199999999994,
+            "height": 84.24000000000001
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.0625,
         "textColumnFillRatio": 1,
@@ -1297,7 +2290,57 @@
       }
     },
     {
+      "frameIndex": 16,
       "label": "dos-piezas → composicion-estable · punto medio de transición",
+      "phaseId": "composicion-estable",
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "conteo",
+          "bounds": {
+            "x": 640,
+            "y": 36,
+            "width": 576,
+            "height": 648
+          }
+        },
+        {
+          "entityId": "panel-a",
+          "bounds": {
+            "x": 651.52,
+            "y": 230.4,
+            "width": 385.9200000000001,
+            "height": 375.84000000000003
+          }
+        },
+        {
+          "entityId": "panel-b",
+          "bounds": {
+            "x": 786.88,
+            "y": 327.6,
+            "width": 260.928,
+            "height": 278.64
+          }
+        },
+        {
+          "entityId": "panel-c",
+          "bounds": {
+            "x": 795.52,
+            "y": 424.8,
+            "width": 241.92000000000007,
+            "height": 181.44
+          }
+        },
+        {
+          "entityId": "panel-d",
+          "bounds": {
+            "x": 805.888,
+            "y": 522,
+            "width": 355.39199999999994,
+            "height": 84.24000000000001
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.0625,
         "textColumnFillRatio": 1,
@@ -1306,7 +2349,57 @@
       }
     },
     {
+      "frameIndex": 23,
       "label": "composicion-estable · pausa",
+      "phaseId": "composicion-estable",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "conteo",
+          "bounds": {
+            "x": 640,
+            "y": 36,
+            "width": 576,
+            "height": 648
+          }
+        },
+        {
+          "entityId": "panel-a",
+          "bounds": {
+            "x": 651.52,
+            "y": 230.4,
+            "width": 385.9200000000001,
+            "height": 375.84000000000003
+          }
+        },
+        {
+          "entityId": "panel-b",
+          "bounds": {
+            "x": 786.88,
+            "y": 327.6,
+            "width": 260.928,
+            "height": 278.64
+          }
+        },
+        {
+          "entityId": "panel-c",
+          "bounds": {
+            "x": 795.52,
+            "y": 424.8,
+            "width": 241.92000000000007,
+            "height": 181.44
+          }
+        },
+        {
+          "entityId": "panel-d",
+          "bounds": {
+            "x": 805.888,
+            "y": 522,
+            "width": 355.39199999999994,
+            "height": 84.24000000000001
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.0625,
         "textColumnFillRatio": 1,
@@ -1315,7 +2408,57 @@
       }
     },
     {
+      "frameIndex": 27,
       "label": "composicion-estable → primera-pieza · unión del ciclo",
+      "phaseId": "primera-pieza",
+      "kind": "loop-bridge",
+      "regions": [
+        {
+          "entityId": "conteo",
+          "bounds": {
+            "x": 640,
+            "y": 36,
+            "width": 576,
+            "height": 648
+          }
+        },
+        {
+          "entityId": "panel-a",
+          "bounds": {
+            "x": 651.52,
+            "y": 230.4,
+            "width": 385.9200000000001,
+            "height": 375.84000000000003
+          }
+        },
+        {
+          "entityId": "panel-b",
+          "bounds": {
+            "x": 786.88,
+            "y": 327.6,
+            "width": 260.928,
+            "height": 278.64
+          }
+        },
+        {
+          "entityId": "panel-c",
+          "bounds": {
+            "x": 795.52,
+            "y": 424.8,
+            "width": 241.92000000000007,
+            "height": 181.44
+          }
+        },
+        {
+          "entityId": "panel-d",
+          "bounds": {
+            "x": 805.888,
+            "y": 522,
+            "width": 355.39199999999994,
+            "height": 84.24000000000001
+          }
+        }
+      ],
       "metrics": {
         "emptyCellRatio": 0.1875,
         "textColumnFillRatio": 1,
@@ -1387,5 +2530,11 @@
     "memoryBytes": 107634688,
     "maxMemoryBytes": 268435456
   },
-  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed."
+  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed.",
+  "generatedBy": "open-beauty-site",
+  "reviewState": "none",
+  "openFeedbackCount": 0,
+  "feedbackFrames": [],
+  "publicationRecommendation": "none",
+  "renderRevision": 0
 }

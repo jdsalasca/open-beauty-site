@@ -1,0 +1,4384 @@
+{
+  "schemaVersion": 3,
+  "commit": "333611c69af02ff251b757214263ecdc5d98ab4d",
+  "brief": {
+    "style": "papercraft",
+    "subfamily": "editorial",
+    "kind": "narrative-gif",
+    "locale": "es",
+    "audience": "Producto en Sprint Review",
+    "title": "Guías más confiables",
+    "status": "in-review",
+    "badgePolicy": "workflow",
+    "phases": [
+      {
+        "id": "before",
+        "label": "Antes",
+        "text": "Una medida inesperada podía pasar sin aviso.",
+        "visual": {
+          "kind": "comparison",
+          "state": "unreviewed",
+          "semantic": {
+            "primitive": "table-rows",
+            "illustrative": true,
+            "legacyUpgrade": true,
+            "entities": [
+              {
+                "id": "legacy-records",
+                "kind": "table",
+                "label": "REGISTROS ILUSTRATIVOS",
+                "illustrative": true
+              },
+              {
+                "id": "legacy-record-a",
+                "kind": "row",
+                "label": "REGISTRO",
+                "illustrative": true
+              },
+              {
+                "id": "legacy-record-b",
+                "kind": "row",
+                "label": "REGISTRO",
+                "illustrative": true
+              },
+              {
+                "id": "legacy-record-c",
+                "kind": "row",
+                "label": "REGISTRO",
+                "illustrative": true
+              },
+              {
+                "id": "legacy-record-d",
+                "kind": "row",
+                "label": "REGISTRO",
+                "illustrative": true
+              }
+            ],
+            "relations": [],
+            "states": {
+              "legacy-records": "default",
+              "legacy-record-a": "pending",
+              "legacy-record-b": "pending",
+              "legacy-record-c": "pending",
+              "legacy-record-d": "pending"
+            },
+            "actions": []
+          }
+        }
+      },
+      {
+        "id": "change",
+        "label": "Cambio",
+        "text": "Ahora se señala para que pueda revisarse.",
+        "visual": {
+          "kind": "comparison",
+          "state": "flagged",
+          "semantic": {
+            "primitive": "table-rows",
+            "illustrative": true,
+            "legacyUpgrade": true,
+            "entities": [
+              {
+                "id": "legacy-records",
+                "kind": "table",
+                "label": "REGISTROS ILUSTRATIVOS",
+                "illustrative": true
+              },
+              {
+                "id": "legacy-record-a",
+                "kind": "row",
+                "label": "REGISTRO",
+                "illustrative": true
+              },
+              {
+                "id": "legacy-record-b",
+                "kind": "row",
+                "label": "REGISTRO",
+                "illustrative": true
+              },
+              {
+                "id": "legacy-record-c",
+                "kind": "row",
+                "label": "REGISTRO",
+                "illustrative": true
+              },
+              {
+                "id": "legacy-record-d",
+                "kind": "row",
+                "label": "REGISTRO",
+                "illustrative": true
+              }
+            ],
+            "relations": [],
+            "states": {
+              "legacy-records": "default",
+              "legacy-record-a": "flagged",
+              "legacy-record-b": "flagged",
+              "legacy-record-c": "flagged",
+              "legacy-record-d": "flagged"
+            },
+            "actions": []
+          }
+        }
+      },
+      {
+        "id": "result",
+        "label": "Resultado esperado",
+        "text": "Detectar el problema antes de publicar.",
+        "visual": {
+          "kind": "comparison",
+          "state": "review-ready",
+          "semantic": {
+            "primitive": "table-rows",
+            "illustrative": true,
+            "legacyUpgrade": true,
+            "entities": [
+              {
+                "id": "legacy-records",
+                "kind": "table",
+                "label": "REGISTROS ILUSTRATIVOS",
+                "illustrative": true
+              },
+              {
+                "id": "legacy-record-a",
+                "kind": "row",
+                "label": "REGISTRO",
+                "illustrative": true
+              },
+              {
+                "id": "legacy-record-b",
+                "kind": "row",
+                "label": "REGISTRO",
+                "illustrative": true
+              },
+              {
+                "id": "legacy-record-c",
+                "kind": "row",
+                "label": "REGISTRO",
+                "illustrative": true
+              },
+              {
+                "id": "legacy-record-d",
+                "kind": "row",
+                "label": "REGISTRO",
+                "illustrative": true
+              }
+            ],
+            "relations": [],
+            "states": {
+              "legacy-records": "default",
+              "legacy-record-a": "ready-for-review",
+              "legacy-record-b": "ready-for-review",
+              "legacy-record-c": "ready-for-review",
+              "legacy-record-d": "ready-for-review"
+            },
+            "actions": []
+          }
+        }
+      }
+    ],
+    "playback": {
+      "preset": "readable",
+      "minReadableHoldMs": 5000,
+      "transitionMs": 900,
+      "loop": true,
+      "totalDurationBudgetMs": 30000
+    },
+    "output": {
+      "width": 1280,
+      "height": 720,
+      "formats": [
+        "gif",
+        "png"
+      ],
+      "preset": "review-1280x720"
+    },
+    "seed": 7,
+    "workflowStatus": "in-review",
+    "outcome": {
+      "mode": "expected"
+    },
+    "illustrative": true
+  },
+  "briefSha256": "6d488ac37acfc9fa9386ca65ac2a37e10561ec1eb206f37f5b3e4ae249d68bcb",
+  "upgrade": {
+    "applied": true,
+    "mapping": "legacy-state-v1:papercraft:comparison",
+    "reason": "papercraft maps legacy comparison states to generic illustrative table-rows entities without counts, figures, or changes to narrative copy."
+  },
+  "style": "papercraft",
+  "subfamily": "editorial",
+  "workflowStatus": "in-review",
+  "outcome": {
+    "mode": "expected"
+  },
+  "evidenceClassification": "illustrative",
+  "illustrative": true,
+  "artOnly": false,
+  "seed": 7,
+  "renderer": {
+    "narrative": "narrative-core/0.2.0",
+    "canvas": "@napi-rs/canvas@1.0.11",
+    "gif": "gifenc@1.0.3",
+    "scene": "papercraft-editorial/1.1.0"
+  },
+  "fonts": {
+    "bundleVersion": "repo-bundled-ofl-1",
+    "roles": {
+      "display": {
+        "family": "Fraunces",
+        "weight": 560
+      },
+      "reading": {
+        "family": "Nunito Sans",
+        "weight": 400
+      },
+      "label": {
+        "family": "Nunito Sans",
+        "weight": 800
+      },
+      "figure": {
+        "family": "Fraunces",
+        "weight": 560
+      },
+      "annotation": {
+        "family": "Space Mono",
+        "weight": 400
+      }
+    }
+  },
+  "dimensions": {
+    "width": 1280,
+    "height": 720
+  },
+  "formats": [
+    "gif",
+    "png"
+  ],
+  "decoded": {
+    "width": 1280,
+    "height": 720,
+    "frameCount": 42,
+    "delaysMs": [
+      80,
+      5000,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      80,
+      5000,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      80,
+      5000,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70
+    ],
+    "durationMs": 17940,
+    "loopCount": 0,
+    "integrity": true
+  },
+  "ffprobe": {
+    "available": true,
+    "passed": true,
+    "detail": "ffprobe 1280×720; 42 frames; 17940ms; matches the independent LZW decode."
+  },
+  "bytes": {
+    "gif": 2125559,
+    "png": 136400,
+    "contactSheet": 145020
+  },
+  "hashes": {
+    "briefSha256": "6d488ac37acfc9fa9386ca65ac2a37e10561ec1eb206f37f5b3e4ae249d68bcb",
+    "gifSha256": "5b99464c8c39260512b7fc3b38af41000f361925bca083a8b6989a5342ad115b",
+    "pngSha256": "4ca871646dd70f66264f9a340cafb0edefb04b74b07b6faf0512171f27b7b467",
+    "contactSheetSha256": "fa83f7c5e647fe6d40be55fdf00717640896a5079f3aa447415eb277dd04b528"
+  },
+  "files": {
+    "gif": "../../../../pilots/papercraft/guias-mas-confiables/guias-mas-confiables-f75f32a9.gif",
+    "png": "../../../../pilots/papercraft/guias-mas-confiables/guias-mas-confiables-f75f32a9.png",
+    "contactSheet": "../../../../pilots/papercraft/guias-mas-confiables/guias-mas-confiables-f75f32a9-contact-sheet.png"
+  },
+  "controls": [
+    {
+      "name": "gif-integrity",
+      "passed": true,
+      "detail": "Independent LZW decode and GIF trailer passed.",
+      "source": "decoded"
+    },
+    {
+      "name": "dimensions",
+      "passed": true,
+      "detail": "decoded 1280×720; requested 1280×720",
+      "source": "decoded"
+    },
+    {
+      "name": "frame-count",
+      "passed": true,
+      "detail": "42 decoded frame(s)",
+      "source": "decoded"
+    },
+    {
+      "name": "duration",
+      "passed": true,
+      "detail": "17940ms decoded; holds exclude transitions",
+      "source": "decoded"
+    },
+    {
+      "name": "loop",
+      "passed": true,
+      "detail": "repeat=0; result-to-before bridge is explicit",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-holds",
+      "passed": true,
+      "detail": "before 5000/5000ms, change 5000/5000ms, result 5000/5000ms",
+      "source": "decoded"
+    },
+    {
+      "name": "ffprobe-crosscheck",
+      "passed": true,
+      "detail": "ffprobe 1280×720; 42 frames; 17940ms; matches the independent LZW decode.",
+      "source": "decoded"
+    },
+    {
+      "name": "files",
+      "passed": true,
+      "detail": "GIF 2125559B · PNG 136400B · contact 145020B",
+      "source": "decoded"
+    },
+    {
+      "name": "scene-renderer-registered",
+      "passed": true,
+      "detail": "renderer papercraft/papercraft-editorial/1.1.0 exists; visual style likeness remains a separate review",
+      "source": "source"
+    },
+    {
+      "name": "type-system",
+      "passed": true,
+      "detail": "style typeSystem tokens are attached to raster role registry",
+      "source": "source"
+    },
+    {
+      "name": "narrative-subfamily",
+      "passed": true,
+      "detail": "papercraft/editorial selects an explicit narrative art direction",
+      "source": "source"
+    },
+    {
+      "name": "font-registration-and-glyphs",
+      "passed": true,
+      "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "distinct-frames",
+      "passed": true,
+      "detail": "18 unique composited frame(s); a format-valid static GIF does not pass",
+      "source": "pixels"
+    },
+    {
+      "name": "palette-loss",
+      "passed": true,
+      "detail": "70 colors; mean channel loss 2.023, max 10; sampled 42 frames",
+      "source": "pixels"
+    },
+    {
+      "name": "title-complete",
+      "passed": true,
+      "detail": "Guías más / confiables",
+      "source": "source"
+    },
+    {
+      "name": "phase-before-label-complete",
+      "passed": true,
+      "detail": "Antes",
+      "source": "source"
+    },
+    {
+      "name": "phase-before-text-complete",
+      "passed": true,
+      "detail": "Una medida / inesperada podía / pasar sin aviso.",
+      "source": "source"
+    },
+    {
+      "name": "phase-change-label-complete",
+      "passed": true,
+      "detail": "Cambio",
+      "source": "source"
+    },
+    {
+      "name": "phase-change-text-complete",
+      "passed": true,
+      "detail": "Ahora se señala para / que pueda revisarse.",
+      "source": "source"
+    },
+    {
+      "name": "phase-result-label-complete",
+      "passed": true,
+      "detail": "Resultado esperado",
+      "source": "source"
+    },
+    {
+      "name": "phase-result-text-complete",
+      "passed": true,
+      "detail": "Detectar el problema / antes de publicar.",
+      "source": "source"
+    },
+    {
+      "name": "registered-fonts",
+      "passed": true,
+      "detail": "all role faces and Spanish glyphs rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "review-size-thresholds",
+      "passed": true,
+      "detail": "title 69px; phase body >=36px; label >=24px",
+      "source": "source"
+    },
+    {
+      "name": "640x360-effective-size",
+      "passed": true,
+      "detail": "title 34.5px; body min 28.0px (requires >=20px); label min 15.0px",
+      "source": "source"
+    },
+    {
+      "name": "semantic-text-legibility",
+      "passed": true,
+      "status": "pass",
+      "detail": "minimum effective text >=14px: 14.0px; minimum headline none; measured 26 declared object text box(es) at 640×360.",
+      "source": "decoded"
+    },
+    {
+      "name": "composition-balance",
+      "passed": true,
+      "detail": "proxy; 8×4 decoded-pixel grid against #FBF1E2: empty cells 6.3%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 3.1%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: before · pausa: empty 6.3%, text fill 100.0%, art 50.0%, largest empty 3.1% | before → change · punto medio de transición: empty 15.6%, text fill 75.0%, art 50.0%, largest empty 12.5% | change · pausa: empty 15.6%, text fill 75.0%, art 50.0%, largest empty 12.5% | change → result · punto medio de transición: empty 15.6%, text fill 75.0%, art 50.0%, largest empty 12.5% | result · pausa: empty 15.6%, text fill 75.0%, art 50.0%, largest empty 12.5% | result → before · unión del ciclo: empty 6.3%, text fill 100.0%, art 50.0%, largest empty 3.1%",
+      "source": "pixels"
+    },
+    {
+      "name": "contrast",
+      "passed": true,
+      "detail": "rendered text colors: ink 9.67:1; label 3.05:1 (not an OCR or per-pixel text measurement)",
+      "source": "source"
+    },
+    {
+      "name": "safe-zone-and-collisions",
+      "passed": true,
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+      "source": "source"
+    },
+    {
+      "name": "stable-reading-holds",
+      "passed": true,
+      "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-count-and-copy",
+      "passed": true,
+      "detail": "3 complete phases; all copy retained",
+      "source": "source"
+    },
+    {
+      "name": "shared-object-identity",
+      "passed": true,
+      "detail": "One scene object instance is created and passed to every phase frame.",
+      "source": "source"
+    },
+    {
+      "name": "visual-state-change",
+      "passed": true,
+      "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+      "source": "pixels"
+    },
+    {
+      "name": "workflow-outcome-separation",
+      "passed": true,
+      "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+      "source": "source"
+    },
+    {
+      "name": "outcome-evidence",
+      "passed": true,
+      "detail": "Expected outcome; no benefit measurement is claimed.",
+      "source": "source"
+    },
+    {
+      "name": "result-follows-outcome",
+      "passed": true,
+      "detail": "outcome=expected; final label=\"Resultado esperado\"",
+      "source": "source"
+    },
+    {
+      "name": "semantic-illustrative-data",
+      "passed": true,
+      "detail": "brief illustrative=true; semantic phase flags=true,true,true",
+      "source": "source"
+    },
+    {
+      "name": "semantic-object-midpoint:before → change · punto medio de transición",
+      "passed": true,
+      "detail": "decoded object diff 20.8%; changed-state entities: legacy-record-a, legacy-record-b, legacy-record-c, legacy-record-d; legacy-records default→default 17.5%, legacy-record-a pending→flagged 26.3%, legacy-record-b pending→flagged 26.1%, legacy-record-c pending→flagged 26.5%, legacy-record-d pending→flagged 26.0%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:change → result · punto medio de transición",
+      "passed": true,
+      "detail": "decoded object diff 18.8%; changed-state entities: legacy-record-a, legacy-record-b, legacy-record-c, legacy-record-d; legacy-records default→default 15.8%, legacy-record-a flagged→ready-for-review 23.6%, legacy-record-b flagged→ready-for-review 23.5%, legacy-record-c flagged→ready-for-review 23.7%, legacy-record-d flagged→ready-for-review 23.4%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:result → before · unión del ciclo",
+      "passed": true,
+      "detail": "decoded object diff 15.1%; changed-state entities: legacy-record-a, legacy-record-b, legacy-record-c, legacy-record-d; legacy-records default→default 12.2%, legacy-record-a ready-for-review→pending 19.7%, legacy-record-b ready-for-review→pending 19.7%, legacy-record-c ready-for-review→pending 19.9%, legacy-record-d ready-for-review→pending 20.0%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:before → change hold",
+      "passed": true,
+      "detail": "decoded object diff 20.8%; changed-state entities: legacy-record-a, legacy-record-b, legacy-record-c, legacy-record-d; legacy-records default→default 17.5%, legacy-record-a pending→flagged 26.3%, legacy-record-b pending→flagged 26.1%, legacy-record-c pending→flagged 26.5%, legacy-record-d pending→flagged 26.0%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:change → result hold",
+      "passed": true,
+      "detail": "decoded object diff 18.8%; changed-state entities: legacy-record-a, legacy-record-b, legacy-record-c, legacy-record-d; legacy-records default→default 15.8%, legacy-record-a flagged→ready-for-review 23.6%, legacy-record-b flagged→ready-for-review 23.5%, legacy-record-c flagged→ready-for-review 23.7%, legacy-record-d flagged→ready-for-review 23.4%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:result → before loop join",
+      "passed": true,
+      "detail": "decoded object diff 15.1%; changed-state entities: legacy-record-a, legacy-record-b, legacy-record-c, legacy-record-d; legacy-records default→default 12.2%, legacy-record-a ready-for-review→pending 19.7%, legacy-record-b ready-for-review→pending 19.7%, legacy-record-c ready-for-review→pending 19.9%, legacy-record-d ready-for-review→pending 20.0%",
+      "source": "decoded"
+    }
+  ],
+  "evaluation": {
+    "technical-integrity": {
+      "status": "pass",
+      "controls": [
+        {
+          "name": "gif-integrity",
+          "passed": true,
+          "detail": "Independent LZW decode and GIF trailer passed.",
+          "source": "decoded"
+        },
+        {
+          "name": "dimensions",
+          "passed": true,
+          "detail": "decoded 1280×720; requested 1280×720",
+          "source": "decoded"
+        },
+        {
+          "name": "frame-count",
+          "passed": true,
+          "detail": "42 decoded frame(s)",
+          "source": "decoded"
+        },
+        {
+          "name": "duration",
+          "passed": true,
+          "detail": "17940ms decoded; holds exclude transitions",
+          "source": "decoded"
+        },
+        {
+          "name": "loop",
+          "passed": true,
+          "detail": "repeat=0; result-to-before bridge is explicit",
+          "source": "decoded"
+        },
+        {
+          "name": "phase-holds",
+          "passed": true,
+          "detail": "before 5000/5000ms, change 5000/5000ms, result 5000/5000ms",
+          "source": "decoded"
+        },
+        {
+          "name": "ffprobe-crosscheck",
+          "passed": true,
+          "detail": "ffprobe 1280×720; 42 frames; 17940ms; matches the independent LZW decode.",
+          "source": "decoded"
+        },
+        {
+          "name": "files",
+          "passed": true,
+          "detail": "GIF 2125559B · PNG 136400B · contact 145020B",
+          "source": "decoded"
+        }
+      ]
+    },
+    "style-conformance": {
+      "status": "pending",
+      "sourceStatus": "pass",
+      "pixelStatus": "pass",
+      "controls": [
+        {
+          "name": "scene-renderer-registered",
+          "passed": true,
+          "detail": "renderer papercraft/papercraft-editorial/1.1.0 exists; visual style likeness remains a separate review",
+          "source": "source"
+        },
+        {
+          "name": "type-system",
+          "passed": true,
+          "detail": "style typeSystem tokens are attached to raster role registry",
+          "source": "source"
+        },
+        {
+          "name": "narrative-subfamily",
+          "passed": true,
+          "detail": "papercraft/editorial selects an explicit narrative art direction",
+          "source": "source"
+        },
+        {
+          "name": "font-registration-and-glyphs",
+          "passed": true,
+          "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "distinct-frames",
+          "passed": true,
+          "detail": "18 unique composited frame(s); a format-valid static GIF does not pass",
+          "source": "pixels"
+        },
+        {
+          "name": "palette-loss",
+          "passed": true,
+          "detail": "70 colors; mean channel loss 2.023, max 10; sampled 42 frames",
+          "source": "pixels"
+        }
+      ],
+      "note": "Source checks identify renderer/font tokens; pixel checks measure frame change and palette loss. Neither substitutes for visual review."
+    },
+    "rendered-legibility": {
+      "status": "pending",
+      "controls": [
+        {
+          "name": "title-complete",
+          "passed": true,
+          "detail": "Guías más / confiables",
+          "source": "source"
+        },
+        {
+          "name": "phase-before-label-complete",
+          "passed": true,
+          "detail": "Antes",
+          "source": "source"
+        },
+        {
+          "name": "phase-before-text-complete",
+          "passed": true,
+          "detail": "Una medida / inesperada podía / pasar sin aviso.",
+          "source": "source"
+        },
+        {
+          "name": "phase-change-label-complete",
+          "passed": true,
+          "detail": "Cambio",
+          "source": "source"
+        },
+        {
+          "name": "phase-change-text-complete",
+          "passed": true,
+          "detail": "Ahora se señala para / que pueda revisarse.",
+          "source": "source"
+        },
+        {
+          "name": "phase-result-label-complete",
+          "passed": true,
+          "detail": "Resultado esperado",
+          "source": "source"
+        },
+        {
+          "name": "phase-result-text-complete",
+          "passed": true,
+          "detail": "Detectar el problema / antes de publicar.",
+          "source": "source"
+        },
+        {
+          "name": "registered-fonts",
+          "passed": true,
+          "detail": "all role faces and Spanish glyphs rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "review-size-thresholds",
+          "passed": true,
+          "detail": "title 69px; phase body >=36px; label >=24px",
+          "source": "source"
+        },
+        {
+          "name": "640x360-effective-size",
+          "passed": true,
+          "detail": "title 34.5px; body min 28.0px (requires >=20px); label min 15.0px",
+          "source": "source"
+        },
+        {
+          "name": "semantic-text-legibility",
+          "passed": true,
+          "status": "pass",
+          "detail": "minimum effective text >=14px: 14.0px; minimum headline none; measured 26 declared object text box(es) at 640×360.",
+          "source": "decoded"
+        },
+        {
+          "name": "composition-balance",
+          "passed": true,
+          "detail": "proxy; 8×4 decoded-pixel grid against #FBF1E2: empty cells 6.3%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 3.1%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: before · pausa: empty 6.3%, text fill 100.0%, art 50.0%, largest empty 3.1% | before → change · punto medio de transición: empty 15.6%, text fill 75.0%, art 50.0%, largest empty 12.5% | change · pausa: empty 15.6%, text fill 75.0%, art 50.0%, largest empty 12.5% | change → result · punto medio de transición: empty 15.6%, text fill 75.0%, art 50.0%, largest empty 12.5% | result · pausa: empty 15.6%, text fill 75.0%, art 50.0%, largest empty 12.5% | result → before · unión del ciclo: empty 6.3%, text fill 100.0%, art 50.0%, largest empty 3.1%",
+          "source": "pixels"
+        },
+        {
+          "name": "contrast",
+          "passed": true,
+          "detail": "rendered text colors: ink 9.67:1; label 3.05:1 (not an OCR or per-pixel text measurement)",
+          "source": "source"
+        },
+        {
+          "name": "safe-zone-and-collisions",
+          "passed": true,
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+          "source": "source"
+        },
+        {
+          "name": "stable-reading-holds",
+          "passed": true,
+          "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+          "source": "decoded"
+        }
+      ],
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
+    },
+    "narrative": {
+      "status": "pending",
+      "controls": [
+        {
+          "name": "phase-count-and-copy",
+          "passed": true,
+          "detail": "3 complete phases; all copy retained",
+          "source": "source"
+        },
+        {
+          "name": "shared-object-identity",
+          "passed": true,
+          "detail": "One scene object instance is created and passed to every phase frame.",
+          "source": "source"
+        },
+        {
+          "name": "visual-state-change",
+          "passed": true,
+          "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+          "source": "pixels"
+        },
+        {
+          "name": "workflow-outcome-separation",
+          "passed": true,
+          "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+          "source": "source"
+        },
+        {
+          "name": "outcome-evidence",
+          "passed": true,
+          "detail": "Expected outcome; no benefit measurement is claimed.",
+          "source": "source"
+        },
+        {
+          "name": "result-follows-outcome",
+          "passed": true,
+          "detail": "outcome=expected; final label=\"Resultado esperado\"",
+          "source": "source"
+        },
+        {
+          "name": "semantic-illustrative-data",
+          "passed": true,
+          "detail": "brief illustrative=true; semantic phase flags=true,true,true",
+          "source": "source"
+        },
+        {
+          "name": "semantic-object-midpoint:before → change · punto medio de transición",
+          "passed": true,
+          "detail": "decoded object diff 20.8%; changed-state entities: legacy-record-a, legacy-record-b, legacy-record-c, legacy-record-d; legacy-records default→default 17.5%, legacy-record-a pending→flagged 26.3%, legacy-record-b pending→flagged 26.1%, legacy-record-c pending→flagged 26.5%, legacy-record-d pending→flagged 26.0%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:change → result · punto medio de transición",
+          "passed": true,
+          "detail": "decoded object diff 18.8%; changed-state entities: legacy-record-a, legacy-record-b, legacy-record-c, legacy-record-d; legacy-records default→default 15.8%, legacy-record-a flagged→ready-for-review 23.6%, legacy-record-b flagged→ready-for-review 23.5%, legacy-record-c flagged→ready-for-review 23.7%, legacy-record-d flagged→ready-for-review 23.4%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:result → before · unión del ciclo",
+          "passed": true,
+          "detail": "decoded object diff 15.1%; changed-state entities: legacy-record-a, legacy-record-b, legacy-record-c, legacy-record-d; legacy-records default→default 12.2%, legacy-record-a ready-for-review→pending 19.7%, legacy-record-b ready-for-review→pending 19.7%, legacy-record-c ready-for-review→pending 19.9%, legacy-record-d ready-for-review→pending 20.0%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:before → change hold",
+          "passed": true,
+          "detail": "decoded object diff 20.8%; changed-state entities: legacy-record-a, legacy-record-b, legacy-record-c, legacy-record-d; legacy-records default→default 17.5%, legacy-record-a pending→flagged 26.3%, legacy-record-b pending→flagged 26.1%, legacy-record-c pending→flagged 26.5%, legacy-record-d pending→flagged 26.0%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:change → result hold",
+          "passed": true,
+          "detail": "decoded object diff 18.8%; changed-state entities: legacy-record-a, legacy-record-b, legacy-record-c, legacy-record-d; legacy-records default→default 15.8%, legacy-record-a flagged→ready-for-review 23.6%, legacy-record-b flagged→ready-for-review 23.5%, legacy-record-c flagged→ready-for-review 23.7%, legacy-record-d flagged→ready-for-review 23.4%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:result → before loop join",
+          "passed": true,
+          "detail": "decoded object diff 15.1%; changed-state entities: legacy-record-a, legacy-record-b, legacy-record-c, legacy-record-d; legacy-records default→default 12.2%, legacy-record-a ready-for-review→pending 19.7%, legacy-record-b ready-for-review→pending 19.7%, legacy-record-c ready-for-review→pending 19.9%, legacy-record-d ready-for-review→pending 20.0%",
+          "source": "decoded"
+        }
+      ],
+      "note": "Automated checks separate work status from expected/observed outcome and confirm required evidence fields; causal meaning and evidence scope still need human review."
+    },
+    "visual-review": {
+      "status": "pending",
+      "reviewer": null,
+      "criteria": {
+        "thumbnailIdentity": {
+          "verdict": "not-evaluated"
+        },
+        "cardSizeReading": {
+          "verdict": "not-evaluated"
+        },
+        "styleMaterial": {
+          "verdict": "not-evaluated"
+        },
+        "phaseContinuity": {
+          "verdict": "not-evaluated"
+        },
+        "loopRestart": {
+          "verdict": "not-evaluated"
+        },
+        "artOnlyTransformationUnderstood": {
+          "verdict": "not-evaluated"
+        }
+      },
+      "feedback": [],
+      "evidence": []
+    },
+    "publicationRecommendation": "none",
+    "automatedEvidence": {
+      "balanceByFrame": [
+        {
+          "frameIndex": 1,
+          "phaseId": "before",
+          "kind": "hold",
+          "label": "before · pausa",
+          "regions": [
+            {
+              "entityId": "legacy-records",
+              "bounds": {
+                "x": 705.6064,
+                "y": 167.544,
+                "width": 444.78720000000004,
+                "height": 397.7424
+              },
+              "textBoxes": [
+                {
+                  "text": "TABLA",
+                  "bounds": {
+                    "x": 705.6064,
+                    "y": 167.544,
+                    "width": 444.78720000000004,
+                    "height": 397.7424
+                  },
+                  "fontSizePx": 28,
+                  "role": "label"
+                },
+                {
+                  "text": "EJEMPLO",
+                  "bounds": {
+                    "x": 870.976,
+                    "y": 68.1084,
+                    "width": 313.632,
+                    "height": 64.152
+                  },
+                  "fontSizePx": 28,
+                  "role": "label"
+                }
+              ]
+            },
+            {
+              "entityId": "legacy-record-a",
+              "bounds": {
+                "x": 721.173952,
+                "y": 229.5918144,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 229.5918144,
+                    "width": 413.6520960000001,
+                    "height": 65.2297536
+                  },
+                  "fontSizePx": 28,
+                  "role": "identifier"
+                }
+              ]
+            },
+            {
+              "entityId": "legacy-record-b",
+              "bounds": {
+                "x": 721.173952,
+                "y": 309.1402944,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 309.1402944,
+                    "width": 413.6520960000001,
+                    "height": 65.2297536
+                  },
+                  "fontSizePx": 28,
+                  "role": "identifier"
+                }
+              ]
+            },
+            {
+              "entityId": "legacy-record-c",
+              "bounds": {
+                "x": 721.173952,
+                "y": 388.6887744,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 388.6887744,
+                    "width": 413.6520960000001,
+                    "height": 65.2297536
+                  },
+                  "fontSizePx": 28,
+                  "role": "identifier"
+                }
+              ]
+            },
+            {
+              "entityId": "legacy-record-d",
+              "bounds": {
+                "x": 721.173952,
+                "y": 468.2372544,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 468.2372544,
+                    "width": 413.6520960000001,
+                    "height": 65.2297536
+                  },
+                  "fontSizePx": 28,
+                  "role": "identifier"
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.0625,
+            "textColumnFillRatio": 1,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.03125
+          }
+        },
+        {
+          "frameIndex": 7,
+          "phaseId": "change",
+          "kind": "transition",
+          "label": "before → change · punto medio de transición",
+          "regions": [
+            {
+              "entityId": "legacy-records",
+              "bounds": {
+                "x": 705.6064,
+                "y": 167.544,
+                "width": 444.78720000000004,
+                "height": 397.7424
+              },
+              "textBoxes": [
+                {
+                  "text": "TABLA",
+                  "bounds": {
+                    "x": 705.6064,
+                    "y": 167.544,
+                    "width": 444.78720000000004,
+                    "height": 397.7424
+                  },
+                  "fontSizePx": 28,
+                  "role": "label"
+                },
+                {
+                  "text": "EJEMPLO",
+                  "bounds": {
+                    "x": 870.976,
+                    "y": 68.1084,
+                    "width": 313.632,
+                    "height": 64.152
+                  },
+                  "fontSizePx": 28,
+                  "role": "label"
+                }
+              ]
+            },
+            {
+              "entityId": "legacy-record-a",
+              "bounds": {
+                "x": 721.173952,
+                "y": 229.5918144,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 229.5918144,
+                    "width": 413.6520960000001,
+                    "height": 65.2297536
+                  },
+                  "fontSizePx": 28,
+                  "role": "identifier"
+                },
+                {
+                  "text": "IDENTIFICADA",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 266.120476416,
+                    "width": 351.60428160000004,
+                    "height": 22.830413759999995
+                  },
+                  "fontSizePx": 28,
+                  "role": "status"
+                }
+              ]
+            },
+            {
+              "entityId": "legacy-record-b",
+              "bounds": {
+                "x": 721.173952,
+                "y": 309.1402944,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 309.1402944,
+                    "width": 413.6520960000001,
+                    "height": 65.2297536
+                  },
+                  "fontSizePx": 28,
+                  "role": "identifier"
+                },
+                {
+                  "text": "IDENTIFICADA",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 345.668956416,
+                    "width": 351.60428160000004,
+                    "height": 22.830413759999995
+                  },
+                  "fontSizePx": 28,
+                  "role": "status"
+                }
+              ]
+            },
+            {
+              "entityId": "legacy-record-c",
+              "bounds": {
+                "x": 721.173952,
+                "y": 388.6887744,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 388.6887744,
+                    "width": 413.6520960000001,
+                    "height": 65.2297536
+                  },
+                  "fontSizePx": 28,
+                  "role": "identifier"
+                },
+                {
+                  "text": "IDENTIFICADA",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 425.217436416,
+                    "width": 351.60428160000004,
+                    "height": 22.830413759999995
+                  },
+                  "fontSizePx": 28,
+                  "role": "status"
+                }
+              ]
+            },
+            {
+              "entityId": "legacy-record-d",
+              "bounds": {
+                "x": 721.173952,
+                "y": 468.2372544,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 468.2372544,
+                    "width": 413.6520960000001,
+                    "height": 65.2297536
+                  },
+                  "fontSizePx": 28,
+                  "role": "identifier"
+                },
+                {
+                  "text": "IDENTIFICADA",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 504.765916416,
+                    "width": 351.60428160000004,
+                    "height": 22.830413759999995
+                  },
+                  "fontSizePx": 28,
+                  "role": "status"
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.15625,
+            "textColumnFillRatio": 0.75,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.125
+          }
+        },
+        {
+          "frameIndex": 15,
+          "phaseId": "change",
+          "kind": "hold",
+          "label": "change · pausa",
+          "regions": [
+            {
+              "entityId": "legacy-records",
+              "bounds": {
+                "x": 705.6064,
+                "y": 167.544,
+                "width": 444.78720000000004,
+                "height": 397.7424
+              },
+              "textBoxes": [
+                {
+                  "text": "TABLA",
+                  "bounds": {
+                    "x": 705.6064,
+                    "y": 167.544,
+                    "width": 444.78720000000004,
+                    "height": 397.7424
+                  },
+                  "fontSizePx": 28,
+                  "role": "label"
+                },
+                {
+                  "text": "EJEMPLO",
+                  "bounds": {
+                    "x": 870.976,
+                    "y": 68.1084,
+                    "width": 313.632,
+                    "height": 64.152
+                  },
+                  "fontSizePx": 28,
+                  "role": "label"
+                }
+              ]
+            },
+            {
+              "entityId": "legacy-record-a",
+              "bounds": {
+                "x": 721.173952,
+                "y": 229.5918144,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 229.5918144,
+                    "width": 413.6520960000001,
+                    "height": 65.2297536
+                  },
+                  "fontSizePx": 28,
+                  "role": "identifier"
+                },
+                {
+                  "text": "IDENTIFICADA",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 266.120476416,
+                    "width": 351.60428160000004,
+                    "height": 22.830413759999995
+                  },
+                  "fontSizePx": 28,
+                  "role": "status"
+                }
+              ]
+            },
+            {
+              "entityId": "legacy-record-b",
+              "bounds": {
+                "x": 721.173952,
+                "y": 309.1402944,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 309.1402944,
+                    "width": 413.6520960000001,
+                    "height": 65.2297536
+                  },
+                  "fontSizePx": 28,
+                  "role": "identifier"
+                },
+                {
+                  "text": "IDENTIFICADA",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 345.668956416,
+                    "width": 351.60428160000004,
+                    "height": 22.830413759999995
+                  },
+                  "fontSizePx": 28,
+                  "role": "status"
+                }
+              ]
+            },
+            {
+              "entityId": "legacy-record-c",
+              "bounds": {
+                "x": 721.173952,
+                "y": 388.6887744,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 388.6887744,
+                    "width": 413.6520960000001,
+                    "height": 65.2297536
+                  },
+                  "fontSizePx": 28,
+                  "role": "identifier"
+                },
+                {
+                  "text": "IDENTIFICADA",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 425.217436416,
+                    "width": 351.60428160000004,
+                    "height": 22.830413759999995
+                  },
+                  "fontSizePx": 28,
+                  "role": "status"
+                }
+              ]
+            },
+            {
+              "entityId": "legacy-record-d",
+              "bounds": {
+                "x": 721.173952,
+                "y": 468.2372544,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 468.2372544,
+                    "width": 413.6520960000001,
+                    "height": 65.2297536
+                  },
+                  "fontSizePx": 28,
+                  "role": "identifier"
+                },
+                {
+                  "text": "IDENTIFICADA",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 504.765916416,
+                    "width": 351.60428160000004,
+                    "height": 22.830413759999995
+                  },
+                  "fontSizePx": 28,
+                  "role": "status"
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.15625,
+            "textColumnFillRatio": 0.75,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.125
+          }
+        },
+        {
+          "frameIndex": 21,
+          "phaseId": "result",
+          "kind": "transition",
+          "label": "change → result · punto medio de transición",
+          "regions": [
+            {
+              "entityId": "legacy-records",
+              "bounds": {
+                "x": 705.6064,
+                "y": 167.544,
+                "width": 444.78720000000004,
+                "height": 397.7424
+              },
+              "textBoxes": [
+                {
+                  "text": "TABLA",
+                  "bounds": {
+                    "x": 705.6064,
+                    "y": 167.544,
+                    "width": 444.78720000000004,
+                    "height": 397.7424
+                  },
+                  "fontSizePx": 28,
+                  "role": "label"
+                },
+                {
+                  "text": "EJEMPLO",
+                  "bounds": {
+                    "x": 870.976,
+                    "y": 68.1084,
+                    "width": 313.632,
+                    "height": 64.152
+                  },
+                  "fontSizePx": 28,
+                  "role": "label"
+                }
+              ]
+            },
+            {
+              "entityId": "legacy-record-a",
+              "bounds": {
+                "x": 721.173952,
+                "y": 229.5918144,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 229.5918144,
+                    "width": 413.6520960000001,
+                    "height": 65.2297536
+                  },
+                  "fontSizePx": 28,
+                  "role": "identifier"
+                },
+                {
+                  "text": "LISTO PARA REVISIÓN",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 266.120476416,
+                    "width": 351.60428160000004,
+                    "height": 22.830413759999995
+                  },
+                  "fontSizePx": 28,
+                  "role": "status"
+                }
+              ]
+            },
+            {
+              "entityId": "legacy-record-b",
+              "bounds": {
+                "x": 721.173952,
+                "y": 309.1402944,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 309.1402944,
+                    "width": 413.6520960000001,
+                    "height": 65.2297536
+                  },
+                  "fontSizePx": 28,
+                  "role": "identifier"
+                },
+                {
+                  "text": "LISTO PARA REVISIÓN",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 345.668956416,
+                    "width": 351.60428160000004,
+                    "height": 22.830413759999995
+                  },
+                  "fontSizePx": 28,
+                  "role": "status"
+                }
+              ]
+            },
+            {
+              "entityId": "legacy-record-c",
+              "bounds": {
+                "x": 721.173952,
+                "y": 388.6887744,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 388.6887744,
+                    "width": 413.6520960000001,
+                    "height": 65.2297536
+                  },
+                  "fontSizePx": 28,
+                  "role": "identifier"
+                },
+                {
+                  "text": "LISTO PARA REVISIÓN",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 425.217436416,
+                    "width": 351.60428160000004,
+                    "height": 22.830413759999995
+                  },
+                  "fontSizePx": 28,
+                  "role": "status"
+                }
+              ]
+            },
+            {
+              "entityId": "legacy-record-d",
+              "bounds": {
+                "x": 721.173952,
+                "y": 468.2372544,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 468.2372544,
+                    "width": 413.6520960000001,
+                    "height": 65.2297536
+                  },
+                  "fontSizePx": 28,
+                  "role": "identifier"
+                },
+                {
+                  "text": "LISTO PARA REVISIÓN",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 504.765916416,
+                    "width": 351.60428160000004,
+                    "height": 22.830413759999995
+                  },
+                  "fontSizePx": 28,
+                  "role": "status"
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.15625,
+            "textColumnFillRatio": 0.75,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.125
+          }
+        },
+        {
+          "frameIndex": 29,
+          "phaseId": "result",
+          "kind": "hold",
+          "label": "result · pausa",
+          "regions": [
+            {
+              "entityId": "legacy-records",
+              "bounds": {
+                "x": 705.6064,
+                "y": 167.544,
+                "width": 444.78720000000004,
+                "height": 397.7424
+              },
+              "textBoxes": [
+                {
+                  "text": "TABLA",
+                  "bounds": {
+                    "x": 705.6064,
+                    "y": 167.544,
+                    "width": 444.78720000000004,
+                    "height": 397.7424
+                  },
+                  "fontSizePx": 28,
+                  "role": "label"
+                },
+                {
+                  "text": "EJEMPLO",
+                  "bounds": {
+                    "x": 870.976,
+                    "y": 68.1084,
+                    "width": 313.632,
+                    "height": 64.152
+                  },
+                  "fontSizePx": 28,
+                  "role": "label"
+                }
+              ]
+            },
+            {
+              "entityId": "legacy-record-a",
+              "bounds": {
+                "x": 721.173952,
+                "y": 229.5918144,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 229.5918144,
+                    "width": 413.6520960000001,
+                    "height": 65.2297536
+                  },
+                  "fontSizePx": 28,
+                  "role": "identifier"
+                },
+                {
+                  "text": "LISTO PARA REVISIÓN",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 266.120476416,
+                    "width": 351.60428160000004,
+                    "height": 22.830413759999995
+                  },
+                  "fontSizePx": 28,
+                  "role": "status"
+                }
+              ]
+            },
+            {
+              "entityId": "legacy-record-b",
+              "bounds": {
+                "x": 721.173952,
+                "y": 309.1402944,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 309.1402944,
+                    "width": 413.6520960000001,
+                    "height": 65.2297536
+                  },
+                  "fontSizePx": 28,
+                  "role": "identifier"
+                },
+                {
+                  "text": "LISTO PARA REVISIÓN",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 345.668956416,
+                    "width": 351.60428160000004,
+                    "height": 22.830413759999995
+                  },
+                  "fontSizePx": 28,
+                  "role": "status"
+                }
+              ]
+            },
+            {
+              "entityId": "legacy-record-c",
+              "bounds": {
+                "x": 721.173952,
+                "y": 388.6887744,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 388.6887744,
+                    "width": 413.6520960000001,
+                    "height": 65.2297536
+                  },
+                  "fontSizePx": 28,
+                  "role": "identifier"
+                },
+                {
+                  "text": "LISTO PARA REVISIÓN",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 425.217436416,
+                    "width": 351.60428160000004,
+                    "height": 22.830413759999995
+                  },
+                  "fontSizePx": 28,
+                  "role": "status"
+                }
+              ]
+            },
+            {
+              "entityId": "legacy-record-d",
+              "bounds": {
+                "x": 721.173952,
+                "y": 468.2372544,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 468.2372544,
+                    "width": 413.6520960000001,
+                    "height": 65.2297536
+                  },
+                  "fontSizePx": 28,
+                  "role": "identifier"
+                },
+                {
+                  "text": "LISTO PARA REVISIÓN",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 504.765916416,
+                    "width": 351.60428160000004,
+                    "height": 22.830413759999995
+                  },
+                  "fontSizePx": 28,
+                  "role": "status"
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.15625,
+            "textColumnFillRatio": 0.75,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.125
+          }
+        },
+        {
+          "frameIndex": 35,
+          "phaseId": "before",
+          "kind": "loop-bridge",
+          "label": "result → before · unión del ciclo",
+          "regions": [
+            {
+              "entityId": "legacy-records",
+              "bounds": {
+                "x": 705.6064,
+                "y": 167.544,
+                "width": 444.78720000000004,
+                "height": 397.7424
+              },
+              "textBoxes": [
+                {
+                  "text": "TABLA",
+                  "bounds": {
+                    "x": 705.6064,
+                    "y": 167.544,
+                    "width": 444.78720000000004,
+                    "height": 397.7424
+                  },
+                  "fontSizePx": 28,
+                  "role": "label"
+                },
+                {
+                  "text": "EJEMPLO",
+                  "bounds": {
+                    "x": 870.976,
+                    "y": 68.1084,
+                    "width": 313.632,
+                    "height": 64.152
+                  },
+                  "fontSizePx": 28,
+                  "role": "label"
+                }
+              ]
+            },
+            {
+              "entityId": "legacy-record-a",
+              "bounds": {
+                "x": 721.173952,
+                "y": 229.5918144,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 229.5918144,
+                    "width": 413.6520960000001,
+                    "height": 65.2297536
+                  },
+                  "fontSizePx": 28,
+                  "role": "identifier"
+                }
+              ]
+            },
+            {
+              "entityId": "legacy-record-b",
+              "bounds": {
+                "x": 721.173952,
+                "y": 309.1402944,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 309.1402944,
+                    "width": 413.6520960000001,
+                    "height": 65.2297536
+                  },
+                  "fontSizePx": 28,
+                  "role": "identifier"
+                }
+              ]
+            },
+            {
+              "entityId": "legacy-record-c",
+              "bounds": {
+                "x": 721.173952,
+                "y": 388.6887744,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 388.6887744,
+                    "width": 413.6520960000001,
+                    "height": 65.2297536
+                  },
+                  "fontSizePx": 28,
+                  "role": "identifier"
+                }
+              ]
+            },
+            {
+              "entityId": "legacy-record-d",
+              "bounds": {
+                "x": 721.173952,
+                "y": 468.2372544,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 721.173952,
+                    "y": 468.2372544,
+                    "width": 413.6520960000001,
+                    "height": 65.2297536
+                  },
+                  "fontSizePx": 28,
+                  "role": "identifier"
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.0625,
+            "textColumnFillRatio": 1,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.03125
+          }
+        }
+      ],
+      "objectTransformationByFrame": [
+        {
+          "frameIndex": 7,
+          "phaseId": "change",
+          "fromPhaseId": "before",
+          "kind": "transition",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "legacy-records",
+              "bounds": {
+                "x": 705.6064,
+                "y": 167.544,
+                "width": 444.78720000000004,
+                "height": 397.7424
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0.1747755037818762,
+              "changed": false
+            },
+            {
+              "entityId": "legacy-record-a",
+              "bounds": {
+                "x": 721.173952,
+                "y": 229.5918144,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fromState": "pending",
+              "toState": "flagged",
+              "pixelDiffRatio": 0.2628458498023715,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-record-b",
+              "bounds": {
+                "x": 721.173952,
+                "y": 309.1402944,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fromState": "pending",
+              "toState": "flagged",
+              "pixelDiffRatio": 0.2606133801785976,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-record-c",
+              "bounds": {
+                "x": 721.173952,
+                "y": 388.6887744,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fromState": "pending",
+              "toState": "flagged",
+              "pixelDiffRatio": 0.2652613087395696,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-record-d",
+              "bounds": {
+                "x": 721.173952,
+                "y": 468.2372544,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fromState": "pending",
+              "toState": "flagged",
+              "pixelDiffRatio": 0.25999121651295565,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 21,
+          "phaseId": "result",
+          "fromPhaseId": "change",
+          "kind": "transition",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "legacy-records",
+              "bounds": {
+                "x": 705.6064,
+                "y": 167.544,
+                "width": 444.78720000000004,
+                "height": 397.7424
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0.1584285826674309,
+              "changed": false
+            },
+            {
+              "entityId": "legacy-record-a",
+              "bounds": {
+                "x": 721.173952,
+                "y": 229.5918144,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fromState": "flagged",
+              "toState": "ready-for-review",
+              "pixelDiffRatio": 0.23580002927829014,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-record-b",
+              "bounds": {
+                "x": 721.173952,
+                "y": 309.1402944,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fromState": "flagged",
+              "toState": "ready-for-review",
+              "pixelDiffRatio": 0.2347386912604304,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-record-c",
+              "bounds": {
+                "x": 721.173952,
+                "y": 388.6887744,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fromState": "flagged",
+              "toState": "ready-for-review",
+              "pixelDiffRatio": 0.23737373737373738,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-record-d",
+              "bounds": {
+                "x": 721.173952,
+                "y": 468.2372544,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fromState": "flagged",
+              "toState": "ready-for-review",
+              "pixelDiffRatio": 0.23433611477089739,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 35,
+          "phaseId": "before",
+          "fromPhaseId": "result",
+          "kind": "loop-bridge",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "legacy-records",
+              "bounds": {
+                "x": 705.6064,
+                "y": 167.544,
+                "width": 444.78720000000004,
+                "height": 397.7424
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0.12185733391775402,
+              "changed": false
+            },
+            {
+              "entityId": "legacy-record-a",
+              "bounds": {
+                "x": 721.173952,
+                "y": 229.5918144,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fromState": "ready-for-review",
+              "toState": "pending",
+              "pixelDiffRatio": 0.1972258820084907,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-record-b",
+              "bounds": {
+                "x": 721.173952,
+                "y": 309.1402944,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fromState": "ready-for-review",
+              "toState": "pending",
+              "pixelDiffRatio": 0.19707949055775142,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-record-c",
+              "bounds": {
+                "x": 721.173952,
+                "y": 388.6887744,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fromState": "ready-for-review",
+              "toState": "pending",
+              "pixelDiffRatio": 0.19898257941736203,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-record-d",
+              "bounds": {
+                "x": 721.173952,
+                "y": 468.2372544,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fromState": "ready-for-review",
+              "toState": "pending",
+              "pixelDiffRatio": 0.20033670033670034,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 15,
+          "phaseId": "change",
+          "fromPhaseId": "before",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "legacy-records",
+              "bounds": {
+                "x": 705.6064,
+                "y": 167.544,
+                "width": 444.78720000000004,
+                "height": 397.7424
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0.1747755037818762,
+              "changed": false
+            },
+            {
+              "entityId": "legacy-record-a",
+              "bounds": {
+                "x": 721.173952,
+                "y": 229.5918144,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fromState": "pending",
+              "toState": "flagged",
+              "pixelDiffRatio": 0.2628458498023715,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-record-b",
+              "bounds": {
+                "x": 721.173952,
+                "y": 309.1402944,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fromState": "pending",
+              "toState": "flagged",
+              "pixelDiffRatio": 0.2606133801785976,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-record-c",
+              "bounds": {
+                "x": 721.173952,
+                "y": 388.6887744,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fromState": "pending",
+              "toState": "flagged",
+              "pixelDiffRatio": 0.2652613087395696,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-record-d",
+              "bounds": {
+                "x": 721.173952,
+                "y": 468.2372544,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fromState": "pending",
+              "toState": "flagged",
+              "pixelDiffRatio": 0.25999121651295565,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 29,
+          "phaseId": "result",
+          "fromPhaseId": "change",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "legacy-records",
+              "bounds": {
+                "x": 705.6064,
+                "y": 167.544,
+                "width": 444.78720000000004,
+                "height": 397.7424
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0.1584285826674309,
+              "changed": false
+            },
+            {
+              "entityId": "legacy-record-a",
+              "bounds": {
+                "x": 721.173952,
+                "y": 229.5918144,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fromState": "flagged",
+              "toState": "ready-for-review",
+              "pixelDiffRatio": 0.23580002927829014,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-record-b",
+              "bounds": {
+                "x": 721.173952,
+                "y": 309.1402944,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fromState": "flagged",
+              "toState": "ready-for-review",
+              "pixelDiffRatio": 0.2347386912604304,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-record-c",
+              "bounds": {
+                "x": 721.173952,
+                "y": 388.6887744,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fromState": "flagged",
+              "toState": "ready-for-review",
+              "pixelDiffRatio": 0.23737373737373738,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-record-d",
+              "bounds": {
+                "x": 721.173952,
+                "y": 468.2372544,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fromState": "flagged",
+              "toState": "ready-for-review",
+              "pixelDiffRatio": 0.23433611477089739,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 1,
+          "phaseId": "before",
+          "fromPhaseId": "result",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "legacy-records",
+              "bounds": {
+                "x": 705.6064,
+                "y": 167.544,
+                "width": 444.78720000000004,
+                "height": 397.7424
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0.12185733391775402,
+              "changed": false
+            },
+            {
+              "entityId": "legacy-record-a",
+              "bounds": {
+                "x": 721.173952,
+                "y": 229.5918144,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fromState": "ready-for-review",
+              "toState": "pending",
+              "pixelDiffRatio": 0.1972258820084907,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-record-b",
+              "bounds": {
+                "x": 721.173952,
+                "y": 309.1402944,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fromState": "ready-for-review",
+              "toState": "pending",
+              "pixelDiffRatio": 0.19707949055775142,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-record-c",
+              "bounds": {
+                "x": 721.173952,
+                "y": 388.6887744,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fromState": "ready-for-review",
+              "toState": "pending",
+              "pixelDiffRatio": 0.19898257941736203,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-record-d",
+              "bounds": {
+                "x": 721.173952,
+                "y": 468.2372544,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fromState": "ready-for-review",
+              "toState": "pending",
+              "pixelDiffRatio": 0.20033670033670034,
+              "changed": true
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "phaseCaptures": [
+    {
+      "phaseId": "before",
+      "labels": [
+        "before · inicio",
+        "before · pausa",
+        "before → change · punto medio de transición",
+        "before · salida",
+        "reinicio del loop"
+      ],
+      "contactSheet": "../../../../pilots/papercraft/guias-mas-confiables/guias-mas-confiables-f75f32a9-contact-sheet.png"
+    },
+    {
+      "phaseId": "change",
+      "labels": [
+        "change · inicio",
+        "change · pausa",
+        "change → result · punto medio de transición",
+        "change · salida"
+      ],
+      "contactSheet": "../../../../pilots/papercraft/guias-mas-confiables/guias-mas-confiables-f75f32a9-contact-sheet.png"
+    },
+    {
+      "phaseId": "result",
+      "labels": [
+        "result · inicio",
+        "result · pausa",
+        "result → before · unión del ciclo",
+        "result · salida"
+      ],
+      "contactSheet": "../../../../pilots/papercraft/guias-mas-confiables/guias-mas-confiables-f75f32a9-contact-sheet.png"
+    }
+  ],
+  "semanticObjectCaptures": [
+    {
+      "label": "before · pausa",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 0,
+      "frameIndex": 1,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "legacy-records",
+          "bounds": {
+            "x": 705.6064,
+            "y": 167.544,
+            "width": 444.78720000000004,
+            "height": 397.7424
+          },
+          "textBoxes": [
+            {
+              "text": "TABLA",
+              "bounds": {
+                "x": 705.6064,
+                "y": 167.544,
+                "width": 444.78720000000004,
+                "height": 397.7424
+              },
+              "fontSizePx": 28,
+              "role": "label"
+            },
+            {
+              "text": "EJEMPLO",
+              "bounds": {
+                "x": 870.976,
+                "y": 68.1084,
+                "width": 313.632,
+                "height": 64.152
+              },
+              "fontSizePx": 28,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-a",
+          "bounds": {
+            "x": 721.173952,
+            "y": 229.5918144,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 229.5918144,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-b",
+          "bounds": {
+            "x": 721.173952,
+            "y": 309.1402944,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 309.1402944,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-c",
+          "bounds": {
+            "x": 721.173952,
+            "y": 388.6887744,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 388.6887744,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-d",
+          "bounds": {
+            "x": 721.173952,
+            "y": 468.2372544,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 468.2372544,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "before → change · punto medio de transición",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 0,
+      "frameIndex": 7,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "legacy-records",
+          "bounds": {
+            "x": 705.6064,
+            "y": 167.544,
+            "width": 444.78720000000004,
+            "height": 397.7424
+          },
+          "textBoxes": [
+            {
+              "text": "TABLA",
+              "bounds": {
+                "x": 705.6064,
+                "y": 167.544,
+                "width": 444.78720000000004,
+                "height": 397.7424
+              },
+              "fontSizePx": 28,
+              "role": "label"
+            },
+            {
+              "text": "EJEMPLO",
+              "bounds": {
+                "x": 870.976,
+                "y": 68.1084,
+                "width": 313.632,
+                "height": 64.152
+              },
+              "fontSizePx": 28,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-a",
+          "bounds": {
+            "x": 721.173952,
+            "y": 229.5918144,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 229.5918144,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "IDENTIFICADA",
+              "bounds": {
+                "x": 721.173952,
+                "y": 266.120476416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-b",
+          "bounds": {
+            "x": 721.173952,
+            "y": 309.1402944,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 309.1402944,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "IDENTIFICADA",
+              "bounds": {
+                "x": 721.173952,
+                "y": 345.668956416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-c",
+          "bounds": {
+            "x": 721.173952,
+            "y": 388.6887744,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 388.6887744,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "IDENTIFICADA",
+              "bounds": {
+                "x": 721.173952,
+                "y": 425.217436416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-d",
+          "bounds": {
+            "x": 721.173952,
+            "y": 468.2372544,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 468.2372544,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "IDENTIFICADA",
+              "bounds": {
+                "x": 721.173952,
+                "y": 504.765916416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "change · pausa",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 1,
+      "frameIndex": 15,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "legacy-records",
+          "bounds": {
+            "x": 705.6064,
+            "y": 167.544,
+            "width": 444.78720000000004,
+            "height": 397.7424
+          },
+          "textBoxes": [
+            {
+              "text": "TABLA",
+              "bounds": {
+                "x": 705.6064,
+                "y": 167.544,
+                "width": 444.78720000000004,
+                "height": 397.7424
+              },
+              "fontSizePx": 28,
+              "role": "label"
+            },
+            {
+              "text": "EJEMPLO",
+              "bounds": {
+                "x": 870.976,
+                "y": 68.1084,
+                "width": 313.632,
+                "height": 64.152
+              },
+              "fontSizePx": 28,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-a",
+          "bounds": {
+            "x": 721.173952,
+            "y": 229.5918144,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 229.5918144,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "IDENTIFICADA",
+              "bounds": {
+                "x": 721.173952,
+                "y": 266.120476416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-b",
+          "bounds": {
+            "x": 721.173952,
+            "y": 309.1402944,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 309.1402944,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "IDENTIFICADA",
+              "bounds": {
+                "x": 721.173952,
+                "y": 345.668956416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-c",
+          "bounds": {
+            "x": 721.173952,
+            "y": 388.6887744,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 388.6887744,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "IDENTIFICADA",
+              "bounds": {
+                "x": 721.173952,
+                "y": 425.217436416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-d",
+          "bounds": {
+            "x": 721.173952,
+            "y": 468.2372544,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 468.2372544,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "IDENTIFICADA",
+              "bounds": {
+                "x": 721.173952,
+                "y": 504.765916416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "change → result · punto medio de transición",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 1,
+      "frameIndex": 21,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "legacy-records",
+          "bounds": {
+            "x": 705.6064,
+            "y": 167.544,
+            "width": 444.78720000000004,
+            "height": 397.7424
+          },
+          "textBoxes": [
+            {
+              "text": "TABLA",
+              "bounds": {
+                "x": 705.6064,
+                "y": 167.544,
+                "width": 444.78720000000004,
+                "height": 397.7424
+              },
+              "fontSizePx": 28,
+              "role": "label"
+            },
+            {
+              "text": "EJEMPLO",
+              "bounds": {
+                "x": 870.976,
+                "y": 68.1084,
+                "width": 313.632,
+                "height": 64.152
+              },
+              "fontSizePx": 28,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-a",
+          "bounds": {
+            "x": 721.173952,
+            "y": 229.5918144,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 229.5918144,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "LISTO PARA REVISIÓN",
+              "bounds": {
+                "x": 721.173952,
+                "y": 266.120476416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-b",
+          "bounds": {
+            "x": 721.173952,
+            "y": 309.1402944,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 309.1402944,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "LISTO PARA REVISIÓN",
+              "bounds": {
+                "x": 721.173952,
+                "y": 345.668956416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-c",
+          "bounds": {
+            "x": 721.173952,
+            "y": 388.6887744,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 388.6887744,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "LISTO PARA REVISIÓN",
+              "bounds": {
+                "x": 721.173952,
+                "y": 425.217436416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-d",
+          "bounds": {
+            "x": 721.173952,
+            "y": 468.2372544,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 468.2372544,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "LISTO PARA REVISIÓN",
+              "bounds": {
+                "x": 721.173952,
+                "y": 504.765916416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "result · pausa",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 2,
+      "frameIndex": 29,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "legacy-records",
+          "bounds": {
+            "x": 705.6064,
+            "y": 167.544,
+            "width": 444.78720000000004,
+            "height": 397.7424
+          },
+          "textBoxes": [
+            {
+              "text": "TABLA",
+              "bounds": {
+                "x": 705.6064,
+                "y": 167.544,
+                "width": 444.78720000000004,
+                "height": 397.7424
+              },
+              "fontSizePx": 28,
+              "role": "label"
+            },
+            {
+              "text": "EJEMPLO",
+              "bounds": {
+                "x": 870.976,
+                "y": 68.1084,
+                "width": 313.632,
+                "height": 64.152
+              },
+              "fontSizePx": 28,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-a",
+          "bounds": {
+            "x": 721.173952,
+            "y": 229.5918144,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 229.5918144,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "LISTO PARA REVISIÓN",
+              "bounds": {
+                "x": 721.173952,
+                "y": 266.120476416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-b",
+          "bounds": {
+            "x": 721.173952,
+            "y": 309.1402944,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 309.1402944,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "LISTO PARA REVISIÓN",
+              "bounds": {
+                "x": 721.173952,
+                "y": 345.668956416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-c",
+          "bounds": {
+            "x": 721.173952,
+            "y": 388.6887744,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 388.6887744,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "LISTO PARA REVISIÓN",
+              "bounds": {
+                "x": 721.173952,
+                "y": 425.217436416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-d",
+          "bounds": {
+            "x": 721.173952,
+            "y": 468.2372544,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 468.2372544,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "LISTO PARA REVISIÓN",
+              "bounds": {
+                "x": 721.173952,
+                "y": 504.765916416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "result → before · unión del ciclo",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 2,
+      "frameIndex": 35,
+      "kind": "loop-bridge",
+      "regions": [
+        {
+          "entityId": "legacy-records",
+          "bounds": {
+            "x": 705.6064,
+            "y": 167.544,
+            "width": 444.78720000000004,
+            "height": 397.7424
+          },
+          "textBoxes": [
+            {
+              "text": "TABLA",
+              "bounds": {
+                "x": 705.6064,
+                "y": 167.544,
+                "width": 444.78720000000004,
+                "height": 397.7424
+              },
+              "fontSizePx": 28,
+              "role": "label"
+            },
+            {
+              "text": "EJEMPLO",
+              "bounds": {
+                "x": 870.976,
+                "y": 68.1084,
+                "width": 313.632,
+                "height": 64.152
+              },
+              "fontSizePx": 28,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-a",
+          "bounds": {
+            "x": 721.173952,
+            "y": 229.5918144,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 229.5918144,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-b",
+          "bounds": {
+            "x": 721.173952,
+            "y": 309.1402944,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 309.1402944,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-c",
+          "bounds": {
+            "x": 721.173952,
+            "y": 388.6887744,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 388.6887744,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-d",
+          "bounds": {
+            "x": 721.173952,
+            "y": 468.2372544,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 468.2372544,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "compositionByFrame": [
+    {
+      "frameIndex": 1,
+      "label": "before · pausa",
+      "phaseId": "before",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "legacy-records",
+          "bounds": {
+            "x": 705.6064,
+            "y": 167.544,
+            "width": 444.78720000000004,
+            "height": 397.7424
+          },
+          "textBoxes": [
+            {
+              "text": "TABLA",
+              "bounds": {
+                "x": 705.6064,
+                "y": 167.544,
+                "width": 444.78720000000004,
+                "height": 397.7424
+              },
+              "fontSizePx": 28,
+              "role": "label"
+            },
+            {
+              "text": "EJEMPLO",
+              "bounds": {
+                "x": 870.976,
+                "y": 68.1084,
+                "width": 313.632,
+                "height": 64.152
+              },
+              "fontSizePx": 28,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-a",
+          "bounds": {
+            "x": 721.173952,
+            "y": 229.5918144,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 229.5918144,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-b",
+          "bounds": {
+            "x": 721.173952,
+            "y": 309.1402944,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 309.1402944,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-c",
+          "bounds": {
+            "x": 721.173952,
+            "y": 388.6887744,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 388.6887744,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-d",
+          "bounds": {
+            "x": 721.173952,
+            "y": 468.2372544,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 468.2372544,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            }
+          ]
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.0625,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.03125
+      }
+    },
+    {
+      "frameIndex": 7,
+      "label": "before → change · punto medio de transición",
+      "phaseId": "change",
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "legacy-records",
+          "bounds": {
+            "x": 705.6064,
+            "y": 167.544,
+            "width": 444.78720000000004,
+            "height": 397.7424
+          },
+          "textBoxes": [
+            {
+              "text": "TABLA",
+              "bounds": {
+                "x": 705.6064,
+                "y": 167.544,
+                "width": 444.78720000000004,
+                "height": 397.7424
+              },
+              "fontSizePx": 28,
+              "role": "label"
+            },
+            {
+              "text": "EJEMPLO",
+              "bounds": {
+                "x": 870.976,
+                "y": 68.1084,
+                "width": 313.632,
+                "height": 64.152
+              },
+              "fontSizePx": 28,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-a",
+          "bounds": {
+            "x": 721.173952,
+            "y": 229.5918144,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 229.5918144,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "IDENTIFICADA",
+              "bounds": {
+                "x": 721.173952,
+                "y": 266.120476416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-b",
+          "bounds": {
+            "x": 721.173952,
+            "y": 309.1402944,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 309.1402944,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "IDENTIFICADA",
+              "bounds": {
+                "x": 721.173952,
+                "y": 345.668956416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-c",
+          "bounds": {
+            "x": 721.173952,
+            "y": 388.6887744,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 388.6887744,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "IDENTIFICADA",
+              "bounds": {
+                "x": 721.173952,
+                "y": 425.217436416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-d",
+          "bounds": {
+            "x": 721.173952,
+            "y": 468.2372544,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 468.2372544,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "IDENTIFICADA",
+              "bounds": {
+                "x": 721.173952,
+                "y": 504.765916416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.15625,
+        "textColumnFillRatio": 0.75,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.125
+      }
+    },
+    {
+      "frameIndex": 15,
+      "label": "change · pausa",
+      "phaseId": "change",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "legacy-records",
+          "bounds": {
+            "x": 705.6064,
+            "y": 167.544,
+            "width": 444.78720000000004,
+            "height": 397.7424
+          },
+          "textBoxes": [
+            {
+              "text": "TABLA",
+              "bounds": {
+                "x": 705.6064,
+                "y": 167.544,
+                "width": 444.78720000000004,
+                "height": 397.7424
+              },
+              "fontSizePx": 28,
+              "role": "label"
+            },
+            {
+              "text": "EJEMPLO",
+              "bounds": {
+                "x": 870.976,
+                "y": 68.1084,
+                "width": 313.632,
+                "height": 64.152
+              },
+              "fontSizePx": 28,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-a",
+          "bounds": {
+            "x": 721.173952,
+            "y": 229.5918144,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 229.5918144,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "IDENTIFICADA",
+              "bounds": {
+                "x": 721.173952,
+                "y": 266.120476416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-b",
+          "bounds": {
+            "x": 721.173952,
+            "y": 309.1402944,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 309.1402944,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "IDENTIFICADA",
+              "bounds": {
+                "x": 721.173952,
+                "y": 345.668956416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-c",
+          "bounds": {
+            "x": 721.173952,
+            "y": 388.6887744,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 388.6887744,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "IDENTIFICADA",
+              "bounds": {
+                "x": 721.173952,
+                "y": 425.217436416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-d",
+          "bounds": {
+            "x": 721.173952,
+            "y": 468.2372544,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 468.2372544,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "IDENTIFICADA",
+              "bounds": {
+                "x": 721.173952,
+                "y": 504.765916416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.15625,
+        "textColumnFillRatio": 0.75,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.125
+      }
+    },
+    {
+      "frameIndex": 21,
+      "label": "change → result · punto medio de transición",
+      "phaseId": "result",
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "legacy-records",
+          "bounds": {
+            "x": 705.6064,
+            "y": 167.544,
+            "width": 444.78720000000004,
+            "height": 397.7424
+          },
+          "textBoxes": [
+            {
+              "text": "TABLA",
+              "bounds": {
+                "x": 705.6064,
+                "y": 167.544,
+                "width": 444.78720000000004,
+                "height": 397.7424
+              },
+              "fontSizePx": 28,
+              "role": "label"
+            },
+            {
+              "text": "EJEMPLO",
+              "bounds": {
+                "x": 870.976,
+                "y": 68.1084,
+                "width": 313.632,
+                "height": 64.152
+              },
+              "fontSizePx": 28,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-a",
+          "bounds": {
+            "x": 721.173952,
+            "y": 229.5918144,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 229.5918144,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "LISTO PARA REVISIÓN",
+              "bounds": {
+                "x": 721.173952,
+                "y": 266.120476416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-b",
+          "bounds": {
+            "x": 721.173952,
+            "y": 309.1402944,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 309.1402944,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "LISTO PARA REVISIÓN",
+              "bounds": {
+                "x": 721.173952,
+                "y": 345.668956416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-c",
+          "bounds": {
+            "x": 721.173952,
+            "y": 388.6887744,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 388.6887744,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "LISTO PARA REVISIÓN",
+              "bounds": {
+                "x": 721.173952,
+                "y": 425.217436416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-d",
+          "bounds": {
+            "x": 721.173952,
+            "y": 468.2372544,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 468.2372544,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "LISTO PARA REVISIÓN",
+              "bounds": {
+                "x": 721.173952,
+                "y": 504.765916416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.15625,
+        "textColumnFillRatio": 0.75,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.125
+      }
+    },
+    {
+      "frameIndex": 29,
+      "label": "result · pausa",
+      "phaseId": "result",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "legacy-records",
+          "bounds": {
+            "x": 705.6064,
+            "y": 167.544,
+            "width": 444.78720000000004,
+            "height": 397.7424
+          },
+          "textBoxes": [
+            {
+              "text": "TABLA",
+              "bounds": {
+                "x": 705.6064,
+                "y": 167.544,
+                "width": 444.78720000000004,
+                "height": 397.7424
+              },
+              "fontSizePx": 28,
+              "role": "label"
+            },
+            {
+              "text": "EJEMPLO",
+              "bounds": {
+                "x": 870.976,
+                "y": 68.1084,
+                "width": 313.632,
+                "height": 64.152
+              },
+              "fontSizePx": 28,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-a",
+          "bounds": {
+            "x": 721.173952,
+            "y": 229.5918144,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 229.5918144,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "LISTO PARA REVISIÓN",
+              "bounds": {
+                "x": 721.173952,
+                "y": 266.120476416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-b",
+          "bounds": {
+            "x": 721.173952,
+            "y": 309.1402944,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 309.1402944,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "LISTO PARA REVISIÓN",
+              "bounds": {
+                "x": 721.173952,
+                "y": 345.668956416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-c",
+          "bounds": {
+            "x": 721.173952,
+            "y": 388.6887744,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 388.6887744,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "LISTO PARA REVISIÓN",
+              "bounds": {
+                "x": 721.173952,
+                "y": 425.217436416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-d",
+          "bounds": {
+            "x": 721.173952,
+            "y": 468.2372544,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 468.2372544,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            },
+            {
+              "text": "LISTO PARA REVISIÓN",
+              "bounds": {
+                "x": 721.173952,
+                "y": 504.765916416,
+                "width": 351.60428160000004,
+                "height": 22.830413759999995
+              },
+              "fontSizePx": 28,
+              "role": "status"
+            }
+          ]
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.15625,
+        "textColumnFillRatio": 0.75,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.125
+      }
+    },
+    {
+      "frameIndex": 35,
+      "label": "result → before · unión del ciclo",
+      "phaseId": "before",
+      "kind": "loop-bridge",
+      "regions": [
+        {
+          "entityId": "legacy-records",
+          "bounds": {
+            "x": 705.6064,
+            "y": 167.544,
+            "width": 444.78720000000004,
+            "height": 397.7424
+          },
+          "textBoxes": [
+            {
+              "text": "TABLA",
+              "bounds": {
+                "x": 705.6064,
+                "y": 167.544,
+                "width": 444.78720000000004,
+                "height": 397.7424
+              },
+              "fontSizePx": 28,
+              "role": "label"
+            },
+            {
+              "text": "EJEMPLO",
+              "bounds": {
+                "x": 870.976,
+                "y": 68.1084,
+                "width": 313.632,
+                "height": 64.152
+              },
+              "fontSizePx": 28,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-a",
+          "bounds": {
+            "x": 721.173952,
+            "y": 229.5918144,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 229.5918144,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-b",
+          "bounds": {
+            "x": 721.173952,
+            "y": 309.1402944,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 309.1402944,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-c",
+          "bounds": {
+            "x": 721.173952,
+            "y": 388.6887744,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 388.6887744,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "legacy-record-d",
+          "bounds": {
+            "x": 721.173952,
+            "y": 468.2372544,
+            "width": 413.6520960000001,
+            "height": 65.2297536
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 721.173952,
+                "y": 468.2372544,
+                "width": 413.6520960000001,
+                "height": 65.2297536
+              },
+              "fontSizePx": 28,
+              "role": "identifier"
+            }
+          ]
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.0625,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.03125
+      }
+    }
+  ],
+  "palette": {
+    "colors": 70,
+    "meanAbsoluteChannelError": 2.023,
+    "maximumChannelError": 10,
+    "sampledFrames": 42
+  },
+  "phaseHoldsVerified": [
+    {
+      "phaseId": "before",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    },
+    {
+      "phaseId": "change",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    },
+    {
+      "phaseId": "result",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    }
+  ],
+  "timing": {
+    "preset": "readable",
+    "holdsRequestedMs": 15000,
+    "holdsDecodedMs": 15000,
+    "transitionsMs": 1800,
+    "loopBridgeMs": 900,
+    "entryMs": 240,
+    "totalDecodedMs": 17940,
+    "totalDurationBudgetMs": 30000,
+    "phaseHolds": [
+      {
+        "phaseId": "before",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      },
+      {
+        "phaseId": "change",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      },
+      {
+        "phaseId": "result",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      }
+    ],
+    "warnings": []
+  },
+  "resourceEstimate": {
+    "pixelFrames": 38707200,
+    "maxPixelFrames": 96000000,
+    "memoryBytes": 124370944,
+    "maxMemoryBytes": 268435456
+  },
+  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed.",
+  "generatedBy": "open-beauty-site",
+  "reviewState": "none",
+  "openFeedbackCount": 0,
+  "feedbackFrames": [],
+  "publicationRecommendation": "none",
+  "renderRevision": 0
+}

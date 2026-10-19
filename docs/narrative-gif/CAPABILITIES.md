@@ -4,6 +4,8 @@ Generada desde beauty capabilities --json · contrato v3 · 312 celdas.
 
 **Leyenda:** `supported` = implementación con evidencia y prueba enlazada; `fallback` = se conserva la ilustración heredada; `unsupported` = renderer o aspecto no disponible. **No evidence = not approved**: una celda solo cuenta como aprobada cuando el CLI la declara supported y el pack y la prueba citados existen.
 
+Compatibilidad: los briefs legacy de papercraft, brutalist, isotype, opart, renaissance y ukiyoe se actualizan a escenas semánticas; `legacyArt: true` conserva su arte previo. Artdeco, bestiary, galactic, memphis, nature, psychedelic y vaporwave siguen en la ruta heredada. Esta conversión no cambia el estado de ninguna celda ni aprueba una capacidad nueva.
+
 Resumen: supported 58 · fallback 158 · unsupported 96.
 
 | Estilo | Primitiva | Aspecto | Locale | Estado | Razón del registro CLI | Prueba que acredita supported | Pack de evidencia |

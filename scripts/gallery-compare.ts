@@ -204,8 +204,9 @@ async function generatedSide(manifest: JsonRecord, manifestPath: string, outputF
   if (gifBytes > MAX_GIF_BYTES) throw new Error(`Generated GIF exceeds 6 MiB (${gifBytes} bytes): ${manifest.brief?.title}`);
   const phases = Array.isArray(manifest.brief?.phases) ? manifest.brief.phases.map((phase: JsonRecord) => ({ id: String(phase.id), label: String(phase.label ?? phase.id) })) : [];
   const transformations = transformationControls(manifest);
-  const objectDiff = controlList(manifest).filter((control) => typeof control.name === 'string' && control.name.startsWith('semantic-object-midpoint:'))
-    .map((control) => String(control.detail ?? '')).filter((detail) => /decoded object diff/u.test(detail));
+  const regionDiffControls = controlList(manifest).filter((control) => typeof control.name === 'string' && control.name.startsWith('semantic-object-midpoint:'));
+  const objectDiff = regionDiffControls.map((control) => String(control.detail ?? '')).filter((detail) => /decoded object diff/u.test(detail));
+  const objectDiffStatus = regionDiffControls.length === 0 ? 'pending' : regionDiffControls.every((control) => control.passed) ? 'pass' : 'fail';
   return {
     assets,
     metrics: {
@@ -219,7 +220,7 @@ async function generatedSide(manifest: JsonRecord, manifestPath: string, outputF
     phaseEvaluation: phaseEvaluation(manifest, phases),
     balance: controlResult(manifest, (control) => control.name === 'composition-balance'),
     transformations,
-    objectRegionDiff: objectDiff.length ? objectDiff.join(' | ') : 'pending · sin diff de región semántica',
+    objectRegionDiff: objectDiff.length ? `${objectDiffStatus} · ${objectDiff.join(' | ')}` : 'pending · sin diff de región semántica',
     reviewState: manifest.reviewState && manifest.reviewState !== 'none' ? manifest.reviewState : 'pending',
     openFeedback: Array.isArray(manifest.feedbackFrames) ? manifest.feedbackFrames.filter((item: JsonRecord) => item.status === 'open' || item.open === true || item.problem)
       .map((item: JsonRecord) => ({ id: item.id, phaseId: item.phaseId, frameIndex: item.frameIndex, problem: item.problem, severity: item.severity, ...(item.framePath ? { framePath: String(item.framePath) } : {}), ...(item.cropPath ? { cropPath: String(item.cropPath) } : {}) })) : [],

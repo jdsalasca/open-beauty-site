@@ -1,0 +1,2478 @@
+{
+  "schemaVersion": 3,
+  "commit": "3d564ec53ced99d824cc5680e3f3c2bb0694c0b4",
+  "brief": {
+    "style": "isotype",
+    "kind": "narrative-gif",
+    "locale": "es",
+    "audience": "Producto en Sprint Review",
+    "title": "Ruta para revisar el cierre",
+    "status": "in-review",
+    "badgePolicy": "workflow",
+    "phases": [
+      {
+        "id": "before",
+        "label": "Antes",
+        "text": "El cambio se leía sin una ruta de revisión.",
+        "visual": {
+          "kind": "checklist",
+          "state": "unreviewed",
+          "semantic": {
+            "primitive": "card-collection",
+            "illustrative": true,
+            "legacyUpgrade": true,
+            "entities": [
+              {
+                "id": "legacy-collection",
+                "kind": "collection",
+                "label": "COLECCIÓN ILUSTRATIVA",
+                "illustrative": true
+              },
+              {
+                "id": "legacy-item-a",
+                "kind": "card",
+                "label": "ELEMENTO",
+                "illustrative": true
+              },
+              {
+                "id": "legacy-item-b",
+                "kind": "card",
+                "label": "ELEMENTO",
+                "illustrative": true
+              },
+              {
+                "id": "legacy-item-c",
+                "kind": "card",
+                "label": "ELEMENTO",
+                "illustrative": true
+              },
+              {
+                "id": "legacy-item-d",
+                "kind": "card",
+                "label": "ELEMENTO",
+                "illustrative": true
+              }
+            ],
+            "relations": [],
+            "states": {
+              "legacy-collection": "default",
+              "legacy-item-a": "pending",
+              "legacy-item-b": "pending",
+              "legacy-item-c": "pending",
+              "legacy-item-d": "pending"
+            },
+            "actions": []
+          }
+        }
+      },
+      {
+        "id": "change",
+        "label": "Cambio",
+        "text": "La propuesta ordena la lectura en pasos visibles.",
+        "visual": {
+          "kind": "checklist",
+          "state": "flagged",
+          "semantic": {
+            "primitive": "card-collection",
+            "illustrative": true,
+            "legacyUpgrade": true,
+            "entities": [
+              {
+                "id": "legacy-collection",
+                "kind": "collection",
+                "label": "COLECCIÓN ILUSTRATIVA",
+                "illustrative": true
+              },
+              {
+                "id": "legacy-item-a",
+                "kind": "card",
+                "label": "ELEMENTO",
+                "illustrative": true
+              },
+              {
+                "id": "legacy-item-b",
+                "kind": "card",
+                "label": "ELEMENTO",
+                "illustrative": true
+              },
+              {
+                "id": "legacy-item-c",
+                "kind": "card",
+                "label": "ELEMENTO",
+                "illustrative": true
+              },
+              {
+                "id": "legacy-item-d",
+                "kind": "card",
+                "label": "ELEMENTO",
+                "illustrative": true
+              }
+            ],
+            "relations": [],
+            "states": {
+              "legacy-collection": "default",
+              "legacy-item-a": "flagged",
+              "legacy-item-b": "flagged",
+              "legacy-item-c": "flagged",
+              "legacy-item-d": "flagged"
+            },
+            "actions": []
+          }
+        }
+      },
+      {
+        "id": "result",
+        "label": "Resultado esperado",
+        "text": "El equipo podrá comprobar la secuencia antes del cierre.",
+        "visual": {
+          "kind": "checklist",
+          "state": "review-ready",
+          "semantic": {
+            "primitive": "card-collection",
+            "illustrative": true,
+            "legacyUpgrade": true,
+            "entities": [
+              {
+                "id": "legacy-collection",
+                "kind": "collection",
+                "label": "COLECCIÓN ILUSTRATIVA",
+                "illustrative": true
+              },
+              {
+                "id": "legacy-item-a",
+                "kind": "card",
+                "label": "ELEMENTO",
+                "illustrative": true
+              },
+              {
+                "id": "legacy-item-b",
+                "kind": "card",
+                "label": "ELEMENTO",
+                "illustrative": true
+              },
+              {
+                "id": "legacy-item-c",
+                "kind": "card",
+                "label": "ELEMENTO",
+                "illustrative": true
+              },
+              {
+                "id": "legacy-item-d",
+                "kind": "card",
+                "label": "ELEMENTO",
+                "illustrative": true
+              }
+            ],
+            "relations": [],
+            "states": {
+              "legacy-collection": "default",
+              "legacy-item-a": "ready-for-review",
+              "legacy-item-b": "ready-for-review",
+              "legacy-item-c": "ready-for-review",
+              "legacy-item-d": "ready-for-review"
+            },
+            "actions": []
+          }
+        }
+      }
+    ],
+    "playback": {
+      "preset": "readable",
+      "minReadableHoldMs": 5000,
+      "transitionMs": 650,
+      "loop": true,
+      "totalDurationBudgetMs": 30000
+    },
+    "output": {
+      "width": 1280,
+      "height": 720,
+      "formats": [
+        "gif",
+        "png"
+      ],
+      "preset": "review-1280x720"
+    },
+    "seed": 7,
+    "workflowStatus": "in-review",
+    "outcome": {
+      "mode": "expected"
+    },
+    "illustrative": true
+  },
+  "briefSha256": "8d0946c7b829f3d5d336191418caa028d81842e7100e4a4de96662b129122386",
+  "upgrade": {
+    "applied": true,
+    "mapping": "legacy-state-v1:isotype:checklist",
+    "reason": "isotype maps legacy checklist states to generic illustrative card-collection entities without counts, figures, or changes to narrative copy."
+  },
+  "style": "isotype",
+  "subfamily": null,
+  "workflowStatus": "in-review",
+  "outcome": {
+    "mode": "expected"
+  },
+  "evidenceClassification": "illustrative",
+  "illustrative": true,
+  "artOnly": false,
+  "seed": 7,
+  "renderer": {
+    "narrative": "narrative-core/0.2.0",
+    "canvas": "@napi-rs/canvas@1.0.11",
+    "gif": "gifenc@1.0.3",
+    "scene": "isotype-countable-semantic-pictograms/2.0.0"
+  },
+  "fonts": {
+    "bundleVersion": "repo-bundled-ofl-1",
+    "roles": {
+      "display": {
+        "family": "Jost",
+        "weight": 500
+      },
+      "reading": {
+        "family": "IBM Plex Sans",
+        "weight": 400
+      },
+      "label": {
+        "family": "IBM Plex Sans",
+        "weight": 500
+      },
+      "figure": {
+        "family": "Jost",
+        "weight": 500
+      },
+      "annotation": {
+        "family": "IBM Plex Sans",
+        "weight": 400
+      }
+    }
+  },
+  "dimensions": {
+    "width": 1280,
+    "height": 720
+  },
+  "formats": [
+    "gif",
+    "png"
+  ],
+  "decoded": {
+    "width": 1280,
+    "height": 720,
+    "frameCount": 33,
+    "delaysMs": [
+      80,
+      5000,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      80,
+      5000,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      80,
+      5000,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70
+    ],
+    "durationMs": 17190,
+    "loopCount": 0,
+    "integrity": true
+  },
+  "ffprobe": {
+    "available": true,
+    "passed": true,
+    "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode."
+  },
+  "bytes": {
+    "gif": 930464,
+    "png": 64444,
+    "contactSheet": 86326
+  },
+  "hashes": {
+    "briefSha256": "8d0946c7b829f3d5d336191418caa028d81842e7100e4a4de96662b129122386",
+    "gifSha256": "7ff2611c9b44d22edec0f8cbb2cf92d6d85b61c607e503fd30a3b333e1e2a6b6",
+    "pngSha256": "e3eac80b1efabd2f94a4850055af132d3d5b768ac1e5d8d80cf024f1a5f1623a",
+    "contactSheetSha256": "3ad534621d5fcd7a9db74d4c106edcb1287a3226e6e9feb63200e95f1978328f"
+  },
+  "files": {
+    "gif": "ruta-para-revisar-el-cierre-64d613d5.gif",
+    "png": "ruta-para-revisar-el-cierre-64d613d5.png",
+    "contactSheet": "ruta-para-revisar-el-cierre-64d613d5-contact-sheet.png"
+  },
+  "controls": [
+    {
+      "name": "gif-integrity",
+      "passed": true,
+      "detail": "Independent LZW decode and GIF trailer passed.",
+      "source": "decoded"
+    },
+    {
+      "name": "dimensions",
+      "passed": true,
+      "detail": "decoded 1280×720; requested 1280×720",
+      "source": "decoded"
+    },
+    {
+      "name": "frame-count",
+      "passed": true,
+      "detail": "33 decoded frame(s)",
+      "source": "decoded"
+    },
+    {
+      "name": "duration",
+      "passed": true,
+      "detail": "17190ms decoded; holds exclude transitions",
+      "source": "decoded"
+    },
+    {
+      "name": "loop",
+      "passed": true,
+      "detail": "repeat=0; result-to-before bridge is explicit",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-holds",
+      "passed": true,
+      "detail": "before 5000/5000ms, change 5000/5000ms, result 5000/5000ms",
+      "source": "decoded"
+    },
+    {
+      "name": "ffprobe-crosscheck",
+      "passed": true,
+      "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode.",
+      "source": "decoded"
+    },
+    {
+      "name": "files",
+      "passed": true,
+      "detail": "GIF 930464B · PNG 64444B · contact 86326B",
+      "source": "decoded"
+    },
+    {
+      "name": "scene-renderer-registered",
+      "passed": true,
+      "detail": "renderer isotype/isotype-countable-semantic-pictograms/2.0.0 exists; visual style likeness remains a separate review",
+      "source": "source"
+    },
+    {
+      "name": "type-system",
+      "passed": true,
+      "detail": "style typeSystem tokens are attached to raster role registry",
+      "source": "source"
+    },
+    {
+      "name": "narrative-subfamily",
+      "passed": true,
+      "detail": "isotype/default selects an explicit narrative art direction",
+      "source": "source"
+    },
+    {
+      "name": "font-registration-and-glyphs",
+      "passed": true,
+      "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "distinct-frames",
+      "passed": true,
+      "detail": "19 unique composited frame(s); a format-valid static GIF does not pass",
+      "source": "pixels"
+    },
+    {
+      "name": "palette-loss",
+      "passed": true,
+      "detail": "51 colors; mean channel loss 0.032, max 10; sampled 33 frames",
+      "source": "pixels"
+    },
+    {
+      "name": "title-complete",
+      "passed": true,
+      "detail": "Ruta para revisar / el cierre",
+      "source": "source"
+    },
+    {
+      "name": "phase-before-label-complete",
+      "passed": true,
+      "detail": "Antes",
+      "source": "source"
+    },
+    {
+      "name": "phase-before-text-complete",
+      "passed": true,
+      "detail": "El cambio se leía sin / una ruta de revisión.",
+      "source": "source"
+    },
+    {
+      "name": "phase-change-label-complete",
+      "passed": true,
+      "detail": "Cambio",
+      "source": "source"
+    },
+    {
+      "name": "phase-change-text-complete",
+      "passed": true,
+      "detail": "La propuesta ordena / la lectura en pasos / visibles.",
+      "source": "source"
+    },
+    {
+      "name": "phase-result-label-complete",
+      "passed": true,
+      "detail": "Resultado esperado",
+      "source": "source"
+    },
+    {
+      "name": "phase-result-text-complete",
+      "passed": true,
+      "detail": "El equipo podrá / comprobar la / secuencia antes del / cierre.",
+      "source": "source"
+    },
+    {
+      "name": "registered-fonts",
+      "passed": true,
+      "detail": "all role faces and Spanish glyphs rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "review-size-thresholds",
+      "passed": true,
+      "detail": "title 69px; phase body >=36px; label >=24px",
+      "source": "source"
+    },
+    {
+      "name": "640x360-effective-size",
+      "passed": true,
+      "detail": "title 34.5px; body min 27.0px (requires >=20px); label min 15.0px",
+      "source": "source"
+    },
+    {
+      "name": "semantic-text-legibility",
+      "passed": false,
+      "status": "pending",
+      "detail": "No scene-declared text boxes were available inside semantic object regions.",
+      "source": "decoded"
+    },
+    {
+      "name": "composition-balance",
+      "passed": true,
+      "detail": "proxy; 8×4 decoded-pixel grid against #F2EBDD: empty cells 37.5%, text-column vertical fill 75.0%, art/object area outside the text column 34.4%, largest empty rectangle 15.6%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: before · pausa: empty 37.5%, text fill 75.0%, art 34.4%, largest empty 15.6% | before → change · punto medio de transición: empty 37.5%, text fill 100.0%, art 25.0%, largest empty 18.8% | change · pausa: empty 37.5%, text fill 100.0%, art 25.0%, largest empty 18.8% | change → result · punto medio de transición: empty 28.1%, text fill 100.0%, art 28.1%, largest empty 18.8% | result · pausa: empty 28.1%, text fill 100.0%, art 28.1%, largest empty 18.8% | result → before · unión del ciclo: empty 34.4%, text fill 75.0%, art 37.5%, largest empty 21.9%",
+      "source": "pixels"
+    },
+    {
+      "name": "contrast",
+      "passed": true,
+      "detail": "rendered text colors: ink 14.37:1; label 5.10:1 (not an OCR or per-pixel text measurement)",
+      "source": "source"
+    },
+    {
+      "name": "safe-zone-and-collisions",
+      "passed": true,
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+      "source": "source"
+    },
+    {
+      "name": "stable-reading-holds",
+      "passed": true,
+      "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-count-and-copy",
+      "passed": true,
+      "detail": "3 complete phases; all copy retained",
+      "source": "source"
+    },
+    {
+      "name": "shared-object-identity",
+      "passed": true,
+      "detail": "One scene object instance is created and passed to every phase frame.",
+      "source": "source"
+    },
+    {
+      "name": "visual-state-change",
+      "passed": true,
+      "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+      "source": "pixels"
+    },
+    {
+      "name": "workflow-outcome-separation",
+      "passed": true,
+      "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+      "source": "source"
+    },
+    {
+      "name": "outcome-evidence",
+      "passed": true,
+      "detail": "Expected outcome; no benefit measurement is claimed.",
+      "source": "source"
+    },
+    {
+      "name": "result-follows-outcome",
+      "passed": true,
+      "detail": "outcome=expected; final label=\"Resultado esperado\"",
+      "source": "source"
+    },
+    {
+      "name": "semantic-illustrative-data",
+      "passed": true,
+      "detail": "brief illustrative=true; semantic phase flags=true,true,true",
+      "source": "source"
+    },
+    {
+      "name": "semantic-object-midpoint:before → change · punto medio de transición",
+      "passed": true,
+      "detail": "decoded object diff 7.7%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-item-a pending→flagged 20.4%, legacy-item-b pending→flagged 25.2%, legacy-item-c pending→flagged 19.3%, legacy-item-d pending→flagged 9.8%, legacy-collection default→default 6.3%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:change → result · punto medio de transición",
+      "passed": true,
+      "detail": "decoded object diff 2.2%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-item-a flagged→ready-for-review 9.7%, legacy-item-b flagged→ready-for-review 12.4%, legacy-item-c flagged→ready-for-review 12.4%, legacy-item-d flagged→ready-for-review 9.7%, legacy-collection default→default 1.0%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:result → before · unión del ciclo",
+      "passed": true,
+      "detail": "decoded object diff 6.2%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-item-a ready-for-review→pending 10.8%, legacy-item-b ready-for-review→pending 12.8%, legacy-item-c ready-for-review→pending 13.0%, legacy-item-d ready-for-review→pending 12.2%, legacy-collection default→default 5.4%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:before → change hold",
+      "passed": true,
+      "detail": "decoded object diff 8.3%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-item-a pending→flagged 20.4%, legacy-item-b pending→flagged 25.2%, legacy-item-c pending→flagged 25.4%, legacy-item-d pending→flagged 21.5%, legacy-collection default→default 6.3%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:change → result hold",
+      "passed": true,
+      "detail": "decoded object diff 2.2%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-item-a flagged→ready-for-review 9.7%, legacy-item-b flagged→ready-for-review 12.4%, legacy-item-c flagged→ready-for-review 12.4%, legacy-item-d flagged→ready-for-review 9.7%, legacy-collection default→default 1.0%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:result → before loop join",
+      "passed": true,
+      "detail": "decoded object diff 6.2%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-item-a ready-for-review→pending 10.8%, legacy-item-b ready-for-review→pending 12.8%, legacy-item-c ready-for-review→pending 13.0%, legacy-item-d ready-for-review→pending 9.8%, legacy-collection default→default 5.4%",
+      "source": "decoded"
+    }
+  ],
+  "evaluation": {
+    "technical-integrity": {
+      "status": "pass",
+      "controls": [
+        {
+          "name": "gif-integrity",
+          "passed": true,
+          "detail": "Independent LZW decode and GIF trailer passed.",
+          "source": "decoded"
+        },
+        {
+          "name": "dimensions",
+          "passed": true,
+          "detail": "decoded 1280×720; requested 1280×720",
+          "source": "decoded"
+        },
+        {
+          "name": "frame-count",
+          "passed": true,
+          "detail": "33 decoded frame(s)",
+          "source": "decoded"
+        },
+        {
+          "name": "duration",
+          "passed": true,
+          "detail": "17190ms decoded; holds exclude transitions",
+          "source": "decoded"
+        },
+        {
+          "name": "loop",
+          "passed": true,
+          "detail": "repeat=0; result-to-before bridge is explicit",
+          "source": "decoded"
+        },
+        {
+          "name": "phase-holds",
+          "passed": true,
+          "detail": "before 5000/5000ms, change 5000/5000ms, result 5000/5000ms",
+          "source": "decoded"
+        },
+        {
+          "name": "ffprobe-crosscheck",
+          "passed": true,
+          "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode.",
+          "source": "decoded"
+        },
+        {
+          "name": "files",
+          "passed": true,
+          "detail": "GIF 930464B · PNG 64444B · contact 86326B",
+          "source": "decoded"
+        }
+      ]
+    },
+    "style-conformance": {
+      "status": "pending",
+      "sourceStatus": "pass",
+      "pixelStatus": "pass",
+      "controls": [
+        {
+          "name": "scene-renderer-registered",
+          "passed": true,
+          "detail": "renderer isotype/isotype-countable-semantic-pictograms/2.0.0 exists; visual style likeness remains a separate review",
+          "source": "source"
+        },
+        {
+          "name": "type-system",
+          "passed": true,
+          "detail": "style typeSystem tokens are attached to raster role registry",
+          "source": "source"
+        },
+        {
+          "name": "narrative-subfamily",
+          "passed": true,
+          "detail": "isotype/default selects an explicit narrative art direction",
+          "source": "source"
+        },
+        {
+          "name": "font-registration-and-glyphs",
+          "passed": true,
+          "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "distinct-frames",
+          "passed": true,
+          "detail": "19 unique composited frame(s); a format-valid static GIF does not pass",
+          "source": "pixels"
+        },
+        {
+          "name": "palette-loss",
+          "passed": true,
+          "detail": "51 colors; mean channel loss 0.032, max 10; sampled 33 frames",
+          "source": "pixels"
+        }
+      ],
+      "note": "Source checks identify renderer/font tokens; pixel checks measure frame change and palette loss. Neither substitutes for visual review."
+    },
+    "rendered-legibility": {
+      "status": "pending",
+      "controls": [
+        {
+          "name": "title-complete",
+          "passed": true,
+          "detail": "Ruta para revisar / el cierre",
+          "source": "source"
+        },
+        {
+          "name": "phase-before-label-complete",
+          "passed": true,
+          "detail": "Antes",
+          "source": "source"
+        },
+        {
+          "name": "phase-before-text-complete",
+          "passed": true,
+          "detail": "El cambio se leía sin / una ruta de revisión.",
+          "source": "source"
+        },
+        {
+          "name": "phase-change-label-complete",
+          "passed": true,
+          "detail": "Cambio",
+          "source": "source"
+        },
+        {
+          "name": "phase-change-text-complete",
+          "passed": true,
+          "detail": "La propuesta ordena / la lectura en pasos / visibles.",
+          "source": "source"
+        },
+        {
+          "name": "phase-result-label-complete",
+          "passed": true,
+          "detail": "Resultado esperado",
+          "source": "source"
+        },
+        {
+          "name": "phase-result-text-complete",
+          "passed": true,
+          "detail": "El equipo podrá / comprobar la / secuencia antes del / cierre.",
+          "source": "source"
+        },
+        {
+          "name": "registered-fonts",
+          "passed": true,
+          "detail": "all role faces and Spanish glyphs rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "review-size-thresholds",
+          "passed": true,
+          "detail": "title 69px; phase body >=36px; label >=24px",
+          "source": "source"
+        },
+        {
+          "name": "640x360-effective-size",
+          "passed": true,
+          "detail": "title 34.5px; body min 27.0px (requires >=20px); label min 15.0px",
+          "source": "source"
+        },
+        {
+          "name": "semantic-text-legibility",
+          "passed": false,
+          "status": "pending",
+          "detail": "No scene-declared text boxes were available inside semantic object regions.",
+          "source": "decoded"
+        },
+        {
+          "name": "composition-balance",
+          "passed": true,
+          "detail": "proxy; 8×4 decoded-pixel grid against #F2EBDD: empty cells 37.5%, text-column vertical fill 75.0%, art/object area outside the text column 34.4%, largest empty rectangle 15.6%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: before · pausa: empty 37.5%, text fill 75.0%, art 34.4%, largest empty 15.6% | before → change · punto medio de transición: empty 37.5%, text fill 100.0%, art 25.0%, largest empty 18.8% | change · pausa: empty 37.5%, text fill 100.0%, art 25.0%, largest empty 18.8% | change → result · punto medio de transición: empty 28.1%, text fill 100.0%, art 28.1%, largest empty 18.8% | result · pausa: empty 28.1%, text fill 100.0%, art 28.1%, largest empty 18.8% | result → before · unión del ciclo: empty 34.4%, text fill 75.0%, art 37.5%, largest empty 21.9%",
+          "source": "pixels"
+        },
+        {
+          "name": "contrast",
+          "passed": true,
+          "detail": "rendered text colors: ink 14.37:1; label 5.10:1 (not an OCR or per-pixel text measurement)",
+          "source": "source"
+        },
+        {
+          "name": "safe-zone-and-collisions",
+          "passed": true,
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+          "source": "source"
+        },
+        {
+          "name": "stable-reading-holds",
+          "passed": true,
+          "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+          "source": "decoded"
+        }
+      ],
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
+    },
+    "narrative": {
+      "status": "pending",
+      "controls": [
+        {
+          "name": "phase-count-and-copy",
+          "passed": true,
+          "detail": "3 complete phases; all copy retained",
+          "source": "source"
+        },
+        {
+          "name": "shared-object-identity",
+          "passed": true,
+          "detail": "One scene object instance is created and passed to every phase frame.",
+          "source": "source"
+        },
+        {
+          "name": "visual-state-change",
+          "passed": true,
+          "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+          "source": "pixels"
+        },
+        {
+          "name": "workflow-outcome-separation",
+          "passed": true,
+          "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+          "source": "source"
+        },
+        {
+          "name": "outcome-evidence",
+          "passed": true,
+          "detail": "Expected outcome; no benefit measurement is claimed.",
+          "source": "source"
+        },
+        {
+          "name": "result-follows-outcome",
+          "passed": true,
+          "detail": "outcome=expected; final label=\"Resultado esperado\"",
+          "source": "source"
+        },
+        {
+          "name": "semantic-illustrative-data",
+          "passed": true,
+          "detail": "brief illustrative=true; semantic phase flags=true,true,true",
+          "source": "source"
+        },
+        {
+          "name": "semantic-object-midpoint:before → change · punto medio de transición",
+          "passed": true,
+          "detail": "decoded object diff 7.7%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-item-a pending→flagged 20.4%, legacy-item-b pending→flagged 25.2%, legacy-item-c pending→flagged 19.3%, legacy-item-d pending→flagged 9.8%, legacy-collection default→default 6.3%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:change → result · punto medio de transición",
+          "passed": true,
+          "detail": "decoded object diff 2.2%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-item-a flagged→ready-for-review 9.7%, legacy-item-b flagged→ready-for-review 12.4%, legacy-item-c flagged→ready-for-review 12.4%, legacy-item-d flagged→ready-for-review 9.7%, legacy-collection default→default 1.0%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:result → before · unión del ciclo",
+          "passed": true,
+          "detail": "decoded object diff 6.2%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-item-a ready-for-review→pending 10.8%, legacy-item-b ready-for-review→pending 12.8%, legacy-item-c ready-for-review→pending 13.0%, legacy-item-d ready-for-review→pending 12.2%, legacy-collection default→default 5.4%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:before → change hold",
+          "passed": true,
+          "detail": "decoded object diff 8.3%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-item-a pending→flagged 20.4%, legacy-item-b pending→flagged 25.2%, legacy-item-c pending→flagged 25.4%, legacy-item-d pending→flagged 21.5%, legacy-collection default→default 6.3%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:change → result hold",
+          "passed": true,
+          "detail": "decoded object diff 2.2%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-item-a flagged→ready-for-review 9.7%, legacy-item-b flagged→ready-for-review 12.4%, legacy-item-c flagged→ready-for-review 12.4%, legacy-item-d flagged→ready-for-review 9.7%, legacy-collection default→default 1.0%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:result → before loop join",
+          "passed": true,
+          "detail": "decoded object diff 6.2%; changed-state entities: legacy-item-a, legacy-item-b, legacy-item-c, legacy-item-d; legacy-item-a ready-for-review→pending 10.8%, legacy-item-b ready-for-review→pending 12.8%, legacy-item-c ready-for-review→pending 13.0%, legacy-item-d ready-for-review→pending 9.8%, legacy-collection default→default 5.4%",
+          "source": "decoded"
+        }
+      ],
+      "note": "Automated checks separate work status from expected/observed outcome and confirm required evidence fields; causal meaning and evidence scope still need human review."
+    },
+    "visual-review": {
+      "status": "pending",
+      "reviewer": null,
+      "criteria": {
+        "thumbnailIdentity": {
+          "verdict": "not-evaluated"
+        },
+        "cardSizeReading": {
+          "verdict": "not-evaluated"
+        },
+        "styleMaterial": {
+          "verdict": "not-evaluated"
+        },
+        "phaseContinuity": {
+          "verdict": "not-evaluated"
+        },
+        "loopRestart": {
+          "verdict": "not-evaluated"
+        },
+        "artOnlyTransformationUnderstood": {
+          "verdict": "not-evaluated"
+        }
+      },
+      "feedback": [],
+      "evidence": []
+    },
+    "publicationRecommendation": "none",
+    "automatedEvidence": {
+      "balanceByFrame": [
+        {
+          "frameIndex": 1,
+          "phaseId": "before",
+          "kind": "hold",
+          "label": "before · pausa",
+          "regions": [
+            {
+              "entityId": "legacy-item-a",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 177.75,
+                "width": 82.62,
+                "height": 92.34
+              }
+            },
+            {
+              "entityId": "legacy-item-b",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 228.29399999999998,
+                "width": 82.62,
+                "height": 92.34
+              }
+            },
+            {
+              "entityId": "legacy-item-c",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 278.83799999999997,
+                "width": 82.62,
+                "height": 92.34
+              }
+            },
+            {
+              "entityId": "legacy-item-d",
+              "bounds": {
+                "x": 771.49,
+                "y": 521.19,
+                "width": 82.62,
+                "height": 92.34
+              }
+            },
+            {
+              "entityId": "legacy-collection",
+              "bounds": {
+                "x": 680.32,
+                "y": 168.84,
+                "width": 495.36,
+                "height": 466.56
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.375,
+            "textColumnFillRatio": 0.75,
+            "objectAreaRatio": 0.34375,
+            "largestEmptyRectangleRatio": 0.15625
+          }
+        },
+        {
+          "frameIndex": 5,
+          "phaseId": "change",
+          "kind": "transition",
+          "label": "before → change · punto medio de transición",
+          "regions": [
+            {
+              "entityId": "legacy-item-a",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 177.75,
+                "width": 82.62,
+                "height": 92.34
+              }
+            },
+            {
+              "entityId": "legacy-item-b",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 228.29399999999998,
+                "width": 82.62,
+                "height": 92.34
+              }
+            },
+            {
+              "entityId": "legacy-item-c",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 278.83799999999997,
+                "width": 82.62,
+                "height": 92.34
+              }
+            },
+            {
+              "entityId": "legacy-item-d",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 329.382,
+                "width": 82.62,
+                "height": 92.34
+              }
+            },
+            {
+              "entityId": "legacy-collection",
+              "bounds": {
+                "x": 680.32,
+                "y": 168.84,
+                "width": 495.36,
+                "height": 466.56
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.375,
+            "textColumnFillRatio": 1,
+            "objectAreaRatio": 0.25,
+            "largestEmptyRectangleRatio": 0.1875
+          }
+        },
+        {
+          "frameIndex": 12,
+          "phaseId": "change",
+          "kind": "hold",
+          "label": "change · pausa",
+          "regions": [
+            {
+              "entityId": "legacy-item-a",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 177.75,
+                "width": 82.62,
+                "height": 92.34
+              }
+            },
+            {
+              "entityId": "legacy-item-b",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 228.29399999999998,
+                "width": 82.62,
+                "height": 92.34
+              }
+            },
+            {
+              "entityId": "legacy-item-c",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 278.83799999999997,
+                "width": 82.62,
+                "height": 92.34
+              }
+            },
+            {
+              "entityId": "legacy-item-d",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 329.382,
+                "width": 82.62,
+                "height": 92.34
+              }
+            },
+            {
+              "entityId": "legacy-collection",
+              "bounds": {
+                "x": 680.32,
+                "y": 168.84,
+                "width": 495.36,
+                "height": 466.56
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.375,
+            "textColumnFillRatio": 1,
+            "objectAreaRatio": 0.25,
+            "largestEmptyRectangleRatio": 0.1875
+          }
+        },
+        {
+          "frameIndex": 16,
+          "phaseId": "result",
+          "kind": "transition",
+          "label": "change → result · punto medio de transición",
+          "regions": [
+            {
+              "entityId": "legacy-item-a",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 177.75,
+                "width": 82.62,
+                "height": 92.34
+              }
+            },
+            {
+              "entityId": "legacy-item-b",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 228.29399999999998,
+                "width": 82.62,
+                "height": 92.34
+              }
+            },
+            {
+              "entityId": "legacy-item-c",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 278.83799999999997,
+                "width": 82.62,
+                "height": 92.34
+              }
+            },
+            {
+              "entityId": "legacy-item-d",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 329.382,
+                "width": 82.62,
+                "height": 92.34
+              }
+            },
+            {
+              "entityId": "legacy-collection",
+              "bounds": {
+                "x": 680.32,
+                "y": 168.84,
+                "width": 495.36,
+                "height": 466.56
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.28125,
+            "textColumnFillRatio": 1,
+            "objectAreaRatio": 0.28125,
+            "largestEmptyRectangleRatio": 0.1875
+          }
+        },
+        {
+          "frameIndex": 23,
+          "phaseId": "result",
+          "kind": "hold",
+          "label": "result · pausa",
+          "regions": [
+            {
+              "entityId": "legacy-item-a",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 177.75,
+                "width": 82.62,
+                "height": 92.34
+              }
+            },
+            {
+              "entityId": "legacy-item-b",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 228.29399999999998,
+                "width": 82.62,
+                "height": 92.34
+              }
+            },
+            {
+              "entityId": "legacy-item-c",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 278.83799999999997,
+                "width": 82.62,
+                "height": 92.34
+              }
+            },
+            {
+              "entityId": "legacy-item-d",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 329.382,
+                "width": 82.62,
+                "height": 92.34
+              }
+            },
+            {
+              "entityId": "legacy-collection",
+              "bounds": {
+                "x": 680.32,
+                "y": 168.84,
+                "width": 495.36,
+                "height": 466.56
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.28125,
+            "textColumnFillRatio": 1,
+            "objectAreaRatio": 0.28125,
+            "largestEmptyRectangleRatio": 0.1875
+          }
+        },
+        {
+          "frameIndex": 27,
+          "phaseId": "before",
+          "kind": "loop-bridge",
+          "label": "result → before · unión del ciclo",
+          "regions": [
+            {
+              "entityId": "legacy-item-a",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 177.75,
+                "width": 82.62,
+                "height": 92.34
+              }
+            },
+            {
+              "entityId": "legacy-item-b",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 228.29399999999998,
+                "width": 82.62,
+                "height": 92.34
+              }
+            },
+            {
+              "entityId": "legacy-item-c",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 278.83799999999997,
+                "width": 82.62,
+                "height": 92.34
+              }
+            },
+            {
+              "entityId": "legacy-item-d",
+              "bounds": {
+                "x": 771.49,
+                "y": 521.19,
+                "width": 82.62,
+                "height": 92.34
+              }
+            },
+            {
+              "entityId": "legacy-collection",
+              "bounds": {
+                "x": 680.32,
+                "y": 168.84,
+                "width": 495.36,
+                "height": 466.56
+              }
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.34375,
+            "textColumnFillRatio": 0.75,
+            "objectAreaRatio": 0.375,
+            "largestEmptyRectangleRatio": 0.21875
+          }
+        }
+      ],
+      "objectTransformationByFrame": [
+        {
+          "frameIndex": 5,
+          "phaseId": "change",
+          "fromPhaseId": "before",
+          "kind": "transition",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "legacy-item-a",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 177.75,
+                "width": 82.62,
+                "height": 92.34
+              },
+              "fromState": "pending",
+              "toState": "flagged",
+              "pixelDiffRatio": 0.20430658805434504,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-item-b",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 228.29399999999998,
+                "width": 82.62,
+                "height": 92.34
+              },
+              "fromState": "pending",
+              "toState": "flagged",
+              "pixelDiffRatio": 0.2518460940536339,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-item-c",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 278.83799999999997,
+                "width": 82.62,
+                "height": 92.34
+              },
+              "fromState": "pending",
+              "toState": "flagged",
+              "pixelDiffRatio": 0.19302742886439375,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-item-d",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 329.382,
+                "width": 82.62,
+                "height": 92.34
+              },
+              "fromState": "pending",
+              "toState": "flagged",
+              "pixelDiffRatio": 0.09805427547363031,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-collection",
+              "bounds": {
+                "x": 680.32,
+                "y": 168.84,
+                "width": 495.36,
+                "height": 466.56
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0.06270247449682934,
+              "changed": false
+            }
+          ]
+        },
+        {
+          "frameIndex": 16,
+          "phaseId": "result",
+          "fromPhaseId": "change",
+          "kind": "transition",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "legacy-item-a",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 177.75,
+                "width": 82.62,
+                "height": 92.34
+              },
+              "fromState": "flagged",
+              "toState": "ready-for-review",
+              "pixelDiffRatio": 0.09664188669571905,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-item-b",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 228.29399999999998,
+                "width": 82.62,
+                "height": 92.34
+              },
+              "fromState": "flagged",
+              "toState": "ready-for-review",
+              "pixelDiffRatio": 0.12385023966835082,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-item-c",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 278.83799999999997,
+                "width": 82.62,
+                "height": 92.34
+              },
+              "fromState": "flagged",
+              "toState": "ready-for-review",
+              "pixelDiffRatio": 0.12381440656241989,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-item-d",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 329.382,
+                "width": 82.62,
+                "height": 92.34
+              },
+              "fromState": "flagged",
+              "toState": "ready-for-review",
+              "pixelDiffRatio": 0.09742194584790775,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-collection",
+              "bounds": {
+                "x": 680.32,
+                "y": 168.84,
+                "width": 495.36,
+                "height": 466.56
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0.009701543975737524,
+              "changed": false
+            }
+          ]
+        },
+        {
+          "frameIndex": 27,
+          "phaseId": "before",
+          "fromPhaseId": "result",
+          "kind": "loop-bridge",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "legacy-item-a",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 177.75,
+                "width": 82.62,
+                "height": 92.34
+              },
+              "fromState": "ready-for-review",
+              "toState": "pending",
+              "pixelDiffRatio": 0.10766470135862599,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-item-b",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 228.29399999999998,
+                "width": 82.62,
+                "height": 92.34
+              },
+              "fromState": "ready-for-review",
+              "toState": "pending",
+              "pixelDiffRatio": 0.12799585438528308,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-item-c",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 278.83799999999997,
+                "width": 82.62,
+                "height": 92.34
+              },
+              "fromState": "ready-for-review",
+              "toState": "pending",
+              "pixelDiffRatio": 0.1302230197385286,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-item-d",
+              "bounds": {
+                "x": 771.49,
+                "y": 521.19,
+                "width": 82.62,
+                "height": 92.34
+              },
+              "fromState": "ready-for-review",
+              "toState": "pending",
+              "pixelDiffRatio": 0.12190698276978883,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-collection",
+              "bounds": {
+                "x": 680.32,
+                "y": 168.84,
+                "width": 495.36,
+                "height": 466.56
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0.0542890129583678,
+              "changed": false
+            }
+          ]
+        },
+        {
+          "frameIndex": 12,
+          "phaseId": "change",
+          "fromPhaseId": "before",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "legacy-item-a",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 177.75,
+                "width": 82.62,
+                "height": 92.34
+              },
+              "fromState": "pending",
+              "toState": "flagged",
+              "pixelDiffRatio": 0.20430658805434504,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-item-b",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 228.29399999999998,
+                "width": 82.62,
+                "height": 92.34
+              },
+              "fromState": "pending",
+              "toState": "flagged",
+              "pixelDiffRatio": 0.2518460940536339,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-item-c",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 278.83799999999997,
+                "width": 82.62,
+                "height": 92.34
+              },
+              "fromState": "pending",
+              "toState": "flagged",
+              "pixelDiffRatio": 0.2540374263009485,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-item-d",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 329.382,
+                "width": 82.62,
+                "height": 92.34
+              },
+              "fromState": "pending",
+              "toState": "flagged",
+              "pixelDiffRatio": 0.21518331390076434,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-collection",
+              "bounds": {
+                "x": 680.32,
+                "y": 168.84,
+                "width": 495.36,
+                "height": 466.56
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0.06267231872070582,
+              "changed": false
+            }
+          ]
+        },
+        {
+          "frameIndex": 23,
+          "phaseId": "result",
+          "fromPhaseId": "change",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "legacy-item-a",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 177.75,
+                "width": 82.62,
+                "height": 92.34
+              },
+              "fromState": "flagged",
+              "toState": "ready-for-review",
+              "pixelDiffRatio": 0.09664188669571905,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-item-b",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 228.29399999999998,
+                "width": 82.62,
+                "height": 92.34
+              },
+              "fromState": "flagged",
+              "toState": "ready-for-review",
+              "pixelDiffRatio": 0.12385023966835082,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-item-c",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 278.83799999999997,
+                "width": 82.62,
+                "height": 92.34
+              },
+              "fromState": "flagged",
+              "toState": "ready-for-review",
+              "pixelDiffRatio": 0.12381440656241989,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-item-d",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 329.382,
+                "width": 82.62,
+                "height": 92.34
+              },
+              "fromState": "flagged",
+              "toState": "ready-for-review",
+              "pixelDiffRatio": 0.09742194584790775,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-collection",
+              "bounds": {
+                "x": 680.32,
+                "y": 168.84,
+                "width": 495.36,
+                "height": 466.56
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0.009701543975737524,
+              "changed": false
+            }
+          ]
+        },
+        {
+          "frameIndex": 1,
+          "phaseId": "before",
+          "fromPhaseId": "result",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "legacy-item-a",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 177.75,
+                "width": 82.62,
+                "height": 92.34
+              },
+              "fromState": "ready-for-review",
+              "toState": "pending",
+              "pixelDiffRatio": 0.10766470135862599,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-item-b",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 228.29399999999998,
+                "width": 82.62,
+                "height": 92.34
+              },
+              "fromState": "ready-for-review",
+              "toState": "pending",
+              "pixelDiffRatio": 0.12799585438528308,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-item-c",
+              "bounds": {
+                "x": 702.3699999999999,
+                "y": 278.83799999999997,
+                "width": 82.62,
+                "height": 92.34
+              },
+              "fromState": "ready-for-review",
+              "toState": "pending",
+              "pixelDiffRatio": 0.1302230197385286,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-item-d",
+              "bounds": {
+                "x": 771.49,
+                "y": 521.19,
+                "width": 82.62,
+                "height": 92.34
+              },
+              "fromState": "ready-for-review",
+              "toState": "pending",
+              "pixelDiffRatio": 0.09805427547363031,
+              "changed": true
+            },
+            {
+              "entityId": "legacy-collection",
+              "bounds": {
+                "x": 680.32,
+                "y": 168.84,
+                "width": 495.36,
+                "height": 466.56
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0.05425024124620899,
+              "changed": false
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "phaseCaptures": [
+    {
+      "phaseId": "before",
+      "labels": [
+        "before · inicio",
+        "before · pausa",
+        "before → change · punto medio de transición",
+        "before · salida",
+        "reinicio del loop"
+      ],
+      "contactSheet": "ruta-para-revisar-el-cierre-64d613d5-contact-sheet.png"
+    },
+    {
+      "phaseId": "change",
+      "labels": [
+        "change · inicio",
+        "change · pausa",
+        "change → result · punto medio de transición",
+        "change · salida"
+      ],
+      "contactSheet": "ruta-para-revisar-el-cierre-64d613d5-contact-sheet.png"
+    },
+    {
+      "phaseId": "result",
+      "labels": [
+        "result · inicio",
+        "result · pausa",
+        "result → before · unión del ciclo",
+        "result · salida"
+      ],
+      "contactSheet": "ruta-para-revisar-el-cierre-64d613d5-contact-sheet.png"
+    }
+  ],
+  "semanticObjectCaptures": [
+    {
+      "label": "before · pausa",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 0,
+      "frameIndex": 1,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "legacy-item-a",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 177.75,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-b",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 228.29399999999998,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-c",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 278.83799999999997,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-d",
+          "bounds": {
+            "x": 771.49,
+            "y": 521.19,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-collection",
+          "bounds": {
+            "x": 680.32,
+            "y": 168.84,
+            "width": 495.36,
+            "height": 466.56
+          }
+        }
+      ]
+    },
+    {
+      "label": "before → change · punto medio de transición",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 0,
+      "frameIndex": 5,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "legacy-item-a",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 177.75,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-b",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 228.29399999999998,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-c",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 278.83799999999997,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-d",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 329.382,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-collection",
+          "bounds": {
+            "x": 680.32,
+            "y": 168.84,
+            "width": 495.36,
+            "height": 466.56
+          }
+        }
+      ]
+    },
+    {
+      "label": "change · pausa",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 1,
+      "frameIndex": 12,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "legacy-item-a",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 177.75,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-b",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 228.29399999999998,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-c",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 278.83799999999997,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-d",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 329.382,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-collection",
+          "bounds": {
+            "x": 680.32,
+            "y": 168.84,
+            "width": 495.36,
+            "height": 466.56
+          }
+        }
+      ]
+    },
+    {
+      "label": "change → result · punto medio de transición",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 1,
+      "frameIndex": 16,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "legacy-item-a",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 177.75,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-b",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 228.29399999999998,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-c",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 278.83799999999997,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-d",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 329.382,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-collection",
+          "bounds": {
+            "x": 680.32,
+            "y": 168.84,
+            "width": 495.36,
+            "height": 466.56
+          }
+        }
+      ]
+    },
+    {
+      "label": "result · pausa",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 2,
+      "frameIndex": 23,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "legacy-item-a",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 177.75,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-b",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 228.29399999999998,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-c",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 278.83799999999997,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-d",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 329.382,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-collection",
+          "bounds": {
+            "x": 680.32,
+            "y": 168.84,
+            "width": 495.36,
+            "height": 466.56
+          }
+        }
+      ]
+    },
+    {
+      "label": "result → before · unión del ciclo",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 2,
+      "frameIndex": 27,
+      "kind": "loop-bridge",
+      "regions": [
+        {
+          "entityId": "legacy-item-a",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 177.75,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-b",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 228.29399999999998,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-c",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 278.83799999999997,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-d",
+          "bounds": {
+            "x": 771.49,
+            "y": 521.19,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-collection",
+          "bounds": {
+            "x": 680.32,
+            "y": 168.84,
+            "width": 495.36,
+            "height": 466.56
+          }
+        }
+      ]
+    }
+  ],
+  "compositionByFrame": [
+    {
+      "frameIndex": 1,
+      "label": "before · pausa",
+      "phaseId": "before",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "legacy-item-a",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 177.75,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-b",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 228.29399999999998,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-c",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 278.83799999999997,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-d",
+          "bounds": {
+            "x": 771.49,
+            "y": 521.19,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-collection",
+          "bounds": {
+            "x": 680.32,
+            "y": 168.84,
+            "width": 495.36,
+            "height": 466.56
+          }
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.375,
+        "textColumnFillRatio": 0.75,
+        "objectAreaRatio": 0.34375,
+        "largestEmptyRectangleRatio": 0.15625
+      }
+    },
+    {
+      "frameIndex": 5,
+      "label": "before → change · punto medio de transición",
+      "phaseId": "change",
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "legacy-item-a",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 177.75,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-b",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 228.29399999999998,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-c",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 278.83799999999997,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-d",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 329.382,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-collection",
+          "bounds": {
+            "x": 680.32,
+            "y": 168.84,
+            "width": 495.36,
+            "height": 466.56
+          }
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.375,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.25,
+        "largestEmptyRectangleRatio": 0.1875
+      }
+    },
+    {
+      "frameIndex": 12,
+      "label": "change · pausa",
+      "phaseId": "change",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "legacy-item-a",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 177.75,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-b",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 228.29399999999998,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-c",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 278.83799999999997,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-d",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 329.382,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-collection",
+          "bounds": {
+            "x": 680.32,
+            "y": 168.84,
+            "width": 495.36,
+            "height": 466.56
+          }
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.375,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.25,
+        "largestEmptyRectangleRatio": 0.1875
+      }
+    },
+    {
+      "frameIndex": 16,
+      "label": "change → result · punto medio de transición",
+      "phaseId": "result",
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "legacy-item-a",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 177.75,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-b",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 228.29399999999998,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-c",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 278.83799999999997,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-d",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 329.382,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-collection",
+          "bounds": {
+            "x": 680.32,
+            "y": 168.84,
+            "width": 495.36,
+            "height": 466.56
+          }
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.28125,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.28125,
+        "largestEmptyRectangleRatio": 0.1875
+      }
+    },
+    {
+      "frameIndex": 23,
+      "label": "result · pausa",
+      "phaseId": "result",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "legacy-item-a",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 177.75,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-b",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 228.29399999999998,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-c",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 278.83799999999997,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-d",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 329.382,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-collection",
+          "bounds": {
+            "x": 680.32,
+            "y": 168.84,
+            "width": 495.36,
+            "height": 466.56
+          }
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.28125,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.28125,
+        "largestEmptyRectangleRatio": 0.1875
+      }
+    },
+    {
+      "frameIndex": 27,
+      "label": "result → before · unión del ciclo",
+      "phaseId": "before",
+      "kind": "loop-bridge",
+      "regions": [
+        {
+          "entityId": "legacy-item-a",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 177.75,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-b",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 228.29399999999998,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-c",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 278.83799999999997,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-item-d",
+          "bounds": {
+            "x": 771.49,
+            "y": 521.19,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "legacy-collection",
+          "bounds": {
+            "x": 680.32,
+            "y": 168.84,
+            "width": 495.36,
+            "height": 466.56
+          }
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.34375,
+        "textColumnFillRatio": 0.75,
+        "objectAreaRatio": 0.375,
+        "largestEmptyRectangleRatio": 0.21875
+      }
+    }
+  ],
+  "palette": {
+    "colors": 51,
+    "meanAbsoluteChannelError": 0.032,
+    "maximumChannelError": 10,
+    "sampledFrames": 33
+  },
+  "phaseHoldsVerified": [
+    {
+      "phaseId": "before",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    },
+    {
+      "phaseId": "change",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    },
+    {
+      "phaseId": "result",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    }
+  ],
+  "timing": {
+    "preset": "readable",
+    "holdsRequestedMs": 15000,
+    "holdsDecodedMs": 15000,
+    "transitionsMs": 1300,
+    "loopBridgeMs": 650,
+    "entryMs": 240,
+    "totalDecodedMs": 17190,
+    "totalDurationBudgetMs": 30000,
+    "phaseHolds": [
+      {
+        "phaseId": "before",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      },
+      {
+        "phaseId": "change",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      },
+      {
+        "phaseId": "result",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      }
+    ],
+    "warnings": []
+  },
+  "resourceEstimate": {
+    "pixelFrames": 30412800,
+    "maxPixelFrames": 96000000,
+    "memoryBytes": 107634688,
+    "maxMemoryBytes": 268435456
+  },
+  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed.",
+  "generatedBy": "open-beauty-site",
+  "reviewState": "none",
+  "openFeedbackCount": 0,
+  "feedbackFrames": [],
+  "publicationRecommendation": "none",
+  "renderRevision": 0
+}
