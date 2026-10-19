@@ -59,6 +59,10 @@ export interface NarrativePhase {
   holdMs?: number;
 }
 
+export type NormalizedNarrativePhase = Omit<NarrativePhase, 'visual'> & {
+  visual: Omit<NarrativePhase['visual'], 'semantic'> & { semantic: NarrativeSemanticScene };
+};
+
 export interface NarrativeEvidenceRef {
   id: string;
   label: string;
@@ -120,7 +124,7 @@ export interface NarrativeBriefInput {
   seed?: number;
 }
 
-export interface NormalizedNarrativeBrief extends Omit<NarrativeBriefInput, 'status' | 'workflowStatus' | 'outcome' | 'illustrative' | 'badgePolicy' | 'badgeText'> {
+export interface NormalizedNarrativeBrief extends Omit<NarrativeBriefInput, 'status' | 'workflowStatus' | 'outcome' | 'illustrative' | 'badgePolicy' | 'badgeText' | 'phases'> {
   status: NarrativeStatus;
   workflowStatus: NarrativeStatus;
   outcome: NarrativeOutcome;
@@ -131,7 +135,7 @@ export interface NormalizedNarrativeBrief extends Omit<NarrativeBriefInput, 'sta
   playback: NarrativePlayback;
   output: NarrativeOutput;
   seed: number;
-  phases: Array<Omit<NarrativePhase, 'visual'> & { visual: NarrativePhase['visual'] & { semantic: NarrativeSemanticScene } }>;
+  phases: NormalizedNarrativePhase[];
 }
 
 export type NarrativeTimelineKind = 'entry' | 'hold' | 'transition' | 'loop-bridge';
@@ -213,7 +217,7 @@ export interface NarrativeRenderContext {
   safeBoxes: { safe: NarrativeRect; text: NarrativeRect; art: NarrativeRect };
   fonts: NarrativeFontProfile;
   rng: () => number;
-  semantic: NarrativeSemanticScene;
+  semantic?: NarrativeSemanticScene;
 }
 
 export interface NarrativeScene {
@@ -235,6 +239,7 @@ export interface NarrativeControlResult {
   detail: string;
   source?: 'source' | 'pixels' | 'decoded' | 'human';
   severity?: 'warning' | 'error';
+  status?: 'pass' | 'pending' | 'fail';
 }
 
 export interface NarrativeEvaluationLevel {

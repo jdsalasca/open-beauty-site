@@ -4,6 +4,11 @@ import type { NarrativePhase, NarrativeRenderContext, NarrativeScene, Normalized
 import { cubicBezierEase, drawRule, drawText, phaseMarkProgress, rgba } from './common.js';
 import { sceneVocabulary } from '../vocabulary.js';
 import { sceneText, workflowBadgeText } from '../i18n.js';
+import { drawPapercraftSemantic, papercraftObjectRegions } from './papercraft/semantic-art.js';
+
+function artBox(art: NarrativeRect): NarrativeRect {
+  return { x: art.x + art.width * 0.005, y: art.y + art.height * 0.005, width: art.width * 0.99, height: art.height * 0.99 };
+}
 
 interface PaperGuide {
   readonly identity: 'guia-de-revision';
@@ -281,12 +286,7 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
   const { ctx } = canvasFor(brief.output.width, brief.output.height);
   const art = layout.reservedArtArea;
   const preset = getStyle('papercraft');
-  const box: NarrativeRect = {
-    x: art.x + art.width * 0.005,
-    y: art.y + art.height * 0.005,
-    width: art.width * 0.99,
-    height: art.height * 0.99,
-  };
+  const box = artBox(art);
   const backingSheet: NarrativeRect = { ...box, x: box.x + box.width * 0.045, y: box.y + box.height * 0.035, width: box.width * 0.94, height: box.height * 0.95 };
   const middleSheet: NarrativeRect = { ...box, x: box.x - box.width * 0.028, y: box.y + box.height * 0.018, width: box.width * 0.97, height: box.height * 0.96 };
   ctx.save();
@@ -300,7 +300,10 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
   fillLayer(ctx, box, preset.palette.surface, guide.cutVariant, guide.edgeProfile, '#CBB99F', { blur: 4, y: 4, alpha: 0.22 });
   drawPaperGrain(ctx, box, guide.grainSeed);
   drawCutoutWindow(ctx, box, backingColor, preset.palette.ink);
-  if (guide.composition === 'checklist') drawChecklist(ctx, box, preset.palette.ink, preset.palette.muted, preset.palette.accent, brief.locale);
+  const semantic = context.semantic;
+  const semanticMode = Boolean(semantic && semantic.primitive !== 'legacy-illustration');
+  if (semanticMode && semantic) drawPapercraftSemantic(ctx, semantic, box, preset.palette, brief.locale);
+  else if (guide.composition === 'checklist') drawChecklist(ctx, box, preset.palette.ink, preset.palette.muted, preset.palette.accent, brief.locale);
   else drawComparison(ctx, box, preset.palette.ink, preset.palette.muted, brief.locale);
   drawTornRibbon(ctx, box, guide.tapeAngle, preset.palette.accent4, preset.palette.ink);
   const outgoing = stateRank(brief.phases[frame.fromPhaseIndex]!);
@@ -308,7 +311,7 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
   const eased = phaseMarkProgress(frame, (value) => cubicBezierEase(value, 0.4, 0, 0.2, 1));
   const level = outgoing + (incoming - outgoing) * eased;
   const stampText = workflowBadgeText('papercraft', brief.locale, brief.workflowStatus, brief.badgePolicy, brief.badgeText);
-  drawSignal(ctx, box, Math.max(0, Math.min(1, level)), preset.palette.accent);
+  if (!semanticMode) drawSignal(ctx, box, Math.max(0, Math.min(1, level)), preset.palette.accent);
   if (stampText) drawReviewStamp(ctx, box, Math.max(0, level - 1), stampText, preset.palette.accent, preset.palette.ink);
   ctx.restore();
   return ctx.getImageData(0, 0, brief.output.width, brief.output.height).data;
@@ -332,6 +335,10 @@ export const papercraftNarrativeScene: NarrativeScene = {
       edgeProfile: Object.freeze(Array.from({ length: 24 }, () => rng())),
       grainSeed: Math.floor(rng() * 0xffff_ffff) >>> 0,
     } satisfies PaperGuide);
+  },
+  objectRegions(context) {
+    if (!context.semantic || context.semantic.primitive === 'legacy-illustration') return [];
+    return papercraftObjectRegions(context, artBox(context.layout.reservedArtArea));
   },
   renderFrame,
 };

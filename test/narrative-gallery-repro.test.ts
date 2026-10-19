@@ -3,8 +3,8 @@ import { mkdtemp, readdir, readFile, rm } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { spawnSync } from 'node:child_process';
 import test from 'node:test';
-import { createNarrative } from '../src/narrative/create.js';
 import {
   DEFAULT_NARRATIVE_COMPOSITION,
   NARRATIVE_COMPOSITION_BY_STYLE,
@@ -15,6 +15,7 @@ import { supportedNarrativeStyles } from '../src/narrative/scene.js';
 import type { StyleSlug } from '../src/types.js';
 
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const REPRO_WORKER = path.join(REPO_ROOT, 'test', 'support', 'narrative-repro-worker.ts');
 const GALLERY_ROOT = path.join(REPO_ROOT, 'docs', 'narrative-gif', 'gallery');
 const PILOTS_ROOT = path.join(REPO_ROOT, 'docs', 'narrative-gif', 'pilots');
 const COMPOSITIONS = ['comparison', 'checklist'] as const;
@@ -141,12 +142,33 @@ test('every committed narrative pack regenerates byte-for-byte from its brief', 
   try {
     for (const [index, item] of packages.entries()) {
       const outputDir = path.join(tempRoot, `${index}-${item.brief.style}-${item.composition}`);
-      const generated = await createNarrative(item.brief, { outputDir });
-      const balance = generated.evaluation['rendered-legibility'].controls.find((control) => control.name === 'composition-balance');
+      const child = spawnSync(process.execPath, ['--import', 'tsx', REPRO_WORKER, item.briefPath, outputDir], {
+        cwd: REPO_ROOT,
+        encoding: 'utf8',
+        timeout: 120_000,
+        maxBuffer: 2 * 1024 * 1024,
+        windowsHide: true,
+      });
+      assert.equal(child.status, 0, `${item.brief.style}/${item.composition} repro worker exited ${child.status}: ${child.stderr || child.stdout}`);
+      const generated = { paths: {
+        gif: path.join(outputDir, `${path.basename(item.briefPath, '.json')}.gif`),
+        png: '',
+        contactSheet: '',
+      } };
+      const outputFiles = await readdir(outputDir);
+      const expectedBase = outputFiles.find((name) => name.endsWith('.manifest.json'))?.replace(/\.manifest\.json$/u, '');
+      assert.ok(expectedBase, `${item.brief.style}/${item.composition} worker wrote a manifest`);
+      const reproManifest = JSON.parse(await readFile(path.join(outputDir, `${expectedBase}.manifest.json`), 'utf8')) as {
+        evaluation: { 'rendered-legibility': { controls: Array<{ name: string; detail: string }> } };
+      };
+      const balance = reproManifest.evaluation['rendered-legibility'].controls.find((control) => control.name === 'composition-balance');
       assert.ok(balance, `${item.brief.style}/${item.composition} reports decoded composition balance`);
       const fill = balance.detail.match(/text-column vertical fill ([\d.]+)%/u);
       assert.ok(fill, `${item.brief.style}/${item.composition} reports a text-column fill ratio`);
       assert.ok(Number(fill[1]) >= 60, `${item.brief.style}/${item.composition} fills at least 60% of the text column vertically`);
+      generated.paths.gif = path.join(outputDir, `${expectedBase}.gif`);
+      generated.paths.png = path.join(outputDir, `${expectedBase}.png`);
+      generated.paths.contactSheet = path.join(outputDir, `${expectedBase}-contact-sheet.png`);
       const artifacts = [
         ['GIF', generated.paths.gif],
         ['PNG', generated.paths.png],
@@ -157,7 +179,7 @@ test('every committed narrative pack regenerates byte-for-byte from its brief', 
         const committedPath = path.join(item.packageDir, path.basename(generatedPath));
         const generatedBytes = await readFile(generatedPath);
         const committedBytes = await readFile(committedPath);
-        assert.deepEqual(generatedBytes, committedBytes, `${item.brief.style}/${item.composition} ${format} matches ${item.briefPath}`);
+        assert.equal(generatedBytes.equals(committedBytes), true, `${item.brief.style}/${item.composition} ${format} matches ${item.briefPath}`);
       }
     }
   } finally {

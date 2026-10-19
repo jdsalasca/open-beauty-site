@@ -19,6 +19,7 @@ export interface NarrativeManifest {
   outcome: NormalizedNarrativeBrief['outcome'];
   evidenceClassification: 'illustrative' | 'measured' | 'expected';
   illustrative: boolean;
+  artOnly: boolean;
   seed: number;
   renderer: { narrative: string; canvas: string; gif: string; scene: string };
   fonts: { bundleVersion: string; roles: NarrativeEncodedFiles['fonts']['effective'] };
@@ -32,6 +33,8 @@ export interface NarrativeManifest {
   controls: NarrativeControlResult[];
   evaluation: NarrativeEvaluation;
   phaseCaptures: Array<{ phaseId: string; labels: string[]; contactSheet: string }>;
+  semanticObjectCaptures: NarrativeEncodedFiles['semanticObjectCaptures'];
+  compositionByFrame: NonNullable<NarrativeEncodedFiles['compositionByFrame']>;
   palette: NarrativeEncodedFiles['palette'];
   phaseHoldsVerified: NarrativeEncodedFiles['phaseHoldsVerified'];
   timing: {
@@ -77,7 +80,7 @@ export async function createNarrativeManifest(input: {
   const phaseCaptures = brief.phases.map((phase, index) => ({
     phaseId: phase.id,
     labels: [
-      ...encoded.captureLabels.filter((label) => label.startsWith(`${phase.id} ·`)),
+      ...encoded.captureLabels.filter((label) => label.startsWith(`${phase.id} ·`) || label.startsWith(`${phase.id} →`)),
       ...(index === 0 && encoded.captureLabels.includes('reinicio del loop') ? ['reinicio del loop'] : []),
     ],
     contactSheet: encoded.paths.contactSheet,
@@ -93,6 +96,7 @@ export async function createNarrativeManifest(input: {
     outcome: brief.outcome,
     evidenceClassification: brief.illustrative ? 'illustrative' : brief.outcome.mode === 'observed' ? 'measured' : 'expected',
     illustrative: brief.illustrative,
+    artOnly: encoded.artOnly,
     seed: brief.seed,
     renderer: { narrative: encoded.rendererVersion, canvas: '@napi-rs/canvas@1.0.11', gif: 'gifenc@1.0.3', scene: encoded.sceneVersion },
     fonts: { bundleVersion: NARRATIVE_FONT_BUNDLE_VERSION, roles: encoded.fonts.effective },
@@ -119,6 +123,8 @@ export async function createNarrativeManifest(input: {
     controls,
     evaluation,
     phaseCaptures,
+    semanticObjectCaptures: encoded.semanticObjectCaptures,
+    compositionByFrame: encoded.compositionByFrame ?? [],
     palette: encoded.palette,
     phaseHoldsVerified: encoded.phaseHoldsVerified,
     timing: {

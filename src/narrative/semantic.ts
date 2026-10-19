@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { NarrativeError, type NarrativePhase } from '../types/narrative.js';
+import { NarrativeError, type NarrativePhase, type NormalizedNarrativePhase } from '../types/narrative.js';
 import type { StyleSlug } from '../types.js';
 import type {
   NarrativeSemanticAction,
@@ -15,6 +15,7 @@ const entitySchema = z.object({
   kind: z.string().trim().min(1).max(40),
   label: z.string().trim().min(1).max(120).optional(),
   value: z.union([z.string().max(120), z.number().finite()]).optional(),
+  progress: z.number().finite().min(0).max(1).optional(),
   illustrative: z.boolean().optional(),
 }).strict();
 
@@ -31,7 +32,7 @@ const actionSchema = z.object({
 }).strict();
 
 export const narrativeSemanticSceneSchema = z.object({
-  primitive: z.enum(['table-rows', 'card-collection', 'counter', 'file-download']),
+  primitive: z.enum(['legacy-illustration', 'table-rows', 'card-collection', 'counter', 'file-download']),
   illustrative: z.boolean().optional(),
   entities: z.array(entitySchema).min(1).max(80),
   relations: z.array(relationSchema).max(120).default([]),
@@ -41,7 +42,7 @@ export const narrativeSemanticSceneSchema = z.object({
 
 export const NARRATIVE_ENTITY_KINDS: NarrativeSemanticEntityKind[] = ['table', 'row', 'collection', 'card', 'counter', 'file'];
 
-const STATES: Record<Exclude<NarrativeSemanticEntityKind, 'illustration'>, string[]> = {
+export const NARRATIVE_SEMANTIC_STATES: Record<Exclude<NarrativeSemanticEntityKind, 'illustration'>, string[]> = {
   table: ['default', 'open', 'reviewed'],
   row: ['default', 'original', 'duplicate', 'flagged', 'marked', 'accepted', 'rejected', 'merged', 'pending'],
   collection: ['default', 'open', 'counted'],
@@ -50,13 +51,20 @@ const STATES: Record<Exclude<NarrativeSemanticEntityKind, 'illustration'>, strin
   file: ['pending', 'downloading', 'failed', 'retrying', 'complete'],
 };
 
-const ACTIONS: Record<Exclude<NarrativeSemanticEntityKind, 'illustration'>, string[]> = {
+export const NARRATIVE_SEMANTIC_ACTIONS: Record<Exclude<NarrativeSemanticEntityKind, 'illustration'>, string[]> = {
   table: [],
   row: ['detect', 'mark-duplicate', 'reject', 'prevent', 'merge-into'],
   collection: ['count-changes'],
   card: ['add-to-collection', 'remove-from-collection', 'count-changes'],
   counter: ['count-changes', 'set-count'],
   file: ['start-download', 'fail', 'retry', 'complete'],
+};
+
+export const NARRATIVE_PRIMITIVE_ENTITY_KINDS: Record<Exclude<NarrativeSemanticPrimitive, 'legacy-illustration'>, NarrativeSemanticEntityKind[]> = {
+  'table-rows': ['table', 'row'],
+  'card-collection': ['collection', 'card'],
+  counter: ['counter', 'row', 'card'],
+  'file-download': ['file'],
 };
 
 function invalid(code: 'UNSUPPORTED_ENTITY' | 'UNSUPPORTED_STATE' | 'UNSUPPORTED_ACTION', message: string, phaseIndex: number, style: StyleSlug, value: string, validAlternatives: string[]): never {
@@ -78,10 +86,7 @@ function requireEntity(id: string, entities: Map<string, NarrativeSemanticEntity
 function assertPrimitiveKinds(primitive: NarrativeSemanticPrimitive, entities: NarrativeSemanticEntity[], phaseIndex: number, style: StyleSlug): void {
   const allowed: Record<NarrativeSemanticPrimitive, NarrativeSemanticEntityKind[]> = {
     'legacy-illustration': ['illustration'],
-    'table-rows': ['table', 'row'],
-    'card-collection': ['collection', 'card'],
-    counter: ['counter', 'row', 'card'],
-    'file-download': ['file'],
+    ...NARRATIVE_PRIMITIVE_ENTITY_KINDS,
   };
   for (const entity of entities) {
     if (entity.kind !== 'illustration' && (!NARRATIVE_ENTITY_KINDS.includes(entity.kind) || !allowed[primitive].includes(entity.kind))) {
@@ -102,7 +107,7 @@ function legacyScene(phase: NarrativePhase, illustrative: boolean): NarrativeSem
 }
 
 /** Validate semantic references and attach a trivial stable scene for v1 visual briefs. */
-export function normalizeSemanticPhases<T extends NarrativePhase>(phases: T[], illustrative: boolean, style: StyleSlug): T[] {
+export function normalizeSemanticPhases(phases: NarrativePhase[], illustrative: boolean, style: StyleSlug): NormalizedNarrativePhase[] {
   let identity: Map<string, NarrativeSemanticEntityKind> | undefined;
   let primitive: NarrativeSemanticPrimitive | undefined;
   return phases.map((phase, phaseIndex) => {
@@ -139,8 +144,8 @@ export function normalizeSemanticPhases<T extends NarrativePhase>(phases: T[], i
     for (const entity of semantic.entities) {
       if (entity.kind === 'illustration') continue;
       const state = semantic.states[entity.id];
-      if (!state) invalid('UNSUPPORTED_STATE', `Entity "${entity.id}" has no state in phase ${phaseIndex}.`, phaseIndex, style, '(missing)', STATES[entity.kind]);
-      if (!STATES[entity.kind].includes(state)) invalid('UNSUPPORTED_STATE', `State "${state}" is not supported for ${entity.kind} entity "${entity.id}" in phase ${phaseIndex}.`, phaseIndex, style, state, STATES[entity.kind]);
+      if (!state) invalid('UNSUPPORTED_STATE', `Entity "${entity.id}" has no state in phase ${phaseIndex}.`, phaseIndex, style, '(missing)', NARRATIVE_SEMANTIC_STATES[entity.kind]);
+      if (!NARRATIVE_SEMANTIC_STATES[entity.kind].includes(state)) invalid('UNSUPPORTED_STATE', `State "${state}" is not supported for ${entity.kind} entity "${entity.id}" in phase ${phaseIndex}.`, phaseIndex, style, state, NARRATIVE_SEMANTIC_STATES[entity.kind]);
     }
     for (const relation of semantic.relations) {
       const from = requireEntity(relation.from, entities, phaseIndex, style);
@@ -150,13 +155,36 @@ export function normalizeSemanticPhases<T extends NarrativePhase>(phases: T[], i
         || relation.kind === 'counts' && from.kind === 'counter' && ['row', 'card', 'collection'].includes(to.kind);
       if (!valid) invalid('UNSUPPORTED_ENTITY', `Relation "${relation.kind}" is not valid for ${from.kind} → ${to.kind}.`, phaseIndex, style, relation.kind, ['duplicate-of (row → row)', 'member-of (card → collection)', 'counts (counter → rows/cards/collection)']);
     }
+    if (semantic.primitive === 'table-rows') {
+      for (const row of semantic.entities.filter((entity) => entity.kind === 'row' && semantic.states[entity.id] === 'duplicate')) {
+        if (!semantic.relations.some((relation) => relation.kind === 'duplicate-of' && relation.from === row.id)) {
+          invalid('UNSUPPORTED_ENTITY', `Duplicate row "${row.id}" requires an explicit duplicate-of relation.`, phaseIndex, style, row.id, semantic.entities.filter((entity) => entity.kind === 'row' && entity.id !== row.id).map((entity) => entity.id));
+        }
+      }
+    }
+    if (semantic.primitive === 'card-collection') {
+      const collectionIds = new Set(semantic.entities.filter((entity) => entity.kind === 'collection').map((entity) => entity.id));
+      for (const card of semantic.entities.filter((entity) => entity.kind === 'card')) {
+        const collectionMembership = semantic.relations.filter((relation) => relation.kind === 'member-of' && relation.from === card.id && collectionIds.has(relation.to));
+        if (collectionMembership.length > 1) invalid('UNSUPPORTED_ENTITY', `Card "${card.id}" has more than one collection membership in phase ${phaseIndex}.`, phaseIndex, style, card.id, [...collectionIds].sort());
+      }
+    }
+    if (semantic.primitive === 'counter') {
+      for (const counter of semantic.entities.filter((entity) => entity.kind === 'counter')) {
+        const count = new Set(semantic.relations.filter((relation) => relation.kind === 'counts' && relation.from === counter.id).map((relation) => relation.to)).size;
+        if (count === 0) invalid('UNSUPPORTED_ENTITY', `Counter "${counter.id}" must explicitly count visible entities.`, phaseIndex, style, counter.id, semantic.entities.filter((entity) => entity.id !== counter.id).map((entity) => entity.id));
+        if (counter.value !== undefined && (typeof counter.value !== 'number' || counter.value !== count)) {
+          invalid('UNSUPPORTED_STATE', `Counter "${counter.id}" value ${counter.value} must be the numeric count ${count} of its visible counts relations.`, phaseIndex, style, String(counter.value), [String(count)]);
+        }
+      }
+    }
     for (const action of semantic.actions) {
       const entity = requireEntity(action.entityId, entities, phaseIndex, style);
       if (action.targetId) requireEntity(action.targetId, entities, phaseIndex, style);
-      if (entity.kind === 'illustration' || !ACTIONS[entity.kind].includes(action.type)) {
-        invalid('UNSUPPORTED_ACTION', `Action "${action.type}" is not supported for ${entity.kind} entity "${entity.id}" in phase ${phaseIndex}.`, phaseIndex, style, action.type, entity.kind === 'illustration' ? [] : ACTIONS[entity.kind]);
+      if (entity.kind === 'illustration' || !NARRATIVE_SEMANTIC_ACTIONS[entity.kind].includes(action.type)) {
+        invalid('UNSUPPORTED_ACTION', `Action "${action.type}" is not supported for ${entity.kind} entity "${entity.id}" in phase ${phaseIndex}.`, phaseIndex, style, action.type, entity.kind === 'illustration' ? [] : NARRATIVE_SEMANTIC_ACTIONS[entity.kind]);
       }
     }
-    return { ...phase, visual: { ...phase.visual, semantic } };
+    return { ...phase, visual: { ...phase.visual, semantic } } as NormalizedNarrativePhase;
   });
 }

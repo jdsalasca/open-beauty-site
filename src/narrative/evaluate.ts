@@ -1,5 +1,6 @@
 import type { NormalizedNarrativeBrief, NarrativeControlResult, NarrativeEvaluation, NarrativeEvaluationLevel, NarrativeLayout, NarrativeLevelStatus } from '../types/narrative.js';
 import type { NarrativeEncodedFiles } from './encode.js';
+import type { NarrativeObjectRegion } from '../types/narrative-scene.js';
 import { getStyle } from '../styles/presets.js';
 import { narrativeResultLabelMatches } from './brief.js';
 import { narrativeLabelToneFor } from './composition.js';
@@ -9,9 +10,67 @@ function level(status: NarrativeLevelStatus, controls: NarrativeControlResult[],
 }
 
 function resultStatus(controls: NarrativeControlResult[], pending = false): NarrativeLevelStatus {
+  if (controls.some((control) => control.status === 'fail')) return 'fail';
+  if (controls.some((control) => control.status === 'pending')) return 'pending';
   if (controls.some((control) => !control.passed && control.severity !== 'warning')) return 'fail';
   if (controls.some((control) => !control.passed && control.severity === 'warning')) return 'revise';
   return pending ? 'pending' : 'pass';
+}
+
+export interface SemanticObjectFrameComparison {
+  passed: boolean;
+  pixelDiffRatio: number;
+  changedEntityIds: string[];
+  entityDiffs: Array<{ entityId: string; fromState?: string; toState?: string; pixelDiffRatio: number; passed: boolean }>;
+}
+
+/** Compare decoded RGB only inside declared entity regions; copy and decoration are excluded. */
+export function compareSemanticObjectFrames(input: {
+  beforeRgb: Uint8Array;
+  afterRgb: Uint8Array;
+  width: number;
+  height: number;
+  regions: NarrativeObjectRegion[];
+  fromStates: Record<string, string>;
+  toStates: Record<string, string>;
+}): SemanticObjectFrameComparison {
+  if (input.beforeRgb.length !== input.width * input.height * 3 || input.afterRgb.length !== input.beforeRgb.length) {
+    return { passed: false, pixelDiffRatio: 0, changedEntityIds: [], entityDiffs: [] };
+  }
+  const entityDiffs = input.regions.map(({ entityId, bounds }) => {
+    const x0 = Math.max(0, Math.floor(bounds.x));
+    const y0 = Math.max(0, Math.floor(bounds.y));
+    const x1 = Math.min(input.width, Math.ceil(bounds.x + bounds.width));
+    const y1 = Math.min(input.height, Math.ceil(bounds.y + bounds.height));
+    let different = 0;
+    let total = 0;
+    for (let y = y0; y < y1; y += 1) {
+      for (let x = x0; x < x1; x += 1) {
+        const offset = (y * input.width + x) * 3;
+        const delta = Math.abs(input.beforeRgb[offset]! - input.afterRgb[offset]!)
+          + Math.abs(input.beforeRgb[offset + 1]! - input.afterRgb[offset + 1]!)
+          + Math.abs(input.beforeRgb[offset + 2]! - input.afterRgb[offset + 2]!);
+        if (delta > 24) different += 1;
+        total += 1;
+      }
+    }
+    const pixelDiffRatio = total ? different / total : 0;
+    const fromState = input.fromStates[entityId];
+    const toState = input.toStates[entityId];
+    return { entityId, ...(fromState === undefined ? {} : { fromState }), ...(toState === undefined ? {} : { toState }), pixelDiffRatio, passed: fromState !== undefined && toState !== undefined && fromState !== toState && pixelDiffRatio >= 0.001 };
+  });
+  const areaById = new Map(input.regions.map(({ entityId, bounds }) => [entityId,
+    Math.max(0, Math.min(input.width, Math.ceil(bounds.x + bounds.width)) - Math.max(0, Math.floor(bounds.x)))
+      * Math.max(0, Math.min(input.height, Math.ceil(bounds.y + bounds.height)) - Math.max(0, Math.floor(bounds.y))),
+  ]));
+  const totalPixels = entityDiffs.reduce((sum, diff) => sum + (areaById.get(diff.entityId) ?? 0), 0);
+  const changedPixels = entityDiffs.reduce((sum, diff) => sum + diff.pixelDiffRatio * (areaById.get(diff.entityId) ?? 0), 0);
+  return {
+    passed: entityDiffs.some((diff) => diff.passed),
+    pixelDiffRatio: totalPixels ? changedPixels / totalPixels : 0,
+    changedEntityIds: entityDiffs.filter((diff) => diff.passed).map((diff) => diff.entityId),
+    entityDiffs,
+  };
 }
 
 function normalizedText(value: string): string {
@@ -210,21 +269,19 @@ export function evaluateNarrative(input: {
   const fontThresholdsPassed = layout.title.size >= 56 && layout.phases.every((phase) => phase.label.size >= 24 && phase.body.size >= 36);
   const cardThresholdsPassed = layout.phases.every((phase) => phase.label.effectiveCardSize >= 12 && phase.body.effectiveCardSize >= 20) && layout.title.effectiveCardSize >= 28;
   const labelColor = stylePreset.palette[narrativeLabelToneFor(brief.style)];
-  const decodedPixelFrame = encoded.decoded.sampledFrames[0];
-  const compositionMetrics = decodedPixelFrame
-    && decodedPixelFrame.rgb.length === encoded.decoded.width * encoded.decoded.height * 3
-    ? measureCompositionBalance({
-      rgb: decodedPixelFrame.rgb,
-      width: encoded.decoded.width,
-      height: encoded.decoded.height,
-      background: stylePreset.palette.bg,
-      textArea: layout.textArea,
-    })
-    : undefined;
-  const compositionNeedsRevision = !compositionMetrics
-    || compositionMetrics.largestEmptyRectangleRatio > 0.22
-    || compositionMetrics.textColumnFillRatio < 0.60;
   const percent = (value: number) => `${(value * 100).toFixed(1)}%`;
+  const decodedByIndex = new Map(encoded.decoded.sampledFrames.map((frame) => [frame.index, frame]));
+  const compositionRows = encoded.compositionByFrame ?? encoded.semanticObjectCaptures.flatMap((capture) => {
+    const frame = decodedByIndex.get(capture.frameIndex);
+    if (!frame || frame.rgb.length !== encoded.decoded.width * encoded.decoded.height * 3) return [];
+    return [{ label: capture.label, metrics: measureCompositionBalance({ rgb: frame.rgb, width: encoded.decoded.width, height: encoded.decoded.height, background: stylePreset.palette.bg, textArea: layout.textArea }) }];
+  });
+  const firstComposition = compositionRows[0]?.metrics;
+  const compositionNeedsRevision = compositionRows.length === 0 || compositionRows.some(({ metrics }) =>
+    metrics.largestEmptyRectangleRatio > 0.22 || (!encoded.artOnly && metrics.textColumnFillRatio < 0.60));
+  const compositionByFrame = compositionRows.map(({ label, metrics }) =>
+    `${label}: empty ${percent(metrics.emptyCellRatio)}, text fill ${percent(metrics.textColumnFillRatio)}, art ${percent(metrics.objectAreaRatio)}, largest empty ${percent(metrics.largestEmptyRectangleRatio)}`,
+  );
   const readabilityControls: NarrativeControlResult[] = [
     ...textControls,
     { name: 'registered-fonts', passed: input.fontChecksPassed ?? true, detail: input.fontChecksPassed === false ? 'a required family, weight or glyph failed rendering/measurement' : 'all role faces and Spanish glyphs rendered/measured', source: 'source' },
@@ -234,9 +291,9 @@ export function evaluateNarrative(input: {
       name: 'composition-balance',
       passed: !compositionNeedsRevision,
       ...(compositionNeedsRevision ? { severity: 'warning' as const } : {}),
-      detail: compositionMetrics
-        ? `${compositionNeedsRevision ? 'WARN · revise' : 'proxy'}; 8×4 decoded-pixel grid against ${stylePreset.palette.bg}: empty cells ${percent(compositionMetrics.emptyCellRatio)}, text-column vertical fill ${percent(compositionMetrics.textColumnFillRatio)}, art/object area outside the text column ${percent(compositionMetrics.objectAreaRatio)}, largest empty rectangle ${percent(compositionMetrics.largestEmptyRectangleRatio)}; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.`
-        : 'WARN · revise; no composited decoded RGB sample was available for the 8×4 composition proxy.',
+      detail: firstComposition
+        ? `${compositionNeedsRevision ? 'WARN · revise' : 'proxy'}; 8×4 decoded-pixel grid against ${stylePreset.palette.bg}: empty cells ${percent(firstComposition.emptyCellRatio)}, text-column vertical fill ${percent(firstComposition.textColumnFillRatio)}, art/object area outside the text column ${percent(firstComposition.objectAreaRatio)}, largest empty rectangle ${percent(firstComposition.largestEmptyRectangleRatio)}; thresholds: rectangle <=22%, text fill >=60%${encoded.artOnly ? ' (text-fill threshold omitted in art-only mode)' : ''}; not an aesthetic score. Per-frame: ${compositionByFrame.join(' | ')}`
+        : 'WARN · revise; no composited decoded RGB capture was available for the 8×4 composition proxy.',
       source: 'pixels',
     },
     { name: 'contrast', passed: contrast(stylePreset.palette.ink, stylePreset.palette.bg) >= 4.5 && contrast(labelColor, stylePreset.palette.bg) >= 3, detail: `rendered text colors: ink ${contrast(stylePreset.palette.ink, stylePreset.palette.bg).toFixed(2)}:1; label ${contrast(labelColor, stylePreset.palette.bg).toFixed(2)}:1 (not an OCR or per-pixel text measurement)`, source: 'source' },
@@ -246,6 +303,72 @@ export function evaluateNarrative(input: {
   const legibilityStatus = resultStatus(readabilityControls, true);
 
   const lastLabelMatchesOutcome = narrativeResultLabelMatches(brief.phases.at(-1)!.label, brief.outcome.mode, brief.locale);
+  const holdCaptures = encoded.semanticObjectCaptures.filter((capture) => capture.kind === 'hold').sort((a, b) => a.phaseIndex - b.phaseIndex);
+  const objectTransformationControls: NarrativeControlResult[] = [];
+  const hasDeclaredObjectRegions = encoded.semanticObjectCaptures.some((capture) => capture.regions.length > 0);
+  if (!hasDeclaredObjectRegions || holdCaptures.length !== brief.phases.length) {
+    objectTransformationControls.push({
+      name: 'semantic-object-transformation',
+      passed: false,
+      status: 'pending',
+      detail: 'Pending: this scene did not declare object regions for every phase hold; full-frame or text changes cannot substitute.',
+      source: 'decoded',
+    });
+  } else {
+    const pairSpecs: Array<{ from: typeof holdCaptures[number]; to: typeof holdCaptures[number]; label: string }> = [];
+    for (let index = 0; index < holdCaptures.length - 1; index += 1) {
+      pairSpecs.push({ from: holdCaptures[index]!, to: holdCaptures[index + 1]!, label: `${brief.phases[index]!.id} → ${brief.phases[index + 1]!.id} hold` });
+    }
+    if (brief.playback.loop) pairSpecs.push({ from: holdCaptures.at(-1)!, to: holdCaptures[0]!, label: `${brief.phases.at(-1)!.id} → ${brief.phases[0]!.id} loop join` });
+    const captureForTransition = (capture: typeof encoded.semanticObjectCaptures[number]) => holdCaptures.find((hold) => hold.phaseIndex === capture.fromPhaseIndex);
+    for (const capture of encoded.semanticObjectCaptures.filter((item) => item.kind !== 'hold')) {
+      const from = captureForTransition(capture);
+      const before = from && decodedByIndex.get(from.frameIndex);
+      const midpoint = decodedByIndex.get(capture.frameIndex);
+      const toPhase = brief.phases[capture.phaseIndex]!;
+      const fromPhase = brief.phases[capture.fromPhaseIndex]!;
+      const comparison = before && midpoint ? compareSemanticObjectFrames({
+        beforeRgb: before.rgb,
+        afterRgb: midpoint.rgb,
+        width: encoded.decoded.width,
+        height: encoded.decoded.height,
+        regions: from?.regions ?? capture.regions,
+        fromStates: fromPhase.visual.semantic.states,
+        toStates: toPhase.visual.semantic.states,
+      }) : undefined;
+      objectTransformationControls.push({
+        name: `semantic-object-midpoint:${capture.label}`,
+        passed: comparison?.passed ?? false,
+        detail: comparison
+          ? `decoded object diff ${percent(comparison.pixelDiffRatio)}; changed-state entities: ${comparison.changedEntityIds.join(', ') || 'none'}; ${comparison.entityDiffs.map((diff) => `${diff.entityId} ${diff.fromState ?? '?'}→${diff.toState ?? '?'} ${percent(diff.pixelDiffRatio)}`).join(', ')}`
+          : 'Midpoint or source hold was not available in decoded pixels.',
+        source: 'decoded',
+      });
+    }
+    for (const pair of pairSpecs) {
+      const before = decodedByIndex.get(pair.from.frameIndex);
+      const after = decodedByIndex.get(pair.to.frameIndex);
+      const toById = new Map(pair.to.regions.map((region) => [region.entityId, region]));
+      const regions = pair.from.regions.map((region) => toById.get(region.entityId) ?? region);
+      const comparison = before && after ? compareSemanticObjectFrames({
+        beforeRgb: before.rgb,
+        afterRgb: after.rgb,
+        width: encoded.decoded.width,
+        height: encoded.decoded.height,
+        regions,
+        fromStates: brief.phases[pair.from.phaseIndex]!.visual.semantic.states,
+        toStates: brief.phases[pair.to.phaseIndex]!.visual.semantic.states,
+      }) : undefined;
+      objectTransformationControls.push({
+        name: `semantic-object-transformation:${pair.label}`,
+        passed: comparison?.passed ?? false,
+        detail: comparison
+          ? `decoded object diff ${percent(comparison.pixelDiffRatio)}; changed-state entities: ${comparison.changedEntityIds.join(', ') || 'none'}; ${comparison.entityDiffs.map((diff) => `${diff.entityId} ${diff.fromState ?? '?'}→${diff.toState ?? '?'} ${percent(diff.pixelDiffRatio)}`).join(', ')}`
+          : 'Consecutive decoded hold frame was not available.',
+        source: 'decoded',
+      });
+    }
+  }
   const narrativeControls: NarrativeControlResult[] = [
     { name: 'phase-count-and-copy', passed: brief.phases.length >= 3 && brief.phases.length <= 5 && textControls.every((control) => control.passed), detail: `${brief.phases.length} complete phases; all copy retained`, source: 'source' },
     { name: 'shared-object-identity', passed: true, detail: 'One scene object instance is created and passed to every phase frame.', source: 'source' },
@@ -253,6 +376,8 @@ export function evaluateNarrative(input: {
     { name: 'workflow-outcome-separation', passed: true, detail: `workflowStatus=${brief.workflowStatus}; outcome=${brief.outcome.mode}; illustrative=${brief.illustrative}`, source: 'source' },
     { name: 'outcome-evidence', passed: brief.outcome.mode === 'expected' || (brief.outcome.evidenceRefs?.length ?? 0) > 0, detail: brief.outcome.mode === 'expected' ? 'Expected outcome; no benefit measurement is claimed.' : `${brief.outcome.evidenceRefs?.length ?? 0} identifiable evidence reference(s) and a scope note are attached.`, source: 'source' },
     { name: 'result-follows-outcome', passed: lastLabelMatchesOutcome, detail: `outcome=${brief.outcome.mode}; final label="${brief.phases.at(-1)!.label}"`, source: 'source' },
+    { name: 'semantic-illustrative-data', passed: brief.phases.every((phase) => phase.visual.semantic.illustrative || !brief.illustrative), detail: `brief illustrative=${brief.illustrative}; semantic phase flags=${brief.phases.map((phase) => phase.visual.semantic.illustrative).join(',')}`, source: 'source' },
+    ...objectTransformationControls,
   ];
   const narrativeStatus = resultStatus(narrativeControls, true);
   const visualReview = input.visualReview ?? {

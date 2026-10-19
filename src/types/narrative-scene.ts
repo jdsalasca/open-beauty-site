@@ -8,6 +8,7 @@ export interface NarrativeSemanticEntity {
   kind: NarrativeSemanticEntityKind;
   label?: string;
   value?: string | number;
+  progress?: number;
   illustrative: boolean;
 }
 
@@ -39,7 +40,7 @@ export interface NarrativeSemanticScene {
 }
 
 export interface NarrativeSemanticSceneInput {
-  primitive: Exclude<NarrativeSemanticPrimitive, 'legacy-illustration'>;
+  primitive: NarrativeSemanticPrimitive;
   illustrative?: boolean;
   entities: NarrativeSemanticEntityInput[];
   relations?: NarrativeSemanticRelation[];

@@ -84,6 +84,7 @@ export function narrativeHelpOptions(): string[] {
     '  --style <s>        artdeco, bestiary, brutalist, galactic, isotype, memphis, nature, opart, papercraft, psychedelic, renaissance, ukiyoe or vaporwave',
     '  --brief <file>     Read the JSON narrative brief',
     '  --out <dir>        Output folder (GIF, PNG, contact sheet and manifest)',
+    '  --art-only         Export a review copy without narrative title, labels or body text',
     '',
     '  JSON brief fields:',
     ...Object.keys(narrativeBriefSchema.shape).map((key) => `  ${key.padEnd(18)} ${NARRATIVE_FIELD_DESCRIPTIONS[key] ?? 'See the narrative brief schema.'}`),
@@ -386,7 +387,9 @@ export function normalizeNarrativeBrief(input: unknown): ParsedNarrativeBrief {
       id: phase.id,
       label: phase.label,
       text: phase.text,
-      visual: phase.visual,
+      visual: phase.visual.semantic.primitive === 'legacy-illustration'
+        ? { kind: phase.visual.kind, state: phase.visual.state, ...(phase.visual.action ? { action: phase.visual.action } : {}) }
+        : phase.visual,
       ...(phase.holdMs === undefined ? {} : { holdMs: phase.holdMs }),
     })),
     playback: {

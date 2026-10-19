@@ -805,15 +805,16 @@ QUALITY BAR
         style: styleEnum.describe('Narrative scene; must match brief.style.'),
         brief: narrativeBriefSchema.describe('Validated narrative-gif brief. Its field descriptions are shared with beauty narrative --help.'),
         output: z.string().max(260).optional().describe('Output directory; defaults to beauty-output/narrative/<style>-<brief-hash>.'),
+        artOnly: z.boolean().optional().describe('Also make a separate review pack without narrative title, phase labels or body copy.'),
       },
     },
-    async ({ style, brief, output }) => {
+    async ({ style, brief, output, artOnly }) => {
       try {
         if (brief.style !== style) {
           const result = narrativeFailure(new NarrativeError('INVALID_STATE', `style ${style} must match brief.style ${String(brief.style ?? '(missing)')}.`, 'Set the same style in both places.', 'style'));
           return { content: [{ type: 'text' as const, text: JSON.stringify(result) }], structuredContent: { ...result }, isError: true };
         }
-        const result = await createNarrative(brief, { outputDir: output });
+        const result = await createNarrative(brief, { outputDir: output, artOnly });
         return { content: [{ type: 'text' as const, text: JSON.stringify(result) }], structuredContent: { ...result } };
       } catch (error) {
         const result = narrativeFailure(error);

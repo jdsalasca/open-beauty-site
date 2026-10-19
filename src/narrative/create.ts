@@ -10,6 +10,7 @@ import { buildNarrativeTimeline } from './timeline.js';
 
 export interface CreateNarrativeOptions {
   outputDir?: string;
+  artOnly?: boolean;
   /** Injection seam for isolated renderer tests; production styles use the registry. */
   scene?: NarrativeScene;
 }
@@ -39,7 +40,7 @@ export async function createNarrative(input: NarrativeBriefInput | unknown, opti
   const layout = layoutNarrative(brief);
   const timeline = buildNarrativeTimeline(brief);
   const outputDir = path.resolve(process.cwd(), options.outputDir ?? path.join('beauty-output', 'narrative', `${brief.style}-${outputHash.slice(0, 8)}`));
-  const encoded = await encodeNarrative(brief, outputHash, layout, timeline, scene, outputDir);
+  const encoded = await encodeNarrative(brief, outputHash, layout, timeline, scene, outputDir, options.artOnly ?? false);
   const evaluation = evaluateNarrative({ brief, layout, encoded, fontChecksPassed: true });
   const controls = [
     ...evaluation['technical-integrity'].controls,
