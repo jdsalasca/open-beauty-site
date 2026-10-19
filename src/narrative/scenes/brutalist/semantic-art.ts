@@ -182,7 +182,7 @@ function createPlan(context: NarrativeRenderContext, box: NarrativeRect, measure
       const card = rect(gridX + (index % columns) * (cardWidth + gap), gridY + Math.floor(index / columns) * (cardHeight + gap), cardWidth, cardHeight);
       addRegion(item.id, card);
       addRect(card.x, card.y, card.width, card.height, index % 2 ? '#E7E3D7' : paper, ink, 2);
-      addRect(card.x, card.y, card.width, card.height * 0.13, acid, ink, 1);
+      addRect(card.x, card.y, card.width, card.height * 0.13, '#D4D0C5', ink, 1);
       const label = displayValue(item);
       addText(item.id, label, card.x + card.width * 0.05, card.y + card.height * 0.57, card.width * 0.9, 16, 'identifier', ink, 'Archivo Black');
       const member = semantic.relations.some((relation) => relation.kind === 'member-of' && relation.from === item.id && relation.to === collection?.id);
@@ -191,7 +191,7 @@ function createPlan(context: NarrativeRenderContext, box: NarrativeRect, measure
     });
     const total = cards.filter((item) => semantic.relations.some((relation) => relation.kind === 'member-of' && relation.from === item.id && relation.to === collection?.id)).length;
     const countBox = rect(box.x + box.width * 0.045, box.y + box.height * 0.78, box.width * 0.74, box.height * 0.11);
-    addRect(countBox.x, countBox.y, countBox.width, countBox.height, acid, ink, 2);
+    addRect(countBox.x, countBox.y, countBox.width, countBox.height, paper, ink, 2);
     if (collection) {
       addText(collection.id, String(total), countBox.x + countBox.width * 0.08, countBox.y + countBox.height * 0.72, countBox.width * 0.2, 20, 'headline', ink, 'Archivo Black');
       addText(collection.id, sceneText('brutalist', context.brief.locale, 'semanticItems'), countBox.x + countBox.width * 0.28, countBox.y + countBox.height * 0.68, countBox.width * 0.68, 14, 'label', ink);
@@ -217,7 +217,7 @@ function createPlan(context: NarrativeRenderContext, box: NarrativeRect, measure
       const count = counter.value ?? active.length;
       const countBox = rect(box.x + box.width * 0.16, box.y + box.height * 0.57, box.width * 0.58, box.height * 0.24);
       addRegion(counter.id, countBox);
-      addRect(countBox.x, countBox.y, countBox.width, countBox.height, acid, ink, 3);
+      addRect(countBox.x, countBox.y, countBox.width, countBox.height, paper, ink, 3);
       addText(counter.id, String(count), countBox.x + countBox.width * 0.08, countBox.y + countBox.height * 0.73, countBox.width * 0.37, 28, 'headline', ink, 'Archivo Black');
       addText(counter.id, sceneText('brutalist', context.brief.locale, 'semanticTotal'), countBox.x + countBox.width * 0.48, countBox.y + countBox.height * 0.64, countBox.width * 0.48, 14, 'label', ink);
       if (stateOf(semantic, counter.id) === 'pending') {
@@ -233,7 +233,7 @@ function createPlan(context: NarrativeRenderContext, box: NarrativeRect, measure
       const fileBox = rect(box.x + box.width * 0.025, box.y + box.height * 0.22, box.width * 0.95, box.height * 0.58);
       addRegion(file.id, fileBox);
       addRect(fileBox.x, fileBox.y, fileBox.width, fileBox.height, paper, ink, 2);
-      addRect(fileBox.x, fileBox.y, fileBox.width, fileBox.height * 0.12, acid, ink, 1);
+      addRect(fileBox.x, fileBox.y, fileBox.width, fileBox.height * 0.12, '#D4D0C5', ink, 1);
       addText(file.id, displayValue(file), fileBox.x + fileBox.width * 0.06, fileBox.y + fileBox.height * 0.34, fileBox.width * 0.88, 20, 'headline', ink, 'Archivo Black');
       const progress = stateOf(semantic, file.id) === 'complete' ? 1 : file.progress ?? 0;
       const progressBar = rect(fileBox.x + fileBox.width * 0.06, fileBox.y + fileBox.height * 0.48, fileBox.width * 0.88, fileBox.height * 0.11);
@@ -241,7 +241,7 @@ function createPlan(context: NarrativeRenderContext, box: NarrativeRect, measure
       if (typeof file.progress === 'number') addText(file.id, `${Math.round(file.progress * 100)}%`, progressBar.x + progressBar.width * 0.01, progressBar.y + progressBar.height * 0.92, progressBar.width * 0.38, 14, 'label', ink);
       const status = stateOf(semantic, file.id);
       const statusBox = rect(fileBox.x + fileBox.width * 0.06, fileBox.y + fileBox.height * 0.67, fileBox.width * 0.88, fileBox.height * 0.22);
-      const statusColor = status === 'failed' ? '#F4D4CA' : acid;
+      const statusColor = status === 'failed' ? '#F4D4CA' : paper;
       addRect(statusBox.x, statusBox.y, statusBox.width, statusBox.height, statusColor, status === 'failed' ? red : ink, 2);
       const label = status === 'failed' && file.value === 'timeout'
         ? sceneText('brutalist', context.brief.locale, 'semanticTimeout')
@@ -290,7 +290,7 @@ function drawShape(ctx: ReturnType<typeof canvasFor>['ctx'], shape: ShapeMark): 
   } else if (shape.kind === 'bar') {
     ctx.fillStyle = shape.fill ?? '#D4D0C5';
     ctx.fillRect(shape.x, shape.y, shape.width, shape.height);
-    ctx.fillStyle = (shape.progress ?? 0) >= 1 ? '#D7F000' : '#D83B32';
+    ctx.fillStyle = (shape.progress ?? 0) >= 1 ? '#111111' : '#D83B32';
     ctx.fillRect(shape.x, shape.y, shape.width * Math.max(0, Math.min(1, shape.progress ?? 0)), shape.height);
     ctx.strokeStyle = shape.stroke ?? '#111111';
     ctx.lineWidth = shape.lineWidth ?? 1;
