@@ -1,6 +1,6 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import type { Brief, DeckBrief, ExperienceBrief, GifOptions, GifResult, StoryBrief, StyleSlug, ValidationResult } from './types.js';
+import type { Brief, ExperienceBrief, GifOptions, GifResult, StoryBrief, StyleSlug, ValidationResult } from './types.js';
 import { renderPage } from './page/index.js';
 import { validateDeck, validateExperience, validateHtml, validateStory } from './validate.js';
 import { createGif } from './gif.js';
@@ -158,7 +158,7 @@ export async function createCanvas({ style, brief, output }: CreateCanvasOptions
 
 export interface CreateDeckOptions {
   style: StyleSlug;
-  brief: Partial<DeckBrief>;
+  brief: import('./types/deck.js').DeckBriefInput;
   /** Absolute path or a path relative to process.cwd(). Omit to return HTML only. */
   output?: string;
 }

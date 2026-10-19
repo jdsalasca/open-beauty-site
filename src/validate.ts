@@ -1,5 +1,6 @@
 import type { StylePreset, StyleSlug, ValidationResult, VisionCheck, VisionReport } from './types.js';
 import type { Patch, RichIssue, RichValidationResult } from './types/validation.js';
+import { DECK_POINT_LIMIT, DECK_STAT_LIMIT, DECK_TOTAL_SLIDE_LIMIT, DECK_WORD_LIMIT } from './types/deck.js';
 import { getStyle, isStyleSlug, styleSlugs } from './styles/presets.js';
 import { contrastRatio, nearestPaletteToken, relativeLuminance } from './a11y.js';
 
@@ -735,6 +736,24 @@ export function formatValidation(result: RichValidationResult | ValidationResult
  * Deck-specific audit. It does not replace the page audit; it adds checks that
  * only make sense for a 16:9 sequence.
  */
+function slideWords(block: string): number {
+  const text = block
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&[a-z]+;/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return text ? text.split(' ').length : 0;
+}
+
+function slideHeading(block: string): string {
+  const text = (block.match(/<h2[^>]*>([\s\S]*?)<\/h2>/)?.[1] ?? '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&[a-z]+;/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return text.length > 60 ? `${text.slice(0, 57).trimEnd()}…` : text;
+}
+
 export function validateDeck(html: string, style: StyleSlug): RichValidationResult {
   const base = validateHtml(html, style);
   const issues: RichIssue[] = [...base.issues];
@@ -753,14 +772,14 @@ export function validateDeck(html: string, style: StyleSlug): RichValidationResu
       ),
     );
   }
-  if (blocks.length > 12) {
+  if (blocks.length > DECK_TOTAL_SLIDE_LIMIT) {
     issues.push(
       mkIssue(
         'warn',
         'deck-too-long',
-        `The deck has ${blocks.length} slides; 12 is the maximum.`,
+        `The deck has ${blocks.length} slides; ${DECK_TOTAL_SLIDE_LIMIT} is the maximum.`,
         'the deck markup',
-        'Past twelve slides the room stops listening. A deck is an argument, not a document.',
+        `Past ${DECK_TOTAL_SLIDE_LIMIT} slides the room stops listening. A deck is an argument, not a document.`,
         'Cut one slide per section.',
         'Split the deck or cut one slide per section.',
       ),
@@ -771,36 +790,48 @@ export function validateDeck(html: string, style: StyleSlug): RichValidationResu
   blocks.forEach((block, index) => {
     const layout = block.match(/layout-([a-z]+)/)?.[1] ?? 'cover';
     layouts.add(layout);
-    const text = block
-      .replace(/<[^>]+>/g, ' ')
-      .replace(/&[a-z]+;/gi, ' ')
-      .replace(/\s+/g, ' ')
-      .trim();
-    const words = text ? text.split(' ').length : 0;
-    if (layout !== 'cover' && layout !== 'closing' && words > 55) {
+    const title = slideHeading(block);
+    const named = title ? ` "${title}"` : '';
+    const where = `slide ${index + 1} of the deck${title ? ` ("${title}")` : ''}`;
+    const words = slideWords(block);
+    if (layout !== 'cover' && layout !== 'closing' && words > DECK_WORD_LIMIT) {
       issues.push(
         mkIssue(
           'warn',
           'deck-word-count',
-          `Slide ${index + 1} has ${words} words. Keep a content slide below 55.`,
-          `slide ${index + 1} of the deck`,
-          'A slide with more than 55 words is a page projected: the room reads instead of listening.',
+          `Slide ${index + 1}${named} (${layout} layout) has ${words} words, labels included; the limit is ${DECK_WORD_LIMIT}.`,
+          where,
+          `A slide with more than ${DECK_WORD_LIMIT} words is a page projected: the room reads instead of listening.`,
           'Cut the body to two short lines.',
-          'Cut the body or split the idea into two slides.',
+          `Shorten ${title ? `"${title}"` : 'this slide'} to ${DECK_WORD_LIMIT} words or split it into two slides.`,
         ),
       );
     }
-    const points = (block.match(/class="point\b/g) ?? []).length;
-    if (points > 4) {
+    const points = (block.match(/class="point(?=[\s"])/g) ?? []).length;
+    if (points > DECK_POINT_LIMIT) {
       issues.push(
         mkIssue(
           'error',
           'deck-too-many-points',
-          `Slide ${index + 1} has ${points} points; the maximum is 4.`,
-          `slide ${index + 1} of the deck`,
-          'Five or more points is a list, not an idea. The slide loses its single claim.',
+          `Slide ${index + 1}${named} has ${points} cards in the points layout; the maximum is ${DECK_POINT_LIMIT}.`,
+          where,
+          `${DECK_POINT_LIMIT + 1} or more points is a list, not an idea. The slide loses its single claim.`,
           'Keep 2–3 points and move the rest.',
-          'Keep 2–3 points and move the rest to another slide.',
+          `Keep ${DECK_POINT_LIMIT} cards or fewer and move the rest to another slide.`,
+        ),
+      );
+    }
+    const stats = (block.match(/class="stat(?=[\s"])/g) ?? []).length;
+    if (stats > DECK_STAT_LIMIT) {
+      issues.push(
+        mkIssue(
+          'warn',
+          'deck-too-many-stats',
+          `Slide ${index + 1}${named} has ${stats} stats in the stats layout; the maximum is ${DECK_STAT_LIMIT}.`,
+          where,
+          `${DECK_STAT_LIMIT + 1} or more figures stop being evidence: the room reads numbers instead of the point.`,
+          'Keep the strongest figures and move the rest.',
+          `Keep ${DECK_STAT_LIMIT} stats or fewer and move the rest to another slide.`,
         ),
       );
     }
