@@ -1,11 +1,17 @@
 import { NarrativeError, type NarrativeScene } from '../types/narrative.js';
 import type { StyleSlug } from '../types.js';
 import { brutalistNarrativeScene } from './scenes/brutalist.js';
+import { galacticNarrativeScene } from './scenes/galactic.js';
+import { natureNarrativeScene } from './scenes/nature.js';
 import { papercraftNarrativeScene } from './scenes/papercraft.js';
+import { vaporwaveNarrativeScene } from './scenes/vaporwave.js';
 
 const SCENES = new Map<StyleSlug, NarrativeScene>();
 SCENES.set(brutalistNarrativeScene.style, brutalistNarrativeScene);
+SCENES.set(galacticNarrativeScene.style, galacticNarrativeScene);
+SCENES.set(natureNarrativeScene.style, natureNarrativeScene);
 SCENES.set(papercraftNarrativeScene.style, papercraftNarrativeScene);
+SCENES.set(vaporwaveNarrativeScene.style, vaporwaveNarrativeScene);
 
 /** Register only production scene renderers. Test scenes should use the per-call injection. */
 export function registerNarrativeScene(scene: NarrativeScene): void {

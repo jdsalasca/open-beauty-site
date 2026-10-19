@@ -175,7 +175,7 @@ test('narrative MCP creates a real pilot pack and keeps visual review pending', 
   assert.ok(existsSync(structured.paths.manifest));
 });
 
-test('narrative MCP keeps non-pilot styles explicitly unsupported', async () => {
+test('narrative MCP keeps Stage D styles explicitly unsupported', async () => {
   const result = await client.callTool({
     name: 'beauty_create_narrative',
     arguments: {
@@ -191,7 +191,7 @@ test('narrative MCP keeps non-pilot styles explicitly unsupported', async () => 
   const structured = result.structuredContent as { ok: boolean; diagnostics: Array<{ code: string; message: string }> };
   assert.equal(structured.ok, false);
   assert.equal(structured.diagnostics[0]?.code, 'STYLE_NOT_SUPPORTED_YET');
-  assert.match(structured.diagnostics[0]?.message ?? '', /Supported styles: brutalist, papercraft/);
+  assert.match(structured.diagnostics[0]?.message ?? '', /Supported styles: brutalist, galactic, nature, papercraft, vaporwave/);
   assert.ok(!existsSync(path.join(dir, 'out', 'unsupported-narrative')));
 });
 test('aborts a GIF request instead of waiting for the render', async () => {
