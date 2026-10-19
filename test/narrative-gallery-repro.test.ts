@@ -3,7 +3,7 @@ import { mkdtemp, readdir, readFile, rm } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { spawnSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import test from 'node:test';
 import { createNarrative } from '../src/narrative/create.js';
 import {
@@ -20,9 +20,11 @@ import type { StyleSlug } from '../src/types.js';
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const REPRO_WORKER = path.join(REPO_ROOT, 'test', 'support', 'narrative-repro-worker.ts');
 const NARRATIVE_ROOT = path.join(REPO_ROOT, 'docs', 'narrative-gif');
+const BASE = 'd63612b192da7d5c746b3eba3d9e56eee4aeb6cc';
 const GALLERY_ROOT = path.join(REPO_ROOT, 'docs', 'narrative-gif', 'gallery');
 const PILOTS_ROOT = path.join(REPO_ROOT, 'docs', 'narrative-gif', 'pilots');
 const COMPOSITIONS = ['comparison', 'checklist'] as const;
+const LEGACY_ONLY_STYLES = ['artdeco', 'bestiary', 'galactic', 'memphis', 'nature', 'psychedelic', 'vaporwave'] as const;
 
 const EXPECTED_COMPOSITIONS: Record<StyleSlug, NarrativeComposition> = {
   papercraft: { textWidthRatio: 0.57, artGapRatio: 0.02, artWidthRatio: 0.31, artY: 0.08, artHeight: 0.84 },
@@ -132,6 +134,27 @@ test('semantic papercraft and brutalist keep their enlarged art lane', () => {
   for (const style of ['isotype', 'opart'] as const) {
     assert.deepEqual(narrativeCompositionFor(style), EXPECTED_COMPOSITIONS[style]);
   }
+});
+
+test('the seven styles without semantic scenes retain their historical raster packs byte-for-byte', async () => {
+  const files = execFileSync('git', ['ls-tree', '-r', '--name-only', BASE, '--', 'docs/narrative-gif/gallery', 'docs/narrative-gif/pilots'], {
+    cwd: REPO_ROOT,
+    encoding: 'utf8',
+  }).split(/\r?\n/u).filter(Boolean);
+  const counts = new Map<string, number>();
+  let checked = 0;
+  for (const file of files) {
+    const parts = file.split('/');
+    const style = parts[3];
+    if (!style || !LEGACY_ONLY_STYLES.includes(style as typeof LEGACY_ONLY_STYLES[number]) || !/\.(?:gif|png)$/iu.test(file)) continue;
+    const before = execFileSync('git', ['show', `${BASE}:${file}`], { cwd: REPO_ROOT, maxBuffer: 16 * 1024 * 1024 });
+    const current = await readFile(path.join(REPO_ROOT, ...file.split('/')));
+    assert.deepEqual(current, before, `${style} raster asset ${file} remains byte-identical`);
+    counts.set(style, (counts.get(style) ?? 0) + 1);
+    checked += 1;
+  }
+  assert.ok(checked > 0, 'historical raster assets are enumerated from the base commit');
+  for (const style of LEGACY_ONLY_STYLES) assert.ok((counts.get(style) ?? 0) > 0, `${style} retains its checked historical outputs`);
 });
 
 test('every committed narrative pack regenerates byte-for-byte from its brief', async () => {
