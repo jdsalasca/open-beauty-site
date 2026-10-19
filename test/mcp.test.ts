@@ -51,6 +51,7 @@ test('exposes the full tool surface', async () => {
     'beauty_get_style',
     'beauty_list_styles',
     'beauty_make',
+    'beauty_plan_artifact',
     'beauty_review_artifact',
     'beauty_validate',
   ]);

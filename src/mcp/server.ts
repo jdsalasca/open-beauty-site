@@ -29,6 +29,8 @@ import { packageRoot } from '../paths.js';
 import { createNarrative, narrativeFailure } from '../narrative/create.js';
 import { narrativeBriefSchema } from '../narrative/brief.js';
 import { narrativeCapabilityReport } from '../narrative/capabilities.js';
+import { planArtifact } from '../plan.js';
+import { planInputSchema } from '../types/plan.js';
 import { NarrativeError } from '../types/narrative.js';
 import { createNarrativeGallery } from '../narrative/gallery.js';
 import { getNarrativeReviewState, NARRATIVE_REVIEW_HELP, reviewNarrativeArtifact } from '../narrative/review.js';
@@ -842,6 +844,35 @@ QUALITY BAR
         content: [{ type: 'text' as const, text: JSON.stringify(report) }],
         structuredContent: { ...report },
       };
+    },
+  );
+
+  server.registerTool(
+    'beauty_plan_artifact',
+    {
+      title: 'Plan an artifact without rendering',
+      description: 'Returns a capability check, a proposed storyboard, content-lint warnings, text-length guidelines, a recommended next command and a ready-to-edit brief skeleton. It does not render or write artifact files.',
+      inputSchema: {
+        format: z.enum(['web', 'deck', 'gif']).describe('Artifact format to plan.'),
+        style: styleEnum.describe('One of the 13 art directions.'),
+        audience: z.string().min(1).max(200).describe('Intended audience.'),
+        purpose: z.string().min(1).max(300).describe('Purpose of the artifact.'),
+        message: z.string().min(1).max(1000).describe('Core message to convey.'),
+        entities: z.array(z.string().min(1).max(120)).max(12).optional().describe('Entities/objects the visuals should use.'),
+        actions: z.array(z.string().min(1).max(80)).max(12).optional().describe('Actions/transitions to illustrate.'),
+      },
+    },
+    async (input) => {
+      try {
+        const parsed = planInputSchema.safeParse(input);
+        if (!parsed.success) {
+          return { content: [{ type: 'text' as const, text: `Plan failed: ${parsed.error.issues.map((issue) => `${issue.path.join('.')}: ${issue.message}`).join('; ')}` }], isError: true };
+        }
+        const result = planArtifact(parsed.data);
+        return { content: [{ type: 'text' as const, text: JSON.stringify(result, null, 2) }], structuredContent: { ...result } };
+      } catch (error) {
+        return { content: [{ type: 'text' as const, text: `Plan failed: ${(error as Error).message}` }], isError: true };
+      }
     },
   );
 

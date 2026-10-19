@@ -1,6 +1,6 @@
 # MCP server
 
-`open-beauty-site` exposes a stdio MCP server with nineteen tools and twenty-two resources. The server is deliberately narrow: it does not call an LLM, it does not browse the web, and it does not invent content. It turns a short brief into a complete, validated artefact.
+`open-beauty-site` exposes a stdio MCP server with twenty tools and twenty-two resources. The server is deliberately narrow: it does not call an LLM, it does not browse the web, and it does not invent content. It turns a short brief into a complete, validated artefact.
 
 ## Build
 
@@ -318,6 +318,10 @@ links to those local pack files.
 | `title` | string | no | Page title. |
 
 CLI equivalent: `beauty gallery docs/narrative-gif --out docs/narrative-gif/GALLERY.html --title "Sprint Review"`.
+
+### `beauty_plan_artifact`
+
+Plans an artifact without rendering it. Input: format (`web|deck|gif`), style, audience, purpose, message, and optional entities/actions. Returns a capability check, a proposed storyboard, content-lint warnings, text-length guidelines, a recommended next command and a ready-to-edit brief skeleton JSON. Fields that cannot be filled are explicit `TODO` placeholders listed in `missing`.
 
 ### `beauty_review_artifact`
 

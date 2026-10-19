@@ -27,6 +27,8 @@ import { createNarrativeGallery, createNarrativeCompareGallery } from './narrati
 import { NARRATIVE_REVIEW_LEVELS, type NarrativeFeedback, type NarrativeReviewer, type NarrativeReviewCriterion, type NarrativeReviewLevel, type NarrativeReviewVerdict } from './types/narrative-review.js';
 import { NARRATIVE_REVIEW_HELP, NARRATIVE_RERENDER_HELP, reviewNarrativeArtifact, getNarrativeReviewState } from './narrative/review.js';
 import { rerenderNarrativePack } from './narrative/rerender.js';
+import { planArtifact } from './plan.js';
+import { planInputSchema } from './types/plan.js';
 
 type Flags = Record<string, string | boolean | string[]>;
 
@@ -142,6 +144,22 @@ const COMMAND_HELP: Record<string, CommandHelpEntry> = {
       '  --json             Print the complete machine-readable capability matrix',
     ],
     example: 'beauty capabilities --style papercraft --json',
+  },
+  plan: {
+    summary: 'Plan an artifact without rendering: capabilities, storyboard, lint warnings and brief skeleton.',
+    usage: 'beauty plan --format web|deck|gif --style <s> --audience "..." --purpose "..." --message "..." [--entities "a,b"] [--actions "x,y"] [--brief plan-input.json]',
+    options: [
+      '  --format web|deck|gif  Artifact format to plan',
+      '  --style <s>            One of the thirteen styles',
+      '  --audience "..."       Intended audience',
+      '  --purpose "..."       Purpose of the artifact',
+      '  --message "..."       Core message to convey',
+      '  --entities "a,b"      Comma-separated entities/objects',
+      '  --actions "x,y"       Comma-separated actions/transitions',
+      '  --brief path          Read the plan input JSON from a file or stdin',
+      '  --out path            Where to write the plan JSON (default: stdout)',
+    ],
+    example: 'beauty plan --format gif --style papercraft --audience "Producto" --purpose "Explicar validaci髇" --message "Una gu韆 duplicada se detecta y se rechaza." --entities "gu韆,fila" --actions "detectar,rechazar"',
   },
   gallery: {
     summary: 'Build a self-contained review or before/after comparison gallery.',
@@ -747,6 +765,28 @@ async function main(): Promise<void> {
         }).join(' 路 ');
         console.log(`${style}: ${cells.filter((cell) => cell.status === 'supported').length} supported 路 ${cells.filter((cell) => cell.status === 'fallback').length} fallback 路 ${cells.filter((cell) => cell.status === 'unsupported').length} unsupported 路 visual states ${states} 路 ${semantic}`);
       }
+      return;
+    }
+
+    case 'plan': {
+      const fileBrief = await loadBrief(stringFlag(flags, 'brief'));
+      const raw: Record<string, unknown> = fileBrief ? { ...(fileBrief as Record<string, unknown>) } : {};
+      if (stringFlag(flags, 'format')) raw.format = stringFlag(flags, 'format');
+      if (stringFlag(flags, 'style')) raw.style = stringFlag(flags, 'style');
+      if (stringFlag(flags, 'audience')) raw.audience = stringFlag(flags, 'audience');
+      if (stringFlag(flags, 'purpose')) raw.purpose = stringFlag(flags, 'purpose');
+      if (stringFlag(flags, 'message')) raw.message = stringFlag(flags, 'message');
+      const entitiesFlag = stringFlag(flags, 'entities');
+      if (entitiesFlag) raw.entities = entitiesFlag.split(',').map((value) => value.trim()).filter(Boolean);
+      const actionsFlag = stringFlag(flags, 'actions');
+      if (actionsFlag) raw.actions = actionsFlag.split(',').map((value) => value.trim()).filter(Boolean);
+      const parsed = planInputSchema.safeParse(raw);
+      if (!parsed.success) throw new Error(`Invalid plan input: ${parsed.error.issues.map((issue) => `${issue.path.join('.')}: ${issue.message}`).join('; ')}`);
+      const result = planArtifact(parsed.data);
+      const output = stringFlag(flags, 'out');
+      const text = JSON.stringify(result, null, 2);
+      if (output) await writeFile(path.resolve(process.cwd(), output), text, 'utf8');
+      else console.log(text);
       return;
     }
 

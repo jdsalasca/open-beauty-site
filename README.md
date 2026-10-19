@@ -91,6 +91,7 @@ Scroll-eá la página antes de capturar: las secciones aparecen al hacer scroll 
 | `beauty_get_style` | Lee los tokens exactos de un estilo | `beauty_get_style({ style: "nature", format: "markdown" })` |
 | `beauty_get_skill` | Carga el flujo y la skill de formato | `beauty_get_skill({ format: "deck" })` |
 | `beauty_get_capabilities` | Consulta primitivas, aspectos, idiomas y vocabulario de escenas | `beauty_get_capabilities({ style: "papercraft" })` |
+| `beauty_plan_artifact` | Planifica sin renderizar: capacidades, storyboard, avisos, siguiente comando y esqueleto de brief | `beauty_plan_artifact({ format: "gif", style: "papercraft", audience: "Producto", purpose: "Explicar", message: "..." })` |
 | `beauty_create_page` | Genera una página HTML completa | `beauty_create_page({ style: "nature", title: "Herbario" })` |
 | `beauty_create_experience` | Genera un lugar de 3–8 salas | `beauty_create_experience({ style: "galactic", title: "Museo", rooms: [...] })` |
 | `beauty_create_story` | Genera un cuento o lección por capítulos | `beauty_create_story({ style: "papercraft", title: "La semilla", chapters: [...] })` |
@@ -247,15 +248,15 @@ La review reúne evidencia, cambios para usuarios y decisiones; la retro, aprend
 
 Una clase puede empezar con una pregunta, detenerse ante un objeto y avanzar por salas o capítulos. Mirá [La città ideale](examples/education/renaissance-perspective.html) y [Museo de las Cosas Pequeñas](examples/education/papercraft-museum.html). En historia, cada fecha, cita y atribución necesita fuente; separá el hecho de la interpretación y señalá lo que no se sabe. El texto sigue disponible con movimiento reducido y debe poder leerse en proyector.
 
-## Diecinueve herramientas MCP
+## Veinte herramientas MCP
 
 El servidor trabaja por **stdio** y transforma briefs; no llama a un modelo ni navega la web.
 
-- **Orientar:** `beauty_list_styles`, `beauty_get_style`, `beauty_get_skill`, `beauty_get_capabilities`.
+- **Orientar:** `beauty_list_styles`, `beauty_get_style`, `beauty_get_skill`, `beauty_get_capabilities`, `beauty_plan_artifact`.
 - **Crear:** `beauty_create_page`, `beauty_create_experience`, `beauty_create_story`, `beauty_create_deck`, `beauty_create_gif`, `beauty_create_sprint`, `beauty_create_motion`, `beauty_create_canvas`, `beauty_create_sequence`.
 - **Revisar y encontrar:** `beauty_validate`, `beauty_examples`.
 
-En total son diecinueve herramientas: elegir una gramática, consultar sus capacidades, cargar instrucciones, crear la pieza adecuada, validarla y consultar ejemplos.
+En total son veinte herramientas: elegir una gramática, consultar sus capacidades, planificar sin renderizar, cargar instrucciones, crear la pieza adecuada, validarla y consultar ejemplos.
 
 ## Canvas abierto
 

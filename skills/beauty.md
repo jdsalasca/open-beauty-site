@@ -29,6 +29,8 @@ and tests. If `dist/` is missing, the CLI prints the exact one-line fix.
 | Sprint kit | `beauty sprint --style <s> --brief sprint.json` |
 | Validate | `beauty validate <file> --style <s> --strict` |
 | Repair | `beauty fix <file> --style <s>` |
+| Guided workflow | `skills/guided-workflow.md` (8-step flow) |
+| Plan without rendering | `beauty plan --format web|deck|gif --style <s> --audience ... --purpose ... --message ...` |
 | Subcommand help | `beauty <cmd> --help` or `beauty help <cmd>` |
 
 `beauty make <kind>` accepts `page|deck|gif|story|experience|motion`. `beauty
@@ -65,7 +67,7 @@ beauty make page --style artdeco --idea-file idea.txt --out out/artdeco.html
 
 `beauty_list_styles`, `beauty_get_style`, `beauty_get_skill`,
 `beauty_create_page`, `beauty_create_deck`, `beauty_create_gif`,
-`beauty_create_narrative`, `beauty_create_gallery`, `beauty_validate`; decks use
+`beauty_create_narrative`, `beauty_create_gallery`, `beauty_plan_artifact`, `beauty_validate`; decks use
 a subfamily (subfamilia). Prefer the CLI when the session has no MCP tools
 registered.
 
