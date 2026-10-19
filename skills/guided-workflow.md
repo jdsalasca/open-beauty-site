@@ -81,15 +81,15 @@ Abbreviated real output:
 {
   "format": "gif",
   "style": "papercraft",
-  "capabilities": { "summary": { "supported": 16, "fallback": 0, "unsupported": 8 } },
+  "capabilities": { "status": "supported", "supportedPrimitives": ["card-collection", "counter", "file-download", "table-rows"], "unsupportedAspects": ["9:16"] },
   "storyboard": [
-    { "id": "scene-1", "kind": "scene", "purpose": "Problema", "draftText": "Una guía con una fila completamente duplicada...", "visual": "guía" },
-    { "id": "scene-2", "kind": "scene", "purpose": "Cambio", "draftText": "Una guía con una fila completamente duplicada...", "visual": "guía" },
-    { "id": "scene-3", "kind": "scene", "purpose": "Resultado", "draftText": "Una guía con una fila completamente duplicada...", "visual": "guía" }
+    { "id": "scene-1", "kind": "scene", "purpose": "Problema", "draftText": "Una guía con una fila completamente duplicada" },
+    { "id": "scene-2", "kind": "scene", "purpose": "Solución", "draftText": "una validación la detecta y rechaza esa entrada" },
+    { "id": "scene-3", "kind": "scene", "purpose": "Highlight", "draftText": "la persona recibe una indicación para corregirla" }
   ],
-  "warnings": ["No entities provided..." only when omitted],
-  "missing": ["tagline", "intro", "visual.kind", "visual.state"],
-  "recommendedNextCommand": "beauty narrative --style papercraft --brief plan.json --out out/papercraft"
+  "warnings": ["Style limits for papercraft: ..."],
+  "missing": ["title", "tagline", "intro", "visual.kind", "visual.state", "scene-2.headline"],
+  "nextCommand": "beauty narrative --style papercraft --brief plan.json --out out/papercraft"
 }
 ```
 

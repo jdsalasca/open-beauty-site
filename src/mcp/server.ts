@@ -872,6 +872,7 @@ QUALITY BAR
         message: z.string().min(1).max(1000).describe('Core message to convey.'),
         entities: z.array(z.string().min(1).max(120)).max(12).optional().describe('Entities/objects the visuals should use.'),
         actions: z.array(z.string().min(1).max(80)).max(12).optional().describe('Actions/transitions to illustrate.'),
+        verbose: z.boolean().optional().describe('Include the full capability cell list.'),
       },
     },
     async (input) => {
