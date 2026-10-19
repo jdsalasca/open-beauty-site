@@ -4,19 +4,19 @@
   "kind": "narrative-gif",
   "locale": "es",
   "audience": "Equipo que revisa un listado",
-  "title": "Conteo",
+  "title": "Total",
   "workflowStatus": "in-review",
   "outcome": {
     "mode": "expected",
-    "scopeNote": "El ejemplo cuenta solo los elementos enlazados que aparecen en la tarjeta. No atribuye una causa externa ni extiende la cifra a elementos no visibles."
+    "scopeNote": "Ejemplo ilustrativo: el conteo incluye solo las tarjetas visibles relacionadas; no representa elementos fuera de la colección."
   },
   "illustrative": true,
   "badgePolicy": "none",
   "phases": [
     {
       "id": "alcance-de-dos",
-      "label": "Alcance declarado",
-      "text": "El 2 enlaza A y B; C está visible, pero fuera del conteo.",
+      "label": "Antes",
+      "text": "A y B forman el conteo 2.",
       "holdMs": 2200,
       "visual": {
         "kind": "comparison",
@@ -25,24 +25,53 @@
           "primitive": "counter",
           "illustrative": true,
           "entities": [
-            { "id": "contador", "kind": "counter", "value": 2 },
-            { "id": "ficha-a", "kind": "row", "label": "A" },
-            { "id": "ficha-b", "kind": "row", "label": "B" },
-            { "id": "ficha-c", "kind": "row", "label": "C" }
+            {
+              "id": "contador",
+              "kind": "counter",
+              "value": 2
+            },
+            {
+              "id": "ficha-a",
+              "kind": "row",
+              "label": "A"
+            },
+            {
+              "id": "ficha-b",
+              "kind": "row",
+              "label": "B"
+            },
+            {
+              "id": "ficha-c",
+              "kind": "row",
+              "label": "C"
+            }
           ],
           "relations": [
-            { "kind": "counts", "from": "contador", "to": "ficha-a" },
-            { "kind": "counts", "from": "contador", "to": "ficha-b" }
+            {
+              "kind": "counts",
+              "from": "contador",
+              "to": "ficha-a"
+            },
+            {
+              "kind": "counts",
+              "from": "contador",
+              "to": "ficha-b"
+            }
           ],
-          "states": { "contador": "value", "ficha-a": "default", "ficha-b": "default", "ficha-c": "pending" },
+          "states": {
+            "contador": "value",
+            "ficha-a": "default",
+            "ficha-b": "default",
+            "ficha-c": "pending"
+          },
           "actions": []
         }
       }
     },
     {
       "id": "tercera-ficha-incluida",
-      "label": "Tercera ficha incluida",
-      "text": "Al incluir C en la relación, la cifra pasa de 2 a 3.",
+      "label": "Se suma C",
+      "text": "La ficha C se incluye.",
       "holdMs": 2200,
       "visual": {
         "kind": "comparison",
@@ -51,25 +80,63 @@
           "primitive": "counter",
           "illustrative": true,
           "entities": [
-            { "id": "contador", "kind": "counter", "value": 3 },
-            { "id": "ficha-a", "kind": "row", "label": "A" },
-            { "id": "ficha-b", "kind": "row", "label": "B" },
-            { "id": "ficha-c", "kind": "row", "label": "C" }
+            {
+              "id": "contador",
+              "kind": "counter",
+              "value": 3
+            },
+            {
+              "id": "ficha-a",
+              "kind": "row",
+              "label": "A"
+            },
+            {
+              "id": "ficha-b",
+              "kind": "row",
+              "label": "B"
+            },
+            {
+              "id": "ficha-c",
+              "kind": "row",
+              "label": "C"
+            }
           ],
           "relations": [
-            { "kind": "counts", "from": "contador", "to": "ficha-a" },
-            { "kind": "counts", "from": "contador", "to": "ficha-b" },
-            { "kind": "counts", "from": "contador", "to": "ficha-c" }
+            {
+              "kind": "counts",
+              "from": "contador",
+              "to": "ficha-a"
+            },
+            {
+              "kind": "counts",
+              "from": "contador",
+              "to": "ficha-b"
+            },
+            {
+              "kind": "counts",
+              "from": "contador",
+              "to": "ficha-c"
+            }
           ],
-          "states": { "contador": "increased", "ficha-a": "default", "ficha-b": "default", "ficha-c": "accepted" },
-          "actions": [{ "entityId": "contador", "type": "count-changes" }]
+          "states": {
+            "contador": "increased",
+            "ficha-a": "default",
+            "ficha-b": "default",
+            "ficha-c": "accepted"
+          },
+          "actions": [
+            {
+              "entityId": "contador",
+              "type": "count-changes"
+            }
+          ]
         }
       }
     },
     {
       "id": "conjunto-de-tres",
-      "label": "Conjunto de tres",
-      "text": "El 3 cubre estas fichas; no incluye elementos no visibles.",
+      "label": "Resultado esperado",
+      "text": "Total esperado: 3.",
       "holdMs": 2200,
       "visual": {
         "kind": "comparison",
@@ -78,23 +145,69 @@
           "primitive": "counter",
           "illustrative": true,
           "entities": [
-            { "id": "contador", "kind": "counter", "value": 3 },
-            { "id": "ficha-a", "kind": "row", "label": "A" },
-            { "id": "ficha-b", "kind": "row", "label": "B" },
-            { "id": "ficha-c", "kind": "row", "label": "C" }
+            {
+              "id": "contador",
+              "kind": "counter",
+              "value": 3
+            },
+            {
+              "id": "ficha-a",
+              "kind": "row",
+              "label": "A"
+            },
+            {
+              "id": "ficha-b",
+              "kind": "row",
+              "label": "B"
+            },
+            {
+              "id": "ficha-c",
+              "kind": "row",
+              "label": "C"
+            }
           ],
           "relations": [
-            { "kind": "counts", "from": "contador", "to": "ficha-a" },
-            { "kind": "counts", "from": "contador", "to": "ficha-b" },
-            { "kind": "counts", "from": "contador", "to": "ficha-c" }
+            {
+              "kind": "counts",
+              "from": "contador",
+              "to": "ficha-a"
+            },
+            {
+              "kind": "counts",
+              "from": "contador",
+              "to": "ficha-b"
+            },
+            {
+              "kind": "counts",
+              "from": "contador",
+              "to": "ficha-c"
+            }
           ],
-          "states": { "contador": "unchanged", "ficha-a": "default", "ficha-b": "default", "ficha-c": "accepted" },
+          "states": {
+            "contador": "pending",
+            "ficha-a": "default",
+            "ficha-b": "default",
+            "ficha-c": "accepted"
+          },
           "actions": []
         }
       }
     }
   ],
-  "playback": { "preset": "concise", "minReadableHoldMs": 2200, "transitionMs": 400, "loop": true, "totalDurationBudgetMs": 15000 },
-  "output": { "width": 640, "height": 360, "formats": ["gif", "png"] },
+  "playback": {
+    "preset": "concise",
+    "minReadableHoldMs": 2200,
+    "transitionMs": 400,
+    "loop": true,
+    "totalDurationBudgetMs": 15000
+  },
+  "output": {
+    "width": 640,
+    "height": 360,
+    "formats": [
+      "gif",
+      "png"
+    ]
+  },
   "seed": 19
 }

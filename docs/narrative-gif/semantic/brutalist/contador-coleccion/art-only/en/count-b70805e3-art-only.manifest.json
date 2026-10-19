@@ -1,0 +1,1735 @@
+{
+  "schemaVersion": 2,
+  "commit": "8d55d1ae9ac9dd5266dcf8f12f8ee95aee5e8220",
+  "brief": {
+    "style": "brutalist",
+    "subfamily": "documentary",
+    "kind": "narrative-gif",
+    "locale": "en",
+    "audience": "Team reviewing a list",
+    "title": "Count",
+    "workflowStatus": "in-review",
+    "outcome": {
+      "mode": "expected",
+      "scopeNote": "Illustrative example: the count includes only related visible cards; it does not represent items outside the collection."
+    },
+    "illustrative": true,
+    "badgePolicy": "none",
+    "phases": [
+      {
+        "id": "scope-of-two",
+        "label": "Before",
+        "text": "A and B count as 2.",
+        "visual": {
+          "kind": "comparison",
+          "state": "before",
+          "semantic": {
+            "primitive": "counter",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "counter",
+                "kind": "counter",
+                "value": 2,
+                "illustrative": true
+              },
+              {
+                "id": "card-a",
+                "kind": "row",
+                "label": "A",
+                "illustrative": true
+              },
+              {
+                "id": "card-b",
+                "kind": "row",
+                "label": "B",
+                "illustrative": true
+              },
+              {
+                "id": "card-c",
+                "kind": "row",
+                "label": "C",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "counts",
+                "from": "counter",
+                "to": "card-a"
+              },
+              {
+                "kind": "counts",
+                "from": "counter",
+                "to": "card-b"
+              }
+            ],
+            "states": {
+              "counter": "value",
+              "card-a": "default",
+              "card-b": "default",
+              "card-c": "pending"
+            },
+            "actions": []
+          }
+        },
+        "holdMs": 2200
+      },
+      {
+        "id": "third-card-included",
+        "label": "Add C",
+        "text": "Card C joins.",
+        "visual": {
+          "kind": "comparison",
+          "state": "flagged",
+          "semantic": {
+            "primitive": "counter",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "counter",
+                "kind": "counter",
+                "value": 3,
+                "illustrative": true
+              },
+              {
+                "id": "card-a",
+                "kind": "row",
+                "label": "A",
+                "illustrative": true
+              },
+              {
+                "id": "card-b",
+                "kind": "row",
+                "label": "B",
+                "illustrative": true
+              },
+              {
+                "id": "card-c",
+                "kind": "row",
+                "label": "C",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "counts",
+                "from": "counter",
+                "to": "card-a"
+              },
+              {
+                "kind": "counts",
+                "from": "counter",
+                "to": "card-b"
+              },
+              {
+                "kind": "counts",
+                "from": "counter",
+                "to": "card-c"
+              }
+            ],
+            "states": {
+              "counter": "increased",
+              "card-a": "default",
+              "card-b": "default",
+              "card-c": "accepted"
+            },
+            "actions": [
+              {
+                "entityId": "counter",
+                "type": "count-changes"
+              }
+            ]
+          }
+        },
+        "holdMs": 2200
+      },
+      {
+        "id": "set-of-three",
+        "label": "Expected result",
+        "text": "Expected total: 3.",
+        "visual": {
+          "kind": "comparison",
+          "state": "review-ready",
+          "semantic": {
+            "primitive": "counter",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "counter",
+                "kind": "counter",
+                "value": 3,
+                "illustrative": true
+              },
+              {
+                "id": "card-a",
+                "kind": "row",
+                "label": "A",
+                "illustrative": true
+              },
+              {
+                "id": "card-b",
+                "kind": "row",
+                "label": "B",
+                "illustrative": true
+              },
+              {
+                "id": "card-c",
+                "kind": "row",
+                "label": "C",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "counts",
+                "from": "counter",
+                "to": "card-a"
+              },
+              {
+                "kind": "counts",
+                "from": "counter",
+                "to": "card-b"
+              },
+              {
+                "kind": "counts",
+                "from": "counter",
+                "to": "card-c"
+              }
+            ],
+            "states": {
+              "counter": "pending",
+              "card-a": "default",
+              "card-b": "default",
+              "card-c": "accepted"
+            },
+            "actions": []
+          }
+        },
+        "holdMs": 2200
+      }
+    ],
+    "playback": {
+      "preset": "concise",
+      "minReadableHoldMs": 2200,
+      "transitionMs": 400,
+      "loop": true,
+      "totalDurationBudgetMs": 15000
+    },
+    "output": {
+      "width": 640,
+      "height": 360,
+      "formats": [
+        "gif",
+        "png"
+      ],
+      "preset": "review-1280x720"
+    },
+    "seed": 19,
+    "status": "in-review"
+  },
+  "briefSha256": "9db6be05a97c85cf40268ea42449b387ebe6662535b7f517cd828022ff1d0f0b",
+  "style": "brutalist",
+  "subfamily": "documentary",
+  "workflowStatus": "in-review",
+  "outcome": {
+    "mode": "expected",
+    "scopeNote": "Illustrative example: the count includes only related visible cards; it does not represent items outside the collection."
+  },
+  "evidenceClassification": "illustrative",
+  "illustrative": true,
+  "artOnly": true,
+  "seed": 19,
+  "renderer": {
+    "narrative": "narrative-core/0.2.0",
+    "canvas": "@napi-rs/canvas@1.0.11",
+    "gif": "gifenc@1.0.3",
+    "scene": "brutalist-documentary/1.1.0"
+  },
+  "fonts": {
+    "bundleVersion": "repo-bundled-ofl-1",
+    "roles": {
+      "display": {
+        "family": "Archivo Black",
+        "weight": 400
+      },
+      "reading": {
+        "family": "Space Mono",
+        "weight": 400
+      },
+      "label": {
+        "family": "Space Mono",
+        "weight": 700
+      },
+      "figure": {
+        "family": "Archivo Black",
+        "weight": 400
+      },
+      "annotation": {
+        "family": "Space Mono",
+        "weight": 400
+      }
+    }
+  },
+  "dimensions": {
+    "width": 640,
+    "height": 360
+  },
+  "formats": [
+    "gif",
+    "png"
+  ],
+  "decoded": {
+    "width": 640,
+    "height": 360,
+    "frameCount": 21,
+    "delaysMs": [
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80
+    ],
+    "durationMs": 8040,
+    "loopCount": 0,
+    "integrity": true
+  },
+  "ffprobe": {
+    "available": true,
+    "passed": true,
+    "detail": "ffprobe 640×360; 21 frames; 8040ms; matches the independent LZW decode."
+  },
+  "bytes": {
+    "gif": 125543,
+    "png": 7020,
+    "contactSheet": 41267
+  },
+  "hashes": {
+    "briefSha256": "9db6be05a97c85cf40268ea42449b387ebe6662535b7f517cd828022ff1d0f0b",
+    "gifSha256": "0c227111c5978216289dec80cdec30d598884b783c401c6344ab8a58b3284aea",
+    "pngSha256": "9da8dd911dae9af69a86d1f9ddd9d4e7a5c8ca775b8675292a5eb672edaf4125",
+    "contactSheetSha256": "541e342a416a90c44d1713ac7bf760ce1b987166bb971bdb384d8becc33510fe"
+  },
+  "files": {
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\contador-coleccion\\art-only\\en\\count-b70805e3-art-only.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\contador-coleccion\\art-only\\en\\count-b70805e3-art-only.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\contador-coleccion\\art-only\\en\\count-b70805e3-art-only-contact-sheet.png"
+  },
+  "controls": [
+    {
+      "name": "gif-integrity",
+      "passed": true,
+      "detail": "Independent LZW decode and GIF trailer passed.",
+      "source": "decoded"
+    },
+    {
+      "name": "dimensions",
+      "passed": true,
+      "detail": "decoded 640×360; requested 640×360",
+      "source": "decoded"
+    },
+    {
+      "name": "frame-count",
+      "passed": true,
+      "detail": "21 decoded frame(s)",
+      "source": "decoded"
+    },
+    {
+      "name": "duration",
+      "passed": true,
+      "detail": "8040ms decoded; holds exclude transitions",
+      "source": "decoded"
+    },
+    {
+      "name": "loop",
+      "passed": true,
+      "detail": "repeat=0; result-to-before bridge is explicit",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-holds",
+      "passed": true,
+      "detail": "scope-of-two 2200/2200ms, third-card-included 2200/2200ms, set-of-three 2200/2200ms",
+      "source": "decoded"
+    },
+    {
+      "name": "ffprobe-crosscheck",
+      "passed": true,
+      "detail": "ffprobe 640×360; 21 frames; 8040ms; matches the independent LZW decode.",
+      "source": "decoded"
+    },
+    {
+      "name": "files",
+      "passed": true,
+      "detail": "GIF 125543B · PNG 7020B · contact 41267B",
+      "source": "decoded"
+    },
+    {
+      "name": "scene-renderer-registered",
+      "passed": true,
+      "detail": "renderer brutalist/brutalist-documentary/1.1.0 exists; visual style likeness remains a separate review",
+      "source": "source"
+    },
+    {
+      "name": "type-system",
+      "passed": true,
+      "detail": "style typeSystem tokens are attached to raster role registry",
+      "source": "source"
+    },
+    {
+      "name": "narrative-subfamily",
+      "passed": true,
+      "detail": "brutalist/documentary selects an explicit narrative art direction",
+      "source": "source"
+    },
+    {
+      "name": "font-registration-and-glyphs",
+      "passed": true,
+      "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "distinct-frames",
+      "passed": true,
+      "detail": "3 unique composited frame(s); a format-valid static GIF does not pass",
+      "source": "pixels"
+    },
+    {
+      "name": "palette-loss",
+      "passed": true,
+      "detail": "40 colors; mean channel loss 0.183, max 7; sampled 21 frames",
+      "source": "pixels"
+    },
+    {
+      "name": "title-complete",
+      "passed": true,
+      "detail": "Count",
+      "source": "source"
+    },
+    {
+      "name": "phase-scope-of-two-label-complete",
+      "passed": true,
+      "detail": "Before",
+      "source": "source"
+    },
+    {
+      "name": "phase-scope-of-two-text-complete",
+      "passed": true,
+      "detail": "A and B / count as 2.",
+      "source": "source"
+    },
+    {
+      "name": "phase-third-card-included-label-complete",
+      "passed": true,
+      "detail": "Add C",
+      "source": "source"
+    },
+    {
+      "name": "phase-third-card-included-text-complete",
+      "passed": true,
+      "detail": "Card C / joins.",
+      "source": "source"
+    },
+    {
+      "name": "phase-set-of-three-label-complete",
+      "passed": true,
+      "detail": "Expected result",
+      "source": "source"
+    },
+    {
+      "name": "phase-set-of-three-text-complete",
+      "passed": true,
+      "detail": "Expected / total: 3.",
+      "source": "source"
+    },
+    {
+      "name": "registered-fonts",
+      "passed": true,
+      "detail": "all role faces and Spanish glyphs rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "review-size-thresholds",
+      "passed": true,
+      "detail": "title 56px; phase body >=36px; label >=24px",
+      "source": "source"
+    },
+    {
+      "name": "640x360-effective-size",
+      "passed": true,
+      "detail": "title 56.0px; body min 36.0px (requires >=20px); label min 24.0px",
+      "source": "source"
+    },
+    {
+      "name": "semantic-text-legibility",
+      "passed": true,
+      "status": "pass",
+      "detail": "minimum effective text >=14px: 14.0px; minimum headline 28.0px (requires >=20px); measured 18 declared object text box(es) at 640×360.",
+      "source": "decoded"
+    },
+    {
+      "name": "composition-balance",
+      "passed": false,
+      "severity": "warning",
+      "detail": "WARN · revise; 8×4 decoded-pixel grid against #F2EFE4: empty cells 50.0%, text-column vertical fill 0.0%, art/object area outside the text column 50.0%, largest empty rectangle 50.0%; thresholds: rectangle <=22%, text fill >=60% (text-fill threshold omitted in art-only mode); not an aesthetic score. Per-frame: scope-of-two · hold: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | scope-of-two → third-card-included · transition midpoint: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | third-card-included · hold: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | third-card-included → set-of-three · transition midpoint: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | set-of-three · hold: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | set-of-three → scope-of-two · loop join: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0%",
+      "source": "pixels"
+    },
+    {
+      "name": "contrast",
+      "passed": true,
+      "detail": "rendered text colors: ink 17.10:1; label 17.10:1 (not an OCR or per-pixel text measurement)",
+      "source": "source"
+    },
+    {
+      "name": "safe-zone-and-collisions",
+      "passed": true,
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+      "source": "source"
+    },
+    {
+      "name": "stable-reading-holds",
+      "passed": true,
+      "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-count-and-copy",
+      "passed": true,
+      "detail": "3 complete phases; all copy retained",
+      "source": "source"
+    },
+    {
+      "name": "shared-object-identity",
+      "passed": true,
+      "detail": "One scene object instance is created and passed to every phase frame.",
+      "source": "source"
+    },
+    {
+      "name": "visual-state-change",
+      "passed": true,
+      "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+      "source": "pixels"
+    },
+    {
+      "name": "workflow-outcome-separation",
+      "passed": true,
+      "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+      "source": "source"
+    },
+    {
+      "name": "outcome-evidence",
+      "passed": true,
+      "detail": "Expected outcome; no benefit measurement is claimed.",
+      "source": "source"
+    },
+    {
+      "name": "result-follows-outcome",
+      "passed": true,
+      "detail": "outcome=expected; final label=\"Expected result\"",
+      "source": "source"
+    },
+    {
+      "name": "semantic-illustrative-data",
+      "passed": true,
+      "detail": "brief illustrative=true; semantic phase flags=true,true,true",
+      "source": "source"
+    },
+    {
+      "name": "semantic-object-midpoint:scope-of-two → third-card-included · transition midpoint",
+      "passed": true,
+      "detail": "decoded object diff 5.3%; changed-state entities: counter; counter value→increased 3.8%, card-a default→default 22.0%, card-b default→default 23.3%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:third-card-included → set-of-three · transition midpoint",
+      "passed": true,
+      "detail": "decoded object diff 1.3%; changed-state entities: counter; counter increased→pending 1.5%, card-a default→default 0.0%, card-b default→default 0.0%, card-c accepted→accepted 0.0%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:set-of-three → scope-of-two · loop join",
+      "passed": true,
+      "detail": "decoded object diff 6.8%; changed-state entities: counter, card-c; counter pending→value 5.3%, card-a default→default 18.6%, card-b default→default 22.6%, card-c accepted→pending 14.3%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:scope-of-two → third-card-included hold",
+      "passed": true,
+      "detail": "decoded object diff 5.1%; changed-state entities: counter; counter value→increased 3.8%, card-a default→default 18.6%, card-b default→default 22.6%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:third-card-included → set-of-three hold",
+      "passed": true,
+      "detail": "decoded object diff 1.3%; changed-state entities: counter; counter increased→pending 1.5%, card-a default→default 0.0%, card-b default→default 0.0%, card-c accepted→accepted 0.0%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:set-of-three → scope-of-two loop join",
+      "passed": true,
+      "detail": "decoded object diff 6.9%; changed-state entities: counter, card-c; counter pending→value 5.3%, card-a default→default 22.0%, card-b default→default 23.3%, card-c accepted→pending 14.3%",
+      "source": "decoded"
+    }
+  ],
+  "evaluation": {
+    "technical-integrity": {
+      "status": "pass",
+      "controls": [
+        {
+          "name": "gif-integrity",
+          "passed": true,
+          "detail": "Independent LZW decode and GIF trailer passed.",
+          "source": "decoded"
+        },
+        {
+          "name": "dimensions",
+          "passed": true,
+          "detail": "decoded 640×360; requested 640×360",
+          "source": "decoded"
+        },
+        {
+          "name": "frame-count",
+          "passed": true,
+          "detail": "21 decoded frame(s)",
+          "source": "decoded"
+        },
+        {
+          "name": "duration",
+          "passed": true,
+          "detail": "8040ms decoded; holds exclude transitions",
+          "source": "decoded"
+        },
+        {
+          "name": "loop",
+          "passed": true,
+          "detail": "repeat=0; result-to-before bridge is explicit",
+          "source": "decoded"
+        },
+        {
+          "name": "phase-holds",
+          "passed": true,
+          "detail": "scope-of-two 2200/2200ms, third-card-included 2200/2200ms, set-of-three 2200/2200ms",
+          "source": "decoded"
+        },
+        {
+          "name": "ffprobe-crosscheck",
+          "passed": true,
+          "detail": "ffprobe 640×360; 21 frames; 8040ms; matches the independent LZW decode.",
+          "source": "decoded"
+        },
+        {
+          "name": "files",
+          "passed": true,
+          "detail": "GIF 125543B · PNG 7020B · contact 41267B",
+          "source": "decoded"
+        }
+      ]
+    },
+    "style-conformance": {
+      "status": "pending",
+      "sourceStatus": "pass",
+      "pixelStatus": "pass",
+      "controls": [
+        {
+          "name": "scene-renderer-registered",
+          "passed": true,
+          "detail": "renderer brutalist/brutalist-documentary/1.1.0 exists; visual style likeness remains a separate review",
+          "source": "source"
+        },
+        {
+          "name": "type-system",
+          "passed": true,
+          "detail": "style typeSystem tokens are attached to raster role registry",
+          "source": "source"
+        },
+        {
+          "name": "narrative-subfamily",
+          "passed": true,
+          "detail": "brutalist/documentary selects an explicit narrative art direction",
+          "source": "source"
+        },
+        {
+          "name": "font-registration-and-glyphs",
+          "passed": true,
+          "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "distinct-frames",
+          "passed": true,
+          "detail": "3 unique composited frame(s); a format-valid static GIF does not pass",
+          "source": "pixels"
+        },
+        {
+          "name": "palette-loss",
+          "passed": true,
+          "detail": "40 colors; mean channel loss 0.183, max 7; sampled 21 frames",
+          "source": "pixels"
+        }
+      ],
+      "note": "Source checks identify renderer/font tokens; pixel checks measure frame change and palette loss. Neither substitutes for visual review."
+    },
+    "rendered-legibility": {
+      "status": "revise",
+      "controls": [
+        {
+          "name": "title-complete",
+          "passed": true,
+          "detail": "Count",
+          "source": "source"
+        },
+        {
+          "name": "phase-scope-of-two-label-complete",
+          "passed": true,
+          "detail": "Before",
+          "source": "source"
+        },
+        {
+          "name": "phase-scope-of-two-text-complete",
+          "passed": true,
+          "detail": "A and B / count as 2.",
+          "source": "source"
+        },
+        {
+          "name": "phase-third-card-included-label-complete",
+          "passed": true,
+          "detail": "Add C",
+          "source": "source"
+        },
+        {
+          "name": "phase-third-card-included-text-complete",
+          "passed": true,
+          "detail": "Card C / joins.",
+          "source": "source"
+        },
+        {
+          "name": "phase-set-of-three-label-complete",
+          "passed": true,
+          "detail": "Expected result",
+          "source": "source"
+        },
+        {
+          "name": "phase-set-of-three-text-complete",
+          "passed": true,
+          "detail": "Expected / total: 3.",
+          "source": "source"
+        },
+        {
+          "name": "registered-fonts",
+          "passed": true,
+          "detail": "all role faces and Spanish glyphs rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "review-size-thresholds",
+          "passed": true,
+          "detail": "title 56px; phase body >=36px; label >=24px",
+          "source": "source"
+        },
+        {
+          "name": "640x360-effective-size",
+          "passed": true,
+          "detail": "title 56.0px; body min 36.0px (requires >=20px); label min 24.0px",
+          "source": "source"
+        },
+        {
+          "name": "semantic-text-legibility",
+          "passed": true,
+          "status": "pass",
+          "detail": "minimum effective text >=14px: 14.0px; minimum headline 28.0px (requires >=20px); measured 18 declared object text box(es) at 640×360.",
+          "source": "decoded"
+        },
+        {
+          "name": "composition-balance",
+          "passed": false,
+          "severity": "warning",
+          "detail": "WARN · revise; 8×4 decoded-pixel grid against #F2EFE4: empty cells 50.0%, text-column vertical fill 0.0%, art/object area outside the text column 50.0%, largest empty rectangle 50.0%; thresholds: rectangle <=22%, text fill >=60% (text-fill threshold omitted in art-only mode); not an aesthetic score. Per-frame: scope-of-two · hold: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | scope-of-two → third-card-included · transition midpoint: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | third-card-included · hold: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | third-card-included → set-of-three · transition midpoint: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | set-of-three · hold: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | set-of-three → scope-of-two · loop join: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0%",
+          "source": "pixels"
+        },
+        {
+          "name": "contrast",
+          "passed": true,
+          "detail": "rendered text colors: ink 17.10:1; label 17.10:1 (not an OCR or per-pixel text measurement)",
+          "source": "source"
+        },
+        {
+          "name": "safe-zone-and-collisions",
+          "passed": true,
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+          "source": "source"
+        },
+        {
+          "name": "stable-reading-holds",
+          "passed": true,
+          "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+          "source": "decoded"
+        }
+      ],
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
+    },
+    "narrative": {
+      "status": "pending",
+      "controls": [
+        {
+          "name": "phase-count-and-copy",
+          "passed": true,
+          "detail": "3 complete phases; all copy retained",
+          "source": "source"
+        },
+        {
+          "name": "shared-object-identity",
+          "passed": true,
+          "detail": "One scene object instance is created and passed to every phase frame.",
+          "source": "source"
+        },
+        {
+          "name": "visual-state-change",
+          "passed": true,
+          "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+          "source": "pixels"
+        },
+        {
+          "name": "workflow-outcome-separation",
+          "passed": true,
+          "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+          "source": "source"
+        },
+        {
+          "name": "outcome-evidence",
+          "passed": true,
+          "detail": "Expected outcome; no benefit measurement is claimed.",
+          "source": "source"
+        },
+        {
+          "name": "result-follows-outcome",
+          "passed": true,
+          "detail": "outcome=expected; final label=\"Expected result\"",
+          "source": "source"
+        },
+        {
+          "name": "semantic-illustrative-data",
+          "passed": true,
+          "detail": "brief illustrative=true; semantic phase flags=true,true,true",
+          "source": "source"
+        },
+        {
+          "name": "semantic-object-midpoint:scope-of-two → third-card-included · transition midpoint",
+          "passed": true,
+          "detail": "decoded object diff 5.3%; changed-state entities: counter; counter value→increased 3.8%, card-a default→default 22.0%, card-b default→default 23.3%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:third-card-included → set-of-three · transition midpoint",
+          "passed": true,
+          "detail": "decoded object diff 1.3%; changed-state entities: counter; counter increased→pending 1.5%, card-a default→default 0.0%, card-b default→default 0.0%, card-c accepted→accepted 0.0%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:set-of-three → scope-of-two · loop join",
+          "passed": true,
+          "detail": "decoded object diff 6.8%; changed-state entities: counter, card-c; counter pending→value 5.3%, card-a default→default 18.6%, card-b default→default 22.6%, card-c accepted→pending 14.3%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:scope-of-two → third-card-included hold",
+          "passed": true,
+          "detail": "decoded object diff 5.1%; changed-state entities: counter; counter value→increased 3.8%, card-a default→default 18.6%, card-b default→default 22.6%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:third-card-included → set-of-three hold",
+          "passed": true,
+          "detail": "decoded object diff 1.3%; changed-state entities: counter; counter increased→pending 1.5%, card-a default→default 0.0%, card-b default→default 0.0%, card-c accepted→accepted 0.0%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:set-of-three → scope-of-two loop join",
+          "passed": true,
+          "detail": "decoded object diff 6.9%; changed-state entities: counter, card-c; counter pending→value 5.3%, card-a default→default 22.0%, card-b default→default 23.3%, card-c accepted→pending 14.3%",
+          "source": "decoded"
+        }
+      ],
+      "note": "Automated checks separate work status from expected/observed outcome and confirm required evidence fields; causal meaning and evidence scope still need human review."
+    },
+    "visual-review": {
+      "status": "pending",
+      "criteria": [
+        "identity at 200px thumbnail",
+        "full text and contrast at 640×360",
+        "style material in native frame",
+        "same object and causal change across phases",
+        "result faithful to outcome and evidence scope",
+        "deliberate loop restart"
+      ],
+      "evidence": []
+    },
+    "publicationRecommendation": "none"
+  },
+  "phaseCaptures": [
+    {
+      "phaseId": "scope-of-two",
+      "labels": [
+        "scope-of-two · start",
+        "scope-of-two · hold",
+        "scope-of-two → third-card-included · transition midpoint",
+        "scope-of-two · exit"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\contador-coleccion\\art-only\\en\\count-b70805e3-art-only-contact-sheet.png"
+    },
+    {
+      "phaseId": "third-card-included",
+      "labels": [
+        "third-card-included · start",
+        "third-card-included · hold",
+        "third-card-included → set-of-three · transition midpoint",
+        "third-card-included · exit"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\contador-coleccion\\art-only\\en\\count-b70805e3-art-only-contact-sheet.png"
+    },
+    {
+      "phaseId": "set-of-three",
+      "labels": [
+        "set-of-three · start",
+        "set-of-three · hold",
+        "set-of-three → scope-of-two · loop join",
+        "set-of-three · exit"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\contador-coleccion\\art-only\\en\\count-b70805e3-art-only-contact-sheet.png"
+    }
+  ],
+  "semanticObjectCaptures": [
+    {
+      "label": "scope-of-two · hold",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 0,
+      "frameIndex": 1,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "counter",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "LEDGER",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 59,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "2",
+              "bounds": {
+                "x": 380.288768,
+                "y": 230.650352,
+                "width": 19,
+                "height": 34
+              },
+              "fontSizePx": 28,
+              "role": "headline"
+            },
+            {
+              "text": "COUNT",
+              "bounds": {
+                "x": 446.436608,
+                "y": 237.72193599999997,
+                "width": 43,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "card-a",
+          "bounds": {
+            "x": 379.1768,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "A",
+              "bounds": {
+                "x": 389.44112,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "card-b",
+          "bounds": {
+            "x": 446.18,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "B",
+              "bounds": {
+                "x": 456.44432,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "scope-of-two → third-card-included · transition midpoint",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 0,
+      "frameIndex": 3,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "counter",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "LEDGER",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 59,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "3",
+              "bounds": {
+                "x": 380.288768,
+                "y": 230.650352,
+                "width": 19,
+                "height": 34
+              },
+              "fontSizePx": 28,
+              "role": "headline"
+            },
+            {
+              "text": "COUNT",
+              "bounds": {
+                "x": 446.436608,
+                "y": 237.72193599999997,
+                "width": 43,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "card-a",
+          "bounds": {
+            "x": 345.6752,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "A",
+              "bounds": {
+                "x": 355.93952,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "card-b",
+          "bounds": {
+            "x": 412.6784,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "B",
+              "bounds": {
+                "x": 422.94272,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "card-c",
+          "bounds": {
+            "x": 479.6816,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "C",
+              "bounds": {
+                "x": 489.94592,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "third-card-included · hold",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 1,
+      "frameIndex": 8,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "counter",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "LEDGER",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 59,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "3",
+              "bounds": {
+                "x": 380.288768,
+                "y": 230.650352,
+                "width": 19,
+                "height": 34
+              },
+              "fontSizePx": 28,
+              "role": "headline"
+            },
+            {
+              "text": "COUNT",
+              "bounds": {
+                "x": 446.436608,
+                "y": 237.72193599999997,
+                "width": 43,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "card-a",
+          "bounds": {
+            "x": 345.6752,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "A",
+              "bounds": {
+                "x": 355.93952,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "card-b",
+          "bounds": {
+            "x": 412.6784,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "B",
+              "bounds": {
+                "x": 422.94272,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "card-c",
+          "bounds": {
+            "x": 479.6816,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "C",
+              "bounds": {
+                "x": 489.94592,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "third-card-included → set-of-three · transition midpoint",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 1,
+      "frameIndex": 10,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "counter",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "LEDGER",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 59,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "3",
+              "bounds": {
+                "x": 380.288768,
+                "y": 230.650352,
+                "width": 19,
+                "height": 34
+              },
+              "fontSizePx": 28,
+              "role": "headline"
+            },
+            {
+              "text": "COUNT",
+              "bounds": {
+                "x": 446.436608,
+                "y": 237.72193599999997,
+                "width": 43,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            },
+            {
+              "text": "EXPECTED",
+              "bounds": {
+                "x": 373.67398399999996,
+                "y": 290.326576,
+                "width": 69,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "card-a",
+          "bounds": {
+            "x": 345.6752,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "A",
+              "bounds": {
+                "x": 355.93952,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "card-b",
+          "bounds": {
+            "x": 412.6784,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "B",
+              "bounds": {
+                "x": 422.94272,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "card-c",
+          "bounds": {
+            "x": 479.6816,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "C",
+              "bounds": {
+                "x": 489.94592,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "set-of-three · hold",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 2,
+      "frameIndex": 15,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "counter",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "LEDGER",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 59,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "3",
+              "bounds": {
+                "x": 380.288768,
+                "y": 230.650352,
+                "width": 19,
+                "height": 34
+              },
+              "fontSizePx": 28,
+              "role": "headline"
+            },
+            {
+              "text": "COUNT",
+              "bounds": {
+                "x": 446.436608,
+                "y": 237.72193599999997,
+                "width": 43,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            },
+            {
+              "text": "EXPECTED",
+              "bounds": {
+                "x": 373.67398399999996,
+                "y": 290.326576,
+                "width": 69,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "card-a",
+          "bounds": {
+            "x": 345.6752,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "A",
+              "bounds": {
+                "x": 355.93952,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "card-b",
+          "bounds": {
+            "x": 412.6784,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "B",
+              "bounds": {
+                "x": 422.94272,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "card-c",
+          "bounds": {
+            "x": 479.6816,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "C",
+              "bounds": {
+                "x": 489.94592,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "set-of-three → scope-of-two · loop join",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 2,
+      "frameIndex": 17,
+      "kind": "loop-bridge",
+      "regions": [
+        {
+          "entityId": "counter",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "LEDGER",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 59,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "2",
+              "bounds": {
+                "x": 380.288768,
+                "y": 230.650352,
+                "width": 19,
+                "height": 34
+              },
+              "fontSizePx": 28,
+              "role": "headline"
+            },
+            {
+              "text": "COUNT",
+              "bounds": {
+                "x": 446.436608,
+                "y": 237.72193599999997,
+                "width": 43,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "card-a",
+          "bounds": {
+            "x": 379.1768,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "A",
+              "bounds": {
+                "x": 389.44112,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "card-b",
+          "bounds": {
+            "x": 446.18,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "B",
+              "bounds": {
+                "x": 456.44432,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "compositionByFrame": [
+    {
+      "label": "scope-of-two · hold",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "scope-of-two → third-card-included · transition midpoint",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "third-card-included · hold",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "third-card-included → set-of-three · transition midpoint",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "set-of-three · hold",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "set-of-three → scope-of-two · loop join",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    }
+  ],
+  "palette": {
+    "colors": 40,
+    "meanAbsoluteChannelError": 0.183,
+    "maximumChannelError": 7,
+    "sampledFrames": 21
+  },
+  "phaseHoldsVerified": [
+    {
+      "phaseId": "scope-of-two",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    },
+    {
+      "phaseId": "third-card-included",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    },
+    {
+      "phaseId": "set-of-three",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    }
+  ],
+  "timing": {
+    "preset": "concise",
+    "holdsRequestedMs": 6600,
+    "holdsDecodedMs": 6600,
+    "transitionsMs": 800,
+    "loopBridgeMs": 400,
+    "entryMs": 240,
+    "totalDecodedMs": 8040,
+    "totalDurationBudgetMs": 15000,
+    "phaseHolds": [
+      {
+        "phaseId": "scope-of-two",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      },
+      {
+        "phaseId": "third-card-included",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      },
+      {
+        "phaseId": "set-of-three",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      }
+    ],
+    "warnings": [
+      {
+        "code": "READING_LOAD",
+        "message": "Phase 1 has about 3.18 words/s (7 label+body words ÷ 2.20s hold); the reading threshold is 3 words/s."
+      }
+    ]
+  },
+  "resourceEstimate": {
+    "pixelFrames": 4838400,
+    "maxPixelFrames": 96000000,
+    "memoryBytes": 34170880,
+    "maxMemoryBytes": 268435456
+  },
+  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed."
+}

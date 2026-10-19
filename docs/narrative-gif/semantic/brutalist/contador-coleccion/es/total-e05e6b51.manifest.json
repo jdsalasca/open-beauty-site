@@ -1,0 +1,1734 @@
+{
+  "schemaVersion": 2,
+  "commit": "8d55d1ae9ac9dd5266dcf8f12f8ee95aee5e8220",
+  "brief": {
+    "style": "brutalist",
+    "subfamily": "documentary",
+    "kind": "narrative-gif",
+    "locale": "es",
+    "audience": "Equipo que revisa un listado",
+    "title": "Total",
+    "workflowStatus": "in-review",
+    "outcome": {
+      "mode": "expected",
+      "scopeNote": "Ejemplo ilustrativo: el conteo incluye solo las tarjetas visibles relacionadas; no representa elementos fuera de la colección."
+    },
+    "illustrative": true,
+    "badgePolicy": "none",
+    "phases": [
+      {
+        "id": "alcance-de-dos",
+        "label": "Antes",
+        "text": "A y B suman 2.",
+        "visual": {
+          "kind": "comparison",
+          "state": "before",
+          "semantic": {
+            "primitive": "counter",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "contador",
+                "kind": "counter",
+                "value": 2,
+                "illustrative": true
+              },
+              {
+                "id": "ficha-a",
+                "kind": "row",
+                "label": "A",
+                "illustrative": true
+              },
+              {
+                "id": "ficha-b",
+                "kind": "row",
+                "label": "B",
+                "illustrative": true
+              },
+              {
+                "id": "ficha-c",
+                "kind": "row",
+                "label": "C",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "counts",
+                "from": "contador",
+                "to": "ficha-a"
+              },
+              {
+                "kind": "counts",
+                "from": "contador",
+                "to": "ficha-b"
+              }
+            ],
+            "states": {
+              "contador": "value",
+              "ficha-a": "default",
+              "ficha-b": "default",
+              "ficha-c": "pending"
+            },
+            "actions": []
+          }
+        },
+        "holdMs": 2200
+      },
+      {
+        "id": "tercera-ficha-incluida",
+        "label": "Se suma C",
+        "text": "C se suma al conteo.",
+        "visual": {
+          "kind": "comparison",
+          "state": "flagged",
+          "semantic": {
+            "primitive": "counter",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "contador",
+                "kind": "counter",
+                "value": 3,
+                "illustrative": true
+              },
+              {
+                "id": "ficha-a",
+                "kind": "row",
+                "label": "A",
+                "illustrative": true
+              },
+              {
+                "id": "ficha-b",
+                "kind": "row",
+                "label": "B",
+                "illustrative": true
+              },
+              {
+                "id": "ficha-c",
+                "kind": "row",
+                "label": "C",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "counts",
+                "from": "contador",
+                "to": "ficha-a"
+              },
+              {
+                "kind": "counts",
+                "from": "contador",
+                "to": "ficha-b"
+              },
+              {
+                "kind": "counts",
+                "from": "contador",
+                "to": "ficha-c"
+              }
+            ],
+            "states": {
+              "contador": "increased",
+              "ficha-a": "default",
+              "ficha-b": "default",
+              "ficha-c": "accepted"
+            },
+            "actions": [
+              {
+                "entityId": "contador",
+                "type": "count-changes"
+              }
+            ]
+          }
+        },
+        "holdMs": 2200
+      },
+      {
+        "id": "conjunto-de-tres",
+        "label": "Resultado esperado",
+        "text": "Total esperado: 3.",
+        "visual": {
+          "kind": "comparison",
+          "state": "review-ready",
+          "semantic": {
+            "primitive": "counter",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "contador",
+                "kind": "counter",
+                "value": 3,
+                "illustrative": true
+              },
+              {
+                "id": "ficha-a",
+                "kind": "row",
+                "label": "A",
+                "illustrative": true
+              },
+              {
+                "id": "ficha-b",
+                "kind": "row",
+                "label": "B",
+                "illustrative": true
+              },
+              {
+                "id": "ficha-c",
+                "kind": "row",
+                "label": "C",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "counts",
+                "from": "contador",
+                "to": "ficha-a"
+              },
+              {
+                "kind": "counts",
+                "from": "contador",
+                "to": "ficha-b"
+              },
+              {
+                "kind": "counts",
+                "from": "contador",
+                "to": "ficha-c"
+              }
+            ],
+            "states": {
+              "contador": "pending",
+              "ficha-a": "default",
+              "ficha-b": "default",
+              "ficha-c": "accepted"
+            },
+            "actions": []
+          }
+        },
+        "holdMs": 2200
+      }
+    ],
+    "playback": {
+      "preset": "concise",
+      "minReadableHoldMs": 2200,
+      "transitionMs": 400,
+      "loop": true,
+      "totalDurationBudgetMs": 15000
+    },
+    "output": {
+      "width": 640,
+      "height": 360,
+      "formats": [
+        "gif",
+        "png"
+      ],
+      "preset": "review-1280x720"
+    },
+    "seed": 19,
+    "status": "in-review"
+  },
+  "briefSha256": "87c3aa2a94c13b5b61544bac03ea4ff689908ab93016c6c463b652ae2b95a316",
+  "style": "brutalist",
+  "subfamily": "documentary",
+  "workflowStatus": "in-review",
+  "outcome": {
+    "mode": "expected",
+    "scopeNote": "Ejemplo ilustrativo: el conteo incluye solo las tarjetas visibles relacionadas; no representa elementos fuera de la colección."
+  },
+  "evidenceClassification": "illustrative",
+  "illustrative": true,
+  "artOnly": false,
+  "seed": 19,
+  "renderer": {
+    "narrative": "narrative-core/0.2.0",
+    "canvas": "@napi-rs/canvas@1.0.11",
+    "gif": "gifenc@1.0.3",
+    "scene": "brutalist-documentary/1.1.0"
+  },
+  "fonts": {
+    "bundleVersion": "repo-bundled-ofl-1",
+    "roles": {
+      "display": {
+        "family": "Archivo Black",
+        "weight": 400
+      },
+      "reading": {
+        "family": "Space Mono",
+        "weight": 400
+      },
+      "label": {
+        "family": "Space Mono",
+        "weight": 700
+      },
+      "figure": {
+        "family": "Archivo Black",
+        "weight": 400
+      },
+      "annotation": {
+        "family": "Space Mono",
+        "weight": 400
+      }
+    }
+  },
+  "dimensions": {
+    "width": 640,
+    "height": 360
+  },
+  "formats": [
+    "gif",
+    "png"
+  ],
+  "decoded": {
+    "width": 640,
+    "height": 360,
+    "frameCount": 21,
+    "delaysMs": [
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80
+    ],
+    "durationMs": 8040,
+    "loopCount": 0,
+    "integrity": true
+  },
+  "ffprobe": {
+    "available": true,
+    "passed": true,
+    "detail": "ffprobe 640×360; 21 frames; 8040ms; matches the independent LZW decode."
+  },
+  "bytes": {
+    "gif": 225461,
+    "png": 16928,
+    "contactSheet": 74615
+  },
+  "hashes": {
+    "briefSha256": "87c3aa2a94c13b5b61544bac03ea4ff689908ab93016c6c463b652ae2b95a316",
+    "gifSha256": "f5626293f09ac68e4fed219d0046b7979294bc741bd6ce57f22485b5d33e4a8e",
+    "pngSha256": "c5a78ab36d3ebba2e4a9af6f34a6f4cea24ac8ecf2b98461ab36060f495c422b",
+    "contactSheetSha256": "4162fa279e55b4cc869d41a8befeb2334cf320e4d5c0dc5f4ebef3e0760b7747"
+  },
+  "files": {
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\contador-coleccion\\es\\total-e05e6b51.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\contador-coleccion\\es\\total-e05e6b51.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\contador-coleccion\\es\\total-e05e6b51-contact-sheet.png"
+  },
+  "controls": [
+    {
+      "name": "gif-integrity",
+      "passed": true,
+      "detail": "Independent LZW decode and GIF trailer passed.",
+      "source": "decoded"
+    },
+    {
+      "name": "dimensions",
+      "passed": true,
+      "detail": "decoded 640×360; requested 640×360",
+      "source": "decoded"
+    },
+    {
+      "name": "frame-count",
+      "passed": true,
+      "detail": "21 decoded frame(s)",
+      "source": "decoded"
+    },
+    {
+      "name": "duration",
+      "passed": true,
+      "detail": "8040ms decoded; holds exclude transitions",
+      "source": "decoded"
+    },
+    {
+      "name": "loop",
+      "passed": true,
+      "detail": "repeat=0; result-to-before bridge is explicit",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-holds",
+      "passed": true,
+      "detail": "alcance-de-dos 2200/2200ms, tercera-ficha-incluida 2200/2200ms, conjunto-de-tres 2200/2200ms",
+      "source": "decoded"
+    },
+    {
+      "name": "ffprobe-crosscheck",
+      "passed": true,
+      "detail": "ffprobe 640×360; 21 frames; 8040ms; matches the independent LZW decode.",
+      "source": "decoded"
+    },
+    {
+      "name": "files",
+      "passed": true,
+      "detail": "GIF 225461B · PNG 16928B · contact 74615B",
+      "source": "decoded"
+    },
+    {
+      "name": "scene-renderer-registered",
+      "passed": true,
+      "detail": "renderer brutalist/brutalist-documentary/1.1.0 exists; visual style likeness remains a separate review",
+      "source": "source"
+    },
+    {
+      "name": "type-system",
+      "passed": true,
+      "detail": "style typeSystem tokens are attached to raster role registry",
+      "source": "source"
+    },
+    {
+      "name": "narrative-subfamily",
+      "passed": true,
+      "detail": "brutalist/documentary selects an explicit narrative art direction",
+      "source": "source"
+    },
+    {
+      "name": "font-registration-and-glyphs",
+      "passed": true,
+      "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "distinct-frames",
+      "passed": true,
+      "detail": "3 unique composited frame(s); a format-valid static GIF does not pass",
+      "source": "pixels"
+    },
+    {
+      "name": "palette-loss",
+      "passed": true,
+      "detail": "54 colors; mean channel loss 0.236, max 8; sampled 21 frames",
+      "source": "pixels"
+    },
+    {
+      "name": "title-complete",
+      "passed": true,
+      "detail": "Total",
+      "source": "source"
+    },
+    {
+      "name": "phase-alcance-de-dos-label-complete",
+      "passed": true,
+      "detail": "Antes",
+      "source": "source"
+    },
+    {
+      "name": "phase-alcance-de-dos-text-complete",
+      "passed": true,
+      "detail": "A y B suman / 2.",
+      "source": "source"
+    },
+    {
+      "name": "phase-tercera-ficha-incluida-label-complete",
+      "passed": true,
+      "detail": "Se suma C",
+      "source": "source"
+    },
+    {
+      "name": "phase-tercera-ficha-incluida-text-complete",
+      "passed": true,
+      "detail": "C se suma al / conteo.",
+      "source": "source"
+    },
+    {
+      "name": "phase-conjunto-de-tres-label-complete",
+      "passed": true,
+      "detail": "Resultado / esperado",
+      "source": "source"
+    },
+    {
+      "name": "phase-conjunto-de-tres-text-complete",
+      "passed": true,
+      "detail": "Total / esperado: 3.",
+      "source": "source"
+    },
+    {
+      "name": "registered-fonts",
+      "passed": true,
+      "detail": "all role faces and Spanish glyphs rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "review-size-thresholds",
+      "passed": true,
+      "detail": "title 56px; phase body >=36px; label >=24px",
+      "source": "source"
+    },
+    {
+      "name": "640x360-effective-size",
+      "passed": true,
+      "detail": "title 56.0px; body min 36.0px (requires >=20px); label min 24.0px",
+      "source": "source"
+    },
+    {
+      "name": "semantic-text-legibility",
+      "passed": true,
+      "status": "pass",
+      "detail": "minimum effective text >=14px: 14.0px; minimum headline 28.0px (requires >=20px); measured 18 declared object text box(es) at 640×360.",
+      "source": "decoded"
+    },
+    {
+      "name": "composition-balance",
+      "passed": true,
+      "detail": "proxy; 8×4 decoded-pixel grid against #F2EFE4: empty cells 18.8%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 9.4%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: alcance-de-dos · pausa: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 9.4% | alcance-de-dos → tercera-ficha-incluida · punto medio de transición: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 6.3% | tercera-ficha-incluida · pausa: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 6.3% | tercera-ficha-incluida → conjunto-de-tres · punto medio de transición: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 9.4% | conjunto-de-tres · pausa: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 9.4% | conjunto-de-tres → alcance-de-dos · unión del ciclo: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 9.4%",
+      "source": "pixels"
+    },
+    {
+      "name": "contrast",
+      "passed": true,
+      "detail": "rendered text colors: ink 17.10:1; label 17.10:1 (not an OCR or per-pixel text measurement)",
+      "source": "source"
+    },
+    {
+      "name": "safe-zone-and-collisions",
+      "passed": true,
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+      "source": "source"
+    },
+    {
+      "name": "stable-reading-holds",
+      "passed": true,
+      "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-count-and-copy",
+      "passed": true,
+      "detail": "3 complete phases; all copy retained",
+      "source": "source"
+    },
+    {
+      "name": "shared-object-identity",
+      "passed": true,
+      "detail": "One scene object instance is created and passed to every phase frame.",
+      "source": "source"
+    },
+    {
+      "name": "visual-state-change",
+      "passed": true,
+      "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+      "source": "pixels"
+    },
+    {
+      "name": "workflow-outcome-separation",
+      "passed": true,
+      "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+      "source": "source"
+    },
+    {
+      "name": "outcome-evidence",
+      "passed": true,
+      "detail": "Expected outcome; no benefit measurement is claimed.",
+      "source": "source"
+    },
+    {
+      "name": "result-follows-outcome",
+      "passed": true,
+      "detail": "outcome=expected; final label=\"Resultado esperado\"",
+      "source": "source"
+    },
+    {
+      "name": "semantic-illustrative-data",
+      "passed": true,
+      "detail": "brief illustrative=true; semantic phase flags=true,true,true",
+      "source": "source"
+    },
+    {
+      "name": "semantic-object-midpoint:alcance-de-dos → tercera-ficha-incluida · punto medio de transición",
+      "passed": true,
+      "detail": "decoded object diff 5.2%; changed-state entities: contador; contador value→increased 3.8%, ficha-a default→default 22.5%, ficha-b default→default 23.8%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:tercera-ficha-incluida → conjunto-de-tres · punto medio de transición",
+      "passed": true,
+      "detail": "decoded object diff 1.4%; changed-state entities: contador; contador increased→pending 1.6%, ficha-a default→default 0.0%, ficha-b default→default 0.0%, ficha-c accepted→accepted 0.0%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:conjunto-de-tres → alcance-de-dos · unión del ciclo",
+      "passed": true,
+      "detail": "decoded object diff 6.8%; changed-state entities: contador, ficha-c; contador pending→value 5.3%, ficha-a default→default 18.6%, ficha-b default→default 23.2%, ficha-c accepted→pending 14.9%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:alcance-de-dos → tercera-ficha-incluida hold",
+      "passed": true,
+      "detail": "decoded object diff 5.1%; changed-state entities: contador; contador value→increased 3.8%, ficha-a default→default 18.6%, ficha-b default→default 23.2%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:tercera-ficha-incluida → conjunto-de-tres hold",
+      "passed": true,
+      "detail": "decoded object diff 1.4%; changed-state entities: contador; contador increased→pending 1.6%, ficha-a default→default 0.0%, ficha-b default→default 0.0%, ficha-c accepted→accepted 0.0%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:conjunto-de-tres → alcance-de-dos loop join",
+      "passed": true,
+      "detail": "decoded object diff 7.0%; changed-state entities: contador, ficha-c; contador pending→value 5.3%, ficha-a default→default 22.5%, ficha-b default→default 23.8%, ficha-c accepted→pending 14.9%",
+      "source": "decoded"
+    }
+  ],
+  "evaluation": {
+    "technical-integrity": {
+      "status": "pass",
+      "controls": [
+        {
+          "name": "gif-integrity",
+          "passed": true,
+          "detail": "Independent LZW decode and GIF trailer passed.",
+          "source": "decoded"
+        },
+        {
+          "name": "dimensions",
+          "passed": true,
+          "detail": "decoded 640×360; requested 640×360",
+          "source": "decoded"
+        },
+        {
+          "name": "frame-count",
+          "passed": true,
+          "detail": "21 decoded frame(s)",
+          "source": "decoded"
+        },
+        {
+          "name": "duration",
+          "passed": true,
+          "detail": "8040ms decoded; holds exclude transitions",
+          "source": "decoded"
+        },
+        {
+          "name": "loop",
+          "passed": true,
+          "detail": "repeat=0; result-to-before bridge is explicit",
+          "source": "decoded"
+        },
+        {
+          "name": "phase-holds",
+          "passed": true,
+          "detail": "alcance-de-dos 2200/2200ms, tercera-ficha-incluida 2200/2200ms, conjunto-de-tres 2200/2200ms",
+          "source": "decoded"
+        },
+        {
+          "name": "ffprobe-crosscheck",
+          "passed": true,
+          "detail": "ffprobe 640×360; 21 frames; 8040ms; matches the independent LZW decode.",
+          "source": "decoded"
+        },
+        {
+          "name": "files",
+          "passed": true,
+          "detail": "GIF 225461B · PNG 16928B · contact 74615B",
+          "source": "decoded"
+        }
+      ]
+    },
+    "style-conformance": {
+      "status": "pending",
+      "sourceStatus": "pass",
+      "pixelStatus": "pass",
+      "controls": [
+        {
+          "name": "scene-renderer-registered",
+          "passed": true,
+          "detail": "renderer brutalist/brutalist-documentary/1.1.0 exists; visual style likeness remains a separate review",
+          "source": "source"
+        },
+        {
+          "name": "type-system",
+          "passed": true,
+          "detail": "style typeSystem tokens are attached to raster role registry",
+          "source": "source"
+        },
+        {
+          "name": "narrative-subfamily",
+          "passed": true,
+          "detail": "brutalist/documentary selects an explicit narrative art direction",
+          "source": "source"
+        },
+        {
+          "name": "font-registration-and-glyphs",
+          "passed": true,
+          "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "distinct-frames",
+          "passed": true,
+          "detail": "3 unique composited frame(s); a format-valid static GIF does not pass",
+          "source": "pixels"
+        },
+        {
+          "name": "palette-loss",
+          "passed": true,
+          "detail": "54 colors; mean channel loss 0.236, max 8; sampled 21 frames",
+          "source": "pixels"
+        }
+      ],
+      "note": "Source checks identify renderer/font tokens; pixel checks measure frame change and palette loss. Neither substitutes for visual review."
+    },
+    "rendered-legibility": {
+      "status": "pending",
+      "controls": [
+        {
+          "name": "title-complete",
+          "passed": true,
+          "detail": "Total",
+          "source": "source"
+        },
+        {
+          "name": "phase-alcance-de-dos-label-complete",
+          "passed": true,
+          "detail": "Antes",
+          "source": "source"
+        },
+        {
+          "name": "phase-alcance-de-dos-text-complete",
+          "passed": true,
+          "detail": "A y B suman / 2.",
+          "source": "source"
+        },
+        {
+          "name": "phase-tercera-ficha-incluida-label-complete",
+          "passed": true,
+          "detail": "Se suma C",
+          "source": "source"
+        },
+        {
+          "name": "phase-tercera-ficha-incluida-text-complete",
+          "passed": true,
+          "detail": "C se suma al / conteo.",
+          "source": "source"
+        },
+        {
+          "name": "phase-conjunto-de-tres-label-complete",
+          "passed": true,
+          "detail": "Resultado / esperado",
+          "source": "source"
+        },
+        {
+          "name": "phase-conjunto-de-tres-text-complete",
+          "passed": true,
+          "detail": "Total / esperado: 3.",
+          "source": "source"
+        },
+        {
+          "name": "registered-fonts",
+          "passed": true,
+          "detail": "all role faces and Spanish glyphs rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "review-size-thresholds",
+          "passed": true,
+          "detail": "title 56px; phase body >=36px; label >=24px",
+          "source": "source"
+        },
+        {
+          "name": "640x360-effective-size",
+          "passed": true,
+          "detail": "title 56.0px; body min 36.0px (requires >=20px); label min 24.0px",
+          "source": "source"
+        },
+        {
+          "name": "semantic-text-legibility",
+          "passed": true,
+          "status": "pass",
+          "detail": "minimum effective text >=14px: 14.0px; minimum headline 28.0px (requires >=20px); measured 18 declared object text box(es) at 640×360.",
+          "source": "decoded"
+        },
+        {
+          "name": "composition-balance",
+          "passed": true,
+          "detail": "proxy; 8×4 decoded-pixel grid against #F2EFE4: empty cells 18.8%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 9.4%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: alcance-de-dos · pausa: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 9.4% | alcance-de-dos → tercera-ficha-incluida · punto medio de transición: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 6.3% | tercera-ficha-incluida · pausa: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 6.3% | tercera-ficha-incluida → conjunto-de-tres · punto medio de transición: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 9.4% | conjunto-de-tres · pausa: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 9.4% | conjunto-de-tres → alcance-de-dos · unión del ciclo: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 9.4%",
+          "source": "pixels"
+        },
+        {
+          "name": "contrast",
+          "passed": true,
+          "detail": "rendered text colors: ink 17.10:1; label 17.10:1 (not an OCR or per-pixel text measurement)",
+          "source": "source"
+        },
+        {
+          "name": "safe-zone-and-collisions",
+          "passed": true,
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+          "source": "source"
+        },
+        {
+          "name": "stable-reading-holds",
+          "passed": true,
+          "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+          "source": "decoded"
+        }
+      ],
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
+    },
+    "narrative": {
+      "status": "pending",
+      "controls": [
+        {
+          "name": "phase-count-and-copy",
+          "passed": true,
+          "detail": "3 complete phases; all copy retained",
+          "source": "source"
+        },
+        {
+          "name": "shared-object-identity",
+          "passed": true,
+          "detail": "One scene object instance is created and passed to every phase frame.",
+          "source": "source"
+        },
+        {
+          "name": "visual-state-change",
+          "passed": true,
+          "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+          "source": "pixels"
+        },
+        {
+          "name": "workflow-outcome-separation",
+          "passed": true,
+          "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+          "source": "source"
+        },
+        {
+          "name": "outcome-evidence",
+          "passed": true,
+          "detail": "Expected outcome; no benefit measurement is claimed.",
+          "source": "source"
+        },
+        {
+          "name": "result-follows-outcome",
+          "passed": true,
+          "detail": "outcome=expected; final label=\"Resultado esperado\"",
+          "source": "source"
+        },
+        {
+          "name": "semantic-illustrative-data",
+          "passed": true,
+          "detail": "brief illustrative=true; semantic phase flags=true,true,true",
+          "source": "source"
+        },
+        {
+          "name": "semantic-object-midpoint:alcance-de-dos → tercera-ficha-incluida · punto medio de transición",
+          "passed": true,
+          "detail": "decoded object diff 5.2%; changed-state entities: contador; contador value→increased 3.8%, ficha-a default→default 22.5%, ficha-b default→default 23.8%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:tercera-ficha-incluida → conjunto-de-tres · punto medio de transición",
+          "passed": true,
+          "detail": "decoded object diff 1.4%; changed-state entities: contador; contador increased→pending 1.6%, ficha-a default→default 0.0%, ficha-b default→default 0.0%, ficha-c accepted→accepted 0.0%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:conjunto-de-tres → alcance-de-dos · unión del ciclo",
+          "passed": true,
+          "detail": "decoded object diff 6.8%; changed-state entities: contador, ficha-c; contador pending→value 5.3%, ficha-a default→default 18.6%, ficha-b default→default 23.2%, ficha-c accepted→pending 14.9%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:alcance-de-dos → tercera-ficha-incluida hold",
+          "passed": true,
+          "detail": "decoded object diff 5.1%; changed-state entities: contador; contador value→increased 3.8%, ficha-a default→default 18.6%, ficha-b default→default 23.2%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:tercera-ficha-incluida → conjunto-de-tres hold",
+          "passed": true,
+          "detail": "decoded object diff 1.4%; changed-state entities: contador; contador increased→pending 1.6%, ficha-a default→default 0.0%, ficha-b default→default 0.0%, ficha-c accepted→accepted 0.0%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:conjunto-de-tres → alcance-de-dos loop join",
+          "passed": true,
+          "detail": "decoded object diff 7.0%; changed-state entities: contador, ficha-c; contador pending→value 5.3%, ficha-a default→default 22.5%, ficha-b default→default 23.8%, ficha-c accepted→pending 14.9%",
+          "source": "decoded"
+        }
+      ],
+      "note": "Automated checks separate work status from expected/observed outcome and confirm required evidence fields; causal meaning and evidence scope still need human review."
+    },
+    "visual-review": {
+      "status": "pending",
+      "criteria": [
+        "identity at 200px thumbnail",
+        "full text and contrast at 640×360",
+        "style material in native frame",
+        "same object and causal change across phases",
+        "result faithful to outcome and evidence scope",
+        "deliberate loop restart"
+      ],
+      "evidence": []
+    },
+    "publicationRecommendation": "none"
+  },
+  "phaseCaptures": [
+    {
+      "phaseId": "alcance-de-dos",
+      "labels": [
+        "alcance-de-dos · inicio",
+        "alcance-de-dos · pausa",
+        "alcance-de-dos → tercera-ficha-incluida · punto medio de transición",
+        "alcance-de-dos · salida",
+        "reinicio del loop"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\contador-coleccion\\es\\total-e05e6b51-contact-sheet.png"
+    },
+    {
+      "phaseId": "tercera-ficha-incluida",
+      "labels": [
+        "tercera-ficha-incluida · inicio",
+        "tercera-ficha-incluida · pausa",
+        "tercera-ficha-incluida → conjunto-de-tres · punto medio de transición",
+        "tercera-ficha-incluida · salida"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\contador-coleccion\\es\\total-e05e6b51-contact-sheet.png"
+    },
+    {
+      "phaseId": "conjunto-de-tres",
+      "labels": [
+        "conjunto-de-tres · inicio",
+        "conjunto-de-tres · pausa",
+        "conjunto-de-tres → alcance-de-dos · unión del ciclo",
+        "conjunto-de-tres · salida"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\contador-coleccion\\es\\total-e05e6b51-contact-sheet.png"
+    }
+  ],
+  "semanticObjectCaptures": [
+    {
+      "label": "alcance-de-dos · pausa",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 0,
+      "frameIndex": 1,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "contador",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "2",
+              "bounds": {
+                "x": 380.288768,
+                "y": 230.650352,
+                "width": 19,
+                "height": 34
+              },
+              "fontSizePx": 28,
+              "role": "headline"
+            },
+            {
+              "text": "TOTAL",
+              "bounds": {
+                "x": 446.436608,
+                "y": 237.72193599999997,
+                "width": 43,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-a",
+          "bounds": {
+            "x": 379.1768,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "A",
+              "bounds": {
+                "x": 389.44112,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-b",
+          "bounds": {
+            "x": 446.18,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "B",
+              "bounds": {
+                "x": 456.44432,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "alcance-de-dos → tercera-ficha-incluida · punto medio de transición",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 0,
+      "frameIndex": 3,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "contador",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "3",
+              "bounds": {
+                "x": 380.288768,
+                "y": 230.650352,
+                "width": 19,
+                "height": 34
+              },
+              "fontSizePx": 28,
+              "role": "headline"
+            },
+            {
+              "text": "TOTAL",
+              "bounds": {
+                "x": 446.436608,
+                "y": 237.72193599999997,
+                "width": 43,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-a",
+          "bounds": {
+            "x": 345.6752,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "A",
+              "bounds": {
+                "x": 355.93952,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-b",
+          "bounds": {
+            "x": 412.6784,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "B",
+              "bounds": {
+                "x": 422.94272,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-c",
+          "bounds": {
+            "x": 479.6816,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "C",
+              "bounds": {
+                "x": 489.94592,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "tercera-ficha-incluida · pausa",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 1,
+      "frameIndex": 8,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "contador",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "3",
+              "bounds": {
+                "x": 380.288768,
+                "y": 230.650352,
+                "width": 19,
+                "height": 34
+              },
+              "fontSizePx": 28,
+              "role": "headline"
+            },
+            {
+              "text": "TOTAL",
+              "bounds": {
+                "x": 446.436608,
+                "y": 237.72193599999997,
+                "width": 43,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-a",
+          "bounds": {
+            "x": 345.6752,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "A",
+              "bounds": {
+                "x": 355.93952,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-b",
+          "bounds": {
+            "x": 412.6784,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "B",
+              "bounds": {
+                "x": 422.94272,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-c",
+          "bounds": {
+            "x": 479.6816,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "C",
+              "bounds": {
+                "x": 489.94592,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "tercera-ficha-incluida → conjunto-de-tres · punto medio de transición",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 1,
+      "frameIndex": 10,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "contador",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "3",
+              "bounds": {
+                "x": 380.288768,
+                "y": 230.650352,
+                "width": 19,
+                "height": 34
+              },
+              "fontSizePx": 28,
+              "role": "headline"
+            },
+            {
+              "text": "TOTAL",
+              "bounds": {
+                "x": 446.436608,
+                "y": 237.72193599999997,
+                "width": 43,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            },
+            {
+              "text": "ESPERADO",
+              "bounds": {
+                "x": 373.67398399999996,
+                "y": 290.326576,
+                "width": 69,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-a",
+          "bounds": {
+            "x": 345.6752,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "A",
+              "bounds": {
+                "x": 355.93952,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-b",
+          "bounds": {
+            "x": 412.6784,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "B",
+              "bounds": {
+                "x": 422.94272,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-c",
+          "bounds": {
+            "x": 479.6816,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "C",
+              "bounds": {
+                "x": 489.94592,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "conjunto-de-tres · pausa",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 2,
+      "frameIndex": 15,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "contador",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "3",
+              "bounds": {
+                "x": 380.288768,
+                "y": 230.650352,
+                "width": 19,
+                "height": 34
+              },
+              "fontSizePx": 28,
+              "role": "headline"
+            },
+            {
+              "text": "TOTAL",
+              "bounds": {
+                "x": 446.436608,
+                "y": 237.72193599999997,
+                "width": 43,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            },
+            {
+              "text": "ESPERADO",
+              "bounds": {
+                "x": 373.67398399999996,
+                "y": 290.326576,
+                "width": 69,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-a",
+          "bounds": {
+            "x": 345.6752,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "A",
+              "bounds": {
+                "x": 355.93952,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-b",
+          "bounds": {
+            "x": 412.6784,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "B",
+              "bounds": {
+                "x": 422.94272,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-c",
+          "bounds": {
+            "x": 479.6816,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "C",
+              "bounds": {
+                "x": 489.94592,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "conjunto-de-tres → alcance-de-dos · unión del ciclo",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 2,
+      "frameIndex": 17,
+      "kind": "loop-bridge",
+      "regions": [
+        {
+          "entityId": "contador",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "2",
+              "bounds": {
+                "x": 380.288768,
+                "y": 230.650352,
+                "width": 19,
+                "height": 34
+              },
+              "fontSizePx": 28,
+              "role": "headline"
+            },
+            {
+              "text": "TOTAL",
+              "bounds": {
+                "x": 446.436608,
+                "y": 237.72193599999997,
+                "width": 43,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-a",
+          "bounds": {
+            "x": 379.1768,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "A",
+              "bounds": {
+                "x": 389.44112,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-b",
+          "bounds": {
+            "x": 446.18,
+            "y": 96.6024,
+            "width": 57.024,
+            "height": 64.152
+          },
+          "textBoxes": [
+            {
+              "text": "B",
+              "bounds": {
+                "x": 456.44432,
+                "y": 115.81056000000001,
+                "width": 14,
+                "height": 22
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "compositionByFrame": [
+    {
+      "label": "alcance-de-dos · pausa",
+      "metrics": {
+        "emptyCellRatio": 0.1875,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.09375
+      }
+    },
+    {
+      "label": "alcance-de-dos → tercera-ficha-incluida · punto medio de transición",
+      "metrics": {
+        "emptyCellRatio": 0.125,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.0625
+      }
+    },
+    {
+      "label": "tercera-ficha-incluida · pausa",
+      "metrics": {
+        "emptyCellRatio": 0.125,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.0625
+      }
+    },
+    {
+      "label": "tercera-ficha-incluida → conjunto-de-tres · punto medio de transición",
+      "metrics": {
+        "emptyCellRatio": 0.125,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.09375
+      }
+    },
+    {
+      "label": "conjunto-de-tres · pausa",
+      "metrics": {
+        "emptyCellRatio": 0.125,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.09375
+      }
+    },
+    {
+      "label": "conjunto-de-tres → alcance-de-dos · unión del ciclo",
+      "metrics": {
+        "emptyCellRatio": 0.1875,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.09375
+      }
+    }
+  ],
+  "palette": {
+    "colors": 54,
+    "meanAbsoluteChannelError": 0.236,
+    "maximumChannelError": 8,
+    "sampledFrames": 21
+  },
+  "phaseHoldsVerified": [
+    {
+      "phaseId": "alcance-de-dos",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    },
+    {
+      "phaseId": "tercera-ficha-incluida",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    },
+    {
+      "phaseId": "conjunto-de-tres",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    }
+  ],
+  "timing": {
+    "preset": "concise",
+    "holdsRequestedMs": 6600,
+    "holdsDecodedMs": 6600,
+    "transitionsMs": 800,
+    "loopBridgeMs": 400,
+    "entryMs": 240,
+    "totalDecodedMs": 8040,
+    "totalDurationBudgetMs": 15000,
+    "phaseHolds": [
+      {
+        "phaseId": "alcance-de-dos",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      },
+      {
+        "phaseId": "tercera-ficha-incluida",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      },
+      {
+        "phaseId": "conjunto-de-tres",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      }
+    ],
+    "warnings": [
+      {
+        "code": "READING_LOAD",
+        "message": "Phase 2 has about 3.64 words/s (8 label+body words ÷ 2.20s hold); the reading threshold is 3 words/s."
+      }
+    ]
+  },
+  "resourceEstimate": {
+    "pixelFrames": 4838400,
+    "maxPixelFrames": 96000000,
+    "memoryBytes": 34170880,
+    "maxMemoryBytes": 268435456
+  },
+  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed."
+}

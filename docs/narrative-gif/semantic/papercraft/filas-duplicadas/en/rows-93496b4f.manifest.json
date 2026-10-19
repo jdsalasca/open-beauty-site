@@ -1,0 +1,1944 @@
+{
+  "schemaVersion": 2,
+  "commit": "8d55d1ae9ac9dd5266dcf8f12f8ee95aee5e8220",
+  "brief": {
+    "style": "papercraft",
+    "subfamily": "editorial",
+    "kind": "narrative-gif",
+    "locale": "en",
+    "audience": "Data operations team",
+    "title": "Rows",
+    "workflowStatus": "in-review",
+    "outcome": {
+      "mode": "expected",
+      "scopeNote": "Illustrative example: the rule rejects the repeated row and does not delete records; the effect is not measured."
+    },
+    "illustrative": true,
+    "badgePolicy": "none",
+    "phases": [
+      {
+        "id": "repetition-visible",
+        "label": "Repeated",
+        "text": "REG-204 appears in two rows.",
+        "visual": {
+          "kind": "comparison",
+          "state": "before",
+          "semantic": {
+            "primitive": "table-rows",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "table",
+                "kind": "table",
+                "illustrative": true
+              },
+              {
+                "id": "original-row",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              },
+              {
+                "id": "repeated-row",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "duplicate-of",
+                "from": "repeated-row",
+                "to": "original-row"
+              }
+            ],
+            "states": {
+              "table": "default",
+              "original-row": "original",
+              "repeated-row": "duplicate"
+            },
+            "actions": []
+          }
+        },
+        "holdMs": 2200
+      },
+      {
+        "id": "duplicate-identified",
+        "label": "Identified",
+        "text": "The repeated row is identified.",
+        "visual": {
+          "kind": "comparison",
+          "state": "flagged",
+          "semantic": {
+            "primitive": "table-rows",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "table",
+                "kind": "table",
+                "illustrative": true
+              },
+              {
+                "id": "original-row",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              },
+              {
+                "id": "repeated-row",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "duplicate-of",
+                "from": "repeated-row",
+                "to": "original-row"
+              }
+            ],
+            "states": {
+              "table": "default",
+              "original-row": "original",
+              "repeated-row": "flagged"
+            },
+            "actions": [
+              {
+                "entityId": "repeated-row",
+                "type": "mark-duplicate"
+              }
+            ]
+          }
+        },
+        "holdMs": 2200
+      },
+      {
+        "id": "authorized-rejection",
+        "label": "Rejected",
+        "text": "The rule rejects it, not deletes.",
+        "visual": {
+          "kind": "comparison",
+          "state": "review-ready",
+          "semantic": {
+            "primitive": "table-rows",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "table",
+                "kind": "table",
+                "illustrative": true
+              },
+              {
+                "id": "original-row",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              },
+              {
+                "id": "repeated-row",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "duplicate-of",
+                "from": "repeated-row",
+                "to": "original-row"
+              }
+            ],
+            "states": {
+              "table": "default",
+              "original-row": "original",
+              "repeated-row": "rejected"
+            },
+            "actions": [
+              {
+                "entityId": "repeated-row",
+                "type": "reject"
+              }
+            ]
+          }
+        },
+        "holdMs": 2200
+      },
+      {
+        "id": "beneficio-esperado",
+        "label": "Expected result",
+        "text": "Row retained; impact unmeasured.",
+        "visual": {
+          "kind": "comparison",
+          "state": "review-ready",
+          "semantic": {
+            "primitive": "table-rows",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "table",
+                "kind": "table",
+                "illustrative": true
+              },
+              {
+                "id": "original-row",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              },
+              {
+                "id": "repeated-row",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "duplicate-of",
+                "from": "repeated-row",
+                "to": "original-row"
+              }
+            ],
+            "states": {
+              "table": "reviewed",
+              "original-row": "original",
+              "repeated-row": "rejected"
+            },
+            "actions": []
+          }
+        },
+        "holdMs": 2200
+      }
+    ],
+    "playback": {
+      "preset": "concise",
+      "minReadableHoldMs": 2200,
+      "transitionMs": 400,
+      "loop": true,
+      "totalDurationBudgetMs": 20000
+    },
+    "output": {
+      "width": 640,
+      "height": 360,
+      "formats": [
+        "gif",
+        "png"
+      ],
+      "preset": "review-1280x720"
+    },
+    "seed": 7,
+    "status": "in-review"
+  },
+  "briefSha256": "d80320616a5884b049a79de6ddc13465ac808b1c6e1b6c7283dfcf802dab0502",
+  "style": "papercraft",
+  "subfamily": "editorial",
+  "workflowStatus": "in-review",
+  "outcome": {
+    "mode": "expected",
+    "scopeNote": "Illustrative example: the rule rejects the repeated row and does not delete records; the effect is not measured."
+  },
+  "evidenceClassification": "illustrative",
+  "illustrative": true,
+  "artOnly": false,
+  "seed": 7,
+  "renderer": {
+    "narrative": "narrative-core/0.2.0",
+    "canvas": "@napi-rs/canvas@1.0.11",
+    "gif": "gifenc@1.0.3",
+    "scene": "papercraft-editorial/1.1.0"
+  },
+  "fonts": {
+    "bundleVersion": "repo-bundled-ofl-1",
+    "roles": {
+      "display": {
+        "family": "Fraunces",
+        "weight": 560
+      },
+      "reading": {
+        "family": "Nunito Sans",
+        "weight": 400
+      },
+      "label": {
+        "family": "Nunito Sans",
+        "weight": 800
+      },
+      "figure": {
+        "family": "Fraunces",
+        "weight": 560
+      },
+      "annotation": {
+        "family": "Space Mono",
+        "weight": 400
+      }
+    }
+  },
+  "dimensions": {
+    "width": 640,
+    "height": 360
+  },
+  "formats": [
+    "gif",
+    "png"
+  ],
+  "decoded": {
+    "width": 640,
+    "height": 360,
+    "frameCount": 28,
+    "delaysMs": [
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80
+    ],
+    "durationMs": 10720,
+    "loopCount": 0,
+    "integrity": true
+  },
+  "ffprobe": {
+    "available": true,
+    "passed": true,
+    "detail": "ffprobe 640×360; 28 frames; 10720ms; matches the independent LZW decode."
+  },
+  "bytes": {
+    "gif": 536576,
+    "png": 56915,
+    "contactSheet": 176340
+  },
+  "hashes": {
+    "briefSha256": "d80320616a5884b049a79de6ddc13465ac808b1c6e1b6c7283dfcf802dab0502",
+    "gifSha256": "ffa91fd80e9e14ddc3617a017300059e6c1f5fffb9b26efb44e5e8f5d5c81cbd",
+    "pngSha256": "d02f5141dfe88a0afc47f48885a04aae3ffc2519fde1d2f42a64680c380fa441",
+    "contactSheetSha256": "74975fb56fb0ed219d4b81e765bc24a846cbffd884b4d6ca21316f1a13b1beb4"
+  },
+  "files": {
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\papercraft\\filas-duplicadas\\en\\rows-93496b4f.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\papercraft\\filas-duplicadas\\en\\rows-93496b4f.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\papercraft\\filas-duplicadas\\en\\rows-93496b4f-contact-sheet.png"
+  },
+  "controls": [
+    {
+      "name": "gif-integrity",
+      "passed": true,
+      "detail": "Independent LZW decode and GIF trailer passed.",
+      "source": "decoded"
+    },
+    {
+      "name": "dimensions",
+      "passed": true,
+      "detail": "decoded 640×360; requested 640×360",
+      "source": "decoded"
+    },
+    {
+      "name": "frame-count",
+      "passed": true,
+      "detail": "28 decoded frame(s)",
+      "source": "decoded"
+    },
+    {
+      "name": "duration",
+      "passed": true,
+      "detail": "10720ms decoded; holds exclude transitions",
+      "source": "decoded"
+    },
+    {
+      "name": "loop",
+      "passed": true,
+      "detail": "repeat=0; result-to-before bridge is explicit",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-holds",
+      "passed": true,
+      "detail": "repetition-visible 2200/2200ms, duplicate-identified 2200/2200ms, authorized-rejection 2200/2200ms, beneficio-esperado 2200/2200ms",
+      "source": "decoded"
+    },
+    {
+      "name": "ffprobe-crosscheck",
+      "passed": true,
+      "detail": "ffprobe 640×360; 28 frames; 10720ms; matches the independent LZW decode.",
+      "source": "decoded"
+    },
+    {
+      "name": "files",
+      "passed": true,
+      "detail": "GIF 536576B · PNG 56915B · contact 176340B",
+      "source": "decoded"
+    },
+    {
+      "name": "scene-renderer-registered",
+      "passed": true,
+      "detail": "renderer papercraft/papercraft-editorial/1.1.0 exists; visual style likeness remains a separate review",
+      "source": "source"
+    },
+    {
+      "name": "type-system",
+      "passed": true,
+      "detail": "style typeSystem tokens are attached to raster role registry",
+      "source": "source"
+    },
+    {
+      "name": "narrative-subfamily",
+      "passed": true,
+      "detail": "papercraft/editorial selects an explicit narrative art direction",
+      "source": "source"
+    },
+    {
+      "name": "font-registration-and-glyphs",
+      "passed": true,
+      "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "distinct-frames",
+      "passed": true,
+      "detail": "4 unique composited frame(s); a format-valid static GIF does not pass",
+      "source": "pixels"
+    },
+    {
+      "name": "palette-loss",
+      "passed": true,
+      "detail": "82 colors; mean channel loss 1.919, max 11; sampled 28 frames",
+      "source": "pixels"
+    },
+    {
+      "name": "title-complete",
+      "passed": true,
+      "detail": "Rows",
+      "source": "source"
+    },
+    {
+      "name": "phase-repetition-visible-label-complete",
+      "passed": true,
+      "detail": "Repeated",
+      "source": "source"
+    },
+    {
+      "name": "phase-repetition-visible-text-complete",
+      "passed": true,
+      "detail": "REG-204 / appears in two / rows.",
+      "source": "source"
+    },
+    {
+      "name": "phase-duplicate-identified-label-complete",
+      "passed": true,
+      "detail": "Identified",
+      "source": "source"
+    },
+    {
+      "name": "phase-duplicate-identified-text-complete",
+      "passed": true,
+      "detail": "The repeated / row is identified.",
+      "source": "source"
+    },
+    {
+      "name": "phase-authorized-rejection-label-complete",
+      "passed": true,
+      "detail": "Rejected",
+      "source": "source"
+    },
+    {
+      "name": "phase-authorized-rejection-text-complete",
+      "passed": true,
+      "detail": "The rule rejects / it, not deletes.",
+      "source": "source"
+    },
+    {
+      "name": "phase-beneficio-esperado-label-complete",
+      "passed": true,
+      "detail": "Expected result",
+      "source": "source"
+    },
+    {
+      "name": "phase-beneficio-esperado-text-complete",
+      "passed": true,
+      "detail": "Row retained; / impact / unmeasured.",
+      "source": "source"
+    },
+    {
+      "name": "registered-fonts",
+      "passed": true,
+      "detail": "all role faces and Spanish glyphs rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "review-size-thresholds",
+      "passed": true,
+      "detail": "title 56px; phase body >=36px; label >=24px",
+      "source": "source"
+    },
+    {
+      "name": "640x360-effective-size",
+      "passed": true,
+      "detail": "title 56.0px; body min 36.0px (requires >=20px); label min 24.0px",
+      "source": "source"
+    },
+    {
+      "name": "semantic-text-legibility",
+      "passed": true,
+      "status": "pass",
+      "detail": "minimum effective text >=14px: 14.0px; minimum headline none; measured 21 declared object text box(es) at 640×360.",
+      "source": "decoded"
+    },
+    {
+      "name": "composition-balance",
+      "passed": true,
+      "detail": "proxy; 8×4 decoded-pixel grid against #FBF1E2: empty cells 12.5%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 6.3%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: repetition-visible · hold: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 6.3% | repetition-visible → duplicate-identified · transition midpoint: empty 18.8%, text fill 75.0%, art 50.0%, largest empty 12.5% | duplicate-identified · hold: empty 18.8%, text fill 75.0%, art 50.0%, largest empty 12.5% | duplicate-identified → authorized-rejection · transition midpoint: empty 21.9%, text fill 75.0%, art 50.0%, largest empty 12.5% | authorized-rejection · hold: empty 21.9%, text fill 75.0%, art 50.0%, largest empty 12.5% | authorized-rejection → beneficio-esperado · transition midpoint: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 6.3% | beneficio-esperado · hold: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 6.3% | beneficio-esperado → repetition-visible · loop join: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 6.3%",
+      "source": "pixels"
+    },
+    {
+      "name": "contrast",
+      "passed": true,
+      "detail": "rendered text colors: ink 9.67:1; label 3.05:1 (not an OCR or per-pixel text measurement)",
+      "source": "source"
+    },
+    {
+      "name": "safe-zone-and-collisions",
+      "passed": true,
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+      "source": "source"
+    },
+    {
+      "name": "stable-reading-holds",
+      "passed": true,
+      "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-count-and-copy",
+      "passed": true,
+      "detail": "4 complete phases; all copy retained",
+      "source": "source"
+    },
+    {
+      "name": "shared-object-identity",
+      "passed": true,
+      "detail": "One scene object instance is created and passed to every phase frame.",
+      "source": "source"
+    },
+    {
+      "name": "visual-state-change",
+      "passed": true,
+      "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+      "source": "pixels"
+    },
+    {
+      "name": "workflow-outcome-separation",
+      "passed": true,
+      "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+      "source": "source"
+    },
+    {
+      "name": "outcome-evidence",
+      "passed": true,
+      "detail": "Expected outcome; no benefit measurement is claimed.",
+      "source": "source"
+    },
+    {
+      "name": "result-follows-outcome",
+      "passed": true,
+      "detail": "outcome=expected; final label=\"Expected result\"",
+      "source": "source"
+    },
+    {
+      "name": "semantic-illustrative-data",
+      "passed": true,
+      "detail": "brief illustrative=true; semantic phase flags=true,true,true,true",
+      "source": "source"
+    },
+    {
+      "name": "semantic-object-midpoint:repetition-visible → duplicate-identified · transition midpoint",
+      "passed": true,
+      "detail": "decoded object diff 2.5%; changed-state entities: repeated-row; table default→default 1.8%, original-row original→original 0.0%, repeated-row duplicate→flagged 8.8%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:duplicate-identified → authorized-rejection · transition midpoint",
+      "passed": true,
+      "detail": "decoded object diff 26.0%; changed-state entities: repeated-row; table default→default 18.2%, original-row original→original 0.0%, repeated-row flagged→rejected 90.8%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:authorized-rejection → beneficio-esperado · transition midpoint",
+      "passed": true,
+      "detail": "decoded object diff 2.2%; changed-state entities: table; table default→reviewed 3.0%, original-row original→original 0.0%, repeated-row rejected→rejected 0.0%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:beneficio-esperado → repetition-visible · loop join",
+      "passed": true,
+      "detail": "decoded object diff 28.2%; changed-state entities: table, repeated-row; table reviewed→default 21.3%, original-row original→original 0.0%, repeated-row rejected→duplicate 90.8%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:repetition-visible → duplicate-identified hold",
+      "passed": true,
+      "detail": "decoded object diff 2.5%; changed-state entities: repeated-row; table default→default 1.8%, original-row original→original 0.0%, repeated-row duplicate→flagged 8.8%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:duplicate-identified → authorized-rejection hold",
+      "passed": true,
+      "detail": "decoded object diff 26.0%; changed-state entities: repeated-row; table default→default 18.2%, original-row original→original 0.0%, repeated-row flagged→rejected 90.8%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:authorized-rejection → beneficio-esperado hold",
+      "passed": true,
+      "detail": "decoded object diff 2.2%; changed-state entities: table; table default→reviewed 3.0%, original-row original→original 0.0%, repeated-row rejected→rejected 0.0%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:beneficio-esperado → repetition-visible loop join",
+      "passed": true,
+      "detail": "decoded object diff 28.2%; changed-state entities: table, repeated-row; table reviewed→default 21.3%, original-row original→original 0.0%, repeated-row rejected→duplicate 90.8%",
+      "source": "decoded"
+    }
+  ],
+  "evaluation": {
+    "technical-integrity": {
+      "status": "pass",
+      "controls": [
+        {
+          "name": "gif-integrity",
+          "passed": true,
+          "detail": "Independent LZW decode and GIF trailer passed.",
+          "source": "decoded"
+        },
+        {
+          "name": "dimensions",
+          "passed": true,
+          "detail": "decoded 640×360; requested 640×360",
+          "source": "decoded"
+        },
+        {
+          "name": "frame-count",
+          "passed": true,
+          "detail": "28 decoded frame(s)",
+          "source": "decoded"
+        },
+        {
+          "name": "duration",
+          "passed": true,
+          "detail": "10720ms decoded; holds exclude transitions",
+          "source": "decoded"
+        },
+        {
+          "name": "loop",
+          "passed": true,
+          "detail": "repeat=0; result-to-before bridge is explicit",
+          "source": "decoded"
+        },
+        {
+          "name": "phase-holds",
+          "passed": true,
+          "detail": "repetition-visible 2200/2200ms, duplicate-identified 2200/2200ms, authorized-rejection 2200/2200ms, beneficio-esperado 2200/2200ms",
+          "source": "decoded"
+        },
+        {
+          "name": "ffprobe-crosscheck",
+          "passed": true,
+          "detail": "ffprobe 640×360; 28 frames; 10720ms; matches the independent LZW decode.",
+          "source": "decoded"
+        },
+        {
+          "name": "files",
+          "passed": true,
+          "detail": "GIF 536576B · PNG 56915B · contact 176340B",
+          "source": "decoded"
+        }
+      ]
+    },
+    "style-conformance": {
+      "status": "pending",
+      "sourceStatus": "pass",
+      "pixelStatus": "pass",
+      "controls": [
+        {
+          "name": "scene-renderer-registered",
+          "passed": true,
+          "detail": "renderer papercraft/papercraft-editorial/1.1.0 exists; visual style likeness remains a separate review",
+          "source": "source"
+        },
+        {
+          "name": "type-system",
+          "passed": true,
+          "detail": "style typeSystem tokens are attached to raster role registry",
+          "source": "source"
+        },
+        {
+          "name": "narrative-subfamily",
+          "passed": true,
+          "detail": "papercraft/editorial selects an explicit narrative art direction",
+          "source": "source"
+        },
+        {
+          "name": "font-registration-and-glyphs",
+          "passed": true,
+          "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "distinct-frames",
+          "passed": true,
+          "detail": "4 unique composited frame(s); a format-valid static GIF does not pass",
+          "source": "pixels"
+        },
+        {
+          "name": "palette-loss",
+          "passed": true,
+          "detail": "82 colors; mean channel loss 1.919, max 11; sampled 28 frames",
+          "source": "pixels"
+        }
+      ],
+      "note": "Source checks identify renderer/font tokens; pixel checks measure frame change and palette loss. Neither substitutes for visual review."
+    },
+    "rendered-legibility": {
+      "status": "pending",
+      "controls": [
+        {
+          "name": "title-complete",
+          "passed": true,
+          "detail": "Rows",
+          "source": "source"
+        },
+        {
+          "name": "phase-repetition-visible-label-complete",
+          "passed": true,
+          "detail": "Repeated",
+          "source": "source"
+        },
+        {
+          "name": "phase-repetition-visible-text-complete",
+          "passed": true,
+          "detail": "REG-204 / appears in two / rows.",
+          "source": "source"
+        },
+        {
+          "name": "phase-duplicate-identified-label-complete",
+          "passed": true,
+          "detail": "Identified",
+          "source": "source"
+        },
+        {
+          "name": "phase-duplicate-identified-text-complete",
+          "passed": true,
+          "detail": "The repeated / row is identified.",
+          "source": "source"
+        },
+        {
+          "name": "phase-authorized-rejection-label-complete",
+          "passed": true,
+          "detail": "Rejected",
+          "source": "source"
+        },
+        {
+          "name": "phase-authorized-rejection-text-complete",
+          "passed": true,
+          "detail": "The rule rejects / it, not deletes.",
+          "source": "source"
+        },
+        {
+          "name": "phase-beneficio-esperado-label-complete",
+          "passed": true,
+          "detail": "Expected result",
+          "source": "source"
+        },
+        {
+          "name": "phase-beneficio-esperado-text-complete",
+          "passed": true,
+          "detail": "Row retained; / impact / unmeasured.",
+          "source": "source"
+        },
+        {
+          "name": "registered-fonts",
+          "passed": true,
+          "detail": "all role faces and Spanish glyphs rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "review-size-thresholds",
+          "passed": true,
+          "detail": "title 56px; phase body >=36px; label >=24px",
+          "source": "source"
+        },
+        {
+          "name": "640x360-effective-size",
+          "passed": true,
+          "detail": "title 56.0px; body min 36.0px (requires >=20px); label min 24.0px",
+          "source": "source"
+        },
+        {
+          "name": "semantic-text-legibility",
+          "passed": true,
+          "status": "pass",
+          "detail": "minimum effective text >=14px: 14.0px; minimum headline none; measured 21 declared object text box(es) at 640×360.",
+          "source": "decoded"
+        },
+        {
+          "name": "composition-balance",
+          "passed": true,
+          "detail": "proxy; 8×4 decoded-pixel grid against #FBF1E2: empty cells 12.5%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 6.3%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: repetition-visible · hold: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 6.3% | repetition-visible → duplicate-identified · transition midpoint: empty 18.8%, text fill 75.0%, art 50.0%, largest empty 12.5% | duplicate-identified · hold: empty 18.8%, text fill 75.0%, art 50.0%, largest empty 12.5% | duplicate-identified → authorized-rejection · transition midpoint: empty 21.9%, text fill 75.0%, art 50.0%, largest empty 12.5% | authorized-rejection · hold: empty 21.9%, text fill 75.0%, art 50.0%, largest empty 12.5% | authorized-rejection → beneficio-esperado · transition midpoint: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 6.3% | beneficio-esperado · hold: empty 9.4%, text fill 100.0%, art 50.0%, largest empty 6.3% | beneficio-esperado → repetition-visible · loop join: empty 12.5%, text fill 100.0%, art 50.0%, largest empty 6.3%",
+          "source": "pixels"
+        },
+        {
+          "name": "contrast",
+          "passed": true,
+          "detail": "rendered text colors: ink 9.67:1; label 3.05:1 (not an OCR or per-pixel text measurement)",
+          "source": "source"
+        },
+        {
+          "name": "safe-zone-and-collisions",
+          "passed": true,
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+          "source": "source"
+        },
+        {
+          "name": "stable-reading-holds",
+          "passed": true,
+          "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+          "source": "decoded"
+        }
+      ],
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
+    },
+    "narrative": {
+      "status": "pending",
+      "controls": [
+        {
+          "name": "phase-count-and-copy",
+          "passed": true,
+          "detail": "4 complete phases; all copy retained",
+          "source": "source"
+        },
+        {
+          "name": "shared-object-identity",
+          "passed": true,
+          "detail": "One scene object instance is created and passed to every phase frame.",
+          "source": "source"
+        },
+        {
+          "name": "visual-state-change",
+          "passed": true,
+          "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+          "source": "pixels"
+        },
+        {
+          "name": "workflow-outcome-separation",
+          "passed": true,
+          "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+          "source": "source"
+        },
+        {
+          "name": "outcome-evidence",
+          "passed": true,
+          "detail": "Expected outcome; no benefit measurement is claimed.",
+          "source": "source"
+        },
+        {
+          "name": "result-follows-outcome",
+          "passed": true,
+          "detail": "outcome=expected; final label=\"Expected result\"",
+          "source": "source"
+        },
+        {
+          "name": "semantic-illustrative-data",
+          "passed": true,
+          "detail": "brief illustrative=true; semantic phase flags=true,true,true,true",
+          "source": "source"
+        },
+        {
+          "name": "semantic-object-midpoint:repetition-visible → duplicate-identified · transition midpoint",
+          "passed": true,
+          "detail": "decoded object diff 2.5%; changed-state entities: repeated-row; table default→default 1.8%, original-row original→original 0.0%, repeated-row duplicate→flagged 8.8%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:duplicate-identified → authorized-rejection · transition midpoint",
+          "passed": true,
+          "detail": "decoded object diff 26.0%; changed-state entities: repeated-row; table default→default 18.2%, original-row original→original 0.0%, repeated-row flagged→rejected 90.8%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:authorized-rejection → beneficio-esperado · transition midpoint",
+          "passed": true,
+          "detail": "decoded object diff 2.2%; changed-state entities: table; table default→reviewed 3.0%, original-row original→original 0.0%, repeated-row rejected→rejected 0.0%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:beneficio-esperado → repetition-visible · loop join",
+          "passed": true,
+          "detail": "decoded object diff 28.2%; changed-state entities: table, repeated-row; table reviewed→default 21.3%, original-row original→original 0.0%, repeated-row rejected→duplicate 90.8%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:repetition-visible → duplicate-identified hold",
+          "passed": true,
+          "detail": "decoded object diff 2.5%; changed-state entities: repeated-row; table default→default 1.8%, original-row original→original 0.0%, repeated-row duplicate→flagged 8.8%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:duplicate-identified → authorized-rejection hold",
+          "passed": true,
+          "detail": "decoded object diff 26.0%; changed-state entities: repeated-row; table default→default 18.2%, original-row original→original 0.0%, repeated-row flagged→rejected 90.8%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:authorized-rejection → beneficio-esperado hold",
+          "passed": true,
+          "detail": "decoded object diff 2.2%; changed-state entities: table; table default→reviewed 3.0%, original-row original→original 0.0%, repeated-row rejected→rejected 0.0%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:beneficio-esperado → repetition-visible loop join",
+          "passed": true,
+          "detail": "decoded object diff 28.2%; changed-state entities: table, repeated-row; table reviewed→default 21.3%, original-row original→original 0.0%, repeated-row rejected→duplicate 90.8%",
+          "source": "decoded"
+        }
+      ],
+      "note": "Automated checks separate work status from expected/observed outcome and confirm required evidence fields; causal meaning and evidence scope still need human review."
+    },
+    "visual-review": {
+      "status": "pending",
+      "criteria": [
+        "identity at 200px thumbnail",
+        "full text and contrast at 640×360",
+        "style material in native frame",
+        "same object and causal change across phases",
+        "result faithful to outcome and evidence scope",
+        "deliberate loop restart"
+      ],
+      "evidence": []
+    },
+    "publicationRecommendation": "none"
+  },
+  "phaseCaptures": [
+    {
+      "phaseId": "repetition-visible",
+      "labels": [
+        "repetition-visible · start",
+        "repetition-visible · hold",
+        "repetition-visible → duplicate-identified · transition midpoint",
+        "repetition-visible · exit"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\papercraft\\filas-duplicadas\\en\\rows-93496b4f-contact-sheet.png"
+    },
+    {
+      "phaseId": "duplicate-identified",
+      "labels": [
+        "duplicate-identified · start",
+        "duplicate-identified · hold",
+        "duplicate-identified → authorized-rejection · transition midpoint",
+        "duplicate-identified · exit"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\papercraft\\filas-duplicadas\\en\\rows-93496b4f-contact-sheet.png"
+    },
+    {
+      "phaseId": "authorized-rejection",
+      "labels": [
+        "authorized-rejection · start",
+        "authorized-rejection · hold",
+        "authorized-rejection → beneficio-esperado · transition midpoint",
+        "authorized-rejection · exit"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\papercraft\\filas-duplicadas\\en\\rows-93496b4f-contact-sheet.png"
+    },
+    {
+      "phaseId": "beneficio-esperado",
+      "labels": [
+        "beneficio-esperado · start",
+        "beneficio-esperado · hold",
+        "beneficio-esperado → repetition-visible · loop join",
+        "beneficio-esperado · exit"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\papercraft\\filas-duplicadas\\en\\rows-93496b4f-contact-sheet.png"
+    }
+  ],
+  "semanticObjectCaptures": [
+    {
+      "label": "repetition-visible · hold",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 0,
+      "frameIndex": 1,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "table",
+          "bounds": {
+            "x": 352.8032,
+            "y": 83.772,
+            "width": 222.39360000000002,
+            "height": 198.8712
+          },
+          "textBoxes": [
+            {
+              "text": "TABLE",
+              "bounds": {
+                "x": 352.8032,
+                "y": 83.772,
+                "width": 222.39360000000002,
+                "height": 198.8712
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            },
+            {
+              "text": "EXAMPLE",
+              "bounds": {
+                "x": 435.488,
+                "y": 34.0542,
+                "width": 156.816,
+                "height": 32.076
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "original-row",
+          "bounds": {
+            "x": 360.586976,
+            "y": 123.80284800000001,
+            "width": 206.82604800000004,
+            "height": 42.08371199999999
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 360.586976,
+                "y": 123.80284800000001,
+                "width": 206.82604800000004,
+                "height": 42.08371199999999
+              },
+              "fontSizePx": 14,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "repeated-row",
+          "bounds": {
+            "x": 360.586976,
+            "y": 175.124448,
+            "width": 206.82604800000004,
+            "height": 42.08371199999999
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 360.586976,
+                "y": 175.124448,
+                "width": 206.82604800000004,
+                "height": 42.08371199999999
+              },
+              "fontSizePx": 14,
+              "role": "identifier"
+            },
+            {
+              "text": "DUPLICATE",
+              "bounds": {
+                "x": 360.586976,
+                "y": 198.69132672,
+                "width": 175.80214080000002,
+                "height": 14.729299199999996
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "repetition-visible → duplicate-identified · transition midpoint",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 0,
+      "frameIndex": 3,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "table",
+          "bounds": {
+            "x": 352.8032,
+            "y": 83.772,
+            "width": 222.39360000000002,
+            "height": 198.8712
+          },
+          "textBoxes": [
+            {
+              "text": "TABLE",
+              "bounds": {
+                "x": 352.8032,
+                "y": 83.772,
+                "width": 222.39360000000002,
+                "height": 198.8712
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            },
+            {
+              "text": "EXAMPLE",
+              "bounds": {
+                "x": 435.488,
+                "y": 34.0542,
+                "width": 156.816,
+                "height": 32.076
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "original-row",
+          "bounds": {
+            "x": 360.586976,
+            "y": 123.80284800000001,
+            "width": 206.82604800000004,
+            "height": 42.08371199999999
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 360.586976,
+                "y": 123.80284800000001,
+                "width": 206.82604800000004,
+                "height": 42.08371199999999
+              },
+              "fontSizePx": 14,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "repeated-row",
+          "bounds": {
+            "x": 360.586976,
+            "y": 175.124448,
+            "width": 206.82604800000004,
+            "height": 42.08371199999999
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 360.586976,
+                "y": 175.124448,
+                "width": 206.82604800000004,
+                "height": 42.08371199999999
+              },
+              "fontSizePx": 14,
+              "role": "identifier"
+            },
+            {
+              "text": "FLAGGED",
+              "bounds": {
+                "x": 360.586976,
+                "y": 198.69132672,
+                "width": 175.80214080000002,
+                "height": 14.729299199999996
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "duplicate-identified · hold",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 1,
+      "frameIndex": 8,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "table",
+          "bounds": {
+            "x": 352.8032,
+            "y": 83.772,
+            "width": 222.39360000000002,
+            "height": 198.8712
+          },
+          "textBoxes": [
+            {
+              "text": "TABLE",
+              "bounds": {
+                "x": 352.8032,
+                "y": 83.772,
+                "width": 222.39360000000002,
+                "height": 198.8712
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            },
+            {
+              "text": "EXAMPLE",
+              "bounds": {
+                "x": 435.488,
+                "y": 34.0542,
+                "width": 156.816,
+                "height": 32.076
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "original-row",
+          "bounds": {
+            "x": 360.586976,
+            "y": 123.80284800000001,
+            "width": 206.82604800000004,
+            "height": 42.08371199999999
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 360.586976,
+                "y": 123.80284800000001,
+                "width": 206.82604800000004,
+                "height": 42.08371199999999
+              },
+              "fontSizePx": 14,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "repeated-row",
+          "bounds": {
+            "x": 360.586976,
+            "y": 175.124448,
+            "width": 206.82604800000004,
+            "height": 42.08371199999999
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 360.586976,
+                "y": 175.124448,
+                "width": 206.82604800000004,
+                "height": 42.08371199999999
+              },
+              "fontSizePx": 14,
+              "role": "identifier"
+            },
+            {
+              "text": "FLAGGED",
+              "bounds": {
+                "x": 360.586976,
+                "y": 198.69132672,
+                "width": 175.80214080000002,
+                "height": 14.729299199999996
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "duplicate-identified → authorized-rejection · transition midpoint",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 1,
+      "frameIndex": 10,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "table",
+          "bounds": {
+            "x": 352.8032,
+            "y": 83.772,
+            "width": 222.39360000000002,
+            "height": 198.8712
+          },
+          "textBoxes": [
+            {
+              "text": "TABLE",
+              "bounds": {
+                "x": 352.8032,
+                "y": 83.772,
+                "width": 222.39360000000002,
+                "height": 198.8712
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            },
+            {
+              "text": "EXAMPLE",
+              "bounds": {
+                "x": 435.488,
+                "y": 34.0542,
+                "width": 156.816,
+                "height": 32.076
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "original-row",
+          "bounds": {
+            "x": 360.586976,
+            "y": 123.80284800000001,
+            "width": 206.82604800000004,
+            "height": 42.08371199999999
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 360.586976,
+                "y": 123.80284800000001,
+                "width": 206.82604800000004,
+                "height": 42.08371199999999
+              },
+              "fontSizePx": 14,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "repeated-row",
+          "bounds": {
+            "x": 360.586976,
+            "y": 175.124448,
+            "width": 206.82604800000004,
+            "height": 42.08371199999999
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 360.586976,
+                "y": 175.124448,
+                "width": 206.82604800000004,
+                "height": 42.08371199999999
+              },
+              "fontSizePx": 14,
+              "role": "identifier"
+            },
+            {
+              "text": "REJECTED",
+              "bounds": {
+                "x": 360.586976,
+                "y": 198.69132672,
+                "width": 175.80214080000002,
+                "height": 14.729299199999996
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "authorized-rejection · hold",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 2,
+      "frameIndex": 15,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "table",
+          "bounds": {
+            "x": 352.8032,
+            "y": 83.772,
+            "width": 222.39360000000002,
+            "height": 198.8712
+          },
+          "textBoxes": [
+            {
+              "text": "TABLE",
+              "bounds": {
+                "x": 352.8032,
+                "y": 83.772,
+                "width": 222.39360000000002,
+                "height": 198.8712
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            },
+            {
+              "text": "EXAMPLE",
+              "bounds": {
+                "x": 435.488,
+                "y": 34.0542,
+                "width": 156.816,
+                "height": 32.076
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "original-row",
+          "bounds": {
+            "x": 360.586976,
+            "y": 123.80284800000001,
+            "width": 206.82604800000004,
+            "height": 42.08371199999999
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 360.586976,
+                "y": 123.80284800000001,
+                "width": 206.82604800000004,
+                "height": 42.08371199999999
+              },
+              "fontSizePx": 14,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "repeated-row",
+          "bounds": {
+            "x": 360.586976,
+            "y": 175.124448,
+            "width": 206.82604800000004,
+            "height": 42.08371199999999
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 360.586976,
+                "y": 175.124448,
+                "width": 206.82604800000004,
+                "height": 42.08371199999999
+              },
+              "fontSizePx": 14,
+              "role": "identifier"
+            },
+            {
+              "text": "REJECTED",
+              "bounds": {
+                "x": 360.586976,
+                "y": 198.69132672,
+                "width": 175.80214080000002,
+                "height": 14.729299199999996
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "authorized-rejection → beneficio-esperado · transition midpoint",
+      "phaseIndex": 3,
+      "fromPhaseIndex": 2,
+      "frameIndex": 17,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "table",
+          "bounds": {
+            "x": 352.8032,
+            "y": 83.772,
+            "width": 222.39360000000002,
+            "height": 198.8712
+          },
+          "textBoxes": [
+            {
+              "text": "TABLE",
+              "bounds": {
+                "x": 352.8032,
+                "y": 83.772,
+                "width": 222.39360000000002,
+                "height": 198.8712
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            },
+            {
+              "text": "RETAINED",
+              "bounds": {
+                "x": 375.04256,
+                "y": 226.95926400000002,
+                "width": 177.91488000000004,
+                "height": 27.841968
+              },
+              "fontSizePx": 16,
+              "role": "status"
+            },
+            {
+              "text": "EXAMPLE",
+              "bounds": {
+                "x": 435.488,
+                "y": 34.0542,
+                "width": 156.816,
+                "height": 32.076
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "original-row",
+          "bounds": {
+            "x": 360.586976,
+            "y": 123.80284800000001,
+            "width": 206.82604800000004,
+            "height": 42.08371199999999
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 360.586976,
+                "y": 123.80284800000001,
+                "width": 206.82604800000004,
+                "height": 42.08371199999999
+              },
+              "fontSizePx": 14,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "repeated-row",
+          "bounds": {
+            "x": 360.586976,
+            "y": 175.124448,
+            "width": 206.82604800000004,
+            "height": 42.08371199999999
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 360.586976,
+                "y": 175.124448,
+                "width": 206.82604800000004,
+                "height": 42.08371199999999
+              },
+              "fontSizePx": 14,
+              "role": "identifier"
+            },
+            {
+              "text": "REJECTED",
+              "bounds": {
+                "x": 360.586976,
+                "y": 198.69132672,
+                "width": 175.80214080000002,
+                "height": 14.729299199999996
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "beneficio-esperado · hold",
+      "phaseIndex": 3,
+      "fromPhaseIndex": 3,
+      "frameIndex": 22,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "table",
+          "bounds": {
+            "x": 352.8032,
+            "y": 83.772,
+            "width": 222.39360000000002,
+            "height": 198.8712
+          },
+          "textBoxes": [
+            {
+              "text": "TABLE",
+              "bounds": {
+                "x": 352.8032,
+                "y": 83.772,
+                "width": 222.39360000000002,
+                "height": 198.8712
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            },
+            {
+              "text": "RETAINED",
+              "bounds": {
+                "x": 375.04256,
+                "y": 226.95926400000002,
+                "width": 177.91488000000004,
+                "height": 27.841968
+              },
+              "fontSizePx": 16,
+              "role": "status"
+            },
+            {
+              "text": "EXAMPLE",
+              "bounds": {
+                "x": 435.488,
+                "y": 34.0542,
+                "width": 156.816,
+                "height": 32.076
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "original-row",
+          "bounds": {
+            "x": 360.586976,
+            "y": 123.80284800000001,
+            "width": 206.82604800000004,
+            "height": 42.08371199999999
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 360.586976,
+                "y": 123.80284800000001,
+                "width": 206.82604800000004,
+                "height": 42.08371199999999
+              },
+              "fontSizePx": 14,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "repeated-row",
+          "bounds": {
+            "x": 360.586976,
+            "y": 175.124448,
+            "width": 206.82604800000004,
+            "height": 42.08371199999999
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 360.586976,
+                "y": 175.124448,
+                "width": 206.82604800000004,
+                "height": 42.08371199999999
+              },
+              "fontSizePx": 14,
+              "role": "identifier"
+            },
+            {
+              "text": "REJECTED",
+              "bounds": {
+                "x": 360.586976,
+                "y": 198.69132672,
+                "width": 175.80214080000002,
+                "height": 14.729299199999996
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "beneficio-esperado → repetition-visible · loop join",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 3,
+      "frameIndex": 24,
+      "kind": "loop-bridge",
+      "regions": [
+        {
+          "entityId": "table",
+          "bounds": {
+            "x": 352.8032,
+            "y": 83.772,
+            "width": 222.39360000000002,
+            "height": 198.8712
+          },
+          "textBoxes": [
+            {
+              "text": "TABLE",
+              "bounds": {
+                "x": 352.8032,
+                "y": 83.772,
+                "width": 222.39360000000002,
+                "height": 198.8712
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            },
+            {
+              "text": "EXAMPLE",
+              "bounds": {
+                "x": 435.488,
+                "y": 34.0542,
+                "width": 156.816,
+                "height": 32.076
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "original-row",
+          "bounds": {
+            "x": 360.586976,
+            "y": 123.80284800000001,
+            "width": 206.82604800000004,
+            "height": 42.08371199999999
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 360.586976,
+                "y": 123.80284800000001,
+                "width": 206.82604800000004,
+                "height": 42.08371199999999
+              },
+              "fontSizePx": 14,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "repeated-row",
+          "bounds": {
+            "x": 360.586976,
+            "y": 175.124448,
+            "width": 206.82604800000004,
+            "height": 42.08371199999999
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 360.586976,
+                "y": 175.124448,
+                "width": 206.82604800000004,
+                "height": 42.08371199999999
+              },
+              "fontSizePx": 14,
+              "role": "identifier"
+            },
+            {
+              "text": "DUPLICATE",
+              "bounds": {
+                "x": 360.586976,
+                "y": 198.69132672,
+                "width": 175.80214080000002,
+                "height": 14.729299199999996
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "compositionByFrame": [
+    {
+      "label": "repetition-visible · hold",
+      "metrics": {
+        "emptyCellRatio": 0.125,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.0625
+      }
+    },
+    {
+      "label": "repetition-visible → duplicate-identified · transition midpoint",
+      "metrics": {
+        "emptyCellRatio": 0.1875,
+        "textColumnFillRatio": 0.75,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.125
+      }
+    },
+    {
+      "label": "duplicate-identified · hold",
+      "metrics": {
+        "emptyCellRatio": 0.1875,
+        "textColumnFillRatio": 0.75,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.125
+      }
+    },
+    {
+      "label": "duplicate-identified → authorized-rejection · transition midpoint",
+      "metrics": {
+        "emptyCellRatio": 0.21875,
+        "textColumnFillRatio": 0.75,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.125
+      }
+    },
+    {
+      "label": "authorized-rejection · hold",
+      "metrics": {
+        "emptyCellRatio": 0.21875,
+        "textColumnFillRatio": 0.75,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.125
+      }
+    },
+    {
+      "label": "authorized-rejection → beneficio-esperado · transition midpoint",
+      "metrics": {
+        "emptyCellRatio": 0.09375,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.0625
+      }
+    },
+    {
+      "label": "beneficio-esperado · hold",
+      "metrics": {
+        "emptyCellRatio": 0.09375,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.0625
+      }
+    },
+    {
+      "label": "beneficio-esperado → repetition-visible · loop join",
+      "metrics": {
+        "emptyCellRatio": 0.125,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.0625
+      }
+    }
+  ],
+  "palette": {
+    "colors": 82,
+    "meanAbsoluteChannelError": 1.919,
+    "maximumChannelError": 11,
+    "sampledFrames": 28
+  },
+  "phaseHoldsVerified": [
+    {
+      "phaseId": "repetition-visible",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    },
+    {
+      "phaseId": "duplicate-identified",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    },
+    {
+      "phaseId": "authorized-rejection",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    },
+    {
+      "phaseId": "beneficio-esperado",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    }
+  ],
+  "timing": {
+    "preset": "concise",
+    "holdsRequestedMs": 8800,
+    "holdsDecodedMs": 8800,
+    "transitionsMs": 1200,
+    "loopBridgeMs": 400,
+    "entryMs": 320,
+    "totalDecodedMs": 10720,
+    "totalDurationBudgetMs": 20000,
+    "phaseHolds": [
+      {
+        "phaseId": "repetition-visible",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      },
+      {
+        "phaseId": "duplicate-identified",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      },
+      {
+        "phaseId": "authorized-rejection",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      },
+      {
+        "phaseId": "beneficio-esperado",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      }
+    ],
+    "warnings": [
+      {
+        "code": "READING_LOAD",
+        "message": "Phase 3 has about 3.18 words/s (7 label+body words ÷ 2.20s hold); the reading threshold is 3 words/s."
+      }
+    ]
+  },
+  "resourceEstimate": {
+    "pixelFrames": 6451200,
+    "maxPixelFrames": 96000000,
+    "memoryBytes": 37511168,
+    "maxMemoryBytes": 268435456
+  },
+  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed."
+}

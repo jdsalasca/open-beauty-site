@@ -4,19 +4,19 @@
   "kind": "narrative-gif",
   "locale": "es",
   "audience": "Equipo de operación de datos",
-  "title": "Filas duplicadas",
+  "title": "Filas",
   "workflowStatus": "in-review",
   "outcome": {
     "mode": "expected",
-    "scopeNote": "Ejemplo ilustrativo: se espera reducir el riesgo de aceptar filas repetidas en este flujo; no se afirma que se borren registros ni que haya una medición de impacto."
+    "scopeNote": "Ejemplo ilustrativo: la regla rechaza la fila repetida y no borra registros; el efecto no se mide."
   },
   "illustrative": true,
   "badgePolicy": "none",
   "phases": [
     {
       "id": "repeticion-visible",
-      "label": "Repetición visible",
-      "text": "Dos filas comparten REG-204; aún no hay una decisión.",
+      "label": "Repetición",
+      "text": "REG-204 aparece en dos filas.",
       "holdMs": 2200,
       "visual": {
         "kind": "comparison",
@@ -25,20 +25,43 @@
           "primitive": "table-rows",
           "illustrative": true,
           "entities": [
-            { "id": "tabla", "kind": "table" },
-            { "id": "fila-original", "kind": "row", "label": "REG-204", "value": "REG-204" },
-            { "id": "fila-repetida", "kind": "row", "label": "REG-204", "value": "REG-204" }
+            {
+              "id": "tabla",
+              "kind": "table"
+            },
+            {
+              "id": "fila-original",
+              "kind": "row",
+              "label": "REG-204",
+              "value": "REG-204"
+            },
+            {
+              "id": "fila-repetida",
+              "kind": "row",
+              "label": "REG-204",
+              "value": "REG-204"
+            }
           ],
-          "relations": [{ "kind": "duplicate-of", "from": "fila-repetida", "to": "fila-original" }],
-          "states": { "tabla": "default", "fila-original": "original", "fila-repetida": "original" },
+          "relations": [
+            {
+              "kind": "duplicate-of",
+              "from": "fila-repetida",
+              "to": "fila-original"
+            }
+          ],
+          "states": {
+            "tabla": "default",
+            "fila-original": "original",
+            "fila-repetida": "duplicate"
+          },
           "actions": []
         }
       }
     },
     {
       "id": "duplicado-identificado",
-      "label": "Duplicado identificado",
-      "text": "La relación permite señalar cuál fila está repetida.",
+      "label": "Identificada",
+      "text": "La fila repetida se identifica.",
       "holdMs": 2200,
       "visual": {
         "kind": "comparison",
@@ -47,20 +70,48 @@
           "primitive": "table-rows",
           "illustrative": true,
           "entities": [
-            { "id": "tabla", "kind": "table" },
-            { "id": "fila-original", "kind": "row", "label": "REG-204", "value": "REG-204" },
-            { "id": "fila-repetida", "kind": "row", "label": "REG-204", "value": "REG-204" }
+            {
+              "id": "tabla",
+              "kind": "table"
+            },
+            {
+              "id": "fila-original",
+              "kind": "row",
+              "label": "REG-204",
+              "value": "REG-204"
+            },
+            {
+              "id": "fila-repetida",
+              "kind": "row",
+              "label": "REG-204",
+              "value": "REG-204"
+            }
           ],
-          "relations": [{ "kind": "duplicate-of", "from": "fila-repetida", "to": "fila-original" }],
-          "states": { "tabla": "default", "fila-original": "original", "fila-repetida": "flagged" },
-          "actions": [{ "entityId": "fila-repetida", "type": "detect" }]
+          "relations": [
+            {
+              "kind": "duplicate-of",
+              "from": "fila-repetida",
+              "to": "fila-original"
+            }
+          ],
+          "states": {
+            "tabla": "default",
+            "fila-original": "original",
+            "fila-repetida": "flagged"
+          },
+          "actions": [
+            {
+              "entityId": "fila-repetida",
+              "type": "mark-duplicate"
+            }
+          ]
         }
       }
     },
     {
       "id": "rechazo-autorizado",
-      "label": "Rechazo autorizado",
-      "text": "La regla ilustrada detecta y rechaza; no borra la fila.",
+      "label": "Rechazo",
+      "text": "La regla la rechaza; no la borra.",
       "holdMs": 2200,
       "visual": {
         "kind": "comparison",
@@ -69,42 +120,48 @@
           "primitive": "table-rows",
           "illustrative": true,
           "entities": [
-            { "id": "tabla", "kind": "table" },
-            { "id": "fila-original", "kind": "row", "label": "REG-204", "value": "REG-204" },
-            { "id": "fila-repetida", "kind": "row", "label": "REG-204", "value": "REG-204" }
+            {
+              "id": "tabla",
+              "kind": "table"
+            },
+            {
+              "id": "fila-original",
+              "kind": "row",
+              "label": "REG-204",
+              "value": "REG-204"
+            },
+            {
+              "id": "fila-repetida",
+              "kind": "row",
+              "label": "REG-204",
+              "value": "REG-204"
+            }
           ],
-          "relations": [{ "kind": "duplicate-of", "from": "fila-repetida", "to": "fila-original" }],
-          "states": { "tabla": "default", "fila-original": "original", "fila-repetida": "rejected" },
-          "actions": [{ "entityId": "fila-repetida", "type": "reject" }]
-        }
-      }
-    },
-    {
-      "id": "estado-posterior",
-      "label": "Estado posterior",
-      "text": "Ambas filas siguen visibles; una queda rechazada.",
-      "holdMs": 2200,
-      "visual": {
-        "kind": "comparison",
-        "state": "review-ready",
-        "semantic": {
-          "primitive": "table-rows",
-          "illustrative": true,
-          "entities": [
-            { "id": "tabla", "kind": "table" },
-            { "id": "fila-original", "kind": "row", "label": "REG-204", "value": "REG-204" },
-            { "id": "fila-repetida", "kind": "row", "label": "REG-204", "value": "REG-204" }
+          "relations": [
+            {
+              "kind": "duplicate-of",
+              "from": "fila-repetida",
+              "to": "fila-original"
+            }
           ],
-          "relations": [{ "kind": "duplicate-of", "from": "fila-repetida", "to": "fila-original" }],
-          "states": { "tabla": "reviewed", "fila-original": "original", "fila-repetida": "rejected" },
-          "actions": []
+          "states": {
+            "tabla": "default",
+            "fila-original": "original",
+            "fila-repetida": "rejected"
+          },
+          "actions": [
+            {
+              "entityId": "fila-repetida",
+              "type": "reject"
+            }
+          ]
         }
       }
     },
     {
       "id": "beneficio-esperado",
-      "label": "Beneficio esperado",
-      "text": "Se esperan menos duplicados aceptados; el efecto no se mide.",
+      "label": "Resultado esperado",
+      "text": "Fila sigue; efecto sin medir.",
       "holdMs": 2200,
       "visual": {
         "kind": "comparison",
@@ -113,18 +170,54 @@
           "primitive": "table-rows",
           "illustrative": true,
           "entities": [
-            { "id": "tabla", "kind": "table" },
-            { "id": "fila-original", "kind": "row", "label": "REG-204", "value": "REG-204" },
-            { "id": "fila-repetida", "kind": "row", "label": "REG-204", "value": "REG-204" }
+            {
+              "id": "tabla",
+              "kind": "table"
+            },
+            {
+              "id": "fila-original",
+              "kind": "row",
+              "label": "REG-204",
+              "value": "REG-204"
+            },
+            {
+              "id": "fila-repetida",
+              "kind": "row",
+              "label": "REG-204",
+              "value": "REG-204"
+            }
           ],
-          "relations": [{ "kind": "duplicate-of", "from": "fila-repetida", "to": "fila-original" }],
-          "states": { "tabla": "reviewed", "fila-original": "original", "fila-repetida": "rejected" },
+          "relations": [
+            {
+              "kind": "duplicate-of",
+              "from": "fila-repetida",
+              "to": "fila-original"
+            }
+          ],
+          "states": {
+            "tabla": "reviewed",
+            "fila-original": "original",
+            "fila-repetida": "rejected"
+          },
           "actions": []
         }
       }
     }
   ],
-  "playback": { "preset": "concise", "minReadableHoldMs": 2200, "transitionMs": 400, "loop": true, "totalDurationBudgetMs": 20000 },
-  "output": { "width": 640, "height": 360, "formats": ["gif", "png"] },
+  "playback": {
+    "preset": "concise",
+    "minReadableHoldMs": 2200,
+    "transitionMs": 400,
+    "loop": true,
+    "totalDurationBudgetMs": 20000
+  },
+  "output": {
+    "width": 640,
+    "height": 360,
+    "formats": [
+      "gif",
+      "png"
+    ]
+  },
   "seed": 7
 }

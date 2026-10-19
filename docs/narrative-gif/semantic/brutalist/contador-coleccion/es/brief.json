@@ -1,0 +1,213 @@
+{
+  "style": "brutalist",
+  "subfamily": "documentary",
+  "kind": "narrative-gif",
+  "locale": "es",
+  "audience": "Equipo que revisa un listado",
+  "title": "Total",
+  "workflowStatus": "in-review",
+  "outcome": {
+    "mode": "expected",
+    "scopeNote": "Ejemplo ilustrativo: el conteo incluye solo las tarjetas visibles relacionadas; no representa elementos fuera de la colección."
+  },
+  "illustrative": true,
+  "badgePolicy": "none",
+  "phases": [
+    {
+      "id": "alcance-de-dos",
+      "label": "Antes",
+      "text": "A y B suman 2.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "before",
+        "semantic": {
+          "primitive": "counter",
+          "illustrative": true,
+          "entities": [
+            {
+              "id": "contador",
+              "kind": "counter",
+              "value": 2
+            },
+            {
+              "id": "ficha-a",
+              "kind": "row",
+              "label": "A"
+            },
+            {
+              "id": "ficha-b",
+              "kind": "row",
+              "label": "B"
+            },
+            {
+              "id": "ficha-c",
+              "kind": "row",
+              "label": "C"
+            }
+          ],
+          "relations": [
+            {
+              "kind": "counts",
+              "from": "contador",
+              "to": "ficha-a"
+            },
+            {
+              "kind": "counts",
+              "from": "contador",
+              "to": "ficha-b"
+            }
+          ],
+          "states": {
+            "contador": "value",
+            "ficha-a": "default",
+            "ficha-b": "default",
+            "ficha-c": "pending"
+          },
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "tercera-ficha-incluida",
+      "label": "Se suma C",
+      "text": "C se suma al conteo.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "flagged",
+        "semantic": {
+          "primitive": "counter",
+          "illustrative": true,
+          "entities": [
+            {
+              "id": "contador",
+              "kind": "counter",
+              "value": 3
+            },
+            {
+              "id": "ficha-a",
+              "kind": "row",
+              "label": "A"
+            },
+            {
+              "id": "ficha-b",
+              "kind": "row",
+              "label": "B"
+            },
+            {
+              "id": "ficha-c",
+              "kind": "row",
+              "label": "C"
+            }
+          ],
+          "relations": [
+            {
+              "kind": "counts",
+              "from": "contador",
+              "to": "ficha-a"
+            },
+            {
+              "kind": "counts",
+              "from": "contador",
+              "to": "ficha-b"
+            },
+            {
+              "kind": "counts",
+              "from": "contador",
+              "to": "ficha-c"
+            }
+          ],
+          "states": {
+            "contador": "increased",
+            "ficha-a": "default",
+            "ficha-b": "default",
+            "ficha-c": "accepted"
+          },
+          "actions": [
+            {
+              "entityId": "contador",
+              "type": "count-changes"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "conjunto-de-tres",
+      "label": "Resultado esperado",
+      "text": "Total esperado: 3.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "review-ready",
+        "semantic": {
+          "primitive": "counter",
+          "illustrative": true,
+          "entities": [
+            {
+              "id": "contador",
+              "kind": "counter",
+              "value": 3
+            },
+            {
+              "id": "ficha-a",
+              "kind": "row",
+              "label": "A"
+            },
+            {
+              "id": "ficha-b",
+              "kind": "row",
+              "label": "B"
+            },
+            {
+              "id": "ficha-c",
+              "kind": "row",
+              "label": "C"
+            }
+          ],
+          "relations": [
+            {
+              "kind": "counts",
+              "from": "contador",
+              "to": "ficha-a"
+            },
+            {
+              "kind": "counts",
+              "from": "contador",
+              "to": "ficha-b"
+            },
+            {
+              "kind": "counts",
+              "from": "contador",
+              "to": "ficha-c"
+            }
+          ],
+          "states": {
+            "contador": "pending",
+            "ficha-a": "default",
+            "ficha-b": "default",
+            "ficha-c": "accepted"
+          },
+          "actions": []
+        }
+      }
+    }
+  ],
+  "playback": {
+    "preset": "concise",
+    "minReadableHoldMs": 2200,
+    "transitionMs": 400,
+    "loop": true,
+    "totalDurationBudgetMs": 15000
+  },
+  "output": {
+    "width": 640,
+    "height": 360,
+    "formats": [
+      "gif",
+      "png"
+    ]
+  },
+  "seed": 19
+}
