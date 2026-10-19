@@ -11,6 +11,7 @@ import {
 } from '../types/narrative.js';
 import { getNarrativeScene } from './scene.js';
 import { normalizeSemanticPhases, narrativeSemanticSceneSchema } from './semantic.js';
+import { upgradeLegacyNarrativePhases, type NarrativeUpgradeMetadata } from './legacy-upgrade.js';
 
 const PRESET_SIZE: Record<NarrativeOutputPreset, [number, number]> = {
   'review-1280x720': [1280, 720],
@@ -56,6 +57,7 @@ export const narrativeBriefSchema = z.object({
   workflowStatus: z.enum(['open', 'in-review', 'done']).optional().describe('Work status only; does not imply an observed outcome.'),
   outcome: outcomeSchema.optional().describe('Expected or observed result; observed requires evidenceRefs and a scopeNote naming excluded claims.'),
   illustrative: z.boolean().optional().describe('Mark synthetic or demonstration content; defaults to true for v1 migration.'),
+  legacyArt: z.boolean().optional().describe('Keep the previous legacy illustration instead of upgrading a kind/state-only brief to semantic scene entities.'),
   badgePolicy: z.enum(['none', 'custom', 'workflow']).default('workflow').describe('none|custom|workflow; workflow preserves v1 stamps by default.'),
   badgeText: z.string().trim().min(1).max(64).optional().describe('Required only with badgePolicy=custom.'),
   phases: z.array(phaseSchema).min(3).max(5).describe('3–5 { id, label, text, visual: { kind, state, action? }, holdMs? } phases.'),
@@ -85,6 +87,7 @@ export function narrativeHelpOptions(): string[] {
     '  --brief <file>     Read the JSON narrative brief',
     '  --out <dir>        Output folder (GIF, PNG, contact sheet and manifest)',
     '  --art-only         Export a review copy without narrative title, labels or body text',
+    '  --legacy-art       Keep the previous illustration for a legacy kind/state-only brief',
     '',
     '  JSON brief fields:',
     ...Object.keys(narrativeBriefSchema.shape).map((key) => `  ${key.padEnd(18)} ${NARRATIVE_FIELD_DESCRIPTIONS[key] ?? 'See the narrative brief schema.'}`),
@@ -164,6 +167,7 @@ export interface ParsedNarrativeBrief {
   brief: NormalizedNarrativeBrief;
   hash: string;
   outputHash: string;
+  upgrade: NarrativeUpgradeMetadata;
 }
 
 export interface ContentSource<TPayload> {
@@ -352,7 +356,8 @@ export function normalizeNarrativeBrief(input: unknown): ParsedNarrativeBrief {
 
   const expectedLabel = value.locale === 'en' ? 'Expected result' : 'Resultado esperado';
   const observedLabel = value.locale === 'en' ? 'Observed result' : 'Resultado observado';
-  const phases = normalizeSemanticPhases(value.phases.map((phase) => ({ ...phase, text: phase.text.trim() })), illustrative, value.style);
+  const legacyUpgrade = upgradeLegacyNarrativePhases(value.phases, value.style, value.locale, value.legacyArt === true);
+  const phases = normalizeSemanticPhases(legacyUpgrade.phases.map((phase) => ({ ...phase, text: phase.text.trim() })), illustrative, value.style);
   phases[phases.length - 1]!.label = outcome.mode === 'observed' ? observedLabel : expectedLabel;
   const brief: NormalizedNarrativeBrief = {
     ...value,
@@ -360,6 +365,7 @@ export function normalizeNarrativeBrief(input: unknown): ParsedNarrativeBrief {
     workflowStatus,
     outcome,
     illustrative,
+    ...(value.legacyArt === true ? { legacyArt: true } : {}),
     badgePolicy: value.badgePolicy,
     ...(value.style === 'papercraft' ? { subfamily: value.subfamily ?? 'editorial' } : {}),
     ...(value.style === 'brutalist' ? { subfamily: value.subfamily ?? 'documentary' } : {}),
@@ -403,7 +409,7 @@ export function normalizeNarrativeBrief(input: unknown): ParsedNarrativeBrief {
     ...(brief.badgePolicy === 'workflow' ? {} : { badgePolicy: brief.badgePolicy, ...(brief.badgeText ? { badgeText: brief.badgeText } : {}) }),
   };
   const outputHash = createHash('sha256').update(stableJson(renderProjection)).digest('hex');
-  return { brief, hash, outputHash };
+  return { brief, hash, outputHash, upgrade: legacyUpgrade.upgrade };
 }
 
 export function parseNarrativeBrief(input: NarrativeBriefInput | unknown): ParsedNarrativeBrief {

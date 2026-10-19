@@ -12,6 +12,8 @@ import { refreshNarrativeReviewMetadata } from './review.js';
 export interface CreateNarrativeOptions {
   outputDir?: string;
   artOnly?: boolean;
+  /** Explicit runtime opt-out for CLIs/clients that do not edit the brief JSON. */
+  legacyArt?: boolean;
   /** Injection seam for isolated renderer tests; production styles use the registry. */
   scene?: NarrativeScene;
 }
@@ -25,10 +27,14 @@ export interface NarrativeGenerationResult {
   durationMs: number;
   diagnostics: Array<{ code: string; message: string; suggestion?: string; phaseIndex?: number; value?: string; style?: string; validAlternatives?: string[] }>;
   evaluation: NarrativeEvaluation;
+  upgrade: ReturnType<typeof normalizeNarrativeBrief>['upgrade'];
 }
 
 export async function createNarrative(input: NarrativeBriefInput | unknown, options: CreateNarrativeOptions = {}): Promise<NarrativeGenerationResult> {
-  const { brief, hash, outputHash } = normalizeNarrativeBrief(input);
+  const inputWithLegacyArt = options.legacyArt && input && typeof input === 'object'
+    ? { ...(input as Record<string, unknown>), legacyArt: true }
+    : input;
+  const { brief, hash, outputHash, upgrade } = normalizeNarrativeBrief(inputWithLegacyArt);
   const scene = resolveNarrativeScene(brief.style, options.scene);
   if (!scene.supportsAspect(brief.output.width / brief.output.height)) {
     throw new NarrativeError(
@@ -49,7 +55,7 @@ export async function createNarrative(input: NarrativeBriefInput | unknown, opti
     ...evaluation['rendered-legibility'].controls,
     ...evaluation.narrative.controls,
   ];
-  const { path: manifestPath } = await createNarrativeManifest({ brief, briefHash: hash, encoded, timeline, controls, evaluation, outputDir });
+  const { path: manifestPath } = await createNarrativeManifest({ brief, briefHash: hash, encoded, timeline, controls, evaluation, outputDir, upgrade });
   await refreshNarrativeReviewMetadata(manifestPath);
   encoded.decoded.sampledFrames.length = 0;
   const diagnostics = [
@@ -71,6 +77,7 @@ export async function createNarrative(input: NarrativeBriefInput | unknown, opti
     durationMs: encoded.decoded.durationMs,
     diagnostics,
     evaluation,
+    upgrade,
   };
 }
 

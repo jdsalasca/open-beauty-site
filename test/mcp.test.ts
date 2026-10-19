@@ -77,7 +77,7 @@ test('capabilities MCP returns per-style cells and exposes the shared narrative 
   const narrativeTool = tools.find((tool) => tool.name === 'beauty_create_narrative');
   const input = narrativeTool?.inputSchema as { properties?: Record<string, { properties?: Record<string, unknown> }> } | undefined;
   const briefFields = input?.properties?.brief?.properties ?? {};
-  for (const field of ['workflowStatus', 'outcome', 'illustrative', 'badgePolicy', 'badgeText', 'playback', 'phases']) {
+  for (const field of ['workflowStatus', 'outcome', 'illustrative', 'legacyArt', 'badgePolicy', 'badgeText', 'playback', 'phases']) {
     assert.ok(field in briefFields, `MCP narrative schema is missing ${field}`);
   }
 });

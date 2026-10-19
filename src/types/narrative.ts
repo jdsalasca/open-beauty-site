@@ -116,6 +116,8 @@ export interface NarrativeBriefInput {
   workflowStatus?: NarrativeStatus;
   outcome?: NarrativeOutcome;
   illustrative?: boolean;
+  /** Keep the previous kind/state illustration when migrating a legacy brief. */
+  legacyArt?: boolean;
   badgePolicy?: NarrativeBadgePolicy;
   badgeText?: string;
   phases: NarrativePhase[];

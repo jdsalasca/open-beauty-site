@@ -74,7 +74,7 @@ test('every narrative schema field and example appears in narrative --help', asy
   for (const key of Object.keys(narrativeBriefSchema.shape)) {
     assert.ok(help.includes(key), `narrative --help is missing the schema field "${key}"`);
   }
-  for (const flag of ['--style', '--brief', '--out']) {
+  for (const flag of ['--style', '--brief', '--out', '--legacy-art']) {
     assert.ok(help.includes(flag), `narrative --help is missing ${flag}`);
   }
   assert.match(help, /"kind": "narrative-gif"/);

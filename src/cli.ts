@@ -716,7 +716,7 @@ async function main(): Promise<void> {
         return;
       }
       try {
-        const result = await createNarrative(brief, { outputDir: stringFlag(flags, 'out'), artOnly: booleanFlag(flags, 'art-only') });
+        const result = await createNarrative(brief, { outputDir: stringFlag(flags, 'out'), artOnly: booleanFlag(flags, 'art-only'), legacyArt: booleanFlag(flags, 'legacy-art') });
         console.log(JSON.stringify(result, null, 2));
       } catch (error) {
         console.log(JSON.stringify(narrativeFailure(error), null, 2));

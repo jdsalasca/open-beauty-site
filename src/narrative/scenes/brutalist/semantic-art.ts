@@ -2,7 +2,7 @@ import { canvasFor } from '../../../canvas.js';
 import { NarrativeError, type NarrativeObjectRegion, type NarrativeObjectTextBox, type NarrativeRect, type NarrativeRenderContext } from '../../../types/narrative.js';
 import type { NarrativeSemanticEntity, NarrativeSemanticScene } from '../../../types/narrative-scene.js';
 import { getStyle } from '../../../styles/presets.js';
-import { sceneText, workflowBadgeText } from '../../i18n.js';
+import { legacySemanticStateText, sceneText, workflowBadgeText } from '../../i18n.js';
 import { drawText, rgba } from '../common.js';
 
 interface BrutalistSemanticColors {
@@ -62,6 +62,7 @@ function localState(locale: 'es' | 'en', state: string): string {
     accepted: 'semanticAccepted', pending: 'semanticPending', downloading: 'semanticDownloading',
     failed: 'semanticFailed', retrying: 'semanticRetrying', complete: 'semanticComplete',
     member: 'semanticMember', selected: 'semanticMember', counted: 'semanticMember',
+    'ready-for-review': 'legacyReady',
     value: 'semanticItems', increased: 'semanticItems', decreased: 'semanticItems', unchanged: 'semanticItems',
   };
   return sceneText('brutalist', locale, key[state] ?? 'semanticPending');
@@ -186,15 +187,21 @@ function createPlan(context: NarrativeRenderContext, box: NarrativeRect, measure
       const label = displayValue(item);
       addText(item.id, label, card.x + card.width * 0.05, card.y + card.height * 0.57, card.width * 0.9, 16, 'identifier', ink, 'Archivo Black');
       const member = semantic.relations.some((relation) => relation.kind === 'member-of' && relation.from === item.id && relation.to === collection?.id);
-      const selected = stateOf(semantic, item.id) === 'selected';
+      const itemState = stateOf(semantic, item.id);
+      const selected = itemState === 'selected' || semantic.legacyUpgrade && itemState === 'flagged';
       shapes.push({ kind: 'checkbox', x: card.x + card.width * 0.72, y: card.y + card.height * 0.68, width: Math.min(card.width, card.height) * 0.19, height: Math.min(card.width, card.height) * 0.19, stroke: selected ? red : ink, lineWidth: 2, progress: member ? 1 : 0 });
     });
-    const total = cards.filter((item) => semantic.relations.some((relation) => relation.kind === 'member-of' && relation.from === item.id && relation.to === collection?.id)).length;
     const countBox = rect(box.x + box.width * 0.045, box.y + box.height * 0.78, box.width * 0.74, box.height * 0.11);
     addRect(countBox.x, countBox.y, countBox.width, countBox.height, paper, ink, 2);
     if (collection) {
-      addText(collection.id, String(total), countBox.x + countBox.width * 0.08, countBox.y + countBox.height * 0.72, countBox.width * 0.2, 20, 'headline', ink, 'Archivo Black');
-      addText(collection.id, sceneText('brutalist', context.brief.locale, 'semanticItems'), countBox.x + countBox.width * 0.28, countBox.y + countBox.height * 0.68, countBox.width * 0.68, 14, 'label', ink);
+      if (semantic.legacyUpgrade) {
+        const state = cards[0] ? stateOf(semantic, cards[0].id) : 'pending';
+        addText(collection.id, legacySemanticStateText('brutalist', context.brief.locale, state), countBox.x + countBox.width * 0.06, countBox.y + countBox.height * 0.68, countBox.width * 0.88, 14, 'status', ink);
+      } else {
+        const total = cards.filter((item) => semantic.relations.some((relation) => relation.kind === 'member-of' && relation.from === item.id && relation.to === collection.id)).length;
+        addText(collection.id, String(total), countBox.x + countBox.width * 0.08, countBox.y + countBox.height * 0.72, countBox.width * 0.2, 20, 'headline', ink, 'Archivo Black');
+        addText(collection.id, sceneText('brutalist', context.brief.locale, 'semanticItems'), countBox.x + countBox.width * 0.28, countBox.y + countBox.height * 0.68, countBox.width * 0.68, 14, 'label', ink);
+      }
     }
   } else if (semantic.primitive === 'counter') {
     const items = semantic.entities.filter((item) => item.kind === 'row' || item.kind === 'card');

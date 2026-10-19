@@ -1,7 +1,7 @@
 import type { SKRSContext2D } from '@napi-rs/canvas';
 import type { NarrativeObjectRegion, NarrativeObjectTextBox, NarrativeRect, NarrativeRenderContext } from '../../../types/narrative.js';
 import type { NarrativeSemanticEntity, NarrativeSemanticScene } from '../../../types/narrative-scene.js';
-import { sceneText } from '../../i18n.js';
+import { legacySemanticStateText, sceneText } from '../../i18n.js';
 import { drawText, rgba } from '../common.js';
 
 export interface PaperPalette {
@@ -133,10 +133,11 @@ export function papercraftObjectRegions(context: NarrativeRenderContext, box: Na
       const size = Math.max(14, Math.min(rowBox.height * 0.34, box.width * 0.045));
       add(row.id, value, rowBox, size, 'identifier');
       const state = semantic.states[row.id] ?? 'default';
-      if (['duplicate', 'flagged', 'marked', 'rejected'].includes(state)) {
+      if (['duplicate', 'flagged', 'marked', 'rejected'].includes(state) || semantic.legacyUpgrade && state === 'ready-for-review') {
         const status = state === 'duplicate' ? sceneText('papercraft', context.brief.locale, 'semanticDuplicate')
           : state === 'rejected' ? sceneText('papercraft', context.brief.locale, 'semanticRejected')
-            : sceneText('papercraft', context.brief.locale, 'semanticFlagged');
+            : state === 'ready-for-review' ? legacySemanticStateText('papercraft', context.brief.locale, state)
+              : sceneText('papercraft', context.brief.locale, 'semanticFlagged');
         add(row.id, status, rect(rowBox.x, rowBox.y + rowBox.height * 0.56, rowBox.width * 0.85, rowBox.height * 0.35), Math.max(14, size * 0.58), 'status');
       }
     }
@@ -202,10 +203,11 @@ function drawRow(ctx: SKRSContext2D, semantic: NarrativeSemanticScene, entity: N
   const inset = target.width * 0.075;
   const size = Math.max(14, Math.min(target.height * 0.34, box.width * 0.045));
   drawFittedText(ctx, text, target.x + inset, target.y + target.height * 0.42, target.width * 0.86, size, palette.ink, 'Nunito Sans', palette.cardScale);
-  if (['duplicate', 'flagged', 'marked', 'rejected'].includes(state)) {
+  if (['duplicate', 'flagged', 'marked', 'rejected'].includes(state) || semantic.legacyUpgrade && state === 'ready-for-review') {
     const status = state === 'duplicate' ? sceneText('papercraft', locale, 'semanticDuplicate')
       : state === 'rejected' ? sceneText('papercraft', locale, 'semanticRejected')
-        : sceneText('papercraft', locale, 'semanticFlagged');
+        : state === 'ready-for-review' ? legacySemanticStateText('papercraft', locale, state)
+          : sceneText('papercraft', locale, 'semanticFlagged');
     const stampX = target.x + target.width * 0.055;
     const stampY = target.y + target.height * 0.56;
     const stampWidth = target.width * 0.85;
@@ -273,15 +275,17 @@ function drawCollection(ctx: SKRSContext2D, semantic: NarrativeSemanticScene, bo
     const cardBox = layout.get(card.id);
     if (!cardBox) continue;
     const state = semantic.states[card.id] ?? 'default';
-    paperPanel(ctx, cardBox, state === 'selected' ? '#F7E5C1' : index % 2 ? '#FCF7EA' : '#FFFDF5', state === 'selected' ? palette.accent : '#D2C1A4', 0.11);
+    const selected = state === 'selected' || semantic.legacyUpgrade && state === 'flagged';
+    const ready = semantic.legacyUpgrade && state === 'ready-for-review';
+    paperPanel(ctx, cardBox, selected ? '#F7E5C1' : ready ? '#E8E8D6' : index % 2 ? '#FCF7EA' : '#FFFDF5', selected ? palette.accent : ready ? palette.accent2 : '#D2C1A4', 0.11);
     const membership = semantic.relations.some((relation) => relation.kind === 'member-of' && relation.from === card.id && relation.to === collection?.id);
     drawFittedText(ctx, card.label ?? String(card.value ?? card.id), cardBox.x + cardBox.width * 0.08, cardBox.y + cardBox.height * 0.53, cardBox.width * 0.82, Math.max(14, cardBox.height * 0.21), palette.ink, 'Nunito Sans', palette.cardScale);
-    ctx.fillStyle = state === 'selected' ? palette.accent : membership ? palette.accent2 : palette.muted;
+    ctx.fillStyle = selected ? palette.accent : ready || membership ? palette.accent2 : palette.muted;
     ctx.beginPath();
     ctx.arc(cardBox.x + cardBox.width * 0.86, cardBox.y + cardBox.height * 0.82, Math.max(3, cardBox.height * 0.055), 0, Math.PI * 2);
     ctx.fill();
   }
-  if (collection && collectionBox) {
+  if (collection && collectionBox && !semantic.legacyUpgrade) {
     const count = cards.filter((card) => semantic.relations.some((relation) => relation.kind === 'member-of' && relation.from === card.id && relation.to === collection.id)).length;
     drawCountBadge(ctx, collectionBox, String(count), palette, locale);
   }

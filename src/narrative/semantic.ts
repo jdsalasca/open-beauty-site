@@ -34,6 +34,7 @@ const actionSchema = z.object({
 export const narrativeSemanticSceneSchema = z.object({
   primitive: z.enum(['legacy-illustration', 'table-rows', 'card-collection', 'counter', 'file-download']),
   illustrative: z.boolean().optional(),
+  legacyUpgrade: z.boolean().optional(),
   entities: z.array(entitySchema).min(1).max(80),
   relations: z.array(relationSchema).max(120).default([]),
   states: z.record(z.string(), z.string().trim().min(1).max(64)),
@@ -44,9 +45,9 @@ export const NARRATIVE_ENTITY_KINDS: NarrativeSemanticEntityKind[] = ['table', '
 
 export const NARRATIVE_SEMANTIC_STATES: Record<Exclude<NarrativeSemanticEntityKind, 'illustration'>, string[]> = {
   table: ['default', 'open', 'reviewed'],
-  row: ['default', 'original', 'duplicate', 'flagged', 'marked', 'accepted', 'rejected', 'merged', 'pending'],
+  row: ['default', 'original', 'duplicate', 'flagged', 'marked', 'accepted', 'rejected', 'merged', 'pending', 'ready-for-review'],
   collection: ['default', 'open', 'counted'],
-  card: ['default', 'member', 'selected', 'counted', 'pending'],
+  card: ['default', 'member', 'selected', 'counted', 'pending', 'flagged', 'ready-for-review'],
   counter: ['value', 'unchanged', 'increased', 'decreased', 'pending'],
   file: ['pending', 'downloading', 'failed', 'retrying', 'complete'],
 };
@@ -116,6 +117,7 @@ export function normalizeSemanticPhases(phases: NarrativePhase[], illustrative: 
       ? {
         ...raw,
         illustrative: raw.illustrative ?? illustrative,
+      ...(raw.legacyUpgrade ? { legacyUpgrade: true } : {}),
         entities: raw.entities.map((entity) => ({ ...entity, illustrative: entity.illustrative ?? raw.illustrative ?? illustrative })) as NarrativeSemanticEntity[],
         relations: (raw.relations ?? []) as NarrativeSemanticRelation[],
         actions: (raw.actions ?? []) as NarrativeSemanticAction[],

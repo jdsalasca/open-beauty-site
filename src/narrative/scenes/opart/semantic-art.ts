@@ -23,7 +23,7 @@ function opticalUnits(semantic: NarrativeSemanticScene): NarrativeSemanticEntity
 
 function groupProgress(state: string | undefined): number {
   if (state === 'pending') return 1;
-  if (state === 'selected') return 0.72;
+  if (state === 'selected' || state === 'flagged') return 0.72;
   return 0;
 }
 

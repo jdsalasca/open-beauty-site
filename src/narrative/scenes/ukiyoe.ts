@@ -4,7 +4,7 @@ import type { NarrativeObjectRegion, NarrativePhase, NarrativeRect, NarrativeRen
 import type { NarrativeSemanticEntity, NarrativeSemanticScene } from '../../types/narrative-scene.js';
 import { cubicBezierEase, drawText } from './common.js';
 import { sceneVocabulary } from '../vocabulary.js';
-import { sceneText } from '../i18n.js';
+import { legacySemanticStateText, sceneText } from '../i18n.js';
 
 interface CoastPrint {
   readonly identity: 'guia-en-recorrido-costero';
@@ -206,6 +206,16 @@ function collectionMember(semantic: NarrativeSemanticScene, entityId: string, co
 
 function memberProgress(context: NarrativeRenderContext, entityId: string, collectionId: string): number {
   const { frame } = context;
+  if (context.semantic?.legacyUpgrade) {
+    const progressFor = (phaseIndex: number): number => {
+      const state = semanticAt(context, phaseIndex).states[entityId];
+      return state === 'pending' ? 0.12 : state === 'flagged' ? 0.52 : state === 'ready-for-review' ? 0.92 : 0;
+    };
+    if (frame.kind === 'transition' || frame.kind === 'loop-bridge') {
+      return progressFor(frame.fromPhaseIndex) + (progressFor(frame.toPhaseIndex) - progressFor(frame.fromPhaseIndex)) * frame.progress;
+    }
+    return progressFor(context.phaseIndex);
+  }
   if (frame.kind === 'transition' || frame.kind === 'loop-bridge') {
     const from = collectionMember(semanticAt(context, frame.fromPhaseIndex), entityId, collectionId) ? 1 : 0;
     const to = collectionMember(semanticAt(context, frame.toPhaseIndex), entityId, collectionId) ? 1 : 0;
@@ -485,6 +495,11 @@ function drawSemanticScene(context: NarrativeRenderContext, print: CoastPrint): 
     }
     const boat = collectionPoint(field, amount);
     drawLargeBoat(ctx, field, { x: boat.x, y: field.y + field.height * 0.87 }, colors, 0.55);
+    if (semantic.legacyUpgrade) {
+      const stateful = cards[0];
+      const state = stateful ? semantic.states[stateful.id] ?? 'pending' : 'pending';
+      drawText(ctx, legacySemanticStateText('ukiyoe', brief.locale, state), field.x + field.width * 0.63, field.y + field.height * 0.13, context.fonts.effective.label.family, 500, 28, preset.palette.ink);
+    }
   }
   // The sea horizon and review point are drawn from fixed field coordinates in every phase.
   return ctx.getImageData(0, 0, brief.output.width, brief.output.height).data;

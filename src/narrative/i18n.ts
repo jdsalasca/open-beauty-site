@@ -55,6 +55,14 @@ const PAIRS: Record<StyleSlug, Pairs> = {
     semanticComplete: ['COMPLETA', 'COMPLETE'],
     semanticTimeout: ['TIEMPO AGOTADO', 'TIMEOUT'],
     semanticProgress: ['AVANCE', 'PROGRESS'],
+    legacyRecords: ['REGISTROS ILUSTRATIVOS', 'ILLUSTRATIVE RECORDS'],
+    legacyRecord: ['REGISTRO', 'RECORD'],
+    legacyCollection: ['COLECCIÓN ILUSTRATIVA', 'ILLUSTRATIVE COLLECTION'],
+    legacyItem: ['ELEMENTO', 'ITEM'],
+    legacyIllustrative: ['ESTADO ILUSTRATIVO', 'ILLUSTRATIVE STATE'],
+    legacyPending: ['PENDIENTE', 'PENDING'],
+    legacyFlagged: ['SEÑALADO', 'FLAGGED'],
+    legacyReady: ['LISTO PARA REVISIÓN', 'READY FOR REVIEW'],
   },
   galactic: {
     trajectory: ['TRAYECTORIA', 'TRAJECTORY'],
@@ -72,6 +80,14 @@ const PAIRS: Record<StyleSlug, Pairs> = {
     stage: ['ETAPA', 'STEP'],
     illustrative: ['ILUSTRATIVO', 'ILLUSTRATIVE'],
     review: ['REVISAR', 'REVIEW'],
+    legacyRecords: ['GRUPO ILUSTRATIVO', 'ILLUSTRATIVE GROUP'],
+    legacyRecord: ['REGISTRO', 'RECORD'],
+    legacyCollection: ['COLECCIÓN ILUSTRATIVA', 'ILLUSTRATIVE COLLECTION'],
+    legacyItem: ['ELEMENTO', 'ITEM'],
+    legacyIllustrative: ['ESTADO ILUSTRATIVO', 'ILLUSTRATIVE STATE'],
+    legacyPending: ['PENDIENTE', 'PENDING'],
+    legacyFlagged: ['SEÑALADO', 'FLAGGED'],
+    legacyReady: ['LISTO PARA REVISIÓN', 'READY FOR REVIEW'],
   },
   memphis: {
     measure: ['MEDIDA', 'MEASURE'],
@@ -94,6 +110,14 @@ const PAIRS: Record<StyleSlug, Pairs> = {
   },
   opart: {
     readingBand: ['LECTURA', 'READING'],
+    legacyRecords: ['GRUPO ILUSTRATIVO', 'ILLUSTRATIVE GROUP'],
+    legacyRecord: ['REGISTRO', 'RECORD'],
+    legacyCollection: ['COLECCIÓN ILUSTRATIVA', 'ILLUSTRATIVE COLLECTION'],
+    legacyItem: ['ELEMENTO', 'ITEM'],
+    legacyIllustrative: ['ESTADO ILUSTRATIVO', 'ILLUSTRATIVE STATE'],
+    legacyPending: ['PENDIENTE', 'PENDING'],
+    legacyFlagged: ['SEÑALADO', 'FLAGGED'],
+    legacyReady: ['LISTO PARA REVISIÓN', 'READY FOR REVIEW'],
   },
   papercraft: {
     badgeOpen: ['PENDIENTE', 'PENDING'],
@@ -123,14 +147,40 @@ const PAIRS: Record<StyleSlug, Pairs> = {
     semanticExpected: ['ESPERADO', 'EXPECTED'],
     semanticMember: ['EN COLECCIÓN', 'IN COLLECTION'],
     semanticIllustrative: ['EJEMPLO', 'EXAMPLE'],
+    legacyRecords: ['REGISTROS ILUSTRATIVOS', 'ILLUSTRATIVE RECORDS'],
+    legacyRecord: ['REGISTRO', 'RECORD'],
+    legacyCollection: ['COLECCIÓN ILUSTRATIVA', 'ILLUSTRATIVE COLLECTION'],
+    legacyItem: ['ELEMENTO', 'ITEM'],
+    legacyIllustrative: ['ESTADO ILUSTRATIVO', 'ILLUSTRATIVE STATE'],
+    legacyPending: ['PENDIENTE', 'PENDING'],
+    legacyFlagged: ['SEÑALADO', 'FLAGGED'],
+    legacyReady: ['LISTO PARA REVISIÓN', 'READY FOR REVIEW'],
   },
   psychedelic: { review: ['REVISIÓN', 'REVIEW'] },
-  renaissance: { caption: ['PIEZA', 'FRAGMENT'] },
+  renaissance: {
+    caption: ['PIEZA', 'FRAGMENT'],
+    legacyRecords: ['REGISTROS ILUSTRATIVOS', 'ILLUSTRATIVE RECORDS'],
+    legacyRecord: ['REGISTRO', 'RECORD'],
+    legacyCollection: ['COLECCIÓN ILUSTRATIVA', 'ILLUSTRATIVE COLLECTION'],
+    legacyItem: ['ELEMENTO', 'ITEM'],
+    legacyIllustrative: ['ESTADO ILUSTRATIVO', 'ILLUSTRATIVE STATE'],
+    legacyPending: ['PENDIENTE', 'PENDING'],
+    legacyFlagged: ['SEÑALADO', 'FLAGGED'],
+    legacyReady: ['LISTO PARA REVISIÓN', 'READY FOR REVIEW'],
+  },
   ukiyoe: {
     point: ['PUNTO', 'POINT'],
     of: ['DE', 'OF'],
     review: ['REVISIÓN', 'REVIEW'],
     signal: ['SEÑAL', 'SIGNAL'],
+    legacyRecords: ['REGISTROS ILUSTRATIVOS', 'ILLUSTRATIVE RECORDS'],
+    legacyRecord: ['REGISTRO', 'RECORD'],
+    legacyCollection: ['COLECCIÓN ILUSTRATIVA', 'ILLUSTRATIVE COLLECTION'],
+    legacyItem: ['ELEMENTO', 'ITEM'],
+    legacyIllustrative: ['ESTADO ILUSTRATIVO', 'ILLUSTRATIVE STATE'],
+    legacyPending: ['PENDIENTE', 'PENDING'],
+    legacyFlagged: ['SEÑALADO', 'FLAGGED'],
+    legacyReady: ['LISTO PARA REVISIÓN', 'READY FOR REVIEW'],
   },
   vaporwave: {
     badgeOpen: ['PENDIENTE', 'PENDING'],
@@ -159,6 +209,11 @@ export function sceneText(style: StyleSlug, locale: NarrativeLocale, key: string
   const value = NARRATIVE_SCENE_TEXT_CATALOG[style][locale][key];
   if (value === undefined) throw new Error(`Missing ${locale} narrative scene text ${style}.${key}.`);
   return value;
+}
+
+export function legacySemanticStateText(style: StyleSlug, locale: NarrativeLocale, state: string): string {
+  const key = state === 'pending' ? 'legacyPending' : state === 'flagged' ? 'legacyFlagged' : 'legacyReady';
+  return sceneText(style, locale, key);
 }
 
 export function workflowBadgeText(style: StyleSlug, locale: NarrativeLocale, status: NarrativeStatus, policy: NarrativeBadgePolicy, customText?: string): string | undefined {
