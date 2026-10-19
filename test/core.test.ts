@@ -74,7 +74,7 @@ test('the validator rejects unknown styles', () => {
 
 
 test('the deck audit catches a slide with too many words', () => {
-  const longBody = 'idea '.repeat(70).trim();
+  const longBody = 'idea '.repeat(60).trim();
   const deck = renderDeck({
     style: getStyle('galactic'),
     brief: {

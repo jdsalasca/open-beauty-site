@@ -75,9 +75,26 @@ test('story scene kinds are adapted to a matching subject and lossy adapters are
       assert.match(warning, /market|night|garden/);
       assert.match(warning, /figure\.subject/);
     }
-    const created = await createDeck({ style, brief: { title: 'Escenas', locale: 'es', slides: scenes.map((scene) => ({ layout: 'figure' as const, title: 'Figura', figure: { scene } })) } });
+    const created = await createDeck({
+      style,
+      brief: {
+        title: 'Escenas',
+        locale: 'es',
+        slides: scenes.map((scene, index) => ({ layout: 'figure' as const, title: `Figura ${index + 1}`, figure: { scene } })),
+      },
+    });
     assert.deepEqual(created.warnings, deck.warnings);
   }
+});
+
+test('a scene without a kind is reported instead of silently drawn as a house', () => {
+  const deck = figureDeck([{ scene: { characters: ['fox'] } }]);
+  const block = figureBlock(deck.html, 0);
+  assert.match(block, /data-scene-subject="none"/);
+  assert.doesNotMatch(block, /M-105 90V-40L0-125 105-40V90Z/);
+  assert.equal(deck.warnings.length, 1);
+  assert.match(deck.warnings[0]!, /without a kind/);
+  assert.match(deck.warnings[0]!, /figure\.subject/);
 });
 
 test('an unknown figure scene fails with the slide, the value and the supported alternatives', () => {

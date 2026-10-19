@@ -180,7 +180,11 @@ test('text exactly at every limit survives intact in the rendered deck', () => {
   const tagline = text(limits.tagline);
   cases.push({ name: 'tagline', brief: { title: 'D', tagline }, needle: tagline });
   const intro = text(limits.intro);
-  cases.push({ name: 'intro', brief: { title: 'D', intro }, needle: intro });
+  cases.push({
+    name: 'intro',
+    brief: { title: 'D', intro, slides: [{ layout: 'statement', title: 'Una idea', body: 'Breve.' }] },
+    needle: intro,
+  });
   const eyebrow = text(limits.eyebrow);
   cases.push({ name: 'eyebrow', brief: { title: 'D', eyebrow }, needle: eyebrow });
   const brand = text(limits.brand);

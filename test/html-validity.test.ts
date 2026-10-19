@@ -104,7 +104,7 @@ test('deck, experience and story generators escape injected content', () => {
       { layout: 'statement' as const, title: `Slide ${XSS_SCRIPT}`, body: `Body ${XSS_ATTR}` },
       { layout: 'quote' as const, title: 'Quote', quote: { text: `Quote ${XSS_SCRIPT}`, author: XSS_ATTR } },
       { layout: 'points' as const, title: 'Points', points: [{ title: `Point ${XSS_SCRIPT}`, body: XSS_ATTR }] },
-      { layout: 'stats' as const, title: 'Stats', stats: [{ value: XSS_ATTR, label: XSS_SCRIPT }] },
+      { layout: 'stats' as const, title: 'Stats', stats: [{ value: '"><b>', label: XSS_SCRIPT }] },
     ],
   };
   const hostileRoom = {
