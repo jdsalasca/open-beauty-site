@@ -4,6 +4,7 @@ import path from 'node:path';
 import type { Brief, DeckBrief, ExperienceBrief, SequenceBrief, SprintBrief, StoryBrief, StyleSlug } from './types.js';
 import { VERSION } from './index.js';
 import { createCanvas, createDeck, createExperience, createGifFile, createMotion, createPage, createSequence, createStory, slugify, timestamp } from './generate.js';
+import { createGifPoster } from './gif.js';
 import { createSprintKit } from './sprint.js';
 import { formatValidation, validateDeck, validateExperience, validateHtml, validateStory } from './validate.js';
 import { fixHtml } from './fix.js';
@@ -115,7 +116,7 @@ Usage:
       [--size square|portrait|landscape] [--duration 14] [--maxxing] [--out loop.svg]
   beauty gif --style <s> --text "..."        Create a looping GIF
       [--subtitle "..."] [--template title|loop|poster] [--fps 20] [--duration 2.4]
-      [--width 800] [--height 800] [--maxxing] [--out file.gif]
+      [--width 800] [--height 800] [--maxxing] [--poster] [--out file.gif]
   beauty validate <file> --style <s> [--strict]
   beauty fix <file> --style <s> [--out f.html]
                                             Apply safe repairs and re-validate
@@ -333,6 +334,22 @@ async function main(): Promise<void> {
       });
       console.log(`${getStyle(style).name} GIF · ${result.width}×${result.height} · ${result.frames} frames · ${Math.round(result.bytes / 1024)} KB`);
       console.log(result.path);
+      if (booleanFlag(flags, 'poster')) {
+        const posterPath = result.path.replace(/\.gif$/i, '.png');
+        await createGifPoster(
+          style,
+          {
+            text,
+            subtitle: stringFlag(flags, 'subtitle'),
+            width: numberFlag(flags, 'width'),
+            height: numberFlag(flags, 'height'),
+            seed: numberFlag(flags, 'seed'),
+            maxxing: booleanFlag(flags, 'maxxing'),
+          },
+          posterPath,
+        );
+        console.log(posterPath);
+      }
       return;
     }
 
