@@ -1,9 +1,10 @@
-import type { Brief, StylePreset } from '../types.js';
+import type { PageBrief, StylePreset } from '../types.js';
 import {
   arrowSvg,
   esc,
   labels,
   normalizeBrief,
+  resolveClosing,
   REVEAL_SCRIPT,
   safeHref,
   shell,
@@ -106,7 +107,7 @@ function scallop(color: string, flip = false): string {
   return `<svg class="scallop${flip ? ' scallop-flip' : ''}" viewBox="0 0 1200 40" preserveAspectRatio="none" aria-hidden="true"><path d="${bumps}" fill="${color}"/></svg>`;
 }
 
-export function renderPapercraft(input: Partial<Brief>, preset: StylePreset): string {
+export function renderPapercraft(input: Partial<PageBrief>, preset: StylePreset): string {
   const brief = normalizeBrief(input);
   const locale = brief.locale ?? 'es';
   const l = labels(locale);
@@ -120,6 +121,12 @@ export function renderPapercraft(input: Partial<Brief>, preset: StylePreset): st
   const sections = brief.sections ?? [];
   const quote = brief.quote;
   const cta = brief.cta ?? { label: t(locale, 'Escribinos', 'Write to us'), href: '#contact' };
+  const closing = resolveClosing(brief, {
+    title: t(locale, '¿Hacemos algo lindo juntos?', 'Shall we make something lovely?'),
+    text: t(locale, 'Contanos qué tenés en mente. Nosotros ponemos el papel, la tijera y el café.', 'Tell us what you have in mind. We bring the paper, the scissors and the coffee.'),
+    label: cta.label,
+    href: cta.href,
+  });
   const year = new Date().getFullYear();
   const variant = (brief.seed ?? 0) % 3;
   const worksHref = sections.length ? '#works' : '#contact';
@@ -193,7 +200,7 @@ export function renderPapercraft(input: Partial<Brief>, preset: StylePreset): st
       <p class="section-label">${esc(l.works)}</p>
       <h2>${esc(t(locale, 'Recortes de nuestro cuaderno.', 'Cuttings from our notebook.'))}</h2>
     </div>
-    <div class="scrap-grid">${cards}</div>
+    <div class="scrap-grid" data-count="${sections.length}">${cards}</div>
   </section>
   ${scallop(preset.palette.bg, true)}`
       : ''
@@ -215,9 +222,9 @@ export function renderPapercraft(input: Partial<Brief>, preset: StylePreset): st
     <div class="cta-card reveal">
       <span class="tape" aria-hidden="true"></span>
       <p class="section-label">${esc(l.contact)}</p>
-      <h2>${esc(t(locale, '¿Hacemos algo lindo juntos?', 'Shall we make something lovely?'))}</h2>
-      <p>${esc(t(locale, 'Contanos qué tenés en mente. Nosotros ponemos el papel, la tijera y el café.', 'Tell us what you have in mind. We bring the paper, the scissors and the coffee.'))}</p>
-      <a class="button" href="${safeHref(cta.href)}">${esc(cta.label)} ${arrowSvg(17)}</a>
+      <h2>${esc(closing.title)}</h2>
+      ${closing.text ? `<p>${esc(closing.text)}</p>` : ''}
+      <a class="button" href="${safeHref(closing.cta.href)}">${esc(closing.cta.label)} ${arrowSvg(17)}</a>
     </div>
   </section>
 </main>
@@ -304,7 +311,14 @@ h1 em{font-style:normal;color:var(--terracotta);display:inline-block;transform:r
 .works{width:100vw;margin-left:calc(50% - 50vw);background:color-mix(in srgb, var(--sage) 24%, var(--cream));padding:72px max(28px,calc((100vw - 1120px)/2)) 84px}
 .works-head{max-width:1120px;margin:0 auto 44px}
 .works-head h2{font-family:'Fraunces',Georgia,serif;font-weight:540;font-variation-settings:'SOFT' 100,'WONK' 1,'opsz' 144;font-size:clamp(40px,5vw,64px);line-height:.98;letter-spacing:-.018em;margin:12px 0 0;max-width:16ch}
-.scrap-grid{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:34px}
+.scrap-grid{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:34px}
+@media (min-width:981px){
+  .scrap-grid[data-count="1"]{grid-template-columns:minmax(0,1fr)}
+  .scrap-grid[data-count="2"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .scrap-grid[data-count="3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .scrap-grid[data-count="4"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .scrap-grid[data-count="5"],.scrap-grid[data-count="6"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
 .work-card{position:relative;isolation:isolate;background:var(--paper);border:1px solid rgba(74,58,50,.12);border-radius:30px 12px 28px 14px;box-shadow:12px 12px 0 var(--sheet),var(--edge),var(--shadow);padding:38px 30px 28px;display:flex;flex-direction:column;transition:transform .35s var(--ease),box-shadow .35s var(--ease);--sheet:var(--sky)}
 .work-card:nth-child(1){transform:rotate(-1.2deg);--sheet:var(--sky)}
 .work-card:nth-child(2){transform:rotate(.8deg) translateY(10px);--sheet:var(--sage)}
@@ -332,6 +346,7 @@ h1 em{font-style:normal;color:var(--terracotta);display:inline-block;transform:r
 .js .reveal.is-in{opacity:1;transform:none}
 @media (max-width:980px){
   .hero{grid-template-columns:1fr;gap:20px;padding-top:44px}
+  .variant-1 .hero{grid-template-columns:1fr}
   .variant-1 .hero-copy,.variant-1 .hero-art{order:0}
   .variant-2 .hero{display:grid;min-height:0;padding-top:44px}
   .variant-2 .hero-art{position:static;width:100%;max-width:560px;margin:0 auto}
@@ -369,5 +384,6 @@ h1 em{font-style:normal;color:var(--terracotta);display:inline-block;transform:r
     body,
     bodyClass: `variant-${variant}`,
     script: REVEAL_SCRIPT,
+    closing: closing.title,
   });
 }

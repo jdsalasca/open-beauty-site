@@ -1,12 +1,12 @@
-import type { Brief, StylePreset } from '../types.js';
-import { arrowSvg, esc, labels, normalizeBrief, safeHref, shell, splitAccent, t, REVEAL_SCRIPT } from './common.js';
+import type { PageBrief, StylePreset } from '../types.js';
+import { arrowSvg, esc, labels, normalizeBrief, resolveClosing, safeHref, shell, splitAccent, t, REVEAL_SCRIPT } from './common.js';
 import { sceneArt } from '../art.js';
 
 function leafMark(): string {
   return `<svg class="leaf-mark" viewBox="0 0 120 40" aria-hidden="true"><path d="M4 34c18-2 30-13 38-30M42 6c12 2 22 9 28 21M14 30c8-9 18-13 30-12" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>`;
 }
 
-export function renderNatureMemory(input: Partial<Brief>, preset: StylePreset): string {
+export function renderNatureMemory(input: Partial<PageBrief>, preset: StylePreset): string {
   const brief = normalizeBrief(input);
   const locale = brief.locale ?? 'es';
   const l = labels(locale);
@@ -18,6 +18,12 @@ export function renderNatureMemory(input: Partial<Brief>, preset: StylePreset): 
   const radius = preset.rules.radius[1] ?? 0;
   const sections = brief.sections ?? [];
   const year = new Date().getFullYear();
+  const closing = resolveClosing(brief, {
+    title: t(locale, 'Traé una semilla. Nosotros ponemos el archivo.', 'Bring a seed. We bring the archive.'),
+    text: brief.tagline || t(locale, 'Una página puede ser un lugar para volver.', 'A page can be a place to return to.'),
+    label: brief.cta?.label || t(locale, 'Escribinos', 'Write to us'),
+    href: brief.cta?.href || '#',
+  });
   const body = `<div class="nature-frame" aria-hidden="true"></div>
 <header class="nature-top">
   <a class="nature-brand" href="#top">${esc(brand)}</a>
@@ -49,14 +55,14 @@ export function renderNatureMemory(input: Partial<Brief>, preset: StylePreset): 
 
   <section class="nature-drawers" id="pliegos" aria-labelledby="drawers-title">
     <div class="nature-section-head reveal"><div><p class="nature-kicker">${esc(t(locale, 'Pliegos / selección', 'Sheets / selection'))}</p><h2 id="drawers-title">${esc(t(locale, 'Tres formas de recordar una planta.', 'Three ways to remember a plant.'))}</h2></div><span class="nature-count">${String(sections.length).padStart(2, '0')} ${esc(t(locale, 'piezas', 'pieces'))}</span></div>
-    <div class="nature-grid">${sections.map((section, index) => `<article class="nature-drawer reveal" style="--i:${index + 1}"><div class="nature-drawer-top"><span>${String(index + 1).padStart(2, '0')}</span>${leafMark()}</div><h3>${esc(section.title)}</h3><p>${esc(section.body)}</p><a href="#contacto">${esc(l.readMore)} ${arrowSvg(13)}</a></article>`).join('')}</div>
+    <div class="nature-grid" data-count="${sections.length}">${sections.map((section, index) => `<article class="nature-drawer reveal" style="--i:${index + 1}"><div class="nature-drawer-top"><span>${String(index + 1).padStart(2, '0')}</span>${leafMark()}</div><h3>${esc(section.title)}</h3><p>${esc(section.body)}</p><a href="#contacto">${esc(l.readMore)} ${arrowSvg(13)}</a></article>`).join('')}</div>
   </section>
 
   ${brief.quote?.text ? `<section class="nature-quote reveal"><span class="nature-quote-mark">“</span><blockquote>${esc(brief.quote.text)}</blockquote><cite>${esc(brief.quote.author || brand)}</cite></section>` : ''}
 
   <section class="nature-cta" id="contacto" aria-labelledby="cta-title">
-    <div class="nature-cta-copy"><p class="nature-kicker">${esc(t(locale, 'Siguiente pliego', 'Next sheet'))}</p><h2 id="cta-title">${esc(t(locale, 'Traé una semilla. Nosotros ponemos el archivo.', 'Bring a seed. We bring the archive.'))}</h2><p>${esc(brief.tagline || t(locale, 'Una página puede ser un lugar para volver.', 'A page can be a place to return to.'))}</p></div>
-    <a class="nature-button" href="${safeHref(brief.cta?.href || '#')}">${esc(brief.cta?.label || t(locale, 'Escribinos', 'Write to us'))} ${arrowSvg(16)}</a>
+    <div class="nature-cta-copy"><p class="nature-kicker">${esc(t(locale, 'Siguiente pliego', 'Next sheet'))}</p><h2 id="cta-title">${esc(closing.title)}</h2>${closing.text ? `<p>${esc(closing.text)}</p>` : ''}</div>
+    <a class="nature-button" href="${safeHref(closing.cta.href)}">${esc(closing.cta.label)} ${arrowSvg(16)}</a>
   </section>
 </main>
 <footer class="nature-foot"><span>${esc(brand)} · ${year}</span><span>${esc(brief.footer || t(locale, 'Archivo vivo · fuentes a la vista', 'Living archive · sources in view'))}</span><span><a href="#top">${esc(l.backToTop)} ↑</a></span></footer>`;
@@ -89,7 +95,14 @@ h1{font-size:clamp(50px,7.2vw,112px);max-width:12ch}h1 em{color:var(--accent);fo
 .nature-note{position:relative;align-self:stretch;border-left:var(--line) solid var(--accent2);padding-left:18px;color:var(--muted);font-size:15px}.nature-note p{margin:0;max-width:23ch}.nature-vertical{display:block;writing-mode:vertical-rl;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent2);margin-bottom:18px}
 .nature-drawers{max-width:1320px;margin:0 auto;padding:clamp(60px,9vh,110px) clamp(24px,6vw,76px);border-top:var(--line) solid color-mix(in srgb,var(--ink) 24%,transparent)}
 .nature-section-head{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:42px}.nature-section-head h2{font-size:clamp(36px,5vw,72px);max-width:12ch}.nature-count{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.nature-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:var(--line) solid color-mix(in srgb,var(--ink) 34%,transparent)}
+.nature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:0;border-top:var(--line) solid color-mix(in srgb,var(--ink) 34%,transparent)}
+@media (min-width:901px){
+  .nature-grid[data-count="1"]{grid-template-columns:minmax(0,1fr)}
+  .nature-grid[data-count="2"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .nature-grid[data-count="3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .nature-grid[data-count="4"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .nature-grid[data-count="5"],.nature-grid[data-count="6"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
 .nature-drawer{border-right:var(--line) solid color-mix(in srgb,var(--ink) 22%,transparent);padding:22px 24px 26px 0;min-height:260px;display:flex;flex-direction:column}.nature-drawer:last-child{border-right:0}.nature-drawer-top{display:flex;justify-content:space-between;align-items:start;color:var(--accent3);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em}.nature-drawer-top .leaf-mark{width:54px;color:var(--accent)}.nature-drawer h3{font-size:clamp(28px,3vw,42px);margin:32px 0 10px;max-width:12ch}.nature-drawer p{color:var(--muted);font-size:16px;line-height:1.62;margin:0 0 24px}.nature-drawer a{margin-top:auto;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent3)}.nature-drawer a svg{transition:transform .3s var(--ease)}.nature-drawer a:hover svg{transform:translateX(4px)}
 .nature-quote{max-width:1100px;margin:0 auto;padding:clamp(60px,9vh,110px) clamp(24px,7vw,90px);border-top:var(--line) solid color-mix(in srgb,var(--ink) 24%,transparent)}.nature-quote-mark{display:block;font-family:'Cormorant Garamond',serif;font-size:100px;line-height:.55;color:var(--accent2)}.nature-quote blockquote{max-width:21ch;margin:10px 0 0;font-family:'Cormorant Garamond',serif;font-size:clamp(34px,5vw,72px);line-height:1.04}.nature-quote cite{display:block;margin-top:22px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-style:normal}
 .nature-cta{display:flex;justify-content:space-between;align-items:end;gap:30px;max-width:1200px;margin:0 auto;padding:clamp(60px,10vh,120px) clamp(24px,6vw,76px);border-top:var(--line) solid var(--accent)}.nature-cta h2{font-size:clamp(40px,6vw,92px);max-width:12ch}.nature-cta p:not(.nature-kicker){max-width:42ch;color:var(--muted);margin:20px 0 0}
@@ -109,5 +122,6 @@ h1{font-size:clamp(50px,7.2vw,112px);max-width:12ch}h1 em{color:var(--accent);fo
     body,
     bodyClass: `nature-memory style-nature sub-${subfamily?.slug ?? 'herbarium'}`,
     script,
+    closing: closing.title,
   });
 }

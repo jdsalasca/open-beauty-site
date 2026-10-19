@@ -1,8 +1,8 @@
-import type { Brief, StylePreset } from '../types.js';
+import type { PageBrief, StylePreset } from '../types.js';
 import { esc } from './common.js';
 import { renderShowcase } from './showcase.js';
 
-export function renderArtDeco(brief: Partial<Brief>, preset: StylePreset): string {
+export function renderArtDeco(brief: Partial<PageBrief>, preset: StylePreset): string {
   const art = `<svg class="deco-art" viewBox="0 0 620 660" role="img" aria-label="Sol de oro Art Deco sobre una ciudad escalonada">
   <g fill="none" stroke="var(--accent)" stroke-width="1">
     <rect x="14" y="14" width="592" height="632"/>
@@ -84,7 +84,7 @@ export function renderArtDeco(brief: Partial<Brief>, preset: StylePreset): strin
   });
 }
 
-export function renderIsotype(brief: Partial<Brief>, preset: StylePreset): string {
+export function renderIsotype(brief: Partial<PageBrief>, preset: StylePreset): string {
   const locale = brief.locale === 'en' ? 'en' : 'es';
   const house = `<svg class="picto" viewBox="0 0 26 26" aria-hidden="true"><path d="M2 12L13 3l11 9h-3v11h-6v-7h-4v7H5V12z"/></svg>`;
   const tree = `<svg class="picto" viewBox="0 0 24 30" aria-hidden="true"><path d="M12 2c5 0 8 4 8 8 0 3-2 5-4 7h-2v11h-4V17H8c-2-2-4-4-4-7 0-4 3-8 8-8z"/></svg>`;
@@ -181,11 +181,13 @@ export function renderIsotype(brief: Partial<Brief>, preset: StylePreset): strin
   });
 }
 
-export function renderOpArt(brief: Partial<Brief>, preset: StylePreset): string {
+export function renderOpArt(brief: Partial<PageBrief>, preset: StylePreset): string {
   const art = `<div class="op-field">
-  <div class="op-layer op-a"></div>
-  <div class="op-layer op-b"></div>
-  <div class="op-disc"></div>
+  <div class="op-layers" aria-hidden="true">
+    <div class="op-layer op-a"></div>
+    <div class="op-layer op-b"></div>
+    <div class="op-disc"></div>
+  </div>
   <div class="op-core">MIRA<br>ME</div>
   <button class="op-toggle" type="button" data-toggle="is-paused">CONGELAR</button>
   <span class="op-caption">FIG. 01 — INTERFERENCIA</span>
@@ -203,7 +205,8 @@ export function renderOpArt(brief: Partial<Brief>, preset: StylePreset): string 
 .style-opart .btn{background:var(--accent);color:var(--bg);clip-path:polygon(0 0,100% 0,100% 72%,92% 100%,0 100%)}
 .style-opart .btn:hover{background:var(--accent3);color:var(--bg);transform:translate(-3px,-3px)}
 .style-opart .nav-cta{border:2px solid var(--ink)}
-.style-opart .op-field{position:relative;aspect-ratio:1;overflow:hidden;background:var(--surface);border:2px solid var(--ink);isolation:isolate}
+.style-opart .op-field{position:relative;aspect-ratio:1;background:var(--surface);border:2px solid var(--ink);isolation:isolate}
+.style-opart .op-layers{position:absolute;inset:0;overflow:hidden;pointer-events:none}
 .style-opart .op-layer{position:absolute;inset:-22%;transition:transform .08s linear;will-change:transform}
 .style-opart .op-a{background:repeating-linear-gradient(45deg,var(--bg) 0 10px,var(--surface) 10px 20px);transform:translate(calc(var(--mx,0) * 14px),calc(var(--my,0) * 14px))}
 .style-opart .op-b{background:repeating-linear-gradient(-45deg,var(--bg) 0 13px,var(--surface) 13px 26px);mix-blend-mode:difference;transform:translate(calc(var(--mx,0) * -20px),calc(var(--my,0) * -20px))}
@@ -241,7 +244,7 @@ export function renderOpArt(brief: Partial<Brief>, preset: StylePreset): string 
   });
 }
 
-export function renderUkiyoe(brief: Partial<Brief>, preset: StylePreset): string {
+export function renderUkiyoe(brief: Partial<PageBrief>, preset: StylePreset): string {
   const art = `<div class="ukiyo-wrap">
   <div class="ukiyo-cartouche">浮世絵</div>
   <svg class="ukiyo-art" viewBox="0 0 900 700" role="img" aria-label="Ola de estilo ukiyo-e con espuma y un sol rojo">

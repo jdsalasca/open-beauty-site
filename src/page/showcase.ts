@@ -1,5 +1,5 @@
-import type { Brief, StylePreset } from '../types.js';
-import { arrowSvg, esc, labels, normalizeBrief, safeHref, shell, splitAccent, t, REVEAL_SCRIPT } from './common.js';
+import type { PageBrief, StylePreset } from '../types.js';
+import { arrowSvg, esc, labels, normalizeBrief, resolveClosing, safeHref, shell, splitAccent, t, REVEAL_SCRIPT } from './common.js';
 
 export interface ShowcaseConfig {
   art: string;
@@ -54,7 +54,7 @@ h1 em{font-style:normal;color:var(--accent)}
 .link{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid var(--muted);padding-bottom:4px}
 .link:hover{color:var(--accent);border-color:var(--accent)}
 .hero-note{margin:28px 0 0;font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
-.hero-art{position:relative;min-width:0}
+.hero-art{position:relative;min-width:0;width:100%}
 .manifesto{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:60px;max-width:1180px;margin:0 auto;padding:70px 34px}
 .kicker{margin:0 0 14px;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
 .statement{font-family:var(--display);font-size:clamp(30px,3.4vw,46px);line-height:1.12;letter-spacing:-.015em;margin:0}
@@ -65,7 +65,14 @@ h1 em{font-style:normal;color:var(--accent)}
 .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:32px;border-top:1px solid var(--muted);padding-top:18px}
 .section-head h2{font-family:var(--display);font-weight:400;font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-.02em;margin:0}
 .section-head>span{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
-.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:18px}
+@media (min-width:981px){
+  .cards[data-count="1"]{grid-template-columns:minmax(0,1fr)}
+  .cards[data-count="2"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cards[data-count="3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .cards[data-count="4"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cards[data-count="5"],.cards[data-count="6"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
 .card{position:relative;padding:22px 22px 20px;border:1px solid var(--muted);background:var(--surface);min-height:235px;display:flex;flex-direction:column;transition:transform .35s var(--ease),background .35s var(--ease)}
 .card:hover{transform:translateY(-4px)}
 .card-num{font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--accent)}
@@ -83,7 +90,7 @@ h1 em{font-style:normal;color:var(--accent)}
 .play:hover{background:var(--accent);color:var(--bg)}
 .player-main{min-width:0}
 .player-label{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 3px}
-.player-title{display:block;font-family:var(--body);font-size:15px;margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player-title{display:block;font-family:var(--body);font-size:15px;margin-bottom:8px;overflow-wrap:break-word}
 .bar{height:3px;background:rgba(128,128,128,.28);position:relative;overflow:hidden}
 .bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .1s linear}
 .player-meta{display:flex;justify-content:space-between;gap:10px;margin-top:6px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--muted)}
@@ -219,7 +226,7 @@ const BASE_SCRIPT = `${REVEAL_SCRIPT}
   });
 })();`;
 
-export function renderShowcase(briefInput: Partial<Brief>, preset: StylePreset, config: ShowcaseConfig): string {
+export function renderShowcase(briefInput: Partial<PageBrief>, preset: StylePreset, config: ShowcaseConfig): string {
   const brief = normalizeBrief(briefInput);
   const locale = brief.locale ?? 'es';
   const l = labels(locale);
@@ -230,7 +237,11 @@ export function renderShowcase(briefInput: Partial<Brief>, preset: StylePreset, 
   const intro = brief.intro || tagline;
   const sections = brief.sections ?? [];
   const cta = brief.cta ?? { label: t(locale, 'Empezar', 'Start'), href: '#top' };
-  const ctaHeading = t(locale, config.ctaHeading?.es ?? 'El siguiente capítulo es tuyo.', config.ctaHeading?.en ?? 'The next chapter is yours.');
+  const closing = resolveClosing(brief, {
+    title: t(locale, config.ctaHeading?.es ?? 'El siguiente capítulo es tuyo.', config.ctaHeading?.en ?? 'The next chapter is yours.'),
+    label: cta.label,
+    href: cta.href,
+  });
   const sectionTitle = t(locale, config.sectionTitle?.es ?? l.selectedWorks, config.sectionTitle?.en ?? l.selectedWorks);
   const year = new Date().getFullYear();
   const subfamily = brief.subfamily ? preset.subfamilies?.find((item) => item.slug === brief.subfamily) : undefined;
@@ -298,7 +309,7 @@ export function renderShowcase(briefInput: Partial<Brief>, preset: StylePreset, 
     sections.length
       ? `<section id="works" class="works">
     <div class="section-head reveal"><div><p class="kicker">${esc(l.works)}</p><h2>${esc(sectionTitle)}</h2></div><span>${String(sections.length).padStart(2, '0')} ${esc(t(locale, 'piezas', 'pieces'))}</span></div>
-    <div class="cards">${cards}</div>
+    <div class="cards" data-count="${sections.length}">${cards}</div>
   </section>`
       : ''
   }
@@ -328,8 +339,8 @@ export function renderShowcase(briefInput: Partial<Brief>, preset: StylePreset, 
   }
   <section id="contact" class="cta reveal">
     <p class="kicker">${esc(l.contact)}</p>
-    <h2>${esc(ctaHeading)}</h2>
-    <a class="btn" href="${safeHref(cta.href)}">${esc(cta.label)} ${arrowSvg(15)}</a>
+    <h2>${esc(closing.title)}</h2>
+    <a class="btn" href="${safeHref(closing.cta.href)}">${esc(closing.cta.label)} ${arrowSvg(15)}</a>
   </section>
 </main>
 <footer class="foot">
@@ -346,5 +357,6 @@ export function renderShowcase(briefInput: Partial<Brief>, preset: StylePreset, 
     body,
     bodyClass: `style-${preset.slug}${subfamily ? ` sub-${subfamily.slug}` : ''}`,
     script: `${BASE_SCRIPT}\n${config.script ?? ''}`,
+    closing: closing.title,
   });
 }
