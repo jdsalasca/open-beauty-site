@@ -11,6 +11,7 @@ import { buildNarrativeTimeline } from '../src/narrative/timeline.js';
 import { createNarrative, narrativeFailure } from '../src/narrative/create.js';
 import { evaluateNarrative } from '../src/narrative/evaluate.js';
 import { getNarrativeScene, supportedNarrativeStyles } from '../src/narrative/scene.js';
+import type { StyleSlug } from '../src/types.js';
 import { decodeGif } from './support/gif-frames.js';
 import { testNarrativeScene } from './support/narrative-scene.js';
 
@@ -299,11 +300,12 @@ test('negative controls cannot pass on file format alone', async () => {
   }
 });
 
-test('only the two pilot renderers are registered; other styles retain the explicit limitation', () => {
-  assert.deepEqual(supportedNarrativeStyles(), ['brutalist', 'papercraft']);
-  assert.throws(() => getNarrativeScene('renaissance'), (error: unknown) => {
+test('registered renderers are supported and the registry preserves an explicit unknown-style failure', () => {
+  const registered = supportedNarrativeStyles();
+  for (const style of ['artdeco', 'brutalist', 'isotype', 'opart', 'papercraft', 'renaissance'] as const) assert.ok(registered.includes(style));
+  assert.throws(() => getNarrativeScene('unlisted-style' as StyleSlug), (error: unknown) => {
     assert.equal((error as { code: string }).code, 'STYLE_NOT_SUPPORTED_YET');
-    assert.match((error as Error).message, /Supported styles: brutalist, papercraft/);
+    assert.match((error as Error).message, /Supported styles:/);
     return true;
   });
 });

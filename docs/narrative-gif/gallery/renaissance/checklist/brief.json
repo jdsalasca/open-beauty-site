@@ -1,0 +1,16 @@
+{
+  "style": "renaissance",
+  "kind": "narrative-gif",
+  "locale": "es",
+  "audience": "Producto en Sprint Review",
+  "title": "Ruta para revisar el cierre",
+  "status": "in-review",
+  "phases": [
+    { "id": "before", "label": "Antes", "text": "El cambio se leía sin una ruta de revisión.", "visual": { "kind": "checklist", "state": "unreviewed" } },
+    { "id": "change", "label": "Cambio", "text": "La propuesta ordena la lectura en pasos visibles.", "visual": { "kind": "checklist", "state": "flagged" } },
+    { "id": "result", "label": "Resultado esperado", "text": "El equipo podrá comprobar la secuencia antes del cierre.", "visual": { "kind": "checklist", "state": "review-ready" } }
+  ],
+  "playback": { "minReadableHoldMs": 5000, "transitionMs": 650, "loop": true },
+  "output": { "width": 1280, "height": 720, "formats": ["gif", "png"], "preset": "review-1280x720" },
+  "seed": 7
+}

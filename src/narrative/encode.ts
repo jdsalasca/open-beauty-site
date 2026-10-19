@@ -126,7 +126,7 @@ function renderFramePixels(
   const labelY = height * 0.34;
   const bodyY = height * 0.43;
   const palette = getStyle(brief.style).palette;
-  const labelColor = brief.style === 'brutalist' ? palette.ink : palette.accent;
+  const labelColor = brief.style === 'brutalist' || brief.style === 'renaissance' ? palette.ink : palette.accent;
   drawBlock(ctx, layout.title, textArea.x, titleY, fonts.effective.display, fonts.approvedAlternative.display, palette.ink);
   drawBlock(ctx, phaseLayout.label, textArea.x, labelY, fonts.effective.label, fonts.approvedAlternative.label, labelColor);
   drawBlock(ctx, phaseLayout.body, textArea.x, bodyY, fonts.effective.reading, fonts.approvedAlternative.reading, palette.ink);

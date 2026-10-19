@@ -110,17 +110,18 @@ export function layoutNarrative(brief: NormalizedNarrativeBrief): NarrativeLayou
   const width = brief.output.width;
   const height = brief.output.height;
   const pilotComposition = brief.style === 'papercraft' || brief.style === 'brutalist';
-  const textWidthRatio = pilotComposition ? 0.60 : 0.59;
-  const artGapRatio = pilotComposition ? 0.02 : 0.04;
-  const artWidthRatio = pilotComposition ? 0.31 : 0.27;
+  const stageCComposition = ['renaissance', 'artdeco', 'isotype', 'opart'].includes(brief.style);
+  const textWidthRatio = pilotComposition ? 0.60 : stageCComposition ? 0.43 : 0.59;
+  const artGapRatio = pilotComposition || stageCComposition ? 0.02 : 0.04;
+  const artWidthRatio = pilotComposition ? 0.31 : stageCComposition ? 0.45 : 0.27;
   const { ctx } = canvasFor(16, 16);
   const safeZone: NarrativeRect = { x: width * 0.05, y: height * 0.05, width: width * 0.9, height: height * 0.9 };
   const textArea: NarrativeRect = { x: safeZone.x, y: height * 0.09, width: width * textWidthRatio, height: height * 0.81 };
   const reservedArtArea: NarrativeRect = {
     x: textArea.x + textArea.width + width * artGapRatio,
-    y: height * (pilotComposition ? 0.08 : 0.17),
+    y: height * (pilotComposition ? 0.08 : stageCComposition ? 0.03 : 0.17),
     width: width * artWidthRatio,
-    height: height * (pilotComposition ? 0.84 : 0.66),
+    height: height * (pilotComposition ? 0.84 : stageCComposition ? 0.94 : 0.66),
   };
   assertSafeRect(safeZone, width, height);
   const cardScale = Math.min(640 / width, 360 / height);
