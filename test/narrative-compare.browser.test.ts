@@ -1,22 +1,17 @@
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
 import { mkdir, mkdtemp, rm } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import test from 'node:test';
 import { createNarrativeCompareGallery } from '../src/narrative/gallery.js';
+import { browserTimeoutMs, launchWithRetry, loadChromium, locatePlaywrightRoot } from './support/browser.js';
 
 const ROOT = process.cwd();
-const DEFAULT_PLAYWRIGHT_ROOT = 'C:\\Users\\jdsal\\Documents\\Programming-personal\\open-civic-signal-os\\node_modules\\playwright';
-const candidate = process.env.BEAUTY_PLAYWRIGHT_ROOT ?? DEFAULT_PLAYWRIGHT_ROOT;
-const playwrightPackage = path.join(candidate, 'package.json');
-const playwrightRoot = existsSync(playwrightPackage) && JSON.parse(readFileSync(playwrightPackage, 'utf8')).name === 'playwright' ? candidate : null;
-const playwrightEntry = playwrightRoot ? path.join(playwrightRoot, existsSync(path.join(playwrightRoot, 'index.mjs')) ? 'index.mjs' : 'index.js') : null;
-const playwrightModule = playwrightEntry ? import(pathToFileURL(playwrightEntry).href) : null;
 
-test('comparison gallery is keyboard operable, keeps reduced-motion static, and fits 360px without requesting GIFs early', { skip: !playwrightModule }, async () => {
-  const { chromium } = await playwrightModule!;
+test('comparison gallery is keyboard operable, keeps reduced-motion static, and fits 360px without requesting GIFs early', { skip: !locatePlaywrightRoot() }, async () => {
+  const chromium = await loadChromium();
+  if (!chromium) return;
   const temp = await mkdtemp(path.join(os.tmpdir(), 'beauty-compare-browser-'));
   let browser: Awaited<ReturnType<typeof chromium.launch>> | undefined;
   try {
@@ -24,12 +19,12 @@ test('comparison gallery is keyboard operable, keeps reduced-motion static, and 
     const screenshots = process.env.BEAUTY_COMPARE_SCREENSHOT_DIR ?? temp;
     await mkdir(screenshots, { recursive: true });
     await createNarrativeCompareGallery({ directory: path.join(ROOT, 'docs', 'narrative-gif', 'compare'), output, title: 'Prueba de comparación' });
-    browser = await chromium.launch({ headless: true });
+    browser = await launchWithRetry(chromium, { headless: true });
     const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
     const page = await context.newPage();
     const gifRequests: string[] = [];
     page.on('request', (request) => { if (/\.gif(?:$|\?)/iu.test(request.url())) gifRequests.push(request.url()); });
-    await page.goto(pathToFileURL(output).href);
+    await page.goto(pathToFileURL(output).href, { timeout: browserTimeoutMs() });
     await page.getByRole('heading', { name: 'Prueba de comparación' }).waitFor();
     const first = page.locator('.pair .asset-card').first();
     const image = first.locator('.poster');
@@ -65,7 +60,7 @@ test('comparison gallery is keyboard operable, keeps reduced-motion static, and 
     const mobilePage = await mobile.newPage();
     const reducedGifRequests: string[] = [];
     mobilePage.on('request', (request) => { if (/\.gif(?:$|\?)/iu.test(request.url())) reducedGifRequests.push(request.url()); });
-    await mobilePage.goto(pathToFileURL(output).href);
+    await mobilePage.goto(pathToFileURL(output).href, { timeout: browserTimeoutMs() });
     const mobilePoster = mobilePage.locator('.pair .asset-card .poster').first();
     assert.match((await mobilePoster.getAttribute('src')) ?? '', /\.png$/u);
     assert.equal(await mobilePage.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches), true);

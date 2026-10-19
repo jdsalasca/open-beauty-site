@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { renderPage } from '../src/page/index.js';
 import { styleSlugs } from '../src/styles/presets.js';
 import type { Brief, SectionBrief, StyleSlug } from '../src/types.js';
+import { browserTimeoutMs } from './support/browser.js';
 import { cleanupTempPages, geometryIssues, openGeometryPage, withGeometryBrowser, writeTempPage } from './support/geometry.js';
 
 /**
@@ -66,7 +67,7 @@ test('every style page passes the geometry contract from 320px to 1440px', async
         const url = writeTempPage(html, `${style}.html`);
         for (const [width, height] of MAIN_WIDTHS) {
           const { page, close } = await openGeometryPage(browser, { width, height });
-          await page.goto(url, { waitUntil: 'domcontentloaded' });
+          await page.goto(url, { waitUntil: 'domcontentloaded', timeout: browserTimeoutMs() });
           await settle(page);
           const issues = await geometryIssues(page);
           assert.deepEqual(
@@ -95,7 +96,7 @@ test('four and five card grids never leave a single orphan item', async (t) => {
           const url = writeTempPage(html, `${style}-${count}.html`);
           for (const [width, height] of STRESS_WIDTHS) {
             const { page, close } = await openGeometryPage(browser, { width, height });
-            await page.goto(url, { waitUntil: 'domcontentloaded' });
+            await page.goto(url, { waitUntil: 'domcontentloaded', timeout: browserTimeoutMs() });
             await settle(page);
             const issues = await geometryIssues(page);
             assert.deepEqual(

@@ -1,39 +1,30 @@
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import test from 'node:test';
 import { createNarrativeGallery } from '../src/narrative/gallery.js';
 import { mkdtemp, rm } from 'node:fs/promises';
 import os from 'node:os';
+import { browserTimeoutMs, launchWithRetry, loadChromium, locatePlaywrightRoot } from './support/browser.js';
 
 const ROOT = process.cwd();
-const DEFAULT_PLAYWRIGHT_ROOT = 'C:\\Users\\jdsal\\Documents\\Programming-personal\\open-civic-signal-os\\node_modules\\playwright';
-const candidate = process.env.BEAUTY_PLAYWRIGHT_ROOT ?? DEFAULT_PLAYWRIGHT_ROOT;
-const playwrightPackage = path.join(candidate, 'package.json');
-const playwrightRoot = existsSync(playwrightPackage) && JSON.parse(readFileSync(playwrightPackage, 'utf8')).name === 'playwright'
-  ? candidate
-  : null;
-const playwrightEntry = playwrightRoot
-  ? path.join(playwrightRoot, existsSync(path.join(playwrightRoot, 'index.mjs')) ? 'index.mjs' : 'index.js')
-  : null;
-const playwrightModule = playwrightEntry ? import(pathToFileURL(playwrightEntry).href) : null;
 
-test('gallery playback, keyboard lightbox, downloads and mobile layout work in Chromium', { skip: !playwrightModule }, async () => {
-  const { chromium } = await playwrightModule!;
+test('gallery playback, keyboard lightbox, downloads and mobile layout work in Chromium', { skip: !locatePlaywrightRoot() }, async () => {
+  const chromium = await loadChromium();
+  if (!chromium) return;
   const temp = await mkdtemp(path.join(os.tmpdir(), 'beauty-gallery-browser-'));
   let browser: Awaited<ReturnType<typeof chromium.launch>> | undefined;
   try {
     const output = path.join(temp, 'gallery.html');
     await createNarrativeGallery({ directory: path.join(ROOT, 'docs', 'narrative-gif'), output, title: 'Prueba de galería' });
-    browser = await chromium.launch({ headless: true });
+    browser = await launchWithRetry(chromium, { headless: true });
     const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
     const page = await context.newPage();
     const gifRequests: string[] = [];
     page.on('request', (request) => {
       if (/\.gif(?:$|\?)/i.test(request.url())) gifRequests.push(request.url());
     });
-    await page.goto(pathToFileURL(output).href);
+    await page.goto(pathToFileURL(output).href, { timeout: browserTimeoutMs() });
     await page.getByRole('heading', { name: 'Prueba de galería' }).waitFor();
     const card = page.locator('article.piece').first();
     const poster = card.locator('img.poster');
@@ -78,7 +69,7 @@ test('gallery playback, keyboard lightbox, downloads and mobile layout work in C
 
     const reduced = await browser.newContext({ viewport: { width: 360, height: 780 }, reducedMotion: 'reduce' });
     const reducedPage = await reduced.newPage();
-    await reducedPage.goto(pathToFileURL(output).href);
+    await reducedPage.goto(pathToFileURL(output).href, { timeout: browserTimeoutMs() });
     const reducedCard = reducedPage.locator('article.piece').first();
     const reducedImage = reducedCard.locator('img.poster');
     assert.match((await reducedImage.getAttribute('src')) ?? '', /\.png$/);

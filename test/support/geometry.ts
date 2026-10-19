@@ -2,18 +2,15 @@ import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { launchWithRetry, loadChromium, locatePlaywrightRoot } from './browser.js';
 
 /**
  * Shared browser geometry harness. Playwright lives outside this repository and
  * is imported by absolute path (BEAUTY_PLAYWRIGHT_ROOT overrides it). When the
  * module or Chromium is unavailable every caller skips gracefully.
  */
-export const PLAYWRIGHT_ROOT =
-  process.env.BEAUTY_PLAYWRIGHT_ROOT ??
-  'C:\\Users\\jdsal\\Documents\\Programming-personal\\open-civic-signal-os\\node_modules\\playwright';
-
 export interface GeometryPage {
-  goto(url: string, options?: { waitUntil?: string }): Promise<unknown>;
+  goto(url: string, options?: { waitUntil?: string; timeout?: number }): Promise<unknown>;
   evaluate<T, Arg = undefined>(fn: (arg: Arg) => T | Promise<T>, arg?: Arg): Promise<T>;
   waitForTimeout(ms: number): Promise<void>;
 }
@@ -33,30 +30,21 @@ export interface GeometryBrowser {
 }
 
 interface ChromiumLike {
-  launch(options?: { headless?: boolean }): Promise<GeometryBrowser>;
-}
-
-let chromiumPromise: Promise<ChromiumLike | null> | null = null;
-
-export async function loadChromium(): Promise<ChromiumLike | null> {
-  chromiumPromise ??= import(pathToFileURL(path.join(PLAYWRIGHT_ROOT, 'index.mjs')).href)
-    .then((module) => (module as { chromium: ChromiumLike }).chromium)
-    .catch(() => null);
-  return chromiumPromise;
+  launch(options?: { headless?: boolean; timeout?: number }): Promise<GeometryBrowser>;
 }
 
 export async function withGeometryBrowser(
   t: { skip(message: string): void },
   run: (browser: GeometryBrowser) => Promise<void>,
 ): Promise<void> {
-  const chromium = await loadChromium();
+  const chromium = (await loadChromium()) as ChromiumLike | null;
   if (!chromium) {
-    t.skip(`playwright not installed at ${PLAYWRIGHT_ROOT}`);
+    t.skip(`playwright not installed at ${locatePlaywrightRoot() ?? 'BEAUTY_PLAYWRIGHT_ROOT'}`);
     return;
   }
   let browser: GeometryBrowser;
   try {
-    browser = await chromium.launch();
+    browser = await launchWithRetry(chromium, { headless: true });
   } catch (error) {
     t.skip(`chromium unavailable: ${error instanceof Error ? error.message.split('\n')[0] : String(error)}`);
     return;
