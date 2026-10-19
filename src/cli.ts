@@ -107,6 +107,7 @@ Usage:
   beauty experience --style <s> --brief exp.json  Create a 3–8 room experience [--maxxing]
   beauty story --style <s> --brief story.json     Create a chaptered story/lesson [--maxxing]
   beauty sprint --style <s> --brief sprint.json   Create review + retrospective + planning + 3 GIFs
+      [--out dir]
   beauty sequence --style <s> --brief seq.json   Create an SVG story + GIF from frames
   beauty canvas --style <s> --brief canvas.json  Create an open animated SVG canvas
   beauty motion --style <s> --title "..."      Create an animated SVG loop
