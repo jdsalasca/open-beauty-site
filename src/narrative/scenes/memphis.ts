@@ -165,7 +165,7 @@ function drawChecklistCard(ctx: ReturnType<typeof canvasFor>['ctx'], box: Narrat
   const rows = [
     { label: sceneText('memphis', locale, 'read'), y: box.y + box.height * 0.42, reached: 1 },
     { label: sceneText('memphis', locale, 'mark'), y: box.y + box.height * 0.59, reached: level },
-    { label: sceneText('memphis', locale, 'review'), y: box.y + box.height * 0.76, reached: Math.max(0, level - 1) },
+    { label: sceneText('memphis', locale, 'reviewAction'), y: box.y + box.height * 0.76, reached: Math.max(0, level - 1) },
   ];
   for (const row of rows) {
     ctx.strokeStyle = colors.ink;

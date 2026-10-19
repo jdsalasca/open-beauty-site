@@ -52,6 +52,7 @@ const PAIRS: Record<StyleSlug, Pairs> = {
   memphis: {
     measure: ['MEDIDA', 'MEASURE'],
     review: ['REVISIÓN', 'REVIEW'],
+    reviewAction: ['REVISAR', 'REVIEW'],
     reviewBeforeClosing: ['REVISAR ANTES DE CERRAR', 'REVIEW BEFORE CLOSING'],
     read: ['LEER', 'READ'],
     mark: ['SEÑALAR', 'FLAG'],

@@ -92,6 +92,9 @@ test('capability registry is explicit and every fallback style/aspect/locale cel
 
 test('all fixed illustration copy is catalogued in both locales and no renderer draws hard-coded Spanish copy', async () => {
   assert.deepEqual(Object.keys(NARRATIVE_SCENE_TEXT_CATALOG).sort(), [...supportedNarrativeStyles()].sort());
+  assert.equal(NARRATIVE_SCENE_TEXT_CATALOG.memphis.es.review, 'REVISIÓN');
+  assert.equal(NARRATIVE_SCENE_TEXT_CATALOG.memphis.es.reviewAction, 'REVISAR');
+  assert.equal(NARRATIVE_SCENE_TEXT_CATALOG.memphis.en.reviewAction, 'REVIEW');
   for (const style of supportedNarrativeStyles()) {
     const localized = NARRATIVE_SCENE_TEXT_CATALOG[style];
     assert.deepEqual(Object.keys(localized.es).sort(), Object.keys(localized.en).sort(), `${style} has matching es/en keys`);
