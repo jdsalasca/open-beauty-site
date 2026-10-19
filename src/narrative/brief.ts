@@ -46,7 +46,7 @@ export const narrativeBriefSchema = z.object({
 }).strict();
 
 const NARRATIVE_FIELD_HELP: Record<string, string> = {
-  style: 'Narrative scenes: papercraft (editorial), brutalist (documentary or poster), vaporwave, galactic, nature. Other styles still return STYLE_NOT_SUPPORTED_YET.',
+  style: 'Narrative scenes: artdeco, bestiary, brutalist, galactic, isotype, memphis, nature, opart, papercraft, psychedelic, renaissance, ukiyoe, vaporwave.',
   subfamily: 'papercraft: editorial; brutalist: documentary (default) or poster. Poster preserves the existing high-contrast brutalist direction.',
   kind: 'Must be "narrative-gif".',
   locale: 'es|en; defaults to es.',
@@ -61,7 +61,7 @@ const NARRATIVE_FIELD_HELP: Record<string, string> = {
 
 export function narrativeHelpOptions(): string[] {
   return [
-    '  --style <s>        papercraft, brutalist, vaporwave, galactic or nature',
+    '  --style <s>        artdeco, bestiary, brutalist, galactic, isotype, memphis, nature, opart, papercraft, psychedelic, renaissance, ukiyoe or vaporwave',
     '  --brief <file>     Read the JSON narrative brief',
     '  --out <dir>        Output folder (GIF, PNG, contact sheet and manifest)',
     '',

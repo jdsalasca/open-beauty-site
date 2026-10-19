@@ -44,6 +44,32 @@ export const NARRATIVE_COMPOSITION_BY_STYLE: Readonly<Partial<Record<StyleSlug, 
   memphis: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.27, artY: 0.17, artHeight: 0.66 },
 };
 
+/** One label-tone rule feeds both raster output and the rendered-contrast evaluator. */
+export const NARRATIVE_LABEL_TONE_BY_STYLE: Readonly<Record<StyleSlug, 'ink' | 'accent'>> = {
+  artdeco: 'accent',
+  bestiary: 'ink',
+  brutalist: 'ink',
+  galactic: 'accent',
+  isotype: 'accent',
+  memphis: 'ink',
+  nature: 'accent',
+  opart: 'accent',
+  papercraft: 'accent',
+  psychedelic: 'ink',
+  renaissance: 'ink',
+  ukiyoe: 'accent',
+  vaporwave: 'accent',
+};
+
+/** These committed groups include an explicit midpoint tile in the contact sheet. */
+export const NARRATIVE_CONTACT_MIDPOINT_STYLES: ReadonlySet<StyleSlug> = new Set([
+  'bestiary', 'brutalist', 'memphis', 'papercraft', 'psychedelic', 'ukiyoe',
+]);
+
 export function narrativeCompositionFor(style: StyleSlug): NarrativeComposition {
   return NARRATIVE_COMPOSITION_BY_STYLE[style] ?? DEFAULT_NARRATIVE_COMPOSITION;
+}
+
+export function narrativeLabelToneFor(style: StyleSlug): 'ink' | 'accent' {
+  return NARRATIVE_LABEL_TONE_BY_STYLE[style];
 }

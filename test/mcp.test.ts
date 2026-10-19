@@ -200,6 +200,27 @@ test('narrative MCP renders a registered Stage C style', async () => {
   assert.ok(existsSync(structured.paths.contactSheet));
   assert.ok(existsSync(structured.paths.manifest));
 });
+test('narrative MCP rejects an unknown style before creating output files', async () => {
+  const result = await client.callTool({
+    name: 'beauty_create_narrative',
+    arguments: {
+      style: 'unlisted-style',
+      brief: { style: 'unlisted-style', kind: 'narrative-gif', audience: 'Producto', title: 'Revisión', status: 'in-review', phases: [
+        { id: 'before', label: 'Antes', text: 'Sin revisión.', visual: { kind: 'comparison', state: 'unreviewed' } },
+        { id: 'change', label: 'Cambio', text: 'Señal visible.', visual: { kind: 'comparison', state: 'flagged' } },
+        { id: 'result', label: 'Resultado esperado', text: 'Lista para revisar.', visual: { kind: 'comparison', state: 'review-ready' } },
+      ] },
+      output: 'out/unsupported-narrative',
+    },
+  });
+  assert.equal(result.isError, true);
+  const message = (result.content as Array<{ type: string; text?: string }>)
+    .filter((item) => item.type === 'text')
+    .map((item) => item.text ?? '')
+    .join('\n');
+  assert.match(message, /invalid_enum_value|Invalid|style/i);
+  assert.ok(!existsSync(path.join(dir, 'out', 'unsupported-narrative')));
+});
 test('aborts a GIF request instead of waiting for the render', async () => {
   const controller = new AbortController();
   const pending = client.callTool(
