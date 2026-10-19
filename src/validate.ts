@@ -1,7 +1,7 @@
 import type { StylePreset, StyleSlug, ValidationResult, VisionCheck, VisionReport } from './types.js';
 import type { Patch, RichIssue, RichValidationResult } from './types/validation.js';
 import { getStyle, isStyleSlug, styleSlugs } from './styles/presets.js';
-import { contrastRatio, nearestPaletteToken, relativeLuminance } from './a11y.js';
+import { contrastRatio, headlineOverflows360, HEADLINE_VIEWPORT, longestWordLength, nearestPaletteToken, relativeLuminance } from './a11y.js';
 
 export { contrastRatio, relativeLuminance as luminance } from './a11y.js';
 
@@ -74,11 +74,19 @@ const CONTRAST_PAIRS: Partial<Record<StyleSlug, Array<[keyof StylePreset['palett
 
 function issuesForColors(css: string, preset: StylePreset): { issues: RichIssue[]; colors: string[] } {
   const allowed = new Set(Object.values(preset.palette).map((hex) => normalizeHex(hex)));
-  const found = new Set(Array.from(css.matchAll(HEX_RE), (match) => normalizeHex(match[0])));
+  // Keep the raw spelling of every hex so `fix` can match #fff and #ffffff alike.
+  const rawByNormalized = new Map<string, Set<string>>();
+  for (const match of css.matchAll(HEX_RE)) {
+    const normalized = normalizeHex(match[0]);
+    const raws = rawByNormalized.get(normalized) ?? new Set<string>();
+    raws.add(match[0]);
+    rawByNormalized.set(normalized, raws);
+  }
   const issues: RichIssue[] = [];
-  const unknown = [...found].filter((hex) => !allowed.has(hex));
+  const unknown = [...rawByNormalized.keys()].filter((hex) => !allowed.has(hex));
   for (const hex of unknown) {
     const token = nearestPaletteToken(hex, preset.palette);
+    const raws = [...(rawByNormalized.get(hex) ?? [])];
     issues.push(
       mkIssue(
         'warn',
@@ -86,13 +94,16 @@ function issuesForColors(css: string, preset: StylePreset): { issues: RichIssue[
         `${hex} is not in the ${preset.name} palette.`,
         'the <style> block',
         `A colour outside the palette breaks the ${preset.name} reading: the page stops looking art-directed and starts looking assembled.`,
-        `${hex} -> ${token.hex} (${token.role})`,
+        `${raws.join(', ')} -> ${token.hex} (${token.role})`,
         `Use one of: ${[...allowed].join(', ')}. The nearest token is ${token.hex} (${token.role}).`,
-        [{ op: 'replace-hex', params: { from: hex, to: token.hex } }],
+        [
+          ...raws.map((from) => ({ op: 'replace-hex' as const, params: { from, to: token.hex } })),
+          { op: 'snap-palette-colors' as const },
+        ],
       ),
     );
   }
-  return { issues, colors: [...found] };
+  return { issues, colors: [...rawByNormalized.keys()] };
 }
 
 function issuesForFonts(css: string, preset: StylePreset): { issues: RichIssue[]; fonts: string[] } {
@@ -551,6 +562,61 @@ function issuesForContrast(preset: StylePreset): RichIssue[] {
   return issues;
 }
 
+function headingText(html: string): string {
+  const match = /<h1\b[^>]*>([\s\S]*?)<\/h1>/i.exec(html);
+  return (match?.[1] ?? '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&[a-z]+;/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * Two headline checks that keep a prompt from becoming the page title and keep
+ * the title from breaking inside a word on a 360px phone.
+ */
+function issuesForHeadline(html: string, css: string): RichIssue[] {
+  const issues: RichIssue[] = [];
+  const text = headingText(html);
+  if (!text) return issues;
+  const points = Array.from(text);
+  const words = text.split(/\s+/).filter(Boolean);
+
+  if (words.length > 8 || points.length > 60) {
+    issues.push(
+      mkIssue(
+        'warn',
+        'idea-as-title',
+        `The h1 reads like a prompt: ${words.length} words / ${points.length} characters.`,
+        'the page <h1>',
+        'A headline is a short promise, not the whole request. When the entire idea becomes the h1 the page has no title and the body looks empty.',
+        '<h1>Noche polinizadora</h1>',
+        'Move the idea to the tagline and intro; keep the h1 at five words or fewer.',
+      ),
+    );
+  }
+
+  const fit = /--headline-fit\s*:\s*(\d+(?:\.\d+)?)px/i.exec(css)?.[1];
+  const ratio = /--headline-ratio\s*:\s*(\d+(?:\.\d+)?)/i.exec(css)?.[1];
+  if (fit !== undefined) {
+    const longest = longestWordLength(text);
+    if (headlineOverflows360(text, Number(fit), ratio ? Number(ratio) : undefined)) {
+      issues.push(
+        mkIssue(
+          'warn',
+          'headline-fits',
+          `The longest headline word (${longest} characters) overflows a ${HEADLINE_VIEWPORT}px viewport.`,
+          'the page <h1>',
+          'On a narrow phone a long word is pushed past the viewport and breaks mid-word, leaving an orphan letter the automatic review never sees.',
+          '--headline-fit:26px',
+          'Shorten the headline or lower --headline-fit so the longest word fits.',
+        ),
+      );
+    }
+  }
+  return issues;
+}
+
 export function visionReport(css: string, preset: StylePreset): VisionReport {
   const sizes = Array.from(css.matchAll(/font-size\s*:\s*([^;}{]+)/gi)).flatMap((match) =>
     Array.from((match[1] ?? '').matchAll(/(\d+(?:\.\d+)?)px/g), (px) => Number(px[1])),
@@ -660,6 +726,7 @@ export function validateHtml(html: string, style: StyleSlug): RichValidationResu
   const motion = issuesForMotion(css);
   const markup = issuesForMarkup(html);
   const contrast = issuesForContrast(preset);
+  const headline = issuesForHeadline(html, css);
 
   issues.push(
     ...colors.issues,
@@ -670,6 +737,7 @@ export function validateHtml(html: string, style: StyleSlug): RichValidationResu
     ...motion.issues,
     ...markup,
     ...contrast,
+    ...headline,
   );
 
   return finalize(style, preset, css, html, issues, colors, fonts, radii, motion);
@@ -690,7 +758,7 @@ function finalize(
   const warnings = issues.filter((issue) => issue.severity === 'warn').length;
   const infos = issues.filter((issue) => issue.severity === 'info').length;
   const score = Math.max(0, Math.min(100, 100 - errors * 18 - warnings * 6 - infos));
-  const grade: RichValidationResult['grade'] = score >= 90 ? 'A' : score >= 80 ? 'B' : score >= 70 ? 'C' : score >= 60 ? 'D' : 'F';
+  const grade: RichValidationResult['grade'] = gradeForScore(score, warnings);
 
   return {
     style,
@@ -1090,11 +1158,21 @@ export function validateStory(html: string, style: StyleSlug): RichValidationRes
   return finalizeFrom(base, style, html, issues);
 }
 
+/**
+ * Documented scoring invariant: an open warning caps the grade at B, so a page
+ * with an off-palette colour (or any other warning) can never present as "A 94".
+ * The score itself still reflects the weighted penalty; only the letter is capped.
+ */
+function gradeForScore(score: number, warnings: number): RichValidationResult['grade'] {
+  const base: RichValidationResult['grade'] = score >= 90 ? 'A' : score >= 80 ? 'B' : score >= 70 ? 'C' : score >= 60 ? 'D' : 'F';
+  return warnings > 0 && base === 'A' ? 'B' : base;
+}
+
 function finalizeFrom(base: RichValidationResult, style: StyleSlug, html: string, issues: RichIssue[]): RichValidationResult {
   const errors = issues.filter((issue) => issue.severity === 'error').length;
   const warnings = issues.filter((issue) => issue.severity === 'warn').length;
   const infos = issues.filter((issue) => issue.severity === 'info').length;
   const score = Math.max(0, Math.min(100, 100 - errors * 18 - warnings * 6 - infos));
-  const grade: RichValidationResult['grade'] = score >= 90 ? 'A' : score >= 80 ? 'B' : score >= 70 ? 'C' : score >= 60 ? 'D' : 'F';
+  const grade: RichValidationResult['grade'] = gradeForScore(score, warnings);
   return { ...base, score, grade, issues };
 }

@@ -1,5 +1,5 @@
 import type { Brief, Locale, SectionBrief, StylePreset } from '../types.js';
-import { focusRingColor, isDarkColor } from '../a11y.js';
+import { displayGlyphRatio, focusRingColor, headlineFitPx, HEADLINE_PREFERRED_VW, isDarkColor } from '../a11y.js';
 
 export class BeautyError extends Error {
   constructor(message: string, readonly code = 'BEAUTY_ERROR') {
@@ -196,6 +196,35 @@ img,svg,video,canvas{max-width:100%}
 `;
 }
 
+/** Visible text of the first <h1> in the body, used to size the headline. */
+function headlineText(markup: string): string {
+  const match = /<h1\b[^>]*>([\s\S]*?)<\/h1>/i.exec(markup);
+  if (!match) return '';
+  return (match[1] ?? '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&[a-z]+;/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * Length-aware headline typography. The generator computes the smallest font
+ * size at which the longest word of the real title still fits a 360px viewport
+ * and emits it as `--headline-fit`; the narrow-screen clamp never goes below
+ * that, so a headline can never break inside a word. The validator re-checks
+ * the same value (`headline-fits`).
+ */
+export function headlineFitCss(body: string, preset: StylePreset): string {
+  const text = headlineText(body);
+  const ratio = displayGlyphRatio(preset.fonts.display);
+  const fit = headlineFitPx(text, undefined, ratio);
+  if (!fit) return '';
+  return `:root{--headline-fit:${fit}px;--headline-ratio:${ratio}}
+html body :where(h1,h2,h3,.display){overflow-wrap:normal;word-break:normal;hyphens:manual;text-wrap:balance}
+@media (max-width:760px){html body[class] h1,html body h1{font-size:min(var(--headline-fit),${HEADLINE_PREFERRED_VW}vw)!important;line-height:1.04;letter-spacing:0;overflow-wrap:normal;word-break:normal;hyphens:manual}}
+`;
+}
+
 export interface ShellOptions {
   lang: Locale;
   title: string;
@@ -233,6 +262,7 @@ export function shell({ lang, title, description, preset, css, body, script, bod
 <style>
 ${css}
 ${designLanguageCss(preset)}
+${headlineFitCss(body, preset)}
 @media print{
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .reveal,.js .reveal{opacity:1!important;transform:none!important;transition:none!important;animation:none!important}

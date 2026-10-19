@@ -208,6 +208,56 @@ export function accentTextColor(palette: StylePalette, accent: string): string {
   return readableOn(palette.bg, [accent, palette.ink, palette.accent2, palette.accent3, palette.accent4], 4.5);
 }
 
+/**
+ * Headline fitting at the narrowest supported viewport (360px). The generator
+ * and the validator share these helpers so a headline can never break inside a
+ * word: the generator emits a clamp minimum that fits the longest word and the
+ * validator re-checks it from the rendered document.
+ */
+export const HEADLINE_VIEWPORT = 360;
+/** Usable content width at 360px once the page gutter is removed. */
+export const HEADLINE_AVAILABLE = 300;
+/** Average advance width of a display glyph, as a fraction of the font size. */
+export const HEADLINE_GLYPH_RATIO = 0.62;
+/** The `vw` preferred term used by the emitted narrow-screen clamp. */
+export const HEADLINE_PREFERRED_VW = 12;
+
+/**
+ * A display font that is monospaced (a pixel face, for example) advances a full
+ * em per glyph; every other face averages a little over half an em. The wider
+ * estimate keeps a pixel headline from overflowing where a serif would not.
+ */
+export function displayGlyphRatio(displayFont: string): number {
+  return /mono|press start|courier|pixel/i.test(String(displayFont ?? '')) ? 1 : HEADLINE_GLYPH_RATIO;
+}
+
+/** Count the grapheme-ish code points of the longest word in a headline. */
+export function longestWordLength(text: string): number {
+  return String(text ?? '')
+    .split(/\s+/)
+    .map((word) => Array.from(word.replace(/[^\p{L}\p{N}]/gu, '')).length)
+    .reduce((max, length) => Math.max(max, length), 0);
+}
+
+/** Minimum font size (px) that keeps the longest word inside the mobile gutter. */
+export function headlineFitPx(text: string, available = HEADLINE_AVAILABLE, ratio = HEADLINE_GLYPH_RATIO): number {
+  const longest = longestWordLength(text);
+  if (longest <= 0) return 0;
+  return Math.max(16, Math.min(72, Math.floor(available / (longest * ratio))));
+}
+
+/** The font size the narrow-screen clamp actually renders at 360px. */
+export function renderedHeadlinePx(fitPx: number): number {
+  return Math.min(fitPx, (HEADLINE_VIEWPORT * HEADLINE_PREFERRED_VW) / 100);
+}
+
+/** True when the longest word still overflows the 360px viewport. */
+export function headlineOverflows360(text: string, fitPx: number, ratio = HEADLINE_GLYPH_RATIO): boolean {
+  const longest = longestWordLength(text);
+  if (longest <= 0) return false;
+  return longest * ratio * renderedHeadlinePx(fitPx) > HEADLINE_VIEWPORT;
+}
+
 function hexToRgb(hex: string): [number, number, number] | null {
   const normalized = normalizeHex(hex).slice(1);
   if (!/^[0-9a-f]{6}$/i.test(normalized)) return null;
