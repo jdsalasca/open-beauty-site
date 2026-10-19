@@ -61,7 +61,7 @@ export function narrativeCapabilityReport(filter: NarrativeCapabilityFilter = {}
     };
     return NARRATIVE_PRIMITIVES.flatMap((primitive) => ASPECTS.flatMap((aspect) => (['es', 'en'] as const).map((locale) => {
       const supportsAspect = scene.supportsAspect(aspect.width / aspect.height);
-      const semanticSupported = style === 'papercraft' && supportsAspect;
+      const semanticSupported = (style === 'papercraft' || style === 'brutalist') && supportsAspect;
       const status: NarrativeCapabilityStatus = !supportsAspect ? 'unsupported' : semanticSupported ? 'supported' : 'fallback';
       const semanticEntityKinds = NARRATIVE_PRIMITIVE_ENTITY_KINDS[primitive];
       const semanticKinds = semanticEntityKinds.filter((kind): kind is Exclude<NarrativeSemanticEntityKind, 'illustration'> => kind !== 'illustration');
@@ -74,7 +74,7 @@ export function narrativeCapabilityReport(filter: NarrativeCapabilityFilter = {}
       const reason = !supportsAspect
         ? `${style} has no narrative renderer for ${aspect.id}; the primitive cannot be rendered in this aspect.`
         : semanticSupported
-          ? `Papercraft renders ${primitive} with stable entity regions; decoded state changes are exercised in test/narrative-semantic-render.test.ts for ${aspect.id}/${locale}.`
+          ? `${style} documentary semantics render ${primitive} with stable entity regions; decoded state changes are exercised in test/narrative-semantic-render.test.ts for ${aspect.id}/${locale}.`
           : `${style} fallback: ${PRIMITIVE_REASONS[primitive]}`;
       return { style, primitive, aspect: aspect.id, locale, status, reason, allowed };
     })));

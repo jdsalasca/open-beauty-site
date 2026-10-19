@@ -1,5 +1,5 @@
 import type { SKRSContext2D } from '@napi-rs/canvas';
-import type { NarrativeRect, NarrativeRenderContext } from '../../../types/narrative.js';
+import type { NarrativeObjectRegion, NarrativeObjectTextBox, NarrativeRect, NarrativeRenderContext } from '../../../types/narrative.js';
 import type { NarrativeSemanticEntity, NarrativeSemanticScene } from '../../../types/narrative-scene.js';
 import { sceneText } from '../../i18n.js';
 import { drawText, rgba } from '../common.js';
@@ -12,6 +12,7 @@ export interface PaperPalette {
   accent3: string;
   accent4: string;
   surface: string;
+  cardScale: number;
 }
 
 function rect(x: number, y: number, width: number, height: number): NarrativeRect {
@@ -22,18 +23,16 @@ function indexed(entities: NarrativeSemanticEntity[], kind: NarrativeSemanticEnt
   return entities.filter((entity) => entity.kind === kind);
 }
 
-function clipped(value: string, limit: number): string {
-  return value.length <= limit ? value : `${value.slice(0, Math.max(1, limit - 1)).trimEnd()}…`;
-}
-
-function drawFittedText(ctx: SKRSContext2D, value: string, x: number, baseline: number, maxWidth: number, size: number, color: string, face: 'Nunito Sans' | 'Fraunces' = 'Nunito Sans'): void {
-  let fitted = size;
+function drawFittedText(ctx: SKRSContext2D, value: string, x: number, baseline: number, maxWidth: number, size: number, color: string, face: 'Nunito Sans' | 'Fraunces' = 'Nunito Sans', cardScale = 1, minEffective = 14): number {
+  let fitted = Math.ceil(Math.max(size, minEffective / cardScale));
+  const minimum = Math.ceil(minEffective / cardScale);
   ctx.font = `700 ${fitted}px "${face}"`;
-  while (fitted > 10 && ctx.measureText(value).width > maxWidth) {
+  while (fitted > minimum && ctx.measureText(value).width > maxWidth) {
     fitted -= 1;
     ctx.font = `700 ${fitted}px "${face}"`;
   }
   drawText(ctx, value, x, baseline, face, 700, fitted, color);
+  return fitted;
 }
 
 function paperPanel(ctx: SKRSContext2D, box: NarrativeRect, fill: string, edge: string, alpha = 0.2): void {
@@ -79,9 +78,9 @@ function positions(semantic: NarrativeSemanticScene, box: NarrativeRect): Map<st
     const gapX = box.width * 0.035;
     const gapY = box.height * 0.035;
     const cardWidth = (collectionBox.width * 0.88 - gapX * (columns - 1)) / columns;
-    const cardHeight = (collectionBox.height * 0.72 - gapY * (rows - 1)) / rows;
+    const cardHeight = (collectionBox.height * 0.54 - gapY * (rows - 1)) / rows;
     indexed(semantic.entities, 'collection').forEach((entity) => result.set(entity.id, collectionBox));
-    cards.forEach((entity, index) => result.set(entity.id, rect(collectionBox.x + collectionBox.width * 0.06 + (index % columns) * (cardWidth + gapX), collectionBox.y + collectionBox.height * 0.13 + Math.floor(index / columns) * (cardHeight + gapY), cardWidth, cardHeight)));
+    cards.forEach((entity, index) => result.set(entity.id, rect(collectionBox.x + collectionBox.width * 0.06 + (index % columns) * (cardWidth + gapX), collectionBox.y + collectionBox.height * 0.24 + Math.floor(index / columns) * (cardHeight + gapY), cardWidth, cardHeight)));
   } else if (semantic.primitive === 'counter') {
     const items = semantic.entities.filter((entity) => entity.kind === 'row' || entity.kind === 'card');
     const itemWidth = Math.min(box.width * 0.21, (box.width * 0.78) / Math.max(1, items.length));
@@ -102,9 +101,83 @@ function positions(semantic: NarrativeSemanticScene, box: NarrativeRect): Map<st
 export function papercraftObjectRegions(context: NarrativeRenderContext, box: NarrativeRect): Array<{ entityId: string; bounds: NarrativeRect }> {
   if (!context.semantic) return [];
   const layout = positions(context.semantic, box);
+  const scale = context.layout.cardScale;
+  const boxes = new Map<string, NarrativeObjectTextBox[]>();
+  const add = (entityId: string, text: string, bounds: NarrativeRect, size: number, role: NarrativeObjectTextBox['role']): void => {
+    const effectiveMinimum = role === 'headline' ? 20 : 14;
+    const fontSizePx = Math.ceil(Math.max(size, effectiveMinimum / scale));
+    const list = boxes.get(entityId) ?? [];
+    list.push({ text, bounds, fontSizePx, role });
+    boxes.set(entityId, list);
+  };
+  const semantic = context.semantic;
+  const table = semantic.entities.find((item) => item.kind === 'table');
+  const rows = indexed(semantic.entities, 'row');
+  const collection = semantic.entities.find((item) => item.kind === 'collection');
+  const cards = indexed(semantic.entities, 'card');
+  if (semantic.primitive === 'table-rows' && table) {
+    const tableBox = layout.get(table.id);
+    if (tableBox) add(table.id, sceneText('papercraft', context.brief.locale, 'semanticTable'), tableBox, Math.max(14, box.width * 0.043), 'label');
+    for (const row of rows) {
+      const rowBox = layout.get(row.id);
+      if (!rowBox) continue;
+      const sourceId = semantic.relations.find((relation) => relation.kind === 'duplicate-of' && relation.from === row.id)?.to;
+      const source = semantic.entities.find((item) => item.id === sourceId);
+      const value = source ? (source.label ?? String(source.value ?? source.id)) : (row.label ?? String(row.value ?? sceneText('papercraft', context.brief.locale, 'semanticRow')));
+      const size = Math.max(14, Math.min(rowBox.height * 0.34, box.width * 0.045));
+      add(row.id, value, rowBox, size, 'identifier');
+      const state = semantic.states[row.id] ?? 'default';
+      if (['duplicate', 'flagged', 'marked', 'rejected'].includes(state)) {
+        const status = state === 'duplicate' ? sceneText('papercraft', context.brief.locale, 'semanticDuplicate')
+          : state === 'rejected' ? sceneText('papercraft', context.brief.locale, 'semanticRejected')
+            : sceneText('papercraft', context.brief.locale, 'semanticFlagged');
+        add(row.id, status, rect(rowBox.x, rowBox.y + rowBox.height * 0.56, rowBox.width * 0.85, rowBox.height * 0.35), Math.max(14, size * 0.58), 'status');
+      }
+    }
+  } else if (semantic.primitive === 'card-collection' && collection) {
+    const collectionBox = layout.get(collection.id);
+    if (collectionBox) {
+      add(collection.id, collection.label ?? sceneText('papercraft', context.brief.locale, 'semanticCollection'), collectionBox, Math.max(14, box.width * 0.04), 'label');
+      const badge = rect(collectionBox.x + collectionBox.width * 0.06, collectionBox.y + collectionBox.height * 0.82, collectionBox.width * 0.88, collectionBox.height * 0.15);
+      const count = cards.filter((card) => semantic.relations.some((relation) => relation.kind === 'member-of' && relation.from === card.id && relation.to === collection.id)).length;
+      add(collection.id, String(count), rect(badge.x, badge.y, badge.width * 0.25, badge.height), Math.max(20, badge.height * 0.48), 'headline');
+      add(collection.id, sceneText('papercraft', context.brief.locale, 'semanticCount'), rect(badge.x + badge.width * 0.3, badge.y, badge.width * 0.65, badge.height), Math.max(14, badge.height * 0.42), 'label');
+    }
+    for (const card of cards) {
+      const cardBox = layout.get(card.id);
+      if (cardBox) add(card.id, card.label ?? String(card.value ?? card.id), cardBox, Math.max(14, cardBox.height * 0.21), 'identifier');
+    }
+  } else if (semantic.primitive === 'counter') {
+    const counter = semantic.entities.find((item) => item.kind === 'counter');
+    for (const item of semantic.entities.filter((candidate) => candidate.kind === 'row' || candidate.kind === 'card')) {
+      const itemBox = layout.get(item.id);
+      if (itemBox) add(item.id, item.label ?? String(item.value ?? item.id), itemBox, Math.max(14, itemBox.height * 0.2), 'identifier');
+    }
+    if (counter) {
+      const counterBox = layout.get(counter.id);
+      const relations = semantic.relations.filter((relation) => relation.kind === 'counts' && relation.from === counter.id);
+      if (counterBox) {
+        add(counter.id, String(counter.value ?? new Set(relations.map((relation) => relation.to)).size), counterBox, Math.max(20, counterBox.height * 0.55), 'headline');
+        add(counter.id, sceneText('papercraft', context.brief.locale, 'semanticCount'), counterBox, Math.max(14, counterBox.height * 0.24), 'label');
+      }
+    }
+  } else if (semantic.primitive === 'file-download') {
+    for (const file of semantic.entities.filter((item) => item.kind === 'file')) {
+      const fileBox = layout.get(file.id);
+      if (!fileBox) continue;
+      const state = semantic.states[file.id] ?? 'pending';
+      add(file.id, file.label ?? String(file.value ?? sceneText('papercraft', context.brief.locale, 'semanticFile')), fileBox, Math.max(20, fileBox.height * 0.12), 'headline');
+      add(file.id, sceneText('papercraft', context.brief.locale, fileStateKey(state)), fileBox, Math.max(14, fileBox.height * 0.11), 'status');
+    }
+  }
+  const container = table ?? collection ?? semantic.entities.find((item) => item.kind === 'counter') ?? semantic.entities.find((item) => item.kind === 'file') ?? semantic.entities[0];
+  if (container) {
+    const tag = rect(box.x + box.width * 0.4, box.y + box.height * 0.045, box.width * 0.55, box.height * 0.1);
+    add(container.id, sceneText('papercraft', context.brief.locale, 'semanticIllustrative'), tag, Math.max(14, tag.height * 0.42), 'label');
+  }
   return context.semantic.entities.flatMap((entity) => {
     const bounds = layout.get(entity.id);
-    return bounds ? [{ entityId: entity.id, bounds }] : [];
+    return bounds ? [{ entityId: entity.id, bounds, ...(boxes.has(entity.id) ? { textBoxes: boxes.get(entity.id)! } : {}) }] : [];
   });
 }
 
@@ -116,17 +189,22 @@ function drawRow(ctx: SKRSContext2D, semantic: NarrativeSemanticScene, entity: N
   const highlighted = ['duplicate', 'flagged', 'marked', 'rejected'].includes(state);
   paperPanel(ctx, target, state === 'rejected' ? '#F4DED3' : highlighted ? '#FFF4DB' : '#FBF7EE', state === 'rejected' ? '#BF664F' : highlighted ? palette.accent : '#C9B99F', 0.12);
   const inset = target.width * 0.075;
-  const size = Math.max(12, Math.min(target.height * 0.34, box.width * 0.045));
-  drawFittedText(ctx, clipped(text, 45), target.x + inset, target.y + target.height * 0.63, target.width * 0.67, size, palette.ink);
-  if (state === 'duplicate') {
-    ctx.save();
-    ctx.setLineDash([target.width * 0.025, target.width * 0.014]);
-    ctx.strokeStyle = palette.accent;
-    ctx.lineWidth = Math.max(1, target.width * 0.006);
-    ctx.strokeRect(target.x + target.width * 0.72, target.y + target.height * 0.22, target.width * 0.23, target.height * 0.55);
-    ctx.restore();
-    drawText(ctx, sceneText('papercraft', locale, 'semanticDuplicate'), target.x + target.width * 0.74, target.y + target.height * 0.57, 'Nunito Sans', 800, Math.max(9, size * 0.58), palette.ink);
-  } else if (state === 'flagged' || state === 'marked') {
+  const size = Math.max(14, Math.min(target.height * 0.34, box.width * 0.045));
+  drawFittedText(ctx, text, target.x + inset, target.y + target.height * 0.42, target.width * 0.86, size, palette.ink, 'Nunito Sans', palette.cardScale);
+  if (['duplicate', 'flagged', 'marked', 'rejected'].includes(state)) {
+    const status = state === 'duplicate' ? sceneText('papercraft', locale, 'semanticDuplicate')
+      : state === 'rejected' ? sceneText('papercraft', locale, 'semanticRejected')
+        : sceneText('papercraft', locale, 'semanticFlagged');
+    const stampX = target.x + target.width * 0.055;
+    const stampY = target.y + target.height * 0.56;
+    const stampWidth = target.width * 0.85;
+    const stampHeight = target.height * 0.35;
+    ctx.strokeStyle = state === 'rejected' ? '#B3493E' : palette.accent;
+    ctx.lineWidth = Math.max(1.5, target.width * 0.008);
+    ctx.strokeRect(stampX, stampY, stampWidth, stampHeight);
+    drawFittedText(ctx, status, stampX + stampWidth * 0.05, stampY + stampHeight * 0.72, stampWidth * 0.9, Math.max(14, size * 0.58), state === 'rejected' ? '#8F3E35' : palette.ink, 'Nunito Sans', palette.cardScale);
+  }
+  if (state === 'flagged' || state === 'marked') {
     ctx.fillStyle = palette.accent;
     ctx.beginPath();
     ctx.arc(target.x + target.width * 0.88, target.y + target.height * 0.48, target.height * 0.19, 0, Math.PI * 2);
@@ -148,7 +226,6 @@ function drawRow(ctx: SKRSContext2D, semantic: NarrativeSemanticScene, entity: N
     ctx.moveTo(target.x + target.width * 0.92, target.y + target.height * 0.25);
     ctx.lineTo(target.x + target.width * 0.79, target.y + target.height * 0.74);
     ctx.stroke();
-    drawText(ctx, sceneText('papercraft', locale, 'semanticRejected'), target.x + target.width * 0.38, target.y + target.height * 0.88, 'Nunito Sans', 800, Math.max(9, size * 0.58), '#8F3E35');
   }
 }
 
@@ -159,7 +236,7 @@ function drawTable(ctx: SKRSContext2D, semantic: NarrativeSemanticScene, box: Na
   const tableBox = table ? layout.get(table.id) : rect(box.x + box.width * 0.11, box.y + box.height * 0.2, box.width * 0.78, box.height * 0.62);
   if (!tableBox) return;
   paperPanel(ctx, tableBox, '#F7EEDC', '#C9B99F', 0.14);
-  drawFittedText(ctx, sceneText('papercraft', locale, 'semanticTable'), tableBox.x + tableBox.width * 0.06, tableBox.y + tableBox.height * 0.16, tableBox.width * 0.75, Math.max(11, box.width * 0.043), palette.muted, 'Fraunces');
+  drawFittedText(ctx, sceneText('papercraft', locale, 'semanticTable'), tableBox.x + tableBox.width * 0.06, tableBox.y + tableBox.height * 0.16, tableBox.width * 0.75, Math.max(14, box.width * 0.043), palette.muted, 'Fraunces', palette.cardScale);
   for (const entity of rows) {
     const row = layout.get(entity.id);
     if (row) drawRow(ctx, semantic, entity, row, box, palette, locale);
@@ -173,7 +250,7 @@ function drawCollection(ctx: SKRSContext2D, semantic: NarrativeSemanticScene, bo
   if (collectionBox) {
     paperPanel(ctx, collectionBox, '#F5EAD4', '#B9A27E', 0.16);
     const label = collection?.label ?? sceneText('papercraft', locale, 'semanticCollection');
-    drawFittedText(ctx, label, collectionBox.x + collectionBox.width * 0.06, collectionBox.y + collectionBox.height * 0.1, collectionBox.width * 0.82, Math.max(11, box.width * 0.04), palette.ink, 'Fraunces');
+    drawFittedText(ctx, label, collectionBox.x + collectionBox.width * 0.06, collectionBox.y + collectionBox.height * 0.1, collectionBox.width * 0.82, Math.max(14, box.width * 0.04), palette.ink, 'Fraunces', palette.cardScale);
   }
   const cards = indexed(semantic.entities, 'card');
   for (const [index, card] of cards.entries()) {
@@ -182,7 +259,7 @@ function drawCollection(ctx: SKRSContext2D, semantic: NarrativeSemanticScene, bo
     const state = semantic.states[card.id] ?? 'default';
     paperPanel(ctx, cardBox, state === 'selected' ? '#F7E5C1' : index % 2 ? '#FCF7EA' : '#FFFDF5', state === 'selected' ? palette.accent : '#D2C1A4', 0.11);
     const membership = semantic.relations.some((relation) => relation.kind === 'member-of' && relation.from === card.id && relation.to === collection?.id);
-    drawFittedText(ctx, card.label ?? String(card.value ?? card.id), cardBox.x + cardBox.width * 0.08, cardBox.y + cardBox.height * 0.53, cardBox.width * 0.82, Math.max(10, cardBox.height * 0.21), palette.ink);
+    drawFittedText(ctx, card.label ?? String(card.value ?? card.id), cardBox.x + cardBox.width * 0.08, cardBox.y + cardBox.height * 0.53, cardBox.width * 0.82, Math.max(14, cardBox.height * 0.21), palette.ink, 'Nunito Sans', palette.cardScale);
     ctx.fillStyle = state === 'selected' ? palette.accent : membership ? palette.accent2 : palette.muted;
     ctx.beginPath();
     ctx.arc(cardBox.x + cardBox.width * 0.86, cardBox.y + cardBox.height * 0.82, Math.max(3, cardBox.height * 0.055), 0, Math.PI * 2);
@@ -195,9 +272,10 @@ function drawCollection(ctx: SKRSContext2D, semantic: NarrativeSemanticScene, bo
 }
 
 function drawCountBadge(ctx: SKRSContext2D, target: NarrativeRect, value: string, palette: PaperPalette, locale: 'es' | 'en'): void {
-  const badge = rect(target.x + target.width * 0.64, target.y + target.height * 0.02, target.width * 0.31, target.height * 0.19);
+  const badge = rect(target.x + target.width * 0.06, target.y + target.height * 0.82, target.width * 0.88, target.height * 0.15);
   paperPanel(ctx, badge, '#FFF7E7', '#C9B99F', 0.1);
-  drawFittedText(ctx, `${value} ${sceneText('papercraft', locale, 'semanticCount')}`, badge.x + badge.width * 0.08, badge.y + badge.height * 0.67, badge.width * 0.84, Math.max(9, badge.height * 0.42), palette.ink);
+  drawFittedText(ctx, value, badge.x + badge.width * 0.08, badge.y + badge.height * 0.72, badge.width * 0.18, Math.max(20, badge.height * 0.48), palette.ink, 'Fraunces', palette.cardScale, 20);
+  drawFittedText(ctx, sceneText('papercraft', locale, 'semanticCount'), badge.x + badge.width * 0.3, badge.y + badge.height * 0.68, badge.width * 0.65, Math.max(14, badge.height * 0.42), palette.ink, 'Nunito Sans', palette.cardScale);
 }
 
 function drawCounter(ctx: SKRSContext2D, semantic: NarrativeSemanticScene, box: NarrativeRect, palette: PaperPalette, locale: 'es' | 'en'): void {
@@ -208,7 +286,7 @@ function drawCounter(ctx: SKRSContext2D, semantic: NarrativeSemanticScene, box: 
     const itemBox = layout.get(item.id);
     if (!itemBox) continue;
     paperPanel(ctx, itemBox, index % 2 ? '#E6E9D8' : '#EFE3CF', '#B9AA91', 0.12);
-    drawFittedText(ctx, item.label ?? String(item.value ?? item.id), itemBox.x + itemBox.width * 0.08, itemBox.y + itemBox.height * 0.58, itemBox.width * 0.82, Math.max(10, itemBox.height * 0.2), palette.ink);
+    drawFittedText(ctx, item.label ?? String(item.value ?? item.id), itemBox.x + itemBox.width * 0.08, itemBox.y + itemBox.height * 0.58, itemBox.width * 0.82, Math.max(14, itemBox.height * 0.2), palette.ink, 'Nunito Sans', palette.cardScale);
   }
   for (const counter of indexed(semantic.entities, 'counter')) {
     const counterBox = layout.get(counter.id);
@@ -216,8 +294,8 @@ function drawCounter(ctx: SKRSContext2D, semantic: NarrativeSemanticScene, box: 
     paperPanel(ctx, counterBox, '#F8E8BE', palette.accent, 0.17);
     const relatedCount = new Set(relations.filter((relation) => relation.from === counter.id).map((relation) => relation.to)).size;
     const value = counter.value === undefined ? String(relatedCount) : String(counter.value);
-    drawFittedText(ctx, value, counterBox.x + counterBox.width * 0.08, counterBox.y + counterBox.height * 0.7, counterBox.width * 0.38, Math.max(18, counterBox.height * 0.55), palette.ink, 'Fraunces');
-    drawFittedText(ctx, sceneText('papercraft', locale, 'semanticCount'), counterBox.x + counterBox.width * 0.49, counterBox.y + counterBox.height * 0.62, counterBox.width * 0.45, Math.max(10, counterBox.height * 0.24), palette.muted);
+    drawFittedText(ctx, value, counterBox.x + counterBox.width * 0.08, counterBox.y + counterBox.height * 0.7, counterBox.width * 0.38, Math.max(20, counterBox.height * 0.55), palette.ink, 'Fraunces', palette.cardScale, 20);
+    drawFittedText(ctx, sceneText('papercraft', locale, 'semanticCount'), counterBox.x + counterBox.width * 0.49, counterBox.y + counterBox.height * 0.62, counterBox.width * 0.45, Math.max(14, counterBox.height * 0.24), palette.muted, 'Nunito Sans', palette.cardScale);
     const targets = relations.filter((relation) => relation.from === counter.id).map((relation) => layout.get(relation.to)).filter((value): value is NarrativeRect => Boolean(value));
     ctx.strokeStyle = rgba(palette.accent, 0.72);
     ctx.fillStyle = palette.accent;
@@ -289,7 +367,7 @@ function drawFile(ctx: SKRSContext2D, semantic: NarrativeSemanticScene, box: Nar
     const state = semantic.states[file.id] ?? 'pending';
     paperPanel(ctx, fileBox, state === 'failed' ? '#F4DFD5' : '#FBF5E8', state === 'failed' ? '#C05749' : '#C5B69C', 0.17);
     const filename = file.label ?? String(file.value ?? sceneText('papercraft', locale, 'semanticFile'));
-    drawFittedText(ctx, filename, fileBox.x + fileBox.width * 0.08, fileBox.y + fileBox.height * 0.28, fileBox.width * 0.78, Math.max(12, fileBox.height * 0.12), palette.ink, 'Fraunces');
+    drawFittedText(ctx, filename, fileBox.x + fileBox.width * 0.08, fileBox.y + fileBox.height * 0.28, fileBox.width * 0.78, Math.max(20, fileBox.height * 0.12), palette.ink, 'Fraunces', palette.cardScale, 20);
     const bar = rect(fileBox.x + fileBox.width * 0.08, fileBox.y + fileBox.height * 0.52, fileBox.width * 0.76, fileBox.height * 0.09);
     ctx.fillStyle = '#E1D5C3';
     ctx.fillRect(bar.x, bar.y, bar.width, bar.height);
@@ -298,7 +376,7 @@ function drawFile(ctx: SKRSContext2D, semantic: NarrativeSemanticScene, box: Nar
       paperPanel(ctx, rect(bar.x, bar.y, bar.width * progress, bar.height), state === 'failed' ? '#C05749' : palette.accent2, 'transparent', 0);
     }
     const status = sceneText('papercraft', locale, fileStateKey(state));
-    drawFittedText(ctx, status, fileBox.x + fileBox.width * 0.08, fileBox.y + fileBox.height * 0.84, fileBox.width * 0.58, Math.max(10, fileBox.height * 0.11), palette.ink);
+    drawFittedText(ctx, status, fileBox.x + fileBox.width * 0.08, fileBox.y + fileBox.height * 0.84, fileBox.width * 0.78, Math.max(14, fileBox.height * 0.11), palette.ink, 'Nunito Sans', palette.cardScale);
     if (state === 'failed') {
       ctx.strokeStyle = '#B3493E';
       ctx.lineWidth = Math.max(2, fileBox.height * 0.035);
@@ -333,8 +411,8 @@ export function drawPapercraftSemantic(ctx: SKRSContext2D, semantic: NarrativeSe
   else if (semantic.primitive === 'counter') drawCounter(ctx, semantic, box, palette, locale);
   else if (semantic.primitive === 'file-download') drawFile(ctx, semantic, box, palette, locale);
   if (semantic.illustrative) {
-    const tag = rect(box.x + box.width * 0.48, box.y + box.height * 0.045, box.width * 0.43, box.height * 0.1);
+    const tag = rect(box.x + box.width * 0.4, box.y + box.height * 0.045, box.width * 0.55, box.height * 0.1);
     paperPanel(ctx, tag, '#F2D99A', '#B99858', 0.08);
-    drawFittedText(ctx, sceneText('papercraft', locale, 'semanticIllustrative'), tag.x + tag.width * 0.08, tag.y + tag.height * 0.69, tag.width * 0.84, Math.max(11, tag.height * 0.42), palette.ink);
+    drawFittedText(ctx, sceneText('papercraft', locale, 'semanticIllustrative'), tag.x + tag.width * 0.08, tag.y + tag.height * 0.69, tag.width * 0.84, Math.max(14, tag.height * 0.42), palette.ink, 'Nunito Sans', palette.cardScale);
   }
 }

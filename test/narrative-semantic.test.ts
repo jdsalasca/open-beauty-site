@@ -5,7 +5,7 @@ import path from 'node:path';
 import test from 'node:test';
 import { createNarrative } from '../src/narrative/create.js';
 import { normalizeNarrativeBrief } from '../src/narrative/brief.js';
-import { compareSemanticObjectFrames } from '../src/narrative/evaluate.js';
+import { compareSemanticObjectFrames, measureSemanticTextLegibility } from '../src/narrative/evaluate.js';
 import { NarrativeError } from '../src/types/narrative.js';
 import { testNarrativeScene } from './support/narrative-scene.js';
 
@@ -145,6 +145,23 @@ test('text-only and decorative-only changes cannot pass the semantic object pixe
   const result = compareSemanticObjectFrames({ ...common, beforeRgb: before, afterRgb: positive });
   assert.equal(result.passed, true);
   assert.deepEqual(result.changedEntityIds, ['row-a']);
+});
+
+test('semantic rendered-legibility negative control fails below 14px effective size and 20px headlines', () => {
+  const bounds = { x: 0, y: 0, width: 40, height: 20 };
+  const tooSmallLabel = measureSemanticTextLegibility([{ entityId: 'row', bounds, textBoxes: [
+    { text: 'REG-204', bounds, fontSizePx: 13, role: 'identifier' },
+    { text: '42', bounds, fontSizePx: 24, role: 'headline' },
+  ] }], 1);
+  assert.equal(tooSmallLabel.passed, false);
+  assert.equal(tooSmallLabel.minimumEffectiveSize, 13);
+
+  const tooSmallHeadline = measureSemanticTextLegibility([{ entityId: 'count', bounds, textBoxes: [
+    { text: 'ITEMS', bounds, fontSizePx: 14, role: 'label' },
+    { text: '42', bounds, fontSizePx: 19, role: 'headline' },
+  ] }], 1);
+  assert.equal(tooSmallHeadline.passed, false);
+  assert.equal(tooSmallHeadline.minimumHeadlineSize, 19);
 });
 
 test('scenes without declared object regions keep transformation status pending', async () => {
