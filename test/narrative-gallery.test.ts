@@ -20,6 +20,7 @@ test('gallery is self-contained, manifest-driven and starts each card from its P
 
     assert.equal(result.pieceCount, 40);
     assert.equal(result.styles.length, 13);
+    assert.doesNotMatch(html, /art-only\/ukiyoe/u, 'standalone art-only variants are not gallery cards');
     assert.match(html, /<title>Revisión de Sprint<\/title>/);
     assert.match(html, /visual-review: pending/);
     assert.match(html, /<dialog\b/);
