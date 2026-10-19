@@ -1,0 +1,1562 @@
+{
+  "schemaVersion": 2,
+  "commit": "4aab5320620c665f4e419e3045ec89fc3fa05099",
+  "brief": {
+    "style": "brutalist",
+    "subfamily": "documentary",
+    "kind": "narrative-gif",
+    "locale": "es",
+    "audience": "Personas que descargan un informe",
+    "title": "PDF",
+    "workflowStatus": "in-review",
+    "outcome": {
+      "mode": "expected",
+      "scopeNote": "Ejemplo ilustrativo: se muestra un tiempo de espera agotado y un reintento pendiente; no se afirma que termine ni que resuelva otros fallos."
+    },
+    "illustrative": true,
+    "badgePolicy": "none",
+    "phases": [
+      {
+        "id": "descarga-iniciada",
+        "label": "Inicio",
+        "text": "Inicia reporte.pdf.",
+        "visual": {
+          "kind": "comparison",
+          "state": "before",
+          "semantic": {
+            "primitive": "file-download",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "archivo-reporte",
+                "kind": "file",
+                "label": "reporte.pdf",
+                "value": "timeout",
+                "illustrative": true
+              }
+            ],
+            "relations": [],
+            "states": {
+              "archivo-reporte": "downloading"
+            },
+            "actions": [
+              {
+                "entityId": "archivo-reporte",
+                "type": "start-download"
+              }
+            ]
+          }
+        },
+        "holdMs": 2200
+      },
+      {
+        "id": "tiempo-agotado",
+        "label": "Demora",
+        "text": "Espera agotada; 42%.",
+        "visual": {
+          "kind": "comparison",
+          "state": "flagged",
+          "semantic": {
+            "primitive": "file-download",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "archivo-reporte",
+                "kind": "file",
+                "label": "reporte.pdf",
+                "value": "timeout",
+                "progress": 0.42,
+                "illustrative": true
+              }
+            ],
+            "relations": [],
+            "states": {
+              "archivo-reporte": "failed"
+            },
+            "actions": [
+              {
+                "entityId": "archivo-reporte",
+                "type": "fail"
+              }
+            ]
+          }
+        },
+        "holdMs": 2200
+      },
+      {
+        "id": "reintento",
+        "label": "Reintento",
+        "text": "Reintento en curso.",
+        "visual": {
+          "kind": "comparison",
+          "state": "review-ready",
+          "semantic": {
+            "primitive": "file-download",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "archivo-reporte",
+                "kind": "file",
+                "label": "reporte.pdf",
+                "value": "timeout",
+                "progress": 0.42,
+                "illustrative": true
+              }
+            ],
+            "relations": [],
+            "states": {
+              "archivo-reporte": "retrying"
+            },
+            "actions": [
+              {
+                "entityId": "archivo-reporte",
+                "type": "retry"
+              }
+            ]
+          }
+        },
+        "holdMs": 2200
+      },
+      {
+        "id": "resultado-pendiente",
+        "label": "Resultado esperado",
+        "text": "Sigue pendiente.",
+        "visual": {
+          "kind": "comparison",
+          "state": "review-ready",
+          "semantic": {
+            "primitive": "file-download",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "archivo-reporte",
+                "kind": "file",
+                "label": "reporte.pdf",
+                "value": "timeout",
+                "progress": 0.42,
+                "illustrative": true
+              }
+            ],
+            "relations": [],
+            "states": {
+              "archivo-reporte": "pending"
+            },
+            "actions": []
+          }
+        },
+        "holdMs": 2200
+      }
+    ],
+    "playback": {
+      "preset": "concise",
+      "minReadableHoldMs": 2200,
+      "transitionMs": 400,
+      "loop": true,
+      "totalDurationBudgetMs": 20000
+    },
+    "output": {
+      "width": 640,
+      "height": 360,
+      "formats": [
+        "gif",
+        "png"
+      ],
+      "preset": "review-1280x720"
+    },
+    "seed": 11,
+    "status": "in-review"
+  },
+  "briefSha256": "17a5bd77d4c930de6e71638394edca5d1ed7d812ca2e1dd596712c41e27e38be",
+  "style": "brutalist",
+  "subfamily": "documentary",
+  "workflowStatus": "in-review",
+  "outcome": {
+    "mode": "expected",
+    "scopeNote": "Ejemplo ilustrativo: se muestra un tiempo de espera agotado y un reintento pendiente; no se afirma que termine ni que resuelva otros fallos."
+  },
+  "evidenceClassification": "illustrative",
+  "illustrative": true,
+  "artOnly": true,
+  "seed": 11,
+  "renderer": {
+    "narrative": "narrative-core/0.2.0",
+    "canvas": "@napi-rs/canvas@1.0.11",
+    "gif": "gifenc@1.0.3",
+    "scene": "brutalist-documentary/1.1.0"
+  },
+  "fonts": {
+    "bundleVersion": "repo-bundled-ofl-1",
+    "roles": {
+      "display": {
+        "family": "Archivo Black",
+        "weight": 400
+      },
+      "reading": {
+        "family": "Space Mono",
+        "weight": 400
+      },
+      "label": {
+        "family": "Space Mono",
+        "weight": 700
+      },
+      "figure": {
+        "family": "Archivo Black",
+        "weight": 400
+      },
+      "annotation": {
+        "family": "Space Mono",
+        "weight": 400
+      }
+    }
+  },
+  "dimensions": {
+    "width": 640,
+    "height": 360
+  },
+  "formats": [
+    "gif",
+    "png"
+  ],
+  "decoded": {
+    "width": 640,
+    "height": 360,
+    "frameCount": 28,
+    "delaysMs": [
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80
+    ],
+    "durationMs": 10720,
+    "loopCount": 0,
+    "integrity": true
+  },
+  "ffprobe": {
+    "available": true,
+    "passed": true,
+    "detail": "ffprobe 640×360; 28 frames; 10720ms; matches the independent LZW decode."
+  },
+  "bytes": {
+    "gif": 174788,
+    "png": 9966,
+    "contactSheet": 56761
+  },
+  "hashes": {
+    "briefSha256": "17a5bd77d4c930de6e71638394edca5d1ed7d812ca2e1dd596712c41e27e38be",
+    "gifSha256": "2869085dc1924a058fd3e10e5514e398d0abcde72827ca0d57fb8b9d7b78c1f0",
+    "pngSha256": "4504261d3e55c1e85fba69b8cc9f2030b357b124c5c49ba7446b20ae3d60a0a7",
+    "contactSheetSha256": "b2f0fbb8c2c7c798da9be9b708ad629e55ae3afe0d74210c0cb9277e67afe695"
+  },
+  "files": {
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\descarga-pendiente\\art-only\\es\\pdf-ac38f07a-art-only.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\descarga-pendiente\\art-only\\es\\pdf-ac38f07a-art-only.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\descarga-pendiente\\art-only\\es\\pdf-ac38f07a-art-only-contact-sheet.png"
+  },
+  "controls": [
+    {
+      "name": "gif-integrity",
+      "passed": true,
+      "detail": "Independent LZW decode and GIF trailer passed.",
+      "source": "decoded"
+    },
+    {
+      "name": "dimensions",
+      "passed": true,
+      "detail": "decoded 640×360; requested 640×360",
+      "source": "decoded"
+    },
+    {
+      "name": "frame-count",
+      "passed": true,
+      "detail": "28 decoded frame(s)",
+      "source": "decoded"
+    },
+    {
+      "name": "duration",
+      "passed": true,
+      "detail": "10720ms decoded; holds exclude transitions",
+      "source": "decoded"
+    },
+    {
+      "name": "loop",
+      "passed": true,
+      "detail": "repeat=0; result-to-before bridge is explicit",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-holds",
+      "passed": true,
+      "detail": "descarga-iniciada 2200/2200ms, tiempo-agotado 2200/2200ms, reintento 2200/2200ms, resultado-pendiente 2200/2200ms",
+      "source": "decoded"
+    },
+    {
+      "name": "ffprobe-crosscheck",
+      "passed": true,
+      "detail": "ffprobe 640×360; 28 frames; 10720ms; matches the independent LZW decode.",
+      "source": "decoded"
+    },
+    {
+      "name": "files",
+      "passed": true,
+      "detail": "GIF 174788B · PNG 9966B · contact 56761B",
+      "source": "decoded"
+    },
+    {
+      "name": "scene-renderer-registered",
+      "passed": true,
+      "detail": "renderer brutalist/brutalist-documentary/1.1.0 exists; visual style likeness remains a separate review",
+      "source": "source"
+    },
+    {
+      "name": "type-system",
+      "passed": true,
+      "detail": "style typeSystem tokens are attached to raster role registry",
+      "source": "source"
+    },
+    {
+      "name": "narrative-subfamily",
+      "passed": true,
+      "detail": "brutalist/documentary selects an explicit narrative art direction",
+      "source": "source"
+    },
+    {
+      "name": "font-registration-and-glyphs",
+      "passed": true,
+      "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "distinct-frames",
+      "passed": true,
+      "detail": "4 unique composited frame(s); a format-valid static GIF does not pass",
+      "source": "pixels"
+    },
+    {
+      "name": "palette-loss",
+      "passed": true,
+      "detail": "42 colors; mean channel loss 0.241, max 8; sampled 28 frames",
+      "source": "pixels"
+    },
+    {
+      "name": "title-complete",
+      "passed": true,
+      "detail": "PDF",
+      "source": "source"
+    },
+    {
+      "name": "phase-descarga-iniciada-label-complete",
+      "passed": true,
+      "detail": "Inicio",
+      "source": "source"
+    },
+    {
+      "name": "phase-descarga-iniciada-text-complete",
+      "passed": true,
+      "detail": "Inicia / reporte.pdf.",
+      "source": "source"
+    },
+    {
+      "name": "phase-tiempo-agotado-label-complete",
+      "passed": true,
+      "detail": "Demora",
+      "source": "source"
+    },
+    {
+      "name": "phase-tiempo-agotado-text-complete",
+      "passed": true,
+      "detail": "Espera / agotada; / 42%.",
+      "source": "source"
+    },
+    {
+      "name": "phase-reintento-label-complete",
+      "passed": true,
+      "detail": "Reintento",
+      "source": "source"
+    },
+    {
+      "name": "phase-reintento-text-complete",
+      "passed": true,
+      "detail": "Reintento en / curso.",
+      "source": "source"
+    },
+    {
+      "name": "phase-resultado-pendiente-label-complete",
+      "passed": true,
+      "detail": "Resultado / esperado",
+      "source": "source"
+    },
+    {
+      "name": "phase-resultado-pendiente-text-complete",
+      "passed": true,
+      "detail": "Sigue / pendiente.",
+      "source": "source"
+    },
+    {
+      "name": "registered-fonts",
+      "passed": true,
+      "detail": "all role faces and Spanish glyphs rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "review-size-thresholds",
+      "passed": true,
+      "detail": "title 56px; phase body >=36px; label >=24px",
+      "source": "source"
+    },
+    {
+      "name": "640x360-effective-size",
+      "passed": true,
+      "detail": "title 56.0px; body min 36.0px (requires >=20px); label min 24.0px",
+      "source": "source"
+    },
+    {
+      "name": "semantic-text-legibility",
+      "passed": true,
+      "status": "pass",
+      "detail": "minimum effective text >=14px: 14.0px; minimum headline 20.0px (requires >=20px); measured 15 declared object text box(es) at 640×360.",
+      "source": "decoded"
+    },
+    {
+      "name": "composition-balance",
+      "passed": false,
+      "severity": "warning",
+      "detail": "WARN · revise; 8×4 decoded-pixel grid against #F2EFE4: empty cells 50.0%, text-column vertical fill 0.0%, art/object area outside the text column 50.0%, largest empty rectangle 50.0%; thresholds: rectangle <=22%, text fill >=60% (text-fill threshold omitted in art-only mode); not an aesthetic score. Per-frame: descarga-iniciada · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | descarga-iniciada → tiempo-agotado · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | tiempo-agotado · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | tiempo-agotado → reintento · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | reintento · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | reintento → resultado-pendiente · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | resultado-pendiente · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | resultado-pendiente → descarga-iniciada · unión del ciclo: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0%",
+      "source": "pixels"
+    },
+    {
+      "name": "contrast",
+      "passed": true,
+      "detail": "rendered text colors: ink 17.10:1; label 17.10:1 (not an OCR or per-pixel text measurement)",
+      "source": "source"
+    },
+    {
+      "name": "safe-zone-and-collisions",
+      "passed": true,
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+      "source": "source"
+    },
+    {
+      "name": "stable-reading-holds",
+      "passed": true,
+      "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-count-and-copy",
+      "passed": true,
+      "detail": "4 complete phases; all copy retained",
+      "source": "source"
+    },
+    {
+      "name": "shared-object-identity",
+      "passed": true,
+      "detail": "One scene object instance is created and passed to every phase frame.",
+      "source": "source"
+    },
+    {
+      "name": "visual-state-change",
+      "passed": true,
+      "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+      "source": "pixels"
+    },
+    {
+      "name": "workflow-outcome-separation",
+      "passed": true,
+      "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+      "source": "source"
+    },
+    {
+      "name": "outcome-evidence",
+      "passed": true,
+      "detail": "Expected outcome; no benefit measurement is claimed.",
+      "source": "source"
+    },
+    {
+      "name": "result-follows-outcome",
+      "passed": true,
+      "detail": "outcome=expected; final label=\"Resultado esperado\"",
+      "source": "source"
+    },
+    {
+      "name": "semantic-illustrative-data",
+      "passed": true,
+      "detail": "brief illustrative=true; semantic phase flags=true,true,true,true",
+      "source": "source"
+    },
+    {
+      "name": "semantic-object-midpoint:descarga-iniciada → tiempo-agotado · punto medio de transición",
+      "passed": true,
+      "detail": "decoded object diff 13.7%; changed-state entities: archivo-reporte; archivo-reporte downloading→failed 13.7%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:tiempo-agotado → reintento · punto medio de transición",
+      "passed": true,
+      "detail": "decoded object diff 11.6%; changed-state entities: archivo-reporte; archivo-reporte failed→retrying 11.6%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:reintento → resultado-pendiente · punto medio de transición",
+      "passed": true,
+      "detail": "decoded object diff 0.2%; changed-state entities: archivo-reporte; archivo-reporte retrying→pending 0.2%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:resultado-pendiente → descarga-iniciada · unión del ciclo",
+      "passed": true,
+      "detail": "decoded object diff 2.8%; changed-state entities: archivo-reporte; archivo-reporte pending→downloading 2.8%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:descarga-iniciada → tiempo-agotado hold",
+      "passed": true,
+      "detail": "decoded object diff 13.7%; changed-state entities: archivo-reporte; archivo-reporte downloading→failed 13.7%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:tiempo-agotado → reintento hold",
+      "passed": true,
+      "detail": "decoded object diff 11.6%; changed-state entities: archivo-reporte; archivo-reporte failed→retrying 11.6%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:reintento → resultado-pendiente hold",
+      "passed": true,
+      "detail": "decoded object diff 0.2%; changed-state entities: archivo-reporte; archivo-reporte retrying→pending 0.2%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:resultado-pendiente → descarga-iniciada loop join",
+      "passed": true,
+      "detail": "decoded object diff 2.8%; changed-state entities: archivo-reporte; archivo-reporte pending→downloading 2.8%",
+      "source": "decoded"
+    }
+  ],
+  "evaluation": {
+    "technical-integrity": {
+      "status": "pass",
+      "controls": [
+        {
+          "name": "gif-integrity",
+          "passed": true,
+          "detail": "Independent LZW decode and GIF trailer passed.",
+          "source": "decoded"
+        },
+        {
+          "name": "dimensions",
+          "passed": true,
+          "detail": "decoded 640×360; requested 640×360",
+          "source": "decoded"
+        },
+        {
+          "name": "frame-count",
+          "passed": true,
+          "detail": "28 decoded frame(s)",
+          "source": "decoded"
+        },
+        {
+          "name": "duration",
+          "passed": true,
+          "detail": "10720ms decoded; holds exclude transitions",
+          "source": "decoded"
+        },
+        {
+          "name": "loop",
+          "passed": true,
+          "detail": "repeat=0; result-to-before bridge is explicit",
+          "source": "decoded"
+        },
+        {
+          "name": "phase-holds",
+          "passed": true,
+          "detail": "descarga-iniciada 2200/2200ms, tiempo-agotado 2200/2200ms, reintento 2200/2200ms, resultado-pendiente 2200/2200ms",
+          "source": "decoded"
+        },
+        {
+          "name": "ffprobe-crosscheck",
+          "passed": true,
+          "detail": "ffprobe 640×360; 28 frames; 10720ms; matches the independent LZW decode.",
+          "source": "decoded"
+        },
+        {
+          "name": "files",
+          "passed": true,
+          "detail": "GIF 174788B · PNG 9966B · contact 56761B",
+          "source": "decoded"
+        }
+      ]
+    },
+    "style-conformance": {
+      "status": "pending",
+      "sourceStatus": "pass",
+      "pixelStatus": "pass",
+      "controls": [
+        {
+          "name": "scene-renderer-registered",
+          "passed": true,
+          "detail": "renderer brutalist/brutalist-documentary/1.1.0 exists; visual style likeness remains a separate review",
+          "source": "source"
+        },
+        {
+          "name": "type-system",
+          "passed": true,
+          "detail": "style typeSystem tokens are attached to raster role registry",
+          "source": "source"
+        },
+        {
+          "name": "narrative-subfamily",
+          "passed": true,
+          "detail": "brutalist/documentary selects an explicit narrative art direction",
+          "source": "source"
+        },
+        {
+          "name": "font-registration-and-glyphs",
+          "passed": true,
+          "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "distinct-frames",
+          "passed": true,
+          "detail": "4 unique composited frame(s); a format-valid static GIF does not pass",
+          "source": "pixels"
+        },
+        {
+          "name": "palette-loss",
+          "passed": true,
+          "detail": "42 colors; mean channel loss 0.241, max 8; sampled 28 frames",
+          "source": "pixels"
+        }
+      ],
+      "note": "Source checks identify renderer/font tokens; pixel checks measure frame change and palette loss. Neither substitutes for visual review."
+    },
+    "rendered-legibility": {
+      "status": "revise",
+      "controls": [
+        {
+          "name": "title-complete",
+          "passed": true,
+          "detail": "PDF",
+          "source": "source"
+        },
+        {
+          "name": "phase-descarga-iniciada-label-complete",
+          "passed": true,
+          "detail": "Inicio",
+          "source": "source"
+        },
+        {
+          "name": "phase-descarga-iniciada-text-complete",
+          "passed": true,
+          "detail": "Inicia / reporte.pdf.",
+          "source": "source"
+        },
+        {
+          "name": "phase-tiempo-agotado-label-complete",
+          "passed": true,
+          "detail": "Demora",
+          "source": "source"
+        },
+        {
+          "name": "phase-tiempo-agotado-text-complete",
+          "passed": true,
+          "detail": "Espera / agotada; / 42%.",
+          "source": "source"
+        },
+        {
+          "name": "phase-reintento-label-complete",
+          "passed": true,
+          "detail": "Reintento",
+          "source": "source"
+        },
+        {
+          "name": "phase-reintento-text-complete",
+          "passed": true,
+          "detail": "Reintento en / curso.",
+          "source": "source"
+        },
+        {
+          "name": "phase-resultado-pendiente-label-complete",
+          "passed": true,
+          "detail": "Resultado / esperado",
+          "source": "source"
+        },
+        {
+          "name": "phase-resultado-pendiente-text-complete",
+          "passed": true,
+          "detail": "Sigue / pendiente.",
+          "source": "source"
+        },
+        {
+          "name": "registered-fonts",
+          "passed": true,
+          "detail": "all role faces and Spanish glyphs rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "review-size-thresholds",
+          "passed": true,
+          "detail": "title 56px; phase body >=36px; label >=24px",
+          "source": "source"
+        },
+        {
+          "name": "640x360-effective-size",
+          "passed": true,
+          "detail": "title 56.0px; body min 36.0px (requires >=20px); label min 24.0px",
+          "source": "source"
+        },
+        {
+          "name": "semantic-text-legibility",
+          "passed": true,
+          "status": "pass",
+          "detail": "minimum effective text >=14px: 14.0px; minimum headline 20.0px (requires >=20px); measured 15 declared object text box(es) at 640×360.",
+          "source": "decoded"
+        },
+        {
+          "name": "composition-balance",
+          "passed": false,
+          "severity": "warning",
+          "detail": "WARN · revise; 8×4 decoded-pixel grid against #F2EFE4: empty cells 50.0%, text-column vertical fill 0.0%, art/object area outside the text column 50.0%, largest empty rectangle 50.0%; thresholds: rectangle <=22%, text fill >=60% (text-fill threshold omitted in art-only mode); not an aesthetic score. Per-frame: descarga-iniciada · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | descarga-iniciada → tiempo-agotado · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | tiempo-agotado · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | tiempo-agotado → reintento · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | reintento · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | reintento → resultado-pendiente · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | resultado-pendiente · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | resultado-pendiente → descarga-iniciada · unión del ciclo: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0%",
+          "source": "pixels"
+        },
+        {
+          "name": "contrast",
+          "passed": true,
+          "detail": "rendered text colors: ink 17.10:1; label 17.10:1 (not an OCR or per-pixel text measurement)",
+          "source": "source"
+        },
+        {
+          "name": "safe-zone-and-collisions",
+          "passed": true,
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+          "source": "source"
+        },
+        {
+          "name": "stable-reading-holds",
+          "passed": true,
+          "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+          "source": "decoded"
+        }
+      ],
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
+    },
+    "narrative": {
+      "status": "pending",
+      "controls": [
+        {
+          "name": "phase-count-and-copy",
+          "passed": true,
+          "detail": "4 complete phases; all copy retained",
+          "source": "source"
+        },
+        {
+          "name": "shared-object-identity",
+          "passed": true,
+          "detail": "One scene object instance is created and passed to every phase frame.",
+          "source": "source"
+        },
+        {
+          "name": "visual-state-change",
+          "passed": true,
+          "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+          "source": "pixels"
+        },
+        {
+          "name": "workflow-outcome-separation",
+          "passed": true,
+          "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+          "source": "source"
+        },
+        {
+          "name": "outcome-evidence",
+          "passed": true,
+          "detail": "Expected outcome; no benefit measurement is claimed.",
+          "source": "source"
+        },
+        {
+          "name": "result-follows-outcome",
+          "passed": true,
+          "detail": "outcome=expected; final label=\"Resultado esperado\"",
+          "source": "source"
+        },
+        {
+          "name": "semantic-illustrative-data",
+          "passed": true,
+          "detail": "brief illustrative=true; semantic phase flags=true,true,true,true",
+          "source": "source"
+        },
+        {
+          "name": "semantic-object-midpoint:descarga-iniciada → tiempo-agotado · punto medio de transición",
+          "passed": true,
+          "detail": "decoded object diff 13.7%; changed-state entities: archivo-reporte; archivo-reporte downloading→failed 13.7%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:tiempo-agotado → reintento · punto medio de transición",
+          "passed": true,
+          "detail": "decoded object diff 11.6%; changed-state entities: archivo-reporte; archivo-reporte failed→retrying 11.6%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:reintento → resultado-pendiente · punto medio de transición",
+          "passed": true,
+          "detail": "decoded object diff 0.2%; changed-state entities: archivo-reporte; archivo-reporte retrying→pending 0.2%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:resultado-pendiente → descarga-iniciada · unión del ciclo",
+          "passed": true,
+          "detail": "decoded object diff 2.8%; changed-state entities: archivo-reporte; archivo-reporte pending→downloading 2.8%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:descarga-iniciada → tiempo-agotado hold",
+          "passed": true,
+          "detail": "decoded object diff 13.7%; changed-state entities: archivo-reporte; archivo-reporte downloading→failed 13.7%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:tiempo-agotado → reintento hold",
+          "passed": true,
+          "detail": "decoded object diff 11.6%; changed-state entities: archivo-reporte; archivo-reporte failed→retrying 11.6%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:reintento → resultado-pendiente hold",
+          "passed": true,
+          "detail": "decoded object diff 0.2%; changed-state entities: archivo-reporte; archivo-reporte retrying→pending 0.2%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:resultado-pendiente → descarga-iniciada loop join",
+          "passed": true,
+          "detail": "decoded object diff 2.8%; changed-state entities: archivo-reporte; archivo-reporte pending→downloading 2.8%",
+          "source": "decoded"
+        }
+      ],
+      "note": "Automated checks separate work status from expected/observed outcome and confirm required evidence fields; causal meaning and evidence scope still need human review."
+    },
+    "visual-review": {
+      "status": "pending",
+      "criteria": [
+        "identity at 200px thumbnail",
+        "full text and contrast at 640×360",
+        "style material in native frame",
+        "same object and causal change across phases",
+        "result faithful to outcome and evidence scope",
+        "deliberate loop restart"
+      ],
+      "evidence": []
+    },
+    "publicationRecommendation": "none"
+  },
+  "phaseCaptures": [
+    {
+      "phaseId": "descarga-iniciada",
+      "labels": [
+        "descarga-iniciada · inicio",
+        "descarga-iniciada · pausa",
+        "descarga-iniciada → tiempo-agotado · punto medio de transición",
+        "descarga-iniciada · salida",
+        "reinicio del loop"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\descarga-pendiente\\art-only\\es\\pdf-ac38f07a-art-only-contact-sheet.png"
+    },
+    {
+      "phaseId": "tiempo-agotado",
+      "labels": [
+        "tiempo-agotado · inicio",
+        "tiempo-agotado · pausa",
+        "tiempo-agotado → reintento · punto medio de transición",
+        "tiempo-agotado · salida"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\descarga-pendiente\\art-only\\es\\pdf-ac38f07a-art-only-contact-sheet.png"
+    },
+    {
+      "phaseId": "reintento",
+      "labels": [
+        "reintento · inicio",
+        "reintento · pausa",
+        "reintento → resultado-pendiente · punto medio de transición",
+        "reintento · salida"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\descarga-pendiente\\art-only\\es\\pdf-ac38f07a-art-only-contact-sheet.png"
+    },
+    {
+      "phaseId": "resultado-pendiente",
+      "labels": [
+        "resultado-pendiente · inicio",
+        "resultado-pendiente · pausa",
+        "resultado-pendiente → descarga-iniciada · unión del ciclo",
+        "resultado-pendiente · salida"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\descarga-pendiente\\art-only\\es\\pdf-ac38f07a-art-only-contact-sheet.png"
+    }
+  ],
+  "semanticObjectCaptures": [
+    {
+      "label": "descarga-iniciada · pausa",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 0,
+      "frameIndex": 1,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "archivo-reporte",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "reporte.pdf",
+              "bounds": {
+                "x": 344.81984,
+                "y": 133.44107200000002,
+                "width": 123,
+                "height": 24
+              },
+              "fontSizePx": 20,
+              "role": "headline"
+            },
+            {
+              "text": "DESCARGANDO",
+              "bounds": {
+                "x": 359.1214592,
+                "y": 228.66623968000002,
+                "width": 95,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "descarga-iniciada → tiempo-agotado · punto medio de transición",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 0,
+      "frameIndex": 3,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "archivo-reporte",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "reporte.pdf",
+              "bounds": {
+                "x": 344.81984,
+                "y": 133.44107200000002,
+                "width": 123,
+                "height": 24
+              },
+              "fontSizePx": 20,
+              "role": "headline"
+            },
+            {
+              "text": "42%",
+              "bounds": {
+                "x": 347.2034432,
+                "y": 184.31411296,
+                "width": 26,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            },
+            {
+              "text": "TIEMPO AGOTADO",
+              "bounds": {
+                "x": 359.1214592,
+                "y": 228.66623968000002,
+                "width": 120,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "tiempo-agotado · pausa",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 1,
+      "frameIndex": 8,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "archivo-reporte",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "reporte.pdf",
+              "bounds": {
+                "x": 344.81984,
+                "y": 133.44107200000002,
+                "width": 123,
+                "height": 24
+              },
+              "fontSizePx": 20,
+              "role": "headline"
+            },
+            {
+              "text": "42%",
+              "bounds": {
+                "x": 347.2034432,
+                "y": 184.31411296,
+                "width": 26,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            },
+            {
+              "text": "TIEMPO AGOTADO",
+              "bounds": {
+                "x": 359.1214592,
+                "y": 228.66623968000002,
+                "width": 120,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "tiempo-agotado → reintento · punto medio de transición",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 1,
+      "frameIndex": 10,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "archivo-reporte",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "reporte.pdf",
+              "bounds": {
+                "x": 344.81984,
+                "y": 133.44107200000002,
+                "width": 123,
+                "height": 24
+              },
+              "fontSizePx": 20,
+              "role": "headline"
+            },
+            {
+              "text": "42%",
+              "bounds": {
+                "x": 347.2034432,
+                "y": 184.31411296,
+                "width": 26,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            },
+            {
+              "text": "REINTENTO",
+              "bounds": {
+                "x": 359.1214592,
+                "y": 228.66623968000002,
+                "width": 78,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "reintento · pausa",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 2,
+      "frameIndex": 15,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "archivo-reporte",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "reporte.pdf",
+              "bounds": {
+                "x": 344.81984,
+                "y": 133.44107200000002,
+                "width": 123,
+                "height": 24
+              },
+              "fontSizePx": 20,
+              "role": "headline"
+            },
+            {
+              "text": "42%",
+              "bounds": {
+                "x": 347.2034432,
+                "y": 184.31411296,
+                "width": 26,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            },
+            {
+              "text": "REINTENTO",
+              "bounds": {
+                "x": 359.1214592,
+                "y": 228.66623968000002,
+                "width": 78,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "reintento → resultado-pendiente · punto medio de transición",
+      "phaseIndex": 3,
+      "fromPhaseIndex": 2,
+      "frameIndex": 17,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "archivo-reporte",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "reporte.pdf",
+              "bounds": {
+                "x": 344.81984,
+                "y": 133.44107200000002,
+                "width": 123,
+                "height": 24
+              },
+              "fontSizePx": 20,
+              "role": "headline"
+            },
+            {
+              "text": "42%",
+              "bounds": {
+                "x": 347.2034432,
+                "y": 184.31411296,
+                "width": 26,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            },
+            {
+              "text": "PENDIENTE",
+              "bounds": {
+                "x": 359.1214592,
+                "y": 228.66623968000002,
+                "width": 78,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "resultado-pendiente · pausa",
+      "phaseIndex": 3,
+      "fromPhaseIndex": 3,
+      "frameIndex": 22,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "archivo-reporte",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "reporte.pdf",
+              "bounds": {
+                "x": 344.81984,
+                "y": 133.44107200000002,
+                "width": 123,
+                "height": 24
+              },
+              "fontSizePx": 20,
+              "role": "headline"
+            },
+            {
+              "text": "42%",
+              "bounds": {
+                "x": 347.2034432,
+                "y": 184.31411296,
+                "width": 26,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            },
+            {
+              "text": "PENDIENTE",
+              "bounds": {
+                "x": 359.1214592,
+                "y": 228.66623968000002,
+                "width": 78,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "resultado-pendiente → descarga-iniciada · unión del ciclo",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 3,
+      "frameIndex": 24,
+      "kind": "loop-bridge",
+      "regions": [
+        {
+          "entityId": "archivo-reporte",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "reporte.pdf",
+              "bounds": {
+                "x": 344.81984,
+                "y": 133.44107200000002,
+                "width": 123,
+                "height": 24
+              },
+              "fontSizePx": 20,
+              "role": "headline"
+            },
+            {
+              "text": "DESCARGANDO",
+              "bounds": {
+                "x": 359.1214592,
+                "y": 228.66623968000002,
+                "width": 95,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "compositionByFrame": [
+    {
+      "label": "descarga-iniciada · pausa",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "descarga-iniciada → tiempo-agotado · punto medio de transición",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "tiempo-agotado · pausa",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "tiempo-agotado → reintento · punto medio de transición",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "reintento · pausa",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "reintento → resultado-pendiente · punto medio de transición",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "resultado-pendiente · pausa",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "resultado-pendiente → descarga-iniciada · unión del ciclo",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    }
+  ],
+  "palette": {
+    "colors": 42,
+    "meanAbsoluteChannelError": 0.241,
+    "maximumChannelError": 8,
+    "sampledFrames": 28
+  },
+  "phaseHoldsVerified": [
+    {
+      "phaseId": "descarga-iniciada",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    },
+    {
+      "phaseId": "tiempo-agotado",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    },
+    {
+      "phaseId": "reintento",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    },
+    {
+      "phaseId": "resultado-pendiente",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    }
+  ],
+  "timing": {
+    "preset": "concise",
+    "holdsRequestedMs": 8800,
+    "holdsDecodedMs": 8800,
+    "transitionsMs": 1200,
+    "loopBridgeMs": 400,
+    "entryMs": 320,
+    "totalDecodedMs": 10720,
+    "totalDurationBudgetMs": 20000,
+    "phaseHolds": [
+      {
+        "phaseId": "descarga-iniciada",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      },
+      {
+        "phaseId": "tiempo-agotado",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      },
+      {
+        "phaseId": "reintento",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      },
+      {
+        "phaseId": "resultado-pendiente",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      }
+    ],
+    "warnings": []
+  },
+  "resourceEstimate": {
+    "pixelFrames": 6451200,
+    "maxPixelFrames": 96000000,
+    "memoryBytes": 37511168,
+    "maxMemoryBytes": 268435456
+  },
+  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed."
+}

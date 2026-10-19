@@ -302,7 +302,7 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
   drawCutoutWindow(ctx, box, backingColor, preset.palette.ink);
   const semantic = context.semantic;
   const semanticMode = Boolean(semantic && semantic.primitive !== 'legacy-illustration');
-  if (semanticMode && semantic) drawPapercraftSemantic(ctx, semantic, box, preset.palette, brief.locale);
+  if (semanticMode && semantic) drawPapercraftSemantic(ctx, semantic, box, { ...preset.palette, cardScale: layout.cardScale }, brief.locale);
   else if (guide.composition === 'checklist') drawChecklist(ctx, box, preset.palette.ink, preset.palette.muted, preset.palette.accent, brief.locale);
   else drawComparison(ctx, box, preset.palette.ink, preset.palette.muted, brief.locale);
   drawTornRibbon(ctx, box, guide.tapeAngle, preset.palette.accent4, preset.palette.ink);

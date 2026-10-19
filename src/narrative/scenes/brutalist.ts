@@ -4,6 +4,7 @@ import type { NarrativePhase, NarrativeRect, NarrativeRenderContext, NarrativeSc
 import { cubicBezierEase, drawRule, drawText, phaseMarkProgress, rgba } from './common.js';
 import { sceneVocabulary } from '../vocabulary.js';
 import { sceneText, workflowBadgeText } from '../i18n.js';
+import { brutalistSemanticObjectRegions, drawBrutalistSemantic } from './brutalist/semantic-art.js';
 
 interface BrutalistDocument {
   readonly identity: 'documento-de-revision';
@@ -299,7 +300,9 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
   const colors = { ink: preset.palette.ink, muted: preset.palette.muted, red: preset.palette.accent2, acid: preset.palette.accent };
   const badgeText = workflowBadgeText('brutalist', brief.locale, brief.workflowStatus, brief.badgePolicy, brief.badgeText);
   const stampLabel = brief.badgePolicy === 'custom' ? badgeText : brief.badgePolicy === 'workflow' ? sceneText('brutalist', brief.locale, 'observation') : undefined;
-  if (document.subfamily === 'poster') drawPoster(ctx, box, level, progress, brief.locale, stampLabel, colors);
+  if (document.subfamily === 'documentary' && context.semantic && context.semantic.primitive !== 'legacy-illustration') {
+    drawBrutalistSemantic(ctx, context, box, { ink: colors.ink, muted: colors.muted, paper: preset.palette.bg, red: colors.red, acid: colors.acid });
+  } else if (document.subfamily === 'poster') drawPoster(ctx, box, level, progress, brief.locale, stampLabel, colors);
   else if (document.composition === 'checklist') {
     drawFormChecklist(ctx, box, document, level, badgeText, brief.badgePolicy, brief.locale, colors);
   } else {
@@ -326,6 +329,13 @@ export const brutalistNarrativeScene: NarrativeScene = {
       stubWidth: 0.16 + rng() * 0.025,
       stampTexture: Object.freeze(Array.from({ length: 24 }, () => rng())),
     } satisfies BrutalistDocument);
+  },
+  objectRegions(context) {
+    const document = context.object as BrutalistDocument;
+    if (document.subfamily !== 'documentary' || !context.semantic || context.semantic.primitive === 'legacy-illustration') return [];
+    const art = context.layout.reservedArtArea;
+    const box: NarrativeRect = { x: art.x + art.width * 0.005, y: art.y + art.height * 0.005, width: art.width * 0.99, height: art.height * 0.99 };
+    return brutalistSemanticObjectRegions(context, box);
   },
   renderFrame,
 };

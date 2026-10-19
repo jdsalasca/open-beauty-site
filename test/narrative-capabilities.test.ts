@@ -65,7 +65,7 @@ function phasePixels(style: string, locale: NarrativeLocale, width: number, heig
 test('capability registry is explicit and every fallback style/aspect/locale cell renders', () => {
   const report = narrativeCapabilityReport();
   assert.equal(report.contractVersion, 3);
-  assert.deepEqual(report.summary, { supported: 16, unsupported: 96, fallback: 200 });
+  assert.deepEqual(report.summary, { supported: 32, unsupported: 96, fallback: 184 });
   assert.equal(report.cells.length, 312);
   const rendered = new Set<string>();
 
@@ -91,7 +91,7 @@ test('capability registry is explicit and every fallback style/aspect/locale cel
     assert.ok(Object.keys(cell.allowed.semanticActions).length > 0);
   }
   for (const cell of report.cells.filter((item) => item.status === 'supported')) {
-    assert.equal(cell.style, 'papercraft');
+    assert.ok(['papercraft', 'brutalist'].includes(cell.style));
     assert.match(cell.reason, /narrative-semantic-render\.test\.ts/u);
     assert.ok(cell.allowed.semanticEntityKinds.length > 0);
   }

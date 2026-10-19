@@ -101,6 +101,28 @@ export interface CompositionBalanceMetrics {
   largestEmptyRectangleRatio: number;
 }
 
+export interface SemanticTextLegibilityMetrics {
+  passed: boolean;
+  textCount: number;
+  minimumEffectiveSize: number | null;
+  minimumHeadlineSize: number | null;
+}
+
+/** Measure the declared type sizes inside semantic object regions at a 640×360 card. */
+export function measureSemanticTextLegibility(regions: NarrativeObjectRegion[], cardScale: number): SemanticTextLegibilityMetrics {
+  const texts = regions.flatMap((region) => region.textBoxes ?? [])
+    .map((text) => ({ ...text, effectiveSize: text.fontSizePx * cardScale }));
+  const headlines = texts.filter((text) => text.role === 'headline');
+  const minimumEffectiveSize = texts.length ? Math.min(...texts.map((text) => text.effectiveSize)) : null;
+  const minimumHeadlineSize = headlines.length ? Math.min(...headlines.map((text) => text.effectiveSize)) : null;
+  return {
+    passed: texts.length > 0 && minimumEffectiveSize! >= 14 && (minimumHeadlineSize === null || minimumHeadlineSize >= 20),
+    textCount: texts.length,
+    minimumEffectiveSize,
+    minimumHeadlineSize,
+  };
+}
+
 function pixelLuminance(red: number, green: number, blue: number): number {
   const linear = [red, green, blue].map((channel) => {
     const value = channel / 255;
@@ -287,6 +309,14 @@ export function evaluateNarrative(input: {
     { name: 'registered-fonts', passed: input.fontChecksPassed ?? true, detail: input.fontChecksPassed === false ? 'a required family, weight or glyph failed rendering/measurement' : 'all role faces and Spanish glyphs rendered/measured', source: 'source' },
     { name: 'review-size-thresholds', passed: fontThresholdsPassed, detail: `title ${layout.title.size}px; phase body >=36px; label >=24px`, source: 'source' },
     { name: '640x360-effective-size', passed: cardThresholdsPassed, detail: `title ${layout.title.effectiveCardSize.toFixed(1)}px; body min ${Math.min(...layout.phases.map((phase) => phase.body.effectiveCardSize)).toFixed(1)}px (requires >=20px); label min ${Math.min(...layout.phases.map((phase) => phase.label.effectiveCardSize)).toFixed(1)}px`, source: 'source' },
+    ...(brief.phases.some((phase) => phase.visual.semantic.primitive !== 'legacy-illustration') ? (() => {
+      const semanticRegions = encoded.semanticObjectCaptures.filter((capture) => capture.kind === 'hold').flatMap((capture) => capture.regions);
+      const metrics = measureSemanticTextLegibility(semanticRegions, layout.cardScale);
+      const detail = metrics.textCount
+        ? `minimum effective text >=14px: ${metrics.minimumEffectiveSize!.toFixed(1)}px; minimum headline ${metrics.minimumHeadlineSize === null ? 'none' : `${metrics.minimumHeadlineSize.toFixed(1)}px (requires >=20px)`}; measured ${metrics.textCount} declared object text box(es) at 640×360.`
+        : 'No scene-declared text boxes were available inside semantic object regions.';
+      return [{ name: 'semantic-text-legibility', passed: metrics.passed, status: metrics.textCount ? (metrics.passed ? 'pass' as const : 'fail' as const) : 'pending' as const, detail, source: 'decoded' as const }];
+    })() : []),
     {
       name: 'composition-balance',
       passed: !compositionNeedsRevision,

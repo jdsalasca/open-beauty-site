@@ -136,7 +136,8 @@ export function layoutNarrative(brief: NormalizedNarrativeBrief): NarrativeLayou
   const fonts = getNarrativeFontProfile(brief.style);
   const width = brief.output.width;
   const height = brief.output.height;
-  const composition = narrativeCompositionFor(brief.style);
+  const semantic = brief.phases.some((phase) => phase.visual.semantic.primitive !== 'legacy-illustration');
+  const composition = narrativeCompositionFor(brief.style, semantic);
   const { ctx } = canvasFor(16, 16);
   const safeZone: NarrativeRect = { x: width * 0.05, y: height * 0.05, width: width * 0.9, height: height * 0.9 };
   const textArea: NarrativeRect = { x: safeZone.x, y: safeZone.y, width: width * composition.textWidthRatio, height: safeZone.height };
@@ -151,7 +152,7 @@ export function layoutNarrative(brief: NormalizedNarrativeBrief): NarrativeLayou
   const cardScale = Math.min(640 / width, 360 / height);
   const scale = Math.min(width / 1280, height / 720);
   const titleBox: NarrativeRect = { x: textArea.x, y: textArea.y, width: textArea.width, height: textArea.height * 0.23 };
-  const labelBox: NarrativeRect = { x: textArea.x, y: textArea.y, width: textArea.width, height: textArea.height * 0.10 };
+  const labelBox: NarrativeRect = { x: textArea.x, y: textArea.y, width: textArea.width, height: textArea.height * (semantic ? 0.18 : 0.10) };
   const bodyBox: NarrativeRect = { x: textArea.x, y: textArea.y, width: textArea.width, height: textArea.height * 0.56 };
   const titleSize = fitText({
     text: brief.title,

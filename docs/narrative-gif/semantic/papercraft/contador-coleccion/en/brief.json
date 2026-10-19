@@ -8,15 +8,15 @@
   "workflowStatus": "in-review",
   "outcome": {
     "mode": "expected",
-    "scopeNote": "The example counts only linked items shown on the card. It assigns no external cause and does not extend the number to unseen items."
+    "scopeNote": "Illustrative example: the count includes only related visible cards; it does not represent items outside the collection."
   },
   "illustrative": true,
   "badgePolicy": "none",
   "phases": [
     {
       "id": "scope-of-two",
-      "label": "Declared scope",
-      "text": "2 links A and B; C is visible but outside the count.",
+      "label": "Before",
+      "text": "A and B count as 2.",
       "holdMs": 2200,
       "visual": {
         "kind": "comparison",
@@ -25,24 +25,53 @@
           "primitive": "counter",
           "illustrative": true,
           "entities": [
-            { "id": "counter", "kind": "counter", "value": 2 },
-            { "id": "card-a", "kind": "row", "label": "A" },
-            { "id": "card-b", "kind": "row", "label": "B" },
-            { "id": "card-c", "kind": "row", "label": "C" }
+            {
+              "id": "counter",
+              "kind": "counter",
+              "value": 2
+            },
+            {
+              "id": "card-a",
+              "kind": "row",
+              "label": "A"
+            },
+            {
+              "id": "card-b",
+              "kind": "row",
+              "label": "B"
+            },
+            {
+              "id": "card-c",
+              "kind": "row",
+              "label": "C"
+            }
           ],
           "relations": [
-            { "kind": "counts", "from": "counter", "to": "card-a" },
-            { "kind": "counts", "from": "counter", "to": "card-b" }
+            {
+              "kind": "counts",
+              "from": "counter",
+              "to": "card-a"
+            },
+            {
+              "kind": "counts",
+              "from": "counter",
+              "to": "card-b"
+            }
           ],
-          "states": { "counter": "value", "card-a": "default", "card-b": "default", "card-c": "pending" },
+          "states": {
+            "counter": "value",
+            "card-a": "default",
+            "card-b": "default",
+            "card-c": "pending"
+          },
           "actions": []
         }
       }
     },
     {
       "id": "third-card-included",
-      "label": "Third card included",
-      "text": "Including C in the relation changes the count from 2 to 3.",
+      "label": "Add C",
+      "text": "Card C is included.",
       "holdMs": 2200,
       "visual": {
         "kind": "comparison",
@@ -51,25 +80,63 @@
           "primitive": "counter",
           "illustrative": true,
           "entities": [
-            { "id": "counter", "kind": "counter", "value": 3 },
-            { "id": "card-a", "kind": "row", "label": "A" },
-            { "id": "card-b", "kind": "row", "label": "B" },
-            { "id": "card-c", "kind": "row", "label": "C" }
+            {
+              "id": "counter",
+              "kind": "counter",
+              "value": 3
+            },
+            {
+              "id": "card-a",
+              "kind": "row",
+              "label": "A"
+            },
+            {
+              "id": "card-b",
+              "kind": "row",
+              "label": "B"
+            },
+            {
+              "id": "card-c",
+              "kind": "row",
+              "label": "C"
+            }
           ],
           "relations": [
-            { "kind": "counts", "from": "counter", "to": "card-a" },
-            { "kind": "counts", "from": "counter", "to": "card-b" },
-            { "kind": "counts", "from": "counter", "to": "card-c" }
+            {
+              "kind": "counts",
+              "from": "counter",
+              "to": "card-a"
+            },
+            {
+              "kind": "counts",
+              "from": "counter",
+              "to": "card-b"
+            },
+            {
+              "kind": "counts",
+              "from": "counter",
+              "to": "card-c"
+            }
           ],
-          "states": { "counter": "increased", "card-a": "default", "card-b": "default", "card-c": "accepted" },
-          "actions": [{ "entityId": "counter", "type": "count-changes" }]
+          "states": {
+            "counter": "increased",
+            "card-a": "default",
+            "card-b": "default",
+            "card-c": "accepted"
+          },
+          "actions": [
+            {
+              "entityId": "counter",
+              "type": "count-changes"
+            }
+          ]
         }
       }
     },
     {
       "id": "set-of-three",
-      "label": "Set of three",
-      "text": "3 covers these cards; items outside view are not included.",
+      "label": "Expected result",
+      "text": "Expected total: 3.",
       "holdMs": 2200,
       "visual": {
         "kind": "comparison",
@@ -78,23 +145,69 @@
           "primitive": "counter",
           "illustrative": true,
           "entities": [
-            { "id": "counter", "kind": "counter", "value": 3 },
-            { "id": "card-a", "kind": "row", "label": "A" },
-            { "id": "card-b", "kind": "row", "label": "B" },
-            { "id": "card-c", "kind": "row", "label": "C" }
+            {
+              "id": "counter",
+              "kind": "counter",
+              "value": 3
+            },
+            {
+              "id": "card-a",
+              "kind": "row",
+              "label": "A"
+            },
+            {
+              "id": "card-b",
+              "kind": "row",
+              "label": "B"
+            },
+            {
+              "id": "card-c",
+              "kind": "row",
+              "label": "C"
+            }
           ],
           "relations": [
-            { "kind": "counts", "from": "counter", "to": "card-a" },
-            { "kind": "counts", "from": "counter", "to": "card-b" },
-            { "kind": "counts", "from": "counter", "to": "card-c" }
+            {
+              "kind": "counts",
+              "from": "counter",
+              "to": "card-a"
+            },
+            {
+              "kind": "counts",
+              "from": "counter",
+              "to": "card-b"
+            },
+            {
+              "kind": "counts",
+              "from": "counter",
+              "to": "card-c"
+            }
           ],
-          "states": { "counter": "unchanged", "card-a": "default", "card-b": "default", "card-c": "accepted" },
+          "states": {
+            "counter": "pending",
+            "card-a": "default",
+            "card-b": "default",
+            "card-c": "accepted"
+          },
           "actions": []
         }
       }
     }
   ],
-  "playback": { "preset": "concise", "minReadableHoldMs": 2200, "transitionMs": 400, "loop": true, "totalDurationBudgetMs": 15000 },
-  "output": { "width": 640, "height": 360, "formats": ["gif", "png"] },
+  "playback": {
+    "preset": "concise",
+    "minReadableHoldMs": 2200,
+    "transitionMs": 400,
+    "loop": true,
+    "totalDurationBudgetMs": 15000
+  },
+  "output": {
+    "width": 640,
+    "height": 360,
+    "formats": [
+      "gif",
+      "png"
+    ]
+  },
   "seed": 19
 }

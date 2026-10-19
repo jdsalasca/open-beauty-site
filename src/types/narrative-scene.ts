@@ -51,4 +51,13 @@ export interface NarrativeSemanticSceneInput {
 export interface NarrativeObjectRegion {
   entityId: string;
   bounds: NarrativeRect;
+  /** Text actually drawn inside this object region; used for a measurable card-size legibility check. */
+  textBoxes?: NarrativeObjectTextBox[];
+}
+
+export interface NarrativeObjectTextBox {
+  text: string;
+  bounds: NarrativeRect;
+  fontSizePx: number;
+  role: 'identifier' | 'label' | 'status' | 'headline';
 }

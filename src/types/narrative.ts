@@ -1,6 +1,6 @@
 import type { StyleSlug, TypeSystem } from '../types.js';
 import type { NarrativeSemanticScene, NarrativeSemanticSceneInput, NarrativeObjectRegion } from './narrative-scene.js';
-export type { NarrativeObjectRegion, NarrativeSemanticAction, NarrativeSemanticEntity, NarrativeSemanticEntityInput, NarrativeSemanticEntityKind, NarrativeSemanticPrimitive, NarrativeSemanticRelation, NarrativeSemanticScene, NarrativeSemanticSceneInput } from './narrative-scene.js';
+export type { NarrativeObjectRegion, NarrativeObjectTextBox, NarrativeSemanticAction, NarrativeSemanticEntity, NarrativeSemanticEntityInput, NarrativeSemanticEntityKind, NarrativeSemanticPrimitive, NarrativeSemanticRelation, NarrativeSemanticScene, NarrativeSemanticSceneInput } from './narrative-scene.js';
 
 export const NARRATIVE_ERROR_CODES = [
   'EMPTY_PHASE',

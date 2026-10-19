@@ -1,0 +1,1561 @@
+{
+  "schemaVersion": 2,
+  "commit": "4aab5320620c665f4e419e3045ec89fc3fa05099",
+  "brief": {
+    "style": "brutalist",
+    "subfamily": "documentary",
+    "kind": "narrative-gif",
+    "locale": "en",
+    "audience": "People downloading a report",
+    "title": "PDF",
+    "workflowStatus": "in-review",
+    "outcome": {
+      "mode": "expected",
+      "scopeNote": "Illustrative example: one timeout and a pending retry are shown; completion and other failure types are not claimed."
+    },
+    "illustrative": true,
+    "badgePolicy": "none",
+    "phases": [
+      {
+        "id": "download-started",
+        "label": "Start",
+        "text": "Start report.pdf.",
+        "visual": {
+          "kind": "comparison",
+          "state": "before",
+          "semantic": {
+            "primitive": "file-download",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "report-file",
+                "kind": "file",
+                "label": "report.pdf",
+                "value": "timeout",
+                "illustrative": true
+              }
+            ],
+            "relations": [],
+            "states": {
+              "report-file": "downloading"
+            },
+            "actions": [
+              {
+                "entityId": "report-file",
+                "type": "start-download"
+              }
+            ]
+          }
+        },
+        "holdMs": 2200
+      },
+      {
+        "id": "timeout",
+        "label": "Timeout",
+        "text": "Timed out at 42%.",
+        "visual": {
+          "kind": "comparison",
+          "state": "flagged",
+          "semantic": {
+            "primitive": "file-download",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "report-file",
+                "kind": "file",
+                "label": "report.pdf",
+                "value": "timeout",
+                "progress": 0.42,
+                "illustrative": true
+              }
+            ],
+            "relations": [],
+            "states": {
+              "report-file": "failed"
+            },
+            "actions": [
+              {
+                "entityId": "report-file",
+                "type": "fail"
+              }
+            ]
+          }
+        },
+        "holdMs": 2200
+      },
+      {
+        "id": "retry-requested",
+        "label": "Retry",
+        "text": "Retry in progress.",
+        "visual": {
+          "kind": "comparison",
+          "state": "review-ready",
+          "semantic": {
+            "primitive": "file-download",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "report-file",
+                "kind": "file",
+                "label": "report.pdf",
+                "value": "timeout",
+                "progress": 0.42,
+                "illustrative": true
+              }
+            ],
+            "relations": [],
+            "states": {
+              "report-file": "retrying"
+            },
+            "actions": [
+              {
+                "entityId": "report-file",
+                "type": "retry"
+              }
+            ]
+          }
+        },
+        "holdMs": 2200
+      },
+      {
+        "id": "result-pending",
+        "label": "Expected result",
+        "text": "Still pending.",
+        "visual": {
+          "kind": "comparison",
+          "state": "review-ready",
+          "semantic": {
+            "primitive": "file-download",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "report-file",
+                "kind": "file",
+                "label": "report.pdf",
+                "value": "timeout",
+                "progress": 0.42,
+                "illustrative": true
+              }
+            ],
+            "relations": [],
+            "states": {
+              "report-file": "pending"
+            },
+            "actions": []
+          }
+        },
+        "holdMs": 2200
+      }
+    ],
+    "playback": {
+      "preset": "concise",
+      "minReadableHoldMs": 2200,
+      "transitionMs": 400,
+      "loop": true,
+      "totalDurationBudgetMs": 20000
+    },
+    "output": {
+      "width": 640,
+      "height": 360,
+      "formats": [
+        "gif",
+        "png"
+      ],
+      "preset": "review-1280x720"
+    },
+    "seed": 11,
+    "status": "in-review"
+  },
+  "briefSha256": "723aad946da2c9f47067f403f2e0610c36b13a70a02ef4cb45fa909afab44b0c",
+  "style": "brutalist",
+  "subfamily": "documentary",
+  "workflowStatus": "in-review",
+  "outcome": {
+    "mode": "expected",
+    "scopeNote": "Illustrative example: one timeout and a pending retry are shown; completion and other failure types are not claimed."
+  },
+  "evidenceClassification": "illustrative",
+  "illustrative": true,
+  "artOnly": true,
+  "seed": 11,
+  "renderer": {
+    "narrative": "narrative-core/0.2.0",
+    "canvas": "@napi-rs/canvas@1.0.11",
+    "gif": "gifenc@1.0.3",
+    "scene": "brutalist-documentary/1.1.0"
+  },
+  "fonts": {
+    "bundleVersion": "repo-bundled-ofl-1",
+    "roles": {
+      "display": {
+        "family": "Archivo Black",
+        "weight": 400
+      },
+      "reading": {
+        "family": "Space Mono",
+        "weight": 400
+      },
+      "label": {
+        "family": "Space Mono",
+        "weight": 700
+      },
+      "figure": {
+        "family": "Archivo Black",
+        "weight": 400
+      },
+      "annotation": {
+        "family": "Space Mono",
+        "weight": 400
+      }
+    }
+  },
+  "dimensions": {
+    "width": 640,
+    "height": 360
+  },
+  "formats": [
+    "gif",
+    "png"
+  ],
+  "decoded": {
+    "width": 640,
+    "height": 360,
+    "frameCount": 28,
+    "delaysMs": [
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80
+    ],
+    "durationMs": 10720,
+    "loopCount": 0,
+    "integrity": true
+  },
+  "ffprobe": {
+    "available": true,
+    "passed": true,
+    "detail": "ffprobe 640×360; 28 frames; 10720ms; matches the independent LZW decode."
+  },
+  "bytes": {
+    "gif": 164680,
+    "png": 8574,
+    "contactSheet": 52289
+  },
+  "hashes": {
+    "briefSha256": "723aad946da2c9f47067f403f2e0610c36b13a70a02ef4cb45fa909afab44b0c",
+    "gifSha256": "7ceec21962b2b92153d8b79ca96aa7b1f8137252bf19b939187386b2bd34fa8e",
+    "pngSha256": "0e1e3590aacce35c5a9fbd5422ace9c8861dbc51ee1d8ae891d8f9f38875eae7",
+    "contactSheetSha256": "2424eaef7dfd8a98fcdf49c2f477179e740bfb93507635dcdd2ef664569b3363"
+  },
+  "files": {
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\descarga-pendiente\\art-only\\en\\pdf-3a3d7875-art-only.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\descarga-pendiente\\art-only\\en\\pdf-3a3d7875-art-only.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\descarga-pendiente\\art-only\\en\\pdf-3a3d7875-art-only-contact-sheet.png"
+  },
+  "controls": [
+    {
+      "name": "gif-integrity",
+      "passed": true,
+      "detail": "Independent LZW decode and GIF trailer passed.",
+      "source": "decoded"
+    },
+    {
+      "name": "dimensions",
+      "passed": true,
+      "detail": "decoded 640×360; requested 640×360",
+      "source": "decoded"
+    },
+    {
+      "name": "frame-count",
+      "passed": true,
+      "detail": "28 decoded frame(s)",
+      "source": "decoded"
+    },
+    {
+      "name": "duration",
+      "passed": true,
+      "detail": "10720ms decoded; holds exclude transitions",
+      "source": "decoded"
+    },
+    {
+      "name": "loop",
+      "passed": true,
+      "detail": "repeat=0; result-to-before bridge is explicit",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-holds",
+      "passed": true,
+      "detail": "download-started 2200/2200ms, timeout 2200/2200ms, retry-requested 2200/2200ms, result-pending 2200/2200ms",
+      "source": "decoded"
+    },
+    {
+      "name": "ffprobe-crosscheck",
+      "passed": true,
+      "detail": "ffprobe 640×360; 28 frames; 10720ms; matches the independent LZW decode.",
+      "source": "decoded"
+    },
+    {
+      "name": "files",
+      "passed": true,
+      "detail": "GIF 164680B · PNG 8574B · contact 52289B",
+      "source": "decoded"
+    },
+    {
+      "name": "scene-renderer-registered",
+      "passed": true,
+      "detail": "renderer brutalist/brutalist-documentary/1.1.0 exists; visual style likeness remains a separate review",
+      "source": "source"
+    },
+    {
+      "name": "type-system",
+      "passed": true,
+      "detail": "style typeSystem tokens are attached to raster role registry",
+      "source": "source"
+    },
+    {
+      "name": "narrative-subfamily",
+      "passed": true,
+      "detail": "brutalist/documentary selects an explicit narrative art direction",
+      "source": "source"
+    },
+    {
+      "name": "font-registration-and-glyphs",
+      "passed": true,
+      "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "distinct-frames",
+      "passed": true,
+      "detail": "4 unique composited frame(s); a format-valid static GIF does not pass",
+      "source": "pixels"
+    },
+    {
+      "name": "palette-loss",
+      "passed": true,
+      "detail": "44 colors; mean channel loss 0.235, max 8; sampled 28 frames",
+      "source": "pixels"
+    },
+    {
+      "name": "title-complete",
+      "passed": true,
+      "detail": "PDF",
+      "source": "source"
+    },
+    {
+      "name": "phase-download-started-label-complete",
+      "passed": true,
+      "detail": "Start",
+      "source": "source"
+    },
+    {
+      "name": "phase-download-started-text-complete",
+      "passed": true,
+      "detail": "Start / report.pdf.",
+      "source": "source"
+    },
+    {
+      "name": "phase-timeout-label-complete",
+      "passed": true,
+      "detail": "Timeout",
+      "source": "source"
+    },
+    {
+      "name": "phase-timeout-text-complete",
+      "passed": true,
+      "detail": "Timed out at / 42%.",
+      "source": "source"
+    },
+    {
+      "name": "phase-retry-requested-label-complete",
+      "passed": true,
+      "detail": "Retry",
+      "source": "source"
+    },
+    {
+      "name": "phase-retry-requested-text-complete",
+      "passed": true,
+      "detail": "Retry in / progress.",
+      "source": "source"
+    },
+    {
+      "name": "phase-result-pending-label-complete",
+      "passed": true,
+      "detail": "Expected result",
+      "source": "source"
+    },
+    {
+      "name": "phase-result-pending-text-complete",
+      "passed": true,
+      "detail": "Still / pending.",
+      "source": "source"
+    },
+    {
+      "name": "registered-fonts",
+      "passed": true,
+      "detail": "all role faces and Spanish glyphs rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "review-size-thresholds",
+      "passed": true,
+      "detail": "title 56px; phase body >=36px; label >=24px",
+      "source": "source"
+    },
+    {
+      "name": "640x360-effective-size",
+      "passed": true,
+      "detail": "title 56.0px; body min 36.0px (requires >=20px); label min 24.0px",
+      "source": "source"
+    },
+    {
+      "name": "semantic-text-legibility",
+      "passed": true,
+      "status": "pass",
+      "detail": "minimum effective text >=14px: 14.0px; minimum headline 20.0px (requires >=20px); measured 15 declared object text box(es) at 640×360.",
+      "source": "decoded"
+    },
+    {
+      "name": "composition-balance",
+      "passed": false,
+      "severity": "warning",
+      "detail": "WARN · revise; 8×4 decoded-pixel grid against #F2EFE4: empty cells 50.0%, text-column vertical fill 0.0%, art/object area outside the text column 50.0%, largest empty rectangle 50.0%; thresholds: rectangle <=22%, text fill >=60% (text-fill threshold omitted in art-only mode); not an aesthetic score. Per-frame: download-started · hold: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | download-started → timeout · transition midpoint: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | timeout · hold: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | timeout → retry-requested · transition midpoint: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | retry-requested · hold: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | retry-requested → result-pending · transition midpoint: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | result-pending · hold: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | result-pending → download-started · loop join: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0%",
+      "source": "pixels"
+    },
+    {
+      "name": "contrast",
+      "passed": true,
+      "detail": "rendered text colors: ink 17.10:1; label 17.10:1 (not an OCR or per-pixel text measurement)",
+      "source": "source"
+    },
+    {
+      "name": "safe-zone-and-collisions",
+      "passed": true,
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+      "source": "source"
+    },
+    {
+      "name": "stable-reading-holds",
+      "passed": true,
+      "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-count-and-copy",
+      "passed": true,
+      "detail": "4 complete phases; all copy retained",
+      "source": "source"
+    },
+    {
+      "name": "shared-object-identity",
+      "passed": true,
+      "detail": "One scene object instance is created and passed to every phase frame.",
+      "source": "source"
+    },
+    {
+      "name": "visual-state-change",
+      "passed": true,
+      "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+      "source": "pixels"
+    },
+    {
+      "name": "workflow-outcome-separation",
+      "passed": true,
+      "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+      "source": "source"
+    },
+    {
+      "name": "outcome-evidence",
+      "passed": true,
+      "detail": "Expected outcome; no benefit measurement is claimed.",
+      "source": "source"
+    },
+    {
+      "name": "result-follows-outcome",
+      "passed": true,
+      "detail": "outcome=expected; final label=\"Expected result\"",
+      "source": "source"
+    },
+    {
+      "name": "semantic-illustrative-data",
+      "passed": true,
+      "detail": "brief illustrative=true; semantic phase flags=true,true,true,true",
+      "source": "source"
+    },
+    {
+      "name": "semantic-object-midpoint:download-started → timeout · transition midpoint",
+      "passed": true,
+      "detail": "decoded object diff 13.7%; changed-state entities: report-file; report-file downloading→failed 13.7%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:timeout → retry-requested · transition midpoint",
+      "passed": true,
+      "detail": "decoded object diff 11.6%; changed-state entities: report-file; report-file failed→retrying 11.6%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:retry-requested → result-pending · transition midpoint",
+      "passed": true,
+      "detail": "decoded object diff 0.4%; changed-state entities: report-file; report-file retrying→pending 0.4%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:result-pending → download-started · loop join",
+      "passed": true,
+      "detail": "decoded object diff 2.9%; changed-state entities: report-file; report-file pending→downloading 2.9%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:download-started → timeout hold",
+      "passed": true,
+      "detail": "decoded object diff 13.7%; changed-state entities: report-file; report-file downloading→failed 13.7%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:timeout → retry-requested hold",
+      "passed": true,
+      "detail": "decoded object diff 11.6%; changed-state entities: report-file; report-file failed→retrying 11.6%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:retry-requested → result-pending hold",
+      "passed": true,
+      "detail": "decoded object diff 0.4%; changed-state entities: report-file; report-file retrying→pending 0.4%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:result-pending → download-started loop join",
+      "passed": true,
+      "detail": "decoded object diff 2.9%; changed-state entities: report-file; report-file pending→downloading 2.9%",
+      "source": "decoded"
+    }
+  ],
+  "evaluation": {
+    "technical-integrity": {
+      "status": "pass",
+      "controls": [
+        {
+          "name": "gif-integrity",
+          "passed": true,
+          "detail": "Independent LZW decode and GIF trailer passed.",
+          "source": "decoded"
+        },
+        {
+          "name": "dimensions",
+          "passed": true,
+          "detail": "decoded 640×360; requested 640×360",
+          "source": "decoded"
+        },
+        {
+          "name": "frame-count",
+          "passed": true,
+          "detail": "28 decoded frame(s)",
+          "source": "decoded"
+        },
+        {
+          "name": "duration",
+          "passed": true,
+          "detail": "10720ms decoded; holds exclude transitions",
+          "source": "decoded"
+        },
+        {
+          "name": "loop",
+          "passed": true,
+          "detail": "repeat=0; result-to-before bridge is explicit",
+          "source": "decoded"
+        },
+        {
+          "name": "phase-holds",
+          "passed": true,
+          "detail": "download-started 2200/2200ms, timeout 2200/2200ms, retry-requested 2200/2200ms, result-pending 2200/2200ms",
+          "source": "decoded"
+        },
+        {
+          "name": "ffprobe-crosscheck",
+          "passed": true,
+          "detail": "ffprobe 640×360; 28 frames; 10720ms; matches the independent LZW decode.",
+          "source": "decoded"
+        },
+        {
+          "name": "files",
+          "passed": true,
+          "detail": "GIF 164680B · PNG 8574B · contact 52289B",
+          "source": "decoded"
+        }
+      ]
+    },
+    "style-conformance": {
+      "status": "pending",
+      "sourceStatus": "pass",
+      "pixelStatus": "pass",
+      "controls": [
+        {
+          "name": "scene-renderer-registered",
+          "passed": true,
+          "detail": "renderer brutalist/brutalist-documentary/1.1.0 exists; visual style likeness remains a separate review",
+          "source": "source"
+        },
+        {
+          "name": "type-system",
+          "passed": true,
+          "detail": "style typeSystem tokens are attached to raster role registry",
+          "source": "source"
+        },
+        {
+          "name": "narrative-subfamily",
+          "passed": true,
+          "detail": "brutalist/documentary selects an explicit narrative art direction",
+          "source": "source"
+        },
+        {
+          "name": "font-registration-and-glyphs",
+          "passed": true,
+          "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "distinct-frames",
+          "passed": true,
+          "detail": "4 unique composited frame(s); a format-valid static GIF does not pass",
+          "source": "pixels"
+        },
+        {
+          "name": "palette-loss",
+          "passed": true,
+          "detail": "44 colors; mean channel loss 0.235, max 8; sampled 28 frames",
+          "source": "pixels"
+        }
+      ],
+      "note": "Source checks identify renderer/font tokens; pixel checks measure frame change and palette loss. Neither substitutes for visual review."
+    },
+    "rendered-legibility": {
+      "status": "revise",
+      "controls": [
+        {
+          "name": "title-complete",
+          "passed": true,
+          "detail": "PDF",
+          "source": "source"
+        },
+        {
+          "name": "phase-download-started-label-complete",
+          "passed": true,
+          "detail": "Start",
+          "source": "source"
+        },
+        {
+          "name": "phase-download-started-text-complete",
+          "passed": true,
+          "detail": "Start / report.pdf.",
+          "source": "source"
+        },
+        {
+          "name": "phase-timeout-label-complete",
+          "passed": true,
+          "detail": "Timeout",
+          "source": "source"
+        },
+        {
+          "name": "phase-timeout-text-complete",
+          "passed": true,
+          "detail": "Timed out at / 42%.",
+          "source": "source"
+        },
+        {
+          "name": "phase-retry-requested-label-complete",
+          "passed": true,
+          "detail": "Retry",
+          "source": "source"
+        },
+        {
+          "name": "phase-retry-requested-text-complete",
+          "passed": true,
+          "detail": "Retry in / progress.",
+          "source": "source"
+        },
+        {
+          "name": "phase-result-pending-label-complete",
+          "passed": true,
+          "detail": "Expected result",
+          "source": "source"
+        },
+        {
+          "name": "phase-result-pending-text-complete",
+          "passed": true,
+          "detail": "Still / pending.",
+          "source": "source"
+        },
+        {
+          "name": "registered-fonts",
+          "passed": true,
+          "detail": "all role faces and Spanish glyphs rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "review-size-thresholds",
+          "passed": true,
+          "detail": "title 56px; phase body >=36px; label >=24px",
+          "source": "source"
+        },
+        {
+          "name": "640x360-effective-size",
+          "passed": true,
+          "detail": "title 56.0px; body min 36.0px (requires >=20px); label min 24.0px",
+          "source": "source"
+        },
+        {
+          "name": "semantic-text-legibility",
+          "passed": true,
+          "status": "pass",
+          "detail": "minimum effective text >=14px: 14.0px; minimum headline 20.0px (requires >=20px); measured 15 declared object text box(es) at 640×360.",
+          "source": "decoded"
+        },
+        {
+          "name": "composition-balance",
+          "passed": false,
+          "severity": "warning",
+          "detail": "WARN · revise; 8×4 decoded-pixel grid against #F2EFE4: empty cells 50.0%, text-column vertical fill 0.0%, art/object area outside the text column 50.0%, largest empty rectangle 50.0%; thresholds: rectangle <=22%, text fill >=60% (text-fill threshold omitted in art-only mode); not an aesthetic score. Per-frame: download-started · hold: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | download-started → timeout · transition midpoint: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | timeout · hold: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | timeout → retry-requested · transition midpoint: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | retry-requested · hold: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | retry-requested → result-pending · transition midpoint: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | result-pending · hold: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | result-pending → download-started · loop join: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0%",
+          "source": "pixels"
+        },
+        {
+          "name": "contrast",
+          "passed": true,
+          "detail": "rendered text colors: ink 17.10:1; label 17.10:1 (not an OCR or per-pixel text measurement)",
+          "source": "source"
+        },
+        {
+          "name": "safe-zone-and-collisions",
+          "passed": true,
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+          "source": "source"
+        },
+        {
+          "name": "stable-reading-holds",
+          "passed": true,
+          "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+          "source": "decoded"
+        }
+      ],
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
+    },
+    "narrative": {
+      "status": "pending",
+      "controls": [
+        {
+          "name": "phase-count-and-copy",
+          "passed": true,
+          "detail": "4 complete phases; all copy retained",
+          "source": "source"
+        },
+        {
+          "name": "shared-object-identity",
+          "passed": true,
+          "detail": "One scene object instance is created and passed to every phase frame.",
+          "source": "source"
+        },
+        {
+          "name": "visual-state-change",
+          "passed": true,
+          "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+          "source": "pixels"
+        },
+        {
+          "name": "workflow-outcome-separation",
+          "passed": true,
+          "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+          "source": "source"
+        },
+        {
+          "name": "outcome-evidence",
+          "passed": true,
+          "detail": "Expected outcome; no benefit measurement is claimed.",
+          "source": "source"
+        },
+        {
+          "name": "result-follows-outcome",
+          "passed": true,
+          "detail": "outcome=expected; final label=\"Expected result\"",
+          "source": "source"
+        },
+        {
+          "name": "semantic-illustrative-data",
+          "passed": true,
+          "detail": "brief illustrative=true; semantic phase flags=true,true,true,true",
+          "source": "source"
+        },
+        {
+          "name": "semantic-object-midpoint:download-started → timeout · transition midpoint",
+          "passed": true,
+          "detail": "decoded object diff 13.7%; changed-state entities: report-file; report-file downloading→failed 13.7%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:timeout → retry-requested · transition midpoint",
+          "passed": true,
+          "detail": "decoded object diff 11.6%; changed-state entities: report-file; report-file failed→retrying 11.6%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:retry-requested → result-pending · transition midpoint",
+          "passed": true,
+          "detail": "decoded object diff 0.4%; changed-state entities: report-file; report-file retrying→pending 0.4%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:result-pending → download-started · loop join",
+          "passed": true,
+          "detail": "decoded object diff 2.9%; changed-state entities: report-file; report-file pending→downloading 2.9%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:download-started → timeout hold",
+          "passed": true,
+          "detail": "decoded object diff 13.7%; changed-state entities: report-file; report-file downloading→failed 13.7%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:timeout → retry-requested hold",
+          "passed": true,
+          "detail": "decoded object diff 11.6%; changed-state entities: report-file; report-file failed→retrying 11.6%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:retry-requested → result-pending hold",
+          "passed": true,
+          "detail": "decoded object diff 0.4%; changed-state entities: report-file; report-file retrying→pending 0.4%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:result-pending → download-started loop join",
+          "passed": true,
+          "detail": "decoded object diff 2.9%; changed-state entities: report-file; report-file pending→downloading 2.9%",
+          "source": "decoded"
+        }
+      ],
+      "note": "Automated checks separate work status from expected/observed outcome and confirm required evidence fields; causal meaning and evidence scope still need human review."
+    },
+    "visual-review": {
+      "status": "pending",
+      "criteria": [
+        "identity at 200px thumbnail",
+        "full text and contrast at 640×360",
+        "style material in native frame",
+        "same object and causal change across phases",
+        "result faithful to outcome and evidence scope",
+        "deliberate loop restart"
+      ],
+      "evidence": []
+    },
+    "publicationRecommendation": "none"
+  },
+  "phaseCaptures": [
+    {
+      "phaseId": "download-started",
+      "labels": [
+        "download-started · start",
+        "download-started · hold",
+        "download-started → timeout · transition midpoint",
+        "download-started · exit"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\descarga-pendiente\\art-only\\en\\pdf-3a3d7875-art-only-contact-sheet.png"
+    },
+    {
+      "phaseId": "timeout",
+      "labels": [
+        "timeout · start",
+        "timeout · hold",
+        "timeout → retry-requested · transition midpoint",
+        "timeout · exit"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\descarga-pendiente\\art-only\\en\\pdf-3a3d7875-art-only-contact-sheet.png"
+    },
+    {
+      "phaseId": "retry-requested",
+      "labels": [
+        "retry-requested · start",
+        "retry-requested · hold",
+        "retry-requested → result-pending · transition midpoint",
+        "retry-requested · exit"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\descarga-pendiente\\art-only\\en\\pdf-3a3d7875-art-only-contact-sheet.png"
+    },
+    {
+      "phaseId": "result-pending",
+      "labels": [
+        "result-pending · start",
+        "result-pending · hold",
+        "result-pending → download-started · loop join",
+        "result-pending · exit"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\descarga-pendiente\\art-only\\en\\pdf-3a3d7875-art-only-contact-sheet.png"
+    }
+  ],
+  "semanticObjectCaptures": [
+    {
+      "label": "download-started · hold",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 0,
+      "frameIndex": 1,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "report-file",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "LEDGER",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 59,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "report.pdf",
+              "bounds": {
+                "x": 344.81984,
+                "y": 133.44107200000002,
+                "width": 110,
+                "height": 24
+              },
+              "fontSizePx": 20,
+              "role": "headline"
+            },
+            {
+              "text": "DOWNLOADING",
+              "bounds": {
+                "x": 359.1214592,
+                "y": 228.66623968000002,
+                "width": 95,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "download-started → timeout · transition midpoint",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 0,
+      "frameIndex": 3,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "report-file",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "LEDGER",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 59,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "report.pdf",
+              "bounds": {
+                "x": 344.81984,
+                "y": 133.44107200000002,
+                "width": 110,
+                "height": 24
+              },
+              "fontSizePx": 20,
+              "role": "headline"
+            },
+            {
+              "text": "42%",
+              "bounds": {
+                "x": 347.2034432,
+                "y": 184.31411296,
+                "width": 26,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            },
+            {
+              "text": "TIMEOUT",
+              "bounds": {
+                "x": 359.1214592,
+                "y": 228.66623968000002,
+                "width": 60,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "timeout · hold",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 1,
+      "frameIndex": 8,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "report-file",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "LEDGER",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 59,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "report.pdf",
+              "bounds": {
+                "x": 344.81984,
+                "y": 133.44107200000002,
+                "width": 110,
+                "height": 24
+              },
+              "fontSizePx": 20,
+              "role": "headline"
+            },
+            {
+              "text": "42%",
+              "bounds": {
+                "x": 347.2034432,
+                "y": 184.31411296,
+                "width": 26,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            },
+            {
+              "text": "TIMEOUT",
+              "bounds": {
+                "x": 359.1214592,
+                "y": 228.66623968000002,
+                "width": 60,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "timeout → retry-requested · transition midpoint",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 1,
+      "frameIndex": 10,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "report-file",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "LEDGER",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 59,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "report.pdf",
+              "bounds": {
+                "x": 344.81984,
+                "y": 133.44107200000002,
+                "width": 110,
+                "height": 24
+              },
+              "fontSizePx": 20,
+              "role": "headline"
+            },
+            {
+              "text": "42%",
+              "bounds": {
+                "x": 347.2034432,
+                "y": 184.31411296,
+                "width": 26,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            },
+            {
+              "text": "RETRYING",
+              "bounds": {
+                "x": 359.1214592,
+                "y": 228.66623968000002,
+                "width": 69,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "retry-requested · hold",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 2,
+      "frameIndex": 15,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "report-file",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "LEDGER",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 59,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "report.pdf",
+              "bounds": {
+                "x": 344.81984,
+                "y": 133.44107200000002,
+                "width": 110,
+                "height": 24
+              },
+              "fontSizePx": 20,
+              "role": "headline"
+            },
+            {
+              "text": "42%",
+              "bounds": {
+                "x": 347.2034432,
+                "y": 184.31411296,
+                "width": 26,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            },
+            {
+              "text": "RETRYING",
+              "bounds": {
+                "x": 359.1214592,
+                "y": 228.66623968000002,
+                "width": 69,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "retry-requested → result-pending · transition midpoint",
+      "phaseIndex": 3,
+      "fromPhaseIndex": 2,
+      "frameIndex": 17,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "report-file",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "LEDGER",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 59,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "report.pdf",
+              "bounds": {
+                "x": 344.81984,
+                "y": 133.44107200000002,
+                "width": 110,
+                "height": 24
+              },
+              "fontSizePx": 20,
+              "role": "headline"
+            },
+            {
+              "text": "42%",
+              "bounds": {
+                "x": 347.2034432,
+                "y": 184.31411296,
+                "width": 26,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            },
+            {
+              "text": "PENDING",
+              "bounds": {
+                "x": 359.1214592,
+                "y": 228.66623968000002,
+                "width": 60,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "result-pending · hold",
+      "phaseIndex": 3,
+      "fromPhaseIndex": 3,
+      "frameIndex": 22,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "report-file",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "LEDGER",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 59,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "report.pdf",
+              "bounds": {
+                "x": 344.81984,
+                "y": 133.44107200000002,
+                "width": 110,
+                "height": 24
+              },
+              "fontSizePx": 20,
+              "role": "headline"
+            },
+            {
+              "text": "42%",
+              "bounds": {
+                "x": 347.2034432,
+                "y": 184.31411296,
+                "width": 26,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            },
+            {
+              "text": "PENDING",
+              "bounds": {
+                "x": 359.1214592,
+                "y": 228.66623968000002,
+                "width": 60,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "result-pending → download-started · loop join",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 3,
+      "frameIndex": 24,
+      "kind": "loop-bridge",
+      "regions": [
+        {
+          "entityId": "report-file",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "LEDGER",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 59,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "report.pdf",
+              "bounds": {
+                "x": 344.81984,
+                "y": 133.44107200000002,
+                "width": 110,
+                "height": 24
+              },
+              "fontSizePx": 20,
+              "role": "headline"
+            },
+            {
+              "text": "DOWNLOADING",
+              "bounds": {
+                "x": 359.1214592,
+                "y": 228.66623968000002,
+                "width": 95,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "compositionByFrame": [
+    {
+      "label": "download-started · hold",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "download-started → timeout · transition midpoint",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "timeout · hold",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "timeout → retry-requested · transition midpoint",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "retry-requested · hold",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "retry-requested → result-pending · transition midpoint",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "result-pending · hold",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "result-pending → download-started · loop join",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    }
+  ],
+  "palette": {
+    "colors": 44,
+    "meanAbsoluteChannelError": 0.235,
+    "maximumChannelError": 8,
+    "sampledFrames": 28
+  },
+  "phaseHoldsVerified": [
+    {
+      "phaseId": "download-started",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    },
+    {
+      "phaseId": "timeout",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    },
+    {
+      "phaseId": "retry-requested",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    },
+    {
+      "phaseId": "result-pending",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    }
+  ],
+  "timing": {
+    "preset": "concise",
+    "holdsRequestedMs": 8800,
+    "holdsDecodedMs": 8800,
+    "transitionsMs": 1200,
+    "loopBridgeMs": 400,
+    "entryMs": 320,
+    "totalDecodedMs": 10720,
+    "totalDurationBudgetMs": 20000,
+    "phaseHolds": [
+      {
+        "phaseId": "download-started",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      },
+      {
+        "phaseId": "timeout",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      },
+      {
+        "phaseId": "retry-requested",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      },
+      {
+        "phaseId": "result-pending",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      }
+    ],
+    "warnings": []
+  },
+  "resourceEstimate": {
+    "pixelFrames": 6451200,
+    "maxPixelFrames": 96000000,
+    "memoryBytes": 37511168,
+    "maxMemoryBytes": 268435456
+  },
+  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed."
+}
