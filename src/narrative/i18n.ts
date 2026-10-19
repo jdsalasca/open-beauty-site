@@ -16,7 +16,9 @@ const PAIRS: Record<StyleSlug, Pairs> = {
   brutalist: {
     badgeOpen: ['PENDIENTE', 'PENDING'],
     badgeInReview: ['EN REVISIÓN', 'IN REVIEW'],
+    badgeOpenSemantic: ['PEND.', 'PENDING'],
     badgeInReviewSemantic: ['REV.', 'REVIEW'],
+    badgeDoneSemantic: ['FIN', 'DONE'],
     badgeDone: ['REVISADA', 'REVIEWED'],
     observation: ['OBSERVACIÓN', 'OBSERVATION'],
     state: ['ESTADO', 'STATUS'],
@@ -59,7 +61,7 @@ const PAIRS: Record<StyleSlug, Pairs> = {
     legacyRecords: ['REGISTROS ILUSTRATIVOS', 'ILLUSTRATIVE RECORDS'],
     legacyRecord: ['REGISTRO', 'RECORD'],
     legacyCollection: ['COLECCIÓN ILUSTRATIVA', 'ILLUSTRATIVE COLLECTION'],
-    legacyItem: ['ELEMENTO', 'ITEM'],
+    legacyItem: ['ÍTEM', 'ITEM'],
     legacyIllustrative: ['ESTADO ILUSTRATIVO', 'ILLUSTRATIVE STATE'],
     legacyPending: ['PENDIENTE', 'PENDING'],
     legacyFlagged: ['SEÑALADO', 'FLAGGED'],

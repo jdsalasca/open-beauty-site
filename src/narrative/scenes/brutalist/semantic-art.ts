@@ -189,7 +189,8 @@ function createPlan(context: NarrativeRenderContext, box: NarrativeRect, measure
       const member = semantic.relations.some((relation) => relation.kind === 'member-of' && relation.from === item.id && relation.to === collection?.id);
       const itemState = stateOf(semantic, item.id);
       const selected = itemState === 'selected' || semantic.legacyUpgrade && itemState === 'flagged';
-      shapes.push({ kind: 'checkbox', x: card.x + card.width * 0.72, y: card.y + card.height * 0.68, width: Math.min(card.width, card.height) * 0.19, height: Math.min(card.width, card.height) * 0.19, stroke: selected ? red : ink, lineWidth: 2, progress: member ? 1 : 0 });
+      const checked = member || semantic.legacyUpgrade && itemState === 'ready-for-review';
+      shapes.push({ kind: 'checkbox', x: card.x + card.width * 0.72, y: card.y + card.height * 0.68, width: Math.min(card.width, card.height) * 0.19, height: Math.min(card.width, card.height) * 0.19, stroke: selected ? red : ink, lineWidth: 2, progress: checked ? 1 : 0 });
     });
     const countBox = rect(box.x + box.width * 0.045, box.y + box.height * 0.78, box.width * 0.74, box.height * 0.11);
     addRect(countBox.x, countBox.y, countBox.width, countBox.height, paper, ink, 2);
@@ -257,8 +258,10 @@ function createPlan(context: NarrativeRenderContext, box: NarrativeRect, measure
     }
   }
 
-  const badgeText = semantic.legacyUpgrade && context.brief.badgePolicy === 'workflow' && context.brief.workflowStatus === 'in-review'
-    ? sceneText('brutalist', context.brief.locale, 'badgeInReviewSemantic')
+  const compactBadgeKey = context.brief.workflowStatus === 'open' ? 'badgeOpenSemantic'
+    : context.brief.workflowStatus === 'in-review' ? 'badgeInReviewSemantic' : 'badgeDoneSemantic';
+  const badgeText = semantic.legacyUpgrade && context.brief.badgePolicy === 'workflow'
+    ? sceneText('brutalist', context.brief.locale, compactBadgeKey)
     : workflowBadgeText('brutalist', context.brief.locale, context.brief.workflowStatus, context.brief.badgePolicy, context.brief.badgeText);
   if (badgeText) {
     const badgeEntity = containerId ?? semanticEntityIds[0]!;
