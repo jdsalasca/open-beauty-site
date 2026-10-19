@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 1,
-  "commit": "aaa4322afd9cf89b6ef3a8c7a1ae542fcef5ed31",
+  "schemaVersion": 2,
+  "commit": "7a036e5fcfc3e09e7c6738e21a0ecc81248f6021",
   "brief": {
     "style": "bestiary",
     "kind": "narrative-gif",
@@ -8,6 +8,7 @@
     "audience": "Producto en Sprint Review",
     "title": "Señal",
     "status": "in-review",
+    "badgePolicy": "workflow",
     "phases": [
       {
         "id": "before",
@@ -38,9 +39,11 @@
       }
     ],
     "playback": {
+      "preset": "readable",
       "minReadableHoldMs": 5000,
       "transitionMs": 650,
-      "loop": true
+      "loop": true,
+      "totalDurationBudgetMs": 30000
     },
     "output": {
       "width": 1280,
@@ -51,14 +54,25 @@
       ],
       "preset": "review-1280x720"
     },
-    "seed": 7
+    "seed": 7,
+    "workflowStatus": "in-review",
+    "outcome": {
+      "mode": "expected"
+    },
+    "illustrative": true
   },
-  "briefSha256": "85ee1938c0cd046aa911ab4508f4d9927a36ceb019158aaf8a2af94c31184412",
+  "briefSha256": "ae21882bc7f4780540d596c6a0c841bebe08b52e50bd4639c3d1f282a09f88e3",
   "style": "bestiary",
   "subfamily": null,
+  "workflowStatus": "in-review",
+  "outcome": {
+    "mode": "expected"
+  },
+  "evidenceClassification": "illustrative",
+  "illustrative": true,
   "seed": 7,
   "renderer": {
-    "narrative": "narrative-core/0.1.0",
+    "narrative": "narrative-core/0.2.0",
     "canvas": "@napi-rs/canvas@1.0.11",
     "gif": "gifenc@1.0.3",
     "scene": "bestiary-owl-folio/1.0.0"
@@ -150,15 +164,15 @@
     "contactSheet": 92086
   },
   "hashes": {
-    "briefSha256": "85ee1938c0cd046aa911ab4508f4d9927a36ceb019158aaf8a2af94c31184412",
+    "briefSha256": "ae21882bc7f4780540d596c6a0c841bebe08b52e50bd4639c3d1f282a09f88e3",
     "gifSha256": "87d65c15c4fca7076afe154a93d526a43f3a3c23382c483e7236adc68391d8f5",
     "pngSha256": "665f9818eda49039733fd4065c9679b4a1b8c2e3f93f51255d07242390fe66b2",
     "contactSheetSha256": "d1d74763b2cabc589248c0eaa13babdefec9c5134bc330e496795aa15de9a4cd"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\bestiary\\checklist\\senal-85ee1938.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\bestiary\\checklist\\senal-85ee1938.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\bestiary\\checklist\\senal-85ee1938-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\gallery\\bestiary\\checklist\\senal-85ee1938.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\gallery\\bestiary\\checklist\\senal-85ee1938.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\gallery\\bestiary\\checklist\\senal-85ee1938-contact-sheet.png"
   },
   "controls": [
     {
@@ -344,13 +358,25 @@
     {
       "name": "visual-state-change",
       "passed": true,
-      "detail": "Phase states differ and exported frames are not identical.",
+      "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
       "source": "pixels"
     },
     {
-      "name": "result-follows-status",
+      "name": "workflow-outcome-separation",
       "passed": true,
-      "detail": "status=in-review; final label=\"Resultado esperado\"",
+      "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+      "source": "source"
+    },
+    {
+      "name": "outcome-evidence",
+      "passed": true,
+      "detail": "Expected outcome; no benefit measurement is claimed.",
+      "source": "source"
+    },
+    {
+      "name": "result-follows-outcome",
+      "passed": true,
+      "detail": "outcome=expected; final label=\"Resultado esperado\"",
       "source": "source"
     }
   ],
@@ -560,17 +586,29 @@
         {
           "name": "visual-state-change",
           "passed": true,
-          "detail": "Phase states differ and exported frames are not identical.",
+          "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
           "source": "pixels"
         },
         {
-          "name": "result-follows-status",
+          "name": "workflow-outcome-separation",
           "passed": true,
-          "detail": "status=in-review; final label=\"Resultado esperado\"",
+          "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+          "source": "source"
+        },
+        {
+          "name": "outcome-evidence",
+          "passed": true,
+          "detail": "Expected outcome; no benefit measurement is claimed.",
+          "source": "source"
+        },
+        {
+          "name": "result-follows-outcome",
+          "passed": true,
+          "detail": "outcome=expected; final label=\"Resultado esperado\"",
           "source": "source"
         }
       ],
-      "note": "Automated checks verify phase/state structure and shared object identity; causal meaning still needs review."
+      "note": "Automated checks separate work status from expected/observed outcome and confirm required evidence fields; causal meaning and evidence scope still need human review."
     },
     "visual-review": {
       "status": "pending",
@@ -579,7 +617,7 @@
         "full text and contrast at 640×360",
         "style material in native frame",
         "same object and causal change across phases",
-        "result faithful to status",
+        "result faithful to outcome and evidence scope",
         "deliberate loop restart"
       ],
       "evidence": []
@@ -596,7 +634,7 @@
         "before · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\bestiary\\checklist\\senal-85ee1938-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\gallery\\bestiary\\checklist\\senal-85ee1938-contact-sheet.png"
     },
     {
       "phaseId": "change",
@@ -606,7 +644,7 @@
         "change · transición media",
         "change · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\bestiary\\checklist\\senal-85ee1938-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\gallery\\bestiary\\checklist\\senal-85ee1938-contact-sheet.png"
     },
     {
       "phaseId": "result",
@@ -616,7 +654,7 @@
         "result · transición media",
         "result · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\bestiary\\checklist\\senal-85ee1938-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\gallery\\bestiary\\checklist\\senal-85ee1938-contact-sheet.png"
     }
   ],
   "palette": {
@@ -645,6 +683,37 @@
       "passed": true
     }
   ],
+  "timing": {
+    "preset": "readable",
+    "holdsRequestedMs": 15000,
+    "holdsDecodedMs": 15000,
+    "transitionsMs": 1300,
+    "loopBridgeMs": 650,
+    "entryMs": 240,
+    "totalDecodedMs": 17190,
+    "totalDurationBudgetMs": 30000,
+    "phaseHolds": [
+      {
+        "phaseId": "before",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      },
+      {
+        "phaseId": "change",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      },
+      {
+        "phaseId": "result",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      }
+    ],
+    "warnings": []
+  },
   "resourceEstimate": {
     "pixelFrames": 30412800,
     "maxPixelFrames": 96000000,

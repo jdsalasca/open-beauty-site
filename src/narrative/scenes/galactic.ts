@@ -2,6 +2,8 @@ import { canvasFor } from '../../canvas.js';
 import { getStyle } from '../../styles/presets.js';
 import type { NarrativePhase, NarrativeRect, NarrativeRenderContext, NarrativeScene, NormalizedNarrativeBrief } from '../../types/narrative.js';
 import { cubicBezierEase, drawText, phaseMarkProgress, rgba } from './common.js';
+import { sceneVocabulary } from '../vocabulary.js';
+import { sceneText } from '../i18n.js';
 
 interface OrbitalRecord {
   readonly identity: 'trayectoria-de-revision';
@@ -113,7 +115,7 @@ function drawPlanetaryOrbits(ctx: ReturnType<typeof canvasFor>['ctx'], art: Narr
   }
 }
 
-function drawComparisonPath(ctx: ReturnType<typeof canvasFor>['ctx'], art: NarrativeRect, palette: ReturnType<typeof getStyle>['palette'], progress: number): void {
+function drawComparisonPath(ctx: ReturnType<typeof canvasFor>['ctx'], art: NarrativeRect, palette: ReturnType<typeof getStyle>['palette'], progress: number, locale: 'es' | 'en'): void {
   const route = comparisonRoute(art);
   ctx.beginPath();
   ctx.moveTo(route[0].x, route[0].y);
@@ -144,10 +146,10 @@ function drawComparisonPath(ctx: ReturnType<typeof canvasFor>['ctx'], art: Narra
   ctx.strokeStyle = palette.accent;
   ctx.lineWidth = 2;
   ctx.stroke();
-  drawText(ctx, 'TRAYECTORIA', art.x + art.width * 0.04, art.y + art.height * 0.94, 'Space Grotesk', 500, Math.max(24, art.width * 0.055), palette.muted);
+  drawText(ctx, sceneText('galactic', locale, 'trajectory'), art.x + art.width * 0.04, art.y + art.height * 0.94, 'Space Grotesk', 500, Math.max(24, art.width * 0.055), palette.muted);
 }
 
-function drawChecklistPath(ctx: ReturnType<typeof canvasFor>['ctx'], art: NarrativeRect, palette: ReturnType<typeof getStyle>['palette'], progress: number, status: NormalizedNarrativeBrief['status']): void {
+function drawChecklistPath(ctx: ReturnType<typeof canvasFor>['ctx'], art: NarrativeRect, palette: ReturnType<typeof getStyle>['palette'], progress: number, status: NormalizedNarrativeBrief['workflowStatus'], badgePolicy: NormalizedNarrativeBrief['badgePolicy'], locale: 'es' | 'en'): void {
   const points: Point[] = [
     { x: art.x + art.width * 0.07, y: art.y + art.height * 0.78 },
     { x: art.x + art.width * 0.37, y: art.y + art.height * 0.60 },
@@ -167,7 +169,7 @@ function drawChecklistPath(ctx: ReturnType<typeof canvasFor>['ctx'], art: Narrat
     ctx.strokeStyle = rgba(index === 2 ? palette.accent3 : palette.accent, active);
     ctx.lineWidth = Math.max(2, art.width * 0.006);
     ctx.stroke();
-    if (index < progress || (status === 'done' && progress >= 2 && index === 2) || (index === Math.floor(progress) && progress % 1 > 0.5)) {
+    if (index < progress || (badgePolicy !== 'none' && status === 'done' && progress >= 2 && index === 2) || (index === Math.floor(progress) && progress % 1 > 0.5)) {
       ctx.beginPath();
       ctx.arc(point.x, point.y, art.width * 0.01, 0, Math.PI * 2);
       ctx.fillStyle = index === 2 ? palette.accent3 : palette.accent;
@@ -186,9 +188,9 @@ function drawChecklistPath(ctx: ReturnType<typeof canvasFor>['ctx'], art: Narrat
   ctx.strokeStyle = palette.accent;
   ctx.lineWidth = 2;
   ctx.stroke();
-  drawText(ctx, 'OBSERVAR', points[0]!.x - art.width * 0.035, points[0]!.y + art.height * 0.065, 'Space Grotesk', 500, Math.max(24, art.width * 0.05), palette.muted);
-  drawText(ctx, 'ANOTAR', points[1]!.x - art.width * 0.035, points[1]!.y + art.height * 0.065, 'Space Grotesk', 500, Math.max(24, art.width * 0.05), palette.muted);
-  drawText(ctx, 'ARCHIVAR', points[2]!.x - art.width * 0.035, points[2]!.y + art.height * 0.065, 'Space Grotesk', 500, Math.max(24, art.width * 0.05), palette.muted);
+  drawText(ctx, sceneText('galactic', locale, 'observe'), points[0]!.x - art.width * 0.035, points[0]!.y + art.height * 0.065, 'Space Grotesk', 500, Math.max(24, art.width * 0.05), palette.muted);
+  drawText(ctx, sceneText('galactic', locale, 'annotate'), points[1]!.x - art.width * 0.035, points[1]!.y + art.height * 0.065, 'Space Grotesk', 500, Math.max(24, art.width * 0.05), palette.muted);
+  drawText(ctx, sceneText('galactic', locale, 'archive'), points[2]!.x - art.width * 0.035, points[2]!.y + art.height * 0.065, 'Space Grotesk', 500, Math.max(24, art.width * 0.05), palette.muted);
 }
 
 function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
@@ -209,8 +211,8 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
   drawStarField(ctx, art, record, palette.ink);
   const center = drawPlanet(ctx, art, record, palette);
   drawPlanetaryOrbits(ctx, art, center, record, palette, progress / 2);
-  if (record.composition === 'comparison') drawComparisonPath(ctx, art, palette, progress);
-  else drawChecklistPath(ctx, art, palette, progress, brief.status);
+  if (record.composition === 'comparison') drawComparisonPath(ctx, art, palette, progress, brief.locale);
+  else drawChecklistPath(ctx, art, palette, progress, brief.workflowStatus, brief.badgePolicy, brief.locale);
   ctx.restore();
   return ctx.getImageData(0, 0, brief.output.width, brief.output.height).data;
 }
@@ -218,6 +220,7 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
 export const galacticNarrativeScene: NarrativeScene = {
   style: 'galactic',
   version: 'galactic-orbital-review/1.0.0',
+  vocabulary: sceneVocabulary('value-driven'),
   supportsAspect(aspect) {
     return Math.abs(aspect - 16 / 9) / (16 / 9) < 0.015;
   },

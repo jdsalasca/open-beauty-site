@@ -27,6 +27,8 @@ import { makeArtifact } from '../make.js';
 import { SKILL_FALLBACK, styleGuideMarkdown, stylesOverview } from '../guide.js';
 import { packageRoot } from '../paths.js';
 import { createNarrative, narrativeFailure } from '../narrative/create.js';
+import { narrativeBriefSchema } from '../narrative/brief.js';
+import { narrativeCapabilityReport } from '../narrative/capabilities.js';
 import { NarrativeError } from '../types/narrative.js';
 import { createNarrativeGallery } from '../narrative/gallery.js';
 
@@ -798,10 +800,10 @@ QUALITY BAR
     {
       title: 'Create a narrative GIF review pack',
       description:
-        'Creates a narrative GIF review pack for papercraft/editorial, brutalist/documentary or poster, vaporwave, galactic, and nature. Other eight styles still return STYLE_NOT_SUPPORTED_YET with the supported-style list; no generic renderer is substituted. Returns GIF/PNG/contact-sheet/manifest paths and separate integrity, style, legibility, narrative and visual-review levels.',
+        'Creates a narrative GIF review pack for any registered scene. Call beauty_get_capabilities first to inspect semantic primitive/aspect/locale fallback and allowed visual vocabularies; only renderer-declared values are accepted. Returns GIF/PNG/contact-sheet/manifest paths and separate integrity, style, legibility, narrative and visual-review levels.',
       inputSchema: {
-        style: styleEnum.describe('Supported narrative scenes: papercraft/editorial, brutalist/documentary or poster, vaporwave, galactic, nature. Other styles remain explicitly unsupported; must match brief.style.'),
-        brief: z.record(z.string(), z.unknown()).describe('The normalized narrative-gif JSON brief with 3–5 phases.'),
+        style: styleEnum.describe('Narrative scene; must match brief.style.'),
+        brief: narrativeBriefSchema.describe('Validated narrative-gif brief. Its field descriptions are shared with beauty narrative --help.'),
         output: z.string().max(260).optional().describe('Output directory; defaults to beauty-output/narrative/<style>-<brief-hash>.'),
       },
     },
@@ -817,6 +819,24 @@ QUALITY BAR
         const result = narrativeFailure(error);
         return { content: [{ type: 'text' as const, text: JSON.stringify(result) }], structuredContent: { ...result }, isError: true };
       }
+    },
+  );
+
+  server.registerTool(
+    'beauty_get_capabilities',
+    {
+      title: 'Inspect narrative capabilities',
+      description: 'Returns the machine-readable style × primitive × aspect × locale matrix, each cell reason, and valid visual kinds, states and actions. Use before composing a narrative brief.',
+      inputSchema: {
+        style: styleEnum.optional().describe('Optional narrative style filter.'),
+      },
+    },
+    async ({ style }) => {
+      const report = narrativeCapabilityReport(style ? { style } : {});
+      return {
+        content: [{ type: 'text' as const, text: JSON.stringify(report) }],
+        structuredContent: { ...report },
+      };
     },
   );
 

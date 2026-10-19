@@ -2,6 +2,8 @@ import { canvasFor } from '../../canvas.js';
 import { getStyle } from '../../styles/presets.js';
 import type { NarrativePhase, NarrativeRect, NarrativeRenderContext, NarrativeScene, NormalizedNarrativeBrief } from '../../types/narrative.js';
 import { cubicBezierEase, drawRule, drawText, phaseMarkProgress, rgba } from './common.js';
+import { sceneVocabulary } from '../vocabulary.js';
+import { sceneText, workflowBadgeText } from '../i18n.js';
 
 interface DesktopArtifact {
   readonly identity: 'archivo-de-revision-1999';
@@ -80,7 +82,7 @@ function drawHorizon(ctx: ReturnType<typeof canvasFor>['ctx'], art: NarrativeRec
   ctx.restore();
 }
 
-function drawWindow(ctx: ReturnType<typeof canvasFor>['ctx'], art: NarrativeRect, artifact: DesktopArtifact, palette: ReturnType<typeof getStyle>['palette'], fonts: NarrativeRenderContext['fonts'], progress: number, status: NormalizedNarrativeBrief['status']): { window: NarrativeRect; row: NarrativeRect; detail: NarrativeRect | null } {
+function drawWindow(ctx: ReturnType<typeof canvasFor>['ctx'], art: NarrativeRect, artifact: DesktopArtifact, palette: ReturnType<typeof getStyle>['palette'], fonts: NarrativeRenderContext['fonts'], progress: number, brief: NormalizedNarrativeBrief): { window: NarrativeRect; row: NarrativeRect; detail: NarrativeRect | null } {
   const window: NarrativeRect = {
     x: art.x + art.width * 0.035,
     y: art.y + art.height * 0.075,
@@ -97,14 +99,14 @@ function drawWindow(ctx: ReturnType<typeof canvasFor>['ctx'], art: NarrativeRect
   ctx.strokeRect(window.x, window.y, window.width, window.height);
   ctx.fillStyle = palette.accent2;
   ctx.fillRect(window.x, window.y, window.width, art.height * 0.082);
-  drawText(ctx, 'EDITOR DE REVISION', window.x + art.width * 0.035, window.y + art.height * 0.056, fonts.effective.figure.family, fonts.effective.figure.weight, Math.max(24, art.width * 0.042), palette.ink);
+  drawText(ctx, sceneText('vaporwave', brief.locale, 'editor'), window.x + art.width * 0.035, window.y + art.height * 0.056, fonts.effective.figure.family, fonts.effective.figure.weight, Math.max(24, art.width * 0.042), palette.ink);
 
   const buttonSize = art.height * 0.034;
   for (let index = 0; index < 3; index += 1) {
     ctx.fillStyle = index === 0 ? palette.accent : index === 1 ? palette.accent4 : palette.accent2;
     ctx.fillRect(window.x + window.width - (index + 1) * buttonSize * 1.4, window.y + art.height * 0.021, buttonSize, buttonSize);
   }
-  drawText(ctx, 'ARCHIVO DEMO · 1999', window.x + art.width * 0.035, window.y + art.height * 0.13, fonts.effective.label.family, fonts.effective.label.weight, Math.max(24, art.width * 0.042), palette.accent4);
+  drawText(ctx, sceneText('vaporwave', brief.locale, 'demoArchive'), window.x + art.width * 0.035, window.y + art.height * 0.13, fonts.effective.label.family, fonts.effective.label.weight, Math.max(24, art.width * 0.042), palette.accent4);
   drawRule(ctx, window.x + art.width * 0.035, window.y + art.height * 0.15, window.x + window.width - art.width * 0.035, rgba(palette.ink, 0.42), 1.5);
 
   const detailReveal = Math.min(1, Math.max(0, progress - 1));
@@ -130,7 +132,7 @@ function drawWindow(ctx: ReturnType<typeof canvasFor>['ctx'], art: NarrativeRect
     ctx.strokeStyle = selectedAlpha > 0.3 ? palette.accent4 : rgba(palette.ink, 0.55);
     ctx.lineWidth = 2;
     ctx.strokeRect(row.x, row.y, row.width, row.height);
-    drawText(ctx, 'LECTURA.TXT', row.x + art.width * 0.13, row.y + row.height * 0.63, fonts.effective.reading.family, fonts.effective.reading.weight, labelSize, palette.ink);
+    drawText(ctx, sceneText('vaporwave', brief.locale, 'readingFile'), row.x + art.width * 0.13, row.y + row.height * 0.63, fonts.effective.reading.family, fonts.effective.reading.weight, labelSize, palette.ink);
 
     if (detailReveal > 0) {
       ctx.save();
@@ -140,16 +142,17 @@ function drawWindow(ctx: ReturnType<typeof canvasFor>['ctx'], art: NarrativeRect
       ctx.strokeStyle = palette.accent2;
       ctx.lineWidth = 2;
       ctx.strokeRect(detailRect.x, detailRect.y, detailRect.width, detailRect.height);
-      drawText(ctx, 'ESTADO', detailRect.x + art.width * 0.025, detailRect.y + detailRect.height * 0.29, fonts.effective.label.family, fonts.effective.label.weight, labelSize, palette.accent4);
+      const badgeText = workflowBadgeText('vaporwave', brief.locale, brief.workflowStatus, brief.badgePolicy, brief.badgeText);
+      if (badgeText) drawText(ctx, sceneText('vaporwave', brief.locale, 'state'), detailRect.x + art.width * 0.025, detailRect.y + detailRect.height * 0.29, fonts.effective.label.family, fonts.effective.label.weight, labelSize, palette.accent4);
       drawRule(ctx, detailRect.x + art.width * 0.025, detailRect.y + detailRect.height * 0.38, detailRect.x + detailRect.width - art.width * 0.025, palette.accent2, 2);
-      drawText(ctx, status === 'done' ? 'REVISADO' : 'EN REVISIÓN', detailRect.x + art.width * 0.025, detailRect.y + detailRect.height * 0.62, fonts.effective.reading.family, fonts.effective.reading.weight, labelSize, palette.ink);
+      if (badgeText) drawText(ctx, badgeText, detailRect.x + art.width * 0.025, detailRect.y + detailRect.height * 0.62, fonts.effective.reading.family, fonts.effective.reading.weight, labelSize, palette.ink);
       ctx.restore();
     }
   } else {
-    const labels = ['LECTURA.TXT', 'SEÑALAR', 'ARCHIVAR'];
+    const labels = [sceneText('vaporwave', brief.locale, 'readingFile'), sceneText('vaporwave', brief.locale, 'signal'), sceneText('vaporwave', brief.locale, 'archive')];
     const current = Math.min(2, Math.floor(progress));
     taskRows.forEach((task, index) => {
-      const done = index < progress || (status === 'done' && progress >= 2 && index === 2);
+      const done = index < progress || (brief.badgePolicy !== 'none' && brief.workflowStatus === 'done' && progress >= 2 && index === 2);
       ctx.fillStyle = rgba(palette.accent, index === current ? 0.3 : 0.1);
       ctx.fillRect(task.x, task.y, task.width, task.height);
       ctx.strokeStyle = index === current ? palette.accent4 : rgba(palette.ink, 0.45);
@@ -157,7 +160,7 @@ function drawWindow(ctx: ReturnType<typeof canvasFor>['ctx'], art: NarrativeRect
       ctx.strokeRect(task.x, task.y, task.width, task.height);
       const labelX = task.x + (index === 0 ? art.width * 0.15 : art.width * 0.07);
       drawText(ctx, labels[index]!, labelX, task.y + task.height * 0.69, fonts.effective.reading.family, fonts.effective.reading.weight, labelSize, palette.ink);
-      if (index === 0) drawText(ctx, 'REVISAR', task.x + task.width * 0.66, task.y + task.height * 0.69, fonts.effective.label.family, fonts.effective.label.weight, labelSize, palette.accent4);
+      if (index === 0) drawText(ctx, sceneText('vaporwave', brief.locale, 'review'), task.x + task.width * 0.66, task.y + task.height * 0.69, fonts.effective.label.family, fonts.effective.label.weight, labelSize, palette.accent4);
       const markX = task.x + task.width * 0.9;
       const markY = task.y + task.height * 0.5;
       ctx.strokeStyle = done ? palette.accent4 : rgba(palette.ink, 0.55);
@@ -176,7 +179,7 @@ function drawWindow(ctx: ReturnType<typeof canvasFor>['ctx'], art: NarrativeRect
   return { window, row, detail };
 }
 
-function drawFileIcon(ctx: ReturnType<typeof canvasFor>['ctx'], centerX: number, centerY: number, size: number, palette: ReturnType<typeof getStyle>['palette'], fonts: NarrativeRenderContext['fonts'], captionAlpha = 1): void {
+function drawFileIcon(ctx: ReturnType<typeof canvasFor>['ctx'], centerX: number, centerY: number, size: number, palette: ReturnType<typeof getStyle>['palette'], fonts: NarrativeRenderContext['fonts'], locale: 'es' | 'en', captionAlpha = 1): void {
   const x = centerX - size * 0.34;
   const y = centerY - size * 0.40;
   ctx.fillStyle = palette.accent4;
@@ -196,7 +199,7 @@ function drawFileIcon(ctx: ReturnType<typeof canvasFor>['ctx'], centerX: number,
   if (captionAlpha > 0.01) {
     ctx.save();
     ctx.globalAlpha = captionAlpha;
-    drawText(ctx, 'ARCHIVO', x - size * 0.16, y + size * 1.04, fonts.effective.reading.family, fonts.effective.reading.weight, Math.max(24, size * 0.28), palette.ink);
+    drawText(ctx, sceneText('vaporwave', locale, 'archive'), x - size * 0.16, y + size * 1.04, fonts.effective.reading.family, fonts.effective.reading.weight, Math.max(24, size * 0.28), palette.ink);
     ctx.restore();
   }
 }
@@ -219,7 +222,7 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
   ctx.fillStyle = palette.bg;
   ctx.fillRect(art.x, art.y, art.width, art.height);
   drawHorizon(ctx, art, palette, artifact.gridOffset, artifact.sunBandOffset);
-  const { window, row } = drawWindow(ctx, art, artifact, palette, fonts, progress, brief.status);
+  const { window, row } = drawWindow(ctx, art, artifact, palette, fonts, progress, brief);
   const desktopX = art.x + art.width * 0.75;
   const desktopY = art.y + art.height * 0.84;
   const rowX = row.x + art.width * 0.055;
@@ -227,14 +230,14 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
   const fileX = progress >= 1 ? rowX : desktopX + (rowX - desktopX) * progress;
   const fileY = progress >= 1 ? rowY : desktopY + (rowY - desktopY) * progress;
   const fileSize = Math.min(art.width * 0.14, art.height * 0.14, row.height * 0.96);
-  drawFileIcon(ctx, fileX, fileY, fileSize, palette, fonts, Math.max(0, 1 - progress / 0.38));
+  drawFileIcon(ctx, fileX, fileY, fileSize, palette, fonts, brief.locale, Math.max(0, 1 - progress / 0.38));
   if (artifact.composition === 'comparison' && progress > 1) {
     ctx.strokeStyle = rgba(palette.accent4, Math.min(1, progress - 1));
     ctx.lineWidth = 2;
     ctx.strokeRect(row.x - 3, row.y - 3, row.width + 6, row.height + 6);
   }
-  const status = artifact.composition === 'checklist' ? 'REVISAR · MARCAR · ARCHIVAR' : 'ARCHIVO · LECTURA · REVISIÓN';
-  drawText(ctx, status, art.x + art.width * 0.045, window.y + window.height * 0.94, fonts.effective.reading.family, fonts.effective.reading.weight, Math.max(24, art.width * 0.042), palette.ink);
+  const statusCopy = sceneText('vaporwave', brief.locale, artifact.composition === 'checklist' ? 'checklistStatus' : 'comparisonStatus');
+  drawText(ctx, statusCopy, art.x + art.width * 0.045, window.y + window.height * 0.94, fonts.effective.reading.family, fonts.effective.reading.weight, Math.max(24, art.width * 0.042), palette.ink);
   ctx.restore();
   return ctx.getImageData(0, 0, brief.output.width, brief.output.height).data;
 }
@@ -242,6 +245,7 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
 export const vaporwaveNarrativeScene: NarrativeScene = {
   style: 'vaporwave',
   version: 'vaporwave-desktop-archive/1.0.0',
+  vocabulary: sceneVocabulary('value-driven'),
   supportsAspect(aspect) {
     return Math.abs(aspect - 16 / 9) / (16 / 9) < 0.015;
   },

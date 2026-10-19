@@ -2,6 +2,8 @@ import { canvasFor } from '../../canvas.js';
 import { getStyle } from '../../styles/presets.js';
 import type { NarrativePhase, NarrativeRect, NarrativeRenderContext, NarrativeScene, NormalizedNarrativeBrief } from '../../types/narrative.js';
 import { cubicBezierEase } from './common.js';
+import { sceneVocabulary } from '../vocabulary.js';
+import { sceneText } from '../i18n.js';
 
 interface LiquidPoster {
   readonly identity: 'flujo-de-senal';
@@ -123,7 +125,7 @@ function drawChecklistBands(ctx: ReturnType<typeof canvasFor>['ctx'], field: Nar
   drawBlob(ctx, signalX, signalY, w * 0.045, h * 0.04, poster.twist * 0.04, colors.yellow, colors.orange);
 }
 
-function drawFocus(ctx: ReturnType<typeof canvasFor>['ctx'], field: NarrativeRect, family: string, colors: { cream: string; dark: string; yellow: string }): void {
+function drawFocus(ctx: ReturnType<typeof canvasFor>['ctx'], field: NarrativeRect, family: string, locale: 'es' | 'en', colors: { cream: string; dark: string; yellow: string }): void {
   const cx = field.x + field.width * 0.71;
   const cy = field.y + field.height * 0.53;
   const radius = field.height * 0.14;
@@ -141,7 +143,7 @@ function drawFocus(ctx: ReturnType<typeof canvasFor>['ctx'], field: NarrativeRec
   ctx.fillStyle = colors.dark;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText('REVISIÓN', cx, cy);
+  ctx.fillText(sceneText('psychedelic', locale, 'review'), cx, cy);
   ctx.textAlign = 'start';
 }
 
@@ -174,13 +176,14 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
     drawBlob(ctx, bubbleX, bubbleY, field.width * 0.12, field.height * 0.105, poster.twist * 0.08, colors.pink, colors.orange);
   }
   ctx.restore();
-  drawFocus(ctx, field, fonts.effective.label.family, colors);
+  drawFocus(ctx, field, fonts.effective.label.family, brief.locale, colors);
   return ctx.getImageData(0, 0, brief.output.width, brief.output.height).data;
 }
 
 export const psychedelicNarrativeScene: NarrativeScene = {
   style: 'psychedelic',
   version: 'psychedelic-fluid-focus/1.0.0',
+  vocabulary: sceneVocabulary('value-driven'),
   supportsAspect(aspect) {
     return [16 / 9, 1].some((ratio) => Math.abs(aspect - ratio) / ratio < 0.015);
   },

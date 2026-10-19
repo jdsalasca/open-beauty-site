@@ -3,6 +3,7 @@ import { getStyle } from '../../styles/presets.js';
 import type { NarrativeRenderContext, NarrativeRect, NarrativeScene } from '../../types/narrative.js';
 import { cubicBezierEase } from './common.js';
 import { clamp, compositionFor, phasePosition, type StageCComposition } from './stage-c-common.js';
+import { sceneVocabulary } from '../vocabulary.js';
 
 interface OpticalPattern {
   readonly identity: 'focus-grouping-pattern';
@@ -83,6 +84,7 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
 export const opartNarrativeScene: NarrativeScene = {
   style: 'opart',
   version: 'opart-still-focus/1.0.0',
+  vocabulary: sceneVocabulary('phase-order-fallback'),
   supportsAspect(aspect) {
     return [16 / 9, 1, 9 / 16].some((ratio) => Math.abs(aspect - ratio) / ratio < 0.015);
   },

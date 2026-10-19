@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 1,
-  "commit": "aaa4322afd9cf89b6ef3a8c7a1ae542fcef5ed31",
+  "schemaVersion": 2,
+  "commit": "7a036e5fcfc3e09e7c6738e21a0ecc81248f6021",
   "brief": {
     "style": "papercraft",
     "subfamily": "editorial",
@@ -9,6 +9,7 @@
     "audience": "Producto en Sprint Review",
     "title": "Lectura antes del cierre",
     "status": "in-review",
+    "badgePolicy": "workflow",
     "phases": [
       {
         "id": "before",
@@ -39,9 +40,11 @@
       }
     ],
     "playback": {
+      "preset": "readable",
       "minReadableHoldMs": 5000,
       "transitionMs": 900,
-      "loop": true
+      "loop": true,
+      "totalDurationBudgetMs": 30000
     },
     "output": {
       "width": 1280,
@@ -52,14 +55,25 @@
       ],
       "preset": "review-1280x720"
     },
-    "seed": 29
+    "seed": 29,
+    "workflowStatus": "in-review",
+    "outcome": {
+      "mode": "expected"
+    },
+    "illustrative": true
   },
-  "briefSha256": "a789b538e4fd90cbc3d8cb4bd501663e0789f8436e9ab17e1d732602d4bfc013",
+  "briefSha256": "f73be3b37dfe90090fa881d649e4c048a2a023cfafa6dcb6e11a4082486175e9",
   "style": "papercraft",
   "subfamily": "editorial",
+  "workflowStatus": "in-review",
+  "outcome": {
+    "mode": "expected"
+  },
+  "evidenceClassification": "illustrative",
+  "illustrative": true,
   "seed": 29,
   "renderer": {
-    "narrative": "narrative-core/0.1.0",
+    "narrative": "narrative-core/0.2.0",
     "canvas": "@napi-rs/canvas@1.0.11",
     "gif": "gifenc@1.0.3",
     "scene": "papercraft-editorial/1.1.0"
@@ -160,15 +174,15 @@
     "contactSheet": 95750
   },
   "hashes": {
-    "briefSha256": "a789b538e4fd90cbc3d8cb4bd501663e0789f8436e9ab17e1d732602d4bfc013",
+    "briefSha256": "f73be3b37dfe90090fa881d649e4c048a2a023cfafa6dcb6e11a4082486175e9",
     "gifSha256": "0fdc14d6b94622e249a3187437c074b212f3b7fcc5f43818df1e6aed84caf17e",
     "pngSha256": "55c22baabee2c08a0b37d597025475cf3fd9e060325a969164911e7f94e4bdb3",
     "contactSheetSha256": "869b7723564c3f67c5204fad224f37185262919a9f97c2c6e4d8acce817c086a"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-a789b538.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-a789b538.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-a789b538-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-a789b538.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-a789b538.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-a789b538-contact-sheet.png"
   },
   "controls": [
     {
@@ -354,13 +368,25 @@
     {
       "name": "visual-state-change",
       "passed": true,
-      "detail": "Phase states differ and exported frames are not identical.",
+      "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
       "source": "pixels"
     },
     {
-      "name": "result-follows-status",
+      "name": "workflow-outcome-separation",
       "passed": true,
-      "detail": "status=in-review; final label=\"Resultado esperado\"",
+      "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+      "source": "source"
+    },
+    {
+      "name": "outcome-evidence",
+      "passed": true,
+      "detail": "Expected outcome; no benefit measurement is claimed.",
+      "source": "source"
+    },
+    {
+      "name": "result-follows-outcome",
+      "passed": true,
+      "detail": "outcome=expected; final label=\"Resultado esperado\"",
       "source": "source"
     }
   ],
@@ -570,17 +596,29 @@
         {
           "name": "visual-state-change",
           "passed": true,
-          "detail": "Phase states differ and exported frames are not identical.",
+          "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
           "source": "pixels"
         },
         {
-          "name": "result-follows-status",
+          "name": "workflow-outcome-separation",
           "passed": true,
-          "detail": "status=in-review; final label=\"Resultado esperado\"",
+          "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+          "source": "source"
+        },
+        {
+          "name": "outcome-evidence",
+          "passed": true,
+          "detail": "Expected outcome; no benefit measurement is claimed.",
+          "source": "source"
+        },
+        {
+          "name": "result-follows-outcome",
+          "passed": true,
+          "detail": "outcome=expected; final label=\"Resultado esperado\"",
           "source": "source"
         }
       ],
-      "note": "Automated checks verify phase/state structure and shared object identity; causal meaning still needs review."
+      "note": "Automated checks separate work status from expected/observed outcome and confirm required evidence fields; causal meaning and evidence scope still need human review."
     },
     "visual-review": {
       "status": "pending",
@@ -589,7 +627,7 @@
         "full text and contrast at 640×360",
         "style material in native frame",
         "same object and causal change across phases",
-        "result faithful to status",
+        "result faithful to outcome and evidence scope",
         "deliberate loop restart"
       ],
       "evidence": []
@@ -606,7 +644,7 @@
         "before · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-a789b538-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-a789b538-contact-sheet.png"
     },
     {
       "phaseId": "change",
@@ -616,7 +654,7 @@
         "change · transición media",
         "change · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-a789b538-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-a789b538-contact-sheet.png"
     },
     {
       "phaseId": "result",
@@ -626,7 +664,7 @@
         "result · transición media",
         "result · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-a789b538-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-a789b538-contact-sheet.png"
     }
   ],
   "palette": {
@@ -655,6 +693,37 @@
       "passed": true
     }
   ],
+  "timing": {
+    "preset": "readable",
+    "holdsRequestedMs": 15000,
+    "holdsDecodedMs": 15000,
+    "transitionsMs": 1800,
+    "loopBridgeMs": 900,
+    "entryMs": 240,
+    "totalDecodedMs": 17940,
+    "totalDurationBudgetMs": 30000,
+    "phaseHolds": [
+      {
+        "phaseId": "before",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      },
+      {
+        "phaseId": "change",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      },
+      {
+        "phaseId": "result",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      }
+    ],
+    "warnings": []
+  },
   "resourceEstimate": {
     "pixelFrames": 38707200,
     "maxPixelFrames": 96000000,

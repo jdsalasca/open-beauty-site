@@ -17,6 +17,7 @@ interface GalleryPack {
   style: string;
   title: string;
   status: string;
+  evidenceClassification: 'illustrative' | 'measured' | 'expected';
   composition: string;
   width: number;
   height: number;
@@ -26,10 +27,17 @@ interface GalleryPack {
 
 interface ManifestShape {
   style?: unknown;
+  workflowStatus?: unknown;
+  evidenceClassification?: unknown;
+  illustrative?: unknown;
+  outcome?: { mode?: unknown };
   brief?: {
     style?: unknown;
     title?: unknown;
     status?: unknown;
+    workflowStatus?: unknown;
+    illustrative?: unknown;
+    outcome?: { mode?: unknown };
     phases?: Array<{ visual?: { kind?: unknown } }>;
   };
   dimensions?: { width?: unknown; height?: unknown };
@@ -130,7 +138,14 @@ async function readPack(manifestPath: string): Promise<GalleryPack> {
   return {
     style,
     title: title.trim(),
-    status: typeof manifest.brief?.status === 'string' ? manifest.brief.status : 'not-declared',
+    status: typeof manifest.workflowStatus === 'string'
+      ? manifest.workflowStatus
+      : typeof manifest.brief?.status === 'string' ? manifest.brief.status : 'not-declared',
+    evidenceClassification: manifest.evidenceClassification === 'illustrative' || manifest.evidenceClassification === 'measured' || manifest.evidenceClassification === 'expected'
+      ? manifest.evidenceClassification
+      : manifest.illustrative === true || manifest.brief?.illustrative === true
+        ? 'illustrative'
+        : manifest.outcome?.mode === 'observed' || manifest.brief?.outcome?.mode === 'observed' ? 'measured' : 'expected',
     composition,
     width,
     height,
@@ -147,6 +162,7 @@ function card(pack: GalleryPack, outputDirectory: string): string {
   const manifest = relativeUrl(outputDirectory, pack.assets.manifest);
   const id = `piece-${pack.style}-${path.basename(pack.assets.manifest).replace(/[^a-z0-9-]/gi, '-')}`;
   const status = escapeHtml(pack.status);
+  const evidenceLabel = pack.evidenceClassification === 'illustrative' ? 'Ilustrativo' : pack.evidenceClassification === 'measured' ? 'Observado con evidencia' : 'Resultado esperado';
   const levels = EVALUATION_LEVELS.map((level) => {
     const value = pack.evaluation[level];
     const emphasized = level === 'visual-review' && value === 'pending' ? ' level--pending' : '';
@@ -156,11 +172,13 @@ function card(pack: GalleryPack, outputDirectory: string): string {
   <header class="piece-header">
     <h2 id="${escapeHtml(id)}-title">${escapeHtml(pack.title)}</h2>
     <span class="status-tag">Estado: ${status}</span>
+    <span class="evidence-tag evidence-tag--${pack.evidenceClassification}">${escapeHtml(evidenceLabel)}</span>
   </header>
   <dl class="piece-meta">
     <div><dt>Estilo</dt><dd>${escapeHtml(styleName)}</dd></div>
     <div><dt>Composición</dt><dd>${escapeHtml(pack.composition)}</dd></div>
     <div><dt>Estado</dt><dd>${status}</dd></div>
+    <div><dt>Resultado</dt><dd>${escapeHtml(evidenceLabel)}</dd></div>
   </dl>
   <figure class="artwork">
     <img class="poster" src="${poster}" data-poster="${poster}" data-gif="${gif}" width="${pack.width}" height="${pack.height}" alt="${escapeHtml(pack.title)} · ${escapeHtml(styleName)} · vista estática" loading="lazy">
@@ -239,7 +257,9 @@ function galleryHtml(title: string, packs: GalleryPack[], outputDirectory: strin
     .piece:nth-child(4n + 2) { margin-top: 0.65rem; }
     .piece-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.5rem; }
     .piece h2 { margin: 0; font-size: clamp(1.2rem, 2.6vw, 1.65rem); line-height: 1.2; }
-    .status-tag { padding: 0.18rem 0.55rem; border: 1px solid var(--ink); border-radius: 48px; font-size: 12px; font-weight: 700; }
+    .status-tag, .evidence-tag { padding: 0.18rem 0.55rem; border: 1px solid var(--ink); border-radius: 48px; font-size: 12px; font-weight: 700; }
+    .evidence-tag--illustrative { border-style: dashed; }
+    .evidence-tag--measured { background: var(--highlight); }
     .piece-meta { display: flex; flex-wrap: wrap; gap: 0.35rem 1rem; margin: 0.8rem 0; }
     .piece-meta div { display: flex; flex-wrap: wrap; gap: 0.25rem; min-width: 0; }
     .piece-meta dt { color: var(--muted); font-weight: 700; }
@@ -276,7 +296,7 @@ function galleryHtml(title: string, packs: GalleryPack[], outputDirectory: strin
   <header class="site-header">
     <p class="eyebrow">Open Beauty · revisión editorial</p>
     <h1>${escapeHtml(title)}</h1>
-    <p class="intro">Cada pieza abre como imagen fija. Reproduce el GIF solo cuando quieras revisar el ritmo. Los estados de evaluación proceden de cada manifiesto; la revisión visual pendiente no aprueba la publicación.</p>
+    <p class="intro">Cada pieza abre como imagen fija. Reproduce el GIF solo cuando quieras revisar el ritmo. La galería distingue ejemplos ilustrativos, resultados esperados y resultados observados con evidencia; la revisión visual pendiente no aprueba la publicación.</p>
   </header>
   <main id="main-content">
     <section class="toolbar" aria-labelledby="filter-heading">

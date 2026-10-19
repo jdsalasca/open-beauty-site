@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 1,
-  "commit": "aaa4322afd9cf89b6ef3a8c7a1ae542fcef5ed31",
+  "schemaVersion": 2,
+  "commit": "7a036e5fcfc3e09e7c6738e21a0ecc81248f6021",
   "brief": {
     "style": "renaissance",
     "kind": "narrative-gif",
@@ -8,6 +8,7 @@
     "audience": "Producto en Sprint Review",
     "title": "Cambios que se revisan",
     "status": "in-review",
+    "badgePolicy": "workflow",
     "phases": [
       {
         "id": "before",
@@ -38,9 +39,11 @@
       }
     ],
     "playback": {
+      "preset": "readable",
       "minReadableHoldMs": 5000,
       "transitionMs": 650,
-      "loop": true
+      "loop": true,
+      "totalDurationBudgetMs": 30000
     },
     "output": {
       "width": 1280,
@@ -51,14 +54,25 @@
       ],
       "preset": "review-1280x720"
     },
-    "seed": 7
+    "seed": 7,
+    "workflowStatus": "in-review",
+    "outcome": {
+      "mode": "expected"
+    },
+    "illustrative": true
   },
-  "briefSha256": "7cff14627603d885bf4737029b4dd7f77d6e34523f3f4de077c4f3ee6bb313e4",
+  "briefSha256": "a2be4ead27b268496396157d9e7127d7987f0516f85b671cae96be596e44e612",
   "style": "renaissance",
   "subfamily": null,
+  "workflowStatus": "in-review",
+  "outcome": {
+    "mode": "expected"
+  },
+  "evidenceClassification": "illustrative",
+  "illustrative": true,
   "seed": 7,
   "renderer": {
-    "narrative": "narrative-core/0.1.0",
+    "narrative": "narrative-core/0.2.0",
     "canvas": "@napi-rs/canvas@1.0.11",
     "gif": "gifenc@1.0.3",
     "scene": "renaissance-fresco/1.0.0"
@@ -150,15 +164,15 @@
     "contactSheet": 66219
   },
   "hashes": {
-    "briefSha256": "7cff14627603d885bf4737029b4dd7f77d6e34523f3f4de077c4f3ee6bb313e4",
+    "briefSha256": "a2be4ead27b268496396157d9e7127d7987f0516f85b671cae96be596e44e612",
     "gifSha256": "d2ce8be4b93b24871b49a17dbd5ab870447bf8c1078439bc2dff1b8eaec8a5c5",
     "pngSha256": "89688fa5ba96766e4e8d9229a1e752c3d16867dcb618bccca246785e926ee280",
     "contactSheetSha256": "59cd7c5a5bbf1f6069ae1c1e2daaafd2e96c9b139d9e1f7508a66135fd750170"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\renaissance\\comparison\\cambios-que-se-revisan-7cff1462.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\renaissance\\comparison\\cambios-que-se-revisan-7cff1462.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\renaissance\\comparison\\cambios-que-se-revisan-7cff1462-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\gallery\\renaissance\\comparison\\cambios-que-se-revisan-7cff1462.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\gallery\\renaissance\\comparison\\cambios-que-se-revisan-7cff1462.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\gallery\\renaissance\\comparison\\cambios-que-se-revisan-7cff1462-contact-sheet.png"
   },
   "controls": [
     {
@@ -344,13 +358,25 @@
     {
       "name": "visual-state-change",
       "passed": true,
-      "detail": "Phase states differ and exported frames are not identical.",
+      "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
       "source": "pixels"
     },
     {
-      "name": "result-follows-status",
+      "name": "workflow-outcome-separation",
       "passed": true,
-      "detail": "status=in-review; final label=\"Resultado esperado\"",
+      "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+      "source": "source"
+    },
+    {
+      "name": "outcome-evidence",
+      "passed": true,
+      "detail": "Expected outcome; no benefit measurement is claimed.",
+      "source": "source"
+    },
+    {
+      "name": "result-follows-outcome",
+      "passed": true,
+      "detail": "outcome=expected; final label=\"Resultado esperado\"",
       "source": "source"
     }
   ],
@@ -560,17 +586,29 @@
         {
           "name": "visual-state-change",
           "passed": true,
-          "detail": "Phase states differ and exported frames are not identical.",
+          "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
           "source": "pixels"
         },
         {
-          "name": "result-follows-status",
+          "name": "workflow-outcome-separation",
           "passed": true,
-          "detail": "status=in-review; final label=\"Resultado esperado\"",
+          "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+          "source": "source"
+        },
+        {
+          "name": "outcome-evidence",
+          "passed": true,
+          "detail": "Expected outcome; no benefit measurement is claimed.",
+          "source": "source"
+        },
+        {
+          "name": "result-follows-outcome",
+          "passed": true,
+          "detail": "outcome=expected; final label=\"Resultado esperado\"",
           "source": "source"
         }
       ],
-      "note": "Automated checks verify phase/state structure and shared object identity; causal meaning still needs review."
+      "note": "Automated checks separate work status from expected/observed outcome and confirm required evidence fields; causal meaning and evidence scope still need human review."
     },
     "visual-review": {
       "status": "pending",
@@ -579,7 +617,7 @@
         "full text and contrast at 640×360",
         "style material in native frame",
         "same object and causal change across phases",
-        "result faithful to status",
+        "result faithful to outcome and evidence scope",
         "deliberate loop restart"
       ],
       "evidence": []
@@ -595,7 +633,7 @@
         "before · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\renaissance\\comparison\\cambios-que-se-revisan-7cff1462-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\gallery\\renaissance\\comparison\\cambios-que-se-revisan-7cff1462-contact-sheet.png"
     },
     {
       "phaseId": "change",
@@ -604,7 +642,7 @@
         "change · pausa",
         "change · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\renaissance\\comparison\\cambios-que-se-revisan-7cff1462-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\gallery\\renaissance\\comparison\\cambios-que-se-revisan-7cff1462-contact-sheet.png"
     },
     {
       "phaseId": "result",
@@ -613,7 +651,7 @@
         "result · pausa",
         "result · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\renaissance\\comparison\\cambios-que-se-revisan-7cff1462-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\gallery\\renaissance\\comparison\\cambios-que-se-revisan-7cff1462-contact-sheet.png"
     }
   ],
   "palette": {
@@ -642,6 +680,37 @@
       "passed": true
     }
   ],
+  "timing": {
+    "preset": "readable",
+    "holdsRequestedMs": 15000,
+    "holdsDecodedMs": 15000,
+    "transitionsMs": 1300,
+    "loopBridgeMs": 650,
+    "entryMs": 240,
+    "totalDecodedMs": 17190,
+    "totalDurationBudgetMs": 30000,
+    "phaseHolds": [
+      {
+        "phaseId": "before",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      },
+      {
+        "phaseId": "change",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      },
+      {
+        "phaseId": "result",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      }
+    ],
+    "warnings": []
+  },
   "resourceEstimate": {
     "pixelFrames": 30412800,
     "maxPixelFrames": 96000000,

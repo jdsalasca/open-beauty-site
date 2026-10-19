@@ -1,46 +1,50 @@
 {
-  "schemaVersion": 1,
-  "commit": "aaa4322afd9cf89b6ef3a8c7a1ae542fcef5ed31",
+  "schemaVersion": 2,
+  "commit": "7a036e5fcfc3e09e7c6738e21a0ecc81248f6021",
   "brief": {
-    "style": "vaporwave",
+    "style": "brutalist",
+    "subfamily": "documentary",
     "kind": "narrative-gif",
     "locale": "es",
-    "audience": "Producto · Sprint Review (ejemplo visual)",
-    "title": "Lectura ordenada",
+    "audience": "Producto en Sprint Review",
+    "title": "Observación registrada",
     "status": "done",
+    "badgePolicy": "workflow",
     "phases": [
       {
         "id": "before",
         "label": "Antes",
-        "text": "La ventana muestra el archivo sin pasos de lectura.",
+        "text": "La ficha no indicaba dónde revisar la advertencia.",
         "visual": {
-          "kind": "checklist",
+          "kind": "comparison",
           "state": "unreviewed"
         }
       },
       {
         "id": "change",
         "label": "Cambio",
-        "text": "La misma ventana organiza revisar, señalar y archivar.",
+        "text": "La observación queda señalada en el mismo documento.",
         "visual": {
-          "kind": "checklist",
+          "kind": "comparison",
           "state": "flagged"
         }
       },
       {
         "id": "result",
-        "label": "Resultado observado",
-        "text": "Los tres pasos quedan visibles junto al mismo archivo.",
+        "label": "Resultado esperado",
+        "text": "La ficha queda lista para una nueva lectura.",
         "visual": {
-          "kind": "checklist",
-          "state": "review-ready"
+          "kind": "comparison",
+          "state": "reviewed"
         }
       }
     ],
     "playback": {
+      "preset": "readable",
       "minReadableHoldMs": 5000,
-      "transitionMs": 650,
-      "loop": true
+      "transitionMs": 900,
+      "loop": true,
+      "totalDurationBudgetMs": 30000
     },
     "output": {
       "width": 1280,
@@ -51,39 +55,50 @@
       ],
       "preset": "review-1280x720"
     },
-    "seed": 11
+    "seed": 43,
+    "workflowStatus": "done",
+    "outcome": {
+      "mode": "expected"
+    },
+    "illustrative": true
   },
-  "briefSha256": "dd72dc2df35f26a3034c135b45794a437d04a30d7389e02ac0acfd5211ef5e64",
-  "style": "vaporwave",
-  "subfamily": null,
-  "seed": 11,
+  "briefSha256": "1e65bd574fd7ad1d2b1318ff9c1ccab9fe8d57f0f1630e9cbfa2d04b45ca3b30",
+  "style": "brutalist",
+  "subfamily": "documentary",
+  "workflowStatus": "done",
+  "outcome": {
+    "mode": "expected"
+  },
+  "evidenceClassification": "illustrative",
+  "illustrative": true,
+  "seed": 43,
   "renderer": {
-    "narrative": "narrative-core/0.1.0",
+    "narrative": "narrative-core/0.2.0",
     "canvas": "@napi-rs/canvas@1.0.11",
     "gif": "gifenc@1.0.3",
-    "scene": "vaporwave-desktop-archive/1.0.0"
+    "scene": "brutalist-documentary/1.1.0"
   },
   "fonts": {
     "bundleVersion": "repo-bundled-ofl-1",
     "roles": {
       "display": {
-        "family": "Press Start 2P",
+        "family": "Archivo Black",
         "weight": 400
       },
       "reading": {
-        "family": "Space Grotesk",
+        "family": "Space Mono",
         "weight": 400
       },
       "label": {
-        "family": "Space Grotesk",
-        "weight": 500
+        "family": "Space Mono",
+        "weight": 700
       },
       "figure": {
-        "family": "Press Start 2P",
+        "family": "Archivo Black",
         "weight": 400
       },
       "annotation": {
-        "family": "Space Grotesk",
+        "family": "Space Mono",
         "weight": 400
       }
     }
@@ -99,13 +114,16 @@
   "decoded": {
     "width": 1280,
     "height": 720,
-    "frameCount": 33,
+    "frameCount": 42,
     "delaysMs": [
       80,
       5000,
       80,
       80,
-      70,
+      80,
+      80,
+      80,
+      80,
       70,
       70,
       70,
@@ -116,7 +134,10 @@
       5000,
       80,
       80,
-      70,
+      80,
+      80,
+      80,
+      80,
       70,
       70,
       70,
@@ -127,7 +148,10 @@
       5000,
       80,
       80,
-      70,
+      80,
+      80,
+      80,
+      80,
       70,
       70,
       70,
@@ -135,30 +159,30 @@
       70,
       70
     ],
-    "durationMs": 17190,
+    "durationMs": 17940,
     "loopCount": 0,
     "integrity": true
   },
   "ffprobe": {
     "available": true,
     "passed": true,
-    "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode."
+    "detail": "ffprobe 1280×720; 42 frames; 17940ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 1303046,
-    "png": 103536,
-    "contactSheet": 87943
+    "gif": 1405890,
+    "png": 73056,
+    "contactSheet": 85189
   },
   "hashes": {
-    "briefSha256": "dd72dc2df35f26a3034c135b45794a437d04a30d7389e02ac0acfd5211ef5e64",
-    "gifSha256": "40c465d7f562f5687b2d89e265641edcd935e7316c56f2e111169fb2405c64cc",
-    "pngSha256": "9652b6f271ea88413142c5b7b673cf2066f78025170a1898023fd24cf6ce432c",
-    "contactSheetSha256": "fc1dff7f0438028c05be1c856774149cd1fe393ab50dfc6a2f34cf2a231b0ce4"
+    "briefSha256": "1e65bd574fd7ad1d2b1318ff9c1ccab9fe8d57f0f1630e9cbfa2d04b45ca3b30",
+    "gifSha256": "aefc5cc9763d317165d2fd6c44a4245468e8323794b38fe2464d224964385609",
+    "pngSha256": "3b5fd9e383f908a95135edd3a48ed9fe46b7e0407088a3dba6d00ec7888b272b",
+    "contactSheetSha256": "5b64491eaf71666d068f1931ab92a6618ff7f58033648bd33a6f078a4fcbe7cf"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\vaporwave\\checklist\\lectura-ordenada-dd72dc2d.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\vaporwave\\checklist\\lectura-ordenada-dd72dc2d.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\vaporwave\\checklist\\lectura-ordenada-dd72dc2d-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\pilots\\brutalist\\observacion-registrada\\observacion-registrada-4c59d791.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\pilots\\brutalist\\observacion-registrada\\observacion-registrada-4c59d791.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\pilots\\brutalist\\observacion-registrada\\observacion-registrada-4c59d791-contact-sheet.png"
   },
   "controls": [
     {
@@ -176,13 +200,13 @@
     {
       "name": "frame-count",
       "passed": true,
-      "detail": "33 decoded frame(s)",
+      "detail": "42 decoded frame(s)",
       "source": "decoded"
     },
     {
       "name": "duration",
       "passed": true,
-      "detail": "17190ms decoded; holds exclude transitions",
+      "detail": "17940ms decoded; holds exclude transitions",
       "source": "decoded"
     },
     {
@@ -200,19 +224,19 @@
     {
       "name": "ffprobe-crosscheck",
       "passed": true,
-      "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode.",
+      "detail": "ffprobe 1280×720; 42 frames; 17940ms; matches the independent LZW decode.",
       "source": "decoded"
     },
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 1303046B · PNG 103536B · contact 87943B",
+      "detail": "GIF 1405890B · PNG 73056B · contact 85189B",
       "source": "decoded"
     },
     {
       "name": "scene-renderer-registered",
       "passed": true,
-      "detail": "renderer vaporwave/vaporwave-desktop-archive/1.0.0 exists; visual style likeness remains a separate review",
+      "detail": "renderer brutalist/brutalist-documentary/1.1.0 exists; visual style likeness remains a separate review",
       "source": "source"
     },
     {
@@ -224,7 +248,7 @@
     {
       "name": "narrative-subfamily",
       "passed": true,
-      "detail": "vaporwave/default selects an explicit narrative art direction",
+      "detail": "brutalist/documentary selects an explicit narrative art direction",
       "source": "source"
     },
     {
@@ -236,19 +260,19 @@
     {
       "name": "distinct-frames",
       "passed": true,
-      "detail": "22 unique composited frame(s); a format-valid static GIF does not pass",
+      "detail": "35 unique composited frame(s); a format-valid static GIF does not pass",
       "source": "pixels"
     },
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "94 colors; mean channel loss 0.119, max 11; sampled 33 frames",
+      "detail": "69 colors; mean channel loss 0.03, max 8; sampled 42 frames",
       "source": "pixels"
     },
     {
       "name": "title-complete",
       "passed": true,
-      "detail": "Lectura / ordenada",
+      "detail": "Observación / registrada",
       "source": "source"
     },
     {
@@ -260,7 +284,7 @@
     {
       "name": "phase-before-text-complete",
       "passed": true,
-      "detail": "La ventana muestra / el archivo sin pasos / de lectura.",
+      "detail": "La ficha no indicaba / dónde revisar la / advertencia.",
       "source": "source"
     },
     {
@@ -272,19 +296,19 @@
     {
       "name": "phase-change-text-complete",
       "passed": true,
-      "detail": "La misma ventana / organiza revisar, / señalar y archivar.",
+      "detail": "La observación queda / señalada en el mismo / documento.",
       "source": "source"
     },
     {
       "name": "phase-result-label-complete",
       "passed": true,
-      "detail": "Resultado observado",
+      "detail": "Resultado esperado",
       "source": "source"
     },
     {
       "name": "phase-result-text-complete",
       "passed": true,
-      "detail": "Los tres pasos / quedan visibles junto / al mismo archivo.",
+      "detail": "La ficha queda lista / para una nueva / lectura.",
       "source": "source"
     },
     {
@@ -296,25 +320,25 @@
     {
       "name": "review-size-thresholds",
       "passed": true,
-      "detail": "title 64px; phase body >=36px; label >=24px",
+      "detail": "title 69px; phase body >=36px; label >=24px",
       "source": "source"
     },
     {
       "name": "640x360-effective-size",
       "passed": true,
-      "detail": "title 32.0px; body min 26.5px (requires >=20px); label min 15.0px",
+      "detail": "title 34.5px; body min 28.0px (requires >=20px); label min 15.0px",
       "source": "source"
     },
     {
       "name": "composition-balance",
       "passed": true,
-      "detail": "proxy; 8×4 decoded-pixel grid against #1B1035: empty cells 15.6%, text-column vertical fill 75.0%, art/object area outside the text column 50.0%, largest empty rectangle 12.5%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+      "detail": "proxy; 8×4 decoded-pixel grid against #F2EFE4: empty cells 15.6%, text-column vertical fill 100.0%, art/object area outside the text column 37.5%, largest empty rectangle 6.3%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
       "source": "pixels"
     },
     {
       "name": "contrast",
       "passed": true,
-      "detail": "rendered text colors: ink 17.92:1; label 5.89:1 (not an OCR or per-pixel text measurement)",
+      "detail": "rendered text colors: ink 17.10:1; label 17.10:1 (not an OCR or per-pixel text measurement)",
       "source": "source"
     },
     {
@@ -344,13 +368,25 @@
     {
       "name": "visual-state-change",
       "passed": true,
-      "detail": "Phase states differ and exported frames are not identical.",
+      "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
       "source": "pixels"
     },
     {
-      "name": "result-follows-status",
+      "name": "workflow-outcome-separation",
       "passed": true,
-      "detail": "status=done; final label=\"Resultado observado\"",
+      "detail": "workflowStatus=done; outcome=expected; illustrative=true",
+      "source": "source"
+    },
+    {
+      "name": "outcome-evidence",
+      "passed": true,
+      "detail": "Expected outcome; no benefit measurement is claimed.",
+      "source": "source"
+    },
+    {
+      "name": "result-follows-outcome",
+      "passed": true,
+      "detail": "outcome=expected; final label=\"Resultado esperado\"",
       "source": "source"
     }
   ],
@@ -373,13 +409,13 @@
         {
           "name": "frame-count",
           "passed": true,
-          "detail": "33 decoded frame(s)",
+          "detail": "42 decoded frame(s)",
           "source": "decoded"
         },
         {
           "name": "duration",
           "passed": true,
-          "detail": "17190ms decoded; holds exclude transitions",
+          "detail": "17940ms decoded; holds exclude transitions",
           "source": "decoded"
         },
         {
@@ -397,13 +433,13 @@
         {
           "name": "ffprobe-crosscheck",
           "passed": true,
-          "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode.",
+          "detail": "ffprobe 1280×720; 42 frames; 17940ms; matches the independent LZW decode.",
           "source": "decoded"
         },
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 1303046B · PNG 103536B · contact 87943B",
+          "detail": "GIF 1405890B · PNG 73056B · contact 85189B",
           "source": "decoded"
         }
       ]
@@ -416,7 +452,7 @@
         {
           "name": "scene-renderer-registered",
           "passed": true,
-          "detail": "renderer vaporwave/vaporwave-desktop-archive/1.0.0 exists; visual style likeness remains a separate review",
+          "detail": "renderer brutalist/brutalist-documentary/1.1.0 exists; visual style likeness remains a separate review",
           "source": "source"
         },
         {
@@ -428,7 +464,7 @@
         {
           "name": "narrative-subfamily",
           "passed": true,
-          "detail": "vaporwave/default selects an explicit narrative art direction",
+          "detail": "brutalist/documentary selects an explicit narrative art direction",
           "source": "source"
         },
         {
@@ -440,13 +476,13 @@
         {
           "name": "distinct-frames",
           "passed": true,
-          "detail": "22 unique composited frame(s); a format-valid static GIF does not pass",
+          "detail": "35 unique composited frame(s); a format-valid static GIF does not pass",
           "source": "pixels"
         },
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "94 colors; mean channel loss 0.119, max 11; sampled 33 frames",
+          "detail": "69 colors; mean channel loss 0.03, max 8; sampled 42 frames",
           "source": "pixels"
         }
       ],
@@ -458,7 +494,7 @@
         {
           "name": "title-complete",
           "passed": true,
-          "detail": "Lectura / ordenada",
+          "detail": "Observación / registrada",
           "source": "source"
         },
         {
@@ -470,7 +506,7 @@
         {
           "name": "phase-before-text-complete",
           "passed": true,
-          "detail": "La ventana muestra / el archivo sin pasos / de lectura.",
+          "detail": "La ficha no indicaba / dónde revisar la / advertencia.",
           "source": "source"
         },
         {
@@ -482,19 +518,19 @@
         {
           "name": "phase-change-text-complete",
           "passed": true,
-          "detail": "La misma ventana / organiza revisar, / señalar y archivar.",
+          "detail": "La observación queda / señalada en el mismo / documento.",
           "source": "source"
         },
         {
           "name": "phase-result-label-complete",
           "passed": true,
-          "detail": "Resultado observado",
+          "detail": "Resultado esperado",
           "source": "source"
         },
         {
           "name": "phase-result-text-complete",
           "passed": true,
-          "detail": "Los tres pasos / quedan visibles junto / al mismo archivo.",
+          "detail": "La ficha queda lista / para una nueva / lectura.",
           "source": "source"
         },
         {
@@ -506,25 +542,25 @@
         {
           "name": "review-size-thresholds",
           "passed": true,
-          "detail": "title 64px; phase body >=36px; label >=24px",
+          "detail": "title 69px; phase body >=36px; label >=24px",
           "source": "source"
         },
         {
           "name": "640x360-effective-size",
           "passed": true,
-          "detail": "title 32.0px; body min 26.5px (requires >=20px); label min 15.0px",
+          "detail": "title 34.5px; body min 28.0px (requires >=20px); label min 15.0px",
           "source": "source"
         },
         {
           "name": "composition-balance",
           "passed": true,
-          "detail": "proxy; 8×4 decoded-pixel grid against #1B1035: empty cells 15.6%, text-column vertical fill 75.0%, art/object area outside the text column 50.0%, largest empty rectangle 12.5%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+          "detail": "proxy; 8×4 decoded-pixel grid against #F2EFE4: empty cells 15.6%, text-column vertical fill 100.0%, art/object area outside the text column 37.5%, largest empty rectangle 6.3%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
           "source": "pixels"
         },
         {
           "name": "contrast",
           "passed": true,
-          "detail": "rendered text colors: ink 17.92:1; label 5.89:1 (not an OCR or per-pixel text measurement)",
+          "detail": "rendered text colors: ink 17.10:1; label 17.10:1 (not an OCR or per-pixel text measurement)",
           "source": "source"
         },
         {
@@ -560,17 +596,29 @@
         {
           "name": "visual-state-change",
           "passed": true,
-          "detail": "Phase states differ and exported frames are not identical.",
+          "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
           "source": "pixels"
         },
         {
-          "name": "result-follows-status",
+          "name": "workflow-outcome-separation",
           "passed": true,
-          "detail": "status=done; final label=\"Resultado observado\"",
+          "detail": "workflowStatus=done; outcome=expected; illustrative=true",
+          "source": "source"
+        },
+        {
+          "name": "outcome-evidence",
+          "passed": true,
+          "detail": "Expected outcome; no benefit measurement is claimed.",
+          "source": "source"
+        },
+        {
+          "name": "result-follows-outcome",
+          "passed": true,
+          "detail": "outcome=expected; final label=\"Resultado esperado\"",
           "source": "source"
         }
       ],
-      "note": "Automated checks verify phase/state structure and shared object identity; causal meaning still needs review."
+      "note": "Automated checks separate work status from expected/observed outcome and confirm required evidence fields; causal meaning and evidence scope still need human review."
     },
     "visual-review": {
       "status": "pending",
@@ -579,7 +627,7 @@
         "full text and contrast at 640×360",
         "style material in native frame",
         "same object and causal change across phases",
-        "result faithful to status",
+        "result faithful to outcome and evidence scope",
         "deliberate loop restart"
       ],
       "evidence": []
@@ -592,35 +640,38 @@
       "labels": [
         "before · inicio",
         "before · pausa",
+        "before · transición media",
         "before · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\vaporwave\\checklist\\lectura-ordenada-dd72dc2d-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\pilots\\brutalist\\observacion-registrada\\observacion-registrada-4c59d791-contact-sheet.png"
     },
     {
       "phaseId": "change",
       "labels": [
         "change · inicio",
         "change · pausa",
+        "change · transición media",
         "change · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\vaporwave\\checklist\\lectura-ordenada-dd72dc2d-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\pilots\\brutalist\\observacion-registrada\\observacion-registrada-4c59d791-contact-sheet.png"
     },
     {
       "phaseId": "result",
       "labels": [
         "result · inicio",
         "result · pausa",
+        "result · transición media",
         "result · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\vaporwave\\checklist\\lectura-ordenada-dd72dc2d-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\pilots\\brutalist\\observacion-registrada\\observacion-registrada-4c59d791-contact-sheet.png"
     }
   ],
   "palette": {
-    "colors": 94,
-    "meanAbsoluteChannelError": 0.119,
-    "maximumChannelError": 11,
-    "sampledFrames": 33
+    "colors": 69,
+    "meanAbsoluteChannelError": 0.03,
+    "maximumChannelError": 8,
+    "sampledFrames": 42
   },
   "phaseHoldsVerified": [
     {
@@ -642,10 +693,41 @@
       "passed": true
     }
   ],
+  "timing": {
+    "preset": "readable",
+    "holdsRequestedMs": 15000,
+    "holdsDecodedMs": 15000,
+    "transitionsMs": 1800,
+    "loopBridgeMs": 900,
+    "entryMs": 240,
+    "totalDecodedMs": 17940,
+    "totalDurationBudgetMs": 30000,
+    "phaseHolds": [
+      {
+        "phaseId": "before",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      },
+      {
+        "phaseId": "change",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      },
+      {
+        "phaseId": "result",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      }
+    ],
+    "warnings": []
+  },
   "resourceEstimate": {
-    "pixelFrames": 30412800,
+    "pixelFrames": 38707200,
     "maxPixelFrames": 96000000,
-    "memoryBytes": 107634688,
+    "memoryBytes": 124370944,
     "maxMemoryBytes": 268435456
   },
   "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed."

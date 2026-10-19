@@ -2,6 +2,8 @@ import { canvasFor } from '../../canvas.js';
 import { getStyle } from '../../styles/presets.js';
 import type { NarrativePhase, NarrativeRect, NarrativeRenderContext, NarrativeScene, NormalizedNarrativeBrief } from '../../types/narrative.js';
 import { cubicBezierEase, drawRule, drawText, phaseMarkProgress, rgba } from './common.js';
+import { sceneVocabulary } from '../vocabulary.js';
+import { sceneText, workflowBadgeText } from '../i18n.js';
 
 interface BotanicalSpecimen {
   readonly identity: 'muestra-botanica';
@@ -86,7 +88,7 @@ function drawLeaf(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect, 
   return { tip, vein: { x: centerX + width * 0.12, y: top + height * 0.47 } };
 }
 
-function drawPlate(ctx: ReturnType<typeof canvasFor>['ctx'], art: NarrativeRect, specimen: BotanicalSpecimen, palette: ReturnType<typeof getStyle>['palette']): void {
+function drawPlate(ctx: ReturnType<typeof canvasFor>['ctx'], art: NarrativeRect, specimen: BotanicalSpecimen, palette: ReturnType<typeof getStyle>['palette'], locale: 'es' | 'en'): void {
   // A flat herbarium field gives the specimen a full-height archive plate without paper layers or shadows.
   ctx.fillStyle = specimen.paperTone === 'lichen' ? palette.surface : '#E6DDC7';
   ctx.fillRect(art.x, art.y, art.width, art.height);
@@ -94,9 +96,9 @@ function drawPlate(ctx: ReturnType<typeof canvasFor>['ctx'], art: NarrativeRect,
   ctx.lineWidth = Math.max(1, art.width * 0.0035);
   ctx.strokeRect(art.x + art.width * 0.018, art.y + art.height * 0.014, art.width * 0.964, art.height * 0.972);
   const headerY = art.y + art.height * 0.075;
-  drawText(ctx, 'ARCHIVO BOTÁNICO', art.x + art.width * 0.065, headerY, 'Karla', 600, Math.max(24, art.width * 0.055), palette.ink);
+  drawText(ctx, sceneText('nature', locale, 'botanicalArchive'), art.x + art.width * 0.065, headerY, 'Karla', 600, Math.max(24, art.width * 0.055), palette.ink);
   drawRule(ctx, art.x + art.width * 0.065, headerY + art.height * 0.025, art.x + art.width * 0.93, palette.muted, 1.2);
-  drawText(ctx, 'PLIEGO DE OBSERVACIÓN', art.x + art.width * 0.065, headerY + art.height * 0.07, 'Karla', 400, Math.max(24, art.width * 0.045), palette.muted);
+  drawText(ctx, sceneText('nature', locale, 'observationSheet'), art.x + art.width * 0.065, headerY + art.height * 0.07, 'Karla', 400, Math.max(24, art.width * 0.045), palette.muted);
 }
 
 function comparisonLeafBox(art: NarrativeRect): NarrativeRect {
@@ -107,12 +109,12 @@ function checklistLeafBox(art: NarrativeRect): NarrativeRect {
   return { x: art.x + art.width * 0.015, y: art.y + art.height * 0.2, width: art.width * 0.62, height: art.height * 0.69 };
 }
 
-function drawComparisonNotes(ctx: ReturnType<typeof canvasFor>['ctx'], art: NarrativeRect, vein: { x: number; y: number }, progress: number, status: NormalizedNarrativeBrief['status'], palette: ReturnType<typeof getStyle>['palette']): void {
+function drawComparisonNotes(ctx: ReturnType<typeof canvasFor>['ctx'], art: NarrativeRect, vein: { x: number; y: number }, progress: number, brief: NormalizedNarrativeBrief, palette: ReturnType<typeof getStyle>['palette']): void {
   // Keep the two indispensable right-hand annotations comfortably inside the 5% safe margin.
   const labelX = art.x + art.width * 0.62;
   const labelY = art.y + art.height * 0.56;
   drawRule(ctx, labelX, labelY, art.x + art.width * 0.91, palette.ink, 1.5);
-  drawText(ctx, 'OBSERVACIÓN', labelX, labelY + art.height * 0.055, 'Karla', 600, Math.max(24, art.width * 0.047), palette.ink);
+  drawText(ctx, sceneText('nature', brief.locale, 'observation'), labelX, labelY + art.height * 0.055, 'Karla', 600, Math.max(24, art.width * 0.047), palette.ink);
   if (progress <= 0.01) return;
   const reveal = Math.min(1, progress);
   const anchorX = labelX - art.width * 0.025;
@@ -131,11 +133,12 @@ function drawComparisonNotes(ctx: ReturnType<typeof canvasFor>['ctx'], art: Narr
   ctx.stroke();
   ctx.restore();
   const archiveReveal = Math.min(1, Math.max(0, progress - 1));
+  const badgeText = workflowBadgeText('nature', brief.locale, brief.workflowStatus, brief.badgePolicy, brief.badgeText);
   if (archiveReveal > 0) {
     ctx.save();
     ctx.globalAlpha = archiveReveal;
     drawRule(ctx, labelX, labelY + art.height * 0.15, art.x + art.width * 0.91, palette.accent2, 3);
-    drawText(ctx, status === 'done' ? 'ARCHIVADA' : 'EN REVISIÓN', labelX, labelY + art.height * 0.22, 'Karla', 600, Math.max(24, art.width * 0.05), palette.accent2);
+    if (badgeText) drawText(ctx, badgeText, labelX, labelY + art.height * 0.22, 'Karla', 600, Math.max(24, art.width * 0.05), palette.accent2);
     ctx.restore();
   }
 }
@@ -150,9 +153,13 @@ function drawCheckMark(ctx: ReturnType<typeof canvasFor>['ctx'], x: number, y: n
   ctx.stroke();
 }
 
-function drawChecklistNotes(ctx: ReturnType<typeof canvasFor>['ctx'], art: NarrativeRect, progress: number, status: NormalizedNarrativeBrief['status'], palette: ReturnType<typeof getStyle>['palette']): void {
+function drawChecklistNotes(ctx: ReturnType<typeof canvasFor>['ctx'], art: NarrativeRect, progress: number, brief: NormalizedNarrativeBrief, palette: ReturnType<typeof getStyle>['palette']): void {
   const x = art.x + art.width * 0.68;
-  const labels = ['OBSERVAR', 'ANOTAR', 'ARCHIVAR'];
+  const labels = [
+    sceneText('nature', brief.locale, 'observe'),
+    sceneText('nature', brief.locale, 'annotate'),
+    sceneText('nature', brief.locale, 'archive'),
+  ];
   const rowHeight = art.height * 0.155;
   const top = art.y + art.height * 0.33;
   ctx.strokeStyle = rgba(palette.ink, 0.42);
@@ -165,7 +172,7 @@ function drawChecklistNotes(ctx: ReturnType<typeof canvasFor>['ctx'], art: Narra
     const y = top + index * rowHeight;
     drawText(ctx, label, x + art.width * 0.075, y, 'Karla', index === 2 ? 600 : 400, Math.max(24, art.width * 0.044), index <= progress ? palette.ink : palette.muted);
     if (index > 0) drawRule(ctx, x + art.width * 0.075, y + art.height * 0.025, art.x + art.width * 0.93, rgba(palette.ink, 0.28), 1);
-    if (index < progress || (status === 'done' && progress >= 2 && index === 2)) drawCheckMark(ctx, x, y - art.height * 0.012, art.width * 0.035, 1, palette.accent2);
+    if (index < progress || (brief.badgePolicy !== 'none' && brief.workflowStatus === 'done' && progress >= 2 && index === 2)) drawCheckMark(ctx, x, y - art.height * 0.012, art.width * 0.035, 1, palette.accent2);
     else if (index === Math.floor(progress) && progress % 1 > 0.01) drawCheckMark(ctx, x, y - art.height * 0.012, art.width * 0.035, progress % 1, palette.accent2);
   });
 }
@@ -180,7 +187,7 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
   const from = stateRank(brief.phases[frame.fromPhaseIndex]!);
   const to = stateRank(brief.phases[frame.toPhaseIndex]!);
   const progress = from + (to - from) * easing;
-  drawPlate(ctx, art, specimen, palette);
+  drawPlate(ctx, art, specimen, palette, brief.locale);
 
   const leaf = specimen.composition === 'comparison' ? comparisonLeafBox(art) : checklistLeafBox(art);
   ctx.save();
@@ -192,14 +199,15 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
   const details = drawLeaf(ctx, leaf, specimen.leafVariant, palette);
   ctx.restore();
 
-  if (specimen.composition === 'comparison') drawComparisonNotes(ctx, art, details.vein, progress, brief.status, palette);
-  else drawChecklistNotes(ctx, art, progress, brief.status, palette);
+  if (specimen.composition === 'comparison') drawComparisonNotes(ctx, art, details.vein, progress, brief, palette);
+  else drawChecklistNotes(ctx, art, progress, brief, palette);
   return ctx.getImageData(0, 0, brief.output.width, brief.output.height).data;
 }
 
 export const natureNarrativeScene: NarrativeScene = {
   style: 'nature',
   version: 'nature-herbarium-memory/1.0.0',
+  vocabulary: sceneVocabulary('value-driven'),
   supportsAspect(aspect) {
     return Math.abs(aspect - 16 / 9) / (16 / 9) < 0.015;
   },

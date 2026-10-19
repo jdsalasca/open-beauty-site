@@ -44,12 +44,30 @@ test('exposes the full tool surface', async () => {
     'beauty_create_story',
     'beauty_examples',
     'beauty_fix',
+    'beauty_get_capabilities',
     'beauty_get_skill',
     'beauty_get_style',
     'beauty_list_styles',
     'beauty_make',
     'beauty_validate',
   ]);
+});
+
+test('capabilities MCP returns per-style cells and exposes the shared narrative brief schema', async () => {
+  const capabilities = await client.callTool({ name: 'beauty_get_capabilities', arguments: { style: 'papercraft' } });
+  const report = capabilities.structuredContent as { contractVersion: number; cells: Array<{ style: string; allowed: { visualStates: unknown[] } }>; summary: Record<string, number> };
+  assert.equal(report.contractVersion, 2);
+  assert.equal(report.cells.length, 24);
+  assert.ok(report.cells.every((cell) => cell.style === 'papercraft' && cell.allowed.visualStates.length > 0));
+  assert.equal(report.summary.fallback + report.summary.unsupported, 24);
+
+  const { tools } = await client.listTools();
+  const narrativeTool = tools.find((tool) => tool.name === 'beauty_create_narrative');
+  const input = narrativeTool?.inputSchema as { properties?: Record<string, { properties?: Record<string, unknown> }> } | undefined;
+  const briefFields = input?.properties?.brief?.properties ?? {};
+  for (const field of ['workflowStatus', 'outcome', 'illustrative', 'badgePolicy', 'badgeText', 'playback', 'phases']) {
+    assert.ok(field in briefFields, `MCP narrative schema is missing ${field}`);
+  }
 });
 
 test('styles expose exact fonts and palette', async () => {

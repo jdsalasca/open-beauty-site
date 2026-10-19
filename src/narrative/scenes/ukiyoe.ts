@@ -2,6 +2,8 @@ import { canvasFor } from '../../canvas.js';
 import { getStyle } from '../../styles/presets.js';
 import type { NarrativePhase, NarrativeRect, NarrativeRenderContext, NarrativeScene, NormalizedNarrativeBrief } from '../../types/narrative.js';
 import { cubicBezierEase, drawText } from './common.js';
+import { sceneVocabulary } from '../vocabulary.js';
+import { sceneText } from '../i18n.js';
 
 interface CoastPrint {
   readonly identity: 'guia-en-recorrido-costero';
@@ -94,7 +96,7 @@ function drawMountain(ctx: ReturnType<typeof canvasFor>['ctx'], field: Narrative
   ctx.fill();
 }
 
-function drawCartouche(ctx: ReturnType<typeof canvasFor>['ctx'], field: NarrativeRect, ink: string, vermilion: string, face: string): void {
+function drawCartouche(ctx: ReturnType<typeof canvasFor>['ctx'], field: NarrativeRect, ink: string, vermilion: string, face: string, locale: 'es' | 'en'): void {
   const { x, y, width: w, height: h } = field;
   const box = { x: x + w * 0.69, y: y + h * 0.08, width: w * 0.25, height: h * 0.31 };
   ctx.fillStyle = '#F3E9D2';
@@ -105,12 +107,12 @@ function drawCartouche(ctx: ReturnType<typeof canvasFor>['ctx'], field: Narrativ
   ctx.strokeStyle = vermilion;
   ctx.lineWidth = 2;
   ctx.strokeRect(box.x + 5, box.y + 5, box.width - 10, box.height - 10);
-  drawText(ctx, 'PUNTO', box.x + box.width * 0.12, box.y + box.height * 0.39, face, 500, 24, ink);
-  drawText(ctx, 'DE', box.x + box.width * 0.12, box.y + box.height * 0.62, face, 500, 24, ink);
-  drawText(ctx, 'REVISIÓN', box.x + box.width * 0.12, box.y + box.height * 0.85, face, 500, 24, ink);
+  drawText(ctx, sceneText('ukiyoe', locale, 'point'), box.x + box.width * 0.12, box.y + box.height * 0.39, face, 500, 24, ink);
+  drawText(ctx, sceneText('ukiyoe', locale, 'of'), box.x + box.width * 0.12, box.y + box.height * 0.62, face, 500, 24, ink);
+  drawText(ctx, sceneText('ukiyoe', locale, 'review'), box.x + box.width * 0.12, box.y + box.height * 0.85, face, 500, 24, ink);
 }
 
-function drawReference(ctx: ReturnType<typeof canvasFor>['ctx'], field: NarrativeRect, ink: string, vermilion: string, face: string): { x: number; y: number } {
+function drawReference(ctx: ReturnType<typeof canvasFor>['ctx'], field: NarrativeRect, ink: string, vermilion: string, face: string, locale: 'es' | 'en'): { x: number; y: number } {
   const point = { x: field.x + field.width * 0.66, y: field.y + field.height * 0.51 };
   ctx.fillStyle = vermilion;
   ctx.beginPath();
@@ -121,7 +123,7 @@ function drawReference(ctx: ReturnType<typeof canvasFor>['ctx'], field: Narrativ
   ctx.beginPath();
   ctx.arc(point.x, point.y, 4, 0, Math.PI * 2);
   ctx.stroke();
-  drawText(ctx, 'SEÑAL', point.x + 18, point.y - 15, face, 500, 24, ink);
+  drawText(ctx, sceneText('ukiyoe', locale, 'signal'), point.x + 18, point.y - 15, face, 500, 24, ink);
   return point;
 }
 
@@ -213,8 +215,8 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
   drawMountain(ctx, field, colors.blue, colors.mist);
   drawSea(ctx, field, level, print, colors.blue, colors.mist, colors.moss);
 
-  const reference = drawReference(ctx, field, preset.palette.bg, colors.vermilion, fonts.effective.label.family);
-  drawCartouche(ctx, field, preset.palette.ink, colors.vermilion, fonts.effective.label.family);
+  const reference = drawReference(ctx, field, preset.palette.bg, colors.vermilion, fonts.effective.label.family, brief.locale);
+  drawCartouche(ctx, field, preset.palette.ink, colors.vermilion, fonts.effective.label.family, brief.locale);
   const boat = drawBoat(ctx, field, print, preset.palette.ink, colors.blue);
   if (print.composition === 'checklist') drawChecklistRoute(ctx, field, level, colors);
   else drawJourney(ctx, boat, reference, level / 2, preset.palette.ink, colors.vermilion);
@@ -233,6 +235,7 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
 export const ukiyoeNarrativeScene: NarrativeScene = {
   style: 'ukiyoe',
   version: 'ukiyoe-coastal-print/1.0.0',
+  vocabulary: sceneVocabulary('value-driven'),
   supportsAspect(aspect) {
     return [16 / 9, 1].some((ratio) => Math.abs(aspect - ratio) / ratio < 0.015);
   },

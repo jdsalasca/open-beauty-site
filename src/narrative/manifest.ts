@@ -4,16 +4,21 @@ import { writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import type { NarrativeControlResult, NarrativeEvaluation, NormalizedNarrativeBrief } from '../types/narrative.js';
 import type { NarrativeEncodedFiles } from './encode.js';
+import type { NarrativeTimeline } from './timeline.js';
 
 export const NARRATIVE_FONT_BUNDLE_VERSION = 'repo-bundled-ofl-1';
 
 export interface NarrativeManifest {
-  schemaVersion: 1;
+  schemaVersion: 2;
   commit: string | null;
   brief: NormalizedNarrativeBrief;
   briefSha256: string;
   style: string;
   subfamily: string | null;
+  workflowStatus: NormalizedNarrativeBrief['workflowStatus'];
+  outcome: NormalizedNarrativeBrief['outcome'];
+  evidenceClassification: 'illustrative' | 'measured' | 'expected';
+  illustrative: boolean;
   seed: number;
   renderer: { narrative: string; canvas: string; gif: string; scene: string };
   fonts: { bundleVersion: string; roles: NarrativeEncodedFiles['fonts']['effective'] };
@@ -29,6 +34,18 @@ export interface NarrativeManifest {
   phaseCaptures: Array<{ phaseId: string; labels: string[]; contactSheet: string }>;
   palette: NarrativeEncodedFiles['palette'];
   phaseHoldsVerified: NarrativeEncodedFiles['phaseHoldsVerified'];
+  timing: {
+    preset: NormalizedNarrativeBrief['playback']['preset'];
+    holdsRequestedMs: number;
+    holdsDecodedMs: number;
+    transitionsMs: number;
+    loopBridgeMs: number;
+    entryMs: number;
+    totalDecodedMs: number;
+    totalDurationBudgetMs: number;
+    phaseHolds: Array<{ phaseId: string; requestedMs: number; encodedMs: number; decodedMs: number }>;
+    warnings: NarrativeTimeline['warnings'];
+  };
   resourceEstimate: NarrativeEncodedFiles['resourceEstimate'];
   deterministicScope: string;
 }
@@ -51,11 +68,12 @@ export async function createNarrativeManifest(input: {
   brief: NormalizedNarrativeBrief;
   briefHash: string;
   encoded: NarrativeEncodedFiles;
+  timeline: NarrativeTimeline;
   controls: NarrativeControlResult[];
   evaluation: NarrativeEvaluation;
   outputDir: string;
 }): Promise<{ manifest: NarrativeManifest; path: string }> {
-  const { brief, briefHash, encoded, controls, evaluation, outputDir } = input;
+  const { brief, briefHash, encoded, timeline, controls, evaluation, outputDir } = input;
   const phaseCaptures = brief.phases.map((phase, index) => ({
     phaseId: phase.id,
     labels: [
@@ -65,12 +83,16 @@ export async function createNarrativeManifest(input: {
     contactSheet: encoded.paths.contactSheet,
   }));
   const manifest: NarrativeManifest = {
-    schemaVersion: 1,
+    schemaVersion: 2,
     commit: currentCommit(),
     brief,
     briefSha256: briefHash,
     style: brief.style,
     subfamily: brief.subfamily ?? null,
+    workflowStatus: brief.workflowStatus,
+    outcome: brief.outcome,
+    evidenceClassification: brief.illustrative ? 'illustrative' : brief.outcome.mode === 'observed' ? 'measured' : 'expected',
+    illustrative: brief.illustrative,
     seed: brief.seed,
     renderer: { narrative: encoded.rendererVersion, canvas: '@napi-rs/canvas@1.0.11', gif: 'gifenc@1.0.3', scene: encoded.sceneVersion },
     fonts: { bundleVersion: NARRATIVE_FONT_BUNDLE_VERSION, roles: encoded.fonts.effective },
@@ -99,6 +121,23 @@ export async function createNarrativeManifest(input: {
     phaseCaptures,
     palette: encoded.palette,
     phaseHoldsVerified: encoded.phaseHoldsVerified,
+    timing: {
+      preset: brief.playback.preset,
+      holdsRequestedMs: timeline.durationBreakdown.holdsRequestedMs,
+      holdsDecodedMs: timeline.holds.reduce((sum, hold) => sum + (encoded.decoded.delaysMs[hold.frameIndex] ?? 0), 0),
+      transitionsMs: timeline.frames.reduce((sum, frame, index) => sum + (frame.kind === 'transition' ? encoded.decoded.delaysMs[index] ?? 0 : 0), 0),
+      loopBridgeMs: timeline.frames.reduce((sum, frame, index) => sum + (frame.kind === 'loop-bridge' ? encoded.decoded.delaysMs[index] ?? 0 : 0), 0),
+      entryMs: timeline.frames.reduce((sum, frame, index) => sum + (frame.kind === 'entry' ? encoded.decoded.delaysMs[index] ?? 0 : 0), 0),
+      totalDecodedMs: encoded.decoded.durationMs,
+      totalDurationBudgetMs: brief.playback.totalDurationBudgetMs,
+      phaseHolds: timeline.holds.map((hold) => ({
+        phaseId: hold.phaseId,
+        requestedMs: hold.requestedMs,
+        encodedMs: hold.encodedMs,
+        decodedMs: encoded.decoded.delaysMs[hold.frameIndex] ?? 0,
+      })),
+      warnings: timeline.warnings,
+    },
     resourceEstimate: encoded.resourceEstimate,
     deterministicScope: 'Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed.',
   };

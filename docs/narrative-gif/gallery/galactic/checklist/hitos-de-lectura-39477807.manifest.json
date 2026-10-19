@@ -1,47 +1,49 @@
 {
-  "schemaVersion": 1,
-  "commit": "aaa4322afd9cf89b6ef3a8c7a1ae542fcef5ed31",
+  "schemaVersion": 2,
+  "commit": "7a036e5fcfc3e09e7c6738e21a0ecc81248f6021",
   "brief": {
-    "style": "papercraft",
-    "subfamily": "editorial",
+    "style": "galactic",
     "kind": "narrative-gif",
     "locale": "es",
-    "audience": "Producto en Sprint Review",
-    "title": "Observación registrada",
+    "audience": "Producto · Sprint Review (ejemplo visual)",
+    "title": "Hitos de lectura",
     "status": "done",
+    "badgePolicy": "workflow",
     "phases": [
       {
         "id": "before",
         "label": "Antes",
-        "text": "La ficha no indicaba dónde revisar la advertencia.",
+        "text": "La ruta empieza en un punto todavía sin revisar.",
         "visual": {
-          "kind": "comparison",
+          "kind": "checklist",
           "state": "unreviewed"
         }
       },
       {
         "id": "change",
         "label": "Cambio",
-        "text": "La observación queda señalada en el mismo documento.",
+        "text": "La señal alcanza el hito de anotación.",
         "visual": {
-          "kind": "comparison",
+          "kind": "checklist",
           "state": "flagged"
         }
       },
       {
         "id": "result",
-        "label": "Resultado observado",
-        "text": "La ficha queda lista para una nueva lectura.",
+        "label": "Resultado esperado",
+        "text": "Los tres hitos se mantienen ligados a la misma trayectoria.",
         "visual": {
-          "kind": "comparison",
-          "state": "reviewed"
+          "kind": "checklist",
+          "state": "review-ready"
         }
       }
     ],
     "playback": {
+      "preset": "readable",
       "minReadableHoldMs": 5000,
-      "transitionMs": 900,
-      "loop": true
+      "transitionMs": 650,
+      "loop": true,
+      "totalDurationBudgetMs": 30000
     },
     "output": {
       "width": 1280,
@@ -52,39 +54,50 @@
       ],
       "preset": "review-1280x720"
     },
-    "seed": 43
+    "seed": 11,
+    "workflowStatus": "done",
+    "outcome": {
+      "mode": "expected"
+    },
+    "illustrative": true
   },
-  "briefSha256": "34abb5716f4f6e1659849d238699d824b58f50489bd3c9d54f76bd65c18fcd0d",
-  "style": "papercraft",
-  "subfamily": "editorial",
-  "seed": 43,
+  "briefSha256": "1a99bd6e8f5de8c46e8d245c022ab5c8db6306b183c9062d8f9e4b13487fda4c",
+  "style": "galactic",
+  "subfamily": null,
+  "workflowStatus": "done",
+  "outcome": {
+    "mode": "expected"
+  },
+  "evidenceClassification": "illustrative",
+  "illustrative": true,
+  "seed": 11,
   "renderer": {
-    "narrative": "narrative-core/0.1.0",
+    "narrative": "narrative-core/0.2.0",
     "canvas": "@napi-rs/canvas@1.0.11",
     "gif": "gifenc@1.0.3",
-    "scene": "papercraft-editorial/1.1.0"
+    "scene": "galactic-orbital-review/1.0.0"
   },
   "fonts": {
     "bundleVersion": "repo-bundled-ofl-1",
     "roles": {
       "display": {
-        "family": "Fraunces",
-        "weight": 560
+        "family": "Michroma",
+        "weight": 400
       },
       "reading": {
-        "family": "Nunito Sans",
+        "family": "Space Grotesk",
         "weight": 400
       },
       "label": {
-        "family": "Nunito Sans",
-        "weight": 800
+        "family": "Space Grotesk",
+        "weight": 500
       },
       "figure": {
-        "family": "Fraunces",
-        "weight": 560
+        "family": "Michroma",
+        "weight": 400
       },
       "annotation": {
-        "family": "Space Mono",
+        "family": "Space Grotesk",
         "weight": 400
       }
     }
@@ -100,16 +113,13 @@
   "decoded": {
     "width": 1280,
     "height": 720,
-    "frameCount": 42,
+    "frameCount": 33,
     "delaysMs": [
       80,
       5000,
       80,
       80,
-      80,
-      80,
-      80,
-      80,
+      70,
       70,
       70,
       70,
@@ -120,10 +130,7 @@
       5000,
       80,
       80,
-      80,
-      80,
-      80,
-      80,
+      70,
       70,
       70,
       70,
@@ -134,10 +141,7 @@
       5000,
       80,
       80,
-      80,
-      80,
-      80,
-      80,
+      70,
       70,
       70,
       70,
@@ -145,30 +149,30 @@
       70,
       70
     ],
-    "durationMs": 17940,
+    "durationMs": 17190,
     "loopCount": 0,
     "integrity": true
   },
   "ffprobe": {
     "available": true,
     "passed": true,
-    "detail": "ffprobe 1280×720; 42 frames; 17940ms; matches the independent LZW decode."
+    "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 1358387,
-    "png": 91949,
-    "contactSheet": 93122
+    "gif": 1203480,
+    "png": 135899,
+    "contactSheet": 96785
   },
   "hashes": {
-    "briefSha256": "34abb5716f4f6e1659849d238699d824b58f50489bd3c9d54f76bd65c18fcd0d",
-    "gifSha256": "346366c203fec24e5065da64808b9e6fdee99cc1471528891094e9b9e133f5bc",
-    "pngSha256": "e5b92fd3d67bb90226c1539d4ad5415ac008c2a488fe477fdeaed6a9f58beb45",
-    "contactSheetSha256": "a280dae15ce0fb9e0ade7b6fbf00b8dc228471b3cb465dc04daa173fb2977fd1"
+    "briefSha256": "1a99bd6e8f5de8c46e8d245c022ab5c8db6306b183c9062d8f9e4b13487fda4c",
+    "gifSha256": "ed6ad12643154d7b6b9af643daf9a2779f7fb1d31ddac1779b8c8c3778eef6e6",
+    "pngSha256": "78bbc02479e6f35ed4f1d49c55c0f84fb508589019a1ee8acc119b5b9f5ac876",
+    "contactSheetSha256": "4d6e37a5bc4d825da3a676ea9b44246e32d7c2ad737e25b5741c4ae7e65fde9b"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-34abb571.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-34abb571.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-34abb571-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\gallery\\galactic\\checklist\\hitos-de-lectura-39477807.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\gallery\\galactic\\checklist\\hitos-de-lectura-39477807.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\gallery\\galactic\\checklist\\hitos-de-lectura-39477807-contact-sheet.png"
   },
   "controls": [
     {
@@ -186,13 +190,13 @@
     {
       "name": "frame-count",
       "passed": true,
-      "detail": "42 decoded frame(s)",
+      "detail": "33 decoded frame(s)",
       "source": "decoded"
     },
     {
       "name": "duration",
       "passed": true,
-      "detail": "17940ms decoded; holds exclude transitions",
+      "detail": "17190ms decoded; holds exclude transitions",
       "source": "decoded"
     },
     {
@@ -210,19 +214,19 @@
     {
       "name": "ffprobe-crosscheck",
       "passed": true,
-      "detail": "ffprobe 1280×720; 42 frames; 17940ms; matches the independent LZW decode.",
+      "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode.",
       "source": "decoded"
     },
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 1358387B · PNG 91949B · contact 93122B",
+      "detail": "GIF 1203480B · PNG 135899B · contact 96785B",
       "source": "decoded"
     },
     {
       "name": "scene-renderer-registered",
       "passed": true,
-      "detail": "renderer papercraft/papercraft-editorial/1.1.0 exists; visual style likeness remains a separate review",
+      "detail": "renderer galactic/galactic-orbital-review/1.0.0 exists; visual style likeness remains a separate review",
       "source": "source"
     },
     {
@@ -234,7 +238,7 @@
     {
       "name": "narrative-subfamily",
       "passed": true,
-      "detail": "papercraft/editorial selects an explicit narrative art direction",
+      "detail": "galactic/default selects an explicit narrative art direction",
       "source": "source"
     },
     {
@@ -246,19 +250,19 @@
     {
       "name": "distinct-frames",
       "passed": true,
-      "detail": "35 unique composited frame(s); a format-valid static GIF does not pass",
+      "detail": "29 unique composited frame(s); a format-valid static GIF does not pass",
       "source": "pixels"
     },
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "58 colors; mean channel loss 2.23, max 8; sampled 42 frames",
+      "detail": "72 colors; mean channel loss 0.309, max 11; sampled 33 frames",
       "source": "pixels"
     },
     {
       "name": "title-complete",
       "passed": true,
-      "detail": "Observación registrada",
+      "detail": "Hitos de / lectura",
       "source": "source"
     },
     {
@@ -270,7 +274,7 @@
     {
       "name": "phase-before-text-complete",
       "passed": true,
-      "detail": "La ficha no indicaba dónde / revisar la advertencia.",
+      "detail": "La ruta empieza en / un punto todavía / sin revisar.",
       "source": "source"
     },
     {
@@ -282,19 +286,19 @@
     {
       "name": "phase-change-text-complete",
       "passed": true,
-      "detail": "La observación queda / señalada en el mismo / documento.",
+      "detail": "La señal alcanza el / hito de anotación.",
       "source": "source"
     },
     {
       "name": "phase-result-label-complete",
       "passed": true,
-      "detail": "Resultado observado",
+      "detail": "Resultado esperado",
       "source": "source"
     },
     {
       "name": "phase-result-text-complete",
       "passed": true,
-      "detail": "La ficha queda lista para una / nueva lectura.",
+      "detail": "Los tres hitos se / mantienen ligados a / la misma trayectoria.",
       "source": "source"
     },
     {
@@ -306,25 +310,25 @@
     {
       "name": "review-size-thresholds",
       "passed": true,
-      "detail": "title 76px; phase body >=36px; label >=24px",
+      "detail": "title 69px; phase body >=36px; label >=24px",
       "source": "source"
     },
     {
       "name": "640x360-effective-size",
       "passed": true,
-      "detail": "title 38.0px; body min 28.0px (requires >=20px); label min 15.0px",
+      "detail": "title 34.5px; body min 27.0px (requires >=20px); label min 15.0px",
       "source": "source"
     },
     {
       "name": "composition-balance",
       "passed": true,
-      "detail": "proxy; 8×4 decoded-pixel grid against #FBF1E2: empty cells 37.5%, text-column vertical fill 75.0%, art/object area outside the text column 28.1%, largest empty rectangle 15.6%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+      "detail": "proxy; 8×4 decoded-pixel grid against #05060A: empty cells 43.8%, text-column vertical fill 100.0%, art/object area outside the text column 18.8%, largest empty rectangle 18.8%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
       "source": "pixels"
     },
     {
       "name": "contrast",
       "passed": true,
-      "detail": "rendered text colors: ink 9.67:1; label 3.05:1 (not an OCR or per-pixel text measurement)",
+      "detail": "rendered text colors: ink 18.48:1; label 14.27:1 (not an OCR or per-pixel text measurement)",
       "source": "source"
     },
     {
@@ -354,13 +358,25 @@
     {
       "name": "visual-state-change",
       "passed": true,
-      "detail": "Phase states differ and exported frames are not identical.",
+      "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
       "source": "pixels"
     },
     {
-      "name": "result-follows-status",
+      "name": "workflow-outcome-separation",
       "passed": true,
-      "detail": "status=done; final label=\"Resultado observado\"",
+      "detail": "workflowStatus=done; outcome=expected; illustrative=true",
+      "source": "source"
+    },
+    {
+      "name": "outcome-evidence",
+      "passed": true,
+      "detail": "Expected outcome; no benefit measurement is claimed.",
+      "source": "source"
+    },
+    {
+      "name": "result-follows-outcome",
+      "passed": true,
+      "detail": "outcome=expected; final label=\"Resultado esperado\"",
       "source": "source"
     }
   ],
@@ -383,13 +399,13 @@
         {
           "name": "frame-count",
           "passed": true,
-          "detail": "42 decoded frame(s)",
+          "detail": "33 decoded frame(s)",
           "source": "decoded"
         },
         {
           "name": "duration",
           "passed": true,
-          "detail": "17940ms decoded; holds exclude transitions",
+          "detail": "17190ms decoded; holds exclude transitions",
           "source": "decoded"
         },
         {
@@ -407,13 +423,13 @@
         {
           "name": "ffprobe-crosscheck",
           "passed": true,
-          "detail": "ffprobe 1280×720; 42 frames; 17940ms; matches the independent LZW decode.",
+          "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode.",
           "source": "decoded"
         },
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 1358387B · PNG 91949B · contact 93122B",
+          "detail": "GIF 1203480B · PNG 135899B · contact 96785B",
           "source": "decoded"
         }
       ]
@@ -426,7 +442,7 @@
         {
           "name": "scene-renderer-registered",
           "passed": true,
-          "detail": "renderer papercraft/papercraft-editorial/1.1.0 exists; visual style likeness remains a separate review",
+          "detail": "renderer galactic/galactic-orbital-review/1.0.0 exists; visual style likeness remains a separate review",
           "source": "source"
         },
         {
@@ -438,7 +454,7 @@
         {
           "name": "narrative-subfamily",
           "passed": true,
-          "detail": "papercraft/editorial selects an explicit narrative art direction",
+          "detail": "galactic/default selects an explicit narrative art direction",
           "source": "source"
         },
         {
@@ -450,13 +466,13 @@
         {
           "name": "distinct-frames",
           "passed": true,
-          "detail": "35 unique composited frame(s); a format-valid static GIF does not pass",
+          "detail": "29 unique composited frame(s); a format-valid static GIF does not pass",
           "source": "pixels"
         },
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "58 colors; mean channel loss 2.23, max 8; sampled 42 frames",
+          "detail": "72 colors; mean channel loss 0.309, max 11; sampled 33 frames",
           "source": "pixels"
         }
       ],
@@ -468,7 +484,7 @@
         {
           "name": "title-complete",
           "passed": true,
-          "detail": "Observación registrada",
+          "detail": "Hitos de / lectura",
           "source": "source"
         },
         {
@@ -480,7 +496,7 @@
         {
           "name": "phase-before-text-complete",
           "passed": true,
-          "detail": "La ficha no indicaba dónde / revisar la advertencia.",
+          "detail": "La ruta empieza en / un punto todavía / sin revisar.",
           "source": "source"
         },
         {
@@ -492,19 +508,19 @@
         {
           "name": "phase-change-text-complete",
           "passed": true,
-          "detail": "La observación queda / señalada en el mismo / documento.",
+          "detail": "La señal alcanza el / hito de anotación.",
           "source": "source"
         },
         {
           "name": "phase-result-label-complete",
           "passed": true,
-          "detail": "Resultado observado",
+          "detail": "Resultado esperado",
           "source": "source"
         },
         {
           "name": "phase-result-text-complete",
           "passed": true,
-          "detail": "La ficha queda lista para una / nueva lectura.",
+          "detail": "Los tres hitos se / mantienen ligados a / la misma trayectoria.",
           "source": "source"
         },
         {
@@ -516,25 +532,25 @@
         {
           "name": "review-size-thresholds",
           "passed": true,
-          "detail": "title 76px; phase body >=36px; label >=24px",
+          "detail": "title 69px; phase body >=36px; label >=24px",
           "source": "source"
         },
         {
           "name": "640x360-effective-size",
           "passed": true,
-          "detail": "title 38.0px; body min 28.0px (requires >=20px); label min 15.0px",
+          "detail": "title 34.5px; body min 27.0px (requires >=20px); label min 15.0px",
           "source": "source"
         },
         {
           "name": "composition-balance",
           "passed": true,
-          "detail": "proxy; 8×4 decoded-pixel grid against #FBF1E2: empty cells 37.5%, text-column vertical fill 75.0%, art/object area outside the text column 28.1%, largest empty rectangle 15.6%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+          "detail": "proxy; 8×4 decoded-pixel grid against #05060A: empty cells 43.8%, text-column vertical fill 100.0%, art/object area outside the text column 18.8%, largest empty rectangle 18.8%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
           "source": "pixels"
         },
         {
           "name": "contrast",
           "passed": true,
-          "detail": "rendered text colors: ink 9.67:1; label 3.05:1 (not an OCR or per-pixel text measurement)",
+          "detail": "rendered text colors: ink 18.48:1; label 14.27:1 (not an OCR or per-pixel text measurement)",
           "source": "source"
         },
         {
@@ -570,17 +586,29 @@
         {
           "name": "visual-state-change",
           "passed": true,
-          "detail": "Phase states differ and exported frames are not identical.",
+          "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
           "source": "pixels"
         },
         {
-          "name": "result-follows-status",
+          "name": "workflow-outcome-separation",
           "passed": true,
-          "detail": "status=done; final label=\"Resultado observado\"",
+          "detail": "workflowStatus=done; outcome=expected; illustrative=true",
+          "source": "source"
+        },
+        {
+          "name": "outcome-evidence",
+          "passed": true,
+          "detail": "Expected outcome; no benefit measurement is claimed.",
+          "source": "source"
+        },
+        {
+          "name": "result-follows-outcome",
+          "passed": true,
+          "detail": "outcome=expected; final label=\"Resultado esperado\"",
           "source": "source"
         }
       ],
-      "note": "Automated checks verify phase/state structure and shared object identity; causal meaning still needs review."
+      "note": "Automated checks separate work status from expected/observed outcome and confirm required evidence fields; causal meaning and evidence scope still need human review."
     },
     "visual-review": {
       "status": "pending",
@@ -589,7 +617,7 @@
         "full text and contrast at 640×360",
         "style material in native frame",
         "same object and causal change across phases",
-        "result faithful to status",
+        "result faithful to outcome and evidence scope",
         "deliberate loop restart"
       ],
       "evidence": []
@@ -602,38 +630,35 @@
       "labels": [
         "before · inicio",
         "before · pausa",
-        "before · transición media",
         "before · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-34abb571-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\gallery\\galactic\\checklist\\hitos-de-lectura-39477807-contact-sheet.png"
     },
     {
       "phaseId": "change",
       "labels": [
         "change · inicio",
         "change · pausa",
-        "change · transición media",
         "change · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-34abb571-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\gallery\\galactic\\checklist\\hitos-de-lectura-39477807-contact-sheet.png"
     },
     {
       "phaseId": "result",
       "labels": [
         "result · inicio",
         "result · pausa",
-        "result · transición media",
         "result · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-34abb571-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-e3dfc923\\docs\\narrative-gif\\gallery\\galactic\\checklist\\hitos-de-lectura-39477807-contact-sheet.png"
     }
   ],
   "palette": {
-    "colors": 58,
-    "meanAbsoluteChannelError": 2.23,
-    "maximumChannelError": 8,
-    "sampledFrames": 42
+    "colors": 72,
+    "meanAbsoluteChannelError": 0.309,
+    "maximumChannelError": 11,
+    "sampledFrames": 33
   },
   "phaseHoldsVerified": [
     {
@@ -655,10 +680,41 @@
       "passed": true
     }
   ],
+  "timing": {
+    "preset": "readable",
+    "holdsRequestedMs": 15000,
+    "holdsDecodedMs": 15000,
+    "transitionsMs": 1300,
+    "loopBridgeMs": 650,
+    "entryMs": 240,
+    "totalDecodedMs": 17190,
+    "totalDurationBudgetMs": 30000,
+    "phaseHolds": [
+      {
+        "phaseId": "before",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      },
+      {
+        "phaseId": "change",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      },
+      {
+        "phaseId": "result",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      }
+    ],
+    "warnings": []
+  },
   "resourceEstimate": {
-    "pixelFrames": 38707200,
+    "pixelFrames": 30412800,
     "maxPixelFrames": 96000000,
-    "memoryBytes": 124370944,
+    "memoryBytes": 107634688,
     "maxMemoryBytes": 268435456
   },
   "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed."
