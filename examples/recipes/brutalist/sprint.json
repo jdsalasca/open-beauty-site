@@ -1,0 +1,53 @@
+{
+  "style": "brutalist",
+  "locale": "en",
+  "team": { "name": "Concrete Office", "brand": "CONCRETE" },
+  "sprint": {
+    "id": "B12",
+    "start": "2026-10-05",
+    "end": "2026-10-16",
+    "goal": "Ship the public permit tracker with readable raw data"
+  },
+  "summary": "We deleted more surface than we shipped, and the system is louder for it.",
+  "stories": [
+    { "id": "CT-88", "title": "Publish every permit as a raw JSON row", "points": 5, "status": "done", "owner": "Mara Voss" },
+    { "id": "CT-89", "title": "Replace the dashboard with one honest table", "points": 8, "status": "done", "owner": "Jonas Pell" },
+    { "id": "CT-90", "title": "Keyboard path through the filter bar", "points": 3, "status": "done", "owner": "Mara Voss" },
+    { "id": "CT-91", "title": "Print styles for the planning board", "points": 3, "status": "carried", "owner": "Ines Falk" },
+    { "id": "CT-92", "title": "Redesign the mascot", "points": 5, "status": "dropped", "owner": "Jonas Pell" }
+  ],
+  "velocity": [
+    { "sprint": "B7", "committed": 18, "done": 14 },
+    { "sprint": "B8", "committed": 21, "done": 18 },
+    { "sprint": "B9", "committed": 19, "done": 19 },
+    { "sprint": "B10", "committed": 24, "done": 15 },
+    { "sprint": "B12", "committed": 24, "done": 16 }
+  ],
+  "burndown": [
+    { "day": "05/10", "remaining": 24 },
+    { "day": "07/10", "remaining": 23 },
+    { "day": "09/10", "remaining": 20 },
+    { "day": "11/10", "remaining": 19 },
+    { "day": "13/10", "remaining": 18 },
+    { "day": "15/10", "remaining": 17 },
+    { "day": "16/10", "remaining": 16 }
+  ],
+  "risks": [
+    { "title": "The permit feed changes schema without notice", "impact": "rows land empty in the table", "mitigation": "schema guard with a loud failure page", "owner": "Ines Falk" },
+    { "title": "Legal review blocks the raw export", "impact": "the tracker launches half blind", "mitigation": "pre-review a sample of 100 rows", "owner": "Mara Voss" }
+  ],
+  "retro": {
+    "wentWell": ["Delete-first reviews", "One shared fixture for the feed"],
+    "toImprove": ["Stop styling error states by hand", "Fewer meetings about the mascot"],
+    "actions": [
+      { "what": "Add the schema guard to CI", "owner": "Ines Falk", "due": "2026-10-21" },
+      { "what": "Schedule the legal sample review", "owner": "Mara Voss", "due": "2026-10-20" }
+    ]
+  },
+  "capacity": [
+    { "person": "Mara Voss", "days": 9, "focus": "tracker" },
+    { "person": "Jonas Pell", "days": 5, "focus": "print" },
+    { "person": "Ines Falk", "days": 7, "focus": "feed" }
+  ],
+  "nextGoal": "A permit tracker a citizen can read in one screen."
+}

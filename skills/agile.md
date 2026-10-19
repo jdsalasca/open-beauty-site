@@ -45,13 +45,27 @@ A plan is a bet, not a wish list. 6–8 content slides:
 
 ## One brief, one kit
 
-Use `beauty_create_sprint` when the team wants the whole ritual in one move. It writes review, retrospective and planning decks plus three matching GIFs. The brief carries `sprint`, `team`, `date`, `summary`, `metrics`, `highlights`, `blockers`, `next`, `quote` and `maxxing`. Each deck is validated; if one is below A/100 or 4/4, fix the brief and regenerate the kit.
+Use `beauty_create_sprint` (CLI: `beauty sprint --style <s> --brief sprint.json [--out dir]`) when the team wants the whole ritual in one move. It writes review, retrospective and planning decks plus three data-driven GIFs. The decks are built from the brief: velocity bars (committed vs done), burndown line, stories table with status, risks, retro columns and actions with owners, capacity bars and the next goal. The brand is `team.brand || team.name`.
+
+The brief is data, not decoration:
+
+- `team`: `{ "name": "...", "brand": "..." }`
+- `sprint`: `{ "id": "...", "start": "...", "end": "...", "goal": "..." }`
+- `stories`: `{ "id", "title", "points", "status": "done" | "carried" | "dropped", "owner" }`
+- `velocity`: `{ "sprint", "committed", "done" }` (the last 5 are charted)
+- `burndown`: `{ "day", "remaining" }`
+- `risks`: `{ "title", "impact", "mitigation", "owner" }`
+- `retro`: `{ "wentWell": [], "toImprove": [], "actions": [{ "what", "owner", "due" }] }`
+- `capacity`: `{ "person", "days", "focus" }`
+- `nextGoal`, `summary`, `locale`, `maxxing`
+
+Legacy minimal briefs (`sprint`, `team`, `metrics`, `highlights`, `blockers`, `next`, `quote`) keep working. Wrong types fail with the exact field; unknown fields come back as warnings; any provided story/risk/action missing from the HTML is reported as a `sprint-fidelity` issue. Without `--out`/`output` the kit writes to a unique `beauty-output/sprint-<team>-<sprint>-<hash>` folder, so parallel runs never collide. Each deck is validated; if one is below A/100, cut words or split a slide and regenerate.
 
 Do not invent metrics or decisions. A missing number stays missing; the deck should ask for it, not decorate it.
 
 ## GIF teaser
 
-`beauty_create_gif` with `text: "Sprint 14"` (or “Review”, “Retro”, “Plan”) and a subtitle such as `"Viernes 10:00 · Sala 2"`. Template `title`. 800×800. The GIF is a door, not the agenda.
+`beauty_create_sprint` already returns three data GIFs: review (velocity bars grow plus the points headline), retro (actions cycle with owner and date) and planning (capacity bars fill). For a standalone door, use `beauty_create_gif` with `text: "Sprint 14"` and a subtitle such as `"Viernes 10:00 · Sala 2"`. Template `title`. 800×800.
 
 ## Tone
 

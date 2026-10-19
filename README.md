@@ -153,7 +153,12 @@ Los rituales ágiles pueden ser conversaciones visuales, no formularios de estad
 
 ### Un kit de sprint
 
-`beauty sprint --style nature --brief sprint.json` genera, en una sola carpeta, **review + retrospectiva + planning + tres GIFs**. El brief lleva sprint, equipo, métricas, highlights, blockers y próximos pasos; el estilo y `maxxing` se comparten. Así el ritual no empieza en una plantilla vacía ni termina en tres archivos que no se hablan.
+`beauty sprint --style nature --brief sprint.json --out out/sprint` genera, en una sola carpeta, **review + retrospectiva + planning + tres GIFs** construidos con los datos: gráfico de barras de velocidad (comprometido vs hecho), línea de burndown, tabla de historias con estado (`done`/`carried`/`dropped`), riesgos con mitigación y responsable, tres columnas de retro con acciones fechadas y barras de capacidad por persona. El brand sale de `team.brand || team.name` y el estilo y `maxxing` se comparten. Sin `--out` (ni `output` en MCP) la carpeta por defecto es `beauty-output/sprint-<equipo>-<sprint>-<hash>`, única por corrida, de modo que dos procesos en paralelo nunca colisionan.
+
+El esquema está documentado en [examples/recipes/README.md](examples/recipes/README.md#sprint-briefs) y hay un brief funcional por estilo en `examples/recipes/<style>/sprint.json`. El esquema es zod: los tipos incorrectos fallan con el campo exacto (por ejemplo `stories.0.points: expected number, received string`) y los campos desconocidos se reportan como warnings, nunca se ignoran en silencio. Los briefs legacy mínimos (`sprint`, `team`, `metrics`, `highlights`, `blockers`, `next`) siguen funcionando.
+
+Después de generar, el kit verifica fidelidad: cada título de historia, riesgo y acción provista tiene que aparecer en el HTML correspondiente; lo que falte se reporta como issue (`sprint-fidelity`). Los GIFs también son datos: la review anima las barras creciendo y el número de puntos, la retro cicla las acciones con responsable y fecha, y el planning llena las barras de capacidad.
+
 <p align="center"><a href="examples/agile/sprint-16/sprint-16-review.html"><img src="examples/agile/sprint-16/sprint-16-review.png" width="520" alt="Sprint 16 review, kit Art Deco maxxing"></a></p>
 
 

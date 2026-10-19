@@ -1,0 +1,52 @@
+{
+  "style": "bestiary",
+  "locale": "es",
+  "team": { "name": "Gabinete de Bestias", "brand": "Gabinete" },
+  "sprint": {
+    "id": "M5",
+    "start": "2026-10-05",
+    "end": "2026-10-16",
+    "goal": "Catalogar la liebre de sombra prestada antes del invierno"
+  },
+  "summary": "Cinco fichas nuevas y una bestia que aprendimos a no nombrar todavía.",
+  "stories": [
+    { "id": "GB-51", "title": "Describir la liebre de sombra prestada", "points": 5, "status": "done", "owner": "Bruno Vela" },
+    { "id": "GB-52", "title": "Ilustrar el ave de pico de agua", "points": 3, "status": "done", "owner": "Selva Ortiz" },
+    { "id": "GB-53", "title": "Cotejar citas del manuscrito de 1608", "points": 5, "status": "done", "owner": "Irene Caz" },
+    { "id": "GB-54", "title": "Digitalizar las láminas sueltas", "points": 3, "status": "carried", "owner": "Selva Ortiz" },
+    { "id": "GB-55", "title": "Tasar el herbario mágico", "points": 5, "status": "dropped", "owner": "Irene Caz" }
+  ],
+  "velocity": [
+    { "sprint": "M1", "committed": 11, "done": 8 },
+    { "sprint": "M2", "committed": 12, "done": 11 },
+    { "sprint": "M3", "committed": 14, "done": 10 },
+    { "sprint": "M5", "committed": 21, "done": 13 }
+  ],
+  "burndown": [
+    { "day": "05/10", "remaining": 21 },
+    { "day": "07/10", "remaining": 19 },
+    { "day": "09/10", "remaining": 16 },
+    { "day": "11/10", "remaining": 13 },
+    { "day": "13/10", "remaining": 10 },
+    { "day": "15/10", "remaining": 9 },
+    { "day": "16/10", "remaining": 8 }
+  ],
+  "risks": [
+    { "title": "La cita de 1608 está mal atribuida", "impact": "la ficha publica un origen falso", "mitigation": "verificar en el archivo y marcar como dudosa", "owner": "Irene Caz" },
+    { "title": "La liebre no se deja observar de nuevo", "impact": "la ficha queda sin segunda nota de campo", "mitigation": "registrar huellas y sombra en su ausencia", "owner": "Bruno Vela" }
+  ],
+  "retro": {
+    "wentWell": ["Citar siempre la fuente", "Dibujar desde la nota, no desde la idea"],
+    "toImprove": ["Fichas que crecen sin límite", "Préstamos de lámina sin registro"],
+    "actions": [
+      { "what": "Limitar cada ficha a una página", "owner": "Selva Ortiz", "due": "2026-10-20" },
+      { "what": "Registrar cada préstamo en el libro de sala", "owner": "Irene Caz", "due": "2026-10-19" }
+    ]
+  },
+  "capacity": [
+    { "person": "Bruno Vela", "days": 7, "focus": "campo" },
+    { "person": "Selva Ortiz", "days": 6, "focus": "láminas" },
+    { "person": "Irene Caz", "days": 5, "focus": "archivo" }
+  ],
+  "nextGoal": "Un catálogo donde cada bestia tenga una sola duda honesta."
+}

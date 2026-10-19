@@ -1,0 +1,52 @@
+{
+  "style": "artdeco",
+  "locale": "en",
+  "team": { "name": "The Mercury Room", "brand": "MERCURY" },
+  "sprint": {
+    "id": "G4",
+    "start": "2026-10-01",
+    "end": "2026-10-12",
+    "goal": "Open the mezzanine bar with a service that runs on time"
+  },
+  "summary": "Marble, brass and a shorter menu made the room feel taller.",
+  "stories": [
+    { "id": "MQ-31", "title": "Cut the cocktail list from 40 to 16", "points": 5, "status": "done", "owner": "Delphine Roux" },
+    { "id": "MQ-32", "title": "Tune the bar rail lighting to 2200K", "points": 3, "status": "done", "owner": "Ottis Lane" },
+    { "id": "MQ-33", "title": "Rehearse the service for 90 covers", "points": 8, "status": "done", "owner": "Amara Cole" },
+    { "id": "MQ-34", "title": "Engrave the new brass plaques", "points": 3, "status": "carried", "owner": "Ottis Lane" },
+    { "id": "MQ-35", "title": "Build an app for reservations", "points": 8, "status": "dropped", "owner": "Delphine Roux" }
+  ],
+  "velocity": [
+    { "sprint": "G1", "committed": 16, "done": 12 },
+    { "sprint": "G2", "committed": 15, "done": 15 },
+    { "sprint": "G3", "committed": 18, "done": 13 },
+    { "sprint": "G4", "committed": 27, "done": 16 }
+  ],
+  "burndown": [
+    { "day": "01/10", "remaining": 27 },
+    { "day": "03/10", "remaining": 25 },
+    { "day": "05/10", "remaining": 22 },
+    { "day": "07/10", "remaining": 20 },
+    { "day": "09/10", "remaining": 17 },
+    { "day": "11/10", "remaining": 17 },
+    { "day": "12/10", "remaining": 16 }
+  ],
+  "risks": [
+    { "title": "The glassware order arrives after opening night", "impact": "two signature drinks cannot be served", "mitigation": "borrow crystal from the partner hotel", "owner": "Amara Cole" },
+    { "title": "The elevator licence is delayed", "impact": "guests reach the mezzanine through service stairs", "mitigation": "rehearse the greeting route and print signs", "owner": "Ottis Lane" }
+  ],
+  "retro": {
+    "wentWell": ["Rehearsing the room before opening", "The shorter menu reads faster"],
+    "toImprove": ["Too many last-minute supply calls", "Brass or silver, decide once"],
+    "actions": [
+      { "what": "Lock the supplier list two weeks before service", "owner": "Amara Cole", "due": "2026-10-19" },
+      { "what": "Sign the elevator route rehearsals", "owner": "Ottis Lane", "due": "2026-10-16" }
+    ]
+  },
+  "capacity": [
+    { "person": "Delphine Roux", "days": 6, "focus": "menu" },
+    { "person": "Ottis Lane", "days": 5, "focus": "room" },
+    { "person": "Amara Cole", "days": 8, "focus": "service" }
+  ],
+  "nextGoal": "A room that is already warm when the first guest arrives."
+}
