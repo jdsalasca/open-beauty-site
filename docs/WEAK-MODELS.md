@@ -139,3 +139,7 @@ full-page screenshot can show blank bands.
 | Vision 3/4 | Template look | Change `seed`, image scale or material |
 | Craft below A | Obedience errors | Read fix lines and adjust the brief |
 | GIF unreadable | Too much text | 2-5 words; put detail in page/deck |
+
+## Flujo guiado y planificación
+
+Usá `beauty plan` para planificar sin renderizar: capacidades, storyboard, avisos de contenido y esqueleto de brief. El flujo completo está en [`skills/guided-workflow.md`](../skills/guided-workflow.md). Un A100 técnico no aprueba legibilidad, narrativa ni dirección de arte; la revisión visual sigue pendiente sin revisor independiente.

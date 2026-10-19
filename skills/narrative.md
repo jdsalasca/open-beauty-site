@@ -128,3 +128,7 @@ la preferencia `prefers-reduced-motion` se mantiene visible y respetada.
 
 La guía de migración completa de briefs v1 y manifiestos v2/v3 está en
 [`docs/narrative-gif/MIGRATION.md`](../docs/narrative-gif/MIGRATION.md).
+
+## Flujo guiado y planificación
+
+Antes de renderizar, usá `beauty plan --format gif --style <s> ...` para obtener capacidades, storyboard, avisos de contenido y esqueleto de brief. El flujo completo de ocho pasos está en [`skills/guided-workflow.md`](guided-workflow.md). Un A100 técnico no aprueba legibilidad, narrativa ni dirección de arte.
