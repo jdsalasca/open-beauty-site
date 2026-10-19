@@ -2,15 +2,93 @@
   "style": "renaissance",
   "kind": "narrative-gif",
   "locale": "es",
-  "audience": "Producto en Sprint Review",
-  "title": "Cambios que se revisan",
-  "status": "in-review",
+  "audience": "Equipo que organiza un registro",
+  "title": "Piezas del arco",
+  "workflowStatus": "in-review",
+  "outcome": { "mode": "expected" },
+  "illustrative": true,
+  "badgePolicy": "none",
   "phases": [
-    { "id": "before", "label": "Antes", "text": "La guía podía cambiar sin indicar qué revisar.", "visual": { "kind": "comparison", "state": "unreviewed" } },
-    { "id": "change", "label": "Cambio", "text": "La propuesta añade una señal junto al cambio para orientar la lectura.", "visual": { "kind": "comparison", "state": "flagged" } },
-    { "id": "result", "label": "Resultado esperado", "text": "El equipo podrá comprobar si la señal facilita la revisión antes del cierre.", "visual": { "kind": "comparison", "state": "review-ready" } }
+    {
+      "id": "hallazgo",
+      "label": "Hallazgo",
+      "text": "Cuatro fragmentos pintados aparecen fuera de su lugar.",
+      "visual": {
+        "kind": "comparison",
+        "state": "unreviewed",
+        "semantic": {
+          "primitive": "card-collection",
+          "illustrative": true,
+          "entities": [
+            { "id": "arco", "kind": "collection", "label": "Registro del arco" },
+            { "id": "pieza-a", "kind": "card", "label": "Fragmento A" },
+            { "id": "pieza-b", "kind": "card", "label": "Fragmento B" },
+            { "id": "pieza-c", "kind": "card", "label": "Fragmento C" },
+            { "id": "pieza-d", "kind": "card", "label": "Fragmento D" }
+          ],
+          "relations": [],
+          "states": { "arco": "open", "pieza-a": "default", "pieza-b": "default", "pieza-c": "default", "pieza-d": "default" },
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "registro",
+      "label": "Orden",
+      "text": "La primera pieza encaja y revela el lugar de las demás.",
+      "visual": {
+        "kind": "comparison",
+        "state": "flagged",
+        "semantic": {
+          "primitive": "card-collection",
+          "illustrative": true,
+          "entities": [
+            { "id": "arco", "kind": "collection", "label": "Registro del arco" },
+            { "id": "pieza-a", "kind": "card", "label": "Fragmento A" },
+            { "id": "pieza-b", "kind": "card", "label": "Fragmento B" },
+            { "id": "pieza-c", "kind": "card", "label": "Fragmento C" },
+            { "id": "pieza-d", "kind": "card", "label": "Fragmento D" }
+          ],
+          "relations": [{ "kind": "member-of", "from": "pieza-a", "to": "arco" }],
+          "states": { "arco": "counted", "pieza-a": "member", "pieza-b": "default", "pieza-c": "default", "pieza-d": "default" },
+          "actions": [{ "entityId": "pieza-a", "type": "add-to-collection" }]
+        }
+      }
+    },
+    {
+      "id": "composicion",
+      "label": "Composición",
+      "text": "Los cuatro fragmentos cierran una composición asimétrica y serena.",
+      "visual": {
+        "kind": "comparison",
+        "state": "review-ready",
+        "semantic": {
+          "primitive": "card-collection",
+          "illustrative": true,
+          "entities": [
+            { "id": "arco", "kind": "collection", "label": "Registro del arco" },
+            { "id": "pieza-a", "kind": "card", "label": "Fragmento A" },
+            { "id": "pieza-b", "kind": "card", "label": "Fragmento B" },
+            { "id": "pieza-c", "kind": "card", "label": "Fragmento C" },
+            { "id": "pieza-d", "kind": "card", "label": "Fragmento D" }
+          ],
+          "relations": [
+            { "kind": "member-of", "from": "pieza-a", "to": "arco" },
+            { "kind": "member-of", "from": "pieza-b", "to": "arco" },
+            { "kind": "member-of", "from": "pieza-c", "to": "arco" },
+            { "kind": "member-of", "from": "pieza-d", "to": "arco" }
+          ],
+          "states": { "arco": "counted", "pieza-a": "member", "pieza-b": "member", "pieza-c": "member", "pieza-d": "member" },
+          "actions": [
+            { "entityId": "pieza-b", "type": "add-to-collection" },
+            { "entityId": "pieza-c", "type": "add-to-collection" },
+            { "entityId": "pieza-d", "type": "add-to-collection" }
+          ]
+        }
+      }
+    }
   ],
-  "playback": { "minReadableHoldMs": 5000, "transitionMs": 650, "loop": true },
+  "playback": { "preset": "readable", "transitionMs": 650, "loop": true },
   "output": { "width": 1280, "height": 720, "formats": ["gif", "png"], "preset": "review-1280x720" },
-  "seed": 7
+  "seed": 41
 }

@@ -1,0 +1,1393 @@
+{
+  "schemaVersion": 2,
+  "commit": "168194e754e50f69395a6101252afb6a3122acff",
+  "brief": {
+    "style": "renaissance",
+    "kind": "narrative-gif",
+    "locale": "es",
+    "audience": "Equipo que ordena fragmentos",
+    "title": "Cuenta del fresco",
+    "workflowStatus": "in-review",
+    "outcome": {
+      "mode": "expected"
+    },
+    "illustrative": true,
+    "badgePolicy": "none",
+    "phases": [
+      {
+        "id": "primera-pieza",
+        "label": "Primera pieza",
+        "text": "Una pieza identificada entra en el registro del arco.",
+        "visual": {
+          "kind": "checklist",
+          "state": "unreviewed",
+          "semantic": {
+            "primitive": "counter",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "conteo",
+                "kind": "counter",
+                "value": 1,
+                "illustrative": true
+              },
+              {
+                "id": "panel-a",
+                "kind": "card",
+                "label": "Panel A",
+                "illustrative": true
+              },
+              {
+                "id": "panel-b",
+                "kind": "card",
+                "label": "Panel B",
+                "illustrative": true
+              },
+              {
+                "id": "panel-c",
+                "kind": "card",
+                "label": "Panel C",
+                "illustrative": true
+              },
+              {
+                "id": "panel-d",
+                "kind": "card",
+                "label": "Panel D",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "counts",
+                "from": "conteo",
+                "to": "panel-a"
+              }
+            ],
+            "states": {
+              "conteo": "value",
+              "panel-a": "member",
+              "panel-b": "default",
+              "panel-c": "default",
+              "panel-d": "default"
+            },
+            "actions": [
+              {
+                "entityId": "conteo",
+                "type": "count-changes"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "dos-piezas",
+        "label": "Dos piezas",
+        "text": "El segundo panel queda junto al primero; el conteo sigue los vínculos.",
+        "visual": {
+          "kind": "checklist",
+          "state": "flagged",
+          "semantic": {
+            "primitive": "counter",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "conteo",
+                "kind": "counter",
+                "value": 2,
+                "illustrative": true
+              },
+              {
+                "id": "panel-a",
+                "kind": "card",
+                "label": "Panel A",
+                "illustrative": true
+              },
+              {
+                "id": "panel-b",
+                "kind": "card",
+                "label": "Panel B",
+                "illustrative": true
+              },
+              {
+                "id": "panel-c",
+                "kind": "card",
+                "label": "Panel C",
+                "illustrative": true
+              },
+              {
+                "id": "panel-d",
+                "kind": "card",
+                "label": "Panel D",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "counts",
+                "from": "conteo",
+                "to": "panel-a"
+              },
+              {
+                "kind": "counts",
+                "from": "conteo",
+                "to": "panel-b"
+              }
+            ],
+            "states": {
+              "conteo": "increased",
+              "panel-a": "member",
+              "panel-b": "member",
+              "panel-c": "default",
+              "panel-d": "default"
+            },
+            "actions": [
+              {
+                "entityId": "conteo",
+                "type": "count-changes"
+              },
+              {
+                "entityId": "panel-b",
+                "type": "add-to-collection"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "composicion-estable",
+        "label": "Resultado esperado",
+        "text": "Las cuatro piezas halladas ocupan sus lugares en una calma asimétrica.",
+        "visual": {
+          "kind": "checklist",
+          "state": "review-ready",
+          "semantic": {
+            "primitive": "counter",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "conteo",
+                "kind": "counter",
+                "value": 4,
+                "illustrative": true
+              },
+              {
+                "id": "panel-a",
+                "kind": "card",
+                "label": "Panel A",
+                "illustrative": true
+              },
+              {
+                "id": "panel-b",
+                "kind": "card",
+                "label": "Panel B",
+                "illustrative": true
+              },
+              {
+                "id": "panel-c",
+                "kind": "card",
+                "label": "Panel C",
+                "illustrative": true
+              },
+              {
+                "id": "panel-d",
+                "kind": "card",
+                "label": "Panel D",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "counts",
+                "from": "conteo",
+                "to": "panel-a"
+              },
+              {
+                "kind": "counts",
+                "from": "conteo",
+                "to": "panel-b"
+              },
+              {
+                "kind": "counts",
+                "from": "conteo",
+                "to": "panel-c"
+              },
+              {
+                "kind": "counts",
+                "from": "conteo",
+                "to": "panel-d"
+              }
+            ],
+            "states": {
+              "conteo": "increased",
+              "panel-a": "member",
+              "panel-b": "member",
+              "panel-c": "member",
+              "panel-d": "member"
+            },
+            "actions": [
+              {
+                "entityId": "conteo",
+                "type": "count-changes"
+              },
+              {
+                "entityId": "panel-c",
+                "type": "add-to-collection"
+              },
+              {
+                "entityId": "panel-d",
+                "type": "add-to-collection"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "playback": {
+      "preset": "readable",
+      "minReadableHoldMs": 5000,
+      "transitionMs": 650,
+      "loop": true,
+      "totalDurationBudgetMs": 30000
+    },
+    "output": {
+      "width": 1280,
+      "height": 720,
+      "formats": [
+        "gif",
+        "png"
+      ],
+      "preset": "review-1280x720"
+    },
+    "seed": 41,
+    "status": "in-review"
+  },
+  "briefSha256": "8598e7872faeb95f3525c35d5c741dae266496f06ddca3c3adbba6ddae873e02",
+  "style": "renaissance",
+  "subfamily": null,
+  "workflowStatus": "in-review",
+  "outcome": {
+    "mode": "expected"
+  },
+  "evidenceClassification": "illustrative",
+  "illustrative": true,
+  "artOnly": true,
+  "seed": 41,
+  "renderer": {
+    "narrative": "narrative-core/0.2.0",
+    "canvas": "@napi-rs/canvas@1.0.11",
+    "gif": "gifenc@1.0.3",
+    "scene": "renaissance-fresco/1.0.0"
+  },
+  "fonts": {
+    "bundleVersion": "repo-bundled-ofl-1",
+    "roles": {
+      "display": {
+        "family": "EB Garamond",
+        "weight": 600
+      },
+      "reading": {
+        "family": "EB Garamond",
+        "weight": 400
+      },
+      "label": {
+        "family": "EB Garamond",
+        "weight": 600
+      },
+      "figure": {
+        "family": "EB Garamond",
+        "weight": 600
+      },
+      "annotation": {
+        "family": "EB Garamond",
+        "weight": 400
+      }
+    }
+  },
+  "dimensions": {
+    "width": 1280,
+    "height": 720
+  },
+  "formats": [
+    "gif",
+    "png"
+  ],
+  "decoded": {
+    "width": 1280,
+    "height": 720,
+    "frameCount": 33,
+    "delaysMs": [
+      80,
+      5000,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      80,
+      5000,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      80,
+      5000,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70
+    ],
+    "durationMs": 17190,
+    "loopCount": 0,
+    "integrity": true
+  },
+  "ffprobe": {
+    "available": true,
+    "passed": true,
+    "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode."
+  },
+  "bytes": {
+    "gif": 580014,
+    "png": 35152,
+    "contactSheet": 55676
+  },
+  "hashes": {
+    "briefSha256": "8598e7872faeb95f3525c35d5c741dae266496f06ddca3c3adbba6ddae873e02",
+    "gifSha256": "52357904422a104f158cb629fb1d7abd463fc0a030663deeda38c9b7e34617e6",
+    "pngSha256": "f16ca366cd7fea3d5b4ce6b7340e6ffe49be5d2feab4e1cd4e08758ea897c977",
+    "contactSheetSha256": "3a2252a6dea795eac50f513572e48aa4ea06aaf9150eb1f9e3b5d3b7bcf8ebe0"
+  },
+  "files": {
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\renaissance\\checklist\\cuenta-del-fresco-7045d15f-art-only.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\renaissance\\checklist\\cuenta-del-fresco-7045d15f-art-only.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\renaissance\\checklist\\cuenta-del-fresco-7045d15f-art-only-contact-sheet.png"
+  },
+  "controls": [
+    {
+      "name": "gif-integrity",
+      "passed": true,
+      "detail": "Independent LZW decode and GIF trailer passed.",
+      "source": "decoded"
+    },
+    {
+      "name": "dimensions",
+      "passed": true,
+      "detail": "decoded 1280×720; requested 1280×720",
+      "source": "decoded"
+    },
+    {
+      "name": "frame-count",
+      "passed": true,
+      "detail": "33 decoded frame(s)",
+      "source": "decoded"
+    },
+    {
+      "name": "duration",
+      "passed": true,
+      "detail": "17190ms decoded; holds exclude transitions",
+      "source": "decoded"
+    },
+    {
+      "name": "loop",
+      "passed": true,
+      "detail": "repeat=0; result-to-before bridge is explicit",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-holds",
+      "passed": true,
+      "detail": "primera-pieza 5000/5000ms, dos-piezas 5000/5000ms, composicion-estable 5000/5000ms",
+      "source": "decoded"
+    },
+    {
+      "name": "ffprobe-crosscheck",
+      "passed": true,
+      "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode.",
+      "source": "decoded"
+    },
+    {
+      "name": "files",
+      "passed": true,
+      "detail": "GIF 580014B · PNG 35152B · contact 55676B",
+      "source": "decoded"
+    },
+    {
+      "name": "scene-renderer-registered",
+      "passed": true,
+      "detail": "renderer renaissance/renaissance-fresco/1.0.0 exists; visual style likeness remains a separate review",
+      "source": "source"
+    },
+    {
+      "name": "type-system",
+      "passed": true,
+      "detail": "style typeSystem tokens are attached to raster role registry",
+      "source": "source"
+    },
+    {
+      "name": "narrative-subfamily",
+      "passed": true,
+      "detail": "renaissance/default selects an explicit narrative art direction",
+      "source": "source"
+    },
+    {
+      "name": "font-registration-and-glyphs",
+      "passed": true,
+      "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "distinct-frames",
+      "passed": true,
+      "detail": "27 unique composited frame(s); a format-valid static GIF does not pass",
+      "source": "pixels"
+    },
+    {
+      "name": "palette-loss",
+      "passed": true,
+      "detail": "60 colors; mean channel loss 0.011, max 11; sampled 33 frames",
+      "source": "pixels"
+    },
+    {
+      "name": "title-complete",
+      "passed": true,
+      "detail": "Cuenta del fresco",
+      "source": "source"
+    },
+    {
+      "name": "phase-primera-pieza-label-complete",
+      "passed": true,
+      "detail": "Primera pieza",
+      "source": "source"
+    },
+    {
+      "name": "phase-primera-pieza-text-complete",
+      "passed": true,
+      "detail": "Una pieza identificada / entra en el registro del / arco.",
+      "source": "source"
+    },
+    {
+      "name": "phase-dos-piezas-label-complete",
+      "passed": true,
+      "detail": "Dos piezas",
+      "source": "source"
+    },
+    {
+      "name": "phase-dos-piezas-text-complete",
+      "passed": true,
+      "detail": "El segundo panel queda / junto al primero; el / conteo sigue los vínculos.",
+      "source": "source"
+    },
+    {
+      "name": "phase-composicion-estable-label-complete",
+      "passed": true,
+      "detail": "Resultado esperado",
+      "source": "source"
+    },
+    {
+      "name": "phase-composicion-estable-text-complete",
+      "passed": true,
+      "detail": "Las cuatro piezas halladas / ocupan sus lugares en / una calma asimétrica.",
+      "source": "source"
+    },
+    {
+      "name": "registered-fonts",
+      "passed": true,
+      "detail": "all role faces and Spanish glyphs rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "review-size-thresholds",
+      "passed": true,
+      "detail": "title 76px; phase body >=36px; label >=24px",
+      "source": "source"
+    },
+    {
+      "name": "640x360-effective-size",
+      "passed": true,
+      "detail": "title 38.0px; body min 28.0px (requires >=20px); label min 15.0px",
+      "source": "source"
+    },
+    {
+      "name": "composition-balance",
+      "passed": false,
+      "severity": "warning",
+      "detail": "WARN · revise; 8×4 decoded-pixel grid against #F6EDDD: empty cells 50.0%, text-column vertical fill 0.0%, art/object area outside the text column 50.0%, largest empty rectangle 50.0%; thresholds: rectangle <=22%, text fill >=60% (text-fill threshold omitted in art-only mode); not an aesthetic score. Per-frame: primera-pieza · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | primera-pieza → dos-piezas · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | dos-piezas · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | dos-piezas → composicion-estable · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | composicion-estable · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | composicion-estable → primera-pieza · unión del ciclo: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0%",
+      "source": "pixels"
+    },
+    {
+      "name": "contrast",
+      "passed": true,
+      "detail": "rendered text colors: ink 13.53:1; label 13.53:1 (not an OCR or per-pixel text measurement)",
+      "source": "source"
+    },
+    {
+      "name": "safe-zone-and-collisions",
+      "passed": true,
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+      "source": "source"
+    },
+    {
+      "name": "stable-reading-holds",
+      "passed": true,
+      "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-count-and-copy",
+      "passed": true,
+      "detail": "3 complete phases; all copy retained",
+      "source": "source"
+    },
+    {
+      "name": "shared-object-identity",
+      "passed": true,
+      "detail": "One scene object instance is created and passed to every phase frame.",
+      "source": "source"
+    },
+    {
+      "name": "visual-state-change",
+      "passed": true,
+      "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+      "source": "pixels"
+    },
+    {
+      "name": "workflow-outcome-separation",
+      "passed": true,
+      "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+      "source": "source"
+    },
+    {
+      "name": "outcome-evidence",
+      "passed": true,
+      "detail": "Expected outcome; no benefit measurement is claimed.",
+      "source": "source"
+    },
+    {
+      "name": "result-follows-outcome",
+      "passed": true,
+      "detail": "outcome=expected; final label=\"Resultado esperado\"",
+      "source": "source"
+    },
+    {
+      "name": "semantic-illustrative-data",
+      "passed": true,
+      "detail": "brief illustrative=true; semantic phase flags=true,true,true",
+      "source": "source"
+    },
+    {
+      "name": "semantic-object-midpoint:primera-pieza → dos-piezas · punto medio de transición",
+      "passed": true,
+      "detail": "decoded object diff 1.8%; changed-state entities: conteo, panel-b; conteo value→increased 0.9%, panel-a member→member 2.0%, panel-b default→member 4.0%, panel-c default→default 3.9%, panel-d default→default 3.7%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:dos-piezas → composicion-estable · punto medio de transición",
+      "passed": true,
+      "detail": "decoded object diff 18.8%; changed-state entities: panel-c, panel-d; conteo increased→increased 8.5%, panel-a member→member 17.1%, panel-b member→member 34.8%, panel-c default→member 56.0%, panel-d default→member 60.6%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:composicion-estable → primera-pieza · unión del ciclo",
+      "passed": true,
+      "detail": "decoded object diff 22.6%; changed-state entities: conteo, panel-b, panel-c, panel-d; conteo increased→value 10.0%, panel-a member→member 21.6%, panel-b member→default 43.7%, panel-c member→default 66.8%, panel-d member→default 66.3%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:primera-pieza → dos-piezas hold",
+      "passed": true,
+      "detail": "decoded object diff 1.8%; changed-state entities: conteo, panel-b; conteo value→increased 1.0%, panel-a member→member 2.1%, panel-b default→member 4.2%, panel-c default→default 2.8%, panel-d default→default 3.7%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:dos-piezas → composicion-estable hold",
+      "passed": true,
+      "detail": "decoded object diff 21.7%; changed-state entities: panel-c, panel-d; conteo increased→increased 9.5%, panel-a member→member 20.4%, panel-b member→member 40.6%, panel-c default→member 66.9%, panel-d default→member 66.8%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:composicion-estable → primera-pieza loop join",
+      "passed": true,
+      "detail": "decoded object diff 22.7%; changed-state entities: conteo, panel-b, panel-c, panel-d; conteo increased→value 10.0%, panel-a member→member 21.8%, panel-b member→default 43.4%, panel-c member→default 67.5%, panel-d member→default 67.3%",
+      "source": "decoded"
+    }
+  ],
+  "evaluation": {
+    "technical-integrity": {
+      "status": "pass",
+      "controls": [
+        {
+          "name": "gif-integrity",
+          "passed": true,
+          "detail": "Independent LZW decode and GIF trailer passed.",
+          "source": "decoded"
+        },
+        {
+          "name": "dimensions",
+          "passed": true,
+          "detail": "decoded 1280×720; requested 1280×720",
+          "source": "decoded"
+        },
+        {
+          "name": "frame-count",
+          "passed": true,
+          "detail": "33 decoded frame(s)",
+          "source": "decoded"
+        },
+        {
+          "name": "duration",
+          "passed": true,
+          "detail": "17190ms decoded; holds exclude transitions",
+          "source": "decoded"
+        },
+        {
+          "name": "loop",
+          "passed": true,
+          "detail": "repeat=0; result-to-before bridge is explicit",
+          "source": "decoded"
+        },
+        {
+          "name": "phase-holds",
+          "passed": true,
+          "detail": "primera-pieza 5000/5000ms, dos-piezas 5000/5000ms, composicion-estable 5000/5000ms",
+          "source": "decoded"
+        },
+        {
+          "name": "ffprobe-crosscheck",
+          "passed": true,
+          "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode.",
+          "source": "decoded"
+        },
+        {
+          "name": "files",
+          "passed": true,
+          "detail": "GIF 580014B · PNG 35152B · contact 55676B",
+          "source": "decoded"
+        }
+      ]
+    },
+    "style-conformance": {
+      "status": "pending",
+      "sourceStatus": "pass",
+      "pixelStatus": "pass",
+      "controls": [
+        {
+          "name": "scene-renderer-registered",
+          "passed": true,
+          "detail": "renderer renaissance/renaissance-fresco/1.0.0 exists; visual style likeness remains a separate review",
+          "source": "source"
+        },
+        {
+          "name": "type-system",
+          "passed": true,
+          "detail": "style typeSystem tokens are attached to raster role registry",
+          "source": "source"
+        },
+        {
+          "name": "narrative-subfamily",
+          "passed": true,
+          "detail": "renaissance/default selects an explicit narrative art direction",
+          "source": "source"
+        },
+        {
+          "name": "font-registration-and-glyphs",
+          "passed": true,
+          "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "distinct-frames",
+          "passed": true,
+          "detail": "27 unique composited frame(s); a format-valid static GIF does not pass",
+          "source": "pixels"
+        },
+        {
+          "name": "palette-loss",
+          "passed": true,
+          "detail": "60 colors; mean channel loss 0.011, max 11; sampled 33 frames",
+          "source": "pixels"
+        }
+      ],
+      "note": "Source checks identify renderer/font tokens; pixel checks measure frame change and palette loss. Neither substitutes for visual review."
+    },
+    "rendered-legibility": {
+      "status": "revise",
+      "controls": [
+        {
+          "name": "title-complete",
+          "passed": true,
+          "detail": "Cuenta del fresco",
+          "source": "source"
+        },
+        {
+          "name": "phase-primera-pieza-label-complete",
+          "passed": true,
+          "detail": "Primera pieza",
+          "source": "source"
+        },
+        {
+          "name": "phase-primera-pieza-text-complete",
+          "passed": true,
+          "detail": "Una pieza identificada / entra en el registro del / arco.",
+          "source": "source"
+        },
+        {
+          "name": "phase-dos-piezas-label-complete",
+          "passed": true,
+          "detail": "Dos piezas",
+          "source": "source"
+        },
+        {
+          "name": "phase-dos-piezas-text-complete",
+          "passed": true,
+          "detail": "El segundo panel queda / junto al primero; el / conteo sigue los vínculos.",
+          "source": "source"
+        },
+        {
+          "name": "phase-composicion-estable-label-complete",
+          "passed": true,
+          "detail": "Resultado esperado",
+          "source": "source"
+        },
+        {
+          "name": "phase-composicion-estable-text-complete",
+          "passed": true,
+          "detail": "Las cuatro piezas halladas / ocupan sus lugares en / una calma asimétrica.",
+          "source": "source"
+        },
+        {
+          "name": "registered-fonts",
+          "passed": true,
+          "detail": "all role faces and Spanish glyphs rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "review-size-thresholds",
+          "passed": true,
+          "detail": "title 76px; phase body >=36px; label >=24px",
+          "source": "source"
+        },
+        {
+          "name": "640x360-effective-size",
+          "passed": true,
+          "detail": "title 38.0px; body min 28.0px (requires >=20px); label min 15.0px",
+          "source": "source"
+        },
+        {
+          "name": "composition-balance",
+          "passed": false,
+          "severity": "warning",
+          "detail": "WARN · revise; 8×4 decoded-pixel grid against #F6EDDD: empty cells 50.0%, text-column vertical fill 0.0%, art/object area outside the text column 50.0%, largest empty rectangle 50.0%; thresholds: rectangle <=22%, text fill >=60% (text-fill threshold omitted in art-only mode); not an aesthetic score. Per-frame: primera-pieza · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | primera-pieza → dos-piezas · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | dos-piezas · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | dos-piezas → composicion-estable · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | composicion-estable · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | composicion-estable → primera-pieza · unión del ciclo: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0%",
+          "source": "pixels"
+        },
+        {
+          "name": "contrast",
+          "passed": true,
+          "detail": "rendered text colors: ink 13.53:1; label 13.53:1 (not an OCR or per-pixel text measurement)",
+          "source": "source"
+        },
+        {
+          "name": "safe-zone-and-collisions",
+          "passed": true,
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+          "source": "source"
+        },
+        {
+          "name": "stable-reading-holds",
+          "passed": true,
+          "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+          "source": "decoded"
+        }
+      ],
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
+    },
+    "narrative": {
+      "status": "pending",
+      "controls": [
+        {
+          "name": "phase-count-and-copy",
+          "passed": true,
+          "detail": "3 complete phases; all copy retained",
+          "source": "source"
+        },
+        {
+          "name": "shared-object-identity",
+          "passed": true,
+          "detail": "One scene object instance is created and passed to every phase frame.",
+          "source": "source"
+        },
+        {
+          "name": "visual-state-change",
+          "passed": true,
+          "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+          "source": "pixels"
+        },
+        {
+          "name": "workflow-outcome-separation",
+          "passed": true,
+          "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+          "source": "source"
+        },
+        {
+          "name": "outcome-evidence",
+          "passed": true,
+          "detail": "Expected outcome; no benefit measurement is claimed.",
+          "source": "source"
+        },
+        {
+          "name": "result-follows-outcome",
+          "passed": true,
+          "detail": "outcome=expected; final label=\"Resultado esperado\"",
+          "source": "source"
+        },
+        {
+          "name": "semantic-illustrative-data",
+          "passed": true,
+          "detail": "brief illustrative=true; semantic phase flags=true,true,true",
+          "source": "source"
+        },
+        {
+          "name": "semantic-object-midpoint:primera-pieza → dos-piezas · punto medio de transición",
+          "passed": true,
+          "detail": "decoded object diff 1.8%; changed-state entities: conteo, panel-b; conteo value→increased 0.9%, panel-a member→member 2.0%, panel-b default→member 4.0%, panel-c default→default 3.9%, panel-d default→default 3.7%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:dos-piezas → composicion-estable · punto medio de transición",
+          "passed": true,
+          "detail": "decoded object diff 18.8%; changed-state entities: panel-c, panel-d; conteo increased→increased 8.5%, panel-a member→member 17.1%, panel-b member→member 34.8%, panel-c default→member 56.0%, panel-d default→member 60.6%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:composicion-estable → primera-pieza · unión del ciclo",
+          "passed": true,
+          "detail": "decoded object diff 22.6%; changed-state entities: conteo, panel-b, panel-c, panel-d; conteo increased→value 10.0%, panel-a member→member 21.6%, panel-b member→default 43.7%, panel-c member→default 66.8%, panel-d member→default 66.3%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:primera-pieza → dos-piezas hold",
+          "passed": true,
+          "detail": "decoded object diff 1.8%; changed-state entities: conteo, panel-b; conteo value→increased 1.0%, panel-a member→member 2.1%, panel-b default→member 4.2%, panel-c default→default 2.8%, panel-d default→default 3.7%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:dos-piezas → composicion-estable hold",
+          "passed": true,
+          "detail": "decoded object diff 21.7%; changed-state entities: panel-c, panel-d; conteo increased→increased 9.5%, panel-a member→member 20.4%, panel-b member→member 40.6%, panel-c default→member 66.9%, panel-d default→member 66.8%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:composicion-estable → primera-pieza loop join",
+          "passed": true,
+          "detail": "decoded object diff 22.7%; changed-state entities: conteo, panel-b, panel-c, panel-d; conteo increased→value 10.0%, panel-a member→member 21.8%, panel-b member→default 43.4%, panel-c member→default 67.5%, panel-d member→default 67.3%",
+          "source": "decoded"
+        }
+      ],
+      "note": "Automated checks separate work status from expected/observed outcome and confirm required evidence fields; causal meaning and evidence scope still need human review."
+    },
+    "visual-review": {
+      "status": "pending",
+      "criteria": [
+        "identity at 200px thumbnail",
+        "full text and contrast at 640×360",
+        "style material in native frame",
+        "same object and causal change across phases",
+        "result faithful to outcome and evidence scope",
+        "deliberate loop restart"
+      ],
+      "evidence": []
+    },
+    "publicationRecommendation": "none"
+  },
+  "phaseCaptures": [
+    {
+      "phaseId": "primera-pieza",
+      "labels": [
+        "primera-pieza · inicio",
+        "primera-pieza · pausa",
+        "primera-pieza → dos-piezas · punto medio de transición",
+        "primera-pieza · salida",
+        "reinicio del loop"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\renaissance\\checklist\\cuenta-del-fresco-7045d15f-art-only-contact-sheet.png"
+    },
+    {
+      "phaseId": "dos-piezas",
+      "labels": [
+        "dos-piezas · inicio",
+        "dos-piezas · pausa",
+        "dos-piezas → composicion-estable · punto medio de transición",
+        "dos-piezas · salida"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\renaissance\\checklist\\cuenta-del-fresco-7045d15f-art-only-contact-sheet.png"
+    },
+    {
+      "phaseId": "composicion-estable",
+      "labels": [
+        "composicion-estable · inicio",
+        "composicion-estable · pausa",
+        "composicion-estable → primera-pieza · unión del ciclo",
+        "composicion-estable · salida"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\renaissance\\checklist\\cuenta-del-fresco-7045d15f-art-only-contact-sheet.png"
+    }
+  ],
+  "semanticObjectCaptures": [
+    {
+      "label": "primera-pieza · pausa",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 0,
+      "frameIndex": 1,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "conteo",
+          "bounds": {
+            "x": 640,
+            "y": 36,
+            "width": 576,
+            "height": 648
+          }
+        },
+        {
+          "entityId": "panel-a",
+          "bounds": {
+            "x": 651.52,
+            "y": 230.4,
+            "width": 385.9200000000001,
+            "height": 375.84000000000003
+          }
+        },
+        {
+          "entityId": "panel-b",
+          "bounds": {
+            "x": 786.88,
+            "y": 327.6,
+            "width": 260.928,
+            "height": 278.64
+          }
+        },
+        {
+          "entityId": "panel-c",
+          "bounds": {
+            "x": 795.52,
+            "y": 424.8,
+            "width": 241.92000000000007,
+            "height": 181.44
+          }
+        },
+        {
+          "entityId": "panel-d",
+          "bounds": {
+            "x": 805.888,
+            "y": 522,
+            "width": 355.39199999999994,
+            "height": 84.24000000000001
+          }
+        }
+      ]
+    },
+    {
+      "label": "primera-pieza → dos-piezas · punto medio de transición",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 0,
+      "frameIndex": 5,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "conteo",
+          "bounds": {
+            "x": 640,
+            "y": 36,
+            "width": 576,
+            "height": 648
+          }
+        },
+        {
+          "entityId": "panel-a",
+          "bounds": {
+            "x": 651.52,
+            "y": 230.4,
+            "width": 385.9200000000001,
+            "height": 375.84000000000003
+          }
+        },
+        {
+          "entityId": "panel-b",
+          "bounds": {
+            "x": 786.88,
+            "y": 327.6,
+            "width": 260.928,
+            "height": 278.64
+          }
+        },
+        {
+          "entityId": "panel-c",
+          "bounds": {
+            "x": 795.52,
+            "y": 424.8,
+            "width": 241.92000000000007,
+            "height": 181.44
+          }
+        },
+        {
+          "entityId": "panel-d",
+          "bounds": {
+            "x": 805.888,
+            "y": 522,
+            "width": 355.39199999999994,
+            "height": 84.24000000000001
+          }
+        }
+      ]
+    },
+    {
+      "label": "dos-piezas · pausa",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 1,
+      "frameIndex": 12,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "conteo",
+          "bounds": {
+            "x": 640,
+            "y": 36,
+            "width": 576,
+            "height": 648
+          }
+        },
+        {
+          "entityId": "panel-a",
+          "bounds": {
+            "x": 651.52,
+            "y": 230.4,
+            "width": 385.9200000000001,
+            "height": 375.84000000000003
+          }
+        },
+        {
+          "entityId": "panel-b",
+          "bounds": {
+            "x": 786.88,
+            "y": 327.6,
+            "width": 260.928,
+            "height": 278.64
+          }
+        },
+        {
+          "entityId": "panel-c",
+          "bounds": {
+            "x": 795.52,
+            "y": 424.8,
+            "width": 241.92000000000007,
+            "height": 181.44
+          }
+        },
+        {
+          "entityId": "panel-d",
+          "bounds": {
+            "x": 805.888,
+            "y": 522,
+            "width": 355.39199999999994,
+            "height": 84.24000000000001
+          }
+        }
+      ]
+    },
+    {
+      "label": "dos-piezas → composicion-estable · punto medio de transición",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 1,
+      "frameIndex": 16,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "conteo",
+          "bounds": {
+            "x": 640,
+            "y": 36,
+            "width": 576,
+            "height": 648
+          }
+        },
+        {
+          "entityId": "panel-a",
+          "bounds": {
+            "x": 651.52,
+            "y": 230.4,
+            "width": 385.9200000000001,
+            "height": 375.84000000000003
+          }
+        },
+        {
+          "entityId": "panel-b",
+          "bounds": {
+            "x": 786.88,
+            "y": 327.6,
+            "width": 260.928,
+            "height": 278.64
+          }
+        },
+        {
+          "entityId": "panel-c",
+          "bounds": {
+            "x": 795.52,
+            "y": 424.8,
+            "width": 241.92000000000007,
+            "height": 181.44
+          }
+        },
+        {
+          "entityId": "panel-d",
+          "bounds": {
+            "x": 805.888,
+            "y": 522,
+            "width": 355.39199999999994,
+            "height": 84.24000000000001
+          }
+        }
+      ]
+    },
+    {
+      "label": "composicion-estable · pausa",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 2,
+      "frameIndex": 23,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "conteo",
+          "bounds": {
+            "x": 640,
+            "y": 36,
+            "width": 576,
+            "height": 648
+          }
+        },
+        {
+          "entityId": "panel-a",
+          "bounds": {
+            "x": 651.52,
+            "y": 230.4,
+            "width": 385.9200000000001,
+            "height": 375.84000000000003
+          }
+        },
+        {
+          "entityId": "panel-b",
+          "bounds": {
+            "x": 786.88,
+            "y": 327.6,
+            "width": 260.928,
+            "height": 278.64
+          }
+        },
+        {
+          "entityId": "panel-c",
+          "bounds": {
+            "x": 795.52,
+            "y": 424.8,
+            "width": 241.92000000000007,
+            "height": 181.44
+          }
+        },
+        {
+          "entityId": "panel-d",
+          "bounds": {
+            "x": 805.888,
+            "y": 522,
+            "width": 355.39199999999994,
+            "height": 84.24000000000001
+          }
+        }
+      ]
+    },
+    {
+      "label": "composicion-estable → primera-pieza · unión del ciclo",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 2,
+      "frameIndex": 27,
+      "kind": "loop-bridge",
+      "regions": [
+        {
+          "entityId": "conteo",
+          "bounds": {
+            "x": 640,
+            "y": 36,
+            "width": 576,
+            "height": 648
+          }
+        },
+        {
+          "entityId": "panel-a",
+          "bounds": {
+            "x": 651.52,
+            "y": 230.4,
+            "width": 385.9200000000001,
+            "height": 375.84000000000003
+          }
+        },
+        {
+          "entityId": "panel-b",
+          "bounds": {
+            "x": 786.88,
+            "y": 327.6,
+            "width": 260.928,
+            "height": 278.64
+          }
+        },
+        {
+          "entityId": "panel-c",
+          "bounds": {
+            "x": 795.52,
+            "y": 424.8,
+            "width": 241.92000000000007,
+            "height": 181.44
+          }
+        },
+        {
+          "entityId": "panel-d",
+          "bounds": {
+            "x": 805.888,
+            "y": 522,
+            "width": 355.39199999999994,
+            "height": 84.24000000000001
+          }
+        }
+      ]
+    }
+  ],
+  "compositionByFrame": [
+    {
+      "label": "primera-pieza · pausa",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "primera-pieza → dos-piezas · punto medio de transición",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "dos-piezas · pausa",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "dos-piezas → composicion-estable · punto medio de transición",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "composicion-estable · pausa",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "composicion-estable → primera-pieza · unión del ciclo",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    }
+  ],
+  "palette": {
+    "colors": 60,
+    "meanAbsoluteChannelError": 0.011,
+    "maximumChannelError": 11,
+    "sampledFrames": 33
+  },
+  "phaseHoldsVerified": [
+    {
+      "phaseId": "primera-pieza",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    },
+    {
+      "phaseId": "dos-piezas",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    },
+    {
+      "phaseId": "composicion-estable",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    }
+  ],
+  "timing": {
+    "preset": "readable",
+    "holdsRequestedMs": 15000,
+    "holdsDecodedMs": 15000,
+    "transitionsMs": 1300,
+    "loopBridgeMs": 650,
+    "entryMs": 240,
+    "totalDecodedMs": 17190,
+    "totalDurationBudgetMs": 30000,
+    "phaseHolds": [
+      {
+        "phaseId": "primera-pieza",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      },
+      {
+        "phaseId": "dos-piezas",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      },
+      {
+        "phaseId": "composicion-estable",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      }
+    ],
+    "warnings": []
+  },
+  "resourceEstimate": {
+    "pixelFrames": 30412800,
+    "maxPixelFrames": 96000000,
+    "memoryBytes": 107634688,
+    "maxMemoryBytes": 268435456
+  },
+  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed."
+}
