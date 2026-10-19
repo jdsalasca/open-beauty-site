@@ -153,8 +153,12 @@ function designLanguageCss(preset: StylePreset): string {
     ? `--type-display-case:${type.displayCase};--type-display-tracking:${type.displayTracking};--type-display-leading:${type.displayLeading};--type-body-size:${type.bodySize};--type-body-leading:${type.bodyLeading};--type-label-tracking:${type.labelTracking};--type-label-case:${type.labelCase};--motion-enter:${motion.enter};--motion-distance:${motion.distance};--motion-stagger:${motion.stagger};--motion-ease:${motion.easing};--motion-page:${motion.page};`
     : '';
   return `:root{${tokens}color-scheme:${scheme};--focus-ring:${focus}}
-.skip-link{position:fixed;left:14px;top:-64px;z-index:10000;background:${preset.palette.ink};color:${preset.palette.bg};padding:10px 16px;font:600 13px/1.2 system-ui,-apple-system,'Segoe UI',sans-serif;letter-spacing:.02em;text-decoration:none;outline:2px solid ${preset.palette.accent};outline-offset:-2px;transition:top .18s ease}
+.skip-link{position:absolute;left:14px;top:-64px;z-index:10000;background:${preset.palette.ink};color:${preset.palette.bg};padding:10px 16px;font:600 13px/1.2 system-ui,-apple-system,'Segoe UI',sans-serif;letter-spacing:.02em;text-decoration:none;outline:2px solid ${preset.palette.accent};outline-offset:-2px;transition:top .18s ease}
 .skip-link:focus,.skip-link:focus-visible{top:14px}
+html.is-capturing .skip-link{display:none!important}
+html.is-capturing .reveal,html.is-static .reveal{opacity:1!important;transform:none!important;transition:none!important;animation:none!important}
+html.is-capturing body,html.is-static body{animation:none!important}
+html.is-capturing{scroll-behavior:auto}
 html{overflow-x:hidden}
 html body,html body[class]{font-size:var(--type-body-size);line-height:var(--type-body-leading);font-kerning:normal;font-optical-sizing:auto;text-rendering:optimizeLegibility;overflow-x:hidden}
 html body :where(p,li),html body[class] :where(p,li){font-size:inherit}
@@ -290,9 +294,18 @@ ${bodyClass?.includes('deck') ? '' : `<script>
 
 export const REVEAL_SCRIPT = `
 (() => {
+  const root = document.documentElement;
   const nodes = document.querySelectorAll('.reveal');
-  if (!('IntersectionObserver' in window)) {
-    nodes.forEach((node) => node.classList.add('is-in'));
+  const revealAll = () => nodes.forEach((node) => node.classList.add('is-in'));
+  const params = new URLSearchParams(location.search);
+  const staticMode =
+    params.has('static') ||
+    root.classList.contains('is-capturing') ||
+    navigator.webdriver === true ||
+    !('IntersectionObserver' in window);
+  if (staticMode) {
+    root.classList.add('is-static');
+    revealAll();
     return;
   }
   const io = new IntersectionObserver((entries) => {

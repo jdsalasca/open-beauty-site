@@ -358,6 +358,10 @@ export interface DeckBrief extends Brief {
   slides?: DeckSlide[];
   /** Optional closing headline; defaults to a generic door. */
   closing?: string;
+  /** Optional author or team credited on the cover. */
+  author?: string;
+  /** Optional date or date range credited on the cover. */
+  date?: string;
 }
 
 

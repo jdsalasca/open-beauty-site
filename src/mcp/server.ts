@@ -6,6 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { z } from 'zod';
 import type { Brief, CanvasLayer, DeckBrief, ExperienceBrief, SequenceFrame, StoryBrief, StyleSlug } from '../types.js';
+import { DECK_CONTENT_SLIDE_LIMIT, DECK_STAT_LIMIT } from '../types/deck.js';
 import { VERSION } from '../index.js';
 import { createCanvas, createDeck, createExperience, createGifFile, createMotion, createPage, createSequence, createStory, timestamp } from '../generate.js';
 import { createSprintKit } from '../sprint.js';
@@ -98,7 +99,7 @@ const deckSlideSchema = z.object({
   title: z.string().min(1).max(120),
   body: z.string().max(300).optional(),
   points: z.array(deckPointSchema).max(4).optional(),
-  stats: z.array(deckStatSchema).max(3).optional(),
+  stats: z.array(deckStatSchema).max(DECK_STAT_LIMIT).optional(),
   quote: quoteSchema.optional(),
   figure: z.object({
     caption: z.string().max(140).optional(),
@@ -182,7 +183,9 @@ const deckInputSchema = z.object({
   intro: z.string().max(900).optional(),
   eyebrow: z.string().max(60).optional(),
   brand: z.string().max(50).optional(),
-  slides: z.array(deckSlideSchema).min(1).max(8).describe('Content slides. The cover and closing are generated automatically.'),
+  author: z.string().max(60).optional().describe('Author or team credited on the deck cover.'),
+  date: z.string().max(40).optional().describe('Date or date range credited on the deck cover.'),
+  slides: z.array(deckSlideSchema).min(1).max(DECK_CONTENT_SLIDE_LIMIT).describe('Content slides. The cover and closing are generated automatically.'),
   closing: z.string().max(120).optional().describe('Closing headline; defaults to "La conversación sigue."'),
   subfamily: z.string().max(40).optional().describe('Curated subfamily slug from beauty_get_style.'),
   maxxing: z.boolean().optional().describe('Richer ornament, type contrast and motion.'),
@@ -263,6 +266,8 @@ function deckBriefFromArgs(args: DeckInput): Partial<DeckBrief> {
     intro: args.intro,
     eyebrow: args.eyebrow,
     brand: args.brand,
+    author: args.author,
+    date: args.date,
     slides: args.slides,
     closing: args.closing,
     cta: args.cta,
