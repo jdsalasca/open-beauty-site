@@ -108,7 +108,7 @@ test('stage C preserves Spanish glyphs and reports a very long unbroken word as 
     input.phases[0]!.text = 'extraordinariamente' + 'x'.repeat(180);
     assert.throws(() => layoutNarrative(normalizeNarrativeBrief(input).brief), (error: unknown) => {
       assert.equal((error as { code: string }).code, 'TEXT_OVERFLOW');
-      assert.match((error as { suggestion: string }).suggestion, /revise its wording|Split the phase/u);
+      assert.match((error as { suggestion: string }).suggestion, /Shorten phase 1 text.*(Even one word is too long|characters fit)/u);
       return true;
     }, `${style} returns guidance without truncating the word`);
   }

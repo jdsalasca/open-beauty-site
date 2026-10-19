@@ -87,9 +87,35 @@ function fitText(options: FitTextOptions, ctx: SKRSContext2D): NarrativeTextBloc
   throw new NarrativeError(
     'TEXT_OVERFLOW',
     `${options.role} text does not fit its ${Math.round(options.box.width)}×${Math.round(options.box.height)}px area while staying at least ${options.minSize}px.`,
-    'Split the phase or revise its wording; all text is preserved and no font below the minimum is used.',
+    overflowSuggestion(options, ctx),
     options.role,
   );
+}
+
+/**
+ * A suggestion a small model can act on: which field fails, and how much of it DOES fit at the
+ * minimum size (largest whole-word prefix), so it can shorten the wording instead of guessing.
+ * Nothing is ever truncated for the caller: this only describes the limit.
+ */
+function overflowSuggestion(options: FitTextOptions, ctx: SKRSContext2D): string {
+  const field = options.role === 'title' ? 'the title' : options.role.replace(/^phases\[(\d+)\]\.(label|text)$/u, (_, index: string, part: string) => `phase ${Number(index) + 1} ${part === 'label' ? 'label' : 'text'}`);
+  const words = options.text.split(/\s+/u).filter(Boolean);
+  let fitting = '';
+  for (let count = words.length - 1; count >= 1; count -= 1) {
+    const candidate = words.slice(0, count).join(' ');
+    const tracking = options.tracking * options.minSize;
+    const lines = wrapText(ctx, candidate, options.box.width, options.face, options.fallback, options.minSize, tracking);
+    const { height } = verticalMetrics(ctx, lines, options.face, options.fallback, options.minSize, options.leading);
+    const width = Math.max(0, ...lines.map((line) => textWidth(ctx, line, options.face, options.fallback, options.minSize, tracking)));
+    if (width <= options.box.width && height <= options.box.height) {
+      fitting = candidate;
+      break;
+    }
+  }
+  const limit = fitting
+    ? ` About ${[...fitting].length} characters fit in this style (for example: "${fitting}"); shorten ${field} to that length, or split the content into another phase.`
+    : ` Even one word is too long here; use a shorter word for ${field}.`;
+  return `Shorten ${field}: this style's face is wide at the required minimum size.${limit} All text is preserved; no font below the minimum is used.`;
 }
 
 function emValue(value: string): number {

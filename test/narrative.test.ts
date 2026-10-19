@@ -184,14 +184,30 @@ test('layout supports square and story ratios and rejects text it cannot fit', (
   assert.throws(() => layoutNarrative(normalizeNarrativeBrief(tooLong).brief), (error: unknown) => {
     assert.equal((error as { code: string }).code, 'TEXT_OVERFLOW');
     assert.match((error as Error).message, /does not fit/);
-    assert.match((error as Error & { suggestion?: string }).suggestion ?? '', /Split the phase/);
+    // A single 3200-character word: no prefix fits, so the hint says to use a shorter word for that field.
+    assert.match((error as Error & { suggestion?: string }).suggestion ?? '', /Shorten phase 1 text.*Even one word is too long/);
     return true;
   });
   const longText = brief() as Record<string, any>;
   longText.phases[0].text = 'La guía reúne una medida, su explicación y una recomendación de lectura para que el equipo pueda volver sobre el dato antes de dejar constancia de su revisión. '.repeat(8);
   assert.throws(() => layoutNarrative(normalizeNarrativeBrief(longText).brief), (error: unknown) => {
     assert.equal((error as { code: string }).code, 'TEXT_OVERFLOW');
-    assert.match((error as Error & { suggestion?: string }).suggestion ?? '', /Split the phase/);
+    assert.match((error as Error & { suggestion?: string }).suggestion ?? '', /Shorten phase 1 text.*characters fit/);
+    return true;
+  });
+  // A title that is fine in a narrow face but too wide for a wide display face (vaporwave, Press Start 2P)
+  // must say WHICH field failed and how much of it fits, not tell a small model to "split the phase".
+  const wideTitle = brief({
+    style: 'vaporwave',
+    title: 'Menos pasos para publicar',
+    output: { preset: 'review-1280x720', width: 1280, height: 720, formats: ['gif', 'png'] },
+  }) as Record<string, any>;
+  assert.throws(() => layoutNarrative(normalizeNarrativeBrief(wideTitle).brief), (error: unknown) => {
+    const suggestion = (error as Error & { suggestion?: string }).suggestion ?? '';
+    assert.equal((error as { code: string }).code, 'TEXT_OVERFLOW');
+    assert.match(suggestion, /Shorten the title/);
+    assert.match(suggestion, /About \d+ characters fit/);
+    assert.doesNotMatch(suggestion, /Split the phase/);
     return true;
   });
 });
