@@ -322,7 +322,13 @@ function normalizeSlides(preset: StylePreset, brief: Partial<DeckBrief>): DeckSl
         normalizeText(slide.kicker, DECK_TEXT_LIMITS.kicker, { slide: label, field: 'kicker' }, 'Shorten the kicker or move part of it to the title.') ||
         `${String(index + 2).padStart(2, '0')} / ${preset.name}`,
       title: normalizeText(slide.title, DECK_TEXT_LIMITS.slideTitle, { slide: label, field: 'title' }, 'Shorten the title or split the slide in two.') || fallbackTitle,
-      body: optionalText(slide.body, DECK_TEXT_LIMITS.slideBody, 'body', 'Shorten the body or split the content into another slide.', label),
+      body: optionalText(
+        slide.body,
+        DECK_TEXT_LIMITS.slideBody,
+        'body',
+        'Shorten the body, split the content into another slide, or move the detail to a separate summary slide.',
+        label,
+      ),
       points: points.length ? points : undefined,
       stats: stats.length ? stats : undefined,
       quote: quoteText
