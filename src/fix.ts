@@ -198,6 +198,25 @@ function stripPlaceholder(html: string, token: string): string {
   return html.split(token).join('');
 }
 
+/** Idempotent CSS append: the exact rule string is the guard. */
+function appendStyleRule(html: string, rule: string): string {
+  if (!rule || html.includes(rule)) return html;
+  return appendStyle(html, rule);
+}
+
+const SELECTOR_PATCHES: Partial<Record<Patch['op'], (selector: string) => string>> = {
+  'reserve-fixed-space': (selector) =>
+    `body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}\n${selector}{position:static!important;inset:auto!important;transform:none!important;margin:14px auto!important;opacity:1}`,
+  'span-last-grid-item': (selector) => `${selector}>:last-child{grid-column:1/-1;justify-self:stretch}`,
+  'prevent-midword-break': (selector) => `${selector}{overflow-wrap:normal!important;word-break:normal!important;hyphens:auto}`,
+  'nowrap-counters': (selector) => `${selector}{white-space:nowrap}`,
+  'fit-wide-element': (selector) =>
+    `${selector}{max-width:100%!important;min-width:0!important;width:auto!important;box-sizing:border-box}`,
+  'unclip-text': (selector) => `${selector}{overflow:visible!important;white-space:normal!important;text-overflow:clip!important}`,
+  'raise-small-text': (selector) => `${selector}{font-size:12px!important;line-height:1.5}`,
+  'hide-decoration': (selector) => `${selector}{display:none!important}`,
+};
+
 function applyPatch(html: string, style: StyleSlug, patch: Patch): string {
   const preset = getStyle(style);
   const params = patch.params ?? {};
@@ -257,11 +276,33 @@ function applyPatch(html: string, style: StyleSlug, patch: Patch): string {
       return ensureReducedMotion(html);
     case 'cap-duration':
       return capDuration(html, Number(params.max ?? 1.2));
+    case 'reserve-fixed-space':
+    case 'span-last-grid-item':
+    case 'prevent-midword-break':
+    case 'nowrap-counters':
+    case 'fit-wide-element':
+    case 'unclip-text':
+    case 'raise-small-text':
+    case 'hide-decoration': {
+      const selector = params.selector?.trim();
+      const rule = selector ? SELECTOR_PATCHES[patch.op]?.(selector) : undefined;
+      return rule ? appendStyleRule(html, rule) : html;
+    }
     default: {
       const exhaustive: never = patch.op;
       return exhaustive;
     }
   }
+}
+
+/** Applies an ordered patch list without re-validating; shared with the visual loop. */
+export function applyPatches(html: string, style: StyleSlug, patches: Patch[]): string {
+  let current = html;
+  for (const patch of patches) {
+    const next = applyPatch(current, style, patch);
+    if (next !== current) current = next;
+  }
+  return current;
 }
 
 function describe(patch: Patch): string {
