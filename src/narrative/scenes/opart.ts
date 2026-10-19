@@ -4,6 +4,7 @@ import type { NarrativeRenderContext, NarrativeRect, NarrativeScene } from '../.
 import { cubicBezierEase } from './common.js';
 import { clamp, compositionFor, phasePosition, type StageCComposition } from './stage-c-common.js';
 import { sceneVocabulary } from '../vocabulary.js';
+import { drawOpartReadingBand, drawOpartSemantic, opartSemanticObjectRegions } from './opart/semantic-art.js';
 
 interface OpticalPattern {
   readonly identity: 'focus-grouping-pattern';
@@ -76,14 +77,19 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
   const box = layout.reservedArtArea;
   const colors = getStyle('opart').palette;
   const state = phasePosition(context, (value) => cubicBezierEase(value, 0.2, 0.6, 0.25, 1));
-  if (pattern.composition === 'comparison') drawComparison(ctx, box, pattern, state, colors);
-  else drawChecklist(ctx, box, pattern, state, colors);
+  if (context.semantic && context.semantic.primitive !== 'legacy-illustration') {
+    drawOpartSemantic(ctx, context, box, pattern.composition, colors);
+  } else {
+    if (pattern.composition === 'comparison') drawComparison(ctx, box, pattern, state, colors);
+    else drawChecklist(ctx, box, pattern, state, colors);
+    drawOpartReadingBand(ctx, context, box, colors);
+  }
   return ctx.getImageData(0, 0, brief.output.width, brief.output.height).data;
 }
 
 export const opartNarrativeScene: NarrativeScene = {
   style: 'opart',
-  version: 'opart-still-focus/1.0.0',
+  version: 'opart-semantic-focus-groups/2.1.0',
   vocabulary: sceneVocabulary('phase-order-fallback'),
   supportsAspect(aspect) {
     return [16 / 9, 1, 9 / 16].some((ratio) => Math.abs(aspect - ratio) / ratio < 0.015);
@@ -96,6 +102,11 @@ export const opartNarrativeScene: NarrativeScene = {
       focusOffset: (rng() - 0.5) * 0.36,
       groupOffset: (rng() - 0.5) * 0.04,
     } satisfies OpticalPattern);
+  },
+  objectRegions(context) {
+    if (!context.semantic || context.semantic.primitive === 'legacy-illustration') return [];
+    const pattern = context.object as OpticalPattern;
+    return opartSemanticObjectRegions(context, context.layout.reservedArtArea, pattern.composition);
   },
   renderFrame,
 };

@@ -10,6 +10,7 @@ import { verifyNarrativeGif } from '../src/narrative/verify-gif.js';
 type Style = 'isotype' | 'opart';
 type Primitive = 'counter' | 'card-collection';
 type Locale = 'es' | 'en';
+type Composition = 'comparison' | 'checklist';
 
 const ASPECTS = [
   { id: '16:9', width: 1280, height: 720 },
@@ -28,10 +29,10 @@ function sceneStates(style: Style, phaseIndex: number): Record<string, string> {
     };
   }
   return {
-    field: ['open', 'open', 'counted'][phaseIndex]!,
+    field: 'open',
     ...Object.fromEntries(Array.from({ length: 6 }, (_, index) => [
       `disc-${index + 1}`,
-      phaseIndex === 0 ? 'member' : phaseIndex === 1 && index < 3 ? 'selected' : 'counted',
+      index >= 3 ? ['member', 'selected', 'pending'][phaseIndex]! : 'member',
     ])),
   };
 }
@@ -83,7 +84,7 @@ function semantic(style: Style, primitive: Primitive, phaseIndex: number, repeat
   };
 }
 
-function brief(style: Style, primitive: Primitive, repeatState = false, locale: Locale = 'en', width = 640, height = 360) {
+function brief(style: Style, primitive: Primitive, repeatState = false, locale: Locale = 'en', width = 640, height = 360, composition: Composition = 'comparison') {
   const english = locale === 'en';
   return {
     style,
@@ -99,14 +100,35 @@ function brief(style: Style, primitive: Primitive, repeatState = false, locale: 
     output: { width, height, formats: ['gif', 'png'] },
     seed: 31,
     phases: [
-      { id: 'before', label: english ? 'Before' : 'Antes', text: english ? 'A sample set appears.' : 'Aparece un conjunto.', visual: { kind: 'comparison', state: 'unreviewed', semantic: semantic(style, primitive, 0, repeatState) } },
-      { id: 'change', label: english ? 'Change' : 'Cambio', text: english ? 'The explanation changes.' : 'Cambia la explicación.', visual: { kind: 'comparison', state: 'flagged', semantic: semantic(style, primitive, 1, repeatState) } },
-      { id: 'result', label: english ? 'Expected result' : 'Resultado esperado', text: english ? 'The same drawing remains.' : 'El dibujo permanece.', visual: { kind: 'comparison', state: 'review-ready', semantic: semantic(style, primitive, 2, repeatState) } },
+      { id: 'before', label: english ? 'Before' : 'Antes', text: english ? 'A sample set appears.' : 'Aparece un conjunto.', visual: { kind: composition, state: 'unreviewed', semantic: semantic(style, primitive, 0, repeatState) } },
+      { id: 'change', label: english ? 'Change' : 'Cambio', text: english ? 'The explanation changes.' : 'Cambia la explicación.', visual: { kind: composition, state: 'flagged', semantic: semantic(style, primitive, 1, repeatState) } },
+      { id: 'result', label: english ? 'Expected result' : 'Resultado esperado', text: english ? 'The same drawing remains.' : 'El dibujo permanece.', visual: { kind: composition, state: 'review-ready', semantic: semantic(style, primitive, 2, repeatState) } },
     ],
   };
 }
 
-for (const [style, primitives] of [['isotype', ['counter', 'card-collection']]] as const) {
+test('opart/checklist keeps the optical group change in a still art-only hold', async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'narrative-opart-checklist-'));
+  try {
+    const input = brief('opart', 'card-collection', false, 'en', 1280, 720, 'checklist');
+    const result = await createNarrative(input, { outputDir: root });
+    const objectChanges = result.evaluation.narrative.controls.filter((control) => control.name.startsWith('semantic-object-transformation:'));
+    assert.ok(objectChanges.some((control) => control.passed), 'the checklist pattern changes inside declared optical-unit regions');
+    assert.equal(verifyNarrativeGif(await readFile(result.paths.gif), []).integrity.valid, true);
+
+    const artOnly = await createNarrative(input, { outputDir: path.join(root, 'art-only'), artOnly: true });
+    const manifest = JSON.parse(await readFile(artOnly.paths.manifest, 'utf8')) as { artOnly: boolean; semanticObjectCaptures: Array<{ kind: string; regions: unknown[] }> };
+    assert.equal(manifest.artOnly, true);
+    assert.ok(manifest.semanticObjectCaptures.filter((capture) => capture.kind === 'hold').every((capture) => capture.regions.length > 0));
+    assert.ok(artOnly.evaluation.narrative.controls.some((control) => control.name.startsWith('semantic-object-transformation:') && control.passed));
+    assert.ok(artOnly.evaluation['rendered-legibility'].controls.some((control) => control.name === 'stable-reading-holds' && control.passed));
+    assert.deepEqual((await readFile(artOnly.paths.png)).subarray(0, 8), Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]));
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+for (const [style, primitives] of [['isotype', ['counter', 'card-collection']], ['opart', ['card-collection']]] as const) {
   for (const primitive of primitives) {
     for (const aspect of ASPECTS) {
       for (const locale of ['es', 'en'] as const) {
@@ -133,6 +155,7 @@ for (const [style, primitives] of [['isotype', ['counter', 'card-collection']]] 
               assert.equal(verifyNarrativeGif(await readFile(artOnly.paths.gif), []).integrity.valid, true);
               assert.ok(manifest.semanticObjectCaptures.filter((capture) => capture.kind === 'hold').every((capture) => capture.regions.length > 0));
               assert.ok(artOnly.evaluation.narrative.controls.some((control) => control.name.startsWith('semantic-object-transformation:') && control.passed));
+              assert.ok(artOnly.evaluation['rendered-legibility'].controls.some((control) => control.name === 'stable-reading-holds' && control.passed), `${style}/${primitive} keeps its reading pattern fixed during holds`);
               assert.deepEqual((await readFile(artOnly.paths.png)).subarray(0, 8), Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]), 'a static PNG fallback is exported');
             }
           } finally {

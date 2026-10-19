@@ -25,6 +25,7 @@ const PRIMITIVE_REASONS: Record<NarrativePrimitive, string> = {
 const STYLE_SEMANTIC_PRIMITIVES: Partial<Record<StyleSlug, readonly NarrativePrimitive[]>> = {
   papercraft: NARRATIVE_PRIMITIVES,
   isotype: ['counter', 'card-collection'],
+  opart: ['card-collection'],
 };
 
 function fallbackReason(style: StyleSlug, primitive: NarrativePrimitive): string {
@@ -88,7 +89,7 @@ export function narrativeCapabilityReport(filter: NarrativeCapabilityFilter = {}
       const reason = !supportsAspect
         ? `${style} has no narrative renderer for ${aspect.id}; the primitive cannot be rendered in this aspect.`
         : semanticSupported
-          ? `${style} renders ${primitive} with stable entity regions; decoded state changes are exercised in ${style === 'isotype' ? 'test/narrative-semantic-style-render.test.ts' : 'test/narrative-semantic-render.test.ts'} for ${aspect.id}/${locale}.`
+          ? `${style} renders ${primitive} with stable entity regions; decoded state changes are exercised in ${style === 'isotype' || style === 'opart' ? 'test/narrative-semantic-style-render.test.ts' : 'test/narrative-semantic-render.test.ts'} for ${aspect.id}/${locale}.`
           : fallbackReason(style, primitive);
       return { style, primitive, aspect: aspect.id, locale, status, reason, allowed };
     })));

@@ -183,9 +183,10 @@ test('every committed narrative pack regenerates byte-for-byte from its brief', 
       }
     }
 
-    const isotypePackages = packages.filter((item) => item.brief.style === 'isotype');
-    for (const [index, item] of isotypePackages.entries()) {
-      const outputDir = path.join(tempRoot, `art-only-${index}-isotype-${item.composition}`);
+    const artOnlyPackages = packages.filter((item) => item.brief.style === 'isotype' || item.brief.style === 'opart');
+    for (const [index, item] of artOnlyPackages.entries()) {
+      const style = item.brief.style;
+      const outputDir = path.join(tempRoot, `art-only-${index}-${style}-${item.composition}`);
       const child = spawnSync(process.execPath, ['--import', 'tsx', REPRO_WORKER, item.briefPath, outputDir, '--art-only'], {
         cwd: REPO_ROOT,
         encoding: 'utf8',
@@ -193,18 +194,18 @@ test('every committed narrative pack regenerates byte-for-byte from its brief', 
         maxBuffer: 2 * 1024 * 1024,
         windowsHide: true,
       });
-      assert.equal(child.status, 0, `isotype/${item.composition} art-only repro worker exited ${child.status}: ${child.stderr || child.stdout}`);
+      assert.equal(child.status, 0, `${style}/${item.composition} art-only repro worker exited ${child.status}: ${child.stderr || child.stdout}`);
       const outputFiles = await readdir(outputDir);
       const expectedBase = outputFiles.find((name) => name.endsWith('.manifest.json'))?.replace(/\.manifest\.json$/u, '');
-      assert.ok(expectedBase?.endsWith('-art-only'), `isotype/${item.composition} art-only worker wrote a separate manifest`);
+      assert.ok(expectedBase?.endsWith('-art-only'), `${style}/${item.composition} art-only worker wrote a separate manifest`);
       const manifest = JSON.parse(await readFile(path.join(outputDir, `${expectedBase}.manifest.json`), 'utf8')) as { artOnly: boolean };
-      assert.equal(manifest.artOnly, true, `isotype/${item.composition} manifest records art-only mode`);
+      assert.equal(manifest.artOnly, true, `${style}/${item.composition} manifest records art-only mode`);
       for (const format of ['gif', 'png', 'contact-sheet.png']) {
         const generatedPath = path.join(outputDir, `${expectedBase}${format === 'contact-sheet.png' ? '-contact-sheet.png' : `.${format}`}`);
         const committedPath = path.join(item.packageDir, path.basename(generatedPath));
         const generatedBytes = await readFile(generatedPath);
         const committedBytes = await readFile(committedPath);
-        assert.equal(generatedBytes.equals(committedBytes), true, `isotype/${item.composition} art-only ${format} matches ${item.briefPath}`);
+        assert.equal(generatedBytes.equals(committedBytes), true, `${style}/${item.composition} art-only ${format} matches ${item.briefPath}`);
       }
     }
   } finally {

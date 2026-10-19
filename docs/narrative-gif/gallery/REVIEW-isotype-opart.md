@@ -28,4 +28,22 @@ Tras regenerar los cuatro packs, se volvieron a inspeccionar hojas completas y h
 
 ## Op Art
 
-La revisión de las composiciones y sus tres iteraciones está pendiente en esta entrega incremental. El objetivo visual es que cambie el agrupamiento o foco del campo óptico y que el patrón se detenga en los holds, sin moiré sobre el texto. Los PNG art-only finales deberán probar la lectura estática cuando el GIF no pueda pausarse. La aprobación independiente seguirá pendiente aunque la inspección del implementador concluya.
+### Ronda 1 · campo semántico inicial
+
+El baseline tenía los mismos anillos concéntricos en todas las fases y una deformación leve; el cambio no se reconocía sin leer el copy. El primer render semántico creó seis motivos en dos grupos y una banda de lectura fija. En las hojas y frames nativos el grupo inferior se movía, pero el desplazamiento de 9% del panel y el desfase de franjas eran discretos en miniatura.
+
+**Correcciones:** se aumentó el desplazamiento a 13% del panel, se ajustó la retícula para mantener margen interno y se elevó el desfase de las franjas gruesas. La banda `LECTURA/READING` se dibuja encima del patrón también en el fallback legado.
+
+### Ronda 2 · separación y cambio de foco
+
+La inspección de contact sheets y frames 1, 5, 12, 16, 23 y 27 en GIF completo y art-only mostró el grupo inferior separado con claridad. En comparison, los focos concéntricos internos se desplazan dentro de cada motivo; en checklist, las franjas anchas cambian de fase mientras la banda central queda libre. El rótulo de la banda seguía en 28 px, justo en el mínimo efectivo a media escala.
+
+**Corrección:** se aumentó `LECTURA/READING` a 32 px nativos para dar más aire a la lectura a 640×360.
+
+### Ronda 3 · verificación final
+
+Tras regenerar ambos briefs y sus versiones art-only, se inspeccionaron de nuevo las cuatro hojas de contacto y frames nativos 1, 5, 12, 16, 23 y 27. Los holds de resultado muestran el grupo inferior desplazado y el foco cambiado sin depender del relato. La banda queda despejada y quieta; no se observó moiré sobre ella, parpadeo, recorte ni patrón moviéndose durante las pausas. El panel ocupa 47% del ancho y los motivos conservan contraste negro/hueso del estilo. Los PNG art-only muestran el hold `Antes`; el hold de resultado se conserva en cada GIF art-only.
+
+**Resultado de la inspección interna:** seis celdas `card-collection` (tres ratios × dos idiomas) tienen prueba de render y diferencia de píxeles decodificados; el control negativo de texto solo falla como se espera. `stable-reading-holds` pasa en comparison y checklist art-only. No se muestra una cifra ni fuente porque los briefs son ilustrativos y no contienen datos de producto. La inspección del implementador no constituye aprobación visual independiente: `visual-review` se mantiene `pending`.
+
+**Recursos inspeccionados:** [comparison · hoja](opart/comparison/cambios-que-se-revisan-b1b5690b-contact-sheet.png), [comparison · GIF art-only](opart/comparison/cambios-que-se-revisan-b1b5690b-art-only.gif), [comparison · PNG art-only](opart/comparison/cambios-que-se-revisan-b1b5690b-art-only.png), [checklist · hoja](opart/checklist/ruta-para-revisar-el-cierre-b4535b83-contact-sheet.png), [checklist · GIF art-only](opart/checklist/ruta-para-revisar-el-cierre-b4535b83-art-only.gif), [checklist · PNG art-only](opart/checklist/ruta-para-revisar-el-cierre-b4535b83-art-only.png).

@@ -4,11 +4,119 @@
   "locale": "es",
   "audience": "Producto en Sprint Review",
   "title": "Ruta para revisar el cierre",
-  "status": "in-review",
+  "workflowStatus": "in-review",
+  "outcome": { "mode": "expected" },
+  "illustrative": true,
+  "badgePolicy": "none",
   "phases": [
-    { "id": "before", "label": "Antes", "text": "El cambio se leía sin una ruta de revisión.", "visual": { "kind": "checklist", "state": "unreviewed" } },
-    { "id": "change", "label": "Cambio", "text": "La propuesta ordena la lectura en pasos visibles.", "visual": { "kind": "checklist", "state": "flagged" } },
-    { "id": "result", "label": "Resultado esperado", "text": "El equipo podrá comprobar la secuencia antes del cierre.", "visual": { "kind": "checklist", "state": "review-ready" } }
+    {
+      "id": "before",
+      "label": "Antes",
+      "text": "Seis motivos de franjas gruesas forman una colección ilustrativa.",
+      "visual": {
+        "kind": "checklist",
+        "state": "unreviewed",
+        "semantic": {
+          "primitive": "card-collection",
+          "illustrative": true,
+          "entities": [
+            { "id": "field", "kind": "collection", "label": "Campo óptico", "illustrative": true },
+            { "id": "disc-1", "kind": "card", "label": "Motivo 1", "illustrative": true },
+            { "id": "disc-2", "kind": "card", "label": "Motivo 2", "illustrative": true },
+            { "id": "disc-3", "kind": "card", "label": "Motivo 3", "illustrative": true },
+            { "id": "disc-4", "kind": "card", "label": "Motivo 4", "illustrative": true },
+            { "id": "disc-5", "kind": "card", "label": "Motivo 5", "illustrative": true },
+            { "id": "disc-6", "kind": "card", "label": "Motivo 6", "illustrative": true }
+          ],
+          "relations": [
+            { "kind": "member-of", "from": "disc-1", "to": "field" },
+            { "kind": "member-of", "from": "disc-2", "to": "field" },
+            { "kind": "member-of", "from": "disc-3", "to": "field" },
+            { "kind": "member-of", "from": "disc-4", "to": "field" },
+            { "kind": "member-of", "from": "disc-5", "to": "field" },
+            { "kind": "member-of", "from": "disc-6", "to": "field" }
+          ],
+          "states": {
+            "field": "open",
+            "disc-1": "member", "disc-2": "member", "disc-3": "member",
+            "disc-4": "member", "disc-5": "member", "disc-6": "member"
+          },
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "change",
+      "label": "Cambio",
+      "text": "El grupo inferior se desplaza; cada franja conserva su pausa.",
+      "visual": {
+        "kind": "checklist",
+        "state": "flagged",
+        "semantic": {
+          "primitive": "card-collection",
+          "illustrative": true,
+          "entities": [
+            { "id": "field", "kind": "collection", "label": "Campo óptico", "illustrative": true },
+            { "id": "disc-1", "kind": "card", "label": "Motivo 1", "illustrative": true },
+            { "id": "disc-2", "kind": "card", "label": "Motivo 2", "illustrative": true },
+            { "id": "disc-3", "kind": "card", "label": "Motivo 3", "illustrative": true },
+            { "id": "disc-4", "kind": "card", "label": "Motivo 4", "illustrative": true },
+            { "id": "disc-5", "kind": "card", "label": "Motivo 5", "illustrative": true },
+            { "id": "disc-6", "kind": "card", "label": "Motivo 6", "illustrative": true }
+          ],
+          "relations": [
+            { "kind": "member-of", "from": "disc-1", "to": "field" },
+            { "kind": "member-of", "from": "disc-2", "to": "field" },
+            { "kind": "member-of", "from": "disc-3", "to": "field" },
+            { "kind": "member-of", "from": "disc-4", "to": "field" },
+            { "kind": "member-of", "from": "disc-5", "to": "field" },
+            { "kind": "member-of", "from": "disc-6", "to": "field" }
+          ],
+          "states": {
+            "field": "open",
+            "disc-1": "member", "disc-2": "member", "disc-3": "member",
+            "disc-4": "selected", "disc-5": "selected", "disc-6": "selected"
+          },
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "result",
+      "label": "Resultado esperado",
+      "text": "El grupo permanece alineado; la banda central queda quieta.",
+      "visual": {
+        "kind": "checklist",
+        "state": "review-ready",
+        "semantic": {
+          "primitive": "card-collection",
+          "illustrative": true,
+          "entities": [
+            { "id": "field", "kind": "collection", "label": "Campo óptico", "illustrative": true },
+            { "id": "disc-1", "kind": "card", "label": "Motivo 1", "illustrative": true },
+            { "id": "disc-2", "kind": "card", "label": "Motivo 2", "illustrative": true },
+            { "id": "disc-3", "kind": "card", "label": "Motivo 3", "illustrative": true },
+            { "id": "disc-4", "kind": "card", "label": "Motivo 4", "illustrative": true },
+            { "id": "disc-5", "kind": "card", "label": "Motivo 5", "illustrative": true },
+            { "id": "disc-6", "kind": "card", "label": "Motivo 6", "illustrative": true }
+          ],
+          "relations": [
+            { "kind": "member-of", "from": "disc-1", "to": "field" },
+            { "kind": "member-of", "from": "disc-2", "to": "field" },
+            { "kind": "member-of", "from": "disc-3", "to": "field" },
+            { "kind": "member-of", "from": "disc-4", "to": "field" },
+            { "kind": "member-of", "from": "disc-5", "to": "field" },
+            { "kind": "member-of", "from": "disc-6", "to": "field" }
+          ],
+          "states": {
+            "field": "open",
+            "disc-1": "member", "disc-2": "member", "disc-3": "member",
+            "disc-4": "pending", "disc-5": "pending", "disc-6": "pending"
+          },
+          "actions": []
+        }
+      }
+    }
   ],
   "playback": { "minReadableHoldMs": 5000, "transitionMs": 650, "loop": true },
   "output": { "width": 1280, "height": 720, "formats": ["gif", "png"], "preset": "review-1280x720" },
