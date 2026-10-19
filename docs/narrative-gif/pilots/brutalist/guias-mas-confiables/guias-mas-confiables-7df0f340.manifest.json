@@ -1,19 +1,19 @@
 {
   "schemaVersion": 1,
-  "commit": "8a5269dd365762bec23ee93fb32f2d0cd975bef8",
+  "commit": "d78a1360e9619fa326d6ce513e19eaac3b08ec4e",
   "brief": {
-    "style": "papercraft",
-    "subfamily": "editorial",
+    "style": "brutalist",
+    "subfamily": "documentary",
     "kind": "narrative-gif",
     "locale": "es",
     "audience": "Producto en Sprint Review",
-    "title": "Observación registrada",
-    "status": "done",
+    "title": "Guías más confiables",
+    "status": "in-review",
     "phases": [
       {
         "id": "before",
         "label": "Antes",
-        "text": "La ficha no indicaba dónde revisar la advertencia.",
+        "text": "Una medida inesperada podía pasar sin aviso.",
         "visual": {
           "kind": "comparison",
           "state": "unreviewed"
@@ -22,7 +22,7 @@
       {
         "id": "change",
         "label": "Cambio",
-        "text": "La observación queda señalada en el mismo documento.",
+        "text": "Ahora se señala para que pueda revisarse.",
         "visual": {
           "kind": "comparison",
           "state": "flagged"
@@ -30,17 +30,17 @@
       },
       {
         "id": "result",
-        "label": "Resultado observado",
-        "text": "La ficha queda lista para una nueva lectura.",
+        "label": "Resultado esperado",
+        "text": "Detectar el problema antes de publicar.",
         "visual": {
           "kind": "comparison",
-          "state": "reviewed"
+          "state": "review-ready"
         }
       }
     ],
     "playback": {
       "minReadableHoldMs": 5000,
-      "transitionMs": 650,
+      "transitionMs": 900,
       "loop": true
     },
     "output": {
@@ -52,36 +52,36 @@
       ],
       "preset": "review-1280x720"
     },
-    "seed": 43
+    "seed": 7
   },
-  "briefSha256": "e522212bba8d14e0e3153a91653f8e3398ae30c8275f0f628418bb874442d128",
-  "style": "papercraft",
-  "subfamily": "editorial",
-  "seed": 43,
+  "briefSha256": "7df0f3403ded30640a60f492f969357a6210aac63f5f212a58052e520e4bd0f0",
+  "style": "brutalist",
+  "subfamily": "documentary",
+  "seed": 7,
   "renderer": {
     "narrative": "narrative-core/0.1.0",
     "canvas": "@napi-rs/canvas@1.0.11",
     "gif": "gifenc@1.0.3",
-    "scene": "papercraft-editorial/1.0.0"
+    "scene": "brutalist-documentary/1.1.0"
   },
   "fonts": {
     "bundleVersion": "repo-bundled-ofl-1",
     "roles": {
       "display": {
-        "family": "Fraunces",
-        "weight": 560
+        "family": "Archivo Black",
+        "weight": 400
       },
       "reading": {
-        "family": "Nunito Sans",
+        "family": "Space Mono",
         "weight": 400
       },
       "label": {
-        "family": "Nunito Sans",
-        "weight": 800
+        "family": "Space Mono",
+        "weight": 700
       },
       "figure": {
-        "family": "Fraunces",
-        "weight": 560
+        "family": "Archivo Black",
+        "weight": 400
       },
       "annotation": {
         "family": "Space Mono",
@@ -100,13 +100,16 @@
   "decoded": {
     "width": 1280,
     "height": 720,
-    "frameCount": 33,
+    "frameCount": 42,
     "delaysMs": [
       80,
       5000,
       80,
       80,
-      70,
+      80,
+      80,
+      80,
+      80,
       70,
       70,
       70,
@@ -117,7 +120,10 @@
       5000,
       80,
       80,
-      70,
+      80,
+      80,
+      80,
+      80,
       70,
       70,
       70,
@@ -128,7 +134,10 @@
       5000,
       80,
       80,
-      70,
+      80,
+      80,
+      80,
+      80,
       70,
       70,
       70,
@@ -136,30 +145,30 @@
       70,
       70
     ],
-    "durationMs": 17190,
+    "durationMs": 17940,
     "loopCount": 0,
     "integrity": true
   },
   "ffprobe": {
     "available": true,
     "passed": true,
-    "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode."
+    "detail": "ffprobe 1280×720; 42 frames; 17940ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 753677,
-    "png": 67468,
-    "contactSheet": 60252
+    "gif": 1214503,
+    "png": 59408,
+    "contactSheet": 73008
   },
   "hashes": {
-    "briefSha256": "e522212bba8d14e0e3153a91653f8e3398ae30c8275f0f628418bb874442d128",
-    "gifSha256": "adc8c6fc2f8dcda3dd5d241156d7da0e47ca3277be112c2f26a19d5d1b8a9ad0",
-    "pngSha256": "98ddc733c3606f7be0db8e8359e2400fa213fe1c62daae63b635b6341339a551",
-    "contactSheetSha256": "046e5041ac456061688e6fdbdd0157cb96c9dbe06a32589a8a27a55b17fc325f"
+    "briefSha256": "7df0f3403ded30640a60f492f969357a6210aac63f5f212a58052e520e4bd0f0",
+    "gifSha256": "07208c7170e1535e3f1d6b1b59464b72118cb2e025a43bf1d3163a3dc2c243c2",
+    "pngSha256": "4ae1bdc3dd51b078143b018aa1e9bf90a8048bfdbac73ae20158cf46e34eb5c7",
+    "contactSheetSha256": "116a9e4d3a427030fc862a79cc8e8a19e2f65a7456cd736015ab78646cd3cc00"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-136fcdc7\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-e522212b.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-136fcdc7\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-e522212b.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-136fcdc7\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-e522212b-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\brutalist\\guias-mas-confiables\\guias-mas-confiables-7df0f340.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\brutalist\\guias-mas-confiables\\guias-mas-confiables-7df0f340.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\brutalist\\guias-mas-confiables\\guias-mas-confiables-7df0f340-contact-sheet.png"
   },
   "controls": [
     {
@@ -177,13 +186,13 @@
     {
       "name": "frame-count",
       "passed": true,
-      "detail": "33 decoded frame(s)",
+      "detail": "42 decoded frame(s)",
       "source": "decoded"
     },
     {
       "name": "duration",
       "passed": true,
-      "detail": "17190ms decoded; holds exclude transitions",
+      "detail": "17940ms decoded; holds exclude transitions",
       "source": "decoded"
     },
     {
@@ -201,19 +210,19 @@
     {
       "name": "ffprobe-crosscheck",
       "passed": true,
-      "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode.",
+      "detail": "ffprobe 1280×720; 42 frames; 17940ms; matches the independent LZW decode.",
       "source": "decoded"
     },
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 753677B · PNG 67468B · contact 60252B",
+      "detail": "GIF 1214503B · PNG 59408B · contact 73008B",
       "source": "decoded"
     },
     {
       "name": "scene-renderer-registered",
       "passed": true,
-      "detail": "renderer papercraft/papercraft-editorial/1.0.0 exists; visual style likeness remains a separate review",
+      "detail": "renderer brutalist/brutalist-documentary/1.1.0 exists; visual style likeness remains a separate review",
       "source": "source"
     },
     {
@@ -225,7 +234,7 @@
     {
       "name": "narrative-subfamily",
       "passed": true,
-      "detail": "papercraft/editorial selects an explicit narrative art direction",
+      "detail": "brutalist/documentary selects an explicit narrative art direction",
       "source": "source"
     },
     {
@@ -237,19 +246,19 @@
     {
       "name": "distinct-frames",
       "passed": true,
-      "detail": "25 unique composited frame(s); a format-valid static GIF does not pass",
+      "detail": "35 unique composited frame(s); a format-valid static GIF does not pass",
       "source": "pixels"
     },
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "38 colors; mean channel loss 1.253, max 9; sampled 33 frames",
+      "detail": "68 colors; mean channel loss 0.04, max 9; sampled 42 frames",
       "source": "pixels"
     },
     {
       "name": "title-complete",
       "passed": true,
-      "detail": "Observación registrada",
+      "detail": "Guías más confiables",
       "source": "source"
     },
     {
@@ -261,7 +270,7 @@
     {
       "name": "phase-before-text-complete",
       "passed": true,
-      "detail": "La ficha no indicaba dónde revisar la / advertencia.",
+      "detail": "Una medida inesperada podía / pasar sin aviso.",
       "source": "source"
     },
     {
@@ -273,19 +282,19 @@
     {
       "name": "phase-change-text-complete",
       "passed": true,
-      "detail": "La observación queda señalada en el / mismo documento.",
+      "detail": "Ahora se señala para que pueda / revisarse.",
       "source": "source"
     },
     {
       "name": "phase-result-label-complete",
       "passed": true,
-      "detail": "Resultado observado",
+      "detail": "Resultado esperado",
       "source": "source"
     },
     {
       "name": "phase-result-text-complete",
       "passed": true,
-      "detail": "La ficha queda lista para una nueva / lectura.",
+      "detail": "Detectar el problema antes de / publicar.",
       "source": "source"
     },
     {
@@ -297,19 +306,19 @@
     {
       "name": "review-size-thresholds",
       "passed": true,
-      "detail": "title 76px; phase body >=36px; label >=24px",
+      "detail": "title 69px; phase body >=36px; label >=24px",
       "source": "source"
     },
     {
       "name": "640x360-effective-size",
       "passed": true,
-      "detail": "title 38.0px; body min 20.0px; label min 14.0px",
+      "detail": "title 34.5px; body min 20.0px; label min 14.0px",
       "source": "source"
     },
     {
       "name": "contrast",
       "passed": true,
-      "detail": "rendered text colors: ink 9.67:1; label 3.05:1 (not an OCR or per-pixel text measurement)",
+      "detail": "rendered text colors: ink 17.10:1; label 17.10:1 (not an OCR or per-pixel text measurement)",
       "source": "source"
     },
     {
@@ -345,7 +354,7 @@
     {
       "name": "result-follows-status",
       "passed": true,
-      "detail": "status=done; final label=\"Resultado observado\"",
+      "detail": "status=in-review; final label=\"Resultado esperado\"",
       "source": "source"
     }
   ],
@@ -368,13 +377,13 @@
         {
           "name": "frame-count",
           "passed": true,
-          "detail": "33 decoded frame(s)",
+          "detail": "42 decoded frame(s)",
           "source": "decoded"
         },
         {
           "name": "duration",
           "passed": true,
-          "detail": "17190ms decoded; holds exclude transitions",
+          "detail": "17940ms decoded; holds exclude transitions",
           "source": "decoded"
         },
         {
@@ -392,13 +401,13 @@
         {
           "name": "ffprobe-crosscheck",
           "passed": true,
-          "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode.",
+          "detail": "ffprobe 1280×720; 42 frames; 17940ms; matches the independent LZW decode.",
           "source": "decoded"
         },
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 753677B · PNG 67468B · contact 60252B",
+          "detail": "GIF 1214503B · PNG 59408B · contact 73008B",
           "source": "decoded"
         }
       ]
@@ -411,7 +420,7 @@
         {
           "name": "scene-renderer-registered",
           "passed": true,
-          "detail": "renderer papercraft/papercraft-editorial/1.0.0 exists; visual style likeness remains a separate review",
+          "detail": "renderer brutalist/brutalist-documentary/1.1.0 exists; visual style likeness remains a separate review",
           "source": "source"
         },
         {
@@ -423,7 +432,7 @@
         {
           "name": "narrative-subfamily",
           "passed": true,
-          "detail": "papercraft/editorial selects an explicit narrative art direction",
+          "detail": "brutalist/documentary selects an explicit narrative art direction",
           "source": "source"
         },
         {
@@ -435,13 +444,13 @@
         {
           "name": "distinct-frames",
           "passed": true,
-          "detail": "25 unique composited frame(s); a format-valid static GIF does not pass",
+          "detail": "35 unique composited frame(s); a format-valid static GIF does not pass",
           "source": "pixels"
         },
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "38 colors; mean channel loss 1.253, max 9; sampled 33 frames",
+          "detail": "68 colors; mean channel loss 0.04, max 9; sampled 42 frames",
           "source": "pixels"
         }
       ],
@@ -453,7 +462,7 @@
         {
           "name": "title-complete",
           "passed": true,
-          "detail": "Observación registrada",
+          "detail": "Guías más confiables",
           "source": "source"
         },
         {
@@ -465,7 +474,7 @@
         {
           "name": "phase-before-text-complete",
           "passed": true,
-          "detail": "La ficha no indicaba dónde revisar la / advertencia.",
+          "detail": "Una medida inesperada podía / pasar sin aviso.",
           "source": "source"
         },
         {
@@ -477,19 +486,19 @@
         {
           "name": "phase-change-text-complete",
           "passed": true,
-          "detail": "La observación queda señalada en el / mismo documento.",
+          "detail": "Ahora se señala para que pueda / revisarse.",
           "source": "source"
         },
         {
           "name": "phase-result-label-complete",
           "passed": true,
-          "detail": "Resultado observado",
+          "detail": "Resultado esperado",
           "source": "source"
         },
         {
           "name": "phase-result-text-complete",
           "passed": true,
-          "detail": "La ficha queda lista para una nueva / lectura.",
+          "detail": "Detectar el problema antes de / publicar.",
           "source": "source"
         },
         {
@@ -501,19 +510,19 @@
         {
           "name": "review-size-thresholds",
           "passed": true,
-          "detail": "title 76px; phase body >=36px; label >=24px",
+          "detail": "title 69px; phase body >=36px; label >=24px",
           "source": "source"
         },
         {
           "name": "640x360-effective-size",
           "passed": true,
-          "detail": "title 38.0px; body min 20.0px; label min 14.0px",
+          "detail": "title 34.5px; body min 20.0px; label min 14.0px",
           "source": "source"
         },
         {
           "name": "contrast",
           "passed": true,
-          "detail": "rendered text colors: ink 9.67:1; label 3.05:1 (not an OCR or per-pixel text measurement)",
+          "detail": "rendered text colors: ink 17.10:1; label 17.10:1 (not an OCR or per-pixel text measurement)",
           "source": "source"
         },
         {
@@ -555,7 +564,7 @@
         {
           "name": "result-follows-status",
           "passed": true,
-          "detail": "status=done; final label=\"Resultado observado\"",
+          "detail": "status=in-review; final label=\"Resultado esperado\"",
           "source": "source"
         }
       ],
@@ -581,35 +590,38 @@
       "labels": [
         "before · inicio",
         "before · pausa",
+        "before · transición media",
         "before · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-136fcdc7\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-e522212b-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\brutalist\\guias-mas-confiables\\guias-mas-confiables-7df0f340-contact-sheet.png"
     },
     {
       "phaseId": "change",
       "labels": [
         "change · inicio",
         "change · pausa",
+        "change · transición media",
         "change · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-136fcdc7\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-e522212b-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\brutalist\\guias-mas-confiables\\guias-mas-confiables-7df0f340-contact-sheet.png"
     },
     {
       "phaseId": "result",
       "labels": [
         "result · inicio",
         "result · pausa",
+        "result · transición media",
         "result · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-136fcdc7\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-e522212b-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\brutalist\\guias-mas-confiables\\guias-mas-confiables-7df0f340-contact-sheet.png"
     }
   ],
   "palette": {
-    "colors": 38,
-    "meanAbsoluteChannelError": 1.253,
+    "colors": 68,
+    "meanAbsoluteChannelError": 0.04,
     "maximumChannelError": 9,
-    "sampledFrames": 33
+    "sampledFrames": 42
   },
   "phaseHoldsVerified": [
     {
@@ -632,9 +644,9 @@
     }
   ],
   "resourceEstimate": {
-    "pixelFrames": 30412800,
+    "pixelFrames": 38707200,
     "maxPixelFrames": 96000000,
-    "memoryBytes": 107634688,
+    "memoryBytes": 124370944,
     "maxMemoryBytes": 268435456
   },
   "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed."

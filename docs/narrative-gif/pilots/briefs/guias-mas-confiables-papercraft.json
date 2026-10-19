@@ -11,7 +11,7 @@
     { "id": "change", "label": "Cambio", "text": "Ahora se señala para que pueda revisarse.", "visual": { "kind": "comparison", "state": "flagged" } },
     { "id": "result", "label": "Resultado esperado", "text": "Detectar el problema antes de publicar.", "visual": { "kind": "comparison", "state": "review-ready" } }
   ],
-  "playback": { "minReadableHoldMs": 5000, "transitionMs": 650, "loop": true },
+  "playback": { "minReadableHoldMs": 5000, "transitionMs": 900, "loop": true },
   "output": { "width": 1280, "height": 720, "formats": ["gif", "png"], "preset": "review-1280x720" },
   "seed": 7
 }

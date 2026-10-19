@@ -197,14 +197,18 @@ function captureLabels(brief: NormalizedNarrativeBrief, timeline: NarrativeTimel
     add(startIndex, `${phase.id} · inicio`);
     add(holdIndex, `${phase.id} · pausa`);
     let exitIndex = -1;
+    let midpointIndex = -1;
     for (let index = 0; index < timeline.frames.length; index += 1) {
       const frame = timeline.frames[index]!;
-      const isExit = phaseIndex === brief.phases.length - 1
-        ? frame.kind === 'loop-bridge' && frame.fromPhaseIndex === phaseIndex
-        : frame.kind === 'transition' && frame.fromPhaseIndex === phaseIndex;
-      if (isExit) exitIndex = index;
+      const isOutgoing = (frame.kind === 'transition' || frame.kind === 'loop-bridge') && frame.fromPhaseIndex === phaseIndex;
+      if (!isOutgoing) continue;
+      exitIndex = index;
+      if (midpointIndex < 0 || Math.abs(frame.progress - 0.5) < Math.abs(timeline.frames[midpointIndex]!.progress - 0.5)) midpointIndex = index;
     }
     if (phaseIndex === brief.phases.length - 1 && exitIndex < 0) exitIndex = holdIndex;
+    if ((brief.style === 'papercraft' || brief.style === 'brutalist') && midpointIndex >= 0) {
+      add(midpointIndex, `${phase.id} · transición media`);
+    }
     if (exitIndex >= 0) add(exitIndex, `${phase.id} · salida`);
   }
   add(0, 'reinicio del loop');

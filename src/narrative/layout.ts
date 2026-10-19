@@ -112,15 +112,15 @@ export function layoutNarrative(brief: NormalizedNarrativeBrief): NarrativeLayou
   const pilotComposition = brief.style === 'papercraft' || brief.style === 'brutalist';
   const textWidthRatio = pilotComposition ? 0.60 : 0.59;
   const artGapRatio = pilotComposition ? 0.02 : 0.04;
-  const artWidthRatio = pilotComposition ? 0.28 : 0.27;
+  const artWidthRatio = pilotComposition ? 0.31 : 0.27;
   const { ctx } = canvasFor(16, 16);
   const safeZone: NarrativeRect = { x: width * 0.05, y: height * 0.05, width: width * 0.9, height: height * 0.9 };
   const textArea: NarrativeRect = { x: safeZone.x, y: height * 0.09, width: width * textWidthRatio, height: height * 0.81 };
   const reservedArtArea: NarrativeRect = {
     x: textArea.x + textArea.width + width * artGapRatio,
-    y: height * 0.17,
+    y: height * (pilotComposition ? 0.08 : 0.17),
     width: width * artWidthRatio,
-    height: height * 0.66,
+    height: height * (pilotComposition ? 0.84 : 0.66),
   };
   assertSafeRect(safeZone, width, height);
   const cardScale = Math.min(640 / width, 360 / height);
