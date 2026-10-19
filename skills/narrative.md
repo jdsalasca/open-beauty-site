@@ -17,18 +17,53 @@ description: Choose and review a narrative GIF workflow with honest status, deco
 Si la narración necesita Antes, Cambio y Resultado esperado, empieza con
 `beauty narrative`; no conviertas esas fases en un título decorativo.
 
-## Estado: observado o esperado
+## Consulta capacidades antes de escribir el brief
 
-- `status: "in-review"` o `status: "open"` termina con **Resultado esperado**.
-- `status: "done"` solo es válido con **Resultado observado** y hechos que el
-  brief pueda respaldar.
-- No inventes métricas, ahorros, fechas, impacto o publicación. Si el trabajo
-  sigue en revisión, describe una expectativa con futuro o condicional.
+Usa `beauty capabilities --json` o MCP `beauty_get_capabilities` para conocer
+las celdas por estilo × primitive × aspecto × idioma, sus motivos y los valores
+permitidos de `visual.kind`, `visual.state` y `visual.action`. El motor rechaza
+valores desconocidos antes de renderizar con alternativas válidas. Los estados
+repetidos entre fases están permitidos cuando el relato lo requiere. Los trece
+estilos tienen vocabulario declarado; por ahora ninguno declara acciones.
 
-Cada fase conserva el mismo objeto visual y cambia su estado; escribe copy en
-español claro y propio de la revisión de producto. Las recetas parten de una
-review de una medida que debe quedar señalada para revisión, sin afirmar un
-resultado medido.
+Los estados compartidos actuales son `unreviewed`, `flagged`, `review-ready` y
+`reviewed`. `comparison` y `checklist` son composiciones declaradas; `document`
+se conserva como alias de compatibilidad para `comparison`. La matriz marca
+`fallback` cuando se renderiza la escena existente pero aún no representa la
+semántica del primitive. No describas un fallback como una tabla, colección,
+contador o descarga implementada.
+
+## Estado de trabajo, resultado y evidencia
+
+- `workflowStatus: open|in-review|done` describe el estado del trabajo. `done`
+  por sí solo no afirma un beneficio observado.
+- `outcome.mode: expected|observed` indica si el resultado es esperado o
+  respaldado por evidencia. El motor deriva la etiqueta final localizada.
+- `observed` requiere `evidenceRefs` con `id` y `label`, más un `scopeNote` que
+  diga explícitamente qué no prueba la evidencia. Añade `source` y `date` cuando
+  estén disponibles; no inventes cifras, mediciones ni citas.
+- `illustrative: true` declara datos de ejemplo o demostración. Los briefs v1
+  sin este campo migran a ilustrativos; para un resultado observado basado en
+  evidencia usa `illustrative: false`.
+- `status` sigue aceptado como alias v1 de `workflowStatus`. Si `done` aparece
+  sin `outcome`, la migración produce `expected`, no `observed`.
+
+Cada fase conserva el mismo objeto visual. Escribe copy breve y fiel a la
+evidencia. `locale: en` también traduce el texto fijo de la ilustración; el
+copy de fase escrito por el autor se conserva en el idioma proporcionado.
+
+## Sellos y tiempo
+
+- `badgePolicy` puede ser `workflow` (default compatible con v1), `none` o
+  `custom`. `none` quita los sellos y marcas de estado del flujo; `custom`
+  requiere `badgeText`.
+- `playback.preset: readable` es el valor predeterminado y conserva el piso de
+  5000 ms por pausa. `concise` permite `phases[].holdMs` desde 2000 ms. Todas
+  las duraciones son números en milisegundos; no añadas unidades.
+- Las pausas no equivalen al tiempo total. Transiciones, entradas y el puente
+  de loop suman duración. El manifiesto v2 separa cada suma y cada hold por
+  fase. Un aviso de lectura se activa sobre 3 palabras/segundo, usando
+  `(palabras de etiqueta + palabras de texto) / segundos decodificados`.
 
 ## Diagnosticar texto que no cabe
 
@@ -46,7 +81,7 @@ el PNG nativo y la vista 640 × 360.
 | `technical-integrity` | Decodificación GIF, dimensiones, frames, duración, loop y archivos. | Un archivo íntegro puede ser ilegible o estar mal compuesto. |
 | `style-conformance` | Tokens, escena, fuentes registradas, cambio de frames y pérdida de paleta. | Una coincidencia de tokens no prueba parecido visual suficiente. |
 | `rendered-legibility` | Copy completo, tamaños, contraste, área segura y pausas decodificadas. | OCR y lectura humana a 640 × 360 pueden seguir pendientes. |
-| `narrative` | Cantidad de fases, estado, continuidad del objeto y etiqueta final. | El sentido causal y la veracidad necesitan revisión. |
+| `narrative` | Cantidad de fases, estados declarados, continuidad del objeto, outcome y evidencia requerida. | El sentido causal y la veracidad necesitan revisión. |
 | `visual-review` | Revisión humana o de un modelo visual identificado, con criterios y evidencia. | Empieza en `pending` y no cambia sin registrar esa revisión. |
 
 Ningún nivel aprueba la publicación. `publicationRecommendation` permanece en
@@ -57,6 +92,7 @@ registrada aparte cualquier revisión visual.
 
 ```bash
 beauty narrative --style papercraft --brief examples/recipes/papercraft/narrative.json --out out/papercraft
+beauty capabilities --style papercraft --json
 beauty gallery docs/narrative-gif --out docs/narrative-gif/GALLERY.html --title "Sprint Review"
 beauty validate docs/narrative-gif/GALLERY.html --style papercraft --visual
 pnpm narrative:recipes
@@ -67,3 +103,6 @@ PNG se carga al abrir la página; el GIF solo se solicita después de pulsar
 **Reproducir**. **Detener** vuelve al PNG. El diálogo nativo se cierra con Esc,
 conserva el foco y muestra la imagen a su resolución declarada. No hay autoplay;
 la preferencia `prefers-reduced-motion` se mantiene visible y respetada.
+
+La guía de migración completa de v1 a v2 está en
+[`docs/narrative-gif/MIGRATION.md`](../docs/narrative-gif/MIGRATION.md).
