@@ -11,8 +11,8 @@ function level(status: NarrativeLevelStatus, controls: NarrativeControlResult[],
 
 function resultStatus(controls: NarrativeControlResult[], pending = false): NarrativeLevelStatus {
   if (controls.some((control) => control.status === 'fail')) return 'fail';
+  if (controls.some((control) => control.status !== 'pending' && !control.passed && control.severity !== 'warning')) return 'fail';
   if (controls.some((control) => control.status === 'pending')) return 'pending';
-  if (controls.some((control) => !control.passed && control.severity !== 'warning')) return 'fail';
   if (controls.some((control) => !control.passed && control.severity === 'warning')) return 'revise';
   return pending ? 'pending' : 'pass';
 }

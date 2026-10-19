@@ -68,7 +68,7 @@ test('gallery playback, keyboard lightbox, downloads and mobile layout work in C
     await page.getByLabel(/Vista de tarjeta 640/).check();
     assert.equal(await page.locator('#gallery-grid').getAttribute('class').then((value) => value?.includes('size-preview')), true);
     await page.getByRole('button', { name: 'Paper Craft' }).click();
-    assert.equal(await page.locator('#gallery-grid .piece:visible').count(), 3, 'style filter leaves only the matching packs');
+    assert.equal(await page.locator('#gallery-grid .piece:visible').count(), 15, 'style filter includes papercraft packs and semantic review variants');
     await page.getByRole('button', { name: 'Todos los estilos' }).click();
     await page.setViewportSize({ width: 360, height: 780 });
     await page.waitForTimeout(100);

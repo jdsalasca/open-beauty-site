@@ -88,5 +88,6 @@ test('capability CLI help and JSON command expose one machine-readable registry'
   const report = JSON.parse(child) as { cells: Array<{ style: string }>; summary: Record<string, number> };
   assert.equal(report.cells.length, 24);
   assert.ok(report.cells.every((cell) => cell.style === 'papercraft'));
-  assert.equal(report.summary.supported, 0);
+  assert.equal(report.summary.supported, 16);
+  assert.equal(report.summary.unsupported, 8);
 });
