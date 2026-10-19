@@ -299,11 +299,11 @@ test('negative controls cannot pass on file format alone', async () => {
   }
 });
 
-test('only the two pilot renderers are registered; other styles retain the explicit limitation', () => {
-  assert.deepEqual(supportedNarrativeStyles(), ['brutalist', 'papercraft']);
+test('registered pilot and stage C renderers are supported; other styles retain the explicit limitation', () => {
+  assert.deepEqual(supportedNarrativeStyles(), ['bestiary', 'brutalist', 'memphis', 'papercraft', 'psychedelic', 'ukiyoe']);
   assert.throws(() => getNarrativeScene('renaissance'), (error: unknown) => {
     assert.equal((error as { code: string }).code, 'STYLE_NOT_SUPPORTED_YET');
-    assert.match((error as Error).message, /Supported styles: brutalist, papercraft/);
+    assert.match((error as Error).message, /Supported styles: bestiary, brutalist, memphis, papercraft, psychedelic, ukiyoe/);
     return true;
   });
 });

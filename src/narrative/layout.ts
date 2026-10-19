@@ -110,8 +110,9 @@ export function layoutNarrative(brief: NormalizedNarrativeBrief): NarrativeLayou
   const width = brief.output.width;
   const height = brief.output.height;
   const pilotComposition = brief.style === 'papercraft' || brief.style === 'brutalist';
-  const textWidthRatio = pilotComposition ? 0.60 : 0.59;
-  const artGapRatio = pilotComposition ? 0.02 : 0.04;
+  const stageCComposition = brief.style === 'ukiyoe' || brief.style === 'bestiary' || brief.style === 'psychedelic' || brief.style === 'memphis';
+  const textWidthRatio = pilotComposition ? 0.60 : stageCComposition ? 0.43 : 0.59;
+  const artGapRatio = pilotComposition || stageCComposition ? 0.02 : 0.04;
   const artWidthRatio = pilotComposition ? 0.28 : 0.27;
   const { ctx } = canvasFor(16, 16);
   const safeZone: NarrativeRect = { x: width * 0.05, y: height * 0.05, width: width * 0.9, height: height * 0.9 };

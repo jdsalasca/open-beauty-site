@@ -126,7 +126,8 @@ function renderFramePixels(
   const labelY = height * 0.34;
   const bodyY = height * 0.43;
   const palette = getStyle(brief.style).palette;
-  const labelColor = brief.style === 'brutalist' ? palette.ink : palette.accent;
+  const highContrastLabel = ['brutalist', 'bestiary', 'psychedelic', 'memphis'].includes(brief.style);
+  const labelColor = highContrastLabel ? palette.ink : palette.accent;
   drawBlock(ctx, layout.title, textArea.x, titleY, fonts.effective.display, fonts.approvedAlternative.display, palette.ink);
   drawBlock(ctx, phaseLayout.label, textArea.x, labelY, fonts.effective.label, fonts.approvedAlternative.label, labelColor);
   drawBlock(ctx, phaseLayout.body, textArea.x, bodyY, fonts.effective.reading, fonts.approvedAlternative.reading, palette.ink);
@@ -196,6 +197,21 @@ function captureLabels(brief: NormalizedNarrativeBrief, timeline: NarrativeTimel
     const holdIndex = timeline.holds[phaseIndex]!.frameIndex;
     add(startIndex, `${phase.id} · inicio`);
     add(holdIndex, `${phase.id} · pausa`);
+    const isLoopBridge = phaseIndex === brief.phases.length - 1;
+    const midKind = isLoopBridge ? 'loop-bridge' : 'transition';
+    const targetPhaseIndex = isLoopBridge ? 0 : phaseIndex + 1;
+    let midIndex = -1;
+    let midpointDistance = Number.POSITIVE_INFINITY;
+    for (let index = 0; index < timeline.frames.length; index += 1) {
+      const frame = timeline.frames[index]!;
+      if (frame.kind !== midKind || frame.fromPhaseIndex !== phaseIndex || frame.toPhaseIndex !== targetPhaseIndex) continue;
+      const distance = Math.abs(frame.progress - 0.5);
+      if (distance < midpointDistance) {
+        midpointDistance = distance;
+        midIndex = index;
+      }
+    }
+    if (midIndex >= 0) add(midIndex, `${phase.id} · transición media`);
     let exitIndex = -1;
     for (let index = 0; index < timeline.frames.length; index += 1) {
       const frame = timeline.frames[index]!;
