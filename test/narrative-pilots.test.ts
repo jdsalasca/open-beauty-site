@@ -22,6 +22,8 @@ function brief(style: (typeof STYLES)[number], kind = 'comparison', overrides: R
   const status = overrides.status === 'done' ? 'done' : 'in-review';
   return {
     style,
+    // These renderer-specific fixtures assert the preserved legacy artwork; upgrade behavior has its own suite.
+    legacyArt: true,
     subfamily: style === 'papercraft' ? 'editorial' : 'documentary',
     kind: 'narrative-gif',
     locale: 'es',

@@ -11,7 +11,7 @@ Base de comparación: `09bc6abbe4a9aac02416e7843a8acad12fa06faf`. La evidencia s
 | 3 · Trabajo y resultado | Hecho (done) | Los manifiestos separan `workflowStatus`, `outcome.mode`, alcance ilustrativo y evidencia; los flujos de resultado esperado no afirman impacto observado. |
 | 4 · Sellos y localización | Hecho (done) | La política de badges y el locale están registrados; los fixtures semánticos comparan es/en sin añadir sellos como sustituto del estado del objeto. |
 | 5 · Timing por fase | Hecho (done) | Los holds decodificados se informan por fase y se separan de transiciones/loop. En los 14 briefs comparados cada hold sigue en 5.000 ms antes y después. |
-| 6 · Ciclo verificable y composiciones débiles | Parcial (partial) | El ledger, feedback por frame, rerender e invalidación existen. La galería muestra 14/14 transformaciones heredadas como `fail` y sus diffs de región como `pending`; no hay feedback abierto registrado ni aprobación visual independiente. Opart conserva una composición de barras con causalidad poco legible; isotype, papercraft y renaissance incluyen pares sin cambio de GIF. |
+| 6 · Ciclo verificable y composiciones débiles | Parcial: controles resueltos; aprobación visual independiente pendiente | El normalizador eleva por defecto los 14 briefs históricos de los seis estilos con escenas semánticas. En los packs regenerados, transformación por objeto, diff de píxeles decodificados y balance pasan 14/14. `legacyArt:true` conserva la ilustración anterior y deja sus controles de región en `pending`. Los siete estilos sin escena semántica mantienen sus recursos raster byte a byte. La aprobación humana sigue pendiente. |
 
 ## Los 13 estilos
 
@@ -35,51 +35,43 @@ Las primitivas indicadas son las celdas `supported` para aspecto 16:9 y locale e
 
 ## Comparación medida antes/después
 
-Los tiempos `Después` son medianas de tres renders por brief; la última columna es la mediana de esas medianas dentro del estilo. El render histórico no se midió en la base, así que no existe delta temporal comprobable. La duración y los holds proceden de la decodificación GIF independiente. Δ de tamaño = Después − Antes.
+Los tiempos son medianas de tres renders por brief, antes con `legacyArt:true` y después con upgrade predeterminado. Δ de render = Después − Antes. Tamaños y holds proceden de la decodificación GIF independiente. Δ de tamaño = Después − Antes.
 
-| Estilo | Briefs y seeds (composición/seed) | GIF total antes → después (Δ bytes) | Frames y duración total antes/después | Holds por fase | Render Después mediano |
-| --- | --- | ---: | --- | --- | ---: |
-| brutalist | comparison/7, checklist/29, comparison/43 | 4.172.299 → 4.170.810 (−1.489) | 126 / 53.820 ms; sin cambio | 5.000 ms cada fase, iguales | 4.261 ms |
-| papercraft | comparison/7, checklist/29, comparison/43 | 3.975.341 → 3.971.584 (−3.757) | 126 / 53.820 ms; sin cambio | 5.000 ms cada fase, iguales | 5.012 ms |
-| isotype | checklist/7, comparison/7 | 1.902.089 → 1.902.089 (0) | 66 / 34.380 ms; sin cambio | 5.000 ms cada fase, iguales | 4.176 ms |
-| opart | checklist/7, comparison/7 | 2.013.796 → 1.972.433 (−41.363) | 66 / 34.380 ms; sin cambio | 5.000 ms cada fase, iguales | 3.771 ms |
-| renaissance | checklist/7, comparison/7 | 1.950.265 → 1.950.265 (0) | 66 / 34.380 ms; sin cambio | 5.000 ms cada fase, iguales | 4.079 ms |
-| ukiyoe | checklist/7, comparison/7 | 1.692.406 → 1.664.124 (−28.282) | 66 / 34.380 ms; sin cambio | 5.000 ms cada fase, iguales | 3.563,5 ms |
-| **Total** | **14 pares** | **15.706.196 → 15.631.305 (−74.891)** | **516 / 245.160 ms; sin cambio** | **3 holds por brief, iguales** | — |
+| Estilo | Briefs y seeds (composición/seed) | GIF total antes → después (Δ bytes) | Render mediano antes → después (Δ ms) | Holds |
+| --- | --- | ---: | ---: | --- |
+| brutalist | comparison/7, checklist/29, comparison/43 | 4.172.299 → 4.863.041 (+690.742) | 3.496 → 4.695 (+1.199) | 3 × 5.000 ms, sin cambio |
+| papercraft | comparison/7, checklist/29, comparison/43 | 3.975.341 → 6.332.063 (+2.356.722) | 3.920 → 4.956 (+1.036) | 3 × 5.000 ms, sin cambio |
+| isotype | checklist/7, comparison/7 | 1.902.089 → 1.890.346 (−11.743) | 2.588 → 3.756 (+1.168) | 3 × 5.000 ms, sin cambio |
+| opart | checklist/7, comparison/7 | 2.013.796 → 1.834.113 (−179.683) | 3.646 → 3.689 (+43) | 3 × 5.000 ms, sin cambio |
+| renaissance | checklist/7, comparison/7 | 1.950.265 → 2.360.290 (+410.025) | 3.374 → 6.899 (+3.525) | 3 × 5.000 ms, sin cambio |
+| ukiyoe | checklist/7, comparison/7 | 1.692.406 → 2.146.422 (+454.016) | 3.128 → 8.355 (+5.227) | 3 × 5.000 ms, sin cambio |
+| **Total** | **14 pares** | **15.706.196 → 19.426.275 (+3.720.079)** | **medianas por estilo** | **42 holds, sin cambio** |
 
-En **8/14 pares** los GIF antes/después tienen SHA-256 idéntico. Los 14 pares heredados dan balance proxy `pass` (14/14), transformación de objeto `fail` (14/14, porque estos briefs no declaran regiones semánticas) y diff de región `pending` (14/14). Los 12 fixtures nuevos dan balance `pass` y transformación `pass` (12/12 cada uno), diff de región `pending` (12/12), feedback abierto 0 y revisión visual `pending`. Esos controles no equivalen a aprobación estética.
+Los **14/14 GIF** antes/después difieren en SHA-256. Antes, los 14 controles de transformación fallaban y los diffs de región estaban pendientes; después, transformación, diff de región decodificado y balance pasan 14/14. El mayor rectángulo vacío es **21,9%**, dentro del umbral de 22%. Los holds de 5.000 ms y el tiempo total decodificado por par se conservan. `legacyArt:true` deja los controles de región en `pending` porque el arte optado no declara regiones. Bajo opt-out, la ilustración coincide con los recursos históricos en 8/14 pares; seis difieren por cambios de renderer posteriores al commit de base.
 
-El índice registra **15.824.107 bytes binarios nuevos en 40 archivos**; el GIF más grande mide **1.407.379 bytes**, por debajo del tope de 6 MiB. El resto de assets idénticos apunta a packs versionados en vez de duplicar bytes.
+Se regeneraron 20 packs de papercraft (3 pilotos, 2 galería, 3 comparaciones históricas y 12 salidas semánticas narrativo/solo-arte), 20 de brutalist con la misma distribución y 4 por estilo para isotype, opart, renaissance y ukiyoe (2 galería y 2 comparaciones históricas). Los siete estilos sin escena semántica mantuvieron sus archivos raster byte a byte. Los conteos canónicos no cambian: siguen siendo 28 packs (22 de galería + 6 pilotos) y 60 manifiestos; la mejora sustituye arte dentro de esos briefs existentes. El índice registra 12 fixtures semánticos en es/en, cada uno con variante narrativo y solo-arte.
+
+El índice registra **26.174.249 bytes GIF/PNG en 63 archivos** de comparación y fixtures; el GIF más grande mide **1.444.112 bytes**, por debajo del tope de 6 MiB.
 
 ## Validación y controles negativos
 
 | Ejecución | Resultado |
 | --- | --- |
 | `pnpm coverage:matrix` | **104/104**, 0 celdas fuera de cobertura |
-| `pnpm narrative:recipes` | **13/13** recetas ejecutables |
-| `pnpm fonts:check` | **65** verificaciones estilo/rol, 13 estilos, 30 caras, 0 caras sintéticas; 52 roles usan fallback para el glifo `→` |
-| Pruebas dirigidas compare + matrix | **5/5**; incluye página estática, A100, índice, teclado y matriz |
-| `node dist/cli.js validate docs/narrative-gif/COMPARE.html --style papercraft --visual` | **A 100/100**, visión 4/4, cero avisos |
-| `pnpm visual:matrix` | **91/91 A100**, 0 celdas debajo del mínimo |
-| `test/narrative-gallery-repro.test.ts` | **28/28** packs por brief y **60/60** manifiestos canónicos reproducen GIF, PNG y hoja de contacto byte por byte |
-| `test/page-geometry.test.ts` | La suite completa tuvo timeout al abrir `isotype-4.html`; ejecución aislada: **2/2** pruebas pass |
-| `test/visual-matrix.test.ts` | En la suite completa, Chromium expiró en `brutalist/retro` y marcó 90/91; ejecución aislada: **4/4** pass y `pnpm visual:matrix`: 91/91 A100 |
-| `pnpm check:all` | **Falló: 453 pass, 2 fail, 1 skipped / 456**. Las dos fallas fueron timeouts de navegación local en las pruebas de geometría y matriz visual. |
+| `pnpm capabilities:matrix` | **312 celdas**: 58 supported, 158 fallback, 96 unsupported; sin celdas promovidas por esta migración |
+| `pnpm narrative:recipes` | **13/13** recetas ejecutables; 1280×720, 33 frames, 17.190 ms y loop 0 |
+| `pnpm fonts:check` | **65** verificaciones estilo/rol, 13 estilos, 30 caras reales, 0 sintéticas |
+| `pnpm visual:matrix` | **91/91 A100**, 0 celdas debajo del mínimo; tercer intento completó sin timeouts |
+| `node dist/cli.js validate docs/narrative-gif/GALLERY.html --style papercraft --visual` | **A 100/100**, visión 4/4, sin problemas |
+| `node dist/cli.js validate docs/narrative-gif/COMPARE.html --style papercraft --visual` | **A 100/100**, visión 4/4, sin problemas |
+| `pnpm check:all` | En curso en segundo plano; el primer pase de `narrative-pilots.test.ts` encontró 4 expectativas de arte heredado incompatibles con el nuevo default. Se actualizaron esos fixtures para usar `legacyArt:true`; las 4 pruebas afectadas pasan aisladas. Log externo `%TEMP%\open-beauty-check-all.log`; falta repetir el gate completo. |
 
-Controles negativos explícitos: la matriz mantiene **254/312** celdas como no aprobadas (158 `fallback` + 96 `unsupported`); el test de matriz comprueba que solo las 58 celdas `supported` tienen prueba y pack existentes. Pasaron los tests `isotype text-only changes do not pass the semantic-object control`, `opart text-only changes do not pass the semantic-object control`, `text-only and decorative-only changes cannot pass the semantic object pixel control`, `unknown semantic states and actions fail before render with allowed alternatives` y `scenes without declared object regions keep transformation status pending` (1 cada uno). En navegador se verificaron dos condiciones de carga negativa: cero GIF antes de pulsar Reproducir y cero GIF en movimiento reducido sin acción explícita. La regresión de los pares históricos conserva el resultado negativo de transformación en 14/14, en vez de inferir causalidad desde cambios de texto.
+Controles negativos explícitos: la matriz conserva **254/312** celdas no aprobadas (158 `fallback` + 96 `unsupported`). Pasan los tests de cambio solo de texto, arte decorativo, estados desconocidos y escenas sin regiones declaradas. El test del opt-out confirma que `legacyArt:true` conserva el arte papercraft anterior byte a byte y deja el control de región en `pending`; el upgrade con cambio solo narrativo sigue fallando el control de objeto.
 
 ## Inspección visual, límites y pendientes
 
-Se generaron y revisaron capturas de `COMPARE.html` a 1440 y 360 px fuera del repositorio (`%TEMP%\beauty-compare-review`). La prueba de navegador confirma sin overflow a 360 px, póster 16:9, modo tarjeta 640×360, Tab/Enter/Esc, diálogo nativo, movimiento reducido y carga diferida. En las muestras PNG revisadas:
+Se inspeccionaron hojas de contacto de un pack por cada uno de los seis estilos; cada hoja incluye pausas, puntos medios y unión del loop. Defectos encontrados y corregidos: badge de brutalist que rebasaba tarjeta; cambio de Op Art que solo afectaba un motivo, ahora afecta las cuatro unidades; rótulo de Ukiyo-e que se montaba sobre el cartucho, ahora localizado, corto y dentro del marco. Isotype, papercraft y Renaissance no mostraron clipping en los estados inspeccionados. El detalle por pack y las imágenes revisadas están en [REVIEW-legacy-upgrade.md](semantic/REVIEW-legacy-upgrade.md).
 
-- isotype conserva exactamente el mismo GIF antes y después, incluida la fila activa; no hay una transformación visible del objeto.
-- opart usa franjas de alto contraste con un rótulo aislado; la relación causal no se reconoce con claridad en la miniatura.
-- renaissance deja una gran zona vacía y una pieza geométrica sencilla; el cambio narrativo no queda explícito en las muestras heredadas.
-- ukiyoe tiene una escena paisajística coherente, pero la señal narrativa es pequeña a tamaño de tarjeta.
-- papercraft tiene materialidad clara y brutalist una jerarquía deliberada; sus pares heredados siguen mostrando el mismo arte en varios briefs.
+Los seis manifiestos revisados reportan cuerpo >=36 px nativo, etiqueta >=24 px nativa y mínimo de etiqueta de 15 px efectivos a 640×360; todos pasan. El mayor rectángulo vacío medido es 21,9% (máximo permitido 22%). Esta revisión cubre los seis estilos de la migración; no constituye aprobación estética independiente para los 13 estilos ni contrasta la referencia privada de Grid. La revisión humana final de publicación queda `pending`.
 
-La inspección anterior la realizó quien preparó esta entrega; **ninguno de los 13 estilos fue revisado ni aprobado independientemente**. Tampoco se revisaron todos los frames/holds de los 14 pares ni se contrastó con la referencia privada de Grid. No hay feedback humano abierto que enlazar a frames; el estado permanece `pending`. Las 91 comprobaciones de `visual:matrix` evalúan la calidad de páginas HTML, no sustituyen esa revisión de GIF.
-
-La suite completa detectó saturación/timeout de navegación de Chromium en dos pruebas que pasan aisladas, y omitió otro chequeo de miniaturización de recetas tras un timeout de Chromium. Por ello `pnpm check:all` queda reportado como fallido aunque las matrices solicitadas y las reproducciones byte a byte pasaron por separado.
-
-La igualdad binaria de varios pares y los 14 fallos de transformación heredada son los límites más relevantes. La comparación informa tamaños y decodificación con precisión; no demuestra mejora visual en los pares idénticos. La determinación se limita a la misma plataforma, runtime y dependencias fijadas en `pnpm-lock.yaml`; no se afirma igualdad de bytes entre sistemas operativos.
+La comparación mide decodificación, bytes, cambios de regiones y balance en estos fixtures y esta plataforma. Los 14 GIF cambiaron de hash; los ocho recursos que coinciden bajo opt-out representan la ruta de arte heredada respecto de la base, mientras seis difieren por cambios de renderer posteriores al commit histórico. Ningún resultado demuestra igualdad entre sistemas operativos.
