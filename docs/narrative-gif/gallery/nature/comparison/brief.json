@@ -1,0 +1,16 @@
+{
+  "style": "nature",
+  "kind": "narrative-gif",
+  "locale": "es",
+  "audience": "Producto · Sprint Review (ejemplo visual)",
+  "title": "Observar la guía",
+  "status": "in-review",
+  "phases": [
+    { "id": "before", "label": "Antes", "text": "La muestra conserva sus nervaduras sin anotación.", "visual": { "kind": "comparison", "state": "unreviewed" } },
+    { "id": "change", "label": "Cambio", "text": "Una llamada señala una nervadura de la misma hoja.", "visual": { "kind": "comparison", "state": "flagged" } },
+    { "id": "result", "label": "Resultado esperado", "text": "El equipo puede volver a esa observación durante la revisión.", "visual": { "kind": "comparison", "state": "review-ready" } }
+  ],
+  "playback": { "minReadableHoldMs": 5000, "transitionMs": 650, "loop": true },
+  "output": { "width": 1280, "height": 720, "formats": ["gif", "png"], "preset": "review-1280x720" },
+  "seed": 7
+}
