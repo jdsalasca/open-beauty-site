@@ -22,6 +22,20 @@ const PRIMITIVE_REASONS: Record<NarrativePrimitive, string> = {
   'file-download': 'This renderer does not yet draw file identity, progress, failure and retry state.',
 };
 
+const STYLE_SEMANTIC_PRIMITIVES: Partial<Record<StyleSlug, readonly NarrativePrimitive[]>> = {
+  papercraft: NARRATIVE_PRIMITIVES,
+  isotype: ['counter', 'card-collection'],
+};
+
+function fallbackReason(style: StyleSlug, primitive: NarrativePrimitive): string {
+  if (style === 'isotype' && primitive === 'table-rows') return 'Isotype represents each row as one countable pictogram; it does not claim table-cell or row-action semantics. Use counter or card-collection.';
+  if (style === 'isotype' && primitive === 'file-download') return 'File progress has no natural mapping to Isotype pictogram counts; the style keeps its legacy illustration fallback.';
+  if (style === 'opart' && primitive === 'table-rows') return 'Op Art groups optical motifs rather than records; the renderer does not represent tabular rows.';
+  if (style === 'opart' && primitive === 'counter') return 'The optical pattern is qualitative and does not encode a numeric count.';
+  if (style === 'opart' && primitive === 'file-download') return 'File progress does not map to the style\'s optical grouping; the renderer keeps its legacy fallback.';
+  return `${style} fallback: ${PRIMITIVE_REASONS[primitive]}`;
+}
+
 export interface NarrativeCapabilityCell {
   style: StyleSlug;
   primitive: NarrativePrimitive;
@@ -61,7 +75,7 @@ export function narrativeCapabilityReport(filter: NarrativeCapabilityFilter = {}
     };
     return NARRATIVE_PRIMITIVES.flatMap((primitive) => ASPECTS.flatMap((aspect) => (['es', 'en'] as const).map((locale) => {
       const supportsAspect = scene.supportsAspect(aspect.width / aspect.height);
-      const semanticSupported = style === 'papercraft' && supportsAspect;
+      const semanticSupported = supportsAspect && (STYLE_SEMANTIC_PRIMITIVES[style]?.includes(primitive) ?? false);
       const status: NarrativeCapabilityStatus = !supportsAspect ? 'unsupported' : semanticSupported ? 'supported' : 'fallback';
       const semanticEntityKinds = NARRATIVE_PRIMITIVE_ENTITY_KINDS[primitive];
       const semanticKinds = semanticEntityKinds.filter((kind): kind is Exclude<NarrativeSemanticEntityKind, 'illustration'> => kind !== 'illustration');
@@ -74,8 +88,8 @@ export function narrativeCapabilityReport(filter: NarrativeCapabilityFilter = {}
       const reason = !supportsAspect
         ? `${style} has no narrative renderer for ${aspect.id}; the primitive cannot be rendered in this aspect.`
         : semanticSupported
-          ? `Papercraft renders ${primitive} with stable entity regions; decoded state changes are exercised in test/narrative-semantic-render.test.ts for ${aspect.id}/${locale}.`
-          : `${style} fallback: ${PRIMITIVE_REASONS[primitive]}`;
+          ? `${style} renders ${primitive} with stable entity regions; decoded state changes are exercised in ${style === 'isotype' ? 'test/narrative-semantic-style-render.test.ts' : 'test/narrative-semantic-render.test.ts'} for ${aspect.id}/${locale}.`
+          : fallbackReason(style, primitive);
       return { style, primitive, aspect: aspect.id, locale, status, reason, allowed };
     })));
   });

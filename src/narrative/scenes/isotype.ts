@@ -5,6 +5,7 @@ import { cubicBezierEase, drawRule } from './common.js';
 import { clamp, compositionFor, drawRoleText, mix, phasePosition, type StageCComposition } from './stage-c-common.js';
 import { sceneVocabulary } from '../vocabulary.js';
 import { sceneText } from '../i18n.js';
+import { drawIsotypeSemantic, isotypeSemanticObjectRegions } from './isotype/semantic-art.js';
 
 interface QualitativeSet {
   readonly identity: 'guide-stage-pictogram-set';
@@ -110,14 +111,15 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
   const box = layout.reservedArtArea;
   const colors = getStyle('isotype').palette;
   const state = phasePosition(context, (value) => cubicBezierEase(value, 0.2, 0.75, 0.3, 1));
-  if (set.composition === 'comparison') drawComparison(ctx, box, set, state, context, colors);
+  if (context.semantic && context.semantic.primitive !== 'legacy-illustration') drawIsotypeSemantic(ctx, context, box, set.composition, colors);
+  else if (set.composition === 'comparison') drawComparison(ctx, box, set, state, context, colors);
   else drawChecklist(ctx, box, set, state, context, colors);
   return ctx.getImageData(0, 0, brief.output.width, brief.output.height).data;
 }
 
 export const isotypeNarrativeScene: NarrativeScene = {
   style: 'isotype',
-  version: 'isotype-qualitative-pictograms/1.0.0',
+  version: 'isotype-countable-semantic-pictograms/2.0.0',
   vocabulary: sceneVocabulary('phase-order-fallback'),
   supportsAspect(aspect) {
     return [16 / 9, 1, 9 / 16].some((ratio) => Math.abs(aspect - ratio) / ratio < 0.015);
@@ -130,6 +132,11 @@ export const isotypeNarrativeScene: NarrativeScene = {
       gridOffset: (rng() - 0.5) * 0.02,
       iconScale: 0.97 + rng() * 0.06,
     } satisfies QualitativeSet);
+  },
+  objectRegions(context) {
+    if (!context.semantic || context.semantic.primitive === 'legacy-illustration') return [];
+    const set = context.object as QualitativeSet;
+    return isotypeSemanticObjectRegions(context, context.layout.reservedArtArea, set.composition);
   },
   renderFrame,
 };

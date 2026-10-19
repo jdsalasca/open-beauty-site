@@ -106,13 +106,13 @@ export function sceneArt(preset: StylePreset, index = 1, caption?: string, subje
         return `<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
           <rect width="800" height="800" fill="${p.bg}"/>
           <g stroke="${p.muted}" stroke-width="1" opacity=".4"><path d="M0 170h800M0 300h800M0 430h800M0 560h800M0 690h800"/><path d="M120 0v800M250 0v800M380 0v800M510 0v800M640 0v800"/></g>
-          <text x="60" y="96" font-family="Jost, sans-serif" font-size="28" letter-spacing="4" fill="${p.ink}">${esc(label || 'ARCHIVO / SERIE 01')}</text>
+          <text x="60" y="96" font-family="Jost, sans-serif" font-size="28" letter-spacing="4" fill="${p.ink}">${esc(label || 'MUESTRA CUALITATIVA')}</text>
           <g fill="${p.accent}">${Array.from({ length: 7 }, (_, i) => `<path d="M70 ${220 + i * 62}h44v44H70z"/><path d="M88 ${214 + i * 62}l14-18 14 18Z"/>`).join('')}</g>
           <g fill="${p.accent2}">${Array.from({ length: 4 }, (_, i) => `<circle cx="${360 + i * 54}" cy="250" r="18"/>`).join('')}</g>
           <g fill="${p.accent3}">${Array.from({ length: 5 }, (_, i) => `<rect x="${390 + i * 44}" y="390" width="26" height="70"/>`).join('')}</g>
           <rect x="350" y="540" width="330" height="120" fill="none" stroke="${p.ink}" stroke-width="2"/>
-          <text x="370" y="620" font-family="Jost, sans-serif" font-size="64" font-weight="700" fill="${p.ink}">68%</text>
-          <text x="370" y="648" font-family="IBM Plex Sans, sans-serif" font-size="16" letter-spacing="2" fill="${p.muted}">SERIE / 01</text>
+          <text x="370" y="620" font-family="Jost, sans-serif" font-size="40" font-weight="700" fill="${p.ink}">ILUSTRATIVO</text>
+          <text x="370" y="648" font-family="IBM Plex Sans, sans-serif" font-size="16" letter-spacing="2" fill="${p.muted}">SIN MÉTRICA</text>
           <path d="M60 740h680" stroke="${p.accent}" stroke-width="8"/>
         </svg>`;
       case 'opart':

@@ -48,6 +48,8 @@ const PAIRS: Record<StyleSlug, Pairs> = {
     expected: ['ESPERADO', 'EXPECTED'],
     change: ['CAMBIO', 'CHANGE'],
     stage: ['ETAPA', 'STEP'],
+    illustrative: ['ILUSTRATIVO', 'ILLUSTRATIVE'],
+    review: ['REVISAR', 'REVIEW'],
   },
   memphis: {
     measure: ['MEDIDA', 'MEASURE'],
