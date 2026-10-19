@@ -55,7 +55,8 @@ function failingTestNames(output: string): string[] {
 }
 
 function timeoutMentions(output: string): number {
-  return output.match(/(?:timeout|timed out)/gi)?.length ?? 0;
+  // Real browser/runner timeout signatures, not the word "timeout" in a name.
+  return output.match(/Timeout \d+ms exceeded|test timed out|ETIMEDOUT|Navigation timeout/gi)?.length ?? 0;
 }
 
 function runStep(step: StepSpec): StepResult {
