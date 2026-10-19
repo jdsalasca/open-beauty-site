@@ -51,6 +51,7 @@ test('composition examples tell the duplicate-row story without invented claims'
     assert.ok(brief.sections?.some((section) => section.kind === 'explanation'), `${example.file}: explanation section`);
     assert.ok(brief.sections?.some((section) => section.kind === 'comparison'), `${example.file}: comparison section`);
     assert.ok(brief.sections?.some((section) => section.kind === 'process'), `${example.file}: process section`);
+    assert.ok(brief.sections?.some((section) => section.kind === 'cta'), `${example.file}: CTA section`);
 
     const copy = JSON.stringify(brief).toLowerCase();
     assert.ok(copy.includes('duplicada'), `${example.file}: names the duplicated row`);

@@ -126,7 +126,7 @@ export function sanitizeCtaAnchors(html: string, locale: 'es' | 'en'): string {
     const href = (/\bhref\s*=\s*"([^"]*)"/i.exec(attrs)?.[1] ?? '').trim();
     if (ctaHasDestination(href)) return match;
     const limited = `<button${stripHref(attrs)} type="button" aria-disabled="true">${content}</button>`;
-    return `${limited}<p class="comp-cta-note" role="note">${esc(limitationNote(locale))}</p>`;
+    return `${limited}<span class="comp-cta-note" role="note">${esc(limitationNote(locale))}</span>`;
   });
 }
 
@@ -203,15 +203,19 @@ function processBlock(context: BandContext): string {
 }
 
 function ctaBlock(context: BandContext): string {
-  const { brief, locale, preset } = context;
+  const { brief, locale, preset, sections } = context;
   const label = t(locale, 'Llamado a la acción', 'Call to action');
+  const typed = sections.find((section) => section.kind === 'cta');
   const cta = brief.cta ?? { label: t(locale, 'Escribinos', 'Write to us'), href: '' };
   const note = limitationNote(locale);
   const semantic = ART_DIRECTION[preset.slug]?.color.semanticStates;
   return `<section class="composition-band composition-cta" data-section="cta" style="--comp-warn:${esc(semantic?.warn ?? preset.palette.muted)}">
-  <p class="comp-kicker">${esc(label)}</p>
-  <h2 class="comp-cta-title">${esc(labels(locale).contact)}</h2>
-  ${ctaMarkup(cta.href, cta.label || labels(locale).contact, { note, className: 'comp-cta-button' })}
+  <div class="comp-cta-copy">
+    <p class="comp-kicker">${esc(label)}</p>
+    <h2 class="comp-cta-title">${esc(typed?.title || labels(locale).contact)}</h2>
+    ${typed?.body ? `<p class="comp-text">${esc(typed.body)}</p>` : ''}
+  </div>
+  <div class="comp-cta-action">${ctaMarkup(cta.href, cta.label || labels(locale).contact, { note, className: 'comp-cta-button' })}</div>
 </section>`;
 }
 
@@ -256,11 +260,12 @@ export function compositionCss(preset: StylePreset): string {
 .comp-steps strong{font-size:16px;line-height:1.3}
 .comp-steps li>span:last-child{font-size:13px;line-height:1.6;color:var(--comp-muted)}
 .composition-cta{display:grid;grid-template-columns:1fr auto;align-items:center;gap:28px;max-width:1080px}
-.composition-cta .comp-kicker{margin:0}
+.composition-cta .comp-kicker{margin:0 0 10px}
+.comp-cta-action{display:grid;gap:8px;justify-items:start}
 .comp-cta-title{margin:0;font-size:clamp(24px,3vw,38px);line-height:1.1}
 .comp-cta{display:inline-flex;align-items:center;gap:10px;background:var(--comp-ink);color:var(--comp-bg);padding:14px 20px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;font-weight:700}
 .comp-cta-limited{cursor:not-allowed;opacity:.55}
-.comp-cta-note{margin:6px 0 0;font-size:11px;line-height:1.5;color:var(--ink,var(--comp-ink,currentColor));border-left:${emphasis}px solid var(--comp-warn,var(--accent,currentColor));padding-left:8px;max-width:34ch}
+.comp-cta-note{display:block;margin:6px 0 0;font-size:11px;line-height:1.5;color:var(--ink,var(--comp-ink,currentColor));border-left:${emphasis}px solid var(--comp-warn,var(--accent,currentColor));padding-left:8px;max-width:34ch}
 .composition-warning{margin:12px 0 0;padding:10px 12px;border-left:${emphasis}px solid ${problem};background:color-mix(in srgb,${problem} 12%,transparent);color:var(--comp-ink);font-size:11px;line-height:1.5}
 .composition-cta .composition-warning{grid-column:1/-1}
 .scene-art svg{width:100%;height:auto;display:block;max-height:560px}

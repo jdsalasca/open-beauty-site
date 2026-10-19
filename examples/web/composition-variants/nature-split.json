@@ -33,7 +33,7 @@
       "kicker": "05 / Cierre",
       "title": "Una nueva revisión",
       "body": "La ficha corregida vuelve a la cola de validación. La guía no promete que no haya más errores: solo confirma que esta versión ya no contiene la fila duplicada.",
-      "kind": "default"
+      "kind": "cta"
     }
   ],
   "quote": {

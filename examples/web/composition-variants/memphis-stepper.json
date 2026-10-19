@@ -33,7 +33,7 @@
       "kicker": "05 / Cierre",
       "title": "La ficha vuelve a revisión",
       "body": "La versión corregida vuelve a la cola de validación. La guía no afirma que se haya borrado nada ni promete que el problema no vuelva a aparecer.",
-      "kind": "default"
+      "kind": "cta"
     }
   ],
   "quote": {
