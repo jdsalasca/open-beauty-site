@@ -28,6 +28,7 @@ import { SKILL_FALLBACK, styleGuideMarkdown, stylesOverview } from '../guide.js'
 import { packageRoot } from '../paths.js';
 import { createNarrative, narrativeFailure } from '../narrative/create.js';
 import { NarrativeError } from '../types/narrative.js';
+import { createNarrativeGallery } from '../narrative/gallery.js';
 
 const styleEnum = z.enum([
   'renaissance',
@@ -815,6 +816,29 @@ QUALITY BAR
       } catch (error) {
         const result = narrativeFailure(error);
         return { content: [{ type: 'text' as const, text: JSON.stringify(result) }], structuredContent: { ...result }, isError: true };
+      }
+    },
+  );
+
+  server.registerTool(
+    'beauty_create_gallery',
+    {
+      title: 'Create a narrative GIF review gallery',
+      description:
+        'Scans a folder tree for narrative pack manifests and writes one self-contained Spanish HTML gallery. PNG posters stay static until a reviewer explicitly plays a GIF. Links remain relative to the local pack files, and each evaluation status is read from its manifest.',
+      inputSchema: {
+        directory: z.string().min(1).max(260).describe('Folder tree to scan recursively for narrative manifests.'),
+        output: z.string().max(260).optional().describe('HTML output path; defaults to gallery.html.'),
+        title: z.string().max(160).optional().describe('Gallery page title.'),
+      },
+    },
+    async ({ directory, output, title }) => {
+      try {
+        const result = await createNarrativeGallery({ directory, output: output ?? 'gallery.html', title });
+        const summary = `Created ${result.pieceCount} narrative pieces across ${result.styles.length} styles.\n${result.path}`;
+        return { content: [{ type: 'text' as const, text: summary }], structuredContent: { ...result } };
+      } catch (error) {
+        return { content: [{ type: 'text' as const, text: `Gallery failed: ${(error as Error).message}` }], isError: true };
       }
     },
   );

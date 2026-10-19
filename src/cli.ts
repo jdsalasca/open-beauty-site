@@ -22,6 +22,7 @@ import { packageRoot } from './paths.js';
 import { createNarrative, narrativeFailure } from './narrative/create.js';
 import { NARRATIVE_BRIEF_EXAMPLE, narrativeHelpOptions } from './narrative/brief.js';
 import { NarrativeError } from './types/narrative.js';
+import { createNarrativeGallery } from './narrative/gallery.js';
 
 type Flags = Record<string, string | boolean>;
 
@@ -128,6 +129,16 @@ const COMMAND_HELP: Record<string, CommandHelpEntry> = {
     usage: 'beauty narrative --style <s> --brief brief.json [--out dir]',
     options: narrativeHelpOptions(),
     example: `beauty narrative --style papercraft --brief narrative.json --out out/narrative\n\n${NARRATIVE_BRIEF_EXAMPLE}`,
+  },
+  gallery: {
+    summary: 'Build a self-contained review gallery from narrative manifests.',
+    usage: 'beauty gallery <dir> [--out gallery.html] [--title "..."]',
+    options: [
+      '  <dir>              Scan this folder tree for narrative manifests and their packs',
+      '  --out path         Write the one-file HTML gallery (default: gallery.html)',
+      '  --title "..."      Gallery heading and document title',
+    ],
+    example: 'beauty gallery docs/narrative-gif --out docs/narrative-gif/GALLERY.html --title "Sprint Review"',
   },
   canvas: {
     summary: 'Create an open animated SVG canvas.',
@@ -371,6 +382,7 @@ Commands:
       [--out dir]
   beauty sequence --style <s> --brief seq.json   Create an SVG story + GIF from frames
   beauty narrative --style <s> --brief brief.json [--out dir]  Create a narrative GIF pack
+  beauty gallery <dir> [--out gallery.html] [--title "..."]  Build a static review gallery
   beauty canvas --style <s> --brief canvas.json  Create an open animated SVG canvas
   beauty motion --style <s> --title "..."      Create an animated SVG loop
       [--scene orbit|bloom|tide|papercut|constellation|ribbon|rain|type]
@@ -639,6 +651,16 @@ async function main(): Promise<void> {
         console.log(JSON.stringify(narrativeFailure(error), null, 2));
         process.exitCode = 1;
       }
+      return;
+    }
+
+    case 'gallery': {
+      const directory = positionals[1];
+      if (!directory) throw new Error('Pass the folder tree that contains narrative manifests: beauty gallery <dir>.');
+      const output = stringFlag(flags, 'out') ?? 'gallery.html';
+      const result = await createNarrativeGallery({ directory, output, title: stringFlag(flags, 'title') });
+      console.log(`Galería narrativa · ${result.pieceCount} piezas · ${result.styles.length} estilos`);
+      console.log(result.path);
       return;
     }
 

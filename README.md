@@ -2,7 +2,18 @@
 
 Open Beauty es un arnés de diseño y servidor MCP que convierte un brief corto en una página HTML, experiencia, cuento, presentación, kit de sprint o GIF completo y validado, en uno de trece sistemas editoriales. El modelo aporta contenido y juicio; el arnés aporta fuentes, paleta, composición, movimiento y la puerta de calidad.
 
-La ruta `beauty narrative` define briefs de tres a cinco fases y genera GIF, PNG, contacto y manifest cuando existe un renderer narrativo revisado para el estilo. La base ya está disponible; las escenas de los trece estilos siguen pendientes y devuelven `STYLE_NOT_SUPPORTED_YET` sin sustituirlas por un estilo genérico.
+La ruta `beauty narrative` define briefs de tres a cinco fases y genera GIF, PNG, hoja de contacto y manifiesto para los trece estilos. Cada pieza separa integridad técnica, fidelidad al estilo, legibilidad, narrativa y revisión visual; esta última empieza pendiente y ninguna evaluación autoriza publicar.
+
+Para una historia de Sprint Review, copia `examples/recipes/<style>/narrative.json`, conserva **Antes → Cambio → Resultado esperado** mientras esté `in-review`, genera y revisa la galería:
+
+```bash
+beauty narrative --style papercraft --brief examples/recipes/papercraft/narrative.json --out out/papercraft
+beauty gallery docs/narrative-gif --out docs/narrative-gif/GALLERY.html --title "Sprint Review"
+beauty validate docs/narrative-gif/GALLERY.html --style papercraft --visual
+pnpm narrative:recipes
+```
+
+La galería usa PNG estáticos al abrir, carga el GIF solo al pulsar **Reproducir**, permite detener, descargar y ampliar, filtrar por estilo y activar una vista de 640 × 360. La salida generada está en [GALLERY.html](docs/narrative-gif/GALLERY.html); los pasos reproducibles desde un checkout limpio están en [REPRODUCE.md](docs/narrative-gif/REPRODUCE.md).
 
 ## Inicio rápido
 
@@ -79,7 +90,8 @@ Scroll-eá la página antes de capturar: las secciones aparecen al hacer scroll 
 | `beauty_create_deck` | Genera una presentación 16:9 | `beauty_create_deck({ style: "nature", title: "Té", slides: [...] })` |
 | `beauty_create_sprint` | Genera review + retro + planning + 3 GIFs | `beauty_create_sprint({ style: "artdeco", sprint: "16" })` |
 | `beauty_create_gif` | Genera un GIF editorial | `beauty_create_gif({ style: "artdeco", text: "Subir" })` |
-| `beauty_create_narrative` | Valida una historia de 3–5 fases; devuelve rutas y niveles separados cuando el estilo tiene escena | `beauty_create_narrative({ style: "papercraft", brief: { kind: "narrative-gif", ... } })` |
+| `beauty_create_narrative` | Valida y renderiza una historia de 3–5 fases en los 13 estilos; devuelve rutas y niveles separados | `beauty_create_narrative({ style: "papercraft", brief: { kind: "narrative-gif", ... } })` |
+| `beauty_create_gallery` | Genera una galería HTML desde los manifiestos de una carpeta | `beauty_create_gallery({ directory: "docs/narrative-gif", output: "out/gallery.html" })` |
 | `beauty_validate` | Audita HTML y devuelve grado y fixes (`visual: true` incluye el pase de navegador) | `beauty_validate({ style: "nature", path: "page.html", visual: true })` |
 | `beauty_fix` | Repara y revalida con las mismas opciones | `beauty_fix({ style: "nature", path: "page.html", visual: true })` |
 | `beauty_examples` | Devuelve rutas de referencia | `beauty_examples()` |
@@ -114,7 +126,8 @@ Scroll-eá la página antes de capturar: las secciones aparecen al hacer scroll 
 ## Kit para modelos débiles
 
 - `skills/beauty.md`: árbol de decisión de una página (qué quieres -> comando exacto).
-- `examples/recipes/<style>/`: briefs de arranque (`page`, `deck`, `story`, `experience`) validados contra el CLI.
+- `examples/recipes/<style>/`: briefs de arranque (`page`, `deck`, `story`, `experience`, `sprint`, `narrative`) validados contra el CLI.
+- `skills/narrative.md`: diferencias entre make/narrative/sequence/gif, estado y lectura de evaluaciones.
 - `docs/WEAK-MODELS.md`: por qué fallan los modelos débiles, reglas del arnés y tabla de solución de problemas.
 
 El CLI y MCP son la fuente de verdad; los comandos exactos están en `skills/beauty.md`.
