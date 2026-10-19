@@ -66,7 +66,7 @@ export function renderBrutalist(input: Partial<Brief>, preset: StylePreset): str
   const body = `<div class="page-frame" aria-hidden="true"></div>
 <header class="topbar">
   <a class="logo" href="#top">${esc(brand)}<span class="reg">®</span></a>
-  <p class="coord">${esc(t(locale, 'BUENOS AIRES · 34°36′S / 58°22′W', 'BUENOS AIRES · 34°36′S / 58°22′W'))}</p>
+  <p class="coord">${esc(brand.toUpperCase().slice(0, 30))}</p>
   <nav aria-label="${esc(t(locale, 'Navegación principal', 'Main navigation'))}">
     <a class="toplink" href="${safeHref(cta.href)}">${esc(cta.label)} ${arrowSvg(14)}</a>
   </nav>

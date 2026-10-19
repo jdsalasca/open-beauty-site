@@ -212,7 +212,7 @@ export function renderRenaissance(input: Partial<Brief>, preset: StylePreset): s
 
 <footer class="site-foot">
   <div class="foot-brand"><span class="mark">✦</span>${esc(brand)}</div>
-  <div class="foot-meta">${esc(brief.footer || t(locale, 'Buenos Aires · Desde MMXXVI', 'Buenos Aires · Since MMXXVI'))}</div>
+  <div class="foot-meta">${esc(brief.footer || t(locale, 'Obra original · desde MMXXVI', 'Original work · since MMXXVI'))}</div>
   <div class="foot-meta">© ${year} — ${esc(l.madeWith)}</div>
 </footer>`;
 

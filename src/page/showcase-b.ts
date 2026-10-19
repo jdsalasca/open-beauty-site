@@ -1,4 +1,5 @@
 import type { Brief, StylePreset } from '../types.js';
+import { esc } from './common.js';
 import { renderShowcase } from './showcase.js';
 
 export function renderBestiary(brief: Partial<Brief>, preset: StylePreset): string {
@@ -18,19 +19,14 @@ export function renderBestiary(brief: Partial<Brief>, preset: StylePreset): stri
       <circle cx="320" cy="293" r="4" fill="var(--bg)"/>
       <path d="M286 330c8 6 18 6 26 0" fill="none" stroke="var(--bg)" stroke-width="3" stroke-linecap="round"/>
     </g>
-    <g fill="var(--accent2)">
-      <path d="M120 120c10-22 34-22 44 0 10-22 34-22 44 0-14 26-30 38-44 50-14-12-30-24-44-50Z"/>
-      <path d="M388 520c8-18 28-18 36 0 8-18 28-18 36 0-12 21-25 31-36 41-11-10-24-20-36-41Z"/>
-    </g>
     <g fill="none" stroke="var(--accent4)" stroke-width="1.5">
       <path d="M78 420c-22-38-8-86 30-104M88 440c-32-22-42-64-28-98M470 160c26-18 52-8 64 16M480 180c32-4 56 18 54 46"/>
       <path d="M78 420c20-8 38-24 46-44M470 160c10 16 26 28 44 34"/>
     </g>
     <g fill="var(--accent)">
       <circle cx="78" cy="420" r="4"/><circle cx="470" cy="160" r="4"/><circle cx="280" cy="112" r="5"/>
-      <path d="M280 76l6 14 15 2-11 10 3 15-13-7-13 7 3-15-11-10 15-2z"/>
     </g>
-    <text x="280" y="590" text-anchor="middle" font-family="IM Fell English,serif" font-size="13" letter-spacing="3" fill="var(--muted)">LIBER BESTIARUM · FOL. XII</text>
+    <text x="280" y="590" text-anchor="middle" font-family="IM Fell English,serif" font-size="13" letter-spacing="3" fill="var(--muted)">${esc((brief.title || (brief.locale === 'en' ? 'Bestiary' : 'Bestiario')).toUpperCase().slice(0, 44))}</text>
   </svg>
 </div>`;
   const css = `
@@ -82,8 +78,8 @@ export function renderBestiary(brief: Partial<Brief>, preset: StylePreset): stri
   return renderShowcase(brief, preset, {
     art,
     css,
-    eyebrow: brief.eyebrow || 'Manuscrito iluminado · Siglo XIII',
-    heroNote: '05 — Bestiario / Scriptorium',
+    eyebrow: brief.eyebrow || 'Manuscrito iluminado',
+    heroNote: '05 — Bestiario',
     sectionTitle: { es: 'Tres criaturas del margen', en: 'Three creatures from the margin' },
   });
 }
@@ -113,7 +109,7 @@ export function renderPsychedelic(brief: Partial<Brief>, preset: StylePreset): s
       <circle cx="100" cy="112" r="8"/><circle cx="512" cy="112" r="6"/><circle cx="540" cy="470" r="9"/><circle cx="72" cy="560" r="5"/>
     </g>
   </svg>
-  <span class="psy-stamp">SERIE<br>1967</span>
+  <span class="psy-stamp">${esc(brief.locale === 'en' ? 'SERIES' : 'SERIE')}</span>
 </div>`;
   const css = `
 .style-psychedelic{background:var(--bg);color:var(--ink)}
@@ -162,7 +158,7 @@ export function renderPsychedelic(brief: Partial<Brief>, preset: StylePreset): s
     art,
     css,
     eyebrow: brief.eyebrow || 'Cartel de concierto · Serie psicodélica',
-    heroNote: '06 — Psychedelic / San Francisco · 1967',
+    heroNote: '06 — Psychedelic',
     sectionTitle: { es: 'Tres viajes sin retorno', en: 'Three trips, no return' },
   });
 }
@@ -180,7 +176,7 @@ export function renderMemphis(brief: Partial<Brief>, preset: StylePreset): strin
     <circle cx="142" cy="146" r="8" fill="var(--ink)"/><circle cx="204" cy="146" r="8" fill="var(--ink)"/>
     <path d="M144 196c16 12 38 12 54 0" fill="none" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"/>
   </svg>
-  <span class="mem-tag">MILANO<br>1981</span>
+  <span class="mem-tag">${esc((brief.brand || (brief.locale === 'en' ? 'Workshop' : 'Taller')).toUpperCase().slice(0, 14))}</span>
   <button class="mem-shuffle" type="button" data-shuffle>REVOLVER ✳</button>
 </div>`;
   const css = `
@@ -231,23 +227,34 @@ export function renderMemphis(brief: Partial<Brief>, preset: StylePreset): strin
     art,
     css,
     eyebrow: brief.eyebrow || 'Postmodernismo doméstico · Taller de formas',
-    heroNote: '07 — Memphis / Milán · 1981',
+    heroNote: '07 — Memphis',
     sectionTitle: { es: 'Tres objetos con mala intención', en: 'Three objects with bad intentions' },
   });
 }
 
 export function renderVaporwave(brief: Partial<Brief>, preset: StylePreset): string {
+  const locale = brief.locale === 'en' ? 'en' : 'es';
+  // The desktop window is built from the brief, not from a fixed demo folder.
+  const base = (brief.brand || brief.title || (locale === 'en' ? 'archive' : 'archivo')).trim();
+  const winName = base.toUpperCase().replace(/[^A-Z0-9]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 16) || 'ARCHIVO';
+  const sections = (brief.sections ?? []).slice(0, 3);
+  const fileNames = [0, 1, 2].map((index) => {
+    const title = sections[index]?.title;
+    if (!title) return `nota_0${index + 1}.txt`;
+    return `${title.toLowerCase().replace(/[^a-z0-9áéíóúñ]+/gi, '_').replace(/^_+|_+$/g, '').slice(0, 18) || `nota_0${index + 1}`}.txt`;
+  });
+  const files = fileNames
+    .map((name, index) => `<div class="vapor-file${index === 1 ? ' is-selected' : ''}"><span class="vapor-icon">▣</span><span>${esc(name)}</span></div>`)
+    .join('\n      ');
   const art = `<div class="vapor-scene">
   <div class="vapor-sun"></div>
   <div class="vapor-grid"></div>
   <div class="vapor-window" data-drag>
-    <div class="vapor-bar"><span>MI_MUSEO.EXE</span><span class="vapor-dots"><i></i><i></i><i></i></span></div>
+    <div class="vapor-bar"><span>${esc(winName)}.EXE</span><span class="vapor-dots"><i></i><i></i><i></i></span></div>
     <div class="vapor-body">
-      <p class="vapor-path">C:\\MUSEO\\COSAS_PEQUEÑAS\\</p>
-      <div class="vapor-file"><span class="vapor-icon">▣</span><span>lección_01.txt</span></div>
-      <div class="vapor-file is-selected"><span class="vapor-icon">▣</span><span>semillas.bmp</span></div>
-      <div class="vapor-file"><span class="vapor-icon">▣</span><span>bichos.exe</span></div>
-      <div class="vapor-status"><span>3 objeto(s)</span><span>1999</span></div>
+      <p class="vapor-path">C:\\${esc(winName)}\\</p>
+      ${files}
+      <div class="vapor-status"><span>${fileNames.length} ${esc(locale === 'es' ? 'objeto(s)' : 'item(s)')}</span></div>
     </div>
   </div>
   <span class="vapor-hint">ARRASTRÁ LA VENTANA_</span>
@@ -308,8 +315,8 @@ export function renderVaporwave(brief: Partial<Brief>, preset: StylePreset): str
   return renderShowcase(brief, preset, {
     art,
     css,
-    eyebrow: brief.eyebrow || 'Archivo digital · Interfaz 1999',
-    heroNote: '08 — Vaporwave / Internet · 1999',
+    eyebrow: brief.eyebrow || 'Archivo digital',
+    heroNote: '08 — Vaporwave',
     sectionTitle: { es: 'Tres ventanas que no cierran', en: 'Three windows that will not close' },
     script: `
 (() => {
@@ -369,8 +376,8 @@ export function renderGalactic(brief: Partial<Brief>, preset: StylePreset): stri
       <circle cx="560" cy="650" r="1.3"/><circle cx="670" cy="584" r="1"/><circle cx="452" cy="92" r="1.2"/>
     </g>
   </svg>
-  <span class="galaxy-coord">RA 05h 35m · DEC −05° 23′</span>
-  <span class="galaxy-scale">1 UA / 149 597 870 km</span>
+  <span class="galaxy-coord">${esc((brief.brand || brief.title || (brief.locale === 'en' ? 'Dome' : 'Cúpula')).toUpperCase().slice(0, 24))}</span>
+  <span class="galaxy-scale">${esc(brief.locale === 'en' ? 'ORBIT 01' : 'ÓRBITA 01')}</span>
 </div>`;
   const css = `
 .style-galactic{background:var(--bg);color:var(--ink)}
@@ -439,7 +446,7 @@ export function renderGalactic(brief: Partial<Brief>, preset: StylePreset): stri
   return renderShowcase(brief, preset, {
     art,
     css,
-    eyebrow: brief.eyebrow || 'Museo de la memoria · Sala 01',
+    eyebrow: brief.eyebrow || 'Sesión de cúpula · Sala 01',
     heroNote: 'GALACTIC FUTURISM · ÓRBITA 01',
     sectionTitle: { es: 'Tres ventanas al disco', en: 'Three windows into the record' },
     ctaHeading: { es: 'La memoria sigue sonando.', en: 'The memory keeps playing.' },
