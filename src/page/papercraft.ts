@@ -157,7 +157,7 @@ export function renderPapercraft(input: Partial<Brief>, preset: StylePreset): st
         <a class="button" href="${safeHref(worksHref)}">${esc(l.viewWorks)} ${arrowSvg(17)}</a>
         <a class="text-link" href="${intro ? '#about' : '#contact'}">${esc(t(locale, 'Conocer el taller', 'Visit the studio'))}</a>
       </div>
-      <p class="hand-note reveal" style="--d:4">${esc(t(locale, 'Cortado, pegado y pensado en Buenos Aires.', 'Cut, glued and thought in Buenos Aires.'))}</p>
+      <p class="hand-note reveal" style="--d:4">${esc(t(locale, 'Cortado, pegado y pensado a mano.', 'Cut, glued and thought by hand.'))}</p>
     </div>
     ${heroArt()}
   </section>

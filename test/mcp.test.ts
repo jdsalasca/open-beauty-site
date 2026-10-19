@@ -266,7 +266,7 @@ test('creates a coordinated sprint kit over MCP', async () => {
 });
 
 test('creates an illustrated storybook over MCP', async () => {
-  const body = 'La liebre cruzó el claro con una sombra prestada. El aire olía a lluvia y a pasto recién cortado; cada hoja tenía una sombra distinta. No era magia: era una forma de mirar. '.repeat(2);
+  const body = 'La liebre cruzó el claro con una sombra prestada. El aire olía a lluvia y a pasto recién cortado; cada hoja tenía una sombra distinta. No era magia: era una forma de mirar. '.repeat(3);
   const result = await client.callTool({
     name: 'beauty_create_story',
     arguments: {
