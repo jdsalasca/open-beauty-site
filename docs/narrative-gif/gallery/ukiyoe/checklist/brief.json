@@ -2,15 +2,88 @@
   "style": "ukiyoe",
   "kind": "narrative-gif",
   "locale": "es",
-  "audience": "Producto en Sprint Review",
-  "title": "Señal",
-  "status": "in-review",
+  "audience": "Equipo que revisa estaciones costeras",
+  "title": "Estaciones de la costa",
+  "workflowStatus": "in-review",
+  "outcome": { "mode": "expected" },
+  "illustrative": true,
+  "badgePolicy": "none",
   "phases": [
-    { "id": "before", "label": "Antes", "text": "La medida puede quedar sin señal.", "visual": { "kind": "checklist", "state": "unreviewed" } },
-    { "id": "change", "label": "Cambio", "text": "La guía marca qué requiere revisión.", "visual": { "kind": "checklist", "state": "flagged" } },
-    { "id": "result", "label": "Resultado esperado", "text": "Revisarla antes del cierre de la sprint.", "visual": { "kind": "checklist", "state": "review-ready" } }
+    {
+      "id": "horizonte",
+      "label": "Horizonte fijo",
+      "text": "Tres estaciones nombradas aparecen junto al horizonte; el faro de referencia ya ocupa su lugar costero.",
+      "visual": {
+        "kind": "checklist",
+        "state": "unreviewed",
+        "semantic": {
+          "primitive": "card-collection",
+          "illustrative": true,
+          "entities": [
+            { "id": "ruta", "kind": "collection", "label": "Ruta costera" },
+            { "id": "estacion-a", "kind": "card", "label": "Estación A" },
+            { "id": "estacion-b", "kind": "card", "label": "Estación B" },
+            { "id": "estacion-c", "kind": "card", "label": "Estación C" }
+          ],
+          "relations": [],
+          "states": { "ruta": "open", "estacion-a": "default", "estacion-b": "default", "estacion-c": "default" },
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "primera-estacion",
+      "label": "Primera estación",
+      "text": "La primera estación entra en la colección y su tramo toma color sin desplazar el punto de referencia.",
+      "visual": {
+        "kind": "checklist",
+        "state": "flagged",
+        "semantic": {
+          "primitive": "card-collection",
+          "illustrative": true,
+          "entities": [
+            { "id": "ruta", "kind": "collection", "label": "Ruta costera" },
+            { "id": "estacion-a", "kind": "card", "label": "Estación A" },
+            { "id": "estacion-b", "kind": "card", "label": "Estación B" },
+            { "id": "estacion-c", "kind": "card", "label": "Estación C" }
+          ],
+          "relations": [{ "kind": "member-of", "from": "estacion-a", "to": "ruta" }],
+          "states": { "ruta": "counted", "estacion-a": "member", "estacion-b": "default", "estacion-c": "default" },
+          "actions": [{ "entityId": "estacion-a", "type": "add-to-collection" }]
+        }
+      }
+    },
+    {
+      "id": "ruta-ordenada",
+      "label": "Ruta completa",
+      "text": "Las tres estaciones ya forman parte del trayecto ilustrativo; el faro y el horizonte permanecen fijos.",
+      "visual": {
+        "kind": "checklist",
+        "state": "review-ready",
+        "semantic": {
+          "primitive": "card-collection",
+          "illustrative": true,
+          "entities": [
+            { "id": "ruta", "kind": "collection", "label": "Ruta costera" },
+            { "id": "estacion-a", "kind": "card", "label": "Estación A" },
+            { "id": "estacion-b", "kind": "card", "label": "Estación B" },
+            { "id": "estacion-c", "kind": "card", "label": "Estación C" }
+          ],
+          "relations": [
+            { "kind": "member-of", "from": "estacion-a", "to": "ruta" },
+            { "kind": "member-of", "from": "estacion-b", "to": "ruta" },
+            { "kind": "member-of", "from": "estacion-c", "to": "ruta" }
+          ],
+          "states": { "ruta": "counted", "estacion-a": "member", "estacion-b": "member", "estacion-c": "member" },
+          "actions": [
+            { "entityId": "estacion-b", "type": "add-to-collection" },
+            { "entityId": "estacion-c", "type": "add-to-collection" }
+          ]
+        }
+      }
+    }
   ],
-  "playback": { "minReadableHoldMs": 5000, "transitionMs": 650, "loop": true },
-  "output": { "width": 1280, "height": 720, "preset": "review-1280x720", "formats": ["gif", "png"] },
-  "seed": 7
+  "playback": { "preset": "readable", "transitionMs": 650, "loop": true },
+  "output": { "width": 1280, "height": 720, "formats": ["gif", "png"], "preset": "review-1280x720" },
+  "seed": 29
 }

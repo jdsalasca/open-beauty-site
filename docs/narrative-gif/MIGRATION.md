@@ -46,3 +46,18 @@ The evaluator records per-entity bounding regions and independently decoded pixe
 See [ARCHITECTURE.md](ARCHITECTURE.md) for capability counts, timing formula and contract rationale. `test/narrative-gallery-repro.test.ts` checks committed pack bytes against their source briefs.
 
 - The five changed packs are gallery galactic/Hitos de lectura (GIF, contact sheet), nature/Archivo de lectura (GIF, contact sheet), and vaporwave/Lectura ordenada (GIF, PNG, contact sheet), plus pilot papercraft/Observación registrada and brutalist/Observación registrada (GIF, contact sheet each). The label is derived from outcome.mode=expected; no evidence or measurement was added.
+
+## Revisión semántica de Renaissance y Ukiyo-e · issue 7, etapa 2b
+
+Cuatro paquetes de galería cambian intencionalmente de historia y de arte. Los briefs conservan las rutas `gallery/<style>/<composition>/brief.json`; el CLI regeneró GIF, PNG, contacto y manifiesto en cada carpeta. Los nombres anteriores se retiraron después de la generación nueva para que no queden manifiestos huérfanos. La reproducción sigue indexando los mismos 22 briefs de galería y seis briefs piloto.
+
+| Estilo/composición | Historia previa | Semántica y transformación nueva |
+| --- | --- | --- |
+| Renaissance/comparison | señal junto a un único fragmento (`cambios-que-se-revisan-7cff1462`) | `card-collection`: cuatro paneles hallados fuera de asiento y reunidos dentro de un arco asimétrico (`piezas-del-arco-e87a8a9d`) |
+| Renaissance/checklist | pasos de lectura con una única pieza roja (`ruta-para-revisar-el-cierre-66d5877c`) | `counter`: paneles A–D; las relaciones explícitas cambian el conteo 1 → 2 → 4 (`cuenta-del-fresco-7045d15f`) |
+| Ukiyo-e/comparison | bote en una ruta punteada sin fallo definido (`senal-42f06804`) | `file-download`: bote/archivo, progreso hasta 55%, fallo fijo, reintento en curso; el cierre sigue pendiente (`travesia-interrumpida-3bca935f`) |
+| Ukiyo-e/checklist | señal de revisión genérica (`senal-e509628a`) | `card-collection`: tres estaciones costeras; horizonte y punto de referencia fijos mientras avanza la pertenencia a la ruta (`estaciones-de-la-costa-fa304104`) |
+
+Los cuatro paquetes anteriores y todos sus GIF, PNG, manifiestos y hojas de contacto quedaron retirados después de generar los cuatro nuevos en sus mismas carpetas. Las variantes solo-arte se guardan fuera de `gallery/` en `art-only/<style>/<composition>/`; así no se convierten en paquetes adicionales en la galería ni cambian el recuento de la prueba de reproducción. Sus GIF mantienen los mismos holds, puntos medios y unión de loop, sin título ni copy narrativo.
+
+La matriz únicamente promueve a `supported` las celdas 16:9 con prueba bilingüe, GIF decodificado, regiones de objeto y cambio de estado/píxeles. Renaissance cubre `card-collection` y `counter`; Ukiyo-e cubre `card-collection` y `file-download`. Otras combinaciones conservan su fallback explícito o `unsupported` por aspecto. Los manifiestos siguen marcando revisión visual `pending`.

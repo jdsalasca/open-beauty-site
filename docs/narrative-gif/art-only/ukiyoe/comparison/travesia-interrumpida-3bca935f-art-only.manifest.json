@@ -1,0 +1,1225 @@
+{
+  "schemaVersion": 2,
+  "commit": "855da1385311d0eddc8ba47a4112963feb7d12b1",
+  "brief": {
+    "style": "ukiyoe",
+    "kind": "narrative-gif",
+    "locale": "es",
+    "audience": "Equipo que revisa el estado de una descarga",
+    "title": "Travesía interrumpida",
+    "workflowStatus": "in-review",
+    "outcome": {
+      "mode": "expected"
+    },
+    "illustrative": true,
+    "badgePolicy": "none",
+    "phases": [
+      {
+        "id": "pendiente",
+        "label": "Pendiente",
+        "text": "El bote parte con un archivo de bitácora; la ruta costera y su llegada siguen pendientes de revisión.",
+        "visual": {
+          "kind": "comparison",
+          "state": "unreviewed",
+          "semantic": {
+            "primitive": "file-download",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "bitacora",
+                "kind": "file",
+                "label": "bitacora-costera.pdf",
+                "progress": 0,
+                "illustrative": true
+              }
+            ],
+            "relations": [],
+            "states": {
+              "bitacora": "pending"
+            },
+            "actions": []
+          }
+        }
+      },
+      {
+        "id": "avance",
+        "label": "En camino",
+        "text": "El archivo avanza hacia el faro de referencia y deja un progreso visible sobre el mar azul.",
+        "visual": {
+          "kind": "comparison",
+          "state": "flagged",
+          "semantic": {
+            "primitive": "file-download",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "bitacora",
+                "kind": "file",
+                "label": "bitacora-costera.pdf",
+                "progress": 0.55,
+                "illustrative": true
+              }
+            ],
+            "relations": [],
+            "states": {
+              "bitacora": "downloading"
+            },
+            "actions": [
+              {
+                "entityId": "bitacora",
+                "type": "start-download"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "fallo",
+        "label": "Fallo en ruta",
+        "text": "La descarga falla al cincuenta y cinco por ciento; el bote se detiene en ese mismo punto.",
+        "visual": {
+          "kind": "comparison",
+          "state": "flagged",
+          "semantic": {
+            "primitive": "file-download",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "bitacora",
+                "kind": "file",
+                "label": "bitacora-costera.pdf",
+                "progress": 0.55,
+                "illustrative": true
+              }
+            ],
+            "relations": [],
+            "states": {
+              "bitacora": "failed"
+            },
+            "actions": [
+              {
+                "entityId": "bitacora",
+                "type": "fail"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "reintento",
+        "label": "Resultado esperado",
+        "text": "El reintento supera la señal del fallo, pero el archivo sigue en curso y aún no llega.",
+        "visual": {
+          "kind": "comparison",
+          "state": "review-ready",
+          "semantic": {
+            "primitive": "file-download",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "bitacora",
+                "kind": "file",
+                "label": "bitacora-costera.pdf",
+                "progress": 0.72,
+                "illustrative": true
+              }
+            ],
+            "relations": [],
+            "states": {
+              "bitacora": "retrying"
+            },
+            "actions": [
+              {
+                "entityId": "bitacora",
+                "type": "retry"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "playback": {
+      "preset": "readable",
+      "minReadableHoldMs": 5000,
+      "transitionMs": 650,
+      "loop": true,
+      "totalDurationBudgetMs": 30000
+    },
+    "output": {
+      "width": 1280,
+      "height": 720,
+      "formats": [
+        "gif",
+        "png"
+      ],
+      "preset": "review-1280x720"
+    },
+    "seed": 29,
+    "status": "in-review"
+  },
+  "briefSha256": "320b7cc906e3dd78e4e3c30608bb8623c765fcb88d998e690ea47eb216f964d8",
+  "style": "ukiyoe",
+  "subfamily": null,
+  "workflowStatus": "in-review",
+  "outcome": {
+    "mode": "expected"
+  },
+  "evidenceClassification": "illustrative",
+  "illustrative": true,
+  "artOnly": true,
+  "seed": 29,
+  "renderer": {
+    "narrative": "narrative-core/0.2.0",
+    "canvas": "@napi-rs/canvas@1.0.11",
+    "gif": "gifenc@1.0.3",
+    "scene": "ukiyoe-coastal-print/1.1.0"
+  },
+  "fonts": {
+    "bundleVersion": "repo-bundled-ofl-1",
+    "roles": {
+      "display": {
+        "family": "Shippori Mincho B1",
+        "weight": 700
+      },
+      "reading": {
+        "family": "Zen Kaku Gothic New",
+        "weight": 400
+      },
+      "label": {
+        "family": "Zen Kaku Gothic New",
+        "weight": 500
+      },
+      "figure": {
+        "family": "Shippori Mincho B1",
+        "weight": 700
+      },
+      "annotation": {
+        "family": "Zen Kaku Gothic New",
+        "weight": 400
+      }
+    }
+  },
+  "dimensions": {
+    "width": 1280,
+    "height": 720
+  },
+  "formats": [
+    "gif",
+    "png"
+  ],
+  "decoded": {
+    "width": 1280,
+    "height": 720,
+    "frameCount": 44,
+    "delaysMs": [
+      80,
+      5400,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      80,
+      5100,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      80,
+      5100,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      80,
+      5100,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70
+    ],
+    "durationMs": 23620,
+    "loopCount": 0,
+    "integrity": true
+  },
+  "ffprobe": {
+    "available": true,
+    "passed": true,
+    "detail": "ffprobe 1280×720; 44 frames; 23620ms; matches the independent LZW decode."
+  },
+  "bytes": {
+    "gif": 831524,
+    "png": 43831,
+    "contactSheet": 83804
+  },
+  "hashes": {
+    "briefSha256": "320b7cc906e3dd78e4e3c30608bb8623c765fcb88d998e690ea47eb216f964d8",
+    "gifSha256": "e174545e0bca265fef517be0f57a4dd76e4f61ea725904fc25c4bf8ef353f971",
+    "pngSha256": "17ea296e45654fb94f63bc593cd61b7e282e3851ea4a75a4e68f3a8384fc0e2c",
+    "contactSheetSha256": "806f94577cf7dd2c38c0168ea5be920a8654521ba43a0fa49eaff67cbd34cbb3"
+  },
+  "files": {
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\ukiyoe\\comparison\\travesia-interrumpida-3bca935f-art-only.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\ukiyoe\\comparison\\travesia-interrumpida-3bca935f-art-only.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\ukiyoe\\comparison\\travesia-interrumpida-3bca935f-art-only-contact-sheet.png"
+  },
+  "controls": [
+    {
+      "name": "gif-integrity",
+      "passed": true,
+      "detail": "Independent LZW decode and GIF trailer passed.",
+      "source": "decoded"
+    },
+    {
+      "name": "dimensions",
+      "passed": true,
+      "detail": "decoded 1280×720; requested 1280×720",
+      "source": "decoded"
+    },
+    {
+      "name": "frame-count",
+      "passed": true,
+      "detail": "44 decoded frame(s)",
+      "source": "decoded"
+    },
+    {
+      "name": "duration",
+      "passed": true,
+      "detail": "23620ms decoded; holds exclude transitions",
+      "source": "decoded"
+    },
+    {
+      "name": "loop",
+      "passed": true,
+      "detail": "repeat=0; result-to-before bridge is explicit",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-holds",
+      "passed": true,
+      "detail": "pendiente 5400/5400ms, avance 5100/5100ms, fallo 5100/5100ms, reintento 5100/5100ms",
+      "source": "decoded"
+    },
+    {
+      "name": "ffprobe-crosscheck",
+      "passed": true,
+      "detail": "ffprobe 1280×720; 44 frames; 23620ms; matches the independent LZW decode.",
+      "source": "decoded"
+    },
+    {
+      "name": "files",
+      "passed": true,
+      "detail": "GIF 831524B · PNG 43831B · contact 83804B",
+      "source": "decoded"
+    },
+    {
+      "name": "scene-renderer-registered",
+      "passed": true,
+      "detail": "renderer ukiyoe/ukiyoe-coastal-print/1.1.0 exists; visual style likeness remains a separate review",
+      "source": "source"
+    },
+    {
+      "name": "type-system",
+      "passed": true,
+      "detail": "style typeSystem tokens are attached to raster role registry",
+      "source": "source"
+    },
+    {
+      "name": "narrative-subfamily",
+      "passed": true,
+      "detail": "ukiyoe/default selects an explicit narrative art direction",
+      "source": "source"
+    },
+    {
+      "name": "font-registration-and-glyphs",
+      "passed": true,
+      "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "distinct-frames",
+      "passed": true,
+      "detail": "28 unique composited frame(s); a format-valid static GIF does not pass",
+      "source": "pixels"
+    },
+    {
+      "name": "palette-loss",
+      "passed": true,
+      "detail": "74 colors; mean channel loss 0.011, max 11; sampled 44 frames",
+      "source": "pixels"
+    },
+    {
+      "name": "title-complete",
+      "passed": true,
+      "detail": "Travesía / interrumpida",
+      "source": "source"
+    },
+    {
+      "name": "phase-pendiente-label-complete",
+      "passed": true,
+      "detail": "Pendiente",
+      "source": "source"
+    },
+    {
+      "name": "phase-pendiente-text-complete",
+      "passed": true,
+      "detail": "El bote parte con un / archivo de bitácora; la ruta / costera y su llegada siguen / pendientes de revisión.",
+      "source": "source"
+    },
+    {
+      "name": "phase-avance-label-complete",
+      "passed": true,
+      "detail": "En camino",
+      "source": "source"
+    },
+    {
+      "name": "phase-avance-text-complete",
+      "passed": true,
+      "detail": "El archivo avanza hacia / el faro de referencia y / deja un progreso visible / sobre el mar azul.",
+      "source": "source"
+    },
+    {
+      "name": "phase-fallo-label-complete",
+      "passed": true,
+      "detail": "Fallo en ruta",
+      "source": "source"
+    },
+    {
+      "name": "phase-fallo-text-complete",
+      "passed": true,
+      "detail": "La descarga falla al / cincuenta y cinco por / ciento; el bote se detiene / en ese mismo punto.",
+      "source": "source"
+    },
+    {
+      "name": "phase-reintento-label-complete",
+      "passed": true,
+      "detail": "Resultado esperado",
+      "source": "source"
+    },
+    {
+      "name": "phase-reintento-text-complete",
+      "passed": true,
+      "detail": "El reintento supera la / señal del fallo, pero el / archivo sigue en curso y / aún no llega.",
+      "source": "source"
+    },
+    {
+      "name": "registered-fonts",
+      "passed": true,
+      "detail": "all role faces and Spanish glyphs rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "review-size-thresholds",
+      "passed": true,
+      "detail": "title 69px; phase body >=36px; label >=24px",
+      "source": "source"
+    },
+    {
+      "name": "640x360-effective-size",
+      "passed": true,
+      "detail": "title 34.5px; body min 23.0px (requires >=20px); label min 15.0px",
+      "source": "source"
+    },
+    {
+      "name": "composition-balance",
+      "passed": false,
+      "severity": "warning",
+      "detail": "WARN · revise; 8×4 decoded-pixel grid against #F3E9D2: empty cells 50.0%, text-column vertical fill 0.0%, art/object area outside the text column 50.0%, largest empty rectangle 50.0%; thresholds: rectangle <=22%, text fill >=60% (text-fill threshold omitted in art-only mode); not an aesthetic score. Per-frame: pendiente · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | pendiente → avance · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | avance · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | avance → fallo · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | fallo · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | fallo → reintento · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | reintento · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | reintento → pendiente · unión del ciclo: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0%",
+      "source": "pixels"
+    },
+    {
+      "name": "contrast",
+      "passed": true,
+      "detail": "rendered text colors: ink 13.46:1; label 9.63:1 (not an OCR or per-pixel text measurement)",
+      "source": "source"
+    },
+    {
+      "name": "safe-zone-and-collisions",
+      "passed": true,
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+      "source": "source"
+    },
+    {
+      "name": "stable-reading-holds",
+      "passed": true,
+      "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-count-and-copy",
+      "passed": true,
+      "detail": "4 complete phases; all copy retained",
+      "source": "source"
+    },
+    {
+      "name": "shared-object-identity",
+      "passed": true,
+      "detail": "One scene object instance is created and passed to every phase frame.",
+      "source": "source"
+    },
+    {
+      "name": "visual-state-change",
+      "passed": true,
+      "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+      "source": "pixels"
+    },
+    {
+      "name": "workflow-outcome-separation",
+      "passed": true,
+      "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+      "source": "source"
+    },
+    {
+      "name": "outcome-evidence",
+      "passed": true,
+      "detail": "Expected outcome; no benefit measurement is claimed.",
+      "source": "source"
+    },
+    {
+      "name": "result-follows-outcome",
+      "passed": true,
+      "detail": "outcome=expected; final label=\"Resultado esperado\"",
+      "source": "source"
+    },
+    {
+      "name": "semantic-illustrative-data",
+      "passed": true,
+      "detail": "brief illustrative=true; semantic phase flags=true,true,true,true",
+      "source": "source"
+    },
+    {
+      "name": "semantic-object-midpoint:pendiente → avance · punto medio de transición",
+      "passed": true,
+      "detail": "decoded object diff 28.0%; changed-state entities: bitacora; bitacora pending→downloading 28.0%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:avance → fallo · punto medio de transición",
+      "passed": false,
+      "detail": "decoded object diff 0.0%; changed-state entities: none; bitacora downloading→failed 0.0%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:fallo → reintento · punto medio de transición",
+      "passed": true,
+      "detail": "decoded object diff 13.8%; changed-state entities: bitacora; bitacora failed→retrying 13.8%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:reintento → pendiente · unión del ciclo",
+      "passed": true,
+      "detail": "decoded object diff 25.2%; changed-state entities: bitacora; bitacora retrying→pending 25.2%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:pendiente → avance hold",
+      "passed": true,
+      "detail": "decoded object diff 27.8%; changed-state entities: bitacora; bitacora pending→downloading 27.8%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:avance → fallo hold",
+      "passed": true,
+      "detail": "decoded object diff 0.6%; changed-state entities: bitacora; bitacora downloading→failed 0.6%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:fallo → reintento hold",
+      "passed": true,
+      "detail": "decoded object diff 15.4%; changed-state entities: bitacora; bitacora failed→retrying 15.4%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:reintento → pendiente loop join",
+      "passed": true,
+      "detail": "decoded object diff 26.7%; changed-state entities: bitacora; bitacora retrying→pending 26.7%",
+      "source": "decoded"
+    }
+  ],
+  "evaluation": {
+    "technical-integrity": {
+      "status": "pass",
+      "controls": [
+        {
+          "name": "gif-integrity",
+          "passed": true,
+          "detail": "Independent LZW decode and GIF trailer passed.",
+          "source": "decoded"
+        },
+        {
+          "name": "dimensions",
+          "passed": true,
+          "detail": "decoded 1280×720; requested 1280×720",
+          "source": "decoded"
+        },
+        {
+          "name": "frame-count",
+          "passed": true,
+          "detail": "44 decoded frame(s)",
+          "source": "decoded"
+        },
+        {
+          "name": "duration",
+          "passed": true,
+          "detail": "23620ms decoded; holds exclude transitions",
+          "source": "decoded"
+        },
+        {
+          "name": "loop",
+          "passed": true,
+          "detail": "repeat=0; result-to-before bridge is explicit",
+          "source": "decoded"
+        },
+        {
+          "name": "phase-holds",
+          "passed": true,
+          "detail": "pendiente 5400/5400ms, avance 5100/5100ms, fallo 5100/5100ms, reintento 5100/5100ms",
+          "source": "decoded"
+        },
+        {
+          "name": "ffprobe-crosscheck",
+          "passed": true,
+          "detail": "ffprobe 1280×720; 44 frames; 23620ms; matches the independent LZW decode.",
+          "source": "decoded"
+        },
+        {
+          "name": "files",
+          "passed": true,
+          "detail": "GIF 831524B · PNG 43831B · contact 83804B",
+          "source": "decoded"
+        }
+      ]
+    },
+    "style-conformance": {
+      "status": "pending",
+      "sourceStatus": "pass",
+      "pixelStatus": "pass",
+      "controls": [
+        {
+          "name": "scene-renderer-registered",
+          "passed": true,
+          "detail": "renderer ukiyoe/ukiyoe-coastal-print/1.1.0 exists; visual style likeness remains a separate review",
+          "source": "source"
+        },
+        {
+          "name": "type-system",
+          "passed": true,
+          "detail": "style typeSystem tokens are attached to raster role registry",
+          "source": "source"
+        },
+        {
+          "name": "narrative-subfamily",
+          "passed": true,
+          "detail": "ukiyoe/default selects an explicit narrative art direction",
+          "source": "source"
+        },
+        {
+          "name": "font-registration-and-glyphs",
+          "passed": true,
+          "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "distinct-frames",
+          "passed": true,
+          "detail": "28 unique composited frame(s); a format-valid static GIF does not pass",
+          "source": "pixels"
+        },
+        {
+          "name": "palette-loss",
+          "passed": true,
+          "detail": "74 colors; mean channel loss 0.011, max 11; sampled 44 frames",
+          "source": "pixels"
+        }
+      ],
+      "note": "Source checks identify renderer/font tokens; pixel checks measure frame change and palette loss. Neither substitutes for visual review."
+    },
+    "rendered-legibility": {
+      "status": "revise",
+      "controls": [
+        {
+          "name": "title-complete",
+          "passed": true,
+          "detail": "Travesía / interrumpida",
+          "source": "source"
+        },
+        {
+          "name": "phase-pendiente-label-complete",
+          "passed": true,
+          "detail": "Pendiente",
+          "source": "source"
+        },
+        {
+          "name": "phase-pendiente-text-complete",
+          "passed": true,
+          "detail": "El bote parte con un / archivo de bitácora; la ruta / costera y su llegada siguen / pendientes de revisión.",
+          "source": "source"
+        },
+        {
+          "name": "phase-avance-label-complete",
+          "passed": true,
+          "detail": "En camino",
+          "source": "source"
+        },
+        {
+          "name": "phase-avance-text-complete",
+          "passed": true,
+          "detail": "El archivo avanza hacia / el faro de referencia y / deja un progreso visible / sobre el mar azul.",
+          "source": "source"
+        },
+        {
+          "name": "phase-fallo-label-complete",
+          "passed": true,
+          "detail": "Fallo en ruta",
+          "source": "source"
+        },
+        {
+          "name": "phase-fallo-text-complete",
+          "passed": true,
+          "detail": "La descarga falla al / cincuenta y cinco por / ciento; el bote se detiene / en ese mismo punto.",
+          "source": "source"
+        },
+        {
+          "name": "phase-reintento-label-complete",
+          "passed": true,
+          "detail": "Resultado esperado",
+          "source": "source"
+        },
+        {
+          "name": "phase-reintento-text-complete",
+          "passed": true,
+          "detail": "El reintento supera la / señal del fallo, pero el / archivo sigue en curso y / aún no llega.",
+          "source": "source"
+        },
+        {
+          "name": "registered-fonts",
+          "passed": true,
+          "detail": "all role faces and Spanish glyphs rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "review-size-thresholds",
+          "passed": true,
+          "detail": "title 69px; phase body >=36px; label >=24px",
+          "source": "source"
+        },
+        {
+          "name": "640x360-effective-size",
+          "passed": true,
+          "detail": "title 34.5px; body min 23.0px (requires >=20px); label min 15.0px",
+          "source": "source"
+        },
+        {
+          "name": "composition-balance",
+          "passed": false,
+          "severity": "warning",
+          "detail": "WARN · revise; 8×4 decoded-pixel grid against #F3E9D2: empty cells 50.0%, text-column vertical fill 0.0%, art/object area outside the text column 50.0%, largest empty rectangle 50.0%; thresholds: rectangle <=22%, text fill >=60% (text-fill threshold omitted in art-only mode); not an aesthetic score. Per-frame: pendiente · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | pendiente → avance · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | avance · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | avance → fallo · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | fallo · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | fallo → reintento · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | reintento · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | reintento → pendiente · unión del ciclo: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0%",
+          "source": "pixels"
+        },
+        {
+          "name": "contrast",
+          "passed": true,
+          "detail": "rendered text colors: ink 13.46:1; label 9.63:1 (not an OCR or per-pixel text measurement)",
+          "source": "source"
+        },
+        {
+          "name": "safe-zone-and-collisions",
+          "passed": true,
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+          "source": "source"
+        },
+        {
+          "name": "stable-reading-holds",
+          "passed": true,
+          "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+          "source": "decoded"
+        }
+      ],
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
+    },
+    "narrative": {
+      "status": "fail",
+      "controls": [
+        {
+          "name": "phase-count-and-copy",
+          "passed": true,
+          "detail": "4 complete phases; all copy retained",
+          "source": "source"
+        },
+        {
+          "name": "shared-object-identity",
+          "passed": true,
+          "detail": "One scene object instance is created and passed to every phase frame.",
+          "source": "source"
+        },
+        {
+          "name": "visual-state-change",
+          "passed": true,
+          "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+          "source": "pixels"
+        },
+        {
+          "name": "workflow-outcome-separation",
+          "passed": true,
+          "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+          "source": "source"
+        },
+        {
+          "name": "outcome-evidence",
+          "passed": true,
+          "detail": "Expected outcome; no benefit measurement is claimed.",
+          "source": "source"
+        },
+        {
+          "name": "result-follows-outcome",
+          "passed": true,
+          "detail": "outcome=expected; final label=\"Resultado esperado\"",
+          "source": "source"
+        },
+        {
+          "name": "semantic-illustrative-data",
+          "passed": true,
+          "detail": "brief illustrative=true; semantic phase flags=true,true,true,true",
+          "source": "source"
+        },
+        {
+          "name": "semantic-object-midpoint:pendiente → avance · punto medio de transición",
+          "passed": true,
+          "detail": "decoded object diff 28.0%; changed-state entities: bitacora; bitacora pending→downloading 28.0%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:avance → fallo · punto medio de transición",
+          "passed": false,
+          "detail": "decoded object diff 0.0%; changed-state entities: none; bitacora downloading→failed 0.0%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:fallo → reintento · punto medio de transición",
+          "passed": true,
+          "detail": "decoded object diff 13.8%; changed-state entities: bitacora; bitacora failed→retrying 13.8%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:reintento → pendiente · unión del ciclo",
+          "passed": true,
+          "detail": "decoded object diff 25.2%; changed-state entities: bitacora; bitacora retrying→pending 25.2%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:pendiente → avance hold",
+          "passed": true,
+          "detail": "decoded object diff 27.8%; changed-state entities: bitacora; bitacora pending→downloading 27.8%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:avance → fallo hold",
+          "passed": true,
+          "detail": "decoded object diff 0.6%; changed-state entities: bitacora; bitacora downloading→failed 0.6%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:fallo → reintento hold",
+          "passed": true,
+          "detail": "decoded object diff 15.4%; changed-state entities: bitacora; bitacora failed→retrying 15.4%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:reintento → pendiente loop join",
+          "passed": true,
+          "detail": "decoded object diff 26.7%; changed-state entities: bitacora; bitacora retrying→pending 26.7%",
+          "source": "decoded"
+        }
+      ],
+      "note": "Automated checks separate work status from expected/observed outcome and confirm required evidence fields; causal meaning and evidence scope still need human review."
+    },
+    "visual-review": {
+      "status": "pending",
+      "criteria": [
+        "identity at 200px thumbnail",
+        "full text and contrast at 640×360",
+        "style material in native frame",
+        "same object and causal change across phases",
+        "result faithful to outcome and evidence scope",
+        "deliberate loop restart"
+      ],
+      "evidence": []
+    },
+    "publicationRecommendation": "none"
+  },
+  "phaseCaptures": [
+    {
+      "phaseId": "pendiente",
+      "labels": [
+        "pendiente · inicio",
+        "pendiente · pausa",
+        "pendiente → avance · punto medio de transición",
+        "pendiente · salida",
+        "reinicio del loop"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\ukiyoe\\comparison\\travesia-interrumpida-3bca935f-art-only-contact-sheet.png"
+    },
+    {
+      "phaseId": "avance",
+      "labels": [
+        "avance · inicio",
+        "avance · pausa",
+        "avance → fallo · punto medio de transición",
+        "avance · salida"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\ukiyoe\\comparison\\travesia-interrumpida-3bca935f-art-only-contact-sheet.png"
+    },
+    {
+      "phaseId": "fallo",
+      "labels": [
+        "fallo · inicio",
+        "fallo · pausa",
+        "fallo → reintento · punto medio de transición",
+        "fallo · salida"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\ukiyoe\\comparison\\travesia-interrumpida-3bca935f-art-only-contact-sheet.png"
+    },
+    {
+      "phaseId": "reintento",
+      "labels": [
+        "reintento · inicio",
+        "reintento · pausa",
+        "reintento → pendiente · unión del ciclo",
+        "reintento · salida"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-0af3192f\\docs\\narrative-gif\\art-only\\ukiyoe\\comparison\\travesia-interrumpida-3bca935f-art-only-contact-sheet.png"
+    }
+  ],
+  "semanticObjectCaptures": [
+    {
+      "label": "pendiente · pausa",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 0,
+      "frameIndex": 1,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "bitacora",
+          "bounds": {
+            "x": 664.064,
+            "y": 265.248,
+            "width": 553.472,
+            "height": 399.31199999999995
+          }
+        }
+      ]
+    },
+    {
+      "label": "pendiente → avance · punto medio de transición",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 0,
+      "frameIndex": 5,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "bitacora",
+          "bounds": {
+            "x": 664.064,
+            "y": 265.248,
+            "width": 553.472,
+            "height": 399.31199999999995
+          }
+        }
+      ]
+    },
+    {
+      "label": "avance · pausa",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 1,
+      "frameIndex": 12,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "bitacora",
+          "bounds": {
+            "x": 664.064,
+            "y": 265.248,
+            "width": 553.472,
+            "height": 399.31199999999995
+          }
+        }
+      ]
+    },
+    {
+      "label": "avance → fallo · punto medio de transición",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 1,
+      "frameIndex": 16,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "bitacora",
+          "bounds": {
+            "x": 664.064,
+            "y": 265.248,
+            "width": 553.472,
+            "height": 399.31199999999995
+          }
+        }
+      ]
+    },
+    {
+      "label": "fallo · pausa",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 2,
+      "frameIndex": 23,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "bitacora",
+          "bounds": {
+            "x": 664.064,
+            "y": 265.248,
+            "width": 553.472,
+            "height": 399.31199999999995
+          }
+        }
+      ]
+    },
+    {
+      "label": "fallo → reintento · punto medio de transición",
+      "phaseIndex": 3,
+      "fromPhaseIndex": 2,
+      "frameIndex": 27,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "bitacora",
+          "bounds": {
+            "x": 664.064,
+            "y": 265.248,
+            "width": 553.472,
+            "height": 399.31199999999995
+          }
+        }
+      ]
+    },
+    {
+      "label": "reintento · pausa",
+      "phaseIndex": 3,
+      "fromPhaseIndex": 3,
+      "frameIndex": 34,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "bitacora",
+          "bounds": {
+            "x": 664.064,
+            "y": 265.248,
+            "width": 553.472,
+            "height": 399.31199999999995
+          }
+        }
+      ]
+    },
+    {
+      "label": "reintento → pendiente · unión del ciclo",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 3,
+      "frameIndex": 38,
+      "kind": "loop-bridge",
+      "regions": [
+        {
+          "entityId": "bitacora",
+          "bounds": {
+            "x": 664.064,
+            "y": 265.248,
+            "width": 553.472,
+            "height": 399.31199999999995
+          }
+        }
+      ]
+    }
+  ],
+  "compositionByFrame": [
+    {
+      "label": "pendiente · pausa",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "pendiente → avance · punto medio de transición",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "avance · pausa",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "avance → fallo · punto medio de transición",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "fallo · pausa",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "fallo → reintento · punto medio de transición",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "reintento · pausa",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "label": "reintento → pendiente · unión del ciclo",
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    }
+  ],
+  "palette": {
+    "colors": 74,
+    "meanAbsoluteChannelError": 0.011,
+    "maximumChannelError": 11,
+    "sampledFrames": 44
+  },
+  "phaseHoldsVerified": [
+    {
+      "phaseId": "pendiente",
+      "requiredMs": 5400,
+      "decodedMs": 5400,
+      "passed": true
+    },
+    {
+      "phaseId": "avance",
+      "requiredMs": 5100,
+      "decodedMs": 5100,
+      "passed": true
+    },
+    {
+      "phaseId": "fallo",
+      "requiredMs": 5100,
+      "decodedMs": 5100,
+      "passed": true
+    },
+    {
+      "phaseId": "reintento",
+      "requiredMs": 5100,
+      "decodedMs": 5100,
+      "passed": true
+    }
+  ],
+  "timing": {
+    "preset": "readable",
+    "holdsRequestedMs": 20700,
+    "holdsDecodedMs": 20700,
+    "transitionsMs": 1950,
+    "loopBridgeMs": 650,
+    "entryMs": 320,
+    "totalDecodedMs": 23620,
+    "totalDurationBudgetMs": 30000,
+    "phaseHolds": [
+      {
+        "phaseId": "pendiente",
+        "requestedMs": 5400,
+        "encodedMs": 5400,
+        "decodedMs": 5400
+      },
+      {
+        "phaseId": "avance",
+        "requestedMs": 5100,
+        "encodedMs": 5100,
+        "decodedMs": 5100
+      },
+      {
+        "phaseId": "fallo",
+        "requestedMs": 5100,
+        "encodedMs": 5100,
+        "decodedMs": 5100
+      },
+      {
+        "phaseId": "reintento",
+        "requestedMs": 5100,
+        "encodedMs": 5100,
+        "decodedMs": 5100
+      }
+    ],
+    "warnings": [
+      {
+        "code": "READING_LOAD",
+        "message": "Phase 1 has about 3.52 words/s (19 label+body words ÷ 5.40s hold); the reading threshold is 3 words/s."
+      },
+      {
+        "code": "READING_LOAD",
+        "message": "Phase 2 has about 3.73 words/s (19 label+body words ÷ 5.10s hold); the reading threshold is 3 words/s."
+      },
+      {
+        "code": "READING_LOAD",
+        "message": "Phase 3 has about 3.92 words/s (20 label+body words ÷ 5.10s hold); the reading threshold is 3 words/s."
+      },
+      {
+        "code": "READING_LOAD",
+        "message": "Phase 4 has about 3.73 words/s (19 label+body words ÷ 5.10s hold); the reading threshold is 3 words/s."
+      }
+    ]
+  },
+  "resourceEstimate": {
+    "pixelFrames": 40550400,
+    "maxPixelFrames": 96000000,
+    "memoryBytes": 128090112,
+    "maxMemoryBytes": 268435456
+  },
+  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed."
+}

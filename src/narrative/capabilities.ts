@@ -25,6 +25,7 @@ const PRIMITIVE_REASONS: Record<NarrativePrimitive, string> = {
 const SEMANTIC_STYLE_PRIMITIVES: Partial<Record<StyleSlug, ReadonlySet<NarrativePrimitive>>> = {
   papercraft: new Set(NARRATIVE_PRIMITIVES),
   renaissance: new Set(['card-collection', 'counter']),
+  ukiyoe: new Set(['card-collection', 'file-download']),
 };
 
 export interface NarrativeCapabilityCell {

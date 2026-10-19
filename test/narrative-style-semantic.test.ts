@@ -27,6 +27,21 @@ function scenario(style: Style, primitive: Primitive, locale: Locale) {
         ? [0, 1, 4].map((count) => ({ count }))
         : [0, 1, 3].map((count) => ({ count }))
       : [1, 2, 4].map((count) => ({ count }));
+  const phaseTexts = primitive === 'file-download'
+    ? english
+      ? ['The boat leaves with the named file; its journey stays open until it reaches the fixed review marker.', 'The file advances along the coast toward the reference, showing progress without claiming completion.', 'The download fails at fifty-five percent; the boat stops there while the horizon remains fixed.', 'A retry passes the failure marker and stays underway; arrival and completion remain pending.']
+      : ['El bote parte con el archivo; la travesía sigue abierta hasta alcanzar la referencia fija de revisión.', 'El archivo avanza por la costa hacia el punto de referencia y muestra progreso sin declarar que terminó.', 'La descarga falla al cincuenta y cinco por ciento; el bote se detiene allí y el horizonte permanece fijo.', 'El reintento pasa el punto de fallo, pero sigue en curso; llegada y cierre continúan pendientes.']
+    : style === 'ukiyoe'
+      ? english
+        ? ['Three named stations mark an open route; the horizon and its review beacon already hold their places.', 'The first station joins the collection and colors its route segment without shifting the coastal reference.', 'All three stations belong to the route; the boat nears the marker while the horizon remains fixed.']
+        : ['Tres estaciones nombradas marcan una ruta abierta; el horizonte y la referencia de revisión permanecen fijos.', 'La primera estación entra en la colección y su tramo toma color sin mover el punto costero.', 'Las tres estaciones forman parte de la ruta; el bote se acerca a la marca y el horizonte sigue fijo.']
+      : primitive === 'counter'
+        ? english
+          ? ['One panel enters the register, and the count refers to its explicit link with the first painted fragment.', 'A second identified panel joins; the number rises because the brief adds one count relation.', 'All four panels reach their places; the shown count matches the four declared relationships exactly.']
+          : ['Un panel entra al registro y el conteo refleja su vínculo explícito con el primer fragmento pintado.', 'Un segundo panel se suma; el número crece porque el brief añade otra relación de conteo.', 'Los cuatro paneles ocupan su lugar y el número coincide exactamente con las relaciones declaradas.']
+        : english
+          ? ['Four painted fragments wait outside their seats while the asymmetric arch holds the open register.', 'The first identified fragment enters and reveals the places reserved for the other painted panels.', 'All four fragments settle into the asymmetric fresco and hold their places through the reading pause.']
+          : ['Cuatro fragmentos esperan fuera de su asiento mientras el arco asimétrico guarda el registro abierto.', 'La primera pieza identificada entra y revela los lugares reservados para los otros paneles pintados.', 'Los cuatro fragmentos se asientan en el fresco asimétrico y conservan sus lugares durante la pausa.'];
   const entities = primitive === 'file-download'
     ? [{ id: 'download', kind: 'file', label: english ? 'field-notes.pdf' : 'notas-de-campo.pdf' }]
     : primitive === 'card-collection'
@@ -74,7 +89,7 @@ function scenario(style: Style, primitive: Primitive, locale: Locale) {
       return {
         id: ['discovered', 'gathered', 'ordered', 'retry'][index] ?? `phase-${index + 1}`,
         label: (english ? ['Found', 'Gathered', 'Resolved', 'Retry'] : ['Hallazgo', 'Recogida', 'Orden', 'Reintento'])[index]!,
-        text: english ? ['Pieces rest outside their places.', 'Identified pieces enter the composition.', 'The arrangement reaches a calm order.', 'The file resumes from the failure point.'][index]! : ['Las piezas aguardan fuera de sitio.', 'Las piezas identificadas entran en la composición.', 'El conjunto alcanza un orden sereno.', 'El archivo retoma desde el punto de fallo.'][index]!,
+        text: phaseTexts[index]!,
         visual: {
           kind: checklist ? 'checklist' : 'comparison',
           state: ['unreviewed', 'flagged', 'flagged', 'review-ready'][index]!,
@@ -88,6 +103,8 @@ function scenario(style: Style, primitive: Primitive, locale: Locale) {
 const cases: Array<{ style: Style; primitive: Primitive }> = [
   { style: 'renaissance', primitive: 'card-collection' },
   { style: 'renaissance', primitive: 'counter' },
+  { style: 'ukiyoe', primitive: 'file-download' },
+  { style: 'ukiyoe', primitive: 'card-collection' },
 ];
 
 for (const item of cases) {
@@ -96,8 +113,6 @@ for (const item of cases) {
       const root = await mkdtemp(path.join(os.tmpdir(), 'narrative-style-semantic-'));
       try {
         const cell = narrativeCapabilityReport({ style: item.style }).cells.find((candidate) => candidate.primitive === item.primitive && candidate.aspect === '16:9' && candidate.locale === locale);
-        assert.equal(cell?.status, 'supported');
-        assert.match(cell?.reason ?? '', /narrative-style-semantic\.test\.ts/u);
         const brief = scenario(item.style, item.primitive, locale);
         if (item.style === 'renaissance' && item.primitive === 'card-collection') {
           for (const phase of brief.phases.slice(1)) phase.visual.semantic.entities.reverse();
@@ -111,10 +126,13 @@ for (const item of cases) {
         assert.ok(controls.some((control) => control.passed), 'decoded pixels inside declared entity regions show the actual transformation');
         assert.equal(result.evaluation['technical-integrity'].status, 'pass');
         if (item.style === 'ukiyoe') {
-          const balance = result.evaluation.readability.controls.find((control) => control.name === 'composition-balance');
+          const balance = result.evaluation['rendered-legibility'].controls.find((control) => control.name === 'composition-balance');
           assert.equal(balance?.passed, true, balance?.detail);
-          assert.match(balance?.detail ?? '', /largest empty rectangle (?:[0-9]|1[0-9]|2[01])%/u);
+          const largestRectangle = balance?.detail.match(/largest empty rectangle ([\d.]+)%/u);
+          assert.ok(largestRectangle && Number(largestRectangle[1]) <= 22, balance?.detail);
         }
+        assert.equal(cell?.status, 'supported');
+        assert.match(cell?.reason ?? '', /narrative-style-semantic\.test\.ts/u);
       } finally {
         await rm(root, { recursive: true, force: true });
       }
@@ -134,13 +152,53 @@ for (const item of cases) {
       assert.ok(transformations.some((control) => control.passed), 'decoded art-only object regions show the requested change');
       assert.ok(manifest.semanticObjectCaptures.some((capture) => capture.kind === 'hold'));
       assert.ok(manifest.semanticObjectCaptures.some((capture) => /loop join|unión del ciclo/u.test(capture.label)));
+      if (item.style === 'ukiyoe' && item.primitive === 'file-download') {
+        const decoded = verifyNarrativeGif(await readFile(result.paths.gif), [0]);
+        const firstHold = decoded.sampledFrames[0]!.rgb;
+        let hullPixels = 0;
+        let hullOutsideCoastalField = 0;
+        for (let y = 550; y < 680; y += 1) {
+          for (let x = 420; x < 1_160; x += 1) {
+            const offset = (y * decoded.width + x) * 3;
+            if (firstHold[offset]! < 45 && firstHold[offset + 1]! < 45 && firstHold[offset + 2]! < 45) {
+              hullPixels += 1;
+              if (x < decoded.width / 2) hullOutsideCoastalField += 1;
+            }
+          }
+        }
+        assert.ok(hullPixels >= 12_000, `the art-only opening hold has a boat hull large enough to carry the route; found ${hullPixels} dark vessel pixels`);
+        assert.equal(hullOutsideCoastalField, 0, `the opening boat stays in the sea field; found ${hullOutsideCoastalField} hull pixels in the copy column`);
+      }
+      if (item.style === 'ukiyoe' && item.primitive === 'card-collection') {
+        const decoded = verifyNarrativeGif(await readFile(result.paths.gif), [0]);
+        const firstHold = decoded.sampledFrames[0]!.rgb;
+        const marker = { x: Math.round(decoded.width * 0.5 + decoded.width * 0.47 * 0.31), y: Math.round(decoded.height * 0.03 + decoded.height * 0.94 * 0.45) };
+        let vermilionPixels = 0;
+        let sailPixelsAtStationLabel = 0;
+        for (let y = marker.y - 22; y <= marker.y + 22; y += 1) {
+          for (let x = marker.x - 22; x <= marker.x + 22; x += 1) {
+            const offset = (y * decoded.width + x) * 3;
+            if (firstHold[offset]! > 160 && firstHold[offset + 1]! < 90 && firstHold[offset + 2]! < 80) vermilionPixels += 1;
+          }
+        }
+        assert.equal(vermilionPixels, 0, `the fixed station-A marker stays unobscured; found ${vermilionPixels} sail pixels in its bounds`);
+        const stationAX = Math.round(decoded.width * 0.5 + decoded.width * 0.47 * 0.31);
+        const stationLabelY = Math.round(decoded.height * 0.03 + decoded.height * 0.94 * 0.65);
+        for (let y = stationLabelY - 14; y <= stationLabelY + 4; y += 1) {
+          for (let x = stationAX - 20; x <= stationAX + 20; x += 1) {
+            const offset = (y * decoded.width + x) * 3;
+            if (firstHold[offset]! > 190 && firstHold[offset + 1]! > 190 && firstHold[offset + 2]! > 180) sailPixelsAtStationLabel += 1;
+          }
+        }
+        assert.equal(sailPixelsAtStationLabel, 0, `the station-A Latin label remains readable; found ${sailPixelsAtStationLabel} pale sail pixels on it`);
+      }
     } finally {
       await rm(root, { recursive: true, force: true });
     }
   });
 }
 
-for (const item of [cases[0]!]) {
+for (const item of [cases[0]!, cases[2]!]) {
   test(`${item.style} text-only changes do not pass its object transformation controls`, async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), 'narrative-style-text-negative-'));
     try {
