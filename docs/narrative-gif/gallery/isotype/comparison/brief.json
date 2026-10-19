@@ -4,11 +4,107 @@
   "locale": "es",
   "audience": "Producto en Sprint Review",
   "title": "Cambios que se revisan",
-  "status": "in-review",
+  "workflowStatus": "in-review",
+  "outcome": { "mode": "expected" },
+  "illustrative": true,
+  "badgePolicy": "none",
   "phases": [
-    { "id": "before", "label": "Antes", "text": "La guía podía cambiar sin indicar qué revisar.", "visual": { "kind": "comparison", "state": "unreviewed" } },
-    { "id": "change", "label": "Cambio", "text": "La propuesta añade una señal junto al cambio para orientar la lectura.", "visual": { "kind": "comparison", "state": "flagged" } },
-    { "id": "result", "label": "Resultado esperado", "text": "El equipo podrá comprobar si la señal facilita la revisión antes del cierre.", "visual": { "kind": "comparison", "state": "review-ready" } }
+    {
+      "id": "before",
+      "label": "Antes",
+      "text": "Seis unidades ilustrativas forman el conjunto; no son datos de producto.",
+      "visual": {
+        "kind": "comparison",
+        "state": "unreviewed",
+        "semantic": {
+          "primitive": "counter",
+          "illustrative": true,
+          "entities": [
+            { "id": "units", "kind": "counter", "value": 6 },
+            { "id": "unit-1", "kind": "row" },
+            { "id": "unit-2", "kind": "row" },
+            { "id": "unit-3", "kind": "row" },
+            { "id": "unit-4", "kind": "row" },
+            { "id": "unit-5", "kind": "row" },
+            { "id": "unit-6", "kind": "row" }
+          ],
+          "relations": [
+            { "kind": "counts", "from": "units", "to": "unit-1" },
+            { "kind": "counts", "from": "units", "to": "unit-2" },
+            { "kind": "counts", "from": "units", "to": "unit-3" },
+            { "kind": "counts", "from": "units", "to": "unit-4" },
+            { "kind": "counts", "from": "units", "to": "unit-5" },
+            { "kind": "counts", "from": "units", "to": "unit-6" }
+          ],
+          "states": { "units": "value", "unit-1": "default", "unit-2": "default", "unit-3": "default", "unit-4": "default", "unit-5": "default", "unit-6": "default" },
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "change",
+      "label": "Cambio",
+      "text": "Una unidad se señala para leerla dentro de la composición.",
+      "visual": {
+        "kind": "comparison",
+        "state": "flagged",
+        "semantic": {
+          "primitive": "counter",
+          "illustrative": true,
+          "entities": [
+            { "id": "units", "kind": "counter", "value": 6 },
+            { "id": "unit-1", "kind": "row" },
+            { "id": "unit-2", "kind": "row" },
+            { "id": "unit-3", "kind": "row" },
+            { "id": "unit-4", "kind": "row" },
+            { "id": "unit-5", "kind": "row" },
+            { "id": "unit-6", "kind": "row" }
+          ],
+          "relations": [
+            { "kind": "counts", "from": "units", "to": "unit-1" },
+            { "kind": "counts", "from": "units", "to": "unit-2" },
+            { "kind": "counts", "from": "units", "to": "unit-3" },
+            { "kind": "counts", "from": "units", "to": "unit-4" },
+            { "kind": "counts", "from": "units", "to": "unit-5" },
+            { "kind": "counts", "from": "units", "to": "unit-6" }
+          ],
+          "states": { "units": "value", "unit-1": "default", "unit-2": "default", "unit-3": "default", "unit-4": "default", "unit-5": "default", "unit-6": "flagged" },
+          "actions": [{ "entityId": "unit-6", "type": "detect" }]
+        }
+      }
+    },
+    {
+      "id": "result",
+      "label": "Resultado esperado",
+      "text": "La unidad señalada se separa para revisión; el conjunto conserva seis.",
+      "visual": {
+        "kind": "comparison",
+        "state": "review-ready",
+        "semantic": {
+          "primitive": "counter",
+          "illustrative": true,
+          "entities": [
+            { "id": "units", "kind": "counter", "value": 6 },
+            { "id": "unit-1", "kind": "row" },
+            { "id": "unit-2", "kind": "row" },
+            { "id": "unit-3", "kind": "row" },
+            { "id": "unit-4", "kind": "row" },
+            { "id": "unit-5", "kind": "row" },
+            { "id": "unit-6", "kind": "row" }
+          ],
+          "relations": [
+            { "kind": "counts", "from": "units", "to": "unit-1" },
+            { "kind": "counts", "from": "units", "to": "unit-2" },
+            { "kind": "counts", "from": "units", "to": "unit-3" },
+            { "kind": "counts", "from": "units", "to": "unit-4" },
+            { "kind": "counts", "from": "units", "to": "unit-5" },
+            { "kind": "counts", "from": "units", "to": "unit-6" }
+          ],
+          "states": { "units": "value", "unit-1": "default", "unit-2": "default", "unit-3": "default", "unit-4": "default", "unit-5": "default", "unit-6": "pending" },
+          "actions": []
+        }
+      }
+    }
   ],
   "playback": { "minReadableHoldMs": 5000, "transitionMs": 650, "loop": true },
   "output": { "width": 1280, "height": 720, "formats": ["gif", "png"], "preset": "review-1280x720" },

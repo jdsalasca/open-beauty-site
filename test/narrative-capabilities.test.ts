@@ -65,8 +65,8 @@ function phasePixels(style: string, locale: NarrativeLocale, width: number, heig
 test('capability registry is explicit and every fallback style/aspect/locale cell renders', () => {
   const report = narrativeCapabilityReport();
   assert.equal(report.contractVersion, 3);
-  // papercraft 16 + brutalist 16 (4 primitives x 16:9,1:1 x es,en) + renaissance 4 + ukiyoe 4 (2 primitives x 16:9 x es,en)
-  assert.deepEqual(report.summary, { supported: 40, unsupported: 96, fallback: 176 });
+  // papercraft 16 + brutalist 16 (4 primitives x 2 aspects x 2 locales) + renaissance 4 + ukiyoe 4 (2 x 1 x 2) + isotype 12 (2 x 3 x 2) + opart 6 (1 x 3 x 2).
+  assert.deepEqual(report.summary, { supported: 58, unsupported: 96, fallback: 158 });
   assert.equal(report.cells.length, 312);
   const rendered = new Set<string>();
 
@@ -92,8 +92,13 @@ test('capability registry is explicit and every fallback style/aspect/locale cel
     assert.ok(Object.keys(cell.allowed.semanticActions).length > 0);
   }
   for (const cell of report.cells.filter((item) => item.status === 'supported')) {
-    assert.ok(['papercraft', 'brutalist', 'renaissance', 'ukiyoe'].includes(cell.style));
-    assert.match(cell.reason, /narrative-(?:semantic-render|style-semantic)\.test\.ts/u);
+    assert.ok(['papercraft', 'brutalist', 'renaissance', 'ukiyoe', 'isotype', 'opart'].includes(cell.style));
+    const reasonTest = cell.style === 'isotype' || cell.style === 'opart'
+      ? /narrative-semantic-style-render\.test\.ts/u
+      : cell.style === 'papercraft' || cell.style === 'brutalist'
+        ? /narrative-semantic-render\.test\.ts/u
+        : /narrative-style-semantic\.test\.ts/u;
+    assert.match(cell.reason, reasonTest);
     assert.ok(cell.allowed.semanticEntityKinds.length > 0);
   }
   assert.ok(report.cells.filter((cell) => cell.status === 'unsupported').every((cell) => cell.reason.length > 12));

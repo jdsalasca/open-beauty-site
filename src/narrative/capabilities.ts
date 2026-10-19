@@ -27,7 +27,26 @@ const SEMANTIC_STYLE_PRIMITIVES: Partial<Record<StyleSlug, ReadonlySet<Narrative
   brutalist: new Set(NARRATIVE_PRIMITIVES),
   renaissance: new Set(['card-collection', 'counter']),
   ukiyoe: new Set(['card-collection', 'file-download']),
+  isotype: new Set(['counter', 'card-collection']),
+  opart: new Set(['card-collection']),
 };
+
+function fallbackReason(style: StyleSlug, primitive: NarrativePrimitive): string {
+  if (style === 'isotype' && primitive === 'table-rows') return 'Isotype represents each row as one countable pictogram; it does not claim table-cell or row-action semantics. Use counter or card-collection.';
+  if (style === 'isotype' && primitive === 'file-download') return 'File progress has no natural mapping to Isotype pictogram counts; the style keeps its legacy illustration fallback.';
+  if (style === 'opart' && primitive === 'table-rows') return 'Op Art groups optical motifs rather than records; the renderer does not represent tabular rows.';
+  if (style === 'opart' && primitive === 'counter') return 'The optical pattern is qualitative and does not encode a numeric count.';
+  if (style === 'opart' && primitive === 'file-download') return 'File progress does not map to the style\'s optical grouping; the renderer keeps its legacy fallback.';
+  return `${style} fallback: ${PRIMITIVE_REASONS[primitive]}`;
+}
+
+const SEMANTIC_ALL_ASPECT_STYLES = new Set<StyleSlug>(['papercraft', 'brutalist', 'isotype', 'opart']);
+
+function semanticRenderTest(style: StyleSlug): string {
+  if (style === 'isotype' || style === 'opart') return 'narrative-semantic-style-render';
+  if (style === 'papercraft' || style === 'brutalist') return 'narrative-semantic-render';
+  return 'narrative-style-semantic';
+}
 
 export interface NarrativeCapabilityCell {
   style: StyleSlug;
@@ -68,9 +87,11 @@ export function narrativeCapabilityReport(filter: NarrativeCapabilityFilter = {}
     };
     return NARRATIVE_PRIMITIVES.flatMap((primitive) => ASPECTS.flatMap((aspect) => (['es', 'en'] as const).map((locale) => {
       const supportsAspect = scene.supportsAspect(aspect.width / aspect.height);
-      // papercraft and brutalist render the semantic primitives in every aspect their scene supports (16:9 and 1:1);
-      // the other styles only claim 16:9, where their render + decoded-change tests live.
-      const semanticSupported = Boolean(SEMANTIC_STYLE_PRIMITIVES[style]?.has(primitive)) && supportsAspect && (style === 'papercraft' || style === 'brutalist' || aspect.id === '16:9');
+      // Papercraft/brutalist support each scene aspect; Isotype/Op Art have decoded proof for all three;
+      // Renaissance/Ukiyoe only claim 16:9, where their style-semantic render tests run.
+      const semanticSupported = Boolean(SEMANTIC_STYLE_PRIMITIVES[style]?.has(primitive))
+        && supportsAspect
+        && (SEMANTIC_ALL_ASPECT_STYLES.has(style) || aspect.id === '16:9');
       const status: NarrativeCapabilityStatus = !supportsAspect ? 'unsupported' : semanticSupported ? 'supported' : 'fallback';
       const semanticEntityKinds = NARRATIVE_PRIMITIVE_ENTITY_KINDS[primitive];
       const semanticKinds = semanticEntityKinds.filter((kind): kind is Exclude<NarrativeSemanticEntityKind, 'illustration'> => kind !== 'illustration');
@@ -83,8 +104,8 @@ export function narrativeCapabilityReport(filter: NarrativeCapabilityFilter = {}
       const reason = !supportsAspect
         ? `${style} has no narrative renderer for ${aspect.id}; the primitive cannot be rendered in this aspect.`
         : semanticSupported
-          ? `${style} renders ${primitive} with stable entity regions; decoded state changes are exercised in test/${style === 'papercraft' || style === 'brutalist' ? 'narrative-semantic-render' : 'narrative-style-semantic'}.test.ts for ${aspect.id}/${locale}.`
-          : `${style} fallback: ${PRIMITIVE_REASONS[primitive]}`;
+          ? `${style} renders ${primitive} with stable entity regions; decoded state changes are exercised in test/${semanticRenderTest(style)}.test.ts for ${aspect.id}/${locale}.`
+          : fallbackReason(style, primitive);
       return { style, primitive, aspect: aspect.id, locale, status, reason, allowed };
     })));
   });

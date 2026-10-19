@@ -1,30 +1,33 @@
-# Op Art · cambio de foco inmóvil durante la lectura
+# Op Art · agrupamiento óptico con banda inmóvil
 
 ## Intención
 
-Negro y hueso construyen un patrón óptico de bandas anchas, junto a una banda negra de lectura. El patrón cambia el foco o agrupa sus líneas durante la transición; se detiene por completo en cada pausa. Ninguna línea pasa sobre título, etiqueta o cuerpo.
+Negro y hueso producen el campo óptico; el rojo del preset queda como acento de fase en el relato. Las formas son geométricas y planas. La escena no usa papel, relieve, sombras, patrones finos ni movimiento continuo.
+
+Los briefs contienen seis motivos ilustrativos, sin fuente ni cifra de producto. La composición muestra la transformación mediante agrupamiento y cambio de foco; no presenta un contador. Una banda negra central, rotulada `LECTURA`/`READING`, permanece quieta y cubre el campo para dejar una zona limpia de lectura.
 
 ## Composiciones
 
-- **comparison:** el conjunto de anillos concéntricos desplaza su centro de observación hacia una posición asentada.
-- **checklist:** bandas rectangulares desfasadas se alinean en un mismo registro; las separaciones son amplias para evitar moiré fino.
+- **comparison:** seis blancos concéntricos en dos grupos de tres. El grupo inferior se desplaza hacia la derecha mientras sus anillos cambian gradualmente el foco; el grupo superior queda fijo.
+- **checklist:** seis celdas de franjas anchas en dos grupos. El grupo inferior se desplaza y cambia la fase horizontal de sus franjas, sin líneas finas ni moiré sobre texto.
 
-El seed selecciona siete u ocho bandas y un desplazamiento acotado del foco. La escena no usa destellos, cambio de luminosidad por frame ni movimiento durante la pausa. La prueba de píxeles confirma que el patrón comparison cambia al menos 8% de sus píxeles entre Antes y Resultado.
+Las transformaciones se interpolan solo durante la transición. Cada hold queda estático; el GIF no destella ni anima el patrón durante las pausas. Las pruebas comparan regiones semánticas por motivo: una transformación real pasa; cambiar solo el título, fase o cuerpo no pasa. `card-collection` está soportado en los tres ratios y ambos idiomas (6 celdas), cubierto por render y prueba de píxeles decodificados. `table-rows` queda en fallback porque los motivos ópticos no representan registros; `counter` porque la escena es cualitativa; `file-download` porque progreso y reintento no pertenecen a este lenguaje.
 
-## Tipografía, fallback y límites
+Ambos briefs usan `badgePolicy: none`, resultado esperado y `illustrative: true`. La banda se localiza mediante el catálogo `src/narrative/i18n.ts`; el texto de usuario permanece fuera del campo óptico.
 
-Archivo Black 400 para display y cifra; Space Grotesk 400 para lectura y anotación; Space Grotesk 500 para etiquetas. Se admiten 16:9, 1:1 y 9:16. El patrón ocupa aproximadamente 40.6% del cuadro.
+## Tipografía, contraste y fallback
 
-El GIF no puede pausarse. El PNG de cada composición es la imagen fija de `Antes` generada por el encoder y debe funcionar como fallback estático: un reproductor debe sustituir el GIF por ese PNG al detener la animación. Esta entrega produce ambos archivos; no implementa el reproductor ni controles de galería. El patrón sigue siendo de alto contraste y no reemplaza una revisión de accesibilidad.
+Archivo Black 400 para display y Space Grotesk 400/500 para lectura y etiquetas. A 1280×720 se mantienen los pisos de 56 px para títulos, 36 px para cuerpo y 24 px para etiquetas. El rótulo interno de la banda es 32 px nativos (16 px efectivos a 640×360). El panel reservado mide 47% del ancho del cuadro y queda separado del carril de lectura.
 
-## Rechaza
+El encoder exporta GIF, una hoja de contacto y un PNG estático por cada brief y modo. El PNG art-only muestra el hold inicial `Antes`; la transformación se juzga en los holds del GIF art-only, incluido el resultado, sin texto narrativo. El PNG ofrece un patrón quieto de fallback cuando un reproductor no puede detener el GIF. La inspección visual no certifica accesibilidad independiente.
 
-Moiré fino sobre copy, bandas que invaden el margen de lectura, destellos, parpadeo, movimiento continuo, cambios de fase durante la pausa y una promesa de “loop seamless”. El reinicio está etiquetado como puente deliberado.
+## Recursos regenerados
 
-## Evidencia
+- **comparison:** [brief](../gallery/opart/comparison/brief.json), [GIF](../gallery/opart/comparison/cambios-que-se-revisan-b1b5690b.gif), [PNG](../gallery/opart/comparison/cambios-que-se-revisan-b1b5690b.png), [contacto](../gallery/opart/comparison/cambios-que-se-revisan-b1b5690b-contact-sheet.png), [manifest](../gallery/opart/comparison/cambios-que-se-revisan-b1b5690b.manifest.json). Art-only: [GIF](../gallery/opart/comparison/cambios-que-se-revisan-b1b5690b-art-only.gif), [PNG fijo](../gallery/opart/comparison/cambios-que-se-revisan-b1b5690b-art-only.png), [contacto](../gallery/opart/comparison/cambios-que-se-revisan-b1b5690b-art-only-contact-sheet.png), [manifest](../gallery/opart/comparison/cambios-que-se-revisan-b1b5690b-art-only.manifest.json).
+- **checklist:** [brief](../gallery/opart/checklist/brief.json), [GIF](../gallery/opart/checklist/ruta-para-revisar-el-cierre-b4535b83.gif), [PNG](../gallery/opart/checklist/ruta-para-revisar-el-cierre-b4535b83.png), [contacto](../gallery/opart/checklist/ruta-para-revisar-el-cierre-b4535b83-contact-sheet.png), [manifest](../gallery/opart/checklist/ruta-para-revisar-el-cierre-b4535b83.manifest.json). Art-only: [GIF](../gallery/opart/checklist/ruta-para-revisar-el-cierre-b4535b83-art-only.gif), [PNG fijo](../gallery/opart/checklist/ruta-para-revisar-el-cierre-b4535b83-art-only.png), [contacto](../gallery/opart/checklist/ruta-para-revisar-el-cierre-b4535b83-art-only-contact-sheet.png), [manifest](../gallery/opart/checklist/ruta-para-revisar-el-cierre-b4535b83-art-only.manifest.json).
 
-- Renderer: [`src/narrative/scenes/opart.ts`](../../../src/narrative/scenes/opart.ts).
-- Composiciones y briefs: [`comparison`](../gallery/opart/comparison/) y [`checklist`](../gallery/opart/checklist/).
-- GIF animado y PNG estático: [`galería Op Art`](../gallery/README.md).
-- Iteraciones y observaciones: [`REVIEW-stage-c.md`](../gallery/REVIEW-stage-c.md).
-- `visual-review` permanece `pending`; la inspección registrada no certifica accesibilidad ni sustituye aprobación independiente.
+## Evidencia y límites de revisión
+
+- Renderer semántico: [`opart.ts`](../../../src/narrative/scenes/opart.ts) y [`semantic-art.ts`](../../../src/narrative/scenes/opart/semantic-art.ts).
+- Pruebas: [`narrative-semantic-style-render.test.ts`](../../../test/narrative-semantic-style-render.test.ts), [`narrative-capabilities.test.ts`](../../../test/narrative-capabilities.test.ts) y [`narrative-gallery-repro.test.ts`](../../../test/narrative-gallery-repro.test.ts).
+- Las tres iteraciones con hojas de contacto y frames nativos están en [`REVIEW-isotype-opart.md`](../gallery/REVIEW-isotype-opart.md). La inspección del implementador permanece separada de aprobación independiente; todos los manifiestos mantienen `visual-review: pending`.

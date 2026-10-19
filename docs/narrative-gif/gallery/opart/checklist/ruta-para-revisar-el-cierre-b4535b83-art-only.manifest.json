@@ -1,0 +1,1571 @@
+{
+  "schemaVersion": 2,
+  "commit": "e6e6780e9c74aed74a4391784352449eaf30ce02",
+  "brief": {
+    "style": "opart",
+    "kind": "narrative-gif",
+    "locale": "es",
+    "audience": "Producto en Sprint Review",
+    "title": "Ruta para revisar el cierre",
+    "workflowStatus": "in-review",
+    "outcome": {
+      "mode": "expected"
+    },
+    "illustrative": true,
+    "badgePolicy": "none",
+    "phases": [
+      {
+        "id": "before",
+        "label": "Antes",
+        "text": "Seis motivos de franjas gruesas forman una colección ilustrativa.",
+        "visual": {
+          "kind": "checklist",
+          "state": "unreviewed",
+          "semantic": {
+            "primitive": "card-collection",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "field",
+                "kind": "collection",
+                "label": "Campo óptico",
+                "illustrative": true
+              },
+              {
+                "id": "disc-1",
+                "kind": "card",
+                "label": "Motivo 1",
+                "illustrative": true
+              },
+              {
+                "id": "disc-2",
+                "kind": "card",
+                "label": "Motivo 2",
+                "illustrative": true
+              },
+              {
+                "id": "disc-3",
+                "kind": "card",
+                "label": "Motivo 3",
+                "illustrative": true
+              },
+              {
+                "id": "disc-4",
+                "kind": "card",
+                "label": "Motivo 4",
+                "illustrative": true
+              },
+              {
+                "id": "disc-5",
+                "kind": "card",
+                "label": "Motivo 5",
+                "illustrative": true
+              },
+              {
+                "id": "disc-6",
+                "kind": "card",
+                "label": "Motivo 6",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "member-of",
+                "from": "disc-1",
+                "to": "field"
+              },
+              {
+                "kind": "member-of",
+                "from": "disc-2",
+                "to": "field"
+              },
+              {
+                "kind": "member-of",
+                "from": "disc-3",
+                "to": "field"
+              },
+              {
+                "kind": "member-of",
+                "from": "disc-4",
+                "to": "field"
+              },
+              {
+                "kind": "member-of",
+                "from": "disc-5",
+                "to": "field"
+              },
+              {
+                "kind": "member-of",
+                "from": "disc-6",
+                "to": "field"
+              }
+            ],
+            "states": {
+              "field": "open",
+              "disc-1": "member",
+              "disc-2": "member",
+              "disc-3": "member",
+              "disc-4": "member",
+              "disc-5": "member",
+              "disc-6": "member"
+            },
+            "actions": []
+          }
+        }
+      },
+      {
+        "id": "change",
+        "label": "Cambio",
+        "text": "El grupo inferior se desplaza; cada franja conserva su pausa.",
+        "visual": {
+          "kind": "checklist",
+          "state": "flagged",
+          "semantic": {
+            "primitive": "card-collection",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "field",
+                "kind": "collection",
+                "label": "Campo óptico",
+                "illustrative": true
+              },
+              {
+                "id": "disc-1",
+                "kind": "card",
+                "label": "Motivo 1",
+                "illustrative": true
+              },
+              {
+                "id": "disc-2",
+                "kind": "card",
+                "label": "Motivo 2",
+                "illustrative": true
+              },
+              {
+                "id": "disc-3",
+                "kind": "card",
+                "label": "Motivo 3",
+                "illustrative": true
+              },
+              {
+                "id": "disc-4",
+                "kind": "card",
+                "label": "Motivo 4",
+                "illustrative": true
+              },
+              {
+                "id": "disc-5",
+                "kind": "card",
+                "label": "Motivo 5",
+                "illustrative": true
+              },
+              {
+                "id": "disc-6",
+                "kind": "card",
+                "label": "Motivo 6",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "member-of",
+                "from": "disc-1",
+                "to": "field"
+              },
+              {
+                "kind": "member-of",
+                "from": "disc-2",
+                "to": "field"
+              },
+              {
+                "kind": "member-of",
+                "from": "disc-3",
+                "to": "field"
+              },
+              {
+                "kind": "member-of",
+                "from": "disc-4",
+                "to": "field"
+              },
+              {
+                "kind": "member-of",
+                "from": "disc-5",
+                "to": "field"
+              },
+              {
+                "kind": "member-of",
+                "from": "disc-6",
+                "to": "field"
+              }
+            ],
+            "states": {
+              "field": "open",
+              "disc-1": "member",
+              "disc-2": "member",
+              "disc-3": "member",
+              "disc-4": "selected",
+              "disc-5": "selected",
+              "disc-6": "selected"
+            },
+            "actions": []
+          }
+        }
+      },
+      {
+        "id": "result",
+        "label": "Resultado esperado",
+        "text": "El grupo permanece alineado; la banda central queda quieta.",
+        "visual": {
+          "kind": "checklist",
+          "state": "review-ready",
+          "semantic": {
+            "primitive": "card-collection",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "field",
+                "kind": "collection",
+                "label": "Campo óptico",
+                "illustrative": true
+              },
+              {
+                "id": "disc-1",
+                "kind": "card",
+                "label": "Motivo 1",
+                "illustrative": true
+              },
+              {
+                "id": "disc-2",
+                "kind": "card",
+                "label": "Motivo 2",
+                "illustrative": true
+              },
+              {
+                "id": "disc-3",
+                "kind": "card",
+                "label": "Motivo 3",
+                "illustrative": true
+              },
+              {
+                "id": "disc-4",
+                "kind": "card",
+                "label": "Motivo 4",
+                "illustrative": true
+              },
+              {
+                "id": "disc-5",
+                "kind": "card",
+                "label": "Motivo 5",
+                "illustrative": true
+              },
+              {
+                "id": "disc-6",
+                "kind": "card",
+                "label": "Motivo 6",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "member-of",
+                "from": "disc-1",
+                "to": "field"
+              },
+              {
+                "kind": "member-of",
+                "from": "disc-2",
+                "to": "field"
+              },
+              {
+                "kind": "member-of",
+                "from": "disc-3",
+                "to": "field"
+              },
+              {
+                "kind": "member-of",
+                "from": "disc-4",
+                "to": "field"
+              },
+              {
+                "kind": "member-of",
+                "from": "disc-5",
+                "to": "field"
+              },
+              {
+                "kind": "member-of",
+                "from": "disc-6",
+                "to": "field"
+              }
+            ],
+            "states": {
+              "field": "open",
+              "disc-1": "member",
+              "disc-2": "member",
+              "disc-3": "member",
+              "disc-4": "pending",
+              "disc-5": "pending",
+              "disc-6": "pending"
+            },
+            "actions": []
+          }
+        }
+      }
+    ],
+    "playback": {
+      "preset": "readable",
+      "minReadableHoldMs": 5000,
+      "transitionMs": 650,
+      "loop": true,
+      "totalDurationBudgetMs": 30000
+    },
+    "output": {
+      "width": 1280,
+      "height": 720,
+      "formats": [
+        "gif",
+        "png"
+      ],
+      "preset": "review-1280x720"
+    },
+    "seed": 7,
+    "status": "in-review"
+  },
+  "briefSha256": "8578cdfe980bdf8dbabe04d2416aaf6b3dc6e525215766e48595f0cb96871bfc",
+  "style": "opart",
+  "subfamily": null,
+  "workflowStatus": "in-review",
+  "outcome": {
+    "mode": "expected"
+  },
+  "evidenceClassification": "illustrative",
+  "illustrative": true,
+  "artOnly": true,
+  "seed": 7,
+  "renderer": {
+    "narrative": "narrative-core/0.2.0",
+    "canvas": "@napi-rs/canvas@1.0.11",
+    "gif": "gifenc@1.0.3",
+    "scene": "opart-semantic-focus-groups/2.1.0"
+  },
+  "fonts": {
+    "bundleVersion": "repo-bundled-ofl-1",
+    "roles": {
+      "display": {
+        "family": "Archivo Black",
+        "weight": 400
+      },
+      "reading": {
+        "family": "Space Grotesk",
+        "weight": 400
+      },
+      "label": {
+        "family": "Space Grotesk",
+        "weight": 500
+      },
+      "figure": {
+        "family": "Archivo Black",
+        "weight": 400
+      },
+      "annotation": {
+        "family": "Space Grotesk",
+        "weight": 400
+      }
+    }
+  },
+  "dimensions": {
+    "width": 1280,
+    "height": 720
+  },
+  "formats": [
+    "gif",
+    "png"
+  ],
+  "decoded": {
+    "width": 1280,
+    "height": 720,
+    "frameCount": 33,
+    "delaysMs": [
+      80,
+      5000,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      80,
+      5000,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      80,
+      5000,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70
+    ],
+    "durationMs": 17190,
+    "loopCount": 0,
+    "integrity": true
+  },
+  "ffprobe": {
+    "available": true,
+    "passed": true,
+    "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode."
+  },
+  "bytes": {
+    "gif": 333728,
+    "png": 10336,
+    "contactSheet": 32996
+  },
+  "hashes": {
+    "briefSha256": "8578cdfe980bdf8dbabe04d2416aaf6b3dc6e525215766e48595f0cb96871bfc",
+    "gifSha256": "dabb4aeaf9c5ad044cd69ebd4b1ce99d1a8ee7edd52e8579899b687571d51f84",
+    "pngSha256": "389af53279dc8b5b023629c76f949528ea196c6d6e5906d0f1c93a7130c3ebaf",
+    "contactSheetSha256": "d1c5928d075ce8150f17ae2787b2630f143ef97b3d2ed1e62ce55c20ac32ec65"
+  },
+  "files": {
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6298d032\\docs\\narrative-gif\\gallery\\opart\\checklist\\ruta-para-revisar-el-cierre-b4535b83-art-only.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6298d032\\docs\\narrative-gif\\gallery\\opart\\checklist\\ruta-para-revisar-el-cierre-b4535b83-art-only.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6298d032\\docs\\narrative-gif\\gallery\\opart\\checklist\\ruta-para-revisar-el-cierre-b4535b83-art-only-contact-sheet.png"
+  },
+  "controls": [
+    {
+      "name": "gif-integrity",
+      "passed": true,
+      "detail": "Independent LZW decode and GIF trailer passed.",
+      "source": "decoded"
+    },
+    {
+      "name": "dimensions",
+      "passed": true,
+      "detail": "decoded 1280×720; requested 1280×720",
+      "source": "decoded"
+    },
+    {
+      "name": "frame-count",
+      "passed": true,
+      "detail": "33 decoded frame(s)",
+      "source": "decoded"
+    },
+    {
+      "name": "duration",
+      "passed": true,
+      "detail": "17190ms decoded; holds exclude transitions",
+      "source": "decoded"
+    },
+    {
+      "name": "loop",
+      "passed": true,
+      "detail": "repeat=0; result-to-before bridge is explicit",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-holds",
+      "passed": true,
+      "detail": "before 5000/5000ms, change 5000/5000ms, result 5000/5000ms",
+      "source": "decoded"
+    },
+    {
+      "name": "ffprobe-crosscheck",
+      "passed": true,
+      "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode.",
+      "source": "decoded"
+    },
+    {
+      "name": "files",
+      "passed": true,
+      "detail": "GIF 333728B · PNG 10336B · contact 32996B",
+      "source": "decoded"
+    },
+    {
+      "name": "scene-renderer-registered",
+      "passed": true,
+      "detail": "renderer opart/opart-semantic-focus-groups/2.1.0 exists; visual style likeness remains a separate review",
+      "source": "source"
+    },
+    {
+      "name": "type-system",
+      "passed": true,
+      "detail": "style typeSystem tokens are attached to raster role registry",
+      "source": "source"
+    },
+    {
+      "name": "narrative-subfamily",
+      "passed": true,
+      "detail": "opart/default selects an explicit narrative art direction",
+      "source": "source"
+    },
+    {
+      "name": "font-registration-and-glyphs",
+      "passed": true,
+      "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "distinct-frames",
+      "passed": true,
+      "detail": "27 unique composited frame(s); a format-valid static GIF does not pass",
+      "source": "pixels"
+    },
+    {
+      "name": "palette-loss",
+      "passed": true,
+      "detail": "21 colors; mean channel loss 0.031, max 8; sampled 33 frames",
+      "source": "pixels"
+    },
+    {
+      "name": "title-complete",
+      "passed": true,
+      "detail": "Ruta para / revisar el cierre",
+      "source": "source"
+    },
+    {
+      "name": "phase-before-label-complete",
+      "passed": true,
+      "detail": "Antes",
+      "source": "source"
+    },
+    {
+      "name": "phase-before-text-complete",
+      "passed": true,
+      "detail": "Seis motivos de / franjas gruesas / forman una / colección ilustrativa.",
+      "source": "source"
+    },
+    {
+      "name": "phase-change-label-complete",
+      "passed": true,
+      "detail": "Cambio",
+      "source": "source"
+    },
+    {
+      "name": "phase-change-text-complete",
+      "passed": true,
+      "detail": "El grupo inferior se / desplaza; cada / franja conserva su / pausa.",
+      "source": "source"
+    },
+    {
+      "name": "phase-result-label-complete",
+      "passed": true,
+      "detail": "Resultado esperado",
+      "source": "source"
+    },
+    {
+      "name": "phase-result-text-complete",
+      "passed": true,
+      "detail": "El grupo permanece / alineado; la banda / central queda / quieta.",
+      "source": "source"
+    },
+    {
+      "name": "registered-fonts",
+      "passed": true,
+      "detail": "all role faces and Spanish glyphs rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "review-size-thresholds",
+      "passed": true,
+      "detail": "title 64px; phase body >=36px; label >=24px",
+      "source": "source"
+    },
+    {
+      "name": "640x360-effective-size",
+      "passed": true,
+      "detail": "title 32.0px; body min 25.5px (requires >=20px); label min 15.0px",
+      "source": "source"
+    },
+    {
+      "name": "composition-balance",
+      "passed": false,
+      "severity": "warning",
+      "detail": "WARN · revise; 8×4 decoded-pixel grid against #0A0A0A: empty cells 37.5%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 37.5%; thresholds: rectangle <=22%, text fill >=60% (text-fill threshold omitted in art-only mode); not an aesthetic score. Per-frame: before · pausa: empty 37.5%, text fill 100.0%, art 50.0%, largest empty 37.5% | before → change · punto medio de transición: empty 37.5%, text fill 100.0%, art 50.0%, largest empty 37.5% | change · pausa: empty 37.5%, text fill 100.0%, art 50.0%, largest empty 37.5% | change → result · punto medio de transición: empty 37.5%, text fill 100.0%, art 50.0%, largest empty 37.5% | result · pausa: empty 37.5%, text fill 100.0%, art 50.0%, largest empty 37.5% | result → before · unión del ciclo: empty 37.5%, text fill 100.0%, art 50.0%, largest empty 37.5%",
+      "source": "pixels"
+    },
+    {
+      "name": "contrast",
+      "passed": true,
+      "detail": "rendered text colors: ink 18.42:1; label 4.58:1 (not an OCR or per-pixel text measurement)",
+      "source": "source"
+    },
+    {
+      "name": "safe-zone-and-collisions",
+      "passed": true,
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+      "source": "source"
+    },
+    {
+      "name": "stable-reading-holds",
+      "passed": true,
+      "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-count-and-copy",
+      "passed": true,
+      "detail": "3 complete phases; all copy retained",
+      "source": "source"
+    },
+    {
+      "name": "shared-object-identity",
+      "passed": true,
+      "detail": "One scene object instance is created and passed to every phase frame.",
+      "source": "source"
+    },
+    {
+      "name": "visual-state-change",
+      "passed": true,
+      "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+      "source": "pixels"
+    },
+    {
+      "name": "workflow-outcome-separation",
+      "passed": true,
+      "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+      "source": "source"
+    },
+    {
+      "name": "outcome-evidence",
+      "passed": true,
+      "detail": "Expected outcome; no benefit measurement is claimed.",
+      "source": "source"
+    },
+    {
+      "name": "result-follows-outcome",
+      "passed": true,
+      "detail": "outcome=expected; final label=\"Resultado esperado\"",
+      "source": "source"
+    },
+    {
+      "name": "semantic-illustrative-data",
+      "passed": true,
+      "detail": "brief illustrative=true; semantic phase flags=true,true,true",
+      "source": "source"
+    },
+    {
+      "name": "semantic-object-midpoint:before → change · punto medio de transición",
+      "passed": true,
+      "detail": "decoded object diff 3.4%; changed-state entities: disc-4, disc-5, disc-6; disc-1 member→member 0.0%, disc-2 member→member 0.0%, disc-3 member→member 0.0%, disc-4 member→selected 12.7%, disc-5 member→selected 13.1%, disc-6 member→selected 15.4%, field open→open 2.4%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:change → result · punto medio de transición",
+      "passed": true,
+      "detail": "decoded object diff 1.8%; changed-state entities: disc-4, disc-5, disc-6; disc-1 member→member 0.0%, disc-2 member→member 0.0%, disc-3 member→member 0.0%, disc-4 selected→pending 8.2%, disc-5 selected→pending 8.0%, disc-6 selected→pending 8.2%, field open→open 1.2%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:result → before · unión del ciclo",
+      "passed": true,
+      "detail": "decoded object diff 4.3%; changed-state entities: disc-4, disc-5, disc-6; disc-1 member→member 0.0%, disc-2 member→member 0.0%, disc-3 member→member 0.0%, disc-4 pending→member 17.3%, disc-5 pending→member 19.4%, disc-6 pending→member 14.7%, field open→open 3.1%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:before → change hold",
+      "passed": true,
+      "detail": "decoded object diff 5.4%; changed-state entities: disc-4, disc-5, disc-6; disc-1 member→member 0.0%, disc-2 member→member 0.0%, disc-3 member→member 0.0%, disc-4 member→selected 22.2%, disc-5 member→selected 18.6%, disc-6 member→selected 21.9%, field open→open 3.9%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:change → result hold",
+      "passed": true,
+      "detail": "decoded object diff 3.0%; changed-state entities: disc-4, disc-5, disc-6; disc-1 member→member 0.0%, disc-2 member→member 0.0%, disc-3 member→member 0.0%, disc-4 selected→pending 11.7%, disc-5 selected→pending 13.4%, disc-6 selected→pending 11.3%, field open→open 2.1%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:result → before loop join",
+      "passed": true,
+      "detail": "decoded object diff 6.1%; changed-state entities: disc-4, disc-5, disc-6; disc-1 member→member 0.0%, disc-2 member→member 0.0%, disc-3 member→member 0.0%, disc-4 pending→member 27.8%, disc-5 pending→member 23.0%, disc-6 pending→member 19.4%, field open→open 4.5%",
+      "source": "decoded"
+    }
+  ],
+  "evaluation": {
+    "technical-integrity": {
+      "status": "pass",
+      "controls": [
+        {
+          "name": "gif-integrity",
+          "passed": true,
+          "detail": "Independent LZW decode and GIF trailer passed.",
+          "source": "decoded"
+        },
+        {
+          "name": "dimensions",
+          "passed": true,
+          "detail": "decoded 1280×720; requested 1280×720",
+          "source": "decoded"
+        },
+        {
+          "name": "frame-count",
+          "passed": true,
+          "detail": "33 decoded frame(s)",
+          "source": "decoded"
+        },
+        {
+          "name": "duration",
+          "passed": true,
+          "detail": "17190ms decoded; holds exclude transitions",
+          "source": "decoded"
+        },
+        {
+          "name": "loop",
+          "passed": true,
+          "detail": "repeat=0; result-to-before bridge is explicit",
+          "source": "decoded"
+        },
+        {
+          "name": "phase-holds",
+          "passed": true,
+          "detail": "before 5000/5000ms, change 5000/5000ms, result 5000/5000ms",
+          "source": "decoded"
+        },
+        {
+          "name": "ffprobe-crosscheck",
+          "passed": true,
+          "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode.",
+          "source": "decoded"
+        },
+        {
+          "name": "files",
+          "passed": true,
+          "detail": "GIF 333728B · PNG 10336B · contact 32996B",
+          "source": "decoded"
+        }
+      ]
+    },
+    "style-conformance": {
+      "status": "pending",
+      "sourceStatus": "pass",
+      "pixelStatus": "pass",
+      "controls": [
+        {
+          "name": "scene-renderer-registered",
+          "passed": true,
+          "detail": "renderer opart/opart-semantic-focus-groups/2.1.0 exists; visual style likeness remains a separate review",
+          "source": "source"
+        },
+        {
+          "name": "type-system",
+          "passed": true,
+          "detail": "style typeSystem tokens are attached to raster role registry",
+          "source": "source"
+        },
+        {
+          "name": "narrative-subfamily",
+          "passed": true,
+          "detail": "opart/default selects an explicit narrative art direction",
+          "source": "source"
+        },
+        {
+          "name": "font-registration-and-glyphs",
+          "passed": true,
+          "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "distinct-frames",
+          "passed": true,
+          "detail": "27 unique composited frame(s); a format-valid static GIF does not pass",
+          "source": "pixels"
+        },
+        {
+          "name": "palette-loss",
+          "passed": true,
+          "detail": "21 colors; mean channel loss 0.031, max 8; sampled 33 frames",
+          "source": "pixels"
+        }
+      ],
+      "note": "Source checks identify renderer/font tokens; pixel checks measure frame change and palette loss. Neither substitutes for visual review."
+    },
+    "rendered-legibility": {
+      "status": "revise",
+      "controls": [
+        {
+          "name": "title-complete",
+          "passed": true,
+          "detail": "Ruta para / revisar el cierre",
+          "source": "source"
+        },
+        {
+          "name": "phase-before-label-complete",
+          "passed": true,
+          "detail": "Antes",
+          "source": "source"
+        },
+        {
+          "name": "phase-before-text-complete",
+          "passed": true,
+          "detail": "Seis motivos de / franjas gruesas / forman una / colección ilustrativa.",
+          "source": "source"
+        },
+        {
+          "name": "phase-change-label-complete",
+          "passed": true,
+          "detail": "Cambio",
+          "source": "source"
+        },
+        {
+          "name": "phase-change-text-complete",
+          "passed": true,
+          "detail": "El grupo inferior se / desplaza; cada / franja conserva su / pausa.",
+          "source": "source"
+        },
+        {
+          "name": "phase-result-label-complete",
+          "passed": true,
+          "detail": "Resultado esperado",
+          "source": "source"
+        },
+        {
+          "name": "phase-result-text-complete",
+          "passed": true,
+          "detail": "El grupo permanece / alineado; la banda / central queda / quieta.",
+          "source": "source"
+        },
+        {
+          "name": "registered-fonts",
+          "passed": true,
+          "detail": "all role faces and Spanish glyphs rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "review-size-thresholds",
+          "passed": true,
+          "detail": "title 64px; phase body >=36px; label >=24px",
+          "source": "source"
+        },
+        {
+          "name": "640x360-effective-size",
+          "passed": true,
+          "detail": "title 32.0px; body min 25.5px (requires >=20px); label min 15.0px",
+          "source": "source"
+        },
+        {
+          "name": "composition-balance",
+          "passed": false,
+          "severity": "warning",
+          "detail": "WARN · revise; 8×4 decoded-pixel grid against #0A0A0A: empty cells 37.5%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 37.5%; thresholds: rectangle <=22%, text fill >=60% (text-fill threshold omitted in art-only mode); not an aesthetic score. Per-frame: before · pausa: empty 37.5%, text fill 100.0%, art 50.0%, largest empty 37.5% | before → change · punto medio de transición: empty 37.5%, text fill 100.0%, art 50.0%, largest empty 37.5% | change · pausa: empty 37.5%, text fill 100.0%, art 50.0%, largest empty 37.5% | change → result · punto medio de transición: empty 37.5%, text fill 100.0%, art 50.0%, largest empty 37.5% | result · pausa: empty 37.5%, text fill 100.0%, art 50.0%, largest empty 37.5% | result → before · unión del ciclo: empty 37.5%, text fill 100.0%, art 50.0%, largest empty 37.5%",
+          "source": "pixels"
+        },
+        {
+          "name": "contrast",
+          "passed": true,
+          "detail": "rendered text colors: ink 18.42:1; label 4.58:1 (not an OCR or per-pixel text measurement)",
+          "source": "source"
+        },
+        {
+          "name": "safe-zone-and-collisions",
+          "passed": true,
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+          "source": "source"
+        },
+        {
+          "name": "stable-reading-holds",
+          "passed": true,
+          "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+          "source": "decoded"
+        }
+      ],
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
+    },
+    "narrative": {
+      "status": "pending",
+      "controls": [
+        {
+          "name": "phase-count-and-copy",
+          "passed": true,
+          "detail": "3 complete phases; all copy retained",
+          "source": "source"
+        },
+        {
+          "name": "shared-object-identity",
+          "passed": true,
+          "detail": "One scene object instance is created and passed to every phase frame.",
+          "source": "source"
+        },
+        {
+          "name": "visual-state-change",
+          "passed": true,
+          "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+          "source": "pixels"
+        },
+        {
+          "name": "workflow-outcome-separation",
+          "passed": true,
+          "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+          "source": "source"
+        },
+        {
+          "name": "outcome-evidence",
+          "passed": true,
+          "detail": "Expected outcome; no benefit measurement is claimed.",
+          "source": "source"
+        },
+        {
+          "name": "result-follows-outcome",
+          "passed": true,
+          "detail": "outcome=expected; final label=\"Resultado esperado\"",
+          "source": "source"
+        },
+        {
+          "name": "semantic-illustrative-data",
+          "passed": true,
+          "detail": "brief illustrative=true; semantic phase flags=true,true,true",
+          "source": "source"
+        },
+        {
+          "name": "semantic-object-midpoint:before → change · punto medio de transición",
+          "passed": true,
+          "detail": "decoded object diff 3.4%; changed-state entities: disc-4, disc-5, disc-6; disc-1 member→member 0.0%, disc-2 member→member 0.0%, disc-3 member→member 0.0%, disc-4 member→selected 12.7%, disc-5 member→selected 13.1%, disc-6 member→selected 15.4%, field open→open 2.4%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:change → result · punto medio de transición",
+          "passed": true,
+          "detail": "decoded object diff 1.8%; changed-state entities: disc-4, disc-5, disc-6; disc-1 member→member 0.0%, disc-2 member→member 0.0%, disc-3 member→member 0.0%, disc-4 selected→pending 8.2%, disc-5 selected→pending 8.0%, disc-6 selected→pending 8.2%, field open→open 1.2%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:result → before · unión del ciclo",
+          "passed": true,
+          "detail": "decoded object diff 4.3%; changed-state entities: disc-4, disc-5, disc-6; disc-1 member→member 0.0%, disc-2 member→member 0.0%, disc-3 member→member 0.0%, disc-4 pending→member 17.3%, disc-5 pending→member 19.4%, disc-6 pending→member 14.7%, field open→open 3.1%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:before → change hold",
+          "passed": true,
+          "detail": "decoded object diff 5.4%; changed-state entities: disc-4, disc-5, disc-6; disc-1 member→member 0.0%, disc-2 member→member 0.0%, disc-3 member→member 0.0%, disc-4 member→selected 22.2%, disc-5 member→selected 18.6%, disc-6 member→selected 21.9%, field open→open 3.9%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:change → result hold",
+          "passed": true,
+          "detail": "decoded object diff 3.0%; changed-state entities: disc-4, disc-5, disc-6; disc-1 member→member 0.0%, disc-2 member→member 0.0%, disc-3 member→member 0.0%, disc-4 selected→pending 11.7%, disc-5 selected→pending 13.4%, disc-6 selected→pending 11.3%, field open→open 2.1%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:result → before loop join",
+          "passed": true,
+          "detail": "decoded object diff 6.1%; changed-state entities: disc-4, disc-5, disc-6; disc-1 member→member 0.0%, disc-2 member→member 0.0%, disc-3 member→member 0.0%, disc-4 pending→member 27.8%, disc-5 pending→member 23.0%, disc-6 pending→member 19.4%, field open→open 4.5%",
+          "source": "decoded"
+        }
+      ],
+      "note": "Automated checks separate work status from expected/observed outcome and confirm required evidence fields; causal meaning and evidence scope still need human review."
+    },
+    "visual-review": {
+      "status": "pending",
+      "criteria": [
+        "identity at 200px thumbnail",
+        "full text and contrast at 640×360",
+        "style material in native frame",
+        "same object and causal change across phases",
+        "result faithful to outcome and evidence scope",
+        "deliberate loop restart"
+      ],
+      "evidence": []
+    },
+    "publicationRecommendation": "none"
+  },
+  "phaseCaptures": [
+    {
+      "phaseId": "before",
+      "labels": [
+        "before · inicio",
+        "before · pausa",
+        "before → change · punto medio de transición",
+        "before · salida",
+        "reinicio del loop"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6298d032\\docs\\narrative-gif\\gallery\\opart\\checklist\\ruta-para-revisar-el-cierre-b4535b83-art-only-contact-sheet.png"
+    },
+    {
+      "phaseId": "change",
+      "labels": [
+        "change · inicio",
+        "change · pausa",
+        "change → result · punto medio de transición",
+        "change · salida"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6298d032\\docs\\narrative-gif\\gallery\\opart\\checklist\\ruta-para-revisar-el-cierre-b4535b83-art-only-contact-sheet.png"
+    },
+    {
+      "phaseId": "result",
+      "labels": [
+        "result · inicio",
+        "result · pausa",
+        "result → before · unión del ciclo",
+        "result · salida"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6298d032\\docs\\narrative-gif\\gallery\\opart\\checklist\\ruta-para-revisar-el-cierre-b4535b83-art-only-contact-sheet.png"
+    }
+  ],
+  "semanticObjectCaptures": [
+    {
+      "label": "before · pausa",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 0,
+      "frameIndex": 1,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "disc-1",
+          "bounds": {
+            "x": 632.448,
+            "y": 165.6,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-2",
+          "bounds": {
+            "x": 806.9119999999999,
+            "y": 165.6,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-3",
+          "bounds": {
+            "x": 969.3439999999999,
+            "y": 165.6,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-4",
+          "bounds": {
+            "x": 632.448,
+            "y": 437.76,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-5",
+          "bounds": {
+            "x": 806.9119999999999,
+            "y": 437.76,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-6",
+          "bounds": {
+            "x": 969.3439999999999,
+            "y": 437.76,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "field",
+          "bounds": {
+            "x": 614.4,
+            "y": 36,
+            "width": 601.5999999999999,
+            "height": 648
+          }
+        }
+      ]
+    },
+    {
+      "label": "before → change · punto medio de transición",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 0,
+      "frameIndex": 5,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "disc-1",
+          "bounds": {
+            "x": 632.448,
+            "y": 165.6,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-2",
+          "bounds": {
+            "x": 806.9119999999999,
+            "y": 165.6,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-3",
+          "bounds": {
+            "x": 969.3439999999999,
+            "y": 165.6,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-4",
+          "bounds": {
+            "x": 657.47456,
+            "y": 437.76,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-5",
+          "bounds": {
+            "x": 831.9385599999999,
+            "y": 437.76,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-6",
+          "bounds": {
+            "x": 994.37056,
+            "y": 437.76,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "field",
+          "bounds": {
+            "x": 614.4,
+            "y": 36,
+            "width": 601.5999999999999,
+            "height": 648
+          }
+        }
+      ]
+    },
+    {
+      "label": "change · pausa",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 1,
+      "frameIndex": 12,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "disc-1",
+          "bounds": {
+            "x": 632.448,
+            "y": 165.6,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-2",
+          "bounds": {
+            "x": 806.9119999999999,
+            "y": 165.6,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-3",
+          "bounds": {
+            "x": 969.3439999999999,
+            "y": 165.6,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-4",
+          "bounds": {
+            "x": 688.75776,
+            "y": 437.76,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-5",
+          "bounds": {
+            "x": 863.22176,
+            "y": 437.76,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-6",
+          "bounds": {
+            "x": 1025.6537599999997,
+            "y": 437.76,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "field",
+          "bounds": {
+            "x": 614.4,
+            "y": 36,
+            "width": 601.5999999999999,
+            "height": 648
+          }
+        }
+      ]
+    },
+    {
+      "label": "change → result · punto medio de transición",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 1,
+      "frameIndex": 16,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "disc-1",
+          "bounds": {
+            "x": 632.448,
+            "y": 165.6,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-2",
+          "bounds": {
+            "x": 806.9119999999999,
+            "y": 165.6,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-3",
+          "bounds": {
+            "x": 969.3439999999999,
+            "y": 165.6,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-4",
+          "bounds": {
+            "x": 698.4903111111112,
+            "y": 437.76,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-5",
+          "bounds": {
+            "x": 872.9543111111111,
+            "y": 437.76,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-6",
+          "bounds": {
+            "x": 1035.386311111111,
+            "y": 437.76,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "field",
+          "bounds": {
+            "x": 614.4,
+            "y": 36,
+            "width": 601.5999999999999,
+            "height": 648
+          }
+        }
+      ]
+    },
+    {
+      "label": "result · pausa",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 2,
+      "frameIndex": 23,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "disc-1",
+          "bounds": {
+            "x": 632.448,
+            "y": 165.6,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-2",
+          "bounds": {
+            "x": 806.9119999999999,
+            "y": 165.6,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-3",
+          "bounds": {
+            "x": 969.3439999999999,
+            "y": 165.6,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-4",
+          "bounds": {
+            "x": 710.6560000000001,
+            "y": 437.76,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-5",
+          "bounds": {
+            "x": 885.12,
+            "y": 437.76,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-6",
+          "bounds": {
+            "x": 1047.5519999999997,
+            "y": 437.76,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "field",
+          "bounds": {
+            "x": 614.4,
+            "y": 36,
+            "width": 601.5999999999999,
+            "height": 648
+          }
+        }
+      ]
+    },
+    {
+      "label": "result → before · unión del ciclo",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 2,
+      "frameIndex": 27,
+      "kind": "loop-bridge",
+      "regions": [
+        {
+          "entityId": "disc-1",
+          "bounds": {
+            "x": 632.448,
+            "y": 165.6,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-2",
+          "bounds": {
+            "x": 806.9119999999999,
+            "y": 165.6,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-3",
+          "bounds": {
+            "x": 969.3439999999999,
+            "y": 165.6,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-4",
+          "bounds": {
+            "x": 675.896888888889,
+            "y": 437.76,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-5",
+          "bounds": {
+            "x": 850.3608888888889,
+            "y": 437.76,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "disc-6",
+          "bounds": {
+            "x": 1012.7928888888888,
+            "y": 437.76,
+            "width": 156.41599999999997,
+            "height": 116.64
+          }
+        },
+        {
+          "entityId": "field",
+          "bounds": {
+            "x": 614.4,
+            "y": 36,
+            "width": 601.5999999999999,
+            "height": 648
+          }
+        }
+      ]
+    }
+  ],
+  "compositionByFrame": [
+    {
+      "label": "before · pausa",
+      "metrics": {
+        "emptyCellRatio": 0.375,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.375
+      }
+    },
+    {
+      "label": "before → change · punto medio de transición",
+      "metrics": {
+        "emptyCellRatio": 0.375,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.375
+      }
+    },
+    {
+      "label": "change · pausa",
+      "metrics": {
+        "emptyCellRatio": 0.375,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.375
+      }
+    },
+    {
+      "label": "change → result · punto medio de transición",
+      "metrics": {
+        "emptyCellRatio": 0.375,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.375
+      }
+    },
+    {
+      "label": "result · pausa",
+      "metrics": {
+        "emptyCellRatio": 0.375,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.375
+      }
+    },
+    {
+      "label": "result → before · unión del ciclo",
+      "metrics": {
+        "emptyCellRatio": 0.375,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.375
+      }
+    }
+  ],
+  "palette": {
+    "colors": 21,
+    "meanAbsoluteChannelError": 0.031,
+    "maximumChannelError": 8,
+    "sampledFrames": 33
+  },
+  "phaseHoldsVerified": [
+    {
+      "phaseId": "before",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    },
+    {
+      "phaseId": "change",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    },
+    {
+      "phaseId": "result",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    }
+  ],
+  "timing": {
+    "preset": "readable",
+    "holdsRequestedMs": 15000,
+    "holdsDecodedMs": 15000,
+    "transitionsMs": 1300,
+    "loopBridgeMs": 650,
+    "entryMs": 240,
+    "totalDecodedMs": 17190,
+    "totalDurationBudgetMs": 30000,
+    "phaseHolds": [
+      {
+        "phaseId": "before",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      },
+      {
+        "phaseId": "change",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      },
+      {
+        "phaseId": "result",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      }
+    ],
+    "warnings": []
+  },
+  "resourceEstimate": {
+    "pixelFrames": 30412800,
+    "maxPixelFrames": 96000000,
+    "memoryBytes": 107634688,
+    "maxMemoryBytes": 268435456
+  },
+  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed."
+}
