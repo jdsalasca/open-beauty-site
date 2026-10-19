@@ -20,8 +20,8 @@ import {
   sprintTeamSchema,
   sprintVelocitySchema,
 } from '../types/sprint.js';
-import { formatValidation, validateDeck, validateExperience, validateHtml, validateStory } from '../validate.js';
-import { fixHtml } from '../fix.js';
+import { formatValidation } from '../validate.js';
+import { auditArtifact, repairArtifact } from '../visual.js';
 import { presets, styleSlugs } from '../styles/presets.js';
 import { makeArtifact } from '../make.js';
 import { SKILL_FALLBACK, styleGuideMarkdown, stylesOverview } from '../guide.js';
@@ -893,27 +893,31 @@ QUALITY BAR
     {
       title: 'Audit a page against one style',
       description:
-        'Scores an HTML file from 0–100 and lists exact fixes for fonts, palette, borders, radii, shadows, motion, markup and contrast. Use this after any manual edit.',
+        'Scores an HTML file from 0–100 and lists exact fixes for fonts, palette, borders, radii, shadows, motion, markup, contrast and repeated filler. Pass visual: true to also load it in Chromium at 360x780 and 1440x900 and report overflow, occluded text, orphan grid items, clipped or mid-word-broken text, tiny text and decoration over content. Visual issues count as warnings (an open warning caps the grade at B). Use this after any manual edit.',
       inputSchema: {
         style: styleEnum,
         path: z.string().max(260).optional().describe('Path to an HTML file.'),
         html: z.string().optional().describe('Raw HTML, if you do not have a file.'),
+        visual: z.boolean().optional().describe('Run the real-browser visual pass (skipped with a one-line fix when Playwright is unavailable).'),
       },
     },
-    async ({ style, path: filePath, html }) => {
+    async ({ style, path: filePath, html, visual }) => {
       try {
         const source = html ?? (filePath ? await readFile(path.resolve(process.cwd(), filePath), 'utf8') : '');
         if (!source) {
           return { content: [{ type: 'text' as const, text: 'Pass either path or html.' }], isError: true };
         }
-        const result = source.includes('class="deck')
-      ? validateDeck(source, style)
-      : source.includes('class="xp ')
-        ? validateExperience(source, style)
-        : source.includes('class="story-page')
-          ? validateStory(source, style)
-          : validateHtml(source, style);
-        return text(`${formatValidation(result)}\n\nstats: ${JSON.stringify(result.stats)}`);
+        const report = await auditArtifact(source, style, {
+          visual,
+          filePath: filePath ? path.resolve(process.cwd(), filePath) : undefined,
+        });
+        const visualLine =
+          visual && report.visual.status === 'skipped' && report.visual.message
+            ? `\n${report.visual.message}`
+            : visual
+              ? `\nvisual: ran at ${report.visual.playwright?.root ?? 'playwright'} · ${report.visual.findings.length} geometry finding(s)`
+              : '';
+        return text(`${formatValidation(report.result)}${visualLine}\n\nstats: ${JSON.stringify(report.result.stats)}`);
       } catch (error) {
         return errorResult(`Validate failed: ${errorMessage(error)}`);
       }
@@ -925,22 +929,26 @@ QUALITY BAR
     {
       title: 'Apply safe automatic repairs and re-validate',
       description:
-        'Replays the machine-applicable patches from beauty_validate: missing lang/title/viewport, empty alt, heading order, skip link and landmarks, forbidden Never-list elements, off-palette colours snapped to the nearest token and text-overflow clamps. Returns before/after scores and is idempotent. Write with output when you want a file on disk.',
+        'Replays the machine-applicable patches from beauty_validate: missing lang/title/viewport, empty alt, heading order, skip link and landmarks, forbidden Never-list elements, off-palette colours snapped to the nearest token, text-overflow clamps and — with visual: true — fixed/sticky controls over text, orphan grid items, clipped or tiny text and decoration over content. It uses the same audit entry as beauty_validate and reports before/after from that same function. Returns before/after scores and is idempotent. Write with output when you want a file on disk.',
       inputSchema: {
         style: styleEnum,
         path: z.string().max(260).optional().describe('Path to an HTML file.'),
         html: z.string().optional().describe('Raw HTML, if you do not have a file.'),
         output: z.string().max(260).optional().describe('Write the repaired HTML to this path.'),
+        visual: z.boolean().optional().describe('Re-validate in Chromium and repair visual issues too.'),
         include_html: z.boolean().optional().describe('Also return the repaired HTML.'),
       },
     },
-    async ({ style, path: filePath, html, output, include_html }) => {
+    async ({ style, path: filePath, html, output, visual, include_html }) => {
       try {
         const source = html ?? (filePath ? await readFile(path.resolve(process.cwd(), filePath), 'utf8') : '');
         if (!source) {
           return { content: [{ type: 'text' as const, text: 'Pass either path or html.' }], isError: true };
         }
-        const result = fixHtml(source, style);
+        const result = await repairArtifact(source, style, {
+          visual,
+          filePath: filePath ? path.resolve(process.cwd(), filePath) : undefined,
+        });
         if (output) {
           await writeFile(path.resolve(process.cwd(), output), result.html, 'utf8');
         }
@@ -949,9 +957,12 @@ QUALITY BAR
           `score: ${result.before.score} (${result.before.grade}) → ${result.after.score} (${result.after.grade})`,
           `errors: ${result.before.errors} → ${result.after.errors} · warnings: ${result.before.warnings} → ${result.after.warnings}`,
           `repairs: ${result.fixes.length}${result.fixes.length ? ` (${result.fixes.join(', ')})` : ' — already clean'}`,
+          visual && result.visual.status === 'skipped' && result.visual.message ? result.visual.message : '',
           output ? `file: ${path.resolve(process.cwd(), output)}` : 'No file written (pass output to save).',
-          `Next: call beauty_validate to confirm the repairs.`,
-        ].join('\n');
+          `Next: call beauty_validate with the same options to confirm the repairs.`,
+        ]
+          .filter(Boolean)
+          .join('\n');
         return text(include_html ? `${summary}\n\n--- HTML ---\n${result.html}` : summary);
       } catch (error) {
         return errorResult(`Fix failed: ${errorMessage(error)}`);

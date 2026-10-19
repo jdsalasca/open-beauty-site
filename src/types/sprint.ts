@@ -111,6 +111,60 @@ export const sprintBriefSchema = z.object({
 
 export type SprintBriefInput = z.infer<typeof sprintBriefSchema>;
 
+/**
+ * Single source of truth for `beauty sprint --help`: the key list comes from the
+ * zod schema itself, so a new field can never be missing from the help. The
+ * drift test compares the schema keys with the printed options.
+ */
+const SPRINT_FIELD_HELP: Record<string, string> = {
+  style: 'Style slug when the brief does not carry it (or use --style)',
+  locale: 'es|en microcopy',
+  maxxing: 'Full art direction',
+  subfamily: 'Curated structural family',
+  sprint: 'Required. { id, start?, end?, goal? } or a legacy id string',
+  team: '{ name, brand? } or a legacy team name string',
+  date: 'Date or range printed on the kit',
+  summary: 'One honest sentence that opens the review',
+  metrics: '[{ label, value }] evidence for the review',
+  highlights: '[string] what shipped',
+  blockers: '[string] systemic friction (max 160 chars each)',
+  next: '[string] small bets for the next sprint',
+  quote: '{ text, author? } closing quote',
+  stories: '[{ id?, title, points?, status: done|carried|dropped, owner? }]',
+  velocity: '[{ sprint, committed, done }] committed vs done (last 5 charted)',
+  burndown: '[{ day, remaining }] remaining points per day',
+  risks: '[{ title, impact?, mitigation?, owner? }]',
+  retro: '{ wentWell[], toImprove[], actions[{ what, owner?, due? }] }',
+  capacity: '[{ person, days, focus? }] next-sprint capacity',
+  nextGoal: 'The next sprint goal, rendered on the planning deck',
+  output: 'Output folder (defaults to beauty-output/sprint-<id>)',
+};
+
+export function sprintHelpOptions(): string[] {
+  const keys = Object.keys(sprintBriefSchema.shape) as string[];
+  return [
+    '  --brief <file>     Read the JSON brief from a file',
+    '  --brief -          Read the sprint brief JSON from stdin (avoids os error 206)',
+    '  --out path         Output folder (defaults to beauty-output/sprint-<id>)',
+    '',
+    '  JSON brief fields (only sprint is required):',
+    ...keys.map((key) => `  ${key.padEnd(12)} ${SPRINT_FIELD_HELP[key] ?? 'See skills/agile.md'}`),
+  ];
+}
+
+/** Full example shown by `beauty sprint --help`. */
+export const SPRINT_BRIEF_EXAMPLE = `{
+  "sprint": { "id": "S15", "start": "2026-10-12", "end": "2026-10-23", "goal": "Publicar la lectura del norte" },
+  "team": { "name": "Cuadrilla Umbral", "brand": "Umbral" },
+  "stories": [{ "id": "SC-101", "title": "Muestreo del río", "points": 5, "status": "done", "owner": "Lucía" }],
+  "velocity": [{ "sprint": "S14", "committed": 18, "done": 15 }],
+  "burndown": [{ "day": "12/10", "remaining": 18 }, { "day": "23/10", "remaining": 0 }],
+  "risks": [{ "title": "Una sola estación", "impact": "lecturas frágiles", "mitigation": "sumar una móvil" }],
+  "retro": { "wentWell": ["Leer antes de medir"], "toImprove": ["Menos tableros"], "actions": [{ "what": "Publicar cada viernes", "owner": "Sombra", "due": "2026-10-30" }] },
+  "capacity": [{ "person": "Lucía", "days": 8, "focus": "campo" }],
+  "nextGoal": "Una lectura común, publicada y discutida."
+}`;
+
 export interface SprintFieldIssue {
   path: string;
   message: string;

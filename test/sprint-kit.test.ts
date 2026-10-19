@@ -5,6 +5,7 @@ import { existsSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { checkSprintFidelity, createSprintKit, drawSprintFrame, parseSprintBrief } from '../src/sprint.js';
+import { validateDeck } from '../src/validate.js';
 import { styleSlugs } from '../src/styles/presets.js';
 import { RICH_SPRINT } from './support/sprint-fixture.js';
 
@@ -70,8 +71,18 @@ test('a legacy minimal brief still renders three complete decks', async () => {
       const html = await readFile(item.html, 'utf8');
       assert.ok(html.includes('Equipo Open Beauty'), 'legacy team must reach the brand');
       assert.ok(!html.includes('[object Object]'));
-      assert.equal(item.grade, 'A', `${path.basename(item.html)} scored ${item.score}`);
+      assert.ok(['A', 'B'].includes(item.grade), `${path.basename(item.html)} scored ${item.score}`);
+      assert.ok(item.score >= 90, `${path.basename(item.html)} scored ${item.score}`);
     }
+    // The minimal brief has no retro data, so the template falls back to one
+    // filler body per points slide. The repetition check must catch it instead
+    // of letting a filler page claim an A.
+    const retro = validateDeck(await readFile(kit.retro.html, 'utf8'), 'isotype');
+    assert.ok(
+      retro.issues.some((issue) => issue.code === 'repeated-filler'),
+      'the repeated fallback body must be reported',
+    );
+    assert.notEqual(retro.grade, 'A');
   } finally {
     await rm(dir, { recursive: true, force: true });
   }

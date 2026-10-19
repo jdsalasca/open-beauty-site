@@ -2,7 +2,6 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { existsSync, statSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
-import { createRequire } from 'node:module';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import type { Brief, DeckBrief, ExperienceBrief, SequenceBrief, SprintBrief, StoryBrief, StyleSlug } from './types.js';
@@ -10,8 +9,10 @@ import { VERSION } from './index.js';
 import { createCanvas, createDeck, createExperience, createGifFile, createMotion, createPage, createSequence, createStory, slugify, timestamp } from './generate.js';
 import { createGifPoster } from './gif.js';
 import { createSprintKit } from './sprint.js';
-import { formatValidation, validateDeck, validateExperience, validateHtml, validateStory } from './validate.js';
-import { fixHtml } from './fix.js';
+import { formatValidation } from './validate.js';
+import { auditArtifact, meetsStrictBar, repairArtifact, locatePlaywright } from './visual.js';
+import { gifHelpOptions, gifUsage } from './types/gif.js';
+import { sprintHelpOptions, SPRINT_BRIEF_EXAMPLE } from './types/sprint.js';
 import { getStyle, isStyleSlug, styleSlugs } from './styles/presets.js';
 import { makeArtifact } from './make.js';
 import { MAKE_KINDS, isMakeKind } from './types/make.js';
@@ -106,13 +107,8 @@ const COMMAND_HELP: Record<string, CommandHelpEntry> = {
   sprint: {
     summary: 'Create review + retrospective + planning + 3 GIFs.',
     usage: 'beauty sprint --style <s> --brief sprint.json [--brief -] [--out folder]',
-    options: [
-      '  --brief <file>     JSON brief: sprint (required), team, date, summary,',
-      '                     metrics[], highlights[], blockers[], next[], quote',
-      '  --brief -          Read the sprint brief JSON from stdin (avoids os error 206)',
-      '  --out path         Output folder (defaults to beauty-output/sprint-<id>)',
-    ],
-    example: 'beauty sprint --style artdeco --brief sprint.json',
+    options: sprintHelpOptions(),
+    example: `beauty sprint --style isotype --brief sprint.json\n\n${SPRINT_BRIEF_EXAMPLE}`,
   },
   sequence: {
     summary: 'Create an SVG story + GIF from frames.',
@@ -151,38 +147,36 @@ const COMMAND_HELP: Record<string, CommandHelpEntry> = {
   },
   gif: {
     summary: 'Create a looping GIF.',
-    usage: 'beauty gif --style <s> --text "..." [--subtitle "..."] [--template title] [--fps 20] [--out file.gif]',
-    options: [
-      '  --text "..."       2–5 word headline',
-      '  --subtitle "..."   Small caption',
-      '  --template name    title|loop|poster',
-      '  --width / --height Pixels (240–1200)',
-      '  --fps / --duration Frame rate and seconds',
-      '  --maxxing          Full art direction',
-      '  --out path         Where to write the GIF',
-    ],
-    example: 'beauty gif --style artdeco --text "Subir" --subtitle "1930"',
+    usage: gifUsage(),
+    options: gifHelpOptions(),
+    example: 'beauty gif --style artdeco --text "Subir" --subtitle "1930" --poster',
   },
   validate: {
     summary: 'Audit HTML and return a grade, issues and fixes.',
-    usage: 'beauty validate <file> --style <s> [--strict]',
+    usage: 'beauty validate <file> --style <s> [--strict] [--visual] [--shots dir]',
     options: [
       '  <file>             HTML file to audit',
       '  --style <s>        Style the file must obey',
-      '  --strict            Exit 1 when the score is below 90',
+      '  --visual           Load it in Chromium at 360x780 and 1440x900',
+      '  --shots <dir>      Write visual-360.png and visual-1440.png (implies --visual)',
+      '  --strict           Exit 1 unless craft A (90+), vision 4/4 and no open warning',
+      '  Exit codes: 0 ok · 1 below the strict bar or an error · a skipped visual check never fails',
     ],
-    example: 'beauty validate out/nature.html --style nature --strict',
+    example: 'beauty validate out/nature.html --style nature --strict --visual',
   },
   fix: {
-    summary: 'Apply safe repairs and re-validate.',
-    usage: 'beauty fix <file> --style <s> [--out f.html] [--strict]',
+    summary: 'Apply safe repairs and re-validate with the same options as validate.',
+    usage: 'beauty fix <file> --style <s> [--out f.html] [--strict] [--visual] [--shots dir]',
     options: [
       '  <file>             HTML file to repair',
       '  --style <s>        Style the file must obey',
       '  --out path         Write to a new file instead of overwriting',
-      '  --strict            Exit 1 when the score is below 90',
+      '  --visual           Re-validate in Chromium and repair visual issues too',
+      '  --shots <dir>      Write visual-360.png and visual-1440.png (implies --visual)',
+      '  --strict           Exit 1 unless craft A (90+), vision 4/4 and no open warning',
+      '  Exit codes: 0 ok · 1 below the strict bar or an error · a skipped visual check never fails',
     ],
-    example: 'beauty fix out/nature.html --style nature',
+    example: 'beauty fix out/nature.html --style nature --visual',
   },
   examples: {
     summary: 'Show reference output paths.',
@@ -374,8 +368,8 @@ Commands:
   beauty gif --style <s> --text "..."        Create a looping GIF
       [--subtitle "..."] [--template title|loop|poster] [--fps 20] [--duration 2.4]
       [--width 800] [--height 800] [--maxxing] [--poster] [--out file.gif]
-  beauty validate <file> --style <s> [--strict]
-  beauty fix <file> --style <s> [--out f.html]
+  beauty validate <file> --style <s> [--strict] [--visual] [--shots dir]
+  beauty fix <file> --style <s> [--out f.html] [--strict] [--visual]
                                              Apply safe repairs and re-validate
   beauty examples                            Show reference output
   beauty doctor                              Check dist, fonts, runtime and Playwright
@@ -383,6 +377,7 @@ Commands:
   beauty version                             Print the package version
 
 Styles: ${styleSlugs.join(', ')}
+Exit codes for validate/fix: 0 ok · 1 below the strict bar (craft A/90 + vision 4/4) or an error.
 `;
 }
 
@@ -420,12 +415,13 @@ async function doctorReport(): Promise<void> {
     console.log(`native canvas: error · ${(error as Error).message} · fix: pnpm install`);
   }
 
-  try {
-    const require = createRequire(import.meta.url);
-    require.resolve('playwright');
-    console.log('playwright: installed · screenshot with `pnpm exec playwright screenshot <file|url> out.png`');
-  } catch {
-    console.log('playwright: not installed · fix: pnpm add -D playwright && pnpm exec playwright install chromium');
+  const playwright = locatePlaywright();
+  if (playwright) {
+    console.log(`playwright: found at ${playwright.root} (${playwright.source}) · visual checks enabled`);
+  } else {
+    console.log(
+      'playwright: not installed · fix: set BEAUTY_PLAYWRIGHT_ROOT to a playwright folder, or run pnpm add -D playwright && pnpm exec playwright install chromium',
+    );
   }
 
   console.log('status: ready');
@@ -724,17 +720,16 @@ async function main(): Promise<void> {
       const file = positionals[1];
       if (!file) throw new Error('Pass an HTML file to validate.');
       const style = requireStyle(stringFlag(flags, 'style'));
-      const html = await readFile(path.resolve(process.cwd(), file), 'utf8');
-      const result = html.includes('class="deck')
-        ? validateDeck(html, style)
-        : html.includes('class="xp ')
-          ? validateExperience(html, style)
-          : html.includes('class="story-page')
-            ? validateStory(html, style)
-            : validateHtml(html, style);
-      console.log(formatValidation(result));
-      console.log(`stats: ${JSON.stringify(result.stats)}`);
-      if (flags.strict && result.score < 90) process.exitCode = 1;
+      const source = path.resolve(process.cwd(), file);
+      const html = await readFile(source, 'utf8');
+      const shots = stringFlag(flags, 'shots');
+      const visual = booleanFlag(flags, 'visual') || shots !== undefined;
+      const report = await auditArtifact(html, style, { visual, shots, filePath: source });
+      console.log(formatValidation(report.result));
+      console.log(`stats: ${JSON.stringify(report.result.stats)}`);
+      if (visual && report.visual.status === 'skipped' && report.visual.message) console.log(report.visual.message);
+      if (report.visual.shots?.length) console.log(`shots: ${report.visual.shots.join(', ')}`);
+      if (booleanFlag(flags, 'strict') && !meetsStrictBar(report.result)) process.exitCode = 1;
       return;
     }
 
@@ -744,14 +739,19 @@ async function main(): Promise<void> {
       const style = requireStyle(stringFlag(flags, 'style'));
       const source = path.resolve(process.cwd(), file);
       const html = await readFile(source, 'utf8');
-      const result = fixHtml(html, style);
+      const shots = stringFlag(flags, 'shots');
+      const visual = booleanFlag(flags, 'visual') || shots !== undefined;
+      const result = await repairArtifact(html, style, { visual, shots, filePath: source });
       const out = stringFlag(flags, 'out');
       const target = out ? path.resolve(process.cwd(), out) : source;
       await writeFile(target, result.html, 'utf8');
       console.log(`${style} · ${result.before.score} → ${result.after.score} (${result.before.grade} → ${result.after.grade})`);
       console.log(`${result.fixes.length} repair(s): ${result.fixes.join(', ') || 'none'}`);
+      console.log(`post-check: ${formatValidation(result.afterResult).split('\n')[0]} · ${result.afterResult.issues.length} issue(s) remaining`);
+      if (visual && result.visual.status === 'skipped' && result.visual.message) console.log(result.visual.message);
+      if (result.visual.shots?.length) console.log(`shots: ${result.visual.shots.join(', ')}`);
       console.log(target);
-      if (flags.strict && result.after.score < 90) process.exitCode = 1;
+      if (booleanFlag(flags, 'strict') && !meetsStrictBar(result.afterResult)) process.exitCode = 1;
       return;
     }
 

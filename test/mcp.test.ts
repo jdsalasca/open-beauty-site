@@ -222,7 +222,11 @@ test('creates a museum experience over MCP', async () => {
 });
 
 test('creates a chaptered story over MCP', async () => {
-  const body = 'Una casa aprende a respirar cuando alguien la habita. La puerta cruje, el pasillo huele a lluvia y una silla se mueve cuando la memoria vuelve. No hay fantasmas: hay costumbres que ocupan el espacio. '.repeat(2);
+  const bodies = [
+    'Una casa aprende a respirar cuando alguien la habita. La puerta cruje, el pasillo huele a lluvia y una silla se mueve cuando la memoria vuelve. No hay fantasmas: hay costumbres que ocupan el espacio. Cada invierno el umbral se hincha y la madera recuerda el peso exacto de quien entraba sin llamar. La casa no guarda retratos, guarda rutinas. ',
+    'La silla se corre sola cada mediodía. Nadie la empuja; el piso de tablones guarda la huella de quien se sentaba a leer con la ventana abierta. La casa repite el gesto hasta que el gesto es suyo. A las tres de la tarde la sombra del marco cae sobre el asiento y el asiento espera. Esperar también es una forma de habitar. ',
+    'Cuando la casa respira, la calle entera baja el volumen. Las cortinas marcan el compás, el tejado suelta el calor de la siesta y la puerta queda entornada para que vuelva la memoria. Los vecinos dicen que es el viento; el gato sabe que no. Al anochecer el pasillo exhala y la casa vuelve a empezar. ',
+  ];
   const result = await client.callTool({
     name: 'beauty_create_story',
     arguments: {
@@ -231,9 +235,9 @@ test('creates a chaptered story over MCP', async () => {
       tagline: 'Un cuento sobre habitar.',
       source: 'Cuaderno de la casa',
       chapters: [
-        { kicker: 'I', title: 'La puerta', body },
-        { kicker: 'II', title: 'La silla', body },
-        { kicker: 'III', title: 'La casa', body },
+        { kicker: 'I', title: 'La puerta', body: bodies[0]! },
+        { kicker: 'II', title: 'La silla', body: bodies[1]! },
+        { kicker: 'III', title: 'La casa', body: bodies[2]! },
       ],
       output: 'story.html',
     },

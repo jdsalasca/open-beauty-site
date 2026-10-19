@@ -40,9 +40,14 @@ claude mcp add -s user open-beauty -- node "<repo>/dist/mcp/server.js"
 
 ### Cómo mirar tu salida
 
-El validador es una auditoría CSS, no un navegador. Mirá el render real antes de publicar:
+El validador estático lee el CSS; el pase visual con Playwright mira el render real. Mirá el render antes de publicar:
 
-- `beauty validate <file> --style <s> --strict` para el grado y las correcciones.
+- `beauty validate <file> --style <s> --strict --visual` para el grado, las correcciones y la geometría en 360x780 y 1440x900.
+- Añadí `--shots <dir>` para guardar `visual-360.png` y `visual-1440.png`.
+- Si Playwright no está disponible, el pase visual se **omite** con una línea de arreglo (`visual check skipped`); nunca falla ni aprueba en silencio.
+- Códigos de salida de `validate`/`fix`: `0` cumple; `1` no cumple el listón estricto (craft A, 90+, visión 4/4 y sin avisos abiertos) o hay un error; un chequeo visual omitido no cambia el código.
+- `beauty fix` revalida con exactamente las mismas opciones que `validate` (incluido `--visual`), así que ambos no pueden discrepar.
+
 - Abrí el HTML en un navegador en 360px, 768px y 1440px.
 - Capturá con Playwright una vez instalado:
 
@@ -72,7 +77,8 @@ Scroll-eá la página antes de capturar: las secciones aparecen al hacer scroll 
 | `beauty_create_deck` | Genera una presentación 16:9 | `beauty_create_deck({ style: "nature", title: "Té", slides: [...] })` |
 | `beauty_create_sprint` | Genera review + retro + planning + 3 GIFs | `beauty_create_sprint({ style: "artdeco", sprint: "16" })` |
 | `beauty_create_gif` | Genera un GIF editorial | `beauty_create_gif({ style: "artdeco", text: "Subir" })` |
-| `beauty_validate` | Audita HTML y devuelve grado y fixes | `beauty_validate({ style: "nature", path: "page.html" })` |
+| `beauty_validate` | Audita HTML y devuelve grado y fixes (`visual: true` incluye el pase de navegador) | `beauty_validate({ style: "nature", path: "page.html", visual: true })` |
+| `beauty_fix` | Repara y revalida con las mismas opciones | `beauty_fix({ style: "nature", path: "page.html", visual: true })` |
 | `beauty_examples` | Devuelve rutas de referencia | `beauty_examples()` |
 
 ## Galería de estilos
