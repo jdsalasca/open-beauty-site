@@ -19,6 +19,9 @@ import { MAKE_KINDS, isMakeKind } from './types/make.js';
 import { styleGuideMarkdown, stylesOverview } from './guide.js';
 import { ensureFonts } from './canvas.js';
 import { packageRoot } from './paths.js';
+import { createNarrative, narrativeFailure } from './narrative/create.js';
+import { NARRATIVE_BRIEF_EXAMPLE, narrativeHelpOptions } from './narrative/brief.js';
+import { NarrativeError } from './types/narrative.js';
 
 type Flags = Record<string, string | boolean>;
 
@@ -119,6 +122,12 @@ const COMMAND_HELP: Record<string, CommandHelpEntry> = {
       '  --out path         Base path; writes .svg and .gif',
     ],
     example: 'beauty sequence --style papercraft --brief seq.json --out out/sequence',
+  },
+  narrative: {
+    summary: 'Create a narrative GIF pack with separate evaluation levels.',
+    usage: 'beauty narrative --style <s> --brief brief.json [--out dir]',
+    options: narrativeHelpOptions(),
+    example: `beauty narrative --style papercraft --brief narrative.json --out out/narrative\n\n${NARRATIVE_BRIEF_EXAMPLE}`,
   },
   canvas: {
     summary: 'Create an open animated SVG canvas.',
@@ -361,6 +370,7 @@ Commands:
   beauty sprint --style <s> --brief sprint.json   Create review + retrospective + planning + 3 GIFs
       [--out dir]
   beauty sequence --style <s> --brief seq.json   Create an SVG story + GIF from frames
+  beauty narrative --style <s> --brief brief.json [--out dir]  Create a narrative GIF pack
   beauty canvas --style <s> --brief canvas.json  Create an open animated SVG canvas
   beauty motion --style <s> --title "..."      Create an animated SVG loop
       [--scene orbit|bloom|tide|papercut|constellation|ribbon|rain|type]
@@ -609,6 +619,26 @@ async function main(): Promise<void> {
       console.log(result.pathSvg);
       console.log(result.pathGif ?? 'no GIF');
       console.log(result.checks.map((check) => `${check.passed ? 'ok' : 'missing'} ${check.name}`).join(' · '));
+      return;
+    }
+
+    case 'narrative': {
+      const style = requireStyle(stringFlag(flags, 'style'));
+      const brief = (await loadBrief<Partial<Brief>>(stringFlag(flags, 'brief'))) as unknown;
+      const briefStyle = brief && typeof brief === 'object' ? (brief as Record<string, unknown>).style : undefined;
+      if (briefStyle !== style) {
+        const failure = narrativeFailure(new NarrativeError('INVALID_STATE', `--style ${style} must match brief.style ${String(briefStyle ?? '(missing)')}.`, 'Set the same registered style in the flag and the brief.', 'style'));
+        console.log(JSON.stringify(failure, null, 2));
+        process.exitCode = 1;
+        return;
+      }
+      try {
+        const result = await createNarrative(brief, { outputDir: stringFlag(flags, 'out') });
+        console.log(JSON.stringify(result, null, 2));
+      } catch (error) {
+        console.log(JSON.stringify(narrativeFailure(error), null, 2));
+        process.exitCode = 1;
+      }
       return;
     }
 

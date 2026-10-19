@@ -93,6 +93,22 @@ test('GIF encoding is deterministic: same input, same bytes', async () => {
   }
 });
 
+test('legacy GIF title layout reports overflow instead of silently dropping lines', async () => {
+  const dir = await tempDir();
+  try {
+    const result = await createGif('papercraft', {
+      ...base,
+      text: 'PALABRA '.repeat(24),
+      width: 320,
+      height: 320,
+      template: 'title',
+    }, path.join(dir, 'overflow.gif'));
+    assert.ok(result.warnings.some((warning) => warning.includes('gif-title-overflow')));
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+});
+
 test('absurd width/height/fps/duration are clamped with a clear message, not a crash', async () => {
   const dir = await tempDir();
   try {

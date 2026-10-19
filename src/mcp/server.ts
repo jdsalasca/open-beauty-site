@@ -26,6 +26,8 @@ import { presets, styleSlugs } from '../styles/presets.js';
 import { makeArtifact } from '../make.js';
 import { SKILL_FALLBACK, styleGuideMarkdown, stylesOverview } from '../guide.js';
 import { packageRoot } from '../paths.js';
+import { createNarrative, narrativeFailure } from '../narrative/create.js';
+import { NarrativeError } from '../types/narrative.js';
 
 const styleEnum = z.enum([
   'renaissance',
@@ -786,6 +788,33 @@ QUALITY BAR
         return text(args.include_svg ? `${summary}\n\n--- SVG ---\n${result.svg}` : summary);
       } catch (error) {
         return { content: [{ type: 'text' as const, text: `Sequence failed: ${(error as Error).message}` }], isError: true };
+      }
+    },
+  );
+
+  server.registerTool(
+    'beauty_create_narrative',
+    {
+      title: 'Create a narrative GIF review pack',
+      description:
+        'Validates one narrative-gif brief and, when a reviewed scene renderer exists for the style, returns real GIF/PNG/contact-sheet/manifest paths plus separate integrity, style, legibility, narrative and visual-review levels. The current foundation has no production scene renderers yet and reports STYLE_NOT_SUPPORTED_YET instead of substituting a generic style.',
+      inputSchema: {
+        style: styleEnum.describe('One of the 13 existing styles; must match brief.style.'),
+        brief: z.record(z.string(), z.unknown()).describe('The normalized narrative-gif JSON brief with 3–5 phases.'),
+        output: z.string().max(260).optional().describe('Output directory; defaults to beauty-output/narrative/<style>-<brief-hash>.'),
+      },
+    },
+    async ({ style, brief, output }) => {
+      try {
+        if (brief.style !== style) {
+          const result = narrativeFailure(new NarrativeError('INVALID_STATE', `style ${style} must match brief.style ${String(brief.style ?? '(missing)')}.`, 'Set the same style in both places.', 'style'));
+          return { content: [{ type: 'text' as const, text: JSON.stringify(result) }], structuredContent: { ...result }, isError: true };
+        }
+        const result = await createNarrative(brief, { outputDir: output });
+        return { content: [{ type: 'text' as const, text: JSON.stringify(result) }], structuredContent: { ...result } };
+      } catch (error) {
+        const result = narrativeFailure(error);
+        return { content: [{ type: 'text' as const, text: JSON.stringify(result) }], structuredContent: { ...result }, isError: true };
       }
     },
   );

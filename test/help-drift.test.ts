@@ -6,6 +6,7 @@ import test from 'node:test';
 import { distCliPath } from '../src/cli.js';
 import { GIF_FLAGS } from '../src/types/gif.js';
 import { sprintBriefSchema, sprintHelpOptions } from '../src/types/sprint.js';
+import { narrativeBriefSchema } from '../src/narrative/brief.js';
 
 /**
  * Help drift guards. `beauty sprint --help` and `beauty gif --help` are
@@ -64,4 +65,16 @@ test('sprint help options are generated from the schema keys', () => {
   for (const key of Object.keys(sprintBriefSchema.shape)) {
     assert.ok(options.includes(key), `sprintHelpOptions is missing "${key}"`);
   }
+});
+
+test('every narrative schema field and example appears in narrative --help', async () => {
+  const help = await runCli(['narrative', '--help']);
+  for (const key of Object.keys(narrativeBriefSchema.shape)) {
+    assert.ok(help.includes(key), `narrative --help is missing the schema field "${key}"`);
+  }
+  for (const flag of ['--style', '--brief', '--out']) {
+    assert.ok(help.includes(flag), `narrative --help is missing ${flag}`);
+  }
+  assert.match(help, /"kind": "narrative-gif"/);
+  assert.match(help, /Resultado esperado/);
 });
