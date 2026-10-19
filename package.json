@@ -46,6 +46,7 @@
   ],
   "scripts": {
     "setup": "pnpm install && pnpm build && pnpm test",
+    "prepare": "tsx src/cli.ts --prepare",
     "build": "tsc -p tsconfig.json",
     "dev": "tsx src/cli.ts",
     "mcp": "tsx src/mcp/server.ts",
