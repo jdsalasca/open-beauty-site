@@ -113,7 +113,7 @@ function drawCartouche(ctx: ReturnType<typeof canvasFor>['ctx'], field: Narrativ
   drawText(ctx, sceneText('ukiyoe', locale, 'review'), box.x + box.width * 0.10, box.y + box.height * 0.84, face, 500, 28, ink);
 }
 
-function drawReference(ctx: ReturnType<typeof canvasFor>['ctx'], field: NarrativeRect, ink: string, vermilion: string, face: string, locale: 'es' | 'en'): { x: number; y: number } {
+function drawReference(ctx: ReturnType<typeof canvasFor>['ctx'], field: NarrativeRect, ink: string, vermilion: string, face: string, locale: 'es' | 'en', semanticLabel = false): { x: number; y: number } {
   const point = { x: field.x + field.width * 0.94, y: field.y + field.height * 0.52 };
   ctx.fillStyle = vermilion;
   ctx.beginPath();
@@ -124,7 +124,18 @@ function drawReference(ctx: ReturnType<typeof canvasFor>['ctx'], field: Narrativ
   ctx.beginPath();
   ctx.arc(point.x, point.y, 4, 0, Math.PI * 2);
   ctx.stroke();
-  drawText(ctx, sceneText('ukiyoe', locale, 'signal'), point.x - 98, point.y - 20, face, 500, 28, ink);
+  if (semanticLabel) {
+    const panel = { x: point.x - 126, y: point.y + field.height * 0.17, width: 116, height: 38 };
+    ctx.fillStyle = '#F3E9D2';
+    ctx.fillRect(panel.x, panel.y, panel.width, panel.height);
+    ctx.strokeStyle = vermilion;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(panel.x, panel.y, panel.width, panel.height);
+    drawText(ctx, sceneText('ukiyoe', locale, 'signal'), panel.x + 8, panel.y + 27, face, 500, 28, ink);
+  } else {
+    // Preserve the historical legacy artwork exactly for opt-out and unsupported styles.
+    drawText(ctx, sceneText('ukiyoe', locale, 'signal'), point.x - 98, point.y - 20, face, 500, 28, ink);
+  }
   return point;
 }
 
@@ -461,7 +472,7 @@ function drawSemanticScene(context: NarrativeRenderContext, print: CoastPrint): 
   drawMountain(ctx, field, colors.blue, colors.mist);
   drawSea(ctx, field, 2, print, colors.blue, colors.mist, colors.moss);
   drawHorizon(ctx, field, preset.palette.ink);
-  drawReference(ctx, field, preset.palette.bg, colors.vermilion, context.fonts.effective.label.family, brief.locale);
+  drawReference(ctx, field, preset.palette.ink, colors.vermilion, context.fonts.effective.label.family, brief.locale, true);
   drawCartouche(ctx, field, preset.palette.ink, colors.vermilion, context.fonts.effective.label.family, brief.locale);
 
   if (semantic.primitive === 'file-download') {

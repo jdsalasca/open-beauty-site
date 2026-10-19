@@ -9,6 +9,7 @@ import { getNarrativeFontProfile } from '../src/narrative/fonts.js';
 import { layoutNarrative } from '../src/narrative/layout.js';
 import { getNarrativeScene, supportedNarrativeStyles } from '../src/narrative/scene.js';
 import { verifyNarrativeGif } from '../src/narrative/verify-gif.js';
+import { decodeGif } from './support/gif-frames.js';
 import type { NarrativeTimelineFrame } from '../src/types/narrative.js';
 
 const STYLE_FONTS = {
@@ -158,8 +159,10 @@ for (const style of Object.keys(STYLE_FONTS) as StageCStyle[]) {
       assert.ok(contrast?.passed, `${style} rendered label and body colors meet contrast controls`);
       assert.equal(manifest.evaluation['visual-review'].status, 'pending');
       assert.ok(manifest.phaseCaptures.some((capture: { labels: string[] }) => capture.labels.includes('reinicio del loop')));
+      const midpointLabel = style === 'ukiyoe' ? 'punto medio de transición' : 'transición media';
+      assert.ok(manifest.phaseCaptures.some((capture: { labels: string[] }) => capture.labels.some((label) => label.includes(midpointLabel))), `${style} contact records its transition midpoint`);
       for (const capture of manifest.phaseCaptures as Array<{ phaseId: string; labels: string[] }>) {
-        for (const label of ['inicio', 'transición media', 'pausa', 'salida']) {
+        for (const label of ['inicio', 'pausa', 'salida']) {
           assert.ok(capture.labels.some((value) => value.includes(label)), `${style}/${capture.phaseId ?? ''} contact includes ${label}`);
         }
       }
@@ -168,3 +171,34 @@ for (const style of Object.keys(STYLE_FONTS) as StageCStyle[]) {
     }
   });
 }
+
+test('ukiyoe upgraded midpoint keeps the reference label clear of the route and station marker', async () => {
+  const outputDir = await mkdtemp(path.join(os.tmpdir(), 'narrative-ukiyoe-reference-label-'));
+  try {
+    const result = await createNarrative(brief('ukiyoe', 'comparison', 1280, 720), { outputDir });
+    const manifest = JSON.parse(await readFile(result.paths.manifest, 'utf8')) as {
+      semanticObjectCaptures: Array<{ kind: string; label: string; frameIndex: number }>;
+    };
+    const midpoint = manifest.semanticObjectCaptures.find((capture) => capture.kind === 'transition' && capture.label.includes('punto medio de transición'));
+    assert.ok(midpoint, 'the upgraded semantic render records its decoded transition midpoint');
+    const decoded = decodeGif(await readFile(result.paths.gif));
+    const field = { x: 1280 * 0.5, y: 720 * 0.03, width: 1280 * 0.47, height: 720 * 0.94 };
+    const reference = { x: field.x + field.width * 0.94, y: field.y + field.height * 0.52 };
+    const panel = { x: Math.floor(reference.x - 126), y: Math.floor(reference.y + field.height * 0.17), width: 116, height: 38 };
+    const frame = decoded.frames[midpoint.frameIndex]!;
+    const framePixels = frame.rgb;
+    const pixelsNearPaper = (() => {
+      let count = 0;
+      for (let y = panel.y; y < panel.y + panel.height; y += 1) {
+        for (let x = panel.x; x < panel.x + panel.width; x += 1) {
+          const offset = (y * decoded.width + x) * 3;
+          if (framePixels[offset]! > 220 && framePixels[offset + 1]! > 205 && framePixels[offset + 2]! > 175) count += 1;
+        }
+      }
+      return count / (panel.width * panel.height);
+    })();
+    assert.ok(pixelsNearPaper >= 0.72, `the signal plaque must stay visibly open at the midpoint; paper coverage was ${(pixelsNearPaper * 100).toFixed(1)}%`);
+  } finally {
+    await rm(outputDir, { recursive: true, force: true });
+  }
+});
