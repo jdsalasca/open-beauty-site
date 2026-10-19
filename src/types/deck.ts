@@ -22,6 +22,32 @@ export const DECK_WORD_LIMIT = 55;
 export const DECK_POINT_LIMIT = 4;
 
 /**
+ * Character limits for authored deck copy. They match the MCP schemas and are
+ * enforced with a structured error: the renderer never clips user text.
+ */
+export const DECK_TEXT_LIMITS = {
+  deckTitle: 120,
+  tagline: 200,
+  intro: 900,
+  eyebrow: 60,
+  brand: 50,
+  author: 60,
+  date: 40,
+  closing: 120,
+  ctaLabel: 40,
+  ctaHref: 200,
+  kicker: 40,
+  slideTitle: 120,
+  slideBody: 300,
+  pointTitle: 80,
+  pointBody: 180,
+  statValue: 18,
+  statLabel: 48,
+  quoteText: 320,
+  quoteAuthor: 90,
+} as const;
+
+/**
  * A deck brief as accepted by the generator. `author` and `date` already live
  * on `DeckBrief`; this alias exists so deck code does not import the whole
  * type soup for one signature.

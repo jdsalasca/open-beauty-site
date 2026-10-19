@@ -163,16 +163,16 @@ export interface CreateDeckOptions {
   output?: string;
 }
 
-export async function createDeck({ style, brief, output }: CreateDeckOptions): Promise<PageResult & { slideCount: number; subfamily: string }> {
+export async function createDeck({ style, brief, output }: CreateDeckOptions): Promise<PageResult & { slideCount: number; subfamily: string; warnings: string[] }> {
   const deck = renderDeck({ style: getStyle(style), brief });
   const validation = validateDeck(deck.html, style);
   if (!output) {
-    return { html: deck.html, validation, slideCount: deck.slideCount, subfamily: deck.subfamily.name };
+    return { html: deck.html, validation, slideCount: deck.slideCount, subfamily: deck.subfamily.name, warnings: deck.warnings };
   }
   const absolute = path.resolve(process.cwd(), output);
   await mkdir(path.dirname(absolute), { recursive: true });
   await writeFile(absolute, deck.html, 'utf8');
-  return { html: deck.html, path: absolute, validation, slideCount: deck.slideCount, subfamily: deck.subfamily.name };
+  return { html: deck.html, path: absolute, validation, slideCount: deck.slideCount, subfamily: deck.subfamily.name, warnings: deck.warnings };
 }
 
 export interface CreateExperienceOptions {

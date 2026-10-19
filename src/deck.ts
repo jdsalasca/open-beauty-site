@@ -1,7 +1,7 @@
-import type { DeckBrief, DeckSlide, DeckStat, StylePreset, StyleSubfamily } from './types.js';
+import type { DeckBrief, DeckFigure, DeckSlide, DeckStat, SceneSubject, StorySceneKind, StylePreset, StyleSubfamily } from './types.js';
 import type { DeckBriefInput } from './types/deck.js';
-import { DECK_CONTENT_SLIDE_LIMIT, DECK_POINT_LIMIT, DECK_STAT_LIMIT } from './types/deck.js';
-import { BeautyError, clampText, esc, normalizeBrief, safeHref, shell, t } from './page/common.js';
+import { DECK_CONTENT_SLIDE_LIMIT, DECK_POINT_LIMIT, DECK_STAT_LIMIT, DECK_TEXT_LIMITS } from './types/deck.js';
+import { BeautyError, esc, safeHref, shell, t } from './page/common.js';
 import { accentTextColor, displayGlyphRatio, textOnAccent } from './a11y.js';
 import { motifFor } from './deck-motifs.js';
 import { applyMaxxing } from './maxxing.js';
@@ -17,6 +17,47 @@ export interface DeckResult {
   html: string;
   slideCount: number;
   subfamily: StyleSubfamily;
+  /** Explicit adapters or ignored intent; the CLI prints every warning. */
+  warnings: string[];
+}
+
+function normalizeText(value: unknown, limit: number, where: { slide?: string; field: string }, hint: string): string {
+  const text = String(value ?? '').trim();
+  if (text.length > limit) {
+    const subject = where.slide ? `The slide "${where.slide}"` : 'The deck brief';
+    throw new BeautyError(
+      `${subject} has ${where.field} with ${text.length} characters; the limit is ${limit}. ${hint}`,
+      'DECK_TEXT_TOO_LONG',
+    );
+  }
+  return text;
+}
+
+function optionalText(value: unknown, limit: number, field: string, hint: string, slide?: string): string | undefined {
+  if (value === undefined || value === null) return undefined;
+  return normalizeText(value, limit, { slide, field }, hint) || undefined;
+}
+
+function normalizeDeckBrief(input: DeckBriefInput) {
+  const title = normalizeText(input.title, DECK_TEXT_LIMITS.deckTitle, { field: 'title' }, 'Shorten the headline or move the extra words to the tagline.');
+  if (!title) {
+    throw new BeautyError('A page needs a title. Pass at least { title }.', 'MISSING_TITLE');
+  }
+  const ctaLabel = optionalText(input.cta?.label, DECK_TEXT_LIMITS.ctaLabel, 'cta.label', 'Shorten the call to action.');
+  const ctaHref = optionalText(input.cta?.href, DECK_TEXT_LIMITS.ctaHref, 'cta.href', 'Shorten the URL or link to a section.');
+  return {
+    title,
+    tagline: optionalText(input.tagline, DECK_TEXT_LIMITS.tagline, 'tagline', 'Shorten the tagline or split it into the intro.'),
+    intro: optionalText(input.intro, DECK_TEXT_LIMITS.intro, 'intro', 'Shorten the intro or split it across slides.'),
+    eyebrow: optionalText(input.eyebrow, DECK_TEXT_LIMITS.eyebrow, 'eyebrow', 'Shorten the eyebrow; it is a small label, not a sentence.'),
+    brand: optionalText(input.brand, DECK_TEXT_LIMITS.brand, 'brand', 'Shorten the brand name.'),
+    author: optionalText(input.author, DECK_TEXT_LIMITS.author, 'author', 'Shorten the author credit or move it to the closing.'),
+    date: optionalText(input.date, DECK_TEXT_LIMITS.date, 'date', 'Shorten the date or use a single range.'),
+    closing: optionalText(input.closing, DECK_TEXT_LIMITS.closing, 'closing', 'Shorten the closing headline or split it into two slides.'),
+    locale: input.locale === 'en' ? ('en' as const) : ('es' as const),
+    cta: ctaLabel ? { label: ctaLabel, href: ctaHref || '#' } : undefined,
+    maxxing: input.maxxing === true,
+  };
 }
 
 function firstSubfamily(preset: StylePreset): StyleSubfamily {
@@ -45,8 +86,10 @@ function normalizePoints(value: DeckSlide['points'], slide: string) {
     );
   }
   return points.map((point, index) => ({
-    title: String(point?.title ?? '').trim().slice(0, 80) || `Punto ${index + 1}`,
-    body: String(point?.body ?? '').trim().slice(0, 180) || undefined,
+    title:
+      normalizeText(point?.title, DECK_TEXT_LIMITS.pointTitle, { slide, field: `points[${index}].title` }, 'Shorten the point or move part of it to another point or slide.') ||
+      `Punto ${index + 1}`,
+    body: optionalText(point?.body, DECK_TEXT_LIMITS.pointBody, `points[${index}].body`, 'Shorten the point body or split it into two points.', slide),
   }));
 }
 
@@ -59,10 +102,21 @@ function normalizeStats(value: DeckSlide['stats'], slide: string): DeckStat[] {
       'DECK_TOO_MANY_STATS',
     );
   }
-  return stats.map((stat) => ({
-    value: String(stat?.value ?? '').trim().slice(0, 18) || '—',
-    label: String(stat?.label ?? '').trim().slice(0, 48) || 'Dato',
+  return stats.map((stat, index) => ({
+    value: normalizeText(stat?.value, DECK_TEXT_LIMITS.statValue, { slide, field: `stats[${index}].value` }, 'Shorten the value or move the detail to the label.') || '—',
+    label: normalizeText(stat?.label, DECK_TEXT_LIMITS.statLabel, { slide, field: `stats[${index}].label` }, 'Shorten the label or move the detail to a points slide.') || 'Dato',
   }));
+}
+
+function legacySections(sections: NonNullable<DeckBrief['sections']>): DeckSlide['points'] {
+  if (sections.length > DECK_POINT_LIMIT) {
+    throw new BeautyError(
+      `The deck brief has ${sections.length} sections; the fallback points slide supports at most ${DECK_POINT_LIMIT}. ` +
+        'Split them into explicit slides so no section is lost.',
+      'DECK_TOO_MANY_SECTIONS',
+    );
+  }
+  return sections.map((section) => ({ title: section.title, body: section.body }));
 }
 
 function normalizeSlides(preset: StylePreset, brief: Partial<DeckBrief>): DeckSlide[] {
@@ -79,12 +133,21 @@ function normalizeSlides(preset: StylePreset, brief: Partial<DeckBrief>): DeckSl
                 layout: 'points' as const,
                 kicker: 'En tres movimientos',
                 title: brief.tagline || fallbackTitle,
-                points: brief.sections.slice(0, 3).map((section) => ({ title: section.title, body: section.body })),
+                points: legacySections(brief.sections),
               },
             ]
           : []),
         ...(brief.quote ? [{ layout: 'quote' as const, kicker: 'Una voz', title: 'Cita', quote: brief.quote }] : []),
       ];
+
+  if (!brief.slides?.length && brief.intro && String(brief.intro).trim().length > DECK_TEXT_LIMITS.slideBody) {
+    const count = String(brief.intro).trim().length;
+    throw new BeautyError(
+      `The deck brief has intro with ${count} characters; without content slides it becomes the statement slide body, limited to ${DECK_TEXT_LIMITS.slideBody}. ` +
+        'Add explicit slides to split the intro, or shorten it.',
+      'DECK_INTRO_TOO_LONG',
+    );
+  }
 
   if (brief.slides && brief.slides.length > DECK_CONTENT_SLIDE_LIMIT) {
     throw new BeautyError(
@@ -101,15 +164,21 @@ function normalizeSlides(preset: StylePreset, brief: Partial<DeckBrief>): DeckSl
     const layout =
       slide.layout ??
       (slide.figure ? 'figure' : slide.quote ? 'quote' : stats.length ? 'stats' : points.length ? 'points' : 'statement');
+    const quoteText = optionalText(slide.quote?.text, DECK_TEXT_LIMITS.quoteText, 'quote.text', 'Shorten the quote or split it across two slides.', label);
     return {
       layout,
-      kicker: String(slide.kicker ?? '').trim().slice(0, 40) || `${String(index + 2).padStart(2, '0')} / ${preset.name}`,
-      title: String(slide.title ?? '').trim().slice(0, 120) || fallbackTitle,
-      body: String(slide.body ?? '').trim().slice(0, 300) || undefined,
+      kicker:
+        normalizeText(slide.kicker, DECK_TEXT_LIMITS.kicker, { slide: label, field: 'kicker' }, 'Shorten the kicker or move part of it to the title.') ||
+        `${String(index + 2).padStart(2, '0')} / ${preset.name}`,
+      title: normalizeText(slide.title, DECK_TEXT_LIMITS.slideTitle, { slide: label, field: 'title' }, 'Shorten the title or split the slide in two.') || fallbackTitle,
+      body: optionalText(slide.body, DECK_TEXT_LIMITS.slideBody, 'body', 'Shorten the body or split the content into another slide.', label),
       points: points.length ? points : undefined,
       stats: stats.length ? stats : undefined,
-      quote: slide.quote?.text
-        ? { text: String(slide.quote.text).slice(0, 240), author: String(slide.quote.author ?? '').slice(0, 60) || undefined }
+      quote: quoteText
+        ? {
+            text: quoteText,
+            author: optionalText(slide.quote?.author, DECK_TEXT_LIMITS.quoteAuthor, 'quote.author', 'Shorten the attribution or move it to the caption.', label),
+          }
         : undefined,
       figure: slide.figure,
     } satisfies DeckSlide;
@@ -130,15 +199,84 @@ function normalizeSlides(preset: StylePreset, brief: Partial<DeckBrief>): DeckSl
   return slides;
 }
 
-function renderSlideContent(slide: DeckSlide, index: number, style: StylePreset): string {
+const FIGURE_SUBJECTS: readonly SceneSubject[] = ['table', 'vitrine', 'river', 'house', 'stage', 'plant', 'window', 'none'];
+
+/** Story scenes that map one-to-one onto a sceneArt subject. */
+const EXACT_SCENE_SUBJECTS = new Set<StorySceneKind>(['house', 'river']);
+
+const SCENE_SUBJECTS: Record<StorySceneKind, SceneSubject> = {
+  meadow: 'plant',
+  forest: 'plant',
+  garden: 'plant',
+  house: 'house',
+  river: 'river',
+  night: 'window',
+  market: 'table',
+  room: 'table',
+};
+
+function resolveFigureSubject(figure: DeckFigure, style: StylePreset, slide: string, warnings: string[]): SceneSubject {
+  if (figure.subject !== undefined) {
+    if (!FIGURE_SUBJECTS.includes(figure.subject)) {
+      throw new BeautyError(
+        `The slide "${slide}" requests figure.subject "${String(figure.subject)}", which sceneArt does not support. ` +
+          `Use one of: ${FIGURE_SUBJECTS.join(', ')}.`,
+        'DECK_UNKNOWN_FIGURE_SUBJECT',
+      );
+    }
+    return figure.subject;
+  }
+  const kind = figure.scene?.kind;
+  if (kind === undefined) {
+    if (figure.scene) {
+      warnings.push(
+        `The slide "${slide}" provides figure.scene without a kind; ${style.name} renders no subject. ` +
+          'Set scene.kind or figure.subject.',
+      );
+    }
+    return 'none';
+  }
+  if (!Object.hasOwn(SCENE_SUBJECTS, String(kind))) {
+    throw new BeautyError(
+      `The slide "${slide}" requests unknown figure.scene.kind "${String(kind)}". ` +
+        `Supported scenes: ${Object.keys(SCENE_SUBJECTS).join(', ')}. ` +
+        `Pass figure.subject with one of: ${FIGURE_SUBJECTS.join(', ')}.`,
+      'DECK_UNKNOWN_FIGURE_SCENE',
+    );
+  }
+  const subject = SCENE_SUBJECTS[kind];
+  if (!EXACT_SCENE_SUBJECTS.has(kind)) {
+    warnings.push(
+      `The slide "${slide}" requests scene "${kind}"; ${style.name} represents it with the "${subject}" subject. ` +
+        'Pass figure.subject to choose a different subject.',
+    );
+  }
+  return subject;
+}
+
+function renderSlideContent(slide: DeckSlide, index: number, style: StylePreset, warnings: string[]): string {
   const kicker = `<p class="kicker anim" style="--a:0">${esc(slide.kicker ?? '')}</p>`;
   if (slide.layout === 'figure' && slide.figure) {
     const scene = slide.figure.scene ?? { kind: 'meadow', characters: ['rabbit'], props: ['pine', 'tree', 'flowers'] };
-    const art = style.slug === 'papercraft' ? papercutScene(style, scene, index + 2) : sceneArt(style, index + 2, slide.kicker || 'FIGURA', 'house');
+    let art: string;
+    let subjectAttribute = '';
+    if (style.slug === 'papercraft') {
+      if (slide.figure.subject !== undefined) {
+        warnings.push(
+          `The slide "${slide.title}" uses the papercraft style, which renders figure.scene; ` +
+            `figure.subject "${String(slide.figure.subject)}" was ignored.`,
+        );
+      }
+      art = papercutScene(style, scene, index + 2);
+    } else {
+      const subject = resolveFigureSubject(slide.figure, style, slide.title, warnings);
+      art = sceneArt(style, index + 2, slide.kicker || 'FIGURA', subject);
+      subjectAttribute = ` data-scene-subject="${subject}"`;
+    }
     return `<div class="slide-inner">
       ${kicker}
       <h2 class="anim" style="--a:1">${esc(slide.title)}</h2>
-      <figure class="deck-figure anim" style="--a:2">${art}<figcaption>${esc(slide.figure.caption || '')}${slide.figure.source ? `<span>${esc(slide.figure.source)}</span>` : ''}</figcaption></figure>
+      <figure class="deck-figure anim" style="--a:2"${subjectAttribute}>${art}<figcaption>${esc(slide.figure.caption || '')}${slide.figure.source ? `<span>${esc(slide.figure.source)}</span>` : ''}</figcaption></figure>
     </div>`;
   }
   if (slide.layout === 'quote' && slide.quote) {
@@ -178,8 +316,9 @@ function renderSlideContent(slide: DeckSlide, index: number, style: StylePreset)
 }
 
 export function renderDeck({ style, brief: input }: DeckOptions): DeckResult {
-  const brief = normalizeBrief(input);
-  const locale = brief.locale ?? 'es';
+  const brief = normalizeDeckBrief(input);
+  const warnings: string[] = [];
+  const locale = brief.locale;
   const subfamily = subfamilyFor(style, input.subfamily);
   const slides = normalizeSlides(style, input);
   const accent = style.palette[subfamily.accent];
@@ -187,10 +326,10 @@ export function renderDeck({ style, brief: input }: DeckOptions): DeckResult {
   const accentOn = textOnAccent(style.palette, accent);
   const accentText = accentTextColor(style.palette, accent);
   const cta = brief.cta ?? { label: t(locale, 'Gracias', 'Thank you'), href: '#' };
-  const closingTitle = input.closing || t(locale, 'La conversación sigue.', 'The conversation continues.');
+  const closingTitle = brief.closing || t(locale, 'La conversación sigue.', 'The conversation continues.');
   const brand = brief.brand || brief.title;
-  const author = clampText(input.author, 60) || undefined;
-  const date = clampText(input.date, 40) || undefined;
+  const author = brief.author;
+  const date = brief.date;
   const total = slides.length + 2;
   const display = style.fonts.display;
   const bodyFont = style.fonts.body;
@@ -212,7 +351,7 @@ export function renderDeck({ style, brief: input }: DeckOptions): DeckResult {
     .map(
       (slide, index) => `<section class="slide layout-${slide.layout}" data-index="${index + 1}" aria-hidden="true" aria-roledescription="slide" aria-label="Diapositiva ${index + 2} de ${total}" inert>
         <span class="slide-watermark" aria-hidden="true">${String(index + 2).padStart(2, '0')}</span>
-        ${renderSlideContent(slide, index, style)}
+        ${renderSlideContent(slide, index, style, warnings)}
         <span class="slide-number">${String(index + 2).padStart(2, '0')} / ${String(total).padStart(2, '0')}</span>
       </section>`,
     )
@@ -416,5 +555,6 @@ ${motifFor(style.slug)}
     html: brief.maxxing ? applyMaxxing(html, style) : html,
     slideCount: total,
     subfamily,
+    warnings,
   };
 }

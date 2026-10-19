@@ -659,6 +659,7 @@ async function main(): Promise<void> {
       console.log(`${getStyle(style).name} deck · ${result.slideCount} slides · ${result.subfamily}`);
       console.log(`${result.validation.grade} ${result.validation.score}/100 · vision ${result.validation.vision.score}/4`);
       console.log(result.path);
+      for (const warning of result.warnings) console.log(`warning: ${warning}`);
       if (result.validation.issues.length) console.log(formatValidation(result.validation));
       return;
     }

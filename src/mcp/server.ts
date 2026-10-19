@@ -111,13 +111,14 @@ const deckSlideSchema = z.object({
   figure: z.object({
     caption: z.string().max(140).optional(),
     source: z.string().max(120).optional(),
+    subject: z.enum(['table', 'vitrine', 'river', 'house', 'stage', 'plant', 'window', 'none']).optional().describe('Non-papercraft subject. Takes precedence over scene.kind; use it to avoid a generic house.'),
     scene: z.object({
       kind: z.enum(['meadow', 'forest', 'garden', 'house', 'river', 'night', 'market', 'room']).optional(),
       characters: z.array(z.enum(['rabbit', 'cat', 'fox', 'bird', 'child'])).max(4).optional(),
       props: z.array(z.enum(['pine', 'tree', 'house', 'gate', 'table', 'lantern', 'basket', 'flowers', 'boat'])).max(8).optional(),
       caption: z.string().max(120).optional(),
     }).optional(),
-  }).optional().describe('Figure layout: papercut scene with caption and source.'),
+  }).optional().describe('Figure layout: scene, explicit subject, caption and source.'),
 });
 
 const experienceItemSchema = z.object({
@@ -518,6 +519,7 @@ QUALITY BAR
           `grade: ${result.validation.grade} (${result.validation.score}/100)`,
           `vision: ${result.validation.vision.score}/4 (${result.validation.vision.checks.map((check) => `${check.name}:${check.passed ? 'ok' : 'missing'}`).join(' · ')})`,
           `issues: ${result.validation.issues.length}`,
+          ...(result.warnings.length ? [`warnings:\n${result.warnings.map((warning) => `- ${warning}`).join('\n')}`] : []),
           `\nNavigation: ← → / space, Home/End, F for fullscreen, swipe on touch.`,
           `\nNext: open the file, or call beauty_validate if you edit it.`,
         ].join('\n');
