@@ -15,5 +15,6 @@ export { createSprintKit } from './sprint.js';
 export type { SprintKitResult, SprintKitFile } from './sprint.js';
 export { sceneArt } from './art.js';
 export { BeautyError } from './page/common.js';
+export * from './narrative/index.js';
 
 export const VERSION = '0.1.0';

@@ -59,6 +59,7 @@
     "compare": "tsx scripts/build-compare.ts",
     "coverage:matrix": "tsx scripts/coverage-matrix.ts",
     "visual:matrix": "tsx scripts/visual-matrix.ts",
+    "fonts:check": "tsx scripts/narrative-fonts-check.ts",
     "docs:build": "tsx scripts/build-docs.ts",
     "e2e:colmena": "tsx scripts/e2e-colmena.ts",
     "check": "tsc -p tsconfig.json --noEmit",

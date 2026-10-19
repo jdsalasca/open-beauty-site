@@ -23,16 +23,21 @@ export function ensureFonts(): void {
   if (registered) return;
   const root = packageRoot();
   const missing: string[] = [];
+  const failedRegistration: string[] = [];
   for (const [file, family] of FONT_FILES) {
     const filePath = path.join(root, 'fonts', file);
     if (!existsSync(filePath)) {
       missing.push(file);
       continue;
     }
-    GlobalFonts.registerFromPath(filePath, family);
+    if (!GlobalFonts.registerFromPath(filePath, family)) failedRegistration.push(file);
   }
-  if (missing.length) {
-    throw new BeautyError(`Missing bundled font files: ${missing.join(', ')}`, 'FONTS_MISSING');
+  if (missing.length || failedRegistration.length) {
+    const details = [
+      missing.length ? `missing bundled files: ${missing.join(', ')}` : '',
+      failedRegistration.length ? `failed to register: ${failedRegistration.join(', ')}` : '',
+    ].filter(Boolean).join('; ');
+    throw new BeautyError(`Bundled fonts unavailable (${details}).`, 'FONTS_MISSING');
   }
   registered = true;
 }
