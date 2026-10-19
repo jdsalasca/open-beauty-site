@@ -57,6 +57,9 @@ test('the six-slide composition deck passes every slide audit in all thirteen st
       [],
       `${style}: open deck diagnostics`,
     );
+    assert.match(deck.html, /prefers-reduced-motion/, `${style}: reduced-motion fallback`);
+    assert.match(deck.html, /ArrowRight/, `${style}: keyboard navigation`);
+    assert.doesNotMatch(deck.html, /user-select:\s*none/i, `${style}: text must stay selectable`);
     items.push({ html: deck.html, style, label: `${style}-composition` });
   }
 
