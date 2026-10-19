@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "commit": "8d55d1ae9ac9dd5266dcf8f12f8ee95aee5e8220",
+  "commit": "4aab5320620c665f4e419e3045ec89fc3fa05099",
   "brief": {
     "style": "brutalist",
     "subfamily": "documentary",
@@ -261,15 +261,15 @@
     "detail": "ffprobe 640×360; 28 frames; 10720ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 267125,
-    "png": 17900,
-    "contactSheet": 88130
+    "gif": 262596,
+    "png": 17921,
+    "contactSheet": 88522
   },
   "hashes": {
     "briefSha256": "723aad946da2c9f47067f403f2e0610c36b13a70a02ef4cb45fa909afab44b0c",
-    "gifSha256": "5e2f941b7d1e076687a9812a4e25186726cdd9dacd3c165995a61e5907f854c7",
-    "pngSha256": "5920dccc51ae48df32cb307098f8c1c92970d2fe5e4e4136b03133a17110c49b",
-    "contactSheetSha256": "acf1e3a582b73c1a47bc1ac0ccaa99a879176233e21281e9c425f94cf215be7a"
+    "gifSha256": "6768eec8d87a0e783dfc2f90100e669a153317207ef1114fe8fab14e16537c9f",
+    "pngSha256": "02fcf4526eaa3e2af100524640e237d15a7c0208d86a83f5d089a3f5ad1649d5",
+    "contactSheetSha256": "80515c5ed4efba50a8cf47799549401e7332124f549084457a6df7d6ec4566f6"
   },
   "files": {
     "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\descarga-pendiente\\en\\pdf-3a3d7875.gif",
@@ -322,7 +322,7 @@
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 267125B · PNG 17900B · contact 88130B",
+      "detail": "GIF 262596B · PNG 17921B · contact 88522B",
       "source": "decoded"
     },
     {
@@ -358,7 +358,7 @@
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "62 colors; mean channel loss 0.258, max 8; sampled 28 frames",
+      "detail": "54 colors; mean channel loss 0.279, max 8; sampled 28 frames",
       "source": "pixels"
     },
     {
@@ -443,7 +443,7 @@
     {
       "name": "composition-balance",
       "passed": true,
-      "detail": "proxy; 8×4 decoded-pixel grid against #F2EFE4: empty cells 21.9%, text-column vertical fill 100.0%, art/object area outside the text column 46.9%, largest empty rectangle 12.5%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: download-started · hold: empty 21.9%, text fill 100.0%, art 46.9%, largest empty 12.5% | download-started → timeout · transition midpoint: empty 21.9%, text fill 100.0%, art 46.9%, largest empty 12.5% | timeout · hold: empty 21.9%, text fill 100.0%, art 46.9%, largest empty 12.5% | timeout → retry-requested · transition midpoint: empty 21.9%, text fill 100.0%, art 46.9%, largest empty 12.5% | retry-requested · hold: empty 21.9%, text fill 100.0%, art 46.9%, largest empty 12.5% | retry-requested → result-pending · transition midpoint: empty 18.8%, text fill 100.0%, art 46.9%, largest empty 6.3% | result-pending · hold: empty 18.8%, text fill 100.0%, art 46.9%, largest empty 6.3% | result-pending → download-started · loop join: empty 21.9%, text fill 100.0%, art 46.9%, largest empty 12.5%",
+      "detail": "proxy; 8×4 decoded-pixel grid against #F2EFE4: empty cells 18.8%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 12.5%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: download-started · hold: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 12.5% | download-started → timeout · transition midpoint: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 12.5% | timeout · hold: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 12.5% | timeout → retry-requested · transition midpoint: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 12.5% | retry-requested · hold: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 12.5% | retry-requested → result-pending · transition midpoint: empty 15.6%, text fill 100.0%, art 50.0%, largest empty 6.3% | result-pending · hold: empty 15.6%, text fill 100.0%, art 50.0%, largest empty 6.3% | result-pending → download-started · loop join: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 12.5%",
       "source": "pixels"
     },
     {
@@ -604,7 +604,7 @@
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 267125B · PNG 17900B · contact 88130B",
+          "detail": "GIF 262596B · PNG 17921B · contact 88522B",
           "source": "decoded"
         }
       ]
@@ -647,7 +647,7 @@
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "62 colors; mean channel loss 0.258, max 8; sampled 28 frames",
+          "detail": "54 colors; mean channel loss 0.279, max 8; sampled 28 frames",
           "source": "pixels"
         }
       ],
@@ -738,7 +738,7 @@
         {
           "name": "composition-balance",
           "passed": true,
-          "detail": "proxy; 8×4 decoded-pixel grid against #F2EFE4: empty cells 21.9%, text-column vertical fill 100.0%, art/object area outside the text column 46.9%, largest empty rectangle 12.5%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: download-started · hold: empty 21.9%, text fill 100.0%, art 46.9%, largest empty 12.5% | download-started → timeout · transition midpoint: empty 21.9%, text fill 100.0%, art 46.9%, largest empty 12.5% | timeout · hold: empty 21.9%, text fill 100.0%, art 46.9%, largest empty 12.5% | timeout → retry-requested · transition midpoint: empty 21.9%, text fill 100.0%, art 46.9%, largest empty 12.5% | retry-requested · hold: empty 21.9%, text fill 100.0%, art 46.9%, largest empty 12.5% | retry-requested → result-pending · transition midpoint: empty 18.8%, text fill 100.0%, art 46.9%, largest empty 6.3% | result-pending · hold: empty 18.8%, text fill 100.0%, art 46.9%, largest empty 6.3% | result-pending → download-started · loop join: empty 21.9%, text fill 100.0%, art 46.9%, largest empty 12.5%",
+          "detail": "proxy; 8×4 decoded-pixel grid against #F2EFE4: empty cells 18.8%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 12.5%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: download-started · hold: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 12.5% | download-started → timeout · transition midpoint: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 12.5% | timeout · hold: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 12.5% | timeout → retry-requested · transition midpoint: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 12.5% | retry-requested · hold: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 12.5% | retry-requested → result-pending · transition midpoint: empty 15.6%, text fill 100.0%, art 50.0%, largest empty 6.3% | result-pending · hold: empty 15.6%, text fill 100.0%, art 50.0%, largest empty 6.3% | result-pending → download-started · loop join: empty 18.8%, text fill 100.0%, art 50.0%, largest empty 12.5%",
           "source": "pixels"
         },
         {
@@ -1410,79 +1410,79 @@
     {
       "label": "download-started · hold",
       "metrics": {
-        "emptyCellRatio": 0.21875,
+        "emptyCellRatio": 0.1875,
         "textColumnFillRatio": 1,
-        "objectAreaRatio": 0.46875,
+        "objectAreaRatio": 0.5,
         "largestEmptyRectangleRatio": 0.125
       }
     },
     {
       "label": "download-started → timeout · transition midpoint",
       "metrics": {
-        "emptyCellRatio": 0.21875,
+        "emptyCellRatio": 0.1875,
         "textColumnFillRatio": 1,
-        "objectAreaRatio": 0.46875,
+        "objectAreaRatio": 0.5,
         "largestEmptyRectangleRatio": 0.125
       }
     },
     {
       "label": "timeout · hold",
       "metrics": {
-        "emptyCellRatio": 0.21875,
+        "emptyCellRatio": 0.1875,
         "textColumnFillRatio": 1,
-        "objectAreaRatio": 0.46875,
+        "objectAreaRatio": 0.5,
         "largestEmptyRectangleRatio": 0.125
       }
     },
     {
       "label": "timeout → retry-requested · transition midpoint",
       "metrics": {
-        "emptyCellRatio": 0.21875,
+        "emptyCellRatio": 0.1875,
         "textColumnFillRatio": 1,
-        "objectAreaRatio": 0.46875,
+        "objectAreaRatio": 0.5,
         "largestEmptyRectangleRatio": 0.125
       }
     },
     {
       "label": "retry-requested · hold",
       "metrics": {
-        "emptyCellRatio": 0.21875,
+        "emptyCellRatio": 0.1875,
         "textColumnFillRatio": 1,
-        "objectAreaRatio": 0.46875,
+        "objectAreaRatio": 0.5,
         "largestEmptyRectangleRatio": 0.125
       }
     },
     {
       "label": "retry-requested → result-pending · transition midpoint",
       "metrics": {
-        "emptyCellRatio": 0.1875,
+        "emptyCellRatio": 0.15625,
         "textColumnFillRatio": 1,
-        "objectAreaRatio": 0.46875,
+        "objectAreaRatio": 0.5,
         "largestEmptyRectangleRatio": 0.0625
       }
     },
     {
       "label": "result-pending · hold",
       "metrics": {
-        "emptyCellRatio": 0.1875,
+        "emptyCellRatio": 0.15625,
         "textColumnFillRatio": 1,
-        "objectAreaRatio": 0.46875,
+        "objectAreaRatio": 0.5,
         "largestEmptyRectangleRatio": 0.0625
       }
     },
     {
       "label": "result-pending → download-started · loop join",
       "metrics": {
-        "emptyCellRatio": 0.21875,
+        "emptyCellRatio": 0.1875,
         "textColumnFillRatio": 1,
-        "objectAreaRatio": 0.46875,
+        "objectAreaRatio": 0.5,
         "largestEmptyRectangleRatio": 0.125
       }
     }
   ],
   "palette": {
-    "colors": 62,
-    "meanAbsoluteChannelError": 0.258,
+    "colors": 54,
+    "meanAbsoluteChannelError": 0.279,
     "maximumChannelError": 8,
     "sampledFrames": 28
   },

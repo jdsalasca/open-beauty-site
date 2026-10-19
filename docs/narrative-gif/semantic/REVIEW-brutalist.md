@@ -32,6 +32,13 @@
 - **Ajuste:** filas queda en cuatro fases y el estado `reviewed` agrega una anotación `CONSERVADA/RETAINED` en el espacio libre inferior del ledger. El contador termina en estado `pending` e imprime `ESPERADO/EXPECTED` en una casilla bajo el número. Ambas marcas se localizan y quedan dentro de las regiones comparadas.
 - **Comprobación:** se regeneraron los paquetes y revisé las hojas de contacto y PNG nativos corregidos. Las transformaciones declaradas de las doce escenas principales pasan en sus manifiestos; ninguna marca cubre el texto de una fila o el número del contador.
 
+### 5. Un solo bloque de acento
+
+- **Inspección:** hojas de contacto actualizadas de contador y descarga, es/en.
+- **Defecto:** las bandas lima repetidas dentro de la descarga y el total disputaban protagonismo con la cabecera del ledger, aunque la dirección documental pide un solo bloque de acento.
+- **Ajuste:** la cabecera del registro conserva el lima; bandas y paneles de archivo/cantidad quedan neutrales. El error sigue marcado en rojo y el progreso conserva su barra roja.
+- **Comprobación:** los renders actuales mantienen una sola banda lima visible; el error `TIMEOUT`, 42%, el reintento y el valor quedan distinguibles en sus casillas. Los GIFs y manifiestos se regeneraron desde el commit `4aab532`.
+
 ## Medidas y evidencia de entrega
 
 En los seis briefs brutalist, `rendered-legibility` informa mínimo efectivo de 14.0 px para cada caja declarada del objeto, a 640×360. Titulares numéricos: 20.0 px para progreso de descarga y 28.0 px para el contador. Filas no declara titular numérico. Los manifiestos registran dimensiones 640×360, decodificación íntegra, cuadros, duración, hashes, controles de transformación semántica y tamaños de GIF/PNG/contacto. Cada fixture es bilingüe y tiene variante solo arte. La tabla de tamaños y los enlaces están en [README.md](README.md); los paquetes viven en `brutalist/filas-duplicadas/`, `brutalist/descarga-pendiente/` y `brutalist/contador-coleccion/`.

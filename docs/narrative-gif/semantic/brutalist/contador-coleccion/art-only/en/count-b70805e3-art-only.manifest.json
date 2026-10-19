@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "commit": "8d55d1ae9ac9dd5266dcf8f12f8ee95aee5e8220",
+  "commit": "4aab5320620c665f4e419e3045ec89fc3fa05099",
   "brief": {
     "style": "brutalist",
     "subfamily": "documentary",
@@ -316,15 +316,15 @@
     "detail": "ffprobe 640×360; 21 frames; 8040ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 125543,
-    "png": 7020,
-    "contactSheet": 41267
+    "gif": 123191,
+    "png": 7169,
+    "contactSheet": 41534
   },
   "hashes": {
     "briefSha256": "9db6be05a97c85cf40268ea42449b387ebe6662535b7f517cd828022ff1d0f0b",
-    "gifSha256": "0c227111c5978216289dec80cdec30d598884b783c401c6344ab8a58b3284aea",
-    "pngSha256": "9da8dd911dae9af69a86d1f9ddd9d4e7a5c8ca775b8675292a5eb672edaf4125",
-    "contactSheetSha256": "541e342a416a90c44d1713ac7bf760ce1b987166bb971bdb384d8becc33510fe"
+    "gifSha256": "de866de847c4f21822026d9f13a06f64c185ecb866e6ccd7bf5167762f1333d9",
+    "pngSha256": "537b928fe391eadd21a45b37528af25731b8e992419e74ef87053491c36fe5be",
+    "contactSheetSha256": "e99d6c475fd4b11ef1db2755b15b10b70b87ca3e6701824342b325bb0034cb5b"
   },
   "files": {
     "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\contador-coleccion\\art-only\\en\\count-b70805e3-art-only.gif",
@@ -377,7 +377,7 @@
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 125543B · PNG 7020B · contact 41267B",
+      "detail": "GIF 123191B · PNG 7169B · contact 41534B",
       "source": "decoded"
     },
     {
@@ -413,7 +413,7 @@
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "40 colors; mean channel loss 0.183, max 7; sampled 21 frames",
+      "detail": "36 colors; mean channel loss 0.193, max 7; sampled 21 frames",
       "source": "pixels"
     },
     {
@@ -553,7 +553,7 @@
     {
       "name": "semantic-object-midpoint:scope-of-two → third-card-included · transition midpoint",
       "passed": true,
-      "detail": "decoded object diff 5.3%; changed-state entities: counter; counter value→increased 3.8%, card-a default→default 22.0%, card-b default→default 23.3%",
+      "detail": "decoded object diff 5.3%; changed-state entities: counter; counter value→increased 3.8%, card-a default→default 22.1%, card-b default→default 23.4%",
       "source": "decoded"
     },
     {
@@ -565,13 +565,13 @@
     {
       "name": "semantic-object-midpoint:set-of-three → scope-of-two · loop join",
       "passed": true,
-      "detail": "decoded object diff 6.8%; changed-state entities: counter, card-c; counter pending→value 5.3%, card-a default→default 18.6%, card-b default→default 22.6%, card-c accepted→pending 14.3%",
+      "detail": "decoded object diff 6.8%; changed-state entities: counter, card-c; counter pending→value 5.4%, card-a default→default 18.6%, card-b default→default 22.7%, card-c accepted→pending 14.4%",
       "source": "decoded"
     },
     {
       "name": "semantic-object-transformation:scope-of-two → third-card-included hold",
       "passed": true,
-      "detail": "decoded object diff 5.1%; changed-state entities: counter; counter value→increased 3.8%, card-a default→default 18.6%, card-b default→default 22.6%",
+      "detail": "decoded object diff 5.1%; changed-state entities: counter; counter value→increased 3.8%, card-a default→default 18.6%, card-b default→default 22.7%",
       "source": "decoded"
     },
     {
@@ -583,7 +583,7 @@
     {
       "name": "semantic-object-transformation:set-of-three → scope-of-two loop join",
       "passed": true,
-      "detail": "decoded object diff 6.9%; changed-state entities: counter, card-c; counter pending→value 5.3%, card-a default→default 22.0%, card-b default→default 23.3%, card-c accepted→pending 14.3%",
+      "detail": "decoded object diff 7.0%; changed-state entities: counter, card-c; counter pending→value 5.4%, card-a default→default 22.1%, card-b default→default 23.4%, card-c accepted→pending 14.4%",
       "source": "decoded"
     }
   ],
@@ -636,7 +636,7 @@
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 125543B · PNG 7020B · contact 41267B",
+          "detail": "GIF 123191B · PNG 7169B · contact 41534B",
           "source": "decoded"
         }
       ]
@@ -679,7 +679,7 @@
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "40 colors; mean channel loss 0.183, max 7; sampled 21 frames",
+          "detail": "36 colors; mean channel loss 0.193, max 7; sampled 21 frames",
           "source": "pixels"
         }
       ],
@@ -831,7 +831,7 @@
         {
           "name": "semantic-object-midpoint:scope-of-two → third-card-included · transition midpoint",
           "passed": true,
-          "detail": "decoded object diff 5.3%; changed-state entities: counter; counter value→increased 3.8%, card-a default→default 22.0%, card-b default→default 23.3%",
+          "detail": "decoded object diff 5.3%; changed-state entities: counter; counter value→increased 3.8%, card-a default→default 22.1%, card-b default→default 23.4%",
           "source": "decoded"
         },
         {
@@ -843,13 +843,13 @@
         {
           "name": "semantic-object-midpoint:set-of-three → scope-of-two · loop join",
           "passed": true,
-          "detail": "decoded object diff 6.8%; changed-state entities: counter, card-c; counter pending→value 5.3%, card-a default→default 18.6%, card-b default→default 22.6%, card-c accepted→pending 14.3%",
+          "detail": "decoded object diff 6.8%; changed-state entities: counter, card-c; counter pending→value 5.4%, card-a default→default 18.6%, card-b default→default 22.7%, card-c accepted→pending 14.4%",
           "source": "decoded"
         },
         {
           "name": "semantic-object-transformation:scope-of-two → third-card-included hold",
           "passed": true,
-          "detail": "decoded object diff 5.1%; changed-state entities: counter; counter value→increased 3.8%, card-a default→default 18.6%, card-b default→default 22.6%",
+          "detail": "decoded object diff 5.1%; changed-state entities: counter; counter value→increased 3.8%, card-a default→default 18.6%, card-b default→default 22.7%",
           "source": "decoded"
         },
         {
@@ -861,7 +861,7 @@
         {
           "name": "semantic-object-transformation:set-of-three → scope-of-two loop join",
           "passed": true,
-          "detail": "decoded object diff 6.9%; changed-state entities: counter, card-c; counter pending→value 5.3%, card-a default→default 22.0%, card-b default→default 23.3%, card-c accepted→pending 14.3%",
+          "detail": "decoded object diff 7.0%; changed-state entities: counter, card-c; counter pending→value 5.4%, card-a default→default 22.1%, card-b default→default 23.4%, card-c accepted→pending 14.4%",
           "source": "decoded"
         }
       ],
@@ -1664,8 +1664,8 @@
     }
   ],
   "palette": {
-    "colors": 40,
-    "meanAbsoluteChannelError": 0.183,
+    "colors": 36,
+    "meanAbsoluteChannelError": 0.193,
     "maximumChannelError": 7,
     "sampledFrames": 21
   },

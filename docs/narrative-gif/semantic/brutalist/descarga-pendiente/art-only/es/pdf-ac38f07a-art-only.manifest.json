@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "commit": "8d55d1ae9ac9dd5266dcf8f12f8ee95aee5e8220",
+  "commit": "4aab5320620c665f4e419e3045ec89fc3fa05099",
   "brief": {
     "style": "brutalist",
     "subfamily": "documentary",
@@ -261,15 +261,15 @@
     "detail": "ffprobe 640×360; 28 frames; 10720ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 175516,
-    "png": 9824,
-    "contactSheet": 56306
+    "gif": 174788,
+    "png": 9966,
+    "contactSheet": 56761
   },
   "hashes": {
     "briefSha256": "17a5bd77d4c930de6e71638394edca5d1ed7d812ca2e1dd596712c41e27e38be",
-    "gifSha256": "6dda3da286fb5c1c3cc16cf2ae8c23e4977979582966525c7dd2378086d97f33",
-    "pngSha256": "346f5214d24bb2d37c0a56dc01029041653c4951368664d5c7bb5856590f29c9",
-    "contactSheetSha256": "a7dcc7cb8a286c739d7c2bf2412972a29b8ec8602c237ee24d41ea953155f481"
+    "gifSha256": "2869085dc1924a058fd3e10e5514e398d0abcde72827ca0d57fb8b9d7b78c1f0",
+    "pngSha256": "4504261d3e55c1e85fba69b8cc9f2030b357b124c5c49ba7446b20ae3d60a0a7",
+    "contactSheetSha256": "b2f0fbb8c2c7c798da9be9b708ad629e55ae3afe0d74210c0cb9277e67afe695"
   },
   "files": {
     "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\descarga-pendiente\\art-only\\es\\pdf-ac38f07a-art-only.gif",
@@ -322,7 +322,7 @@
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 175516B · PNG 9824B · contact 56306B",
+      "detail": "GIF 174788B · PNG 9966B · contact 56761B",
       "source": "decoded"
     },
     {
@@ -358,7 +358,7 @@
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "50 colors; mean channel loss 0.22, max 7; sampled 28 frames",
+      "detail": "42 colors; mean channel loss 0.241, max 8; sampled 28 frames",
       "source": "pixels"
     },
     {
@@ -444,7 +444,7 @@
       "name": "composition-balance",
       "passed": false,
       "severity": "warning",
-      "detail": "WARN · revise; 8×4 decoded-pixel grid against #F2EFE4: empty cells 53.1%, text-column vertical fill 0.0%, art/object area outside the text column 46.9%, largest empty rectangle 50.0%; thresholds: rectangle <=22%, text fill >=60% (text-fill threshold omitted in art-only mode); not an aesthetic score. Per-frame: descarga-iniciada · pausa: empty 53.1%, text fill 0.0%, art 46.9%, largest empty 50.0% | descarga-iniciada → tiempo-agotado · punto medio de transición: empty 53.1%, text fill 0.0%, art 46.9%, largest empty 50.0% | tiempo-agotado · pausa: empty 53.1%, text fill 0.0%, art 46.9%, largest empty 50.0% | tiempo-agotado → reintento · punto medio de transición: empty 53.1%, text fill 0.0%, art 46.9%, largest empty 50.0% | reintento · pausa: empty 53.1%, text fill 0.0%, art 46.9%, largest empty 50.0% | reintento → resultado-pendiente · punto medio de transición: empty 53.1%, text fill 0.0%, art 46.9%, largest empty 50.0% | resultado-pendiente · pausa: empty 53.1%, text fill 0.0%, art 46.9%, largest empty 50.0% | resultado-pendiente → descarga-iniciada · unión del ciclo: empty 53.1%, text fill 0.0%, art 46.9%, largest empty 50.0%",
+      "detail": "WARN · revise; 8×4 decoded-pixel grid against #F2EFE4: empty cells 50.0%, text-column vertical fill 0.0%, art/object area outside the text column 50.0%, largest empty rectangle 50.0%; thresholds: rectangle <=22%, text fill >=60% (text-fill threshold omitted in art-only mode); not an aesthetic score. Per-frame: descarga-iniciada · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | descarga-iniciada → tiempo-agotado · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | tiempo-agotado · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | tiempo-agotado → reintento · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | reintento · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | reintento → resultado-pendiente · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | resultado-pendiente · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | resultado-pendiente → descarga-iniciada · unión del ciclo: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0%",
       "source": "pixels"
     },
     {
@@ -605,7 +605,7 @@
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 175516B · PNG 9824B · contact 56306B",
+          "detail": "GIF 174788B · PNG 9966B · contact 56761B",
           "source": "decoded"
         }
       ]
@@ -648,7 +648,7 @@
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "50 colors; mean channel loss 0.22, max 7; sampled 28 frames",
+          "detail": "42 colors; mean channel loss 0.241, max 8; sampled 28 frames",
           "source": "pixels"
         }
       ],
@@ -740,7 +740,7 @@
           "name": "composition-balance",
           "passed": false,
           "severity": "warning",
-          "detail": "WARN · revise; 8×4 decoded-pixel grid against #F2EFE4: empty cells 53.1%, text-column vertical fill 0.0%, art/object area outside the text column 46.9%, largest empty rectangle 50.0%; thresholds: rectangle <=22%, text fill >=60% (text-fill threshold omitted in art-only mode); not an aesthetic score. Per-frame: descarga-iniciada · pausa: empty 53.1%, text fill 0.0%, art 46.9%, largest empty 50.0% | descarga-iniciada → tiempo-agotado · punto medio de transición: empty 53.1%, text fill 0.0%, art 46.9%, largest empty 50.0% | tiempo-agotado · pausa: empty 53.1%, text fill 0.0%, art 46.9%, largest empty 50.0% | tiempo-agotado → reintento · punto medio de transición: empty 53.1%, text fill 0.0%, art 46.9%, largest empty 50.0% | reintento · pausa: empty 53.1%, text fill 0.0%, art 46.9%, largest empty 50.0% | reintento → resultado-pendiente · punto medio de transición: empty 53.1%, text fill 0.0%, art 46.9%, largest empty 50.0% | resultado-pendiente · pausa: empty 53.1%, text fill 0.0%, art 46.9%, largest empty 50.0% | resultado-pendiente → descarga-iniciada · unión del ciclo: empty 53.1%, text fill 0.0%, art 46.9%, largest empty 50.0%",
+          "detail": "WARN · revise; 8×4 decoded-pixel grid against #F2EFE4: empty cells 50.0%, text-column vertical fill 0.0%, art/object area outside the text column 50.0%, largest empty rectangle 50.0%; thresholds: rectangle <=22%, text fill >=60% (text-fill threshold omitted in art-only mode); not an aesthetic score. Per-frame: descarga-iniciada · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | descarga-iniciada → tiempo-agotado · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | tiempo-agotado · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | tiempo-agotado → reintento · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | reintento · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | reintento → resultado-pendiente · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | resultado-pendiente · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | resultado-pendiente → descarga-iniciada · unión del ciclo: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0%",
           "source": "pixels"
         },
         {
@@ -1413,80 +1413,80 @@
     {
       "label": "descarga-iniciada · pausa",
       "metrics": {
-        "emptyCellRatio": 0.53125,
+        "emptyCellRatio": 0.5,
         "textColumnFillRatio": 0,
-        "objectAreaRatio": 0.46875,
+        "objectAreaRatio": 0.5,
         "largestEmptyRectangleRatio": 0.5
       }
     },
     {
       "label": "descarga-iniciada → tiempo-agotado · punto medio de transición",
       "metrics": {
-        "emptyCellRatio": 0.53125,
+        "emptyCellRatio": 0.5,
         "textColumnFillRatio": 0,
-        "objectAreaRatio": 0.46875,
+        "objectAreaRatio": 0.5,
         "largestEmptyRectangleRatio": 0.5
       }
     },
     {
       "label": "tiempo-agotado · pausa",
       "metrics": {
-        "emptyCellRatio": 0.53125,
+        "emptyCellRatio": 0.5,
         "textColumnFillRatio": 0,
-        "objectAreaRatio": 0.46875,
+        "objectAreaRatio": 0.5,
         "largestEmptyRectangleRatio": 0.5
       }
     },
     {
       "label": "tiempo-agotado → reintento · punto medio de transición",
       "metrics": {
-        "emptyCellRatio": 0.53125,
+        "emptyCellRatio": 0.5,
         "textColumnFillRatio": 0,
-        "objectAreaRatio": 0.46875,
+        "objectAreaRatio": 0.5,
         "largestEmptyRectangleRatio": 0.5
       }
     },
     {
       "label": "reintento · pausa",
       "metrics": {
-        "emptyCellRatio": 0.53125,
+        "emptyCellRatio": 0.5,
         "textColumnFillRatio": 0,
-        "objectAreaRatio": 0.46875,
+        "objectAreaRatio": 0.5,
         "largestEmptyRectangleRatio": 0.5
       }
     },
     {
       "label": "reintento → resultado-pendiente · punto medio de transición",
       "metrics": {
-        "emptyCellRatio": 0.53125,
+        "emptyCellRatio": 0.5,
         "textColumnFillRatio": 0,
-        "objectAreaRatio": 0.46875,
+        "objectAreaRatio": 0.5,
         "largestEmptyRectangleRatio": 0.5
       }
     },
     {
       "label": "resultado-pendiente · pausa",
       "metrics": {
-        "emptyCellRatio": 0.53125,
+        "emptyCellRatio": 0.5,
         "textColumnFillRatio": 0,
-        "objectAreaRatio": 0.46875,
+        "objectAreaRatio": 0.5,
         "largestEmptyRectangleRatio": 0.5
       }
     },
     {
       "label": "resultado-pendiente → descarga-iniciada · unión del ciclo",
       "metrics": {
-        "emptyCellRatio": 0.53125,
+        "emptyCellRatio": 0.5,
         "textColumnFillRatio": 0,
-        "objectAreaRatio": 0.46875,
+        "objectAreaRatio": 0.5,
         "largestEmptyRectangleRatio": 0.5
       }
     }
   ],
   "palette": {
-    "colors": 50,
-    "meanAbsoluteChannelError": 0.22,
-    "maximumChannelError": 7,
+    "colors": 42,
+    "meanAbsoluteChannelError": 0.241,
+    "maximumChannelError": 8,
     "sampledFrames": 28
   },
   "phaseHoldsVerified": [

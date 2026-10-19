@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "commit": "8d55d1ae9ac9dd5266dcf8f12f8ee95aee5e8220",
+  "commit": "4aab5320620c665f4e419e3045ec89fc3fa05099",
   "brief": {
     "style": "brutalist",
     "subfamily": "documentary",
@@ -316,15 +316,15 @@
     "detail": "ffprobe 640×360; 21 frames; 8040ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 127979,
-    "png": 7480,
-    "contactSheet": 43139
+    "gif": 124920,
+    "png": 7616,
+    "contactSheet": 43349
   },
   "hashes": {
     "briefSha256": "87c3aa2a94c13b5b61544bac03ea4ff689908ab93016c6c463b652ae2b95a316",
-    "gifSha256": "512ad44305dc14bd054b67aad2ac58f25f8cafb1f1d49a62809ca95f9bb59464",
-    "pngSha256": "7a26131eec51ffd8c4cf2e42f0de42b6f9a93f636cb9ec239e41762bf4c56810",
-    "contactSheetSha256": "c253dd6ec4a644c604497a287c9b96ae6dcceb2ea0e3bb4336ca0677db38703b"
+    "gifSha256": "c71baf2cad7e52c590b2d7451a22ef930215c8fda965c0cd8592499b48817483",
+    "pngSha256": "f0f315e02ed2598db7676d6e52a4e9cceb31602b93f37204338f86e9cd9224b2",
+    "contactSheetSha256": "2f8383cdc8b3fdca65c60a5bef4f3dc6f6e00731bfe8aae2d1d3cc644c74630d"
   },
   "files": {
     "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-c6ce441f\\docs\\narrative-gif\\semantic\\brutalist\\contador-coleccion\\art-only\\es\\total-e05e6b51-art-only.gif",
@@ -377,7 +377,7 @@
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 127979B · PNG 7480B · contact 43139B",
+      "detail": "GIF 124920B · PNG 7616B · contact 43349B",
       "source": "decoded"
     },
     {
@@ -413,7 +413,7 @@
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "39 colors; mean channel loss 0.183, max 7; sampled 21 frames",
+      "detail": "35 colors; mean channel loss 0.193, max 7; sampled 21 frames",
       "source": "pixels"
     },
     {
@@ -553,7 +553,7 @@
     {
       "name": "semantic-object-midpoint:alcance-de-dos → tercera-ficha-incluida · punto medio de transición",
       "passed": true,
-      "detail": "decoded object diff 5.3%; changed-state entities: contador; contador value→increased 3.8%, ficha-a default→default 22.0%, ficha-b default→default 23.3%",
+      "detail": "decoded object diff 5.3%; changed-state entities: contador; contador value→increased 3.9%, ficha-a default→default 22.1%, ficha-b default→default 23.4%",
       "source": "decoded"
     },
     {
@@ -565,13 +565,13 @@
     {
       "name": "semantic-object-midpoint:conjunto-de-tres → alcance-de-dos · unión del ciclo",
       "passed": true,
-      "detail": "decoded object diff 6.8%; changed-state entities: contador, ficha-c; contador pending→value 5.4%, ficha-a default→default 18.6%, ficha-b default→default 22.6%, ficha-c accepted→pending 14.3%",
+      "detail": "decoded object diff 6.9%; changed-state entities: contador, ficha-c; contador pending→value 5.4%, ficha-a default→default 18.6%, ficha-b default→default 22.7%, ficha-c accepted→pending 14.4%",
       "source": "decoded"
     },
     {
       "name": "semantic-object-transformation:alcance-de-dos → tercera-ficha-incluida hold",
       "passed": true,
-      "detail": "decoded object diff 5.1%; changed-state entities: contador; contador value→increased 3.8%, ficha-a default→default 18.6%, ficha-b default→default 22.6%",
+      "detail": "decoded object diff 5.1%; changed-state entities: contador; contador value→increased 3.9%, ficha-a default→default 18.6%, ficha-b default→default 22.7%",
       "source": "decoded"
     },
     {
@@ -583,7 +583,7 @@
     {
       "name": "semantic-object-transformation:conjunto-de-tres → alcance-de-dos loop join",
       "passed": true,
-      "detail": "decoded object diff 7.0%; changed-state entities: contador, ficha-c; contador pending→value 5.4%, ficha-a default→default 22.0%, ficha-b default→default 23.3%, ficha-c accepted→pending 14.3%",
+      "detail": "decoded object diff 7.0%; changed-state entities: contador, ficha-c; contador pending→value 5.4%, ficha-a default→default 22.1%, ficha-b default→default 23.4%, ficha-c accepted→pending 14.4%",
       "source": "decoded"
     }
   ],
@@ -636,7 +636,7 @@
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 127979B · PNG 7480B · contact 43139B",
+          "detail": "GIF 124920B · PNG 7616B · contact 43349B",
           "source": "decoded"
         }
       ]
@@ -679,7 +679,7 @@
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "39 colors; mean channel loss 0.183, max 7; sampled 21 frames",
+          "detail": "35 colors; mean channel loss 0.193, max 7; sampled 21 frames",
           "source": "pixels"
         }
       ],
@@ -831,7 +831,7 @@
         {
           "name": "semantic-object-midpoint:alcance-de-dos → tercera-ficha-incluida · punto medio de transición",
           "passed": true,
-          "detail": "decoded object diff 5.3%; changed-state entities: contador; contador value→increased 3.8%, ficha-a default→default 22.0%, ficha-b default→default 23.3%",
+          "detail": "decoded object diff 5.3%; changed-state entities: contador; contador value→increased 3.9%, ficha-a default→default 22.1%, ficha-b default→default 23.4%",
           "source": "decoded"
         },
         {
@@ -843,13 +843,13 @@
         {
           "name": "semantic-object-midpoint:conjunto-de-tres → alcance-de-dos · unión del ciclo",
           "passed": true,
-          "detail": "decoded object diff 6.8%; changed-state entities: contador, ficha-c; contador pending→value 5.4%, ficha-a default→default 18.6%, ficha-b default→default 22.6%, ficha-c accepted→pending 14.3%",
+          "detail": "decoded object diff 6.9%; changed-state entities: contador, ficha-c; contador pending→value 5.4%, ficha-a default→default 18.6%, ficha-b default→default 22.7%, ficha-c accepted→pending 14.4%",
           "source": "decoded"
         },
         {
           "name": "semantic-object-transformation:alcance-de-dos → tercera-ficha-incluida hold",
           "passed": true,
-          "detail": "decoded object diff 5.1%; changed-state entities: contador; contador value→increased 3.8%, ficha-a default→default 18.6%, ficha-b default→default 22.6%",
+          "detail": "decoded object diff 5.1%; changed-state entities: contador; contador value→increased 3.9%, ficha-a default→default 18.6%, ficha-b default→default 22.7%",
           "source": "decoded"
         },
         {
@@ -861,7 +861,7 @@
         {
           "name": "semantic-object-transformation:conjunto-de-tres → alcance-de-dos loop join",
           "passed": true,
-          "detail": "decoded object diff 7.0%; changed-state entities: contador, ficha-c; contador pending→value 5.4%, ficha-a default→default 22.0%, ficha-b default→default 23.3%, ficha-c accepted→pending 14.3%",
+          "detail": "decoded object diff 7.0%; changed-state entities: contador, ficha-c; contador pending→value 5.4%, ficha-a default→default 22.1%, ficha-b default→default 23.4%, ficha-c accepted→pending 14.4%",
           "source": "decoded"
         }
       ],
@@ -1665,8 +1665,8 @@
     }
   ],
   "palette": {
-    "colors": 39,
-    "meanAbsoluteChannelError": 0.183,
+    "colors": 35,
+    "meanAbsoluteChannelError": 0.193,
     "maximumChannelError": 7,
     "sampledFrames": 21
   },
