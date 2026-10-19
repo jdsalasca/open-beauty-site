@@ -1,4 +1,4 @@
-import type { StylePreset, StyleSlug } from './types.js';
+import type { Brief, StylePreset, StyleSlug } from './types.js';
 import type { CriticCategory, CriticReport } from './types/critic.js';
 import { getStyle, isStyleSlug, styleSlugs } from './styles/presets.js';
 import { PALETTE_TEXT_PAIRS, paletteContrastFailures } from './a11y.js';
@@ -291,7 +291,65 @@ function styleNever(preset: StylePreset, html: string, css: string): CriticCateg
   return { name: 'style-never', label: 'Style Never rules', score, findings };
 }
 
-export function criticReport(html: string, style: StyleSlug): CriticReport {
+/** Decode the entities `esc` produces so brief strings compare cleanly. */
+function visibleText(html: string): string {
+  return html
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#0?39;|&apos;/gi, "'")
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function briefFields(brief: Partial<Brief>): Array<{ label: string; value: string }> {
+  const fields: Array<{ label: string; value: string }> = [];
+  const add = (label: string, value: unknown): void => {
+    const text = String(value ?? '').replace(/\s+/g, ' ').trim();
+    if (text) fields.push({ label, value: text });
+  };
+  add('title', brief.title);
+  add('tagline', brief.tagline);
+  add('intro', brief.intro);
+  add('eyebrow', brief.eyebrow);
+  add('brand', brief.brand);
+  add('footer', brief.footer);
+  add('CTA label', brief.cta?.label);
+  add('quote', brief.quote?.text);
+  add('quote author', brief.quote?.author);
+  (brief.sections ?? []).forEach((section, index) => {
+    add(`section ${index + 1} title`, section?.title);
+    add(`section ${index + 1} body`, section?.body);
+    add(`section ${index + 1} kicker`, section?.kicker);
+  });
+  return fields;
+}
+
+/**
+ * Brief fidelity: every authored string in the brief must survive into the
+ * page. A field that never appears is a warning naming it, so a page that
+ * ignores the brief cannot present as perfect.
+ */
+function briefFidelity(html: string, brief?: Partial<Brief>): CriticCategory {
+  const fields = brief ? briefFields(brief) : [];
+  if (fields.length === 0) return { name: 'brief-fidelity', label: 'Brief fidelity', score: 100, findings: [] };
+  const text = visibleText(html);
+  const missing = fields.filter((field) => !text.includes(field.value));
+  const findings = missing.map((field) => `The brief ${field.label} never appears in the page: “${field.value.slice(0, 70)}”.`);
+  return {
+    name: 'brief-fidelity',
+    label: 'Brief fidelity',
+    score: Math.round(((fields.length - missing.length) / fields.length) * 100),
+    findings,
+  };
+}
+
+export function criticReport(html: string, style: StyleSlug, brief?: Partial<Brief>): CriticReport {
   if (!isStyleSlug(style)) {
     throw new Error(`Unknown style "${style}". Use one of: ${styleSlugs.join(', ')}.`);
   }
@@ -307,6 +365,7 @@ export function criticReport(html: string, style: StyleSlug): CriticReport {
     motion(css),
     labelling(html),
     styleNever(preset, html, css),
+    briefFidelity(html, brief),
   ];
 
   const score = Math.round(categories.reduce((sum, category) => sum + category.score, 0) / categories.length);

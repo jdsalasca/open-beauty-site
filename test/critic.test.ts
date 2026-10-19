@@ -4,7 +4,7 @@ import { criticReport } from '../src/critic.js';
 import { renderPage } from '../src/page/index.js';
 import { styleSlugs } from '../src/styles/presets.js';
 
-test('the critic grades every generated page with eight categories and at most three fixes', () => {
+test('the critic grades every generated page with nine categories and at most three fixes', () => {
   for (const style of styleSlugs) {
     const html = renderPage(style, {
       title: 'Atelier Lumen',
@@ -17,7 +17,7 @@ test('the critic grades every generated page with eight categories and at most t
       ],
     });
     const report = criticReport(html, style);
-    assert.equal(report.categories.length, 8, `${style} should have eight categories`);
+    assert.equal(report.categories.length, 9, `${style} should have nine categories`);
     assert.ok(report.score >= 0 && report.score <= 100, `${style} score in range`);
     for (const category of report.categories) {
       assert.ok(category.score >= 0 && category.score <= 100, `${style}/${category.name} score in range`);
@@ -31,7 +31,7 @@ test('the critic names every axis', () => {
   const report = criticReport('<html lang="en"><body><main><h1>X</h1></main></body></html>', 'renaissance');
   assert.deepEqual(
     report.categories.map((category) => category.name),
-    ['hierarchy', 'line-length', 'density', 'whitespace', 'contrast', 'motion', 'labelling', 'style-never'],
+    ['hierarchy', 'line-length', 'density', 'whitespace', 'contrast', 'motion', 'labelling', 'style-never', 'brief-fidelity'],
   );
 });
 
