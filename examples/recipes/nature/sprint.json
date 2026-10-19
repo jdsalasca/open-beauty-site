@@ -1,0 +1,53 @@
+{
+  "style": "nature",
+  "locale": "es",
+  "team": { "name": "Herbario Vivo", "brand": "Herbario Vivo" },
+  "sprint": {
+    "id": "N14",
+    "start": "2026-09-28",
+    "end": "2026-10-09",
+    "goal": "Prensar y fechar el pliego de otoño sin perder el color"
+  },
+  "summary": "El secado lento devolvió las hojas al archivo con su fecha exacta.",
+  "stories": [
+    { "id": "HV-141", "title": "Recolectar doce especies sin repetir", "points": 5, "status": "done", "owner": "Olivia Prado" },
+    { "id": "HV-142", "title": "Prensar con papel secante cada dos días", "points": 3, "status": "done", "owner": "Mateo Aliso" },
+    { "id": "HV-143", "title": "Rotular fecha, lugar y recolector", "points": 3, "status": "done", "owner": "Olivia Prado" },
+    { "id": "HV-144", "title": "Escanear el pliego en color real", "points": 5, "status": "carried", "owner": "Sara Olmo" },
+    { "id": "HV-145", "title": "Comprar una prensa antigua", "points": 5, "status": "dropped", "owner": "Mateo Aliso" }
+  ],
+  "velocity": [
+    { "sprint": "N9", "committed": 12, "done": 11 },
+    { "sprint": "N10", "committed": 14, "done": 12 },
+    { "sprint": "N11", "committed": 13, "done": 13 },
+    { "sprint": "N13", "committed": 16, "done": 13 },
+    { "sprint": "N14", "committed": 16, "done": 11 }
+  ],
+  "burndown": [
+    { "day": "28/09", "remaining": 16 },
+    { "day": "30/09", "remaining": 14 },
+    { "day": "02/10", "remaining": 13 },
+    { "day": "04/10", "remaining": 12 },
+    { "day": "06/10", "remaining": 10 },
+    { "day": "08/10", "remaining": 6 },
+    { "day": "09/10", "remaining": 5 }
+  ],
+  "risks": [
+    { "title": "El papel secante se satura a mitad de prensado", "impact": "las hojas pierden el verde", "mitigation": "cambiar el secante cada dos días y anotarlo", "owner": "Mateo Aliso" },
+    { "title": "La etiqueta se moja en el traslado", "impact": "el pliego pierde procedencia", "mitigation": "rotular con tinta indeleble antes de prensar", "owner": "Sara Olmo" }
+  ],
+  "retro": {
+    "wentWell": ["Fechar antes de prensar", "El listado de especies siempre abierto"],
+    "toImprove": ["Escanear de noche da color falso", "Prensas con demasiada presión"],
+    "actions": [
+      { "what": "Escanear solo con luz de mediodía", "owner": "Sara Olmo", "due": "2026-10-16" },
+      { "what": "Registrar la presión de cada prensado", "owner": "Mateo Aliso", "due": "2026-10-19" }
+    ]
+  },
+  "capacity": [
+    { "person": "Olivia Prado", "days": 7, "focus": "campo" },
+    { "person": "Mateo Aliso", "days": 6, "focus": "prensado" },
+    { "person": "Sara Olmo", "days": 5, "focus": "escaneo" }
+  ],
+  "nextGoal": "Un pliego de otoño que dure cien años con su fecha."
+}

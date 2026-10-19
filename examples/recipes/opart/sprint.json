@@ -1,0 +1,52 @@
+{
+  "style": "opart",
+  "locale": "es",
+  "team": { "name": "Estudio Retina", "brand": "Retina" },
+  "sprint": {
+    "id": "O6",
+    "start": "2026-10-05",
+    "end": "2026-10-16",
+    "goal": "Abrir la muestra del ojo que se mueve"
+  },
+  "summary": "Vimos menos piezas y más movimiento: el montaje ya no compite con la página.",
+  "stories": [
+    { "id": "RE-61", "title": "Elegir la secuencia de cinco piezas", "points": 3, "status": "done", "owner": "Ivo Prisma" },
+    { "id": "RE-62", "title": "Calibrar la luz que vibra", "points": 5, "status": "done", "owner": "Gala Miralles" },
+    { "id": "RE-63", "title": "Escribir el texto de sala sin adjetivos", "points": 3, "status": "done", "owner": "Duna Oteiza" },
+    { "id": "RE-64", "title": "Imprimir el cartel de doble lectura", "points": 5, "status": "carried", "owner": "Ivo Prisma" },
+    { "id": "RE-65", "title": "Comprar gafas de descanso", "points": 2, "status": "dropped", "owner": "Gala Miralles" }
+  ],
+  "velocity": [
+    { "sprint": "O2", "committed": 12, "done": 9 },
+    { "sprint": "O3", "committed": 13, "done": 12 },
+    { "sprint": "O4", "committed": 12, "done": 12 },
+    { "sprint": "O6", "committed": 18, "done": 11 }
+  ],
+  "burndown": [
+    { "day": "05/10", "remaining": 18 },
+    { "day": "07/10", "remaining": 16 },
+    { "day": "09/10", "remaining": 13 },
+    { "day": "11/10", "remaining": 11 },
+    { "day": "13/10", "remaining": 8 },
+    { "day": "15/10", "remaining": 7 },
+    { "day": "16/10", "remaining": 7 }
+  ],
+  "risks": [
+    { "title": "La luz vibra distinto en cada sala", "impact": "el efecto se rompe en la tercera pieza", "mitigation": "medir con fotómetro y fijar el protocolo", "owner": "Gala Miralles" },
+    { "title": "El cartel se imprime con demasiado contraste", "impact": "el texto pequeño desaparece", "mitigation": "prueba de tinta en papel mate", "owner": "Ivo Prisma" }
+  ],
+  "retro": {
+    "wentWell": ["Probar la secuencia con visitantes", "Textos sin adjetivos"],
+    "toImprove": ["Cambios de luz a última hora", "Una sola persona decide el montaje"],
+    "actions": [
+      { "what": "Fijar el protocolo de luz por escrito", "owner": "Gala Miralles", "due": "2026-10-22" },
+      { "what": "Reservar la prueba de imprenta con antelación", "owner": "Ivo Prisma", "due": "2026-10-20" }
+    ]
+  },
+  "capacity": [
+    { "person": "Ivo Prisma", "days": 7, "focus": "montaje" },
+    { "person": "Gala Miralles", "days": 6, "focus": "luz" },
+    { "person": "Duna Oteiza", "days": 4, "focus": "textos" }
+  ],
+  "nextGoal": "Una muestra que el ojo recuerde al cerrar."
+}

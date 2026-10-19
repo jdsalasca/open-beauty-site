@@ -1,0 +1,52 @@
+{
+  "style": "memphis",
+  "locale": "en",
+  "team": { "name": "Playground Dept.", "brand": "PLAYGROUND" },
+  "sprint": {
+    "id": "M8",
+    "start": "2026-10-05",
+    "end": "2026-10-16",
+    "goal": "Launch the museum kids map without a single instruction label"
+  },
+  "summary": "The map got funnier and clearer at the same time, which is rare.",
+  "stories": [
+    { "id": "PG-81", "title": "Redraw the map with five shapes only", "points": 5, "status": "done", "owner": "Lola Beats" },
+    { "id": "PG-82", "title": "Write the intro card in two lines", "points": 2, "status": "done", "owner": "Ravi Pong" },
+    { "id": "PG-83", "title": "Print the giant floor version", "points": 5, "status": "done", "owner": "Mina Kitsch" },
+    { "id": "PG-84", "title": "Build the stamp trail for kids", "points": 5, "status": "carried", "owner": "Lola Beats" },
+    { "id": "PG-85", "title": "Add an AR layer", "points": 8, "status": "dropped", "owner": "Ravi Pong" }
+  ],
+  "velocity": [
+    { "sprint": "PG4", "committed": 14, "done": 12 },
+    { "sprint": "PG5", "committed": 15, "done": 13 },
+    { "sprint": "PG6", "committed": 17, "done": 14 },
+    { "sprint": "PG8", "committed": 25, "done": 12 }
+  ],
+  "burndown": [
+    { "day": "05/10", "remaining": 25 },
+    { "day": "07/10", "remaining": 23 },
+    { "day": "09/10", "remaining": 20 },
+    { "day": "11/10", "remaining": 17 },
+    { "day": "13/10", "remaining": 15 },
+    { "day": "15/10", "remaining": 13 },
+    { "day": "16/10", "remaining": 13 }
+  ],
+  "risks": [
+    { "title": "The floor print curls at the corners", "impact": "kids trip on the map", "mitigation": "laminate with a 5 cm overlap", "owner": "Mina Kitsch" },
+    { "title": "Two shapes read as corporate logos", "impact": "the playful voice breaks", "mitigation": "redraw them with thicker asymmetric strokes", "owner": "Lola Beats" }
+  ],
+  "retro": {
+    "wentWell": ["Testing the map with actual kids", "Five shapes, zero labels"],
+    "toImprove": ["Late print changes", "Keep the palette closed"],
+    "actions": [
+      { "what": "Freeze the print file one week before launch", "owner": "Mina Kitsch", "due": "2026-10-23" },
+      { "what": "Run a shapes-only review with visitors", "owner": "Lola Beats", "due": "2026-10-21" }
+    ]
+  },
+  "capacity": [
+    { "person": "Lola Beats", "days": 8, "focus": "map" },
+    { "person": "Ravi Pong", "days": 5, "focus": "copy" },
+    { "person": "Mina Kitsch", "days": 6, "focus": "print" }
+  ],
+  "nextGoal": "A map children can read by walking it."
+}

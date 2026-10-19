@@ -1,0 +1,51 @@
+{
+  "style": "vaporwave",
+  "locale": "en",
+  "team": { "name": "Mallsoft Archive", "brand": "MI_MUSEO.EXE" },
+  "sprint": {
+    "id": "VHYPER2",
+    "start": "2026-10-01",
+    "end": "2026-10-12",
+    "goal": "Restore the 1999 mall directory kiosk"
+  },
+  "summary": "The kiosk boots again, and the directory reads like a confession.",
+  "stories": [
+    { "id": "MM-61", "title": "Recover the kiosk shell from two disks", "points": 5, "status": "done", "owner": "Rin Kazama" },
+    { "id": "MM-62", "title": "Rebuild the directory index by hand", "points": 5, "status": "done", "owner": "Dot Mireles" },
+    { "id": "MM-63", "title": "Record the dial-up handshake sound", "points": 3, "status": "done", "owner": "Vex Morrow" },
+    { "id": "MM-64", "title": "Write the fake CRT wear shader", "points": 5, "status": "carried", "owner": "Rin Kazama" },
+    { "id": "MM-65", "title": "Host it on a real 1999 server", "points": 8, "status": "dropped", "owner": "Vex Morrow" }
+  ],
+  "velocity": [
+    { "sprint": "VHY1", "committed": 13, "done": 13 },
+    { "sprint": "VHY2", "committed": 15, "done": 10 },
+    { "sprint": "VHY3", "committed": 18, "done": 13 }
+  ],
+  "burndown": [
+    { "day": "01/10", "remaining": 18 },
+    { "day": "03/10", "remaining": 16 },
+    { "day": "05/10", "remaining": 15 },
+    { "day": "07/10", "remaining": 11 },
+    { "day": "09/10", "remaining": 8 },
+    { "day": "11/10", "remaining": 6 },
+    { "day": "12/10", "remaining": 5 }
+  ],
+  "risks": [
+    { "title": "The recovered fonts render as squares", "impact": "the directory becomes unreadable", "mitigation": "fallback to bitmap font and document it", "owner": "Dot Mireles" },
+    { "title": "Nostalgia turns into parody", "impact": "the archive loses its editorial voice", "mitigation": "keep real receipts and dated screenshots", "owner": "Vex Morrow" }
+  ],
+  "retro": {
+    "wentWell": ["Documenting every recovered file", "Playing the handshake sound in the room"],
+    "toImprove": ["Too many CRT effects at once", "Name files before midnight"],
+    "actions": [
+      { "what": "Cap the CRT effect to three layers", "owner": "Rin Kazama", "due": "2026-10-19" },
+      { "what": "Publish the recovery log with dates", "owner": "Dot Mireles", "due": "2026-10-17" }
+    ]
+  },
+  "capacity": [
+    { "person": "Rin Kazama", "days": 7, "focus": "kiosk" },
+    { "person": "Dot Mireles", "days": 6, "focus": "index" },
+    { "person": "Vex Morrow", "days": 4, "focus": "sound" }
+  ],
+  "nextGoal": "A kiosk that boots in 1999 time and tells the truth."
+}

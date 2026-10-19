@@ -1,0 +1,53 @@
+{
+  "style": "ukiyoe",
+  "locale": "es",
+  "team": { "name": "Cuaderno de Orilla", "brand": "Cuaderno de Orilla" },
+  "sprint": {
+    "id": "U18",
+    "start": "2026-09-14",
+    "end": "2026-09-25",
+    "goal": "Terminar el cuaderno de mareas de Bahía Solano"
+  },
+  "summary": "La marea dictó el ritmo: dibujamos lo que el agua dejó ver.",
+  "stories": [
+    { "id": "CO-71", "title": "Anotar la marea alta y baja de siete días", "points": 3, "status": "done", "owner": "Kaori Ishi" },
+    { "id": "CO-72", "title": "Dibujar las olas desde la roca negra", "points": 5, "status": "done", "owner": "Tomás Ría" },
+    { "id": "CO-73", "title": "Rotular cada estampa con fecha y hora", "points": 3, "status": "done", "owner": "Kaori Ishi" },
+    { "id": "CO-74", "title": "Cocer al vapor los pliegos húmedos", "points": 3, "status": "carried", "owner": "Nao Ventura" },
+    { "id": "CO-75", "title": "Comprar una prensa nueva", "points": 8, "status": "dropped", "owner": "Tomás Ría" }
+  ],
+  "velocity": [
+    { "sprint": "U13", "committed": 10, "done": 9 },
+    { "sprint": "U14", "committed": 12, "done": 10 },
+    { "sprint": "U15", "committed": 11, "done": 11 },
+    { "sprint": "U17", "committed": 14, "done": 11 },
+    { "sprint": "U18", "committed": 14, "done": 11 }
+  ],
+  "burndown": [
+    { "day": "14/09", "remaining": 14 },
+    { "day": "16/09", "remaining": 12 },
+    { "day": "18/09", "remaining": 11 },
+    { "day": "20/09", "remaining": 8 },
+    { "day": "22/09", "remaining": 6 },
+    { "day": "24/09", "remaining": 4 },
+    { "day": "25/09", "remaining": 3 }
+  ],
+  "risks": [
+    { "title": "La lluvia borra las notas de campo", "impact": "se pierden las horas de la marea", "mitigation": "tinta indeleble y funda de cera", "owner": "Kaori Ishi" },
+    { "title": "El papel se humedece en el viaje", "impact": "las estampas llegan onduladas", "mitigation": "prensa plana entre cartones secos", "owner": "Nao Ventura" }
+  ],
+  "retro": {
+    "wentWell": ["Dibujar con las dos manos libres", "Rotular en el momento"],
+    "toImprove": ["Guardar los pliegos sin funda", "Salir sin revisar la marea"],
+    "actions": [
+      { "what": "Coser una funda de cera por dibujante", "owner": "Nao Ventura", "due": "2026-10-02" },
+      { "what": "Comprobar la tabla de mareas cada mañana", "owner": "Kaori Ishi", "due": "2026-10-01" }
+    ]
+  },
+  "capacity": [
+    { "person": "Kaori Ishi", "days": 6, "focus": "campo" },
+    { "person": "Tomás Ría", "days": 5, "focus": "taller" },
+    { "person": "Nao Ventura", "days": 4, "focus": "papel" }
+  ],
+  "nextGoal": "Un cuaderno que huela a sal y diga la verdad de la marea."
+}

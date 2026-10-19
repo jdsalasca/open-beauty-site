@@ -1,0 +1,52 @@
+{
+  "style": "psychedelic",
+  "locale": "es",
+  "maxxing": true,
+  "team": { "name": "Colectivo Líquido", "brand": "Líquido" },
+  "sprint": {
+    "id": "PS3",
+    "start": "2026-09-28",
+    "end": "2026-10-09",
+    "goal": "Cerrar el cartel del festival con una sola imagen que gire"
+  },
+  "summary": "El color dejó de ser decoración cuando aceptamos borrar capas.",
+  "stories": [
+    { "id": "LQ-21", "title": "Probar la retícula líquida en tres tamaños", "points": 5, "status": "done", "owner": "Azul Ferrán" },
+    { "id": "LQ-22", "title": "Escribir el manifiesto en una frase", "points": 2, "status": "done", "owner": "Nube Ramírez" },
+    { "id": "LQ-23", "title": "Separar tintas para serigrafía", "points": 5, "status": "done", "owner": "Ola Pineda" },
+    { "id": "LQ-24", "title": "Animar el cartel para las pantallas", "points": 5, "status": "carried", "owner": "Azul Ferrán" },
+    { "id": "LQ-25", "title": "Imprimir una versión en neón", "points": 3, "status": "dropped", "owner": "Ola Pineda" }
+  ],
+  "velocity": [
+    { "sprint": "LQ1", "committed": 15, "done": 12 },
+    { "sprint": "LQ2", "committed": 16, "done": 15 },
+    { "sprint": "LQ3", "committed": 20, "done": 12 }
+  ],
+  "burndown": [
+    { "day": "28/09", "remaining": 20 },
+    { "day": "30/09", "remaining": 18 },
+    { "day": "02/10", "remaining": 15 },
+    { "day": "04/10", "remaining": 13 },
+    { "day": "06/10", "remaining": 9 },
+    { "day": "08/10", "remaining": 7 },
+    { "day": "09/10", "remaining": 7 }
+  ],
+  "risks": [
+    { "title": "La serigrafía pierde el violeta en la segunda pasada", "impact": "el cartel cambia de tono por lotes", "mitigation": "fijar una receta de tinta y probar 10 hojas", "owner": "Ola Pineda" },
+    { "title": "La imagen gira demasiado y marea", "impact": "el mensaje se pierde en la feria", "mitigation": "reducir la animación a un cuarto de vuelta", "owner": "Azul Ferrán" }
+  ],
+  "retro": {
+    "wentWell": ["Borrar antes de añadir", "El manifiesto cabe en una frase"],
+    "toImprove": ["Pruebas de tinta sin registro", "Elegir colores por encargo, no por impulso"],
+    "actions": [
+      { "what": "Registrar cada receta de tinta", "owner": "Ola Pineda", "due": "2026-10-16" },
+      { "what": "Mostrar la animación a tres personas antes de publicar", "owner": "Azul Ferrán", "due": "2026-10-15" }
+    ]
+  },
+  "capacity": [
+    { "person": "Azul Ferrán", "days": 7, "focus": "cartel" },
+    { "person": "Nube Ramírez", "days": 4, "focus": "textos" },
+    { "person": "Ola Pineda", "days": 6, "focus": "taller" }
+  ],
+  "nextGoal": "Una imagen que gire sin perder la frase."
+}

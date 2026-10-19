@@ -1,0 +1,54 @@
+{
+  "style": "isotype",
+  "locale": "es",
+  "maxxing": true,
+  "team": { "name": "Cuadrilla Umbral", "brand": "Umbral" },
+  "sprint": {
+    "id": "I31",
+    "start": "2026-09-28",
+    "end": "2026-10-09",
+    "goal": "Publicar una lectura común del agua del norte"
+  },
+  "summary": "El sprint cambió la unidad de medida: de litros a acuerdos.",
+  "stories": [
+    { "id": "UM-301", "title": "Contar los puntos de muestreo del río", "points": 3, "status": "done", "owner": "Lucía Rojas" },
+    { "id": "UM-302", "title": "Dibujar el pictograma de una lectura", "points": 5, "status": "done", "owner": "Mateo Gil" },
+    { "id": "UM-303", "title": "Comparar las series de tres estaciones", "points": 5, "status": "done", "owner": "Sombra Común" },
+    { "id": "UM-304", "title": "Calibrar la estación de niebla", "points": 3, "status": "carried", "owner": "Lucía Rojas" },
+    { "id": "UM-305", "title": "Migrar el tablero antiguo", "points": 8, "status": "dropped", "owner": "Mateo Gil" }
+  ],
+  "velocity": [
+    { "sprint": "I26", "committed": 12, "done": 10 },
+    { "sprint": "I27", "committed": 14, "done": 11 },
+    { "sprint": "I28", "committed": 13, "done": 13 },
+    { "sprint": "I29", "committed": 17, "done": 12 },
+    { "sprint": "I31", "committed": 16, "done": 13 }
+  ],
+  "burndown": [
+    { "day": "28/09", "remaining": 16 },
+    { "day": "30/09", "remaining": 15 },
+    { "day": "02/10", "remaining": 13 },
+    { "day": "04/10", "remaining": 10 },
+    { "day": "06/10", "remaining": 8 },
+    { "day": "08/10", "remaining": 4 },
+    { "day": "09/10", "remaining": 3 }
+  ],
+  "risks": [
+    { "title": "El muestreo desigual", "impact": "las series de octubre no se pueden comparar", "mitigation": "repetir el transecto con doble lectura", "owner": "Lucía Rojas" },
+    { "title": "Depender de una sola estación", "impact": "una avería deja el norte sin datos", "mitigation": "sumar una estación móvil compartida", "owner": "Mateo Gil" }
+  ],
+  "retro": {
+    "wentWell": ["Leer el río antes de medir", "Un pictograma por idea"],
+    "toImprove": ["Menos tableros paralelos", "Cerrar acuerdos por escrito"],
+    "actions": [
+      { "what": "Publicar una lectura común cada viernes", "owner": "Sombra Común", "due": "2026-10-16" },
+      { "what": "Rotar el rol de estación móvil", "owner": "Lucía Rojas", "due": "2026-10-23" }
+    ]
+  },
+  "capacity": [
+    { "person": "Lucía Rojas", "days": 8, "focus": "campo" },
+    { "person": "Mateo Gil", "days": 6, "focus": "mapas" },
+    { "person": "Sombra Común", "days": 4, "focus": "archivo" }
+  ],
+  "nextGoal": "Una lectura del norte que cualquier persona pueda repetir."
+}

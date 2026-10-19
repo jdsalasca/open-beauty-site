@@ -1,0 +1,53 @@
+{
+  "style": "papercraft",
+  "locale": "es",
+  "team": { "name": "Mesa de Papel", "brand": "Mesa de Papel" },
+  "sprint": {
+    "id": "P9",
+    "start": "2026-09-21",
+    "end": "2026-10-02",
+    "goal": "Montar el taller de sobres para la feria del barrio"
+  },
+  "summary": "Cortamos, plegamos y aprendimos a no pegar antes de medir.",
+  "stories": [
+    { "id": "MP-41", "title": "Prototipar el sobre con solapa de montaña", "points": 3, "status": "done", "owner": "Clara Nieto" },
+    { "id": "MP-42", "title": "Escribir las instrucciones plegables", "points": 5, "status": "done", "owner": "Teo Barral" },
+    { "id": "MP-43", "title": "Cortar 200 plantillas sin marcas de tijera", "points": 5, "status": "done", "owner": "Clara Nieto" },
+    { "id": "MP-44", "title": "Encuadernar el muestrario de papeles", "points": 3, "status": "carried", "owner": "Rita Sol" },
+    { "id": "MP-45", "title": "Grabar el vídeo lento de plegado", "points": 2, "status": "dropped", "owner": "Teo Barral" }
+  ],
+  "velocity": [
+    { "sprint": "P4", "committed": 11, "done": 11 },
+    { "sprint": "P5", "committed": 13, "done": 10 },
+    { "sprint": "P6", "committed": 14, "done": 12 },
+    { "sprint": "P7", "committed": 12, "done": 12 },
+    { "sprint": "P9", "committed": 18, "done": 13 }
+  ],
+  "burndown": [
+    { "day": "21/09", "remaining": 18 },
+    { "day": "23/09", "remaining": 16 },
+    { "day": "25/09", "remaining": 15 },
+    { "day": "27/09", "remaining": 12 },
+    { "day": "29/09", "remaining": 9 },
+    { "day": "01/10", "remaining": 6 },
+    { "day": "02/10", "remaining": 5 }
+  ],
+  "risks": [
+    { "title": "El papel de la feria llega con humedad", "impact": "los pliegues se agrietan", "mitigation": "guardar los pliegos en la sala seca", "owner": "Rita Sol" },
+    { "title": "La plegadora se atasca con el gramaje nuevo", "impact": "la mitad del lote sale marcada", "mitigation": "ajustar la presión y probar en frío", "owner": "Clara Nieto" }
+  ],
+  "retro": {
+    "wentWell": ["Plegar en silencio y en grupo", "Las instrucciones se entienden sin texto"],
+    "toImprove": ["Demasiado pegamento en los laterales", "Cortar sin revisar la fibra"],
+    "actions": [
+      { "what": "Medir la humedad de la sala cada mañana", "owner": "Rita Sol", "due": "2026-10-09" },
+      { "what": "Grabar una prueba de plegado por gramaje", "owner": "Clara Nieto", "due": "2026-10-14" }
+    ]
+  },
+  "capacity": [
+    { "person": "Clara Nieto", "days": 7, "focus": "corte" },
+    { "person": "Teo Barral", "days": 5, "focus": "textos" },
+    { "person": "Rita Sol", "days": 4, "focus": "papeles" }
+  ],
+  "nextGoal": "Un muestrario que se pueda tocar antes de comprar."
+}
