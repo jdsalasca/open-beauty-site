@@ -3,6 +3,7 @@ import type { Patch, RichIssue, RichValidationResult } from './types/validation.
 import { DECK_POINT_LIMIT, DECK_STAT_LIMIT, DECK_TOTAL_SLIDE_LIMIT, DECK_WORD_LIMIT } from './types/deck.js';
 import { getStyle, isStyleSlug, styleSlugs } from './styles/presets.js';
 import { contrastRatio, headlineOverflows360, HEADLINE_VIEWPORT, longestWordLength, nearestPaletteToken, relativeLuminance } from './a11y.js';
+import { ctaHasDestination } from './page/composition.js';
 
 export { contrastRatio, relativeLuminance as luminance } from './a11y.js';
 
@@ -474,6 +475,28 @@ function issuesForMarkup(html: string): RichIssue[] {
         ),
       );
     }
+  }
+  // CTA integrity: a call to action must carry a real destination. An anchor
+  // with an empty or placeholder href is flagged; the visible limitation state
+  // (`<button aria-disabled>`) is the accepted alternative and is not an
+  // anchor, so it passes this check.
+  for (const match of html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi)) {
+    const attrs = match[1] ?? '';
+    const href = (/\bhref\s*=\s*"([^"]*)"/i.exec(attrs)?.[1] ?? '').trim();
+    if (ctaHasDestination(href)) continue;
+    const className = (/\bclass\s*=\s*"([^"]*)"/i.exec(attrs)?.[1] ?? '').toLowerCase();
+    if (!/\b(cta|btn|button|nav-cta|action)\b/.test(className)) continue;
+    issues.push(
+      mkIssue(
+        'error',
+        'cta-no-destination',
+        'A call to action has an empty or placeholder href.',
+        `the CTA link "${(match[2] ?? '').replace(/<[^>]+>/g, ' ').trim().slice(0, 48)}"`,
+        'A button or link with no destination is a broken promise: the reader clicks and nothing happens. Either give it a real href or render a visible limitation state.',
+        `<a class="btn" href="#contact">Empezar</a>`,
+        'Give the CTA a real destination, or replace it with a visible limitation state (`<button aria-disabled="true">` plus an explanatory note).',
+      ),
+    );
   }
   const visibleText = html
     .replace(/<script[\s\S]*?<\/script>/gi, ' ')

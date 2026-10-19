@@ -11,6 +11,7 @@ import {
   splitAccent,
   t,
 } from './common.js';
+import { heroArtForScene } from './composition.js';
 
 const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI'];
 
@@ -160,7 +161,7 @@ export function renderRenaissance(input: Partial<PageBrief>, preset: StylePreset
         <span></span><span>${esc(t(locale, 'Seguir', 'Continue'))}</span>
       </a>
     </div>
-    ${archPlate(locale)}
+    ${heroArtForScene(brief, preset, () => archPlate(locale), brief.title)}
   </section>
 
   ${ornamentDivider()}

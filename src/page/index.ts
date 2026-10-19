@@ -6,6 +6,7 @@ import { renderPapercraft } from './papercraft.js';
 import { renderArtDeco, renderIsotype, renderOpArt, renderUkiyoe } from './showcase-a.js';
 import { renderBestiary, renderGalactic, renderMemphis, renderPsychedelic, renderVaporwave } from './showcase-b.js';
 import { renderNatureMemory } from './nature-memory.js';
+import { applyComposition } from './composition.js';
 import { applyMaxxing } from '../maxxing.js';
 
 function renderPageBase(style: StyleSlug, brief: Partial<PageBrief>): string {
@@ -47,6 +48,6 @@ function renderPageBase(style: StyleSlug, brief: Partial<PageBrief>): string {
 
 export function renderPage(style: StyleSlug, brief: Partial<PageBrief>): string {
   const preset = getStyle(style);
-  const html = renderPageBase(style, brief);
-  return brief.maxxing ? applyMaxxing(html, preset) : html;
+  const composed = applyComposition(renderPageBase(style, brief), brief, preset);
+  return brief.maxxing ? applyMaxxing(composed, preset) : composed;
 }

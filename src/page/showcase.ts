@@ -1,5 +1,6 @@
 import type { PageBrief, StylePreset } from '../types.js';
 import { arrowSvg, esc, labels, normalizeBrief, resolveClosing, safeHref, shell, splitAccent, t, REVEAL_SCRIPT } from './common.js';
+import { heroArtForScene } from './composition.js';
 
 export interface ShowcaseConfig {
   art: string;
@@ -293,7 +294,7 @@ export function renderShowcase(briefInput: Partial<PageBrief>, preset: StylePres
       </div>
       <p class="hero-note reveal" style="--i:4">${esc(config.heroNote || '01 — 08')}</p>
     </div>
-    <div class="hero-art reveal" style="--i:1">${config.art}</div>
+    <div class="hero-art reveal" style="--i:1">${heroArtForScene(brief, preset, () => config.art, brief.title)}</div>
   </section>
   <section id="manifesto" class="manifesto">
     <div class="reveal">
