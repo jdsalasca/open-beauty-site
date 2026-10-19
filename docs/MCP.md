@@ -1,6 +1,6 @@
 # MCP server
 
-`open-beauty-site` exposes a stdio MCP server with seventeen tools and twenty-two resources. The server is deliberately narrow: it does not call an LLM, it does not browse the web, and it does not invent content. It turns a short brief into a complete, validated artefact.
+`open-beauty-site` exposes a stdio MCP server with eighteen tools and twenty-two resources. The server is deliberately narrow: it does not call an LLM, it does not browse the web, and it does not invent content. It turns a short brief into a complete, validated artefact.
 
 ## Build
 
@@ -264,7 +264,7 @@ Returns path, dimensions, frame count, fps and file size. Frames are capped at 1
 
 ### `beauty_create_narrative`
 
-Accepts the same normalized `narrative-gif` brief as `beauty narrative`. The production pilots are `papercraft` with `subfamily: "editorial"` (default), and `brutalist` with `subfamily: "documentary"` (default) or `"poster"` to keep the existing high-contrast poster direction available. Both pilot scenes support 16:9, 1:1 and 9:16 without cropping or stretching. The other eleven styles still return `STYLE_NOT_SUPPORTED_YET` and name the two supported styles. Exports include a real GIF, PNG, contact sheet and manifest with independently decoded timing and five separate evaluation levels; visual review remains pending until inspected.
+Accepts the same normalized `narrative-gif` brief as `beauty narrative`. All thirteen registered style scenes are available. Papercraft supports its editorial subfamily; brutalist supports documentary (default) and poster. Each scene declares supported aspect ratios rather than silently cropping or stretching. Exports include a real GIF, PNG, contact sheet and manifest with independently decoded timing and five separate evaluation levels; visual review remains pending until a reviewer records evidence.
 
 ```json
 {
@@ -288,6 +288,23 @@ Accepts the same normalized `narrative-gif` brief as `beauty narrative`. The pro
 ```
 
 CLI equivalent: `beauty narrative --style papercraft --brief brief.json --out out/narrative`. Run `beauty narrative --help` for the complete schema-derived field list and JSON example.
+
+### `beauty_create_gallery`
+
+Scans a directory recursively for `*.manifest.json` or `manifest.json` files,
+resolves their GIF, PNG and contact-sheet assets beside each manifest, and
+writes one static Spanish HTML review gallery. Poster images load first; the
+GIF is requested only after explicit playback. Evaluation statuses are read
+from their manifests, and the page remains self-contained apart from relative
+links to those local pack files.
+
+| Argument | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `directory` | string | yes | Folder tree to scan. |
+| `output` | string | no | HTML path; defaults to `gallery.html`. |
+| `title` | string | no | Page title. |
+
+CLI equivalent: `beauty gallery docs/narrative-gif --out docs/narrative-gif/GALLERY.html --title "Sprint Review"`.
 
 ### `beauty_create_motion`
 
