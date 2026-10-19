@@ -1,0 +1,16 @@
+{
+  "style": "memphis",
+  "kind": "narrative-gif",
+  "locale": "es",
+  "audience": "Producto en Sprint Review",
+  "title": "Revisión",
+  "status": "in-review",
+  "phases": [
+    { "id": "before", "label": "Antes", "text": "Una medida fuera del criterio podía pasar sin una señal visible.", "visual": { "kind": "comparison", "state": "unreviewed" } },
+    { "id": "change", "label": "Cambio", "text": "La propuesta marca el valor y mantiene el criterio a la vista.", "visual": { "kind": "comparison", "state": "flagged" } },
+    { "id": "result", "label": "Resultado esperado", "text": "El equipo podrá detectar el desvío antes de cerrar la revisión.", "visual": { "kind": "comparison", "state": "review-ready" } }
+  ],
+  "playback": { "minReadableHoldMs": 5000, "transitionMs": 650, "loop": true },
+  "output": { "width": 1280, "height": 720, "formats": ["gif", "png"], "preset": "review-1280x720" },
+  "seed": 7
+}

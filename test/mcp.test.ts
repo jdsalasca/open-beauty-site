@@ -34,6 +34,7 @@ test('exposes the full tool surface', async () => {
     'beauty_create_canvas',
     'beauty_create_deck',
     'beauty_create_experience',
+    'beauty_create_gallery',
     'beauty_create_gif',
     'beauty_create_motion',
     'beauty_create_narrative',
@@ -57,6 +58,25 @@ test('styles expose exact fonts and palette', async () => {
   assert.match(text, /EB Garamond/);
   assert.match(text, /#B4432C/);
   assert.match(text, /0–2 px/);
+});
+
+test('gallery MCP creates one manifest-driven static HTML file', async () => {
+  const result = await client.callTool({
+    name: 'beauty_create_gallery',
+    arguments: {
+      directory: path.join(root, 'docs', 'narrative-gif'),
+      output: 'out/narrative-gallery.html',
+      title: 'Revisión MCP',
+    },
+  });
+  assert.notEqual(result.isError, true);
+  const structured = result.structuredContent as { path: string; pieceCount: number; styles: string[] };
+  assert.equal(structured.pieceCount, 28);
+  assert.equal(structured.styles.length, 13);
+  const html = await readFile(structured.path, 'utf8');
+  assert.match(html, /<title>Revisión MCP<\/title>/);
+  assert.match(html, /visual-review: pending/);
+  assert.doesNotMatch(html, /<img[^>]+src="[^"]+\.gif/i);
 });
 
 test('creates and audits a page over MCP', async () => {
