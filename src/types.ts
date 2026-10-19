@@ -35,6 +35,12 @@ export interface QuoteBrief {
 
 export type SlideLayout = 'statement' | 'points' | 'stats' | 'quote' | 'figure';
 
+/**
+ * A slide composition chosen by what the slide has to say, not by its shape.
+ * When absent the deck keeps the legacy `layout` behaviour.
+ */
+export type DeckPurpose = 'cover' | 'problem' | 'comparison' | 'process' | 'example' | 'result' | 'next-steps' | 'table';
+
 export interface DeckPoint {
   title: string;
   body?: string;
@@ -43,6 +49,13 @@ export interface DeckPoint {
 export interface DeckStat {
   value: string;
   label: string;
+}
+
+export interface DeckTable {
+  /** Visible semantic caption; defaults to the slide title. */
+  caption?: string;
+  columns: string[];
+  rows: string[][];
 }
 
 export interface DeckFigure {
@@ -59,6 +72,8 @@ export interface DeckFigure {
 
 export interface DeckSlide {
   layout?: SlideLayout;
+  /** Purpose-driven composition; takes precedence over `layout` when present. */
+  purpose?: DeckPurpose;
   kicker?: string;
   title: string;
   body?: string;
@@ -66,6 +81,10 @@ export interface DeckSlide {
   stats?: DeckStat[];
   quote?: QuoteBrief;
   figure?: DeckFigure;
+  /** 3–5 ordered steps for the process composition. */
+  steps?: DeckPoint[];
+  /** 1–6 rows × 2–4 columns for the table/result compositions. */
+  table?: DeckTable;
 }
 
 

@@ -1,0 +1,111 @@
+{
+  "title": "La guía con una fila duplicada",
+  "tagline": "Una validación detecta la fila repetida y devuelve una indicación para corregirla.",
+  "eyebrow": "Revisión de guías",
+  "brand": "Mesa de despacho",
+  "author": "Equipo de operaciones",
+  "date": "octubre 2026",
+  "locale": "es",
+  "closing": "La guía vuelve a la persona; no se corrige sola.",
+  "cta": {
+    "label": "Ver el proceso",
+    "href": "#slide-2"
+  },
+  "slides": [
+    {
+      "purpose": "problem",
+      "kicker": "01 · El problema",
+      "title": "Una guía repite una fila completa",
+      "body": "La guía llega con la misma fila dos veces. La validación la detecta y rechaza la entrada sin modificarla.",
+      "points": [
+        {
+          "title": "Fila duplicada",
+          "body": "Mismo número, mismo destino y mismos bultos."
+        },
+        {
+          "title": "La persona decide",
+          "body": "Recibe la indicación para corregir y reenviar."
+        }
+      ]
+    },
+    {
+      "purpose": "comparison",
+      "kicker": "02 · Antes y después",
+      "title": "Qué cambia con la validación",
+      "points": [
+        {
+          "title": "Antes",
+          "body": "La guía entra con una fila repetida y nadie sabe qué corregir."
+        },
+        {
+          "title": "Después",
+          "body": "La validación rechaza la entrada y señala la fila que debe corregirse."
+        }
+      ]
+    },
+    {
+      "purpose": "example",
+      "kicker": "03 · El objeto",
+      "title": "La guía bajo revisión",
+      "body": "La fila duplicada se marca en la guía; la persona corrige la entrada antes de continuar.",
+      "figure": {
+        "subject": "table",
+        "scene": {
+          "kind": "market"
+        },
+        "caption": "Guía con la fila duplicada señalada",
+        "source": "Original · SVG"
+      }
+    },
+    {
+      "purpose": "result",
+      "kicker": "04 · El resultado",
+      "title": "La entrada se corrige",
+      "body": "La guía vuelve con una indicación: corregir la fila duplicada y reenviar. Nada se modifica sola.",
+      "table": {
+        "caption": "Recorrido de la guía",
+        "columns": [
+          "Estado",
+          "Qué ocurre"
+        ],
+        "rows": [
+          [
+            "Detectada",
+            "La validación marca la fila."
+          ],
+          [
+            "Rechazada",
+            "La entrada no se procesa."
+          ],
+          [
+            "Corregida",
+            "La persona ajusta y reenvía."
+          ]
+        ]
+      }
+    },
+    {
+      "purpose": "next-steps",
+      "kicker": "05 · Próximos pasos",
+      "title": "Qué sigue ahora",
+      "points": [
+        {
+          "title": "Revisar la indicación",
+          "body": "Operaciones · hoy"
+        },
+        {
+          "title": "Corregir la fila duplicada",
+          "body": "Persona responsable · al recibirla"
+        },
+        {
+          "title": "Reenviar la guía",
+          "body": "Persona responsable · tras corregir"
+        },
+        {
+          "title": "Confirmar la validación",
+          "body": "Operaciones · al completar"
+        }
+      ]
+    }
+  ]
+}

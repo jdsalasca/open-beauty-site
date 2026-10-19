@@ -947,7 +947,7 @@ export function validateDeck(html: string, style: StyleSlug): RichValidationResu
 
   const layouts = new Set<string>();
   blocks.forEach((block, index) => {
-    const layout = block.match(/layout-([a-z]+)/)?.[1] ?? 'cover';
+    const layout = block.match(/layout-([a-z-]+)/)?.[1] ?? 'cover';
     layouts.add(layout);
     const title = slideHeading(block);
     const named = title ? ` "${title}"` : '';
@@ -962,7 +962,8 @@ export function validateDeck(html: string, style: StyleSlug): RichValidationResu
           where,
           `A slide with more than ${DECK_WORD_LIMIT} words is a page projected: the room reads instead of listening.`,
           'Cut the body to two short lines.',
-          `Shorten ${title ? `"${title}"` : 'this slide'} to ${DECK_WORD_LIMIT} words or split it into two slides.`,
+          `Shorten ${title ? `"${title}"` : 'this slide'} to ${DECK_WORD_LIMIT} words or split it into two slides; ` +
+            'the original copy stays untouched, and the detail can move to a separate summary slide.',
         ),
       );
     }
