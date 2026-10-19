@@ -445,6 +445,9 @@ test('each purpose slide alternates scale and density by index without changing 
   assert.match(innerTag(contentBlock(html, 0)), /data-rhythm="even"/);
   assert.match(innerTag(contentBlock(html, 1)), /data-rhythm="odd"/);
   assert.match(innerTag(contentBlock(html, 2)), /data-rhythm="even"/);
+  assert.match(innerTag(contentBlock(html, 0)), /density-airy/);
+  assert.match(innerTag(contentBlock(html, 1)), /density-regular/);
+  assert.match(innerTag(contentBlock(html, 2)), /density-airy/);
   assert.match(html, /\[data-rhythm="odd"\] \.comp-title\{font-size:calc\(/);
 });
 

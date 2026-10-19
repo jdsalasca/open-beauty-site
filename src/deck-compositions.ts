@@ -82,7 +82,7 @@ export function compositionPlan(slide: DeckSlide, index: number, seed: number, s
   const purpose = slide.purpose ?? 'cover';
   const art = ART_DIRECTION[style.slug]?.composition;
   const allowsAsymmetry = art ? ASYMMETRY_ALLOWED.test(art.allowedAsymmetry) : false;
-  const score = PURPOSE_DENSITY[purpose] + styleDensity(style);
+  const score = PURPOSE_DENSITY[purpose] + styleDensity(style) + (index % 2 === 0 ? 0 : 1);
   return {
     purpose,
     focus: FOCUS[purpose],
