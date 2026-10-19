@@ -40,6 +40,12 @@ The Isotype comparison and checklist briefs now declare six countable pictograms
 
 The Op Art comparison and checklist briefs now model six illustrative optical motifs as a `card-collection`. The lower group shifts and changes focus/stripe phase while the central reading band remains fixed. No counter, source or product figure is invented. Only `card-collection` is supported; table rows, counters and file downloads retain reasoned fallbacks. Both packs have regular and `--art-only` GIF, static PNG, contact sheet and manifest outputs; their art-only manifests retain the paused holds and entity regions. The previous ring-only exports were removed after three render/inspection rounds. `test/narrative-gallery-repro.test.ts` reproduces all four art-only Isotype and Op Art variants alongside all 28 regular packs.
 
+## Review gallery count and test scheduling
+
+The gallery generator discovers every manifest below `docs/narrative-gif`. The four added art-only manifests (Isotype and Op Art × comparison/checklist) therefore raise the existing gallery count from 40 to 44. The CLI/MCP and library gallery assertions now expect 44, and the checked-in `GALLERY.html` is regenerated from the same manifest tree. This is an additive count change; no visual, contrast, legibility or semantic threshold was lowered.
+
+`pnpm test` sets Node's test-file concurrency to 1 because the full parallel run caused unrelated CLI, Chromium and GIF-rendering workers to exit before their suites completed on this loaded machine. The affected Isotype and papercraft semantic suites, CLI suite and 52-case browser legibility audit all passed when run alone. Serial execution retains every test and assertion; it avoids competing browser, renderer and child-process work.
+
 The evaluator records per-entity bounding regions and independently decoded pixel diffs across consecutive holds, all transition midpoints and the last-to-first loop join. It reports which IDs changed state. Text-only, decoration-only and identical-object negative controls do not pass. Composition balance is recorded for every one of those captures. `beauty narrative --art-only` and MCP `artOnly: true` create a separate pack without the title, phase labels or body copy while retaining semantic labels that belong to the illustrated object. Manifest schema v2 remains at version 2 and adds `artOnly`, `semanticObjectCaptures` and `compositionByFrame`.
 
 ## Defaults and compatibility

@@ -53,7 +53,7 @@
     "mcp": "tsx src/mcp/server.ts",
     "mcp:prod": "node dist/mcp/server.js",
     "mcp:config": "tsx scripts/mcp-config.ts",
-    "test": "tsx --test test/*.test.ts",
+    "test": "tsx --test --test-concurrency=1 test/*.test.ts",
     "examples": "tsx scripts/build-examples.ts",
     "education": "tsx scripts/build-education.ts",
     "showcase": "tsx scripts/build-showcase.ts",

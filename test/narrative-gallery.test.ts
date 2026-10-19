@@ -18,7 +18,7 @@ test('gallery is self-contained, manifest-driven and starts each card from its P
     const result = await createNarrativeGallery({ directory: PACKS, output, title: 'Revisión de Sprint' });
     const html = await readFile(output, 'utf8');
 
-    assert.equal(result.pieceCount, 40);
+    assert.equal(result.pieceCount, 44);
     assert.equal(result.styles.length, 13);
     assert.match(html, /<title>Revisión de Sprint<\/title>/);
     assert.match(html, /visual-review: pending/);
