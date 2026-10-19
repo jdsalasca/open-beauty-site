@@ -9,6 +9,8 @@ import {
   DEFAULT_NARRATIVE_COMPOSITION,
   NARRATIVE_COMPOSITION_BY_STYLE,
   NARRATIVE_LABEL_TONE_BY_STYLE,
+  SEMANTIC_NARRATIVE_COMPOSITION,
+  narrativeCompositionFor,
   type NarrativeComposition,
 } from '../src/narrative/composition.js';
 import { supportedNarrativeStyles } from '../src/narrative/scene.js';
@@ -113,6 +115,23 @@ test('the declarative style rules preserve every branch-specific value', () => {
   assert.deepEqual(Object.keys(NARRATIVE_COMPOSITION_BY_STYLE).sort(), supportedNarrativeStyles());
 });
 
+test('semantic papercraft and brutalist keep their enlarged art lane', () => {
+  assert.deepEqual(SEMANTIC_NARRATIVE_COMPOSITION, {
+    textWidthRatio: 0.43,
+    artGapRatio: 0.02,
+    artWidthRatio: 0.45,
+    artY: 0.05,
+    artHeight: 0.90,
+  });
+  for (const style of ['papercraft', 'brutalist'] as const) {
+    assert.deepEqual(narrativeCompositionFor(style, true), SEMANTIC_NARRATIVE_COMPOSITION);
+    assert.deepEqual(narrativeCompositionFor(style), EXPECTED_COMPOSITIONS[style]);
+  }
+  for (const style of ['isotype', 'opart'] as const) {
+    assert.deepEqual(narrativeCompositionFor(style), EXPECTED_COMPOSITIONS[style]);
+  }
+});
+
 test('every committed narrative pack regenerates byte-for-byte from its brief', async () => {
   const packages = await committedPackages();
   const galleryPackages = packages.filter((item) => item.briefPath.startsWith(GALLERY_ROOT));
@@ -180,6 +199,32 @@ test('every committed narrative pack regenerates byte-for-byte from its brief', 
         const generatedBytes = await readFile(generatedPath);
         const committedBytes = await readFile(committedPath);
         assert.equal(generatedBytes.equals(committedBytes), true, `${item.brief.style}/${item.composition} ${format} matches ${item.briefPath}`);
+      }
+    }
+
+    const artOnlyPackages = packages.filter((item) => item.brief.style === 'isotype' || item.brief.style === 'opart');
+    for (const [index, item] of artOnlyPackages.entries()) {
+      const style = item.brief.style;
+      const outputDir = path.join(tempRoot, `art-only-${index}-${style}-${item.composition}`);
+      const child = spawnSync(process.execPath, ['--import', 'tsx', REPRO_WORKER, item.briefPath, outputDir, '--art-only'], {
+        cwd: REPO_ROOT,
+        encoding: 'utf8',
+        timeout: 120_000,
+        maxBuffer: 2 * 1024 * 1024,
+        windowsHide: true,
+      });
+      assert.equal(child.status, 0, `${style}/${item.composition} art-only repro worker exited ${child.status}: ${child.stderr || child.stdout}`);
+      const outputFiles = await readdir(outputDir);
+      const expectedBase = outputFiles.find((name) => name.endsWith('.manifest.json'))?.replace(/\.manifest\.json$/u, '');
+      assert.ok(expectedBase?.endsWith('-art-only'), `${style}/${item.composition} art-only worker wrote a separate manifest`);
+      const manifest = JSON.parse(await readFile(path.join(outputDir, `${expectedBase}.manifest.json`), 'utf8')) as { artOnly: boolean };
+      assert.equal(manifest.artOnly, true, `${style}/${item.composition} manifest records art-only mode`);
+      for (const format of ['gif', 'png', 'contact-sheet.png']) {
+        const generatedPath = path.join(outputDir, `${expectedBase}${format === 'contact-sheet.png' ? '-contact-sheet.png' : `.${format}`}`);
+        const committedPath = path.join(item.packageDir, path.basename(generatedPath));
+        const generatedBytes = await readFile(generatedPath);
+        const committedBytes = await readFile(committedPath);
+        assert.equal(generatedBytes.equals(committedBytes), true, `${style}/${item.composition} art-only ${format} matches ${item.briefPath}`);
       }
     }
   } finally {

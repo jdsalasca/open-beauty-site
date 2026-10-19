@@ -70,6 +70,8 @@ const PAIRS: Record<StyleSlug, Pairs> = {
     expected: ['ESPERADO', 'EXPECTED'],
     change: ['CAMBIO', 'CHANGE'],
     stage: ['ETAPA', 'STEP'],
+    illustrative: ['ILUSTRATIVO', 'ILLUSTRATIVE'],
+    review: ['REVISAR', 'REVIEW'],
   },
   memphis: {
     measure: ['MEDIDA', 'MEASURE'],
@@ -90,7 +92,9 @@ const PAIRS: Record<StyleSlug, Pairs> = {
     annotate: ['ANOTAR', 'ANNOTATE'],
     archive: ['ARCHIVAR', 'ARCHIVE'],
   },
-  opart: {},
+  opart: {
+    readingBand: ['LECTURA', 'READING'],
+  },
   papercraft: {
     badgeOpen: ['PENDIENTE', 'PENDING'],
     badgeInReview: ['EN REVISIÓN', 'IN REVIEW'],

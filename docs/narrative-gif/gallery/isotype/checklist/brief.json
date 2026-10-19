@@ -4,11 +4,107 @@
   "locale": "es",
   "audience": "Producto en Sprint Review",
   "title": "Ruta para revisar el cierre",
-  "status": "in-review",
+  "workflowStatus": "in-review",
+  "outcome": { "mode": "expected" },
+  "illustrative": true,
+  "badgePolicy": "none",
   "phases": [
-    { "id": "before", "label": "Antes", "text": "El cambio se leía sin una ruta de revisión.", "visual": { "kind": "checklist", "state": "unreviewed" } },
-    { "id": "change", "label": "Cambio", "text": "La propuesta ordena la lectura en pasos visibles.", "visual": { "kind": "checklist", "state": "flagged" } },
-    { "id": "result", "label": "Resultado esperado", "text": "El equipo podrá comprobar la secuencia antes del cierre.", "visual": { "kind": "checklist", "state": "review-ready" } }
+    {
+      "id": "before",
+      "label": "Antes",
+      "text": "Seis pictogramas ilustrativos componen la lista de revisión.",
+      "visual": {
+        "kind": "checklist",
+        "state": "unreviewed",
+        "semantic": {
+          "primitive": "card-collection",
+          "illustrative": true,
+          "entities": [
+            { "id": "roster", "kind": "collection", "label": "Conjunto ilustrativo" },
+            { "id": "unit-1", "kind": "card" },
+            { "id": "unit-2", "kind": "card" },
+            { "id": "unit-3", "kind": "card" },
+            { "id": "unit-4", "kind": "card" },
+            { "id": "unit-5", "kind": "card" },
+            { "id": "unit-6", "kind": "card" }
+          ],
+          "relations": [
+            { "kind": "member-of", "from": "unit-1", "to": "roster" },
+            { "kind": "member-of", "from": "unit-2", "to": "roster" },
+            { "kind": "member-of", "from": "unit-3", "to": "roster" },
+            { "kind": "member-of", "from": "unit-4", "to": "roster" },
+            { "kind": "member-of", "from": "unit-5", "to": "roster" },
+            { "kind": "member-of", "from": "unit-6", "to": "roster" }
+          ],
+          "states": { "roster": "open", "unit-1": "member", "unit-2": "member", "unit-3": "member", "unit-4": "member", "unit-5": "member", "unit-6": "default" },
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "change",
+      "label": "Cambio",
+      "text": "Una unidad se marca sin ocultar las demás.",
+      "visual": {
+        "kind": "checklist",
+        "state": "flagged",
+        "semantic": {
+          "primitive": "card-collection",
+          "illustrative": true,
+          "entities": [
+            { "id": "roster", "kind": "collection", "label": "Conjunto ilustrativo" },
+            { "id": "unit-1", "kind": "card" },
+            { "id": "unit-2", "kind": "card" },
+            { "id": "unit-3", "kind": "card" },
+            { "id": "unit-4", "kind": "card" },
+            { "id": "unit-5", "kind": "card" },
+            { "id": "unit-6", "kind": "card" }
+          ],
+          "relations": [
+            { "kind": "member-of", "from": "unit-1", "to": "roster" },
+            { "kind": "member-of", "from": "unit-2", "to": "roster" },
+            { "kind": "member-of", "from": "unit-3", "to": "roster" },
+            { "kind": "member-of", "from": "unit-4", "to": "roster" },
+            { "kind": "member-of", "from": "unit-5", "to": "roster" },
+            { "kind": "member-of", "from": "unit-6", "to": "roster" }
+          ],
+          "states": { "roster": "open", "unit-1": "member", "unit-2": "member", "unit-3": "member", "unit-4": "member", "unit-5": "member", "unit-6": "selected" },
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "result",
+      "label": "Resultado esperado",
+      "text": "La unidad marcada ocupa una zona separada y sigue dentro del total.",
+      "visual": {
+        "kind": "checklist",
+        "state": "review-ready",
+        "semantic": {
+          "primitive": "card-collection",
+          "illustrative": true,
+          "entities": [
+            { "id": "roster", "kind": "collection", "label": "Conjunto ilustrativo" },
+            { "id": "unit-1", "kind": "card" },
+            { "id": "unit-2", "kind": "card" },
+            { "id": "unit-3", "kind": "card" },
+            { "id": "unit-4", "kind": "card" },
+            { "id": "unit-5", "kind": "card" },
+            { "id": "unit-6", "kind": "card" }
+          ],
+          "relations": [
+            { "kind": "member-of", "from": "unit-1", "to": "roster" },
+            { "kind": "member-of", "from": "unit-2", "to": "roster" },
+            { "kind": "member-of", "from": "unit-3", "to": "roster" },
+            { "kind": "member-of", "from": "unit-4", "to": "roster" },
+            { "kind": "member-of", "from": "unit-5", "to": "roster" },
+            { "kind": "member-of", "from": "unit-6", "to": "roster" }
+          ],
+          "states": { "roster": "counted", "unit-1": "member", "unit-2": "member", "unit-3": "member", "unit-4": "member", "unit-5": "member", "unit-6": "pending" },
+          "actions": []
+        }
+      }
+    }
   ],
   "playback": { "minReadableHoldMs": 5000, "transitionMs": 650, "loop": true },
   "output": { "width": 1280, "height": 720, "formats": ["gif", "png"], "preset": "review-1280x720" },

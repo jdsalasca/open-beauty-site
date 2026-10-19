@@ -90,7 +90,8 @@ test('gallery MCP creates one manifest-driven static HTML file', async () => {
   });
   assert.notEqual(result.isError, true);
   const structured = result.structuredContent as { path: string; pieceCount: number; styles: string[] };
-  assert.equal(structured.pieceCount, 52);
+  // The gallery excludes four manifests in the standalone art-only directory.
+  assert.equal(structured.pieceCount, 56);
   assert.equal(structured.styles.length, 13);
   const html = await readFile(structured.path, 'utf8');
   assert.match(html, /<title>Revisión MCP<\/title>/);
