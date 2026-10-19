@@ -108,7 +108,8 @@ function checklistLeafBox(art: NarrativeRect): NarrativeRect {
 }
 
 function drawComparisonNotes(ctx: ReturnType<typeof canvasFor>['ctx'], art: NarrativeRect, vein: { x: number; y: number }, progress: number, status: NormalizedNarrativeBrief['status'], palette: ReturnType<typeof getStyle>['palette']): void {
-  const labelX = art.x + art.width * 0.69;
+  // Keep the two indispensable right-hand annotations comfortably inside the 5% safe margin.
+  const labelX = art.x + art.width * 0.62;
   const labelY = art.y + art.height * 0.56;
   drawRule(ctx, labelX, labelY, art.x + art.width * 0.91, palette.ink, 1.5);
   drawText(ctx, 'OBSERVACIÓN', labelX, labelY + art.height * 0.055, 'Karla', 600, Math.max(24, art.width * 0.047), palette.ink);

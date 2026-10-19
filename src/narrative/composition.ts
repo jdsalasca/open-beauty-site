@@ -29,19 +29,19 @@ export const DEFAULT_NARRATIVE_COMPOSITION: NarrativeComposition = {
 };
 
 export const NARRATIVE_COMPOSITION_BY_STYLE: Readonly<Partial<Record<StyleSlug, NarrativeComposition>>> = {
-  papercraft: { textWidthRatio: 0.60, artGapRatio: 0.02, artWidthRatio: 0.31, artY: 0.08, artHeight: 0.84 },
-  brutalist: { textWidthRatio: 0.60, artGapRatio: 0.02, artWidthRatio: 0.31, artY: 0.08, artHeight: 0.84 },
-  renaissance: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.03, artHeight: 0.94 },
-  artdeco: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.03, artHeight: 0.94 },
-  isotype: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.03, artHeight: 0.94 },
-  opart: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.03, artHeight: 0.94 },
-  vaporwave: { textWidthRatio: 0.44, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.05, artHeight: 0.90 },
-  galactic: { textWidthRatio: 0.44, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.05, artHeight: 0.90 },
-  nature: { textWidthRatio: 0.44, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.05, artHeight: 0.90 },
-  ukiyoe: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.27, artY: 0.17, artHeight: 0.66 },
-  bestiary: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.27, artY: 0.17, artHeight: 0.66 },
-  psychedelic: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.27, artY: 0.17, artHeight: 0.66 },
-  memphis: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.27, artY: 0.17, artHeight: 0.66 },
+  papercraft: { textWidthRatio: 0.57, artGapRatio: 0.02, artWidthRatio: 0.31, artY: 0.08, artHeight: 0.84 },
+  brutalist: { textWidthRatio: 0.57, artGapRatio: 0.02, artWidthRatio: 0.31, artY: 0.08, artHeight: 0.84 },
+  renaissance: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.05, artHeight: 0.90 },
+  artdeco: { textWidthRatio: 0.41, artGapRatio: 0.02, artWidthRatio: 0.47, artY: 0.05, artHeight: 0.90 },
+  isotype: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.05, artHeight: 0.90 },
+  opart: { textWidthRatio: 0.41, artGapRatio: 0.02, artWidthRatio: 0.47, artY: 0.05, artHeight: 0.90 },
+  vaporwave: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.05, artHeight: 0.90 },
+  galactic: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.05, artHeight: 0.90 },
+  nature: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.05, artHeight: 0.90 },
+  ukiyoe: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.05, artHeight: 0.90 },
+  bestiary: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.05, artHeight: 0.90 },
+  psychedelic: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.05, artHeight: 0.90 },
+  memphis: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.05, artHeight: 0.90 },
 };
 
 /** One label-tone rule feeds both raster output and the rendered-contrast evaluator. */

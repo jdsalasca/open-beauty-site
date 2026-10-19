@@ -123,9 +123,7 @@ function renderFramePixels(
 
   const phaseLayout = layout.phases[phaseIndex]!;
   const textArea = layout.textArea;
-  const titleY = height * 0.10;
-  const labelY = height * 0.34;
-  const bodyY = height * 0.43;
+  const { titleY, labelY, bodyY } = layout.copyPositions;
   const palette = getStyle(brief.style).palette;
   const labelColor = palette[narrativeLabelToneFor(brief.style)];
   drawBlock(ctx, layout.title, textArea.x, titleY, fonts.effective.display, fonts.approvedAlternative.display, palette.ink);
@@ -231,6 +229,9 @@ function captureLabels(brief: NormalizedNarrativeBrief, timeline: NarrativeTimel
 
 function drawContactTile(
   sheet: Canvas,
+  source: Canvas,
+  sourceContext: SKRSContext2D,
+  sourceImage: ReturnType<SKRSContext2D['createImageData']>,
   index: number,
   labels: string[],
   pixels: Uint8ClampedArray,
@@ -243,7 +244,8 @@ function drawContactTile(
   const cellHeight = tileHeight + CONTACT_LABEL_HEIGHT;
   const x = (index % columns) * tileWidth;
   const y = Math.floor(index / columns) * cellHeight;
-  const source = imageDataCanvas(width, height, pixels);
+  sourceImage.data.set(pixels);
+  sourceContext.putImageData(sourceImage, 0, 0);
   const ctx = sheet.getContext('2d');
   ctx.drawImage(source, x, y, tileWidth, tileHeight);
   ctx.fillStyle = '#ffffff';
@@ -307,7 +309,7 @@ export async function encodeNarrative(
     localTimeMs += timeline.frames[index]!.delayMs;
   }
   const sampleLength = phaseSamples.reduce((sum, sample) => sum + sample.length, 0);
-  const paletteInput = new Uint8Array(sampleLength);
+  let paletteInput = new Uint8Array(sampleLength);
   let sampleOffset = 0;
   for (const sample of phaseSamples) {
     paletteInput.set(sample, sampleOffset);
@@ -316,11 +318,16 @@ export async function encodeNarrative(
   const palette = quantize(paletteInput, 128, { format: 'rgb444', clearAlpha: true });
   if (!palette.length) throw new NarrativeError('RESOURCE_LIMIT', 'GIF palette sampling produced no colors.', 'Render at least one fully composited phase.');
   const loss = paletteLoss(paletteInput, palette);
+  phaseSamples.length = 0;
+  paletteInput = new Uint8Array();
   const indices = captureLabels(brief, timeline);
   const captureCount = indices.size;
   const tileHeight = Math.round(CONTACT_TILE_WIDTH * height / width) + CONTACT_LABEL_HEIGHT;
   const rows = Math.ceil(captureCount / 4);
   const contactCanvas = createCanvas(CONTACT_TILE_WIDTH * 4, tileHeight * rows);
+  const contactSourceCanvas = createCanvas(width, height);
+  const contactSourceContext = contactSourceCanvas.getContext('2d');
+  const contactSourceImage = contactSourceContext.createImageData(width, height);
   const encoder = GIFEncoder();
   const gifPalette = palette.length < 2 ? [...palette, palette[0]!] : palette;
   let holdFramePixels: Uint8ClampedArray | undefined;
@@ -339,7 +346,7 @@ export async function encodeNarrative(
     if (frame.kind === 'hold' && frame.phaseIndex === 0) holdFramePixels = pixels.slice();
     const labels = indices.get(index);
     if (labels) {
-      drawContactTile(contactCanvas, tileIndex, labels, pixels, width, height);
+      drawContactTile(contactCanvas, contactSourceCanvas, contactSourceContext, contactSourceImage, tileIndex, labels, pixels, width, height);
       tileIndex += 1;
     }
     localTimeMs += frame.delayMs;
@@ -351,10 +358,19 @@ export async function encodeNarrative(
   const poster = imageDataCanvas(width, height, holdFramePixels);
   const pngBytes = Buffer.from(poster.encodeSync('png'));
   const contactBytes = Buffer.from(contactCanvas.encodeSync('png'));
+  holdFramePixels = undefined;
   await writeFile(paths.png, pngBytes);
   await writeFile(paths.contactSheet, contactBytes);
+  renderCanvas.width = 1;
+  renderCanvas.height = 1;
+  poster.width = 1;
+  poster.height = 1;
+  contactCanvas.width = 1;
+  contactCanvas.height = 1;
+  contactSourceCanvas.width = 1;
+  contactSourceCanvas.height = 1;
 
-  const decoded = verifyNarrativeGif(gifBytes);
+  const decoded = verifyNarrativeGif(gifBytes, [timeline.holds[0]!.frameIndex]);
   const ffprobe = await crossCheckWithFfprobe(paths.gif, decoded);
   const phaseHoldsVerified = timeline.holds.map((hold) => {
     const decodedMs = decoded.delaysMs[hold.frameIndex] ?? 0;

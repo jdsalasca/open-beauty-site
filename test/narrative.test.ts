@@ -9,8 +9,9 @@ import { normalizeContentSource, normalizeNarrativeBrief } from '../src/narrativ
 import { layoutNarrative } from '../src/narrative/layout.js';
 import { buildNarrativeTimeline } from '../src/narrative/timeline.js';
 import { createNarrative, narrativeFailure } from '../src/narrative/create.js';
-import { evaluateNarrative } from '../src/narrative/evaluate.js';
+import { evaluateNarrative, measureCompositionBalance } from '../src/narrative/evaluate.js';
 import { getNarrativeScene, supportedNarrativeStyles } from '../src/narrative/scene.js';
+import { getStyle } from '../src/styles/presets.js';
 import type { StyleSlug } from '../src/types.js';
 import { decodeGif } from './support/gif-frames.js';
 import { testNarrativeScene } from './support/narrative-scene.js';
@@ -108,6 +109,65 @@ test('layout preserves all copy and meets the review and 640x360 size thresholds
     assert.ok(fitted.label.effectiveCardSize >= 12);
   }
   assert.equal(NARRATIVE_GLYPHS, 'áéíóúüñ¿¡0123456789%→·');
+});
+
+test('layout uses the available type scale and centers the complete copy group in the text column', () => {
+  const normalized = normalizeNarrativeBrief(brief({ output: undefined })).brief;
+  const layout = layoutNarrative(normalized);
+  const positions = (layout as unknown as { copyPositions?: { titleY: number; labelY: number; bodyY: number; groupHeight: number } }).copyPositions;
+
+  assert.ok(layout.title.size >= 90, `short title should grow above the old 76px ceiling; got ${layout.title.size}px`);
+  assert.ok(layout.phases.every((phase) => phase.label.size >= 30), 'short labels should use the new 30px ceiling');
+  assert.ok(layout.phases.every((phase) => phase.body.size >= 48), 'short body copy should use the available scale above the old 40px ceiling');
+  assert.ok(positions, 'layout exposes shared vertical positions for the title, label and body');
+  const center = positions.titleY + positions.groupHeight / 2;
+  assert.ok(Math.abs(center - (layout.textArea.y + layout.textArea.height / 2)) <= 2, 'the copy group is centered in the text column');
+  assert.ok(positions.bodyY - positions.labelY > layout.phases[0]!.label.height, 'label and body keep a deliberate hierarchy gap');
+});
+
+test('every style keeps its allocated text and art boxes inside the five-percent safe margins', () => {
+  for (const style of supportedNarrativeStyles()) {
+    const normalized = normalizeNarrativeBrief(brief({ style, output: undefined })).brief;
+    const layout = layoutNarrative(normalized);
+    assert.ok(layout.reservedArtArea.x >= normalized.output.width * 0.05, `${style} art starts inside the left safe margin`);
+    assert.ok(layout.reservedArtArea.x + layout.reservedArtArea.width <= normalized.output.width * 0.95 + 0.01, `${style} art ends inside the right safe margin`);
+    assert.ok(layout.reservedArtArea.y >= normalized.output.height * 0.05 - 0.01, `${style} art starts inside the top safe margin`);
+    assert.ok(layout.reservedArtArea.y + layout.reservedArtArea.height <= normalized.output.height * 0.95 + 0.01, `${style} art ends inside the bottom safe margin`);
+  }
+});
+
+test('composition object-area ratio excludes occupied text cells and measures the art lane', () => {
+  const width = 1280;
+  const height = 720;
+  const rgb = new Uint8Array(width * height * 3).fill(255);
+  const paintCell = (column: number, row: number) => {
+    const x0 = column * width / 8;
+    const x1 = (column + 1) * width / 8;
+    const y0 = row * height / 4;
+    const y1 = (row + 1) * height / 4;
+    for (let y = y0; y < y1; y += 1) {
+      for (let x = x0; x < x1; x += 1) {
+        const offset = (y * width + x) * 3;
+        rgb[offset] = 0;
+        rgb[offset + 1] = 0;
+        rgb[offset + 2] = 0;
+      }
+    }
+  };
+  paintCell(0, 1);
+  paintCell(6, 2);
+
+  const metrics = measureCompositionBalance({
+    rgb,
+    width,
+    height,
+    background: '#ffffff',
+    textArea: { x: 0, y: 0, width: 320, height },
+  });
+
+  assert.equal(metrics.emptyCellRatio, 30 / 32);
+  assert.equal(metrics.textColumnFillRatio, 1 / 4);
+  assert.equal(metrics.objectAreaRatio, 1 / 32);
 });
 
 test('layout supports square and story ratios and rejects text it cannot fit', () => {
@@ -284,6 +344,31 @@ test('negative controls cannot pass on file format alone', async () => {
 
     const lostColor = evaluateNarrative({ brief: input.brief, layout, encoded: { ...encoded, palette: { ...encoded.palette, meanAbsoluteChannelError: 100, maximumChannelError: 255 } } });
     assert.equal(lostColor['style-conformance'].pixelStatus, 'fail');
+
+    const background = getStyle(input.brief.style).palette.bg.replace('#', '');
+    const rgb = new Uint8Array(input.brief.output.width * input.brief.output.height * 3);
+    const bg = [0, 2, 4].map((offset) => Number.parseInt(background.slice(offset, offset + 2), 16));
+    for (let offset = 0; offset < rgb.length; offset += 3) rgb.set(bg, offset);
+    const ink = getStyle(input.brief.style).palette.ink.replace('#', '');
+    const foreground = [0, 2, 4].map((offset) => Number.parseInt(ink.slice(offset, offset + 2), 16));
+    for (let y = 0; y < input.brief.output.height / 2; y += 1) {
+      for (let x = 0; x < input.brief.output.width / 3; x += 1) rgb.set(foreground, (y * input.brief.output.width + x) * 3);
+    }
+    const crammed = {
+      ...encoded,
+      decoded: { ...encoded.decoded, sampledFrames: [{ index: 0, rgb }] },
+    } as typeof encoded;
+    const crammedResult = evaluateNarrative({ brief: input.brief, layout, encoded: crammed });
+    const balanceControl = crammedResult['rendered-legibility'].controls.find((control) => control.name === 'composition-balance');
+    assert.equal(crammedResult['rendered-legibility'].status, 'revise', 'top-left-only content must request layout revision');
+    assert.equal(balanceControl?.passed, false, 'the decoded-pixel negative control must flag the empty remainder');
+
+    const undersized = structuredClone(layout);
+    undersized.phases[0]!.body.size = 39;
+    undersized.phases[0]!.body.effectiveCardSize = 19.5;
+    const cardSize = evaluateNarrative({ brief: input.brief, layout: undersized, encoded })['rendered-legibility'].controls.find((control) => control.name === '640x360-effective-size');
+    assert.equal(cardSize?.passed, false, 'body text below 20px at 640x360 fails the effective-size control');
+    assert.match(cardSize?.detail ?? '', /20px/);
     let durationError: unknown;
     try {
       normalizeNarrativeBrief(brief({ playback: { minReadableHoldMs: 700_000, transitionMs: 650, loop: true } }));

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "commit": "8199103db118759c589f6593a4d6eb13c71230ae",
+  "commit": "aaa4322afd9cf89b6ef3a8c7a1ae542fcef5ed31",
   "brief": {
     "style": "vaporwave",
     "kind": "narrative-gif",
@@ -145,20 +145,20 @@
     "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 1234410,
-    "png": 95245,
-    "contactSheet": 80844
+    "gif": 1303046,
+    "png": 103536,
+    "contactSheet": 87943
   },
   "hashes": {
     "briefSha256": "dd72dc2df35f26a3034c135b45794a437d04a30d7389e02ac0acfd5211ef5e64",
-    "gifSha256": "fef6f481c20c17818dfab4cd76b605f4f595720af23e85f42af4db83fbbf98f9",
-    "pngSha256": "56a7a5bfcda1ca4e708c8aac9656149f057e787f7ce63a6e9271c21169597d44",
-    "contactSheetSha256": "c0c0da86c015574e4286c95b9123b0484418de7197e12ed4ba8b7e4e4f49389e"
+    "gifSha256": "40c465d7f562f5687b2d89e265641edcd935e7316c56f2e111169fb2405c64cc",
+    "pngSha256": "9652b6f271ea88413142c5b7b673cf2066f78025170a1898023fd24cf6ce432c",
+    "contactSheetSha256": "fc1dff7f0438028c05be1c856774149cd1fe393ab50dfc6a2f34cf2a231b0ce4"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-f4a8d2d6\\docs\\narrative-gif\\gallery\\vaporwave\\checklist\\lectura-ordenada-dd72dc2d.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-f4a8d2d6\\docs\\narrative-gif\\gallery\\vaporwave\\checklist\\lectura-ordenada-dd72dc2d.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-f4a8d2d6\\docs\\narrative-gif\\gallery\\vaporwave\\checklist\\lectura-ordenada-dd72dc2d-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\vaporwave\\checklist\\lectura-ordenada-dd72dc2d.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\vaporwave\\checklist\\lectura-ordenada-dd72dc2d.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\vaporwave\\checklist\\lectura-ordenada-dd72dc2d-contact-sheet.png"
   },
   "controls": [
     {
@@ -206,7 +206,7 @@
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 1234410B · PNG 95245B · contact 80844B",
+      "detail": "GIF 1303046B · PNG 103536B · contact 87943B",
       "source": "decoded"
     },
     {
@@ -242,7 +242,7 @@
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "97 colors; mean channel loss 0.131, max 11; sampled 33 frames",
+      "detail": "94 colors; mean channel loss 0.119, max 11; sampled 33 frames",
       "source": "pixels"
     },
     {
@@ -260,7 +260,7 @@
     {
       "name": "phase-before-text-complete",
       "passed": true,
-      "detail": "La ventana muestra el / archivo sin pasos de lectura.",
+      "detail": "La ventana muestra / el archivo sin pasos / de lectura.",
       "source": "source"
     },
     {
@@ -272,7 +272,7 @@
     {
       "name": "phase-change-text-complete",
       "passed": true,
-      "detail": "La misma ventana organiza / revisar, señalar y archivar.",
+      "detail": "La misma ventana / organiza revisar, / señalar y archivar.",
       "source": "source"
     },
     {
@@ -284,7 +284,7 @@
     {
       "name": "phase-result-text-complete",
       "passed": true,
-      "detail": "Los tres pasos quedan / visibles junto al mismo / archivo.",
+      "detail": "Los tres pasos / quedan visibles junto / al mismo archivo.",
       "source": "source"
     },
     {
@@ -296,14 +296,20 @@
     {
       "name": "review-size-thresholds",
       "passed": true,
-      "detail": "title 65px; phase body >=36px; label >=24px",
+      "detail": "title 64px; phase body >=36px; label >=24px",
       "source": "source"
     },
     {
       "name": "640x360-effective-size",
       "passed": true,
-      "detail": "title 32.5px; body min 20.0px; label min 14.0px",
+      "detail": "title 32.0px; body min 26.5px (requires >=20px); label min 15.0px",
       "source": "source"
+    },
+    {
+      "name": "composition-balance",
+      "passed": true,
+      "detail": "proxy; 8×4 decoded-pixel grid against #1B1035: empty cells 15.6%, text-column vertical fill 75.0%, art/object area outside the text column 50.0%, largest empty rectangle 12.5%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+      "source": "pixels"
     },
     {
       "name": "contrast",
@@ -314,7 +320,7 @@
     {
       "name": "safe-zone-and-collisions",
       "passed": true,
-      "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
       "source": "source"
     },
     {
@@ -397,7 +403,7 @@
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 1234410B · PNG 95245B · contact 80844B",
+          "detail": "GIF 1303046B · PNG 103536B · contact 87943B",
           "source": "decoded"
         }
       ]
@@ -440,7 +446,7 @@
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "97 colors; mean channel loss 0.131, max 11; sampled 33 frames",
+          "detail": "94 colors; mean channel loss 0.119, max 11; sampled 33 frames",
           "source": "pixels"
         }
       ],
@@ -464,7 +470,7 @@
         {
           "name": "phase-before-text-complete",
           "passed": true,
-          "detail": "La ventana muestra el / archivo sin pasos de lectura.",
+          "detail": "La ventana muestra / el archivo sin pasos / de lectura.",
           "source": "source"
         },
         {
@@ -476,7 +482,7 @@
         {
           "name": "phase-change-text-complete",
           "passed": true,
-          "detail": "La misma ventana organiza / revisar, señalar y archivar.",
+          "detail": "La misma ventana / organiza revisar, / señalar y archivar.",
           "source": "source"
         },
         {
@@ -488,7 +494,7 @@
         {
           "name": "phase-result-text-complete",
           "passed": true,
-          "detail": "Los tres pasos quedan / visibles junto al mismo / archivo.",
+          "detail": "Los tres pasos / quedan visibles junto / al mismo archivo.",
           "source": "source"
         },
         {
@@ -500,14 +506,20 @@
         {
           "name": "review-size-thresholds",
           "passed": true,
-          "detail": "title 65px; phase body >=36px; label >=24px",
+          "detail": "title 64px; phase body >=36px; label >=24px",
           "source": "source"
         },
         {
           "name": "640x360-effective-size",
           "passed": true,
-          "detail": "title 32.5px; body min 20.0px; label min 14.0px",
+          "detail": "title 32.0px; body min 26.5px (requires >=20px); label min 15.0px",
           "source": "source"
+        },
+        {
+          "name": "composition-balance",
+          "passed": true,
+          "detail": "proxy; 8×4 decoded-pixel grid against #1B1035: empty cells 15.6%, text-column vertical fill 75.0%, art/object area outside the text column 50.0%, largest empty rectangle 12.5%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+          "source": "pixels"
         },
         {
           "name": "contrast",
@@ -518,7 +530,7 @@
         {
           "name": "safe-zone-and-collisions",
           "passed": true,
-          "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
           "source": "source"
         },
         {
@@ -528,7 +540,7 @@
           "source": "decoded"
         }
       ],
-      "note": "Layout, contrast and decoded holds are measured; OCR and human reading at card size remain pending."
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
     },
     "narrative": {
       "status": "pending",
@@ -583,7 +595,7 @@
         "before · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-f4a8d2d6\\docs\\narrative-gif\\gallery\\vaporwave\\checklist\\lectura-ordenada-dd72dc2d-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\vaporwave\\checklist\\lectura-ordenada-dd72dc2d-contact-sheet.png"
     },
     {
       "phaseId": "change",
@@ -592,7 +604,7 @@
         "change · pausa",
         "change · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-f4a8d2d6\\docs\\narrative-gif\\gallery\\vaporwave\\checklist\\lectura-ordenada-dd72dc2d-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\vaporwave\\checklist\\lectura-ordenada-dd72dc2d-contact-sheet.png"
     },
     {
       "phaseId": "result",
@@ -601,12 +613,12 @@
         "result · pausa",
         "result · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-f4a8d2d6\\docs\\narrative-gif\\gallery\\vaporwave\\checklist\\lectura-ordenada-dd72dc2d-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\vaporwave\\checklist\\lectura-ordenada-dd72dc2d-contact-sheet.png"
     }
   ],
   "palette": {
-    "colors": 97,
-    "meanAbsoluteChannelError": 0.131,
+    "colors": 94,
+    "meanAbsoluteChannelError": 0.119,
     "maximumChannelError": 11,
     "sampledFrames": 33
   },

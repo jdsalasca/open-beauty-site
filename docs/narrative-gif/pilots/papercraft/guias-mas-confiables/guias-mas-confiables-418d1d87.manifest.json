@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "commit": "d78a1360e9619fa326d6ce513e19eaac3b08ec4e",
+  "commit": "aaa4322afd9cf89b6ef3a8c7a1ae542fcef5ed31",
   "brief": {
     "style": "papercraft",
     "subfamily": "editorial",
@@ -155,20 +155,20 @@
     "detail": "ffprobe 1280×720; 42 frames; 17940ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 1153651,
-    "png": 86857,
-    "contactSheet": 81449
+    "gif": 1269205,
+    "png": 94065,
+    "contactSheet": 94195
   },
   "hashes": {
     "briefSha256": "418d1d87e19495002b8c0410ba9ebfbcbc8e9f94dce00bb3dc2e1949d74ea4a6",
-    "gifSha256": "b094bc69782748cdd1f3d7a482706c3456802b0b6633f36c9ff371929f247b25",
-    "pngSha256": "ebe99a545e1c189322aeb2c85baddc5b3730e766a4367c4968c1b2fb6e03a1c4",
-    "contactSheetSha256": "cb62de5ab18ee9aa41eb390604cac72532de1569c3ee98cb732189e7adba7ddf"
+    "gifSha256": "ad7ffaab53d6b5f3aca52afff025db7385b02166df267ba72b449fd06b6c756c",
+    "pngSha256": "ab55d07df023ce5d6245771aaa30daf1268b51ed96a2c561d4e7bead17c687c2",
+    "contactSheetSha256": "d10b017184adc1511f7264d45f8b3f4b71ddfa97e44867d0b27ea00767979740"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\papercraft\\guias-mas-confiables\\guias-mas-confiables-418d1d87.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\papercraft\\guias-mas-confiables\\guias-mas-confiables-418d1d87.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\papercraft\\guias-mas-confiables\\guias-mas-confiables-418d1d87-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\guias-mas-confiables\\guias-mas-confiables-418d1d87.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\guias-mas-confiables\\guias-mas-confiables-418d1d87.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\guias-mas-confiables\\guias-mas-confiables-418d1d87-contact-sheet.png"
   },
   "controls": [
     {
@@ -216,7 +216,7 @@
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 1153651B · PNG 86857B · contact 81449B",
+      "detail": "GIF 1269205B · PNG 94065B · contact 94195B",
       "source": "decoded"
     },
     {
@@ -252,7 +252,7 @@
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "61 colors; mean channel loss 2.253, max 9; sampled 42 frames",
+      "detail": "54 colors; mean channel loss 2.228, max 12; sampled 42 frames",
       "source": "pixels"
     },
     {
@@ -270,7 +270,7 @@
     {
       "name": "phase-before-text-complete",
       "passed": true,
-      "detail": "Una medida inesperada podía pasar sin / aviso.",
+      "detail": "Una medida inesperada / podía pasar sin aviso.",
       "source": "source"
     },
     {
@@ -282,7 +282,7 @@
     {
       "name": "phase-change-text-complete",
       "passed": true,
-      "detail": "Ahora se señala para que pueda revisarse.",
+      "detail": "Ahora se señala para que / pueda revisarse.",
       "source": "source"
     },
     {
@@ -294,7 +294,7 @@
     {
       "name": "phase-result-text-complete",
       "passed": true,
-      "detail": "Detectar el problema antes de publicar.",
+      "detail": "Detectar el problema antes / de publicar.",
       "source": "source"
     },
     {
@@ -306,14 +306,20 @@
     {
       "name": "review-size-thresholds",
       "passed": true,
-      "detail": "title 76px; phase body >=36px; label >=24px",
+      "detail": "title 85px; phase body >=36px; label >=24px",
       "source": "source"
     },
     {
       "name": "640x360-effective-size",
       "passed": true,
-      "detail": "title 38.0px; body min 20.0px; label min 14.0px",
+      "detail": "title 42.5px; body min 28.0px (requires >=20px); label min 15.0px",
       "source": "source"
+    },
+    {
+      "name": "composition-balance",
+      "passed": true,
+      "detail": "proxy; 8×4 decoded-pixel grid against #FBF1E2: empty cells 12.5%, text-column vertical fill 100.0%, art/object area outside the text column 28.1%, largest empty rectangle 6.3%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+      "source": "pixels"
     },
     {
       "name": "contrast",
@@ -324,7 +330,7 @@
     {
       "name": "safe-zone-and-collisions",
       "passed": true,
-      "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
       "source": "source"
     },
     {
@@ -407,7 +413,7 @@
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 1153651B · PNG 86857B · contact 81449B",
+          "detail": "GIF 1269205B · PNG 94065B · contact 94195B",
           "source": "decoded"
         }
       ]
@@ -450,7 +456,7 @@
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "61 colors; mean channel loss 2.253, max 9; sampled 42 frames",
+          "detail": "54 colors; mean channel loss 2.228, max 12; sampled 42 frames",
           "source": "pixels"
         }
       ],
@@ -474,7 +480,7 @@
         {
           "name": "phase-before-text-complete",
           "passed": true,
-          "detail": "Una medida inesperada podía pasar sin / aviso.",
+          "detail": "Una medida inesperada / podía pasar sin aviso.",
           "source": "source"
         },
         {
@@ -486,7 +492,7 @@
         {
           "name": "phase-change-text-complete",
           "passed": true,
-          "detail": "Ahora se señala para que pueda revisarse.",
+          "detail": "Ahora se señala para que / pueda revisarse.",
           "source": "source"
         },
         {
@@ -498,7 +504,7 @@
         {
           "name": "phase-result-text-complete",
           "passed": true,
-          "detail": "Detectar el problema antes de publicar.",
+          "detail": "Detectar el problema antes / de publicar.",
           "source": "source"
         },
         {
@@ -510,14 +516,20 @@
         {
           "name": "review-size-thresholds",
           "passed": true,
-          "detail": "title 76px; phase body >=36px; label >=24px",
+          "detail": "title 85px; phase body >=36px; label >=24px",
           "source": "source"
         },
         {
           "name": "640x360-effective-size",
           "passed": true,
-          "detail": "title 38.0px; body min 20.0px; label min 14.0px",
+          "detail": "title 42.5px; body min 28.0px (requires >=20px); label min 15.0px",
           "source": "source"
+        },
+        {
+          "name": "composition-balance",
+          "passed": true,
+          "detail": "proxy; 8×4 decoded-pixel grid against #FBF1E2: empty cells 12.5%, text-column vertical fill 100.0%, art/object area outside the text column 28.1%, largest empty rectangle 6.3%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+          "source": "pixels"
         },
         {
           "name": "contrast",
@@ -528,7 +540,7 @@
         {
           "name": "safe-zone-and-collisions",
           "passed": true,
-          "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
           "source": "source"
         },
         {
@@ -538,7 +550,7 @@
           "source": "decoded"
         }
       ],
-      "note": "Layout, contrast and decoded holds are measured; OCR and human reading at card size remain pending."
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
     },
     "narrative": {
       "status": "pending",
@@ -594,7 +606,7 @@
         "before · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\papercraft\\guias-mas-confiables\\guias-mas-confiables-418d1d87-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\guias-mas-confiables\\guias-mas-confiables-418d1d87-contact-sheet.png"
     },
     {
       "phaseId": "change",
@@ -604,7 +616,7 @@
         "change · transición media",
         "change · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\papercraft\\guias-mas-confiables\\guias-mas-confiables-418d1d87-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\guias-mas-confiables\\guias-mas-confiables-418d1d87-contact-sheet.png"
     },
     {
       "phaseId": "result",
@@ -614,13 +626,13 @@
         "result · transición media",
         "result · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\papercraft\\guias-mas-confiables\\guias-mas-confiables-418d1d87-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\guias-mas-confiables\\guias-mas-confiables-418d1d87-contact-sheet.png"
     }
   ],
   "palette": {
-    "colors": 61,
-    "meanAbsoluteChannelError": 2.253,
-    "maximumChannelError": 9,
+    "colors": 54,
+    "meanAbsoluteChannelError": 2.228,
+    "maximumChannelError": 12,
     "sampledFrames": 42
   },
   "phaseHoldsVerified": [

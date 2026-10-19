@@ -20,19 +20,19 @@ const PILOTS_ROOT = path.join(REPO_ROOT, 'docs', 'narrative-gif', 'pilots');
 const COMPOSITIONS = ['comparison', 'checklist'] as const;
 
 const EXPECTED_COMPOSITIONS: Record<StyleSlug, NarrativeComposition> = {
-  papercraft: { textWidthRatio: 0.60, artGapRatio: 0.02, artWidthRatio: 0.31, artY: 0.08, artHeight: 0.84 },
-  brutalist: { textWidthRatio: 0.60, artGapRatio: 0.02, artWidthRatio: 0.31, artY: 0.08, artHeight: 0.84 },
-  renaissance: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.03, artHeight: 0.94 },
-  artdeco: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.03, artHeight: 0.94 },
-  isotype: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.03, artHeight: 0.94 },
-  opart: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.03, artHeight: 0.94 },
-  vaporwave: { textWidthRatio: 0.44, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.05, artHeight: 0.90 },
-  galactic: { textWidthRatio: 0.44, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.05, artHeight: 0.90 },
-  nature: { textWidthRatio: 0.44, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.05, artHeight: 0.90 },
-  ukiyoe: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.27, artY: 0.17, artHeight: 0.66 },
-  bestiary: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.27, artY: 0.17, artHeight: 0.66 },
-  psychedelic: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.27, artY: 0.17, artHeight: 0.66 },
-  memphis: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.27, artY: 0.17, artHeight: 0.66 },
+  papercraft: { textWidthRatio: 0.57, artGapRatio: 0.02, artWidthRatio: 0.31, artY: 0.08, artHeight: 0.84 },
+  brutalist: { textWidthRatio: 0.57, artGapRatio: 0.02, artWidthRatio: 0.31, artY: 0.08, artHeight: 0.84 },
+  renaissance: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.05, artHeight: 0.90 },
+  artdeco: { textWidthRatio: 0.41, artGapRatio: 0.02, artWidthRatio: 0.47, artY: 0.05, artHeight: 0.90 },
+  isotype: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.05, artHeight: 0.90 },
+  opart: { textWidthRatio: 0.41, artGapRatio: 0.02, artWidthRatio: 0.47, artY: 0.05, artHeight: 0.90 },
+  vaporwave: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.05, artHeight: 0.90 },
+  galactic: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.05, artHeight: 0.90 },
+  nature: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.05, artHeight: 0.90 },
+  ukiyoe: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.05, artHeight: 0.90 },
+  bestiary: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.05, artHeight: 0.90 },
+  psychedelic: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.05, artHeight: 0.90 },
+  memphis: { textWidthRatio: 0.43, artGapRatio: 0.02, artWidthRatio: 0.45, artY: 0.05, artHeight: 0.90 },
 };
 
 const EXPECTED_LABEL_TONES: Record<StyleSlug, 'ink' | 'accent'> = {
@@ -142,6 +142,11 @@ test('every committed narrative pack regenerates byte-for-byte from its brief', 
     for (const [index, item] of packages.entries()) {
       const outputDir = path.join(tempRoot, `${index}-${item.brief.style}-${item.composition}`);
       const generated = await createNarrative(item.brief, { outputDir });
+      const balance = generated.evaluation['rendered-legibility'].controls.find((control) => control.name === 'composition-balance');
+      assert.ok(balance, `${item.brief.style}/${item.composition} reports decoded composition balance`);
+      const fill = balance.detail.match(/text-column vertical fill ([\d.]+)%/u);
+      assert.ok(fill, `${item.brief.style}/${item.composition} reports a text-column fill ratio`);
+      assert.ok(Number(fill[1]) >= 60, `${item.brief.style}/${item.composition} fills at least 60% of the text column vertically`);
       const artifacts = [
         ['GIF', generated.paths.gif],
         ['PNG', generated.paths.png],

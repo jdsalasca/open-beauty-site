@@ -135,6 +135,7 @@ export interface NarrativeLayout {
   safeZone: NarrativeRect;
   textArea: NarrativeRect;
   reservedArtArea: NarrativeRect;
+  copyPositions: { titleY: number; labelY: number; bodyY: number; groupHeight: number };
   title: NarrativeTextBlock;
   phases: NarrativePhaseLayout[];
   cardScale: number;
@@ -162,13 +163,14 @@ export interface NarrativeScene {
   renderFrame(context: NarrativeRenderContext): Uint8ClampedArray;
 }
 
-export type NarrativeLevelStatus = 'pass' | 'fail' | 'pending' | 'not-evaluated';
+export type NarrativeLevelStatus = 'pass' | 'revise' | 'fail' | 'pending' | 'not-evaluated';
 
 export interface NarrativeControlResult {
   name: string;
   passed: boolean;
   detail: string;
   source?: 'source' | 'pixels' | 'decoded' | 'human';
+  severity?: 'warning' | 'error';
 }
 
 export interface NarrativeEvaluationLevel {

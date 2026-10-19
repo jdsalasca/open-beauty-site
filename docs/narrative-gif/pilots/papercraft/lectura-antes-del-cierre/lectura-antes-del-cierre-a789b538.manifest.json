@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "commit": "d78a1360e9619fa326d6ce513e19eaac3b08ec4e",
+  "commit": "aaa4322afd9cf89b6ef3a8c7a1ae542fcef5ed31",
   "brief": {
     "style": "papercraft",
     "subfamily": "editorial",
@@ -155,20 +155,20 @@
     "detail": "ffprobe 1280×720; 42 frames; 17940ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 1343788,
-    "png": 92606,
-    "contactSheet": 85918
+    "gif": 1347749,
+    "png": 99037,
+    "contactSheet": 95750
   },
   "hashes": {
     "briefSha256": "a789b538e4fd90cbc3d8cb4bd501663e0789f8436e9ab17e1d732602d4bfc013",
-    "gifSha256": "434ad76cbbcdea1efc4acf68164c4b6b2a884b3357288203ecfbb3dc1437e338",
-    "pngSha256": "abb4b3cbfb53ed8e833f2f1e20699e45debd78c0f9986c95cb57b2ddb5e6a1da",
-    "contactSheetSha256": "d5bfba68cf5f12f4f0406545772222f3edd296712102ce0b3c3f1ff31f093820"
+    "gifSha256": "0fdc14d6b94622e249a3187437c074b212f3b7fcc5f43818df1e6aed84caf17e",
+    "pngSha256": "55c22baabee2c08a0b37d597025475cf3fd9e060325a969164911e7f94e4bdb3",
+    "contactSheetSha256": "869b7723564c3f67c5204fad224f37185262919a9f97c2c6e4d8acce817c086a"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-a789b538.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-a789b538.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-a789b538-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-a789b538.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-a789b538.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-a789b538-contact-sheet.png"
   },
   "controls": [
     {
@@ -216,7 +216,7 @@
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 1343788B · PNG 92606B · contact 85918B",
+      "detail": "GIF 1347749B · PNG 99037B · contact 95750B",
       "source": "decoded"
     },
     {
@@ -252,7 +252,7 @@
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "59 colors; mean channel loss 2.224, max 13; sampled 42 frames",
+      "detail": "62 colors; mean channel loss 2.203, max 10; sampled 42 frames",
       "source": "pixels"
     },
     {
@@ -270,7 +270,7 @@
     {
       "name": "phase-before-text-complete",
       "passed": true,
-      "detail": "La ficha puede llegar sin una lectura / compartida.",
+      "detail": "La ficha puede llegar sin una / lectura compartida.",
       "source": "source"
     },
     {
@@ -282,7 +282,7 @@
     {
       "name": "phase-change-text-complete",
       "passed": true,
-      "detail": "Una lista deja visibles los puntos por / comprobar.",
+      "detail": "Una lista deja visibles los / puntos por comprobar.",
       "source": "source"
     },
     {
@@ -294,7 +294,7 @@
     {
       "name": "phase-result-text-complete",
       "passed": true,
-      "detail": "El equipo termina la revisión antes de / cerrar la ficha.",
+      "detail": "El equipo termina la revisión / antes de cerrar la ficha.",
       "source": "source"
     },
     {
@@ -306,14 +306,20 @@
     {
       "name": "review-size-thresholds",
       "passed": true,
-      "detail": "title 76px; phase body >=36px; label >=24px",
+      "detail": "title 77px; phase body >=36px; label >=24px",
       "source": "source"
     },
     {
       "name": "640x360-effective-size",
       "passed": true,
-      "detail": "title 38.0px; body min 20.0px; label min 14.0px",
+      "detail": "title 38.5px; body min 28.0px (requires >=20px); label min 15.0px",
       "source": "source"
+    },
+    {
+      "name": "composition-balance",
+      "passed": true,
+      "detail": "proxy; 8×4 decoded-pixel grid against #FBF1E2: empty cells 21.9%, text-column vertical fill 75.0%, art/object area outside the text column 31.3%, largest empty rectangle 15.6%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+      "source": "pixels"
     },
     {
       "name": "contrast",
@@ -324,7 +330,7 @@
     {
       "name": "safe-zone-and-collisions",
       "passed": true,
-      "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
       "source": "source"
     },
     {
@@ -407,7 +413,7 @@
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 1343788B · PNG 92606B · contact 85918B",
+          "detail": "GIF 1347749B · PNG 99037B · contact 95750B",
           "source": "decoded"
         }
       ]
@@ -450,7 +456,7 @@
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "59 colors; mean channel loss 2.224, max 13; sampled 42 frames",
+          "detail": "62 colors; mean channel loss 2.203, max 10; sampled 42 frames",
           "source": "pixels"
         }
       ],
@@ -474,7 +480,7 @@
         {
           "name": "phase-before-text-complete",
           "passed": true,
-          "detail": "La ficha puede llegar sin una lectura / compartida.",
+          "detail": "La ficha puede llegar sin una / lectura compartida.",
           "source": "source"
         },
         {
@@ -486,7 +492,7 @@
         {
           "name": "phase-change-text-complete",
           "passed": true,
-          "detail": "Una lista deja visibles los puntos por / comprobar.",
+          "detail": "Una lista deja visibles los / puntos por comprobar.",
           "source": "source"
         },
         {
@@ -498,7 +504,7 @@
         {
           "name": "phase-result-text-complete",
           "passed": true,
-          "detail": "El equipo termina la revisión antes de / cerrar la ficha.",
+          "detail": "El equipo termina la revisión / antes de cerrar la ficha.",
           "source": "source"
         },
         {
@@ -510,14 +516,20 @@
         {
           "name": "review-size-thresholds",
           "passed": true,
-          "detail": "title 76px; phase body >=36px; label >=24px",
+          "detail": "title 77px; phase body >=36px; label >=24px",
           "source": "source"
         },
         {
           "name": "640x360-effective-size",
           "passed": true,
-          "detail": "title 38.0px; body min 20.0px; label min 14.0px",
+          "detail": "title 38.5px; body min 28.0px (requires >=20px); label min 15.0px",
           "source": "source"
+        },
+        {
+          "name": "composition-balance",
+          "passed": true,
+          "detail": "proxy; 8×4 decoded-pixel grid against #FBF1E2: empty cells 21.9%, text-column vertical fill 75.0%, art/object area outside the text column 31.3%, largest empty rectangle 15.6%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+          "source": "pixels"
         },
         {
           "name": "contrast",
@@ -528,7 +540,7 @@
         {
           "name": "safe-zone-and-collisions",
           "passed": true,
-          "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
           "source": "source"
         },
         {
@@ -538,7 +550,7 @@
           "source": "decoded"
         }
       ],
-      "note": "Layout, contrast and decoded holds are measured; OCR and human reading at card size remain pending."
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
     },
     "narrative": {
       "status": "pending",
@@ -594,7 +606,7 @@
         "before · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-a789b538-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-a789b538-contact-sheet.png"
     },
     {
       "phaseId": "change",
@@ -604,7 +616,7 @@
         "change · transición media",
         "change · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-a789b538-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-a789b538-contact-sheet.png"
     },
     {
       "phaseId": "result",
@@ -614,13 +626,13 @@
         "result · transición media",
         "result · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-a789b538-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\lectura-antes-del-cierre\\lectura-antes-del-cierre-a789b538-contact-sheet.png"
     }
   ],
   "palette": {
-    "colors": 59,
-    "meanAbsoluteChannelError": 2.224,
-    "maximumChannelError": 13,
+    "colors": 62,
+    "meanAbsoluteChannelError": 2.203,
+    "maximumChannelError": 10,
     "sampledFrames": 42
   },
   "phaseHoldsVerified": [

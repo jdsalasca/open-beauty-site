@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "commit": "8199103db118759c589f6593a4d6eb13c71230ae",
+  "commit": "aaa4322afd9cf89b6ef3a8c7a1ae542fcef5ed31",
   "brief": {
     "style": "nature",
     "kind": "narrative-gif",
@@ -145,20 +145,20 @@
     "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 1221402,
-    "png": 104830,
-    "contactSheet": 76432
+    "gif": 1321084,
+    "png": 114247,
+    "contactSheet": 85885
   },
   "hashes": {
     "briefSha256": "e3d7c07f22cd2a9ddd9dc9ef35d577e87e230b9e361093b80c7557e37aacaf75",
-    "gifSha256": "27d34b5f5df8b138fa52e8c9aa717ad9d61516a6aa92fce8528d9759e85604a1",
-    "pngSha256": "53659676ed5826c6dd928696276213d1081c13692347231259caf751fd6f0409",
-    "contactSheetSha256": "d34a9c7cb9e221349297d0f8db3ea10a03997a0780cb6c7f024c4ed90b271ad8"
+    "gifSha256": "8c17daeb9baeaf8e149205f5871cc0e7d2408d827181aae17a581730c8e45955",
+    "pngSha256": "d56e4a899b8994111fdaea2206e2d575cf11c48690f87f2af56e5ab0ca682f63",
+    "contactSheetSha256": "fe8a20a0fd78058e7516bd95be241953b201aa1521413387dd60cb6f1279943e"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-f4a8d2d6\\docs\\narrative-gif\\gallery\\nature\\comparison\\observar-la-guia-e3d7c07f.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-f4a8d2d6\\docs\\narrative-gif\\gallery\\nature\\comparison\\observar-la-guia-e3d7c07f.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-f4a8d2d6\\docs\\narrative-gif\\gallery\\nature\\comparison\\observar-la-guia-e3d7c07f-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\nature\\comparison\\observar-la-guia-e3d7c07f.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\nature\\comparison\\observar-la-guia-e3d7c07f.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\nature\\comparison\\observar-la-guia-e3d7c07f-contact-sheet.png"
   },
   "controls": [
     {
@@ -206,7 +206,7 @@
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 1221402B · PNG 104830B · contact 76432B",
+      "detail": "GIF 1321084B · PNG 114247B · contact 85885B",
       "source": "decoded"
     },
     {
@@ -242,7 +242,7 @@
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "59 colors; mean channel loss 0.073, max 11; sampled 33 frames",
+      "detail": "46 colors; mean channel loss 0.073, max 11; sampled 33 frames",
       "source": "pixels"
     },
     {
@@ -260,7 +260,7 @@
     {
       "name": "phase-before-text-complete",
       "passed": true,
-      "detail": "La muestra conserva sus / nervaduras sin anotación.",
+      "detail": "La muestra conserva / sus nervaduras sin / anotación.",
       "source": "source"
     },
     {
@@ -272,7 +272,7 @@
     {
       "name": "phase-change-text-complete",
       "passed": true,
-      "detail": "Una llamada señala una / nervadura de la misma hoja.",
+      "detail": "Una llamada señala / una nervadura de la / misma hoja.",
       "source": "source"
     },
     {
@@ -284,7 +284,7 @@
     {
       "name": "phase-result-text-complete",
       "passed": true,
-      "detail": "El equipo puede volver a esa / observación durante la / revisión.",
+      "detail": "El equipo puede / volver a esa / observación durante / la revisión.",
       "source": "source"
     },
     {
@@ -296,14 +296,20 @@
     {
       "name": "review-size-thresholds",
       "passed": true,
-      "detail": "title 76px; phase body >=36px; label >=24px",
+      "detail": "title 85px; phase body >=36px; label >=24px",
       "source": "source"
     },
     {
       "name": "640x360-effective-size",
       "passed": true,
-      "detail": "title 38.0px; body min 20.0px; label min 14.0px",
+      "detail": "title 42.5px; body min 27.0px (requires >=20px); label min 15.0px",
       "source": "source"
+    },
+    {
+      "name": "composition-balance",
+      "passed": true,
+      "detail": "proxy; 8×4 decoded-pixel grid against #EFE9D8: empty cells 6.3%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 6.3%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+      "source": "pixels"
     },
     {
       "name": "contrast",
@@ -314,7 +320,7 @@
     {
       "name": "safe-zone-and-collisions",
       "passed": true,
-      "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
       "source": "source"
     },
     {
@@ -397,7 +403,7 @@
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 1221402B · PNG 104830B · contact 76432B",
+          "detail": "GIF 1321084B · PNG 114247B · contact 85885B",
           "source": "decoded"
         }
       ]
@@ -440,7 +446,7 @@
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "59 colors; mean channel loss 0.073, max 11; sampled 33 frames",
+          "detail": "46 colors; mean channel loss 0.073, max 11; sampled 33 frames",
           "source": "pixels"
         }
       ],
@@ -464,7 +470,7 @@
         {
           "name": "phase-before-text-complete",
           "passed": true,
-          "detail": "La muestra conserva sus / nervaduras sin anotación.",
+          "detail": "La muestra conserva / sus nervaduras sin / anotación.",
           "source": "source"
         },
         {
@@ -476,7 +482,7 @@
         {
           "name": "phase-change-text-complete",
           "passed": true,
-          "detail": "Una llamada señala una / nervadura de la misma hoja.",
+          "detail": "Una llamada señala / una nervadura de la / misma hoja.",
           "source": "source"
         },
         {
@@ -488,7 +494,7 @@
         {
           "name": "phase-result-text-complete",
           "passed": true,
-          "detail": "El equipo puede volver a esa / observación durante la / revisión.",
+          "detail": "El equipo puede / volver a esa / observación durante / la revisión.",
           "source": "source"
         },
         {
@@ -500,14 +506,20 @@
         {
           "name": "review-size-thresholds",
           "passed": true,
-          "detail": "title 76px; phase body >=36px; label >=24px",
+          "detail": "title 85px; phase body >=36px; label >=24px",
           "source": "source"
         },
         {
           "name": "640x360-effective-size",
           "passed": true,
-          "detail": "title 38.0px; body min 20.0px; label min 14.0px",
+          "detail": "title 42.5px; body min 27.0px (requires >=20px); label min 15.0px",
           "source": "source"
+        },
+        {
+          "name": "composition-balance",
+          "passed": true,
+          "detail": "proxy; 8×4 decoded-pixel grid against #EFE9D8: empty cells 6.3%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 6.3%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+          "source": "pixels"
         },
         {
           "name": "contrast",
@@ -518,7 +530,7 @@
         {
           "name": "safe-zone-and-collisions",
           "passed": true,
-          "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
           "source": "source"
         },
         {
@@ -528,7 +540,7 @@
           "source": "decoded"
         }
       ],
-      "note": "Layout, contrast and decoded holds are measured; OCR and human reading at card size remain pending."
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
     },
     "narrative": {
       "status": "pending",
@@ -583,7 +595,7 @@
         "before · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-f4a8d2d6\\docs\\narrative-gif\\gallery\\nature\\comparison\\observar-la-guia-e3d7c07f-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\nature\\comparison\\observar-la-guia-e3d7c07f-contact-sheet.png"
     },
     {
       "phaseId": "change",
@@ -592,7 +604,7 @@
         "change · pausa",
         "change · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-f4a8d2d6\\docs\\narrative-gif\\gallery\\nature\\comparison\\observar-la-guia-e3d7c07f-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\nature\\comparison\\observar-la-guia-e3d7c07f-contact-sheet.png"
     },
     {
       "phaseId": "result",
@@ -601,11 +613,11 @@
         "result · pausa",
         "result · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-f4a8d2d6\\docs\\narrative-gif\\gallery\\nature\\comparison\\observar-la-guia-e3d7c07f-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\nature\\comparison\\observar-la-guia-e3d7c07f-contact-sheet.png"
     }
   ],
   "palette": {
-    "colors": 59,
+    "colors": 46,
     "meanAbsoluteChannelError": 0.073,
     "maximumChannelError": 11,
     "sampledFrames": 33

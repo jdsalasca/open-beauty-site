@@ -102,6 +102,10 @@ Ratios use the rendered scene rectangle geometry: scene-box area divided by the 
 
 Remaining weaknesses: the documentary form's internal field labels are secondary and small at 640×360; the papercraft grain is intentionally subtle and is easiest to see at native size; long brutalist titles wrap over two lines. This inspection did not include OCR or independent designer approval. Every manifest therefore retains `visual-review: pending` and `publicationRecommendation: none`.
 
+### Métrica histórica: aclaración
+
+Los **1.99% de “empty art-lane area”** de la tabla anterior son un cálculo geométrico del rectángulo del objeto dentro del área reservada. No miden el espacio vacío que percibe una persona en el frame ni la ocupación de la columna de texto. Se conserva la cifra como registro de aquella caja geométrica, pero no debe interpretarse como balance visual. La evaluación actual decodifica píxeles y documenta sus límites en [REVIEW-layout-pass.md](../gallery/REVIEW-layout-pass.md).
+
 ### Iteration 5 — corrected 640px title fit and final checked-in exports
 
 The full suite caught `TEXT_OVERFLOW` for the brutalist title `Guías claras` at the 640×360 effective size when the text column was narrowed to 54%. Restored the pilot copy column to 60% of the frame width, kept a 2% gap, set the art lane to 31% width and 84% height, and expanded each hero object to 99% of that lane. Re-rendered and replaced all six checked-in GIF/PNG/contact-sheet/manifest packs. Inspected all six contact sheets and 18 GIF-decoded 1280×720 hold frames (indexes 1, 15 and 29); all contact sheets include phase start, transition midpoint, hold, exit and the labeled loop restart.

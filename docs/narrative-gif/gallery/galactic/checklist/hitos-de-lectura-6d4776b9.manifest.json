@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "commit": "8199103db118759c589f6593a4d6eb13c71230ae",
+  "commit": "aaa4322afd9cf89b6ef3a8c7a1ae542fcef5ed31",
   "brief": {
     "style": "galactic",
     "kind": "narrative-gif",
@@ -145,20 +145,20 @@
     "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 1109560,
-    "png": 129099,
-    "contactSheet": 92644
+    "gif": 1204930,
+    "png": 135899,
+    "contactSheet": 96831
   },
   "hashes": {
     "briefSha256": "6d4776b948bf3ee8b7e6ea0f70059d06e8aed46b4ff62d9db66c234d811f3308",
-    "gifSha256": "71f34163daf609851e4ac32f221ac354f37de7fd26b87e06f99549e3e4a3ab9e",
-    "pngSha256": "995b4a34a0610260f1c84ef9188872d30a6dcf1012836fb7d3893be384697e2b",
-    "contactSheetSha256": "e372967e6a728221cf872350c549a8ef3526020f1d2d5ede77ef4431633e0e02"
+    "gifSha256": "fdc0ac1a40ad9ea9b72ad8094855fca7e57f27b61e8e7463078b826c93919f6e",
+    "pngSha256": "78bbc02479e6f35ed4f1d49c55c0f84fb508589019a1ee8acc119b5b9f5ac876",
+    "contactSheetSha256": "48be3d79005eaa11e5571f281dfe333062ee87a1dc464b243c85d3651ee2662d"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-f4a8d2d6\\docs\\narrative-gif\\gallery\\galactic\\checklist\\hitos-de-lectura-6d4776b9.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-f4a8d2d6\\docs\\narrative-gif\\gallery\\galactic\\checklist\\hitos-de-lectura-6d4776b9.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-f4a8d2d6\\docs\\narrative-gif\\gallery\\galactic\\checklist\\hitos-de-lectura-6d4776b9-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\galactic\\checklist\\hitos-de-lectura-6d4776b9.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\galactic\\checklist\\hitos-de-lectura-6d4776b9.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\galactic\\checklist\\hitos-de-lectura-6d4776b9-contact-sheet.png"
   },
   "controls": [
     {
@@ -206,7 +206,7 @@
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 1109560B · PNG 129099B · contact 92644B",
+      "detail": "GIF 1204930B · PNG 135899B · contact 96831B",
       "source": "decoded"
     },
     {
@@ -242,7 +242,7 @@
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "54 colors; mean channel loss 0.311, max 11; sampled 33 frames",
+      "detail": "72 colors; mean channel loss 0.309, max 11; sampled 33 frames",
       "source": "pixels"
     },
     {
@@ -260,7 +260,7 @@
     {
       "name": "phase-before-text-complete",
       "passed": true,
-      "detail": "La ruta empieza en un punto / todavía sin revisar.",
+      "detail": "La ruta empieza en / un punto todavía / sin revisar.",
       "source": "source"
     },
     {
@@ -272,7 +272,7 @@
     {
       "name": "phase-change-text-complete",
       "passed": true,
-      "detail": "La señal alcanza el hito de / anotación.",
+      "detail": "La señal alcanza el / hito de anotación.",
       "source": "source"
     },
     {
@@ -284,7 +284,7 @@
     {
       "name": "phase-result-text-complete",
       "passed": true,
-      "detail": "Los tres hitos se mantienen / ligados a la misma / trayectoria.",
+      "detail": "Los tres hitos se / mantienen ligados a / la misma trayectoria.",
       "source": "source"
     },
     {
@@ -302,8 +302,14 @@
     {
       "name": "640x360-effective-size",
       "passed": true,
-      "detail": "title 34.5px; body min 20.0px; label min 14.0px",
+      "detail": "title 34.5px; body min 27.0px (requires >=20px); label min 15.0px",
       "source": "source"
+    },
+    {
+      "name": "composition-balance",
+      "passed": true,
+      "detail": "proxy; 8×4 decoded-pixel grid against #05060A: empty cells 43.8%, text-column vertical fill 100.0%, art/object area outside the text column 18.8%, largest empty rectangle 18.8%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+      "source": "pixels"
     },
     {
       "name": "contrast",
@@ -314,7 +320,7 @@
     {
       "name": "safe-zone-and-collisions",
       "passed": true,
-      "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
       "source": "source"
     },
     {
@@ -397,7 +403,7 @@
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 1109560B · PNG 129099B · contact 92644B",
+          "detail": "GIF 1204930B · PNG 135899B · contact 96831B",
           "source": "decoded"
         }
       ]
@@ -440,7 +446,7 @@
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "54 colors; mean channel loss 0.311, max 11; sampled 33 frames",
+          "detail": "72 colors; mean channel loss 0.309, max 11; sampled 33 frames",
           "source": "pixels"
         }
       ],
@@ -464,7 +470,7 @@
         {
           "name": "phase-before-text-complete",
           "passed": true,
-          "detail": "La ruta empieza en un punto / todavía sin revisar.",
+          "detail": "La ruta empieza en / un punto todavía / sin revisar.",
           "source": "source"
         },
         {
@@ -476,7 +482,7 @@
         {
           "name": "phase-change-text-complete",
           "passed": true,
-          "detail": "La señal alcanza el hito de / anotación.",
+          "detail": "La señal alcanza el / hito de anotación.",
           "source": "source"
         },
         {
@@ -488,7 +494,7 @@
         {
           "name": "phase-result-text-complete",
           "passed": true,
-          "detail": "Los tres hitos se mantienen / ligados a la misma / trayectoria.",
+          "detail": "Los tres hitos se / mantienen ligados a / la misma trayectoria.",
           "source": "source"
         },
         {
@@ -506,8 +512,14 @@
         {
           "name": "640x360-effective-size",
           "passed": true,
-          "detail": "title 34.5px; body min 20.0px; label min 14.0px",
+          "detail": "title 34.5px; body min 27.0px (requires >=20px); label min 15.0px",
           "source": "source"
+        },
+        {
+          "name": "composition-balance",
+          "passed": true,
+          "detail": "proxy; 8×4 decoded-pixel grid against #05060A: empty cells 43.8%, text-column vertical fill 100.0%, art/object area outside the text column 18.8%, largest empty rectangle 18.8%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+          "source": "pixels"
         },
         {
           "name": "contrast",
@@ -518,7 +530,7 @@
         {
           "name": "safe-zone-and-collisions",
           "passed": true,
-          "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
           "source": "source"
         },
         {
@@ -528,7 +540,7 @@
           "source": "decoded"
         }
       ],
-      "note": "Layout, contrast and decoded holds are measured; OCR and human reading at card size remain pending."
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
     },
     "narrative": {
       "status": "pending",
@@ -583,7 +595,7 @@
         "before · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-f4a8d2d6\\docs\\narrative-gif\\gallery\\galactic\\checklist\\hitos-de-lectura-6d4776b9-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\galactic\\checklist\\hitos-de-lectura-6d4776b9-contact-sheet.png"
     },
     {
       "phaseId": "change",
@@ -592,7 +604,7 @@
         "change · pausa",
         "change · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-f4a8d2d6\\docs\\narrative-gif\\gallery\\galactic\\checklist\\hitos-de-lectura-6d4776b9-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\galactic\\checklist\\hitos-de-lectura-6d4776b9-contact-sheet.png"
     },
     {
       "phaseId": "result",
@@ -601,12 +613,12 @@
         "result · pausa",
         "result · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-f4a8d2d6\\docs\\narrative-gif\\gallery\\galactic\\checklist\\hitos-de-lectura-6d4776b9-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\galactic\\checklist\\hitos-de-lectura-6d4776b9-contact-sheet.png"
     }
   ],
   "palette": {
-    "colors": 54,
-    "meanAbsoluteChannelError": 0.311,
+    "colors": 72,
+    "meanAbsoluteChannelError": 0.309,
     "maximumChannelError": 11,
     "sampledFrames": 33
   },

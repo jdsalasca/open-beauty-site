@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "commit": "d78a1360e9619fa326d6ce513e19eaac3b08ec4e",
+  "commit": "aaa4322afd9cf89b6ef3a8c7a1ae542fcef5ed31",
   "brief": {
     "style": "brutalist",
     "subfamily": "documentary",
@@ -155,20 +155,20 @@
     "detail": "ffprobe 1280×720; 42 frames; 17940ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 1289496,
-    "png": 59576,
-    "contactSheet": 78951
+    "gif": 1444112,
+    "png": 69316,
+    "contactSheet": 86974
   },
   "hashes": {
     "briefSha256": "b49056b8858565197b7e1c18ce953b2f7ccf9f2857ccad651cc966b66a3eba8a",
-    "gifSha256": "3122a2f04975f61ff19d9b321d1a937eda839a287c6df624990037584eca3440",
-    "pngSha256": "b7313cdc62c9d05cd80a2fedc21f644ac944b1f3c0f3950281fec444960d8c1c",
-    "contactSheetSha256": "015b9911d624af7e1a13c13410e00533903e999ba1d4ffba1881543d4b0911c4"
+    "gifSha256": "c91f219315ce53860ea7bcdcf367e06801e14596beece1c26c8f7c9d21481618",
+    "pngSha256": "301b48d9e98668107af4f7ca2519269cd0d58f9a9180acc2d4d95efbb93cde07",
+    "contactSheetSha256": "50e09cd1b2db1e0f46ba1d8ed75d9537989dd5fb074a57f51a601bea878ad1d7"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\brutalist\\lectura-antes-del-cierre\\lectura-antes-del-cierre-b49056b8.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\brutalist\\lectura-antes-del-cierre\\lectura-antes-del-cierre-b49056b8.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\brutalist\\lectura-antes-del-cierre\\lectura-antes-del-cierre-b49056b8-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\brutalist\\lectura-antes-del-cierre\\lectura-antes-del-cierre-b49056b8.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\brutalist\\lectura-antes-del-cierre\\lectura-antes-del-cierre-b49056b8.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\brutalist\\lectura-antes-del-cierre\\lectura-antes-del-cierre-b49056b8-contact-sheet.png"
   },
   "controls": [
     {
@@ -216,7 +216,7 @@
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 1289496B · PNG 59576B · contact 78951B",
+      "detail": "GIF 1444112B · PNG 69316B · contact 86974B",
       "source": "decoded"
     },
     {
@@ -252,7 +252,7 @@
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "67 colors; mean channel loss 0.026, max 7; sampled 42 frames",
+      "detail": "70 colors; mean channel loss 0.031, max 8; sampled 42 frames",
       "source": "pixels"
     },
     {
@@ -270,7 +270,7 @@
     {
       "name": "phase-before-text-complete",
       "passed": true,
-      "detail": "La ficha puede llegar sin una / lectura compartida.",
+      "detail": "La ficha puede llegar / sin una lectura / compartida.",
       "source": "source"
     },
     {
@@ -282,7 +282,7 @@
     {
       "name": "phase-change-text-complete",
       "passed": true,
-      "detail": "Una lista deja visibles los / puntos por comprobar.",
+      "detail": "Una lista deja / visibles los puntos / por comprobar.",
       "source": "source"
     },
     {
@@ -294,7 +294,7 @@
     {
       "name": "phase-result-text-complete",
       "passed": true,
-      "detail": "El equipo termina la revisión / antes de cerrar la ficha.",
+      "detail": "El equipo termina la / revisión antes de / cerrar la ficha.",
       "source": "source"
     },
     {
@@ -312,8 +312,14 @@
     {
       "name": "640x360-effective-size",
       "passed": true,
-      "detail": "title 34.5px; body min 20.0px; label min 14.0px",
+      "detail": "title 34.5px; body min 28.0px (requires >=20px); label min 15.0px",
       "source": "source"
+    },
+    {
+      "name": "composition-balance",
+      "passed": true,
+      "detail": "proxy; 8×4 decoded-pixel grid against #F2EFE4: empty cells 15.6%, text-column vertical fill 100.0%, art/object area outside the text column 37.5%, largest empty rectangle 9.4%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+      "source": "pixels"
     },
     {
       "name": "contrast",
@@ -324,7 +330,7 @@
     {
       "name": "safe-zone-and-collisions",
       "passed": true,
-      "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
       "source": "source"
     },
     {
@@ -407,7 +413,7 @@
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 1289496B · PNG 59576B · contact 78951B",
+          "detail": "GIF 1444112B · PNG 69316B · contact 86974B",
           "source": "decoded"
         }
       ]
@@ -450,7 +456,7 @@
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "67 colors; mean channel loss 0.026, max 7; sampled 42 frames",
+          "detail": "70 colors; mean channel loss 0.031, max 8; sampled 42 frames",
           "source": "pixels"
         }
       ],
@@ -474,7 +480,7 @@
         {
           "name": "phase-before-text-complete",
           "passed": true,
-          "detail": "La ficha puede llegar sin una / lectura compartida.",
+          "detail": "La ficha puede llegar / sin una lectura / compartida.",
           "source": "source"
         },
         {
@@ -486,7 +492,7 @@
         {
           "name": "phase-change-text-complete",
           "passed": true,
-          "detail": "Una lista deja visibles los / puntos por comprobar.",
+          "detail": "Una lista deja / visibles los puntos / por comprobar.",
           "source": "source"
         },
         {
@@ -498,7 +504,7 @@
         {
           "name": "phase-result-text-complete",
           "passed": true,
-          "detail": "El equipo termina la revisión / antes de cerrar la ficha.",
+          "detail": "El equipo termina la / revisión antes de / cerrar la ficha.",
           "source": "source"
         },
         {
@@ -516,8 +522,14 @@
         {
           "name": "640x360-effective-size",
           "passed": true,
-          "detail": "title 34.5px; body min 20.0px; label min 14.0px",
+          "detail": "title 34.5px; body min 28.0px (requires >=20px); label min 15.0px",
           "source": "source"
+        },
+        {
+          "name": "composition-balance",
+          "passed": true,
+          "detail": "proxy; 8×4 decoded-pixel grid against #F2EFE4: empty cells 15.6%, text-column vertical fill 100.0%, art/object area outside the text column 37.5%, largest empty rectangle 9.4%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+          "source": "pixels"
         },
         {
           "name": "contrast",
@@ -528,7 +540,7 @@
         {
           "name": "safe-zone-and-collisions",
           "passed": true,
-          "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
           "source": "source"
         },
         {
@@ -538,7 +550,7 @@
           "source": "decoded"
         }
       ],
-      "note": "Layout, contrast and decoded holds are measured; OCR and human reading at card size remain pending."
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
     },
     "narrative": {
       "status": "pending",
@@ -594,7 +606,7 @@
         "before · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\brutalist\\lectura-antes-del-cierre\\lectura-antes-del-cierre-b49056b8-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\brutalist\\lectura-antes-del-cierre\\lectura-antes-del-cierre-b49056b8-contact-sheet.png"
     },
     {
       "phaseId": "change",
@@ -604,7 +616,7 @@
         "change · transición media",
         "change · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\brutalist\\lectura-antes-del-cierre\\lectura-antes-del-cierre-b49056b8-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\brutalist\\lectura-antes-del-cierre\\lectura-antes-del-cierre-b49056b8-contact-sheet.png"
     },
     {
       "phaseId": "result",
@@ -614,13 +626,13 @@
         "result · transición media",
         "result · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\brutalist\\lectura-antes-del-cierre\\lectura-antes-del-cierre-b49056b8-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\brutalist\\lectura-antes-del-cierre\\lectura-antes-del-cierre-b49056b8-contact-sheet.png"
     }
   ],
   "palette": {
-    "colors": 67,
-    "meanAbsoluteChannelError": 0.026,
-    "maximumChannelError": 7,
+    "colors": 70,
+    "meanAbsoluteChannelError": 0.031,
+    "maximumChannelError": 8,
     "sampledFrames": 42
   },
   "phaseHoldsVerified": [
