@@ -302,7 +302,7 @@ test('negative controls cannot pass on file format alone', async () => {
 
 test('registered renderers are supported and the registry preserves an explicit unknown-style failure', () => {
   const registered = supportedNarrativeStyles();
-  for (const style of ['artdeco', 'brutalist', 'isotype', 'opart', 'papercraft', 'renaissance'] as const) assert.ok(registered.includes(style));
+  for (const style of ['artdeco', 'brutalist', 'galactic', 'isotype', 'nature', 'opart', 'papercraft', 'renaissance', 'vaporwave'] as const) assert.ok(registered.includes(style));
   assert.throws(() => getNarrativeScene('unlisted-style' as StyleSlug), (error: unknown) => {
     assert.equal((error as { code: string }).code, 'STYLE_NOT_SUPPORTED_YET');
     assert.match((error as Error).message, /Supported styles:/);

@@ -1,0 +1,16 @@
+{
+  "style": "vaporwave",
+  "kind": "narrative-gif",
+  "locale": "es",
+  "audience": "Producto · Sprint Review (ejemplo visual)",
+  "title": "Lectura ordenada",
+  "status": "done",
+  "phases": [
+    { "id": "before", "label": "Antes", "text": "La ventana muestra el archivo sin pasos de lectura.", "visual": { "kind": "checklist", "state": "unreviewed" } },
+    { "id": "change", "label": "Cambio", "text": "La misma ventana organiza revisar, señalar y archivar.", "visual": { "kind": "checklist", "state": "flagged" } },
+    { "id": "result", "label": "Resultado observado", "text": "Los tres pasos quedan visibles junto al mismo archivo.", "visual": { "kind": "checklist", "state": "review-ready" } }
+  ],
+  "playback": { "minReadableHoldMs": 5000, "transitionMs": 650, "loop": true },
+  "output": { "width": 1280, "height": 720, "formats": ["gif", "png"], "preset": "review-1280x720" },
+  "seed": 11
+}
