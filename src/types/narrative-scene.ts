@@ -1,0 +1,53 @@
+import type { NarrativeRect } from './narrative.js';
+
+export type NarrativeSemanticPrimitive = 'legacy-illustration' | 'table-rows' | 'card-collection' | 'counter' | 'file-download';
+export type NarrativeSemanticEntityKind = 'illustration' | 'table' | 'row' | 'collection' | 'card' | 'counter' | 'file';
+
+export interface NarrativeSemanticEntity {
+  id: string;
+  kind: NarrativeSemanticEntityKind;
+  label?: string;
+  value?: string | number;
+  illustrative: boolean;
+}
+
+export interface NarrativeSemanticEntityInput extends Omit<NarrativeSemanticEntity, 'illustrative' | 'kind'> {
+  kind: string;
+  illustrative?: boolean;
+}
+
+export interface NarrativeSemanticRelation {
+  kind: string;
+  from: string;
+  to: string;
+}
+
+export interface NarrativeSemanticAction {
+  entityId: string;
+  type: string;
+  targetId?: string;
+}
+
+/** Style-neutral state of the same identified objects at one narrative phase. */
+export interface NarrativeSemanticScene {
+  primitive: NarrativeSemanticPrimitive;
+  illustrative: boolean;
+  entities: NarrativeSemanticEntity[];
+  relations: NarrativeSemanticRelation[];
+  states: Record<string, string>;
+  actions: NarrativeSemanticAction[];
+}
+
+export interface NarrativeSemanticSceneInput {
+  primitive: Exclude<NarrativeSemanticPrimitive, 'legacy-illustration'>;
+  illustrative?: boolean;
+  entities: NarrativeSemanticEntityInput[];
+  relations?: NarrativeSemanticRelation[];
+  states: Record<string, string>;
+  actions?: NarrativeSemanticAction[];
+}
+
+export interface NarrativeObjectRegion {
+  entityId: string;
+  bounds: NarrativeRect;
+}

@@ -10,6 +10,7 @@ import {
   type NormalizedNarrativeBrief,
 } from '../types/narrative.js';
 import { getNarrativeScene } from './scene.js';
+import { normalizeSemanticPhases, narrativeSemanticSceneSchema } from './semantic.js';
 
 const PRESET_SIZE: Record<NarrativeOutputPreset, [number, number]> = {
   'review-1280x720': [1280, 720],
@@ -26,6 +27,7 @@ const phaseSchema = z.object({
     kind: z.string().trim().min(1).max(64).describe('Must be declared for this style; query beauty_get_capabilities.'),
     state: z.string().trim().min(1).max(64).describe('Must be declared for this style; query beauty_get_capabilities.'),
     action: z.string().trim().min(1).max(64).optional().describe('Future or renderer-declared action; unknown actions fail validation.'),
+    semantic: narrativeSemanticSceneSchema.optional().describe('Optional style-neutral entities, relations, per-phase states and actions.'),
   }).strict().describe('Visual composition state; validation happens before rendering.'),
   holdMs: z.number().finite().positive().optional().describe('Optional explicit hold in milliseconds; floor depends on playback.preset.'),
 }).strict();
@@ -349,7 +351,7 @@ export function normalizeNarrativeBrief(input: unknown): ParsedNarrativeBrief {
 
   const expectedLabel = value.locale === 'en' ? 'Expected result' : 'Resultado esperado';
   const observedLabel = value.locale === 'en' ? 'Observed result' : 'Resultado observado';
-  const phases = value.phases.map((phase) => ({ ...phase, text: phase.text.trim() }));
+  const phases = normalizeSemanticPhases(value.phases.map((phase) => ({ ...phase, text: phase.text.trim() })), illustrative, value.style);
   phases[phases.length - 1]!.label = outcome.mode === 'observed' ? observedLabel : expectedLabel;
   const brief: NormalizedNarrativeBrief = {
     ...value,

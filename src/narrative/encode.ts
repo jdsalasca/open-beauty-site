@@ -106,6 +106,7 @@ function renderFramePixels(
     safeBoxes: safeBoxes(layout),
     fonts,
     rng: seedRandom(frameSeed(brief.seed, index)),
+    semantic: phase.visual.semantic,
   });
   if (!(raw instanceof Uint8ClampedArray) || raw.length !== width * height * 4) {
     throw new NarrativeError('RESOURCE_LIMIT', `Scene ${scene.style} returned ${raw?.length ?? 0} RGBA bytes; expected ${width * height * 4}.`, 'Return one complete RGBA canvas for every timeline frame.');
