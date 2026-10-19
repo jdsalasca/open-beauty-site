@@ -2,6 +2,9 @@ import { canvasFor } from '../../canvas.js';
 import { getStyle } from '../../styles/presets.js';
 import type { NarrativePhase, NarrativeRect, NarrativeRenderContext, NarrativeScene, NormalizedNarrativeBrief } from '../../types/narrative.js';
 import { cubicBezierEase, drawRule, drawText, phaseMarkProgress, rgba } from './common.js';
+import { sceneVocabulary } from '../vocabulary.js';
+import { sceneText, workflowBadgeText } from '../i18n.js';
+import { brutalistSemanticObjectRegions, drawBrutalistSemantic } from './brutalist/semantic-art.js';
 
 interface BrutalistDocument {
   readonly identity: 'documento-de-revision';
@@ -68,7 +71,7 @@ function drawCheckbox(ctx: ReturnType<typeof canvasFor>['ctx'], x: number, y: nu
   ctx.restore();
 }
 
-function drawStatusStamp(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect, level: number, progress: number, mono: string, red: string): void {
+function drawStatusStamp(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect, level: number, progress: number, mono: string, red: string, label: string): void {
   const stampWidth = box.width * 0.68;
   const stampHeight = Math.max(34, box.height * 0.105);
   const x = box.x + box.width * 0.23;
@@ -80,15 +83,15 @@ function drawStatusStamp(ctx: ReturnType<typeof canvasFor>['ctx'], box: Narrativ
   ctx.lineWidth = Math.max(2, box.width * 0.009);
   ctx.strokeStyle = red;
   ctx.strokeRect(x, y, stampWidth, stampHeight);
-  drawText(ctx, 'OBSERVACIÓN', x + stampWidth * 0.055, y + stampHeight * 0.67, mono, 700, Math.max(13, box.width * 0.046), red);
+  drawText(ctx, label, x + stampWidth * 0.055, y + stampHeight * 0.67, mono, 700, Math.max(13, box.width * 0.046), red);
   ctx.restore();
 }
 
-function drawReviewReady(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect, level: number, progress: number, ink: string, red: string): void {
+function drawReviewReady(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect, level: number, progress: number, ink: string, red: string, locale: 'es' | 'en'): void {
   const left = box.x + box.width * 0.09;
   const baseline = box.y + box.height * 0.76;
   const size = box.width * 0.055;
-  drawText(ctx, 'ESTADO', left, baseline, 'Space Mono', 700, Math.max(11, box.width * 0.033), ink);
+  drawText(ctx, sceneText('brutalist', locale, 'state'), left, baseline, 'Space Mono', 700, Math.max(11, box.width * 0.033), ink);
   drawCheckbox(ctx, box.x + box.width * 0.78, baseline - size * 0.83, size, level >= 2 ? progress : 0, ink, red);
 }
 
@@ -140,15 +143,15 @@ function drawDocumentGrid(ctx: ReturnType<typeof canvasFor>['ctx'], box: Narrati
   return { left, right, split, copy };
 }
 
-function drawReferenceColumn(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect, copyX: number, colors: { ink: string; muted: string }): void {
+function drawReferenceColumn(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect, copyX: number, colors: { ink: string; muted: string }, locale: 'es' | 'en'): void {
   const { ink, muted } = colors;
-  drawText(ctx, 'REFERENCIA', copyX, box.y + box.height * 0.28, 'Space Mono', 700, Math.max(12, box.width * 0.034), ink);
+  drawText(ctx, sceneText('brutalist', locale, 'reference'), copyX, box.y + box.height * 0.28, 'Space Mono', 700, Math.max(12, box.width * 0.034), ink);
   drawRule(ctx, copyX, box.y + box.height * 0.315, box.x + box.width * 0.88, muted, 1);
   drawRule(ctx, copyX, box.y + box.height * 0.36, box.x + box.width * 0.87, muted, 1);
-  drawText(ctx, 'COPIA', copyX, box.y + box.height * 0.47, 'Space Mono', 700, Math.max(12, box.width * 0.034), ink);
+  drawText(ctx, sceneText('brutalist', locale, 'copy'), copyX, box.y + box.height * 0.47, 'Space Mono', 700, Math.max(12, box.width * 0.034), ink);
   drawRule(ctx, copyX, box.y + box.height * 0.5, box.x + box.width * 0.88, muted, 1);
   drawRule(ctx, copyX, box.y + box.height * 0.515, box.x + box.width * 0.86, muted, 1);
-  drawText(ctx, 'TRAZA', copyX, box.y + box.height * 0.64, 'Space Mono', 700, Math.max(12, box.width * 0.034), ink);
+  drawText(ctx, sceneText('brutalist', locale, 'trace'), copyX, box.y + box.height * 0.64, 'Space Mono', 700, Math.max(12, box.width * 0.034), ink);
 }
 
 function drawInkEdge(ctx: ReturnType<typeof canvasFor>['ctx'], x: number, y: number, width: number, height: number, alpha: number, label: string, texture: readonly number[], color: string): void {
@@ -190,10 +193,11 @@ function drawInkEdge(ctx: ReturnType<typeof canvasFor>['ctx'], x: number, y: num
   ctx.restore();
 }
 
-function drawRegistrationBoxes(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect, document: BrutalistDocument, level: number, finalLabel: string, red: string): void {
+function drawRegistrationBoxes(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect, document: BrutalistDocument, level: number, badgeText: string | undefined, badgePolicy: NormalizedNarrativeBrief['badgePolicy'], locale: 'es' | 'en', red: string): void {
+  if (!badgeText) return;
   const labelX = box.x + box.width * 0.08;
   const labelY = box.y + box.height * 0.755;
-  drawText(ctx, 'REGISTRO', labelX, labelY, 'Space Mono', 700, Math.max(12, box.width * 0.033), '#0B0B0B');
+  drawText(ctx, sceneText('brutalist', locale, 'register'), labelX, labelY, 'Space Mono', 700, Math.max(12, box.width * 0.033), '#0B0B0B');
   const y = box.y + box.height * 0.78;
   const height = box.height * 0.13;
   const cellWidth = box.width * 0.37;
@@ -204,40 +208,41 @@ function drawRegistrationBoxes(ctx: ReturnType<typeof canvasFor>['ctx'], box: Na
     ctx.lineWidth = 2;
     ctx.strokeRect(x, y, cellWidth, height);
   }
-  drawInkEdge(ctx, firstX + 7, y + 7, cellWidth - 14, height - 14, Math.min(1, level), 'OBSERVACIÓN', document.stampTexture, red);
-  drawInkEdge(ctx, secondX + 7, y + 7, cellWidth - 14, height - 14, Math.max(0, level - 1), finalLabel, document.stampTexture, red);
+  const observation = badgePolicy === 'workflow' ? sceneText('brutalist', locale, 'observation') : '';
+  drawInkEdge(ctx, firstX + 7, y + 7, cellWidth - 14, height - 14, Math.min(1, level), observation, document.stampTexture, red);
+  drawInkEdge(ctx, secondX + 7, y + 7, cellWidth - 14, height - 14, Math.max(0, level - 1), badgeText, document.stampTexture, red);
 }
 
-function drawFormComparison(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect, document: BrutalistDocument, level: number, finalLabel: string, colors: { ink: string; muted: string; red: string; acid: string }): void {
+function drawFormComparison(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect, document: BrutalistDocument, level: number, badgeText: string | undefined, badgePolicy: NormalizedNarrativeBrief['badgePolicy'], locale: 'es' | 'en', colors: { ink: string; muted: string; red: string; acid: string }): void {
   const { ink, muted, red, acid } = colors;
   const columns = drawDocumentGrid(ctx, box, document, { ink, muted });
   const headerY = box.y + box.height * 0.07;
   ctx.fillStyle = acid;
   ctx.fillRect(columns.left, headerY, box.width * 0.62, box.height * 0.105);
-  drawText(ctx, 'FICHA DE REVISIÓN', columns.left + box.width * 0.025, headerY + box.height * 0.069, 'Space Mono', 700, Math.max(13, box.width * 0.043), ink);
-  drawText(ctx, 'MEDIDA', columns.left, box.y + box.height * 0.275, 'Space Mono', 700, Math.max(12, box.width * 0.035), ink);
+  drawText(ctx, sceneText('brutalist', locale, 'reviewSheet'), columns.left + box.width * 0.025, headerY + box.height * 0.069, 'Space Mono', 700, Math.max(13, box.width * 0.043), ink);
+  drawText(ctx, sceneText('brutalist', locale, 'measure'), columns.left, box.y + box.height * 0.275, 'Space Mono', 700, Math.max(12, box.width * 0.035), ink);
   drawRule(ctx, columns.left, box.y + box.height * 0.325, columns.split - box.width * 0.045, ink, 2);
   drawRule(ctx, columns.left, box.y + box.height * 0.365, columns.split - box.width * 0.07, muted, 1);
-  drawText(ctx, 'SEÑALAR', columns.left, box.y + box.height * 0.48, 'Space Mono', 700, Math.max(12, box.width * 0.035), level >= 0.01 ? ink : muted);
+  drawText(ctx, sceneText('brutalist', locale, 'mark'), columns.left, box.y + box.height * 0.48, 'Space Mono', 700, Math.max(12, box.width * 0.035), level >= 0.01 ? ink : muted);
   const checkbox = box.width * 0.06;
   drawCheckbox(ctx, columns.split - checkbox - box.width * 0.04, box.y + box.height * 0.43, checkbox, Math.min(1, level), ink, red);
-  drawText(ctx, 'REVISIÓN', columns.left, box.y + box.height * 0.63, 'Space Mono', 700, Math.max(12, box.width * 0.035), level >= 1.01 ? ink : muted);
+  drawText(ctx, sceneText('brutalist', locale, 'review'), columns.left, box.y + box.height * 0.63, 'Space Mono', 700, Math.max(12, box.width * 0.035), level >= 1.01 ? ink : muted);
   drawCheckbox(ctx, columns.split - checkbox - box.width * 0.04, box.y + box.height * 0.58, checkbox, Math.max(0, level - 1), ink, red);
-  drawReferenceColumn(ctx, box, columns.copy, { ink, muted });
-  drawRegistrationBoxes(ctx, box, document, level, finalLabel, red);
+  drawReferenceColumn(ctx, box, columns.copy, { ink, muted }, locale);
+  drawRegistrationBoxes(ctx, box, document, level, badgeText, badgePolicy, locale, red);
 }
 
-function drawFormChecklist(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect, document: BrutalistDocument, level: number, finalLabel: string, colors: { ink: string; muted: string; red: string; acid: string }): void {
+function drawFormChecklist(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect, document: BrutalistDocument, level: number, badgeText: string | undefined, badgePolicy: NormalizedNarrativeBrief['badgePolicy'], locale: 'es' | 'en', colors: { ink: string; muted: string; red: string; acid: string }): void {
   const { ink, muted, red, acid } = colors;
   const columns = drawDocumentGrid(ctx, box, document, { ink, muted });
   const headerY = box.y + box.height * 0.07;
   ctx.fillStyle = acid;
   ctx.fillRect(columns.left, headerY, box.width * 0.62, box.height * 0.105);
-  drawText(ctx, 'CONTROL DE LECTURA', columns.left + box.width * 0.025, headerY + box.height * 0.069, 'Space Mono', 700, Math.max(12, box.width * 0.038), ink);
+  drawText(ctx, sceneText('brutalist', locale, 'readingControl'), columns.left + box.width * 0.025, headerY + box.height * 0.069, 'Space Mono', 700, Math.max(12, box.width * 0.038), ink);
   const rows = [
-    { label: 'LEER LA GUÍA', y: box.y + box.height * 0.31, checked: Math.min(1, level) },
-    { label: 'SEÑALAR EL DATO', y: box.y + box.height * 0.46, checked: Math.min(1, level) },
-    { label: 'DEJAR EN REVISIÓN', y: box.y + box.height * 0.61, checked: Math.max(0, level - 1) },
+    { label: sceneText('brutalist', locale, 'readGuide'), y: box.y + box.height * 0.31, checked: Math.min(1, level) },
+    { label: sceneText('brutalist', locale, 'markDatum'), y: box.y + box.height * 0.46, checked: Math.min(1, level) },
+    { label: sceneText('brutalist', locale, 'leaveInReview'), y: box.y + box.height * 0.61, checked: Math.max(0, level - 1) },
   ];
   const size = box.width * 0.065;
   for (const row of rows) {
@@ -245,11 +250,11 @@ function drawFormChecklist(ctx: ReturnType<typeof canvasFor>['ctx'], box: Narrat
     drawText(ctx, row.label, columns.left + size * 1.5, row.y, 'Space Mono', 700, Math.max(12, box.width * 0.034), row.checked > 0 ? ink : muted);
     drawRule(ctx, columns.left, row.y + size * 0.68, columns.split - box.width * 0.035, rgba(ink, 0.72), 1.5);
   }
-  drawReferenceColumn(ctx, box, columns.copy, { ink, muted });
-  drawRegistrationBoxes(ctx, box, document, level, finalLabel, red);
+  drawReferenceColumn(ctx, box, columns.copy, { ink, muted }, locale);
+  drawRegistrationBoxes(ctx, box, document, level, badgeText, badgePolicy, locale, red);
 }
 
-function drawPoster(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect, level: number, progress: number, colors: { ink: string; red: string; acid: string }): void {
+function drawPoster(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect, level: number, progress: number, locale: 'es' | 'en', stampLabel: string | undefined, colors: { ink: string; red: string; acid: string }): void {
   const { ink, red, acid } = colors;
   ctx.fillStyle = ink;
   ctx.fillRect(box.x, box.y, box.width, box.height);
@@ -259,11 +264,11 @@ function drawPoster(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect
   const pad = box.width * 0.09;
   ctx.fillStyle = acid;
   ctx.fillRect(box.x + pad, box.y + box.height * 0.1, box.width * 0.78, box.height * 0.18);
-  drawText(ctx, 'AVISO', box.x + pad * 1.2, box.y + box.height * 0.235, 'Archivo Black', 400, Math.max(30, box.width * 0.17), ink);
+  drawText(ctx, sceneText('brutalist', locale, 'notice'), box.x + pad * 1.2, box.y + box.height * 0.235, 'Archivo Black', 400, Math.max(30, box.width * 0.17), ink);
   drawRule(ctx, box.x + pad, box.y + box.height * 0.37, box.x + box.width - pad, '#F2EFE4', 3);
-  drawText(ctx, 'REVISIÓN', box.x + pad, box.y + box.height * 0.52, 'Archivo Black', 400, Math.max(22, box.width * 0.1), '#F2EFE4');
-  drawText(ctx, 'CAMBIO REGISTRADO', box.x + pad, box.y + box.height * 0.62, 'Space Mono', 700, Math.max(11, box.width * 0.035), '#F2EFE4');
-  drawStatusStamp(ctx, box, level, progress, 'Space Mono', red);
+  drawText(ctx, sceneText('brutalist', locale, 'review'), box.x + pad, box.y + box.height * 0.52, 'Archivo Black', 400, Math.max(22, box.width * 0.1), '#F2EFE4');
+  drawText(ctx, sceneText('brutalist', locale, 'changeRegistered'), box.x + pad, box.y + box.height * 0.62, 'Space Mono', 700, Math.max(11, box.width * 0.035), '#F2EFE4');
+  if (stampLabel) drawStatusStamp(ctx, box, level, progress, 'Space Mono', red, stampLabel);
 }
 
 function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
@@ -293,13 +298,15 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
   const progress = phaseMarkProgress(frame, (value) => cubicBezierEase(value, 0.4, 0, 0.2, 1));
   const level = outgoing + (incoming - outgoing) * progress;
   const colors = { ink: preset.palette.ink, muted: preset.palette.muted, red: preset.palette.accent2, acid: preset.palette.accent };
-  if (document.subfamily === 'poster') drawPoster(ctx, box, level, progress, colors);
+  const badgeText = workflowBadgeText('brutalist', brief.locale, brief.workflowStatus, brief.badgePolicy, brief.badgeText);
+  const stampLabel = brief.badgePolicy === 'custom' ? badgeText : brief.badgePolicy === 'workflow' ? sceneText('brutalist', brief.locale, 'observation') : undefined;
+  if (document.subfamily === 'documentary' && context.semantic && context.semantic.primitive !== 'legacy-illustration') {
+    drawBrutalistSemantic(ctx, context, box, { ink: colors.ink, muted: colors.muted, paper: preset.palette.bg, red: colors.red, acid: colors.acid });
+  } else if (document.subfamily === 'poster') drawPoster(ctx, box, level, progress, brief.locale, stampLabel, colors);
   else if (document.composition === 'checklist') {
-    const finalLabel = brief.status === 'done' ? 'REVISADA' : brief.status === 'in-review' ? 'EN REVISIÓN' : 'PENDIENTE';
-    drawFormChecklist(ctx, box, document, level, finalLabel, colors);
+    drawFormChecklist(ctx, box, document, level, badgeText, brief.badgePolicy, brief.locale, colors);
   } else {
-    const finalLabel = brief.status === 'done' ? 'REVISADA' : brief.status === 'in-review' ? 'EN REVISIÓN' : 'PENDIENTE';
-    drawFormComparison(ctx, box, document, level, finalLabel, colors);
+    drawFormComparison(ctx, box, document, level, badgeText, brief.badgePolicy, brief.locale, colors);
   }
   // A ruled form records a changed state in a dedicated margin, never over copy.
   ctx.restore();
@@ -309,6 +316,7 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
 export const brutalistNarrativeScene: NarrativeScene = {
   style: 'brutalist',
   version: 'brutalist-documentary/1.1.0',
+  vocabulary: sceneVocabulary('value-driven'),
   supportsAspect(aspect) {
     return [16 / 9, 1].some((ratio) => Math.abs(aspect - ratio) / ratio < 0.015);
   },
@@ -321,6 +329,13 @@ export const brutalistNarrativeScene: NarrativeScene = {
       stubWidth: 0.16 + rng() * 0.025,
       stampTexture: Object.freeze(Array.from({ length: 24 }, () => rng())),
     } satisfies BrutalistDocument);
+  },
+  objectRegions(context) {
+    const document = context.object as BrutalistDocument;
+    if (document.subfamily !== 'documentary' || !context.semantic || context.semantic.primitive === 'legacy-illustration') return [];
+    const art = context.layout.reservedArtArea;
+    const box: NarrativeRect = { x: art.x + art.width * 0.005, y: art.y + art.height * 0.005, width: art.width * 0.99, height: art.height * 0.99 };
+    return brutalistSemanticObjectRegions(context, box);
   },
   renderFrame,
 };

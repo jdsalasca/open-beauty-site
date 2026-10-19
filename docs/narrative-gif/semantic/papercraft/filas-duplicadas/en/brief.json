@@ -1,0 +1,223 @@
+{
+  "style": "papercraft",
+  "subfamily": "editorial",
+  "kind": "narrative-gif",
+  "locale": "en",
+  "audience": "Data operations team",
+  "title": "Rows",
+  "workflowStatus": "in-review",
+  "outcome": {
+    "mode": "expected",
+    "scopeNote": "Illustrative example: the rule rejects the repeated row and does not delete records; the effect is not measured."
+  },
+  "illustrative": true,
+  "badgePolicy": "none",
+  "phases": [
+    {
+      "id": "repetition-visible",
+      "label": "Repeated",
+      "text": "REG-204 appears in two rows.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "before",
+        "semantic": {
+          "primitive": "table-rows",
+          "illustrative": true,
+          "entities": [
+            {
+              "id": "table",
+              "kind": "table"
+            },
+            {
+              "id": "original-row",
+              "kind": "row",
+              "label": "REG-204",
+              "value": "REG-204"
+            },
+            {
+              "id": "repeated-row",
+              "kind": "row",
+              "label": "REG-204",
+              "value": "REG-204"
+            }
+          ],
+          "relations": [
+            {
+              "kind": "duplicate-of",
+              "from": "repeated-row",
+              "to": "original-row"
+            }
+          ],
+          "states": {
+            "table": "default",
+            "original-row": "original",
+            "repeated-row": "duplicate"
+          },
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "duplicate-identified",
+      "label": "Identified",
+      "text": "The repeated row is identified.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "flagged",
+        "semantic": {
+          "primitive": "table-rows",
+          "illustrative": true,
+          "entities": [
+            {
+              "id": "table",
+              "kind": "table"
+            },
+            {
+              "id": "original-row",
+              "kind": "row",
+              "label": "REG-204",
+              "value": "REG-204"
+            },
+            {
+              "id": "repeated-row",
+              "kind": "row",
+              "label": "REG-204",
+              "value": "REG-204"
+            }
+          ],
+          "relations": [
+            {
+              "kind": "duplicate-of",
+              "from": "repeated-row",
+              "to": "original-row"
+            }
+          ],
+          "states": {
+            "table": "default",
+            "original-row": "original",
+            "repeated-row": "flagged"
+          },
+          "actions": [
+            {
+              "entityId": "repeated-row",
+              "type": "mark-duplicate"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "authorized-rejection",
+      "label": "Rejected",
+      "text": "The rule rejects it, not deletes.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "review-ready",
+        "semantic": {
+          "primitive": "table-rows",
+          "illustrative": true,
+          "entities": [
+            {
+              "id": "table",
+              "kind": "table"
+            },
+            {
+              "id": "original-row",
+              "kind": "row",
+              "label": "REG-204",
+              "value": "REG-204"
+            },
+            {
+              "id": "repeated-row",
+              "kind": "row",
+              "label": "REG-204",
+              "value": "REG-204"
+            }
+          ],
+          "relations": [
+            {
+              "kind": "duplicate-of",
+              "from": "repeated-row",
+              "to": "original-row"
+            }
+          ],
+          "states": {
+            "table": "default",
+            "original-row": "original",
+            "repeated-row": "rejected"
+          },
+          "actions": [
+            {
+              "entityId": "repeated-row",
+              "type": "reject"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "beneficio-esperado",
+      "label": "Expected result",
+      "text": "Row retained; impact unmeasured.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "review-ready",
+        "semantic": {
+          "primitive": "table-rows",
+          "illustrative": true,
+          "entities": [
+            {
+              "id": "table",
+              "kind": "table"
+            },
+            {
+              "id": "original-row",
+              "kind": "row",
+              "label": "REG-204",
+              "value": "REG-204"
+            },
+            {
+              "id": "repeated-row",
+              "kind": "row",
+              "label": "REG-204",
+              "value": "REG-204"
+            }
+          ],
+          "relations": [
+            {
+              "kind": "duplicate-of",
+              "from": "repeated-row",
+              "to": "original-row"
+            }
+          ],
+          "states": {
+            "table": "reviewed",
+            "original-row": "original",
+            "repeated-row": "rejected"
+          },
+          "actions": []
+        }
+      }
+    }
+  ],
+  "playback": {
+    "preset": "concise",
+    "minReadableHoldMs": 2200,
+    "transitionMs": 400,
+    "loop": true,
+    "totalDurationBudgetMs": 20000
+  },
+  "output": {
+    "width": 640,
+    "height": 360,
+    "formats": [
+      "gif",
+      "png"
+    ]
+  },
+  "seed": 7
+}

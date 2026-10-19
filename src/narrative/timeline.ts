@@ -24,13 +24,22 @@ export interface NarrativeTimeline {
   frames: NarrativeTimelineFrame[];
   holds: NarrativePhaseHold[];
   transitionFramesPerStep: number;
+  durationBreakdown: {
+    holdsRequestedMs: number;
+    holdsEncodedMs: number;
+    transitionsMs: number;
+    loopBridgeMs: number;
+    entryMs: number;
+    totalDecodedMs: number;
+  };
+  warnings: Array<{ code: 'READING_LOAD' | 'TOTAL_DURATION_BUDGET'; message: string }>;
   durationMs: number;
   estimatedMemoryBytes: number;
 }
 
-function readingHoldMs(brief: NormalizedNarrativeBrief, text: string): number {
-  const words = text.trim().split(/\s+/u).filter(Boolean).length;
-  const requested = Math.max(brief.playback.minReadableHoldMs, words * 300);
+function readingHoldMs(brief: NormalizedNarrativeBrief, phase: NormalizedNarrativeBrief['phases'][number]): number {
+  const words = phase.text.trim().split(/\s+/u).filter(Boolean).length;
+  const requested = phase.holdMs ?? Math.max(brief.playback.minReadableHoldMs, words * 300);
   if (!Number.isFinite(requested) || requested > 655_350) {
     throw new NarrativeError(
       'BAD_DURATION',
@@ -67,14 +76,24 @@ export function buildNarrativeTimeline(brief: NormalizedNarrativeBrief): Narrati
   const frames: NarrativeTimelineFrame[] = [];
   const holds: NarrativePhaseHold[] = [];
   const transitionFrameDelays = transitionDelays(brief.playback.transitionMs);
+  const warnings: NarrativeTimeline['warnings'] = [];
   for (let index = 0; index < brief.phases.length; index += 1) {
     frames.push(timelineFrame('entry', index, index, index, 0, ENTRY_DELAY_MS));
-    const requestedMs = Math.max(
+    const phase = brief.phases[index]!;
+    const requestedMs = phase.holdMs ?? Math.max(
       brief.playback.minReadableHoldMs,
-      brief.phases[index]!.text.trim().split(/\s+/u).filter(Boolean).length * 300,
+      phase.text.trim().split(/\s+/u).filter(Boolean).length * 300,
     );
-    const encodedMs = readingHoldMs(brief, brief.phases[index]!.text);
+    const encodedMs = readingHoldMs(brief, phase);
     holds.push({ phaseIndex: index, phaseId: brief.phases[index]!.id, requestedMs, encodedMs, frameIndex: frames.length });
+    const wordsToRead = `${phase.label} ${phase.text}`.trim().split(/\s+/u).filter(Boolean).length;
+    const wordsPerSecond = wordsToRead / (encodedMs / 1_000);
+    if (wordsPerSecond > 3) {
+      warnings.push({
+        code: 'READING_LOAD',
+        message: `Phase ${index + 1} has about ${wordsPerSecond.toFixed(2)} words/s (${wordsToRead} label+body words ÷ ${(encodedMs / 1_000).toFixed(2)}s hold); the reading threshold is 3 words/s.`,
+      });
+    }
     frames.push(timelineFrame('hold', index, index, index, 1, encodedMs));
 
     if (index < brief.phases.length - 1) {
@@ -122,11 +141,23 @@ export function buildNarrativeTimeline(brief: NormalizedNarrativeBrief): Narrati
     );
   }
 
+  const transitionsMs = frames.filter((frame) => frame.kind === 'transition').reduce((sum, frame) => sum + frame.delayMs, 0);
+  const loopBridgeMs = frames.filter((frame) => frame.kind === 'loop-bridge').reduce((sum, frame) => sum + frame.delayMs, 0);
+  const entryMs = frames.filter((frame) => frame.kind === 'entry').reduce((sum, frame) => sum + frame.delayMs, 0);
+  const holdsRequestedMs = holds.reduce((sum, hold) => sum + hold.requestedMs, 0);
+  const holdsEncodedMs = holds.reduce((sum, hold) => sum + hold.encodedMs, 0);
+  const durationMs = frames.reduce((sum, frame) => sum + frame.delayMs, 0);
+  if (durationMs > brief.playback.totalDurationBudgetMs) {
+    warnings.push({ code: 'TOTAL_DURATION_BUDGET', message: `Decoded duration is ${durationMs}ms, above the ${brief.playback.totalDurationBudgetMs}ms total-duration budget.` });
+  }
+
   return {
     frames,
     holds,
     transitionFramesPerStep: transitionFrameDelays.length,
-    durationMs: frames.reduce((sum, frame) => sum + frame.delayMs, 0),
+    durationBreakdown: { holdsRequestedMs, holdsEncodedMs, transitionsMs, loopBridgeMs, entryMs, totalDecodedMs: durationMs },
+    warnings,
+    durationMs,
     estimatedMemoryBytes,
   };
 }

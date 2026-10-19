@@ -18,8 +18,10 @@ test('gallery is self-contained, manifest-driven and starts each card from its P
     const result = await createNarrativeGallery({ directory: PACKS, output, title: 'Revisión de Sprint' });
     const html = await readFile(output, 'utf8');
 
-    assert.equal(result.pieceCount, 28);
+    // 60 committed manifests minus 4 under the excluded docs/narrative-gif/art-only directory.
+    assert.equal(result.pieceCount, 56);
     assert.equal(result.styles.length, 13);
+    assert.doesNotMatch(html, /art-only\/ukiyoe/u, 'standalone art-only variants are not gallery cards');
     assert.match(html, /<title>Revisión de Sprint<\/title>/);
     assert.match(html, /visual-review: pending/);
     assert.match(html, /<dialog\b/);

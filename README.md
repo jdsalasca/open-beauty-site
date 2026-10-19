@@ -2,18 +2,24 @@
 
 Open Beauty es un arnés de diseño y servidor MCP que convierte un brief corto en una página HTML, experiencia, cuento, presentación, kit de sprint o GIF completo y validado, en uno de trece sistemas editoriales. El modelo aporta contenido y juicio; el arnés aporta fuentes, paleta, composición, movimiento y la puerta de calidad.
 
-La ruta `beauty narrative` define briefs de tres a cinco fases y genera GIF, PNG, hoja de contacto y manifiesto para los trece estilos. Cada pieza separa integridad técnica, fidelidad al estilo, legibilidad, narrativa y revisión visual; esta última empieza pendiente y ninguna evaluación autoriza publicar.
+La ruta `beauty narrative` define briefs de tres a cinco fases y genera GIF, PNG, hoja de contacto y manifiesto v3 para los trece estilos. `workflowStatus` describe el trabajo; `outcome` separa el resultado esperado del observado con evidencia. Antes de escribir el brief, consulta `beauty capabilities` para conocer los valores válidos y los límites de cada escena. Los cinco niveles de evaluación y la revisión visual permanecen separados. La revisión empieza sin registro y solo una revisión independiente con criterios completos puede aprobarla.
 
-Para una historia de Sprint Review, copia `examples/recipes/<style>/narrative.json`, conserva **Antes → Cambio → Resultado esperado** mientras esté `in-review`, genera y revisa la galería:
+Para una historia de Sprint Review, copia `examples/recipes/<style>/narrative.json`, conserva **Antes → Cambio → Resultado esperado** mientras el resultado no tenga evidencia observada, genera y revisa la galería:
 
 ```bash
+beauty capabilities --style papercraft --json
 beauty narrative --style papercraft --brief examples/recipes/papercraft/narrative.json --out out/papercraft
+beauty review "out/papercraft/<pack>.manifest.json" --reviewer reviewer-17:Ada --criterion thumbnailIdentity=pass --frames
+beauty review-state "out/papercraft/<pack>.manifest.json"
+beauty rerender "out/papercraft/<pack>.manifest.json" --apply-feedback
 beauty gallery docs/narrative-gif --out docs/narrative-gif/GALLERY.html --title "Sprint Review"
 beauty validate docs/narrative-gif/GALLERY.html --style papercraft --visual
 pnpm narrative:recipes
 ```
 
 La galería usa PNG estáticos al abrir, carga el GIF solo al pulsar **Reproducir**, permite detener, descargar y ampliar, filtrar por estilo y activar una vista de 640 × 360. La salida generada está en [GALLERY.html](docs/narrative-gif/GALLERY.html); los pasos reproducibles desde un checkout limpio están en [REPRODUCE.md](docs/narrative-gif/REPRODUCE.md).
+
+`beauty review` guarda criterios visuales y feedback enlazados a hashes del GIF, PNG y manifiesto. `--frames` extrae frames y recortes verificados para la galería. `beauty rerender` reutiliza brief y seed y solo marca comentarios como corregidos cuando la región indicada cambió de forma medible. Una recomendación humana de publicación es una señal editorial, nunca una publicación automática. El procedimiento y el formato del feedback están en [REVIEW-PROCESS.md](docs/narrative-gif/REVIEW-PROCESS.md).
 
 ## Inicio rápido
 
@@ -84,13 +90,16 @@ Scroll-eá la página antes de capturar: las secciones aparecen al hacer scroll 
 | `beauty_list_styles` | Lista los 13 estilos con fuente y uso | `beauty_list_styles()` |
 | `beauty_get_style` | Lee los tokens exactos de un estilo | `beauty_get_style({ style: "nature", format: "markdown" })` |
 | `beauty_get_skill` | Carga el flujo y la skill de formato | `beauty_get_skill({ format: "deck" })` |
+| `beauty_get_capabilities` | Consulta primitivas, aspectos, idiomas y vocabulario de escenas | `beauty_get_capabilities({ style: "papercraft" })` |
 | `beauty_create_page` | Genera una página HTML completa | `beauty_create_page({ style: "nature", title: "Herbario" })` |
 | `beauty_create_experience` | Genera un lugar de 3–8 salas | `beauty_create_experience({ style: "galactic", title: "Museo", rooms: [...] })` |
 | `beauty_create_story` | Genera un cuento o lección por capítulos | `beauty_create_story({ style: "papercraft", title: "La semilla", chapters: [...] })` |
 | `beauty_create_deck` | Genera una presentación 16:9 | `beauty_create_deck({ style: "nature", title: "Té", slides: [...] })` |
 | `beauty_create_sprint` | Genera review + retro + planning + 3 GIFs | `beauty_create_sprint({ style: "artdeco", sprint: "16" })` |
 | `beauty_create_gif` | Genera un GIF editorial | `beauty_create_gif({ style: "artdeco", text: "Subir" })` |
-| `beauty_create_narrative` | Valida y renderiza una historia de 3–5 fases en los 13 estilos; devuelve rutas y niveles separados | `beauty_create_narrative({ style: "papercraft", brief: { kind: "narrative-gif", ... } })` |
+| `beauty_create_narrative` | Valida vocabulario, workflow, outcome y holds, y renderiza un pack en los 13 estilos | `beauty_create_narrative({ style: "papercraft", brief: { kind: "narrative-gif", ... } })` |
+| `beauty_review_artifact` | Registra revisión, feedback y hashes del artefacto exacto | `beauty_review_artifact({ pack: "out/pack.manifest.json", reviewer: { id: "reviewer-17", name: "Ada", kind: "human" } })` |
+| `beauty_get_review_state` | Comprueba si el ledger aún coincide con los hashes actuales | `beauty_get_review_state({ pack: "out/pack.manifest.json" })` |
 | `beauty_create_gallery` | Genera una galería HTML desde los manifiestos de una carpeta | `beauty_create_gallery({ directory: "docs/narrative-gif", output: "out/gallery.html" })` |
 | `beauty_validate` | Audita HTML y devuelve grado y fixes (`visual: true` incluye el pase de navegador) | `beauty_validate({ style: "nature", path: "page.html", visual: true })` |
 | `beauty_fix` | Repara y revalida con las mismas opciones | `beauty_fix({ style: "nature", path: "page.html", visual: true })` |
@@ -238,15 +247,15 @@ La review reúne evidencia, cambios para usuarios y decisiones; la retro, aprend
 
 Una clase puede empezar con una pregunta, detenerse ante un objeto y avanzar por salas o capítulos. Mirá [La città ideale](examples/education/renaissance-perspective.html) y [Museo de las Cosas Pequeñas](examples/education/papercraft-museum.html). En historia, cada fecha, cita y atribución necesita fuente; separá el hecho de la interpretación y señalá lo que no se sabe. El texto sigue disponible con movimiento reducido y debe poder leerse en proyector.
 
-## Catorce herramientas MCP
+## Diecinueve herramientas MCP
 
 El servidor trabaja por **stdio** y transforma briefs; no llama a un modelo ni navega la web.
 
-- **Orientar:** `beauty_list_styles`, `beauty_get_style`, `beauty_get_skill`.
+- **Orientar:** `beauty_list_styles`, `beauty_get_style`, `beauty_get_skill`, `beauty_get_capabilities`.
 - **Crear:** `beauty_create_page`, `beauty_create_experience`, `beauty_create_story`, `beauty_create_deck`, `beauty_create_gif`, `beauty_create_sprint`, `beauty_create_motion`, `beauty_create_canvas`, `beauty_create_sequence`.
 - **Revisar y encontrar:** `beauty_validate`, `beauty_examples`.
 
-En total son catorce herramientas: elegir una gramática, cargar sus instrucciones, crear la pieza adecuada, validarla y consultar ejemplos.
+En total son diecinueve herramientas: elegir una gramática, consultar sus capacidades, cargar instrucciones, crear la pieza adecuada, validarla y consultar ejemplos.
 
 ## Canvas abierto
 

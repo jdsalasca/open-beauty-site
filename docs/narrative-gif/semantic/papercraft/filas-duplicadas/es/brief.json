@@ -1,0 +1,223 @@
+{
+  "style": "papercraft",
+  "subfamily": "editorial",
+  "kind": "narrative-gif",
+  "locale": "es",
+  "audience": "Equipo de operación de datos",
+  "title": "Filas",
+  "workflowStatus": "in-review",
+  "outcome": {
+    "mode": "expected",
+    "scopeNote": "Ejemplo ilustrativo: la regla rechaza la fila repetida y no borra registros; el efecto no se mide."
+  },
+  "illustrative": true,
+  "badgePolicy": "none",
+  "phases": [
+    {
+      "id": "repeticion-visible",
+      "label": "Repetición",
+      "text": "REG-204 aparece en dos filas.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "before",
+        "semantic": {
+          "primitive": "table-rows",
+          "illustrative": true,
+          "entities": [
+            {
+              "id": "tabla",
+              "kind": "table"
+            },
+            {
+              "id": "fila-original",
+              "kind": "row",
+              "label": "REG-204",
+              "value": "REG-204"
+            },
+            {
+              "id": "fila-repetida",
+              "kind": "row",
+              "label": "REG-204",
+              "value": "REG-204"
+            }
+          ],
+          "relations": [
+            {
+              "kind": "duplicate-of",
+              "from": "fila-repetida",
+              "to": "fila-original"
+            }
+          ],
+          "states": {
+            "tabla": "default",
+            "fila-original": "original",
+            "fila-repetida": "duplicate"
+          },
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "duplicado-identificado",
+      "label": "Identificada",
+      "text": "La fila repetida se identifica.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "flagged",
+        "semantic": {
+          "primitive": "table-rows",
+          "illustrative": true,
+          "entities": [
+            {
+              "id": "tabla",
+              "kind": "table"
+            },
+            {
+              "id": "fila-original",
+              "kind": "row",
+              "label": "REG-204",
+              "value": "REG-204"
+            },
+            {
+              "id": "fila-repetida",
+              "kind": "row",
+              "label": "REG-204",
+              "value": "REG-204"
+            }
+          ],
+          "relations": [
+            {
+              "kind": "duplicate-of",
+              "from": "fila-repetida",
+              "to": "fila-original"
+            }
+          ],
+          "states": {
+            "tabla": "default",
+            "fila-original": "original",
+            "fila-repetida": "flagged"
+          },
+          "actions": [
+            {
+              "entityId": "fila-repetida",
+              "type": "mark-duplicate"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "rechazo-autorizado",
+      "label": "Rechazo",
+      "text": "La regla la rechaza; no la borra.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "review-ready",
+        "semantic": {
+          "primitive": "table-rows",
+          "illustrative": true,
+          "entities": [
+            {
+              "id": "tabla",
+              "kind": "table"
+            },
+            {
+              "id": "fila-original",
+              "kind": "row",
+              "label": "REG-204",
+              "value": "REG-204"
+            },
+            {
+              "id": "fila-repetida",
+              "kind": "row",
+              "label": "REG-204",
+              "value": "REG-204"
+            }
+          ],
+          "relations": [
+            {
+              "kind": "duplicate-of",
+              "from": "fila-repetida",
+              "to": "fila-original"
+            }
+          ],
+          "states": {
+            "tabla": "default",
+            "fila-original": "original",
+            "fila-repetida": "rejected"
+          },
+          "actions": [
+            {
+              "entityId": "fila-repetida",
+              "type": "reject"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "beneficio-esperado",
+      "label": "Resultado esperado",
+      "text": "Fila sigue; efecto sin medir.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "review-ready",
+        "semantic": {
+          "primitive": "table-rows",
+          "illustrative": true,
+          "entities": [
+            {
+              "id": "tabla",
+              "kind": "table"
+            },
+            {
+              "id": "fila-original",
+              "kind": "row",
+              "label": "REG-204",
+              "value": "REG-204"
+            },
+            {
+              "id": "fila-repetida",
+              "kind": "row",
+              "label": "REG-204",
+              "value": "REG-204"
+            }
+          ],
+          "relations": [
+            {
+              "kind": "duplicate-of",
+              "from": "fila-repetida",
+              "to": "fila-original"
+            }
+          ],
+          "states": {
+            "tabla": "reviewed",
+            "fila-original": "original",
+            "fila-repetida": "rejected"
+          },
+          "actions": []
+        }
+      }
+    }
+  ],
+  "playback": {
+    "preset": "concise",
+    "minReadableHoldMs": 2200,
+    "transitionMs": 400,
+    "loop": true,
+    "totalDurationBudgetMs": 20000
+  },
+  "output": {
+    "width": 640,
+    "height": 360,
+    "formats": [
+      "gif",
+      "png"
+    ]
+  },
+  "seed": 7
+}

@@ -3,6 +3,9 @@ import { getStyle } from '../../styles/presets.js';
 import type { NarrativeRenderContext, NarrativeRect, NarrativeScene } from '../../types/narrative.js';
 import { cubicBezierEase, drawRule } from './common.js';
 import { clamp, compositionFor, drawRoleText, mix, phasePosition, type StageCComposition } from './stage-c-common.js';
+import { sceneVocabulary } from '../vocabulary.js';
+import { sceneText } from '../i18n.js';
+import { drawIsotypeSemantic, isotypeSemanticObjectRegions } from './isotype/semantic-art.js';
 
 interface QualitativeSet {
   readonly identity: 'guide-stage-pictogram-set';
@@ -46,16 +49,16 @@ function qualitativeHeading(ctx: ReturnType<typeof canvasFor>['ctx'], box: Narra
   ctx.strokeStyle = colors.ink;
   ctx.lineWidth = 2;
   ctx.strokeRect(box.x, box.y, box.width, box.height);
-  drawRoleText(ctx, 'CATEGORÍAS CUALITATIVAS', box.x + box.width * 0.055, box.y + box.height * 0.075, context.fonts.effective.label, 24, colors.ink);
-  drawRoleText(ctx, 'SIN MÉTRICA', box.x + box.width * 0.055, box.y + box.height * 0.12, context.fonts.effective.annotation, 24, colors.muted);
+  drawRoleText(ctx, sceneText('isotype', context.brief.locale, 'categories'), box.x + box.width * 0.055, box.y + box.height * 0.075, context.fonts.effective.label, 24, colors.ink);
+  drawRoleText(ctx, sceneText('isotype', context.brief.locale, 'noMetric'), box.x + box.width * 0.055, box.y + box.height * 0.12, context.fonts.effective.annotation, 24, colors.muted);
   drawRule(ctx, box.x + box.width * 0.05, box.y + box.height * 0.15, box.x + box.width * 0.95, colors.ink, 2);
 }
 
-function categoryName(index: number, count: number, status: string): string {
-  if (index === 0) return 'ANTES';
-  if (index === count - 1) return status === 'done' ? 'OBSERVADO' : 'ESPERADO';
-  if (index === 1) return 'CAMBIO';
-  return 'ETAPA';
+function categoryName(index: number, count: number, context: NarrativeRenderContext): string {
+  if (index === 0) return sceneText('isotype', context.brief.locale, 'before');
+  if (index === count - 1) return sceneText('isotype', context.brief.locale, context.brief.outcome.mode);
+  if (index === 1) return sceneText('isotype', context.brief.locale, 'change');
+  return sceneText('isotype', context.brief.locale, 'stage');
 }
 
 function drawComparison(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect, set: QualitativeSet, state: number, context: NarrativeRenderContext, colors: ReturnType<typeof getStyle>['palette']): void {
@@ -71,7 +74,7 @@ function drawComparison(ctx: ReturnType<typeof canvasFor>['ctx'], box: Narrative
     const centerY = top + step * (index + 0.5);
     const iconSize = Math.min(box.width * 0.28, step * 0.46) * set.iconScale;
     drawDocumentPictogram(ctx, centerX, centerY - step * 0.04, iconSize, colors.ink, colors.bg, colors.accent4);
-    drawRoleText(ctx, categoryName(index, count, context.brief.status), box.x + box.width * 0.17, centerY + step * 0.34, context.fonts.effective.label, 24, colors.ink);
+    drawRoleText(ctx, categoryName(index, count, context), box.x + box.width * 0.17, centerY + step * 0.34, context.fonts.effective.label, 24, colors.ink);
     drawRule(ctx, box.x + box.width * 0.09, top + step * (index + 1), box.x + box.width * 0.91, colors.accent4, 1);
   }
   // This red register is the one moving focus; the pictogram set itself is unchanged.
@@ -93,7 +96,7 @@ function drawChecklist(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeR
     const centerY = y + rowHeight / 2;
     drawRule(ctx, left, y + rowHeight, right, colors.accent4, 1);
     drawDocumentPictogram(ctx, left + box.width * 0.13, centerY, iconSize, colors.ink, colors.bg, colors.accent4);
-    drawRoleText(ctx, categoryName(index, count, context.brief.status), left + box.width * 0.28, centerY + 9, context.fonts.effective.label, 24, colors.ink);
+    drawRoleText(ctx, categoryName(index, count, context), left + box.width * 0.28, centerY + 9, context.fonts.effective.label, 24, colors.ink);
   }
   const markerY = top + rowHeight * (clamp(state / 2) * (count - 1) + 0.5);
   ctx.strokeStyle = colors.accent;
@@ -108,14 +111,16 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
   const box = layout.reservedArtArea;
   const colors = getStyle('isotype').palette;
   const state = phasePosition(context, (value) => cubicBezierEase(value, 0.2, 0.75, 0.3, 1));
-  if (set.composition === 'comparison') drawComparison(ctx, box, set, state, context, colors);
+  if (context.semantic && context.semantic.primitive !== 'legacy-illustration') drawIsotypeSemantic(ctx, context, box, set.composition, colors);
+  else if (set.composition === 'comparison') drawComparison(ctx, box, set, state, context, colors);
   else drawChecklist(ctx, box, set, state, context, colors);
   return ctx.getImageData(0, 0, brief.output.width, brief.output.height).data;
 }
 
 export const isotypeNarrativeScene: NarrativeScene = {
   style: 'isotype',
-  version: 'isotype-qualitative-pictograms/1.0.0',
+  version: 'isotype-countable-semantic-pictograms/2.0.0',
+  vocabulary: sceneVocabulary('phase-order-fallback'),
   supportsAspect(aspect) {
     return [16 / 9, 1, 9 / 16].some((ratio) => Math.abs(aspect - ratio) / ratio < 0.015);
   },
@@ -127,6 +132,11 @@ export const isotypeNarrativeScene: NarrativeScene = {
       gridOffset: (rng() - 0.5) * 0.02,
       iconScale: 0.97 + rng() * 0.06,
     } satisfies QualitativeSet);
+  },
+  objectRegions(context) {
+    if (!context.semantic || context.semantic.primitive === 'legacy-illustration') return [];
+    const set = context.object as QualitativeSet;
+    return isotypeSemanticObjectRegions(context, context.layout.reservedArtArea, set.composition);
   },
   renderFrame,
 };

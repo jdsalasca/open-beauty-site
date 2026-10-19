@@ -1,6 +1,6 @@
 # MCP server
 
-`open-beauty-site` exposes a stdio MCP server with eighteen tools and twenty-two resources. The server is deliberately narrow: it does not call an LLM, it does not browse the web, and it does not invent content. It turns a short brief into a complete, validated artefact.
+`open-beauty-site` exposes a stdio MCP server with nineteen tools and twenty-two resources. The server is deliberately narrow: it does not call an LLM, it does not browse the web, and it does not invent content. It turns a short brief into a complete, validated artefact.
 
 ## Build
 
@@ -155,6 +155,16 @@ Returns the hard tokens: exact fonts, palette, border widths, radii, motion wind
 
 Returns the contents of `skills/beauty.md` plus the matching skill (`presentation`, `experience`, `story` or `agile`). Load it into an agent's context before asking it to design.
 
+### `beauty_get_capabilities`
+
+Call this before composing a narrative brief. The returned JSON uses the same registry as `beauty capabilities --json` and includes one cell per style × semantic primitive × aspect × locale, each cell's status and reason, and the style's allowed `visual.kind`, `visual.state` and `visual.action` values.
+
+| Argument | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `style` | narrative style slug | no | Filter to one style; omit it for the full matrix. |
+
+The current matrix has 312 cells: 0 `supported`, 216 `fallback` and 96 `unsupported`. `fallback` means the current scene renderer can produce its existing illustration but does not yet implement the named semantic primitive. No primitive is advertised as semantically supported.
+
 ### `beauty_create_page`
 
 Creates a full HTML page and writes it to disk.
@@ -264,7 +274,7 @@ Returns path, dimensions, frame count, fps and file size. Frames are capped at 1
 
 ### `beauty_create_narrative`
 
-Accepts the same normalized `narrative-gif` brief as `beauty narrative`. All thirteen registered style scenes are available. Papercraft supports its editorial subfamily; brutalist supports documentary (default) and poster. Each scene declares supported aspect ratios rather than silently cropping or stretching. Exports include a real GIF, PNG, contact sheet and manifest with independently decoded timing and five separate evaluation levels; visual review remains pending until a reviewer records evidence.
+Accepts the same strict `narrative-gif` brief as `beauty narrative`. All thirteen registered style scenes are available. Papercraft supports its editorial subfamily; brutalist supports documentary (default) and poster. Each scene declares supported aspect ratios and visual vocabulary rather than silently cropping, stretching or accepting an unknown state. Exports include a real GIF, PNG, contact sheet and schema-v3 manifest with independently decoded timing, five separate evaluation levels and review-state data. Visual review stays pending until a valid independent reviewer records evidence.
 
 ```json
 {
@@ -276,11 +286,14 @@ Accepts the same normalized `narrative-gif` brief as `beauty narrative`. All thi
     "locale": "es",
     "audience": "Producto",
     "title": "Guías claras",
-    "status": "in-review",
+    "workflowStatus": "in-review",
+    "outcome": { "mode": "expected" },
+    "illustrative": true,
+    "badgePolicy": "workflow",
     "phases": [
-      { "id": "before", "label": "Antes", "text": "La medida llegaba sin aviso.", "visual": { "kind": "document", "state": "unreviewed" } },
-      { "id": "change", "label": "Cambio", "text": "Ahora aparece una señal de revisión.", "visual": { "kind": "document", "state": "flagged" } },
-      { "id": "result", "label": "Resultado esperado", "text": "Detectar el problema antes de publicar.", "visual": { "kind": "document", "state": "review-ready" } }
+      { "id": "before", "label": "Antes", "text": "La medida llegaba sin aviso.", "visual": { "kind": "comparison", "state": "unreviewed" } },
+      { "id": "change", "label": "Cambio", "text": "Ahora aparece una señal de revisión.", "visual": { "kind": "comparison", "state": "flagged" } },
+      { "id": "result", "label": "Resultado esperado", "text": "Detectar el problema antes de publicar.", "visual": { "kind": "comparison", "state": "review-ready" } }
     ]
   },
   "output": "out/narrative"
@@ -305,6 +318,43 @@ links to those local pack files.
 | `title` | string | no | Page title. |
 
 CLI equivalent: `beauty gallery docs/narrative-gif --out docs/narrative-gif/GALLERY.html --title "Sprint Review"`.
+
+### `beauty_review_artifact`
+
+Appends a Zod-validated review record to `<pack>.review.json`. It binds the
+reviewer, date, six visual-matrix criteria, five evaluation levels, structured
+feedback, GIF and PNG SHA-256 values, and a canonical hash of the static
+manifest data. The dynamic review fields are excluded from the manifest hash
+to avoid a circular digest. Each new render increments `renderRevision` and
+reports the previous record as `stale` while retaining it in history. Model
+reviewers need their model id, version and criteria; only a valid independent
+human review with all six criteria and all five levels in pass can emit
+`consider-publication`, which never publishes by itself.
+
+| Argument | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `pack` | string | yes | Manifest, GIF/PNG path, or pack base path. |
+| `reviewer` | object | yes | Human `{id,name,kind}` or model `{id,name,kind,model:{id,version,criteria}}`. |
+| `criteria` | object | no | Six matrix verdicts: `pass`, `revise` or `not-evaluated`; omitted ones remain not-evaluated. |
+| `quality_levels` | object | no | Verdicts for technical integrity, style, legibility, narrative and visual review. |
+| `feedback` | array | no | Phase, GIF frame index, native-pixel region, problem, severity, evidence and allowed adjustment. |
+| `frames` | boolean | no | Decode and save referenced frames/crops under `<pack>.frames/`. |
+
+The same `NARRATIVE_REVIEW_HELP` source supplies the CLI and MCP instructions.
+See [the review procedure](narrative-gif/REVIEW-PROCESS.md) for the complete
+step-by-step flow and sample feedback JSON.
+
+### `beauty_get_review_state`
+
+Recomputes the current GIF, PNG and canonical manifest hashes and returns
+`none`, `pending`, `approved`, `revise` or `stale` with the most recent record.
+Input: `pack` (string, required). It does not treat automated controls as a
+visual verdict.
+
+CLI equivalent: `beauty review-state <pack-or-manifest>`. Rerendering is
+available as `beauty rerender <manifest> [--apply-feedback]`; it records the
+decoder-measured change summary and marks feedback fixed only when its
+referenced region/frame changed measurably.
 
 ### `beauty_create_motion`
 

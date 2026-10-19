@@ -17,24 +17,38 @@ interface GalleryPack {
   style: string;
   title: string;
   status: string;
+  evidenceClassification: 'illustrative' | 'measured' | 'expected';
   composition: string;
   width: number;
   height: number;
   assets: { gif: string; png: string; contactSheet: string; manifest: string };
   evaluation: Record<EvaluationLevel, string>;
+  reviewState: 'none' | 'pending' | 'approved' | 'revise' | 'stale';
+  openFeedbackCount: number;
+  feedbackFrames: Array<{ id: string; phaseId: string; frameIndex: number; problem: string; severity: string; framePath?: string; cropPath?: string }>;
 }
 
 interface ManifestShape {
   style?: unknown;
+  workflowStatus?: unknown;
+  evidenceClassification?: unknown;
+  illustrative?: unknown;
+  outcome?: { mode?: unknown };
   brief?: {
     style?: unknown;
     title?: unknown;
     status?: unknown;
+    workflowStatus?: unknown;
+    illustrative?: unknown;
+    outcome?: { mode?: unknown };
     phases?: Array<{ visual?: { kind?: unknown } }>;
   };
   dimensions?: { width?: unknown; height?: unknown };
   files?: Record<string, unknown>;
   evaluation?: Record<string, { status?: unknown }>;
+  reviewState?: unknown;
+  openFeedbackCount?: unknown;
+  feedbackFrames?: unknown;
 }
 
 export interface NarrativeGalleryOptions {
@@ -74,11 +88,11 @@ function levelStatus(manifest: ManifestShape, level: EvaluationLevel): string {
   return typeof status === 'string' && status.trim() ? status : 'not-evaluated';
 }
 
-async function manifestsUnder(directory: string): Promise<string[]> {
+async function manifestsUnder(directory: string, excludedDirectory: string): Promise<string[]> {
   const files: string[] = [];
   for (const entry of await readdir(directory, { withFileTypes: true })) {
     const file = path.join(directory, entry.name);
-    if (entry.isDirectory()) files.push(...await manifestsUnder(file));
+    if (entry.isDirectory() && path.resolve(file) !== excludedDirectory) files.push(...await manifestsUnder(file, excludedDirectory));
     else if (entry.isFile() && (entry.name === 'manifest.json' || entry.name.endsWith('.manifest.json'))) files.push(file);
   }
   return files.sort((a, b) => a.localeCompare(b, 'en'));
@@ -92,6 +106,15 @@ async function requiredAsset(directory: string, name: string, manifestPath: stri
     // The error below points to the manifest that declared this missing asset.
   }
   throw new Error(`Narrative gallery: asset "${name}" is missing beside ${manifestPath}.`);
+}
+
+async function optionalPackAsset(directory: string, value: unknown): Promise<string | undefined> {
+  if (typeof value !== 'string' || !value.trim()) return undefined;
+  const file = path.resolve(directory, value);
+  const relative = path.relative(directory, file);
+  if (relative.startsWith('..') || path.isAbsolute(relative)) return undefined;
+  try { return (await stat(file)).isFile() ? file : undefined; }
+  catch { return undefined; }
 }
 
 async function readPack(manifestPath: string): Promise<GalleryPack> {
@@ -127,15 +150,45 @@ async function readPack(manifestPath: string): Promise<GalleryPack> {
 
   const width = typeof manifest.dimensions?.width === 'number' ? manifest.dimensions.width : 1280;
   const height = typeof manifest.dimensions?.height === 'number' ? manifest.dimensions.height : 720;
+  const evaluationReview = manifest.evaluation?.['visual-review']?.status;
+  const reviewState = ['none', 'pending', 'approved', 'revise', 'stale'].includes(String(manifest.reviewState))
+    ? manifest.reviewState as GalleryPack['reviewState']
+    : evaluationReview === 'approved' || evaluationReview === 'revise' || evaluationReview === 'stale'
+      ? evaluationReview
+      : evaluationReview === 'pending' ? 'pending' : 'none';
+  const feedbackInput = Array.isArray(manifest.feedbackFrames) ? manifest.feedbackFrames : [];
+  const feedbackFrames: GalleryPack['feedbackFrames'] = [];
+  for (const entry of feedbackInput) {
+    if (!entry || typeof entry !== 'object') continue;
+    const item = entry as Record<string, unknown>;
+    const [framePath, cropPath] = await Promise.all([
+      optionalPackAsset(directory, item.framePath), optionalPackAsset(directory, item.cropPath),
+    ]);
+    feedbackFrames.push({
+      id: String(item.id ?? ''), phaseId: String(item.phaseId ?? ''), frameIndex: Number(item.frameIndex ?? 0),
+      problem: String(item.problem ?? ''), severity: String(item.severity ?? 'note'),
+      ...(framePath ? { framePath } : {}), ...(cropPath ? { cropPath } : {}),
+    });
+  }
   return {
     style,
     title: title.trim(),
-    status: typeof manifest.brief?.status === 'string' ? manifest.brief.status : 'not-declared',
+    status: typeof manifest.workflowStatus === 'string'
+      ? manifest.workflowStatus
+      : typeof manifest.brief?.status === 'string' ? manifest.brief.status : 'not-declared',
+    evidenceClassification: manifest.evidenceClassification === 'illustrative' || manifest.evidenceClassification === 'measured' || manifest.evidenceClassification === 'expected'
+      ? manifest.evidenceClassification
+      : manifest.illustrative === true || manifest.brief?.illustrative === true
+        ? 'illustrative'
+        : manifest.outcome?.mode === 'observed' || manifest.brief?.outcome?.mode === 'observed' ? 'measured' : 'expected',
     composition,
     width,
     height,
     assets: { gif, png, contactSheet, manifest: manifestPath },
     evaluation: Object.fromEntries(EVALUATION_LEVELS.map((level) => [level, levelStatus(manifest, level)])) as Record<EvaluationLevel, string>,
+    reviewState,
+    openFeedbackCount: typeof manifest.openFeedbackCount === 'number' && Number.isFinite(manifest.openFeedbackCount) ? manifest.openFeedbackCount : feedbackFrames.length,
+    feedbackFrames,
   };
 }
 
@@ -147,6 +200,11 @@ function card(pack: GalleryPack, outputDirectory: string): string {
   const manifest = relativeUrl(outputDirectory, pack.assets.manifest);
   const id = `piece-${pack.style}-${path.basename(pack.assets.manifest).replace(/[^a-z0-9-]/gi, '-')}`;
   const status = escapeHtml(pack.status);
+  const evidenceLabel = pack.evidenceClassification === 'illustrative' ? 'Ilustrativo' : pack.evidenceClassification === 'measured' ? 'Observado con evidencia' : 'Resultado esperado';
+  const reviewLabels = { none: 'Sin revisión', pending: 'Pendiente', approved: 'Aprobada', revise: 'Requiere ajustes', stale: 'Desactualizada' };
+  const openFeedback = pack.openFeedbackCount > 0
+    ? `<section class="evaluation" aria-label="Comentarios abiertos de ${escapeHtml(pack.title)}"><h3>${pack.openFeedbackCount} comentario${pack.openFeedbackCount === 1 ? '' : 's'} abierto${pack.openFeedbackCount === 1 ? '' : 's'}</h3><ul>${pack.feedbackFrames.map((item) => `<li><strong>${escapeHtml(item.severity)} · ${escapeHtml(item.phaseId)} · frame ${item.frameIndex}:</strong> ${escapeHtml(item.problem)}${item.framePath ? ` <a href="${relativeUrl(outputDirectory, item.framePath)}">Ver frame</a>` : ''}${item.cropPath ? ` · <a href="${relativeUrl(outputDirectory, item.cropPath)}">Ver recorte</a>` : ''}</li>`).join('\n')}</ul></section>`
+    : '';
   const levels = EVALUATION_LEVELS.map((level) => {
     const value = pack.evaluation[level];
     const emphasized = level === 'visual-review' && value === 'pending' ? ' level--pending' : '';
@@ -156,11 +214,14 @@ function card(pack: GalleryPack, outputDirectory: string): string {
   <header class="piece-header">
     <h2 id="${escapeHtml(id)}-title">${escapeHtml(pack.title)}</h2>
     <span class="status-tag">Estado: ${status}</span>
+    <span class="status-tag" aria-label="Estado de revisión visual">Revisión visual: ${reviewLabels[pack.reviewState]}</span>
+    <span class="evidence-tag evidence-tag--${pack.evidenceClassification}">${escapeHtml(evidenceLabel)}</span>
   </header>
   <dl class="piece-meta">
     <div><dt>Estilo</dt><dd>${escapeHtml(styleName)}</dd></div>
     <div><dt>Composición</dt><dd>${escapeHtml(pack.composition)}</dd></div>
     <div><dt>Estado</dt><dd>${status}</dd></div>
+    <div><dt>Resultado</dt><dd>${escapeHtml(evidenceLabel)}</dd></div>
   </dl>
   <figure class="artwork">
     <img class="poster" src="${poster}" data-poster="${poster}" data-gif="${gif}" width="${pack.width}" height="${pack.height}" alt="${escapeHtml(pack.title)} · ${escapeHtml(styleName)} · vista estática" loading="lazy">
@@ -178,6 +239,7 @@ function card(pack: GalleryPack, outputDirectory: string): string {
     <h3>Evaluación</h3>
     <ul>${levels}</ul>
   </section>
+  ${openFeedback}
   <nav class="evidence-links" aria-label="Evidencia de ${escapeHtml(pack.title)}">
     <a href="${contact}">Hoja de contacto</a>
     <a href="${manifest}">Manifiesto</a>
@@ -239,7 +301,9 @@ function galleryHtml(title: string, packs: GalleryPack[], outputDirectory: strin
     .piece:nth-child(4n + 2) { margin-top: 0.65rem; }
     .piece-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.5rem; }
     .piece h2 { margin: 0; font-size: clamp(1.2rem, 2.6vw, 1.65rem); line-height: 1.2; }
-    .status-tag { padding: 0.18rem 0.55rem; border: 1px solid var(--ink); border-radius: 48px; font-size: 12px; font-weight: 700; }
+    .status-tag, .evidence-tag { padding: 0.18rem 0.55rem; border: 1px solid var(--ink); border-radius: 48px; font-size: 12px; font-weight: 700; }
+    .evidence-tag--illustrative { border-style: dashed; }
+    .evidence-tag--measured { background: var(--highlight); }
     .piece-meta { display: flex; flex-wrap: wrap; gap: 0.35rem 1rem; margin: 0.8rem 0; }
     .piece-meta div { display: flex; flex-wrap: wrap; gap: 0.25rem; min-width: 0; }
     .piece-meta dt { color: var(--muted); font-weight: 700; }
@@ -276,7 +340,7 @@ function galleryHtml(title: string, packs: GalleryPack[], outputDirectory: strin
   <header class="site-header">
     <p class="eyebrow">Open Beauty · revisión editorial</p>
     <h1>${escapeHtml(title)}</h1>
-    <p class="intro">Cada pieza abre como imagen fija. Reproduce el GIF solo cuando quieras revisar el ritmo. Los estados de evaluación proceden de cada manifiesto; la revisión visual pendiente no aprueba la publicación.</p>
+    <p class="intro">Cada pieza abre como imagen fija. Reproduce el GIF solo cuando quieras revisar el ritmo. La galería distingue ejemplos ilustrativos, resultados esperados y resultados observados con evidencia; la revisión visual pendiente no aprueba la publicación.</p>
   </header>
   <main id="main-content">
     <section class="toolbar" aria-labelledby="filter-heading">
@@ -364,7 +428,7 @@ export async function createNarrativeGallery(options: NarrativeGalleryOptions): 
   const sourceInfo = await stat(sourceDirectory);
   if (!sourceInfo.isDirectory()) throw new Error(`Narrative gallery: input is not a directory: ${sourceDirectory}`);
 
-  const manifestPaths = await manifestsUnder(sourceDirectory);
+  const manifestPaths = await manifestsUnder(sourceDirectory, path.join(sourceDirectory, 'art-only'));
   if (manifestPaths.length === 0) throw new Error(`Narrative gallery: no manifest files found under ${sourceDirectory}.`);
   const packs = await Promise.all(manifestPaths.map(readPack));
   packs.sort((a, b) => a.style.localeCompare(b.style, 'en') || a.title.localeCompare(b.title, 'es'));

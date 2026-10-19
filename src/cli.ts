@@ -21,10 +21,14 @@ import { ensureFonts } from './canvas.js';
 import { packageRoot } from './paths.js';
 import { createNarrative, narrativeFailure } from './narrative/create.js';
 import { NARRATIVE_BRIEF_EXAMPLE, narrativeHelpOptions } from './narrative/brief.js';
+import { narrativeCapabilityReport } from './narrative/capabilities.js';
 import { NarrativeError } from './types/narrative.js';
 import { createNarrativeGallery } from './narrative/gallery.js';
+import { NARRATIVE_REVIEW_LEVELS, type NarrativeFeedback, type NarrativeReviewer, type NarrativeReviewCriterion, type NarrativeReviewLevel, type NarrativeReviewVerdict } from './types/narrative-review.js';
+import { NARRATIVE_REVIEW_HELP, NARRATIVE_RERENDER_HELP, reviewNarrativeArtifact, getNarrativeReviewState } from './narrative/review.js';
+import { rerenderNarrativePack } from './narrative/rerender.js';
 
-type Flags = Record<string, string | boolean>;
+type Flags = Record<string, string | boolean | string[]>;
 
 interface CommandHelpEntry {
   summary: string;
@@ -130,6 +134,15 @@ const COMMAND_HELP: Record<string, CommandHelpEntry> = {
     options: narrativeHelpOptions(),
     example: `beauty narrative --style papercraft --brief narrative.json --out out/narrative\n\n${NARRATIVE_BRIEF_EXAMPLE}`,
   },
+  capabilities: {
+    summary: 'Inspect the narrative renderer capability registry.',
+    usage: 'beauty capabilities [--style <s>] [--json]',
+    options: [
+      '  --style <s>        Filter to one of the thirteen narrative scenes',
+      '  --json             Print the complete machine-readable capability matrix',
+    ],
+    example: 'beauty capabilities --style papercraft --json',
+  },
   gallery: {
     summary: 'Build a self-contained review gallery from narrative manifests.',
     usage: 'beauty gallery <dir> [--out gallery.html] [--title "..."]',
@@ -139,6 +152,24 @@ const COMMAND_HELP: Record<string, CommandHelpEntry> = {
       '  --title "..."      Gallery heading and document title',
     ],
     example: 'beauty gallery docs/narrative-gif --out docs/narrative-gif/GALLERY.html --title "Sprint Review"',
+  },
+  review: {
+    summary: 'Record a hash-bound narrative review and structured feedback.',
+    usage: NARRATIVE_REVIEW_HELP.split('\n')[0]!,
+    options: NARRATIVE_REVIEW_HELP.split('\n').slice(1),
+    example: 'beauty review out/narrative/example.manifest.json --reviewer reviewer-1:Ada --criterion thumbnailIdentity=pass --criterion loopRestart=revise --frames',
+  },
+  'review-state': {
+    summary: 'Check whether a review still matches the current GIF, PNG and manifest.',
+    usage: 'beauty review-state <pack-or-manifest>',
+    options: ['  <pack-or-manifest>  Narrative manifest or pack path'],
+    example: 'beauty review-state out/narrative/example.manifest.json',
+  },
+  rerender: {
+    summary: 'Rerender a pack from its stored normalized brief and seed.',
+    usage: NARRATIVE_RERENDER_HELP.split('\n')[0]!,
+    options: NARRATIVE_RERENDER_HELP.split('\n').slice(1),
+    example: 'beauty rerender out/narrative/example.manifest.json --apply-feedback',
   },
   canvas: {
     summary: 'Create an open animated SVG canvas.',
@@ -233,14 +264,19 @@ function parseArgs(argv: string[]): { positionals: string[]; flags: Flags } {
       const body = token.slice(2);
       const equals = body.indexOf('=');
       if (equals >= 0) {
-        flags[body.slice(0, equals)] = body.slice(equals + 1);
+        const name = body.slice(0, equals);
+        const value = body.slice(equals + 1);
+        const previous = flags[name];
+        flags[name] = previous === undefined ? value : Array.isArray(previous) ? [...previous, value] : [String(previous), value];
       } else {
         const next = argv[index + 1];
         if (next && !next.startsWith('--')) {
-          flags[body] = next;
+          const previous = flags[body];
+          flags[body] = previous === undefined ? next : Array.isArray(previous) ? [...previous, next] : [String(previous), next];
           index += 1;
         } else {
-          flags[body] = true;
+          const previous = flags[body];
+          flags[body] = previous === undefined ? true : Array.isArray(previous) ? [...previous, 'true'] : [String(previous), 'true'];
         }
       }
     } else {
@@ -252,7 +288,12 @@ function parseArgs(argv: string[]): { positionals: string[]; flags: Flags } {
 
 function stringFlag(flags: Flags, name: string): string | undefined {
   const value = flags[name];
-  return typeof value === 'string' ? value : undefined;
+  return typeof value === 'string' ? value : Array.isArray(value) ? value.at(-1) : undefined;
+}
+
+function stringFlags(flags: Flags, name: string): string[] {
+  const value = flags[name];
+  return typeof value === 'string' ? [value] : Array.isArray(value) ? value.filter((item): item is string => typeof item === 'string') : [];
 }
 
 function booleanFlag(flags: Flags, name: string): boolean {
@@ -264,6 +305,20 @@ function numberFlag(flags: Flags, name: string): number | undefined {
   if (!value) return undefined;
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : undefined;
+}
+
+function parsedPairs(values: string[], label: string, allowed: readonly string[]): Record<string, NarrativeReviewVerdict> {
+  const result: Record<string, NarrativeReviewVerdict> = {};
+  for (const value of values) {
+    const split = value.lastIndexOf('=');
+    if (split < 1) throw new Error(`Invalid --${label} "${value}"; expected name=pass|revise|not-evaluated.`);
+    const name = value.slice(0, split);
+    const verdict = value.slice(split + 1);
+    if (!allowed.includes(name)) throw new Error(`Unknown --${label} "${name}". Valid values: ${allowed.join(', ')}.`);
+    if (!['pass', 'revise', 'not-evaluated'].includes(verdict)) throw new Error(`Invalid --${label} verdict "${verdict}".`);
+    result[name] = verdict as NarrativeReviewVerdict;
+  }
+  return result;
 }
 
 function requireStyle(value: string | undefined): StyleSlug {
@@ -382,7 +437,11 @@ Commands:
       [--out dir]
   beauty sequence --style <s> --brief seq.json   Create an SVG story + GIF from frames
   beauty narrative --style <s> --brief brief.json [--out dir]  Create a narrative GIF pack
+  beauty capabilities [--style <s>] [--json]  Inspect narrative options before writing a brief
   beauty gallery <dir> [--out gallery.html] [--title "..."]  Build a static review gallery
+  beauty review <pack> [--criterion name=pass|revise|not-evaluated] ...  Record a visual review
+  beauty review-state <pack>                    Check hash freshness and verdict
+  beauty rerender <manifest> [--apply-feedback] Rerender and measure feedback regions
   beauty canvas --style <s> --brief canvas.json  Create an open animated SVG canvas
   beauty motion --style <s> --title "..."      Create an animated SVG loop
       [--scene orbit|bloom|tide|papercut|constellation|ribbon|rain|type]
@@ -656,11 +715,35 @@ async function main(): Promise<void> {
         return;
       }
       try {
-        const result = await createNarrative(brief, { outputDir: stringFlag(flags, 'out') });
+        const result = await createNarrative(brief, { outputDir: stringFlag(flags, 'out'), artOnly: booleanFlag(flags, 'art-only') });
         console.log(JSON.stringify(result, null, 2));
       } catch (error) {
         console.log(JSON.stringify(narrativeFailure(error), null, 2));
         process.exitCode = 1;
+      }
+      return;
+    }
+
+    case 'capabilities': {
+      const styleValue = stringFlag(flags, 'style');
+      if (styleValue && !isStyleSlug(styleValue)) {
+        throw new Error(`Unknown style "${styleValue}". Choose one of: ${styleSlugs.join(', ')}.`);
+      }
+      const report = narrativeCapabilityReport(styleValue ? { style: styleValue as StyleSlug } : {});
+      if (booleanFlag(flags, 'json')) {
+        console.log(JSON.stringify(report, null, 2));
+        return;
+      }
+      console.log(`Narrative capabilities · ${report.cells.length} cells · supported ${report.summary.supported} · fallback ${report.summary.fallback} · unsupported ${report.summary.unsupported}`);
+      for (const style of [...new Set(report.cells.map((cell) => cell.style))]) {
+        const cells = report.cells.filter((cell) => cell.style === style);
+        const states = [...new Set(cells.flatMap((cell) => cell.allowed.visualStates.map((entry) => entry.value)))].join(', ');
+        const semantic = cells.filter((cell) => cell.aspect === '16:9' && cell.locale === 'es').map((cell) => {
+          const statesByKind = Object.entries(cell.allowed.semanticStates).map(([kind, values]) => `${kind}[${values?.join('|') ?? ''}]`).join(',');
+          const actionsByKind = Object.entries(cell.allowed.semanticActions).map(([kind, values]) => `${kind}[${values?.join('|') ?? ''}]`).join(',');
+          return `${cell.primitive}=${cell.status}; entities ${cell.allowed.semanticEntityKinds.join('|')}; states ${statesByKind}; actions ${actionsByKind}`;
+        }).join(' · ');
+        console.log(`${style}: ${cells.filter((cell) => cell.status === 'supported').length} supported · ${cells.filter((cell) => cell.status === 'fallback').length} fallback · ${cells.filter((cell) => cell.status === 'unsupported').length} unsupported · visual states ${states} · ${semantic}`);
       }
       return;
     }
@@ -672,6 +755,69 @@ async function main(): Promise<void> {
       const result = await createNarrativeGallery({ directory, output, title: stringFlag(flags, 'title') });
       console.log(`Galería narrativa · ${result.pieceCount} piezas · ${result.styles.length} estilos`);
       console.log(result.path);
+      return;
+    }
+
+    case 'review': {
+      const pack = positionals[1];
+      if (!pack) throw new Error('Pass a narrative pack or manifest to beauty review.');
+      const rawReviewer = stringFlag(flags, 'reviewer') ?? 'reviewer:Reviewer';
+      const colon = rawReviewer.indexOf(':');
+      const reviewerId = colon < 0 ? rawReviewer : rawReviewer.slice(0, colon);
+      const reviewerName = colon < 0 ? rawReviewer : rawReviewer.slice(colon + 1);
+      const kind = stringFlag(flags, 'reviewer-kind') ?? 'human';
+      if (kind !== 'human' && kind !== 'model') throw new Error('--reviewer-kind must be human or model.');
+      let reviewer: NarrativeReviewer;
+      if (kind === 'human') reviewer = { id: reviewerId, name: reviewerName, kind: 'human' };
+      else {
+        const model = { id: stringFlag(flags, 'model-id') ?? '', version: stringFlag(flags, 'model-version') ?? '', criteria: stringFlag(flags, 'model-criteria') ?? '' };
+        if (!model.id || !model.version || !model.criteria) throw new Error('Model reviews require --model-id, --model-version and --model-criteria.');
+        reviewer = { id: reviewerId, name: reviewerName, kind: 'model', model };
+      }
+      const criterionAliases: Record<string, NarrativeReviewCriterion> = {
+        thumbnailIdentity: 'thumbnailIdentity', 'thumbnail-identity': 'thumbnailIdentity',
+        cardSizeReading: 'cardSizeReading', 'reading-at-card-size': 'cardSizeReading',
+        styleMaterial: 'styleMaterial', 'style-material': 'styleMaterial',
+        phaseContinuity: 'phaseContinuity', 'phase-continuity': 'phaseContinuity',
+        loopRestart: 'loopRestart', 'loop-restart': 'loopRestart',
+        artOnlyTransformationUnderstood: 'artOnlyTransformationUnderstood', 'art-only-transformation-understood': 'artOnlyTransformationUnderstood',
+      };
+      const criteriaInput: Record<string, NarrativeReviewVerdict> = {};
+      const rawCriteria = parsedPairs(stringFlags(flags, 'criterion'), 'criterion', Object.keys(criterionAliases));
+      for (const [name, verdict] of Object.entries(rawCriteria)) criteriaInput[criterionAliases[name]!] = verdict;
+      const levelsInput = parsedPairs(stringFlags(flags, 'level'), 'level', NARRATIVE_REVIEW_LEVELS);
+      let feedback: unknown[] | undefined;
+      const feedbackFile = stringFlag(flags, 'feedback');
+      if (feedbackFile) {
+        const parsed = JSON.parse(await readFile(path.resolve(process.cwd(), feedbackFile), 'utf8')) as unknown;
+        feedback = Array.isArray(parsed) ? parsed : (parsed as { feedback?: unknown[] }).feedback;
+        if (!Array.isArray(feedback)) throw new Error('--feedback JSON must be an array or an object with a feedback array.');
+      }
+      const result = await reviewNarrativeArtifact({
+        manifestPath: pack,
+        reviewer,
+        criteria: criteriaInput as Partial<Record<NarrativeReviewCriterion, NarrativeReviewVerdict>>,
+        qualityLevels: levelsInput as Partial<Record<NarrativeReviewLevel, NarrativeReviewVerdict>>,
+        feedback: feedback as NarrativeFeedback[] | undefined,
+        extractFrames: booleanFlag(flags, 'frames'),
+        overallNote: stringFlag(flags, 'note'),
+      });
+      console.log(JSON.stringify({ reviewPath: result.reviewPath, ...result.assessment }, null, 2));
+      return;
+    }
+
+    case 'review-state': {
+      const pack = positionals[1];
+      if (!pack) throw new Error('Pass a narrative pack or manifest to beauty review-state.');
+      console.log(JSON.stringify(await getNarrativeReviewState(pack), null, 2));
+      return;
+    }
+
+    case 'rerender': {
+      const manifest = positionals[1];
+      if (!manifest) throw new Error('Pass a narrative manifest to beauty rerender.');
+      const result = await rerenderNarrativePack(manifest, { applyFeedback: booleanFlag(flags, 'apply-feedback') });
+      console.log(JSON.stringify(result, null, 2));
       return;
     }
 

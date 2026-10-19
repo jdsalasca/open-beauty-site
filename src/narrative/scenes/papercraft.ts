@@ -2,6 +2,13 @@ import { canvasFor } from '../../canvas.js';
 import { getStyle } from '../../styles/presets.js';
 import type { NarrativePhase, NarrativeRenderContext, NarrativeScene, NormalizedNarrativeBrief, NarrativeRect } from '../../types/narrative.js';
 import { cubicBezierEase, drawRule, drawText, phaseMarkProgress, rgba } from './common.js';
+import { sceneVocabulary } from '../vocabulary.js';
+import { sceneText, workflowBadgeText } from '../i18n.js';
+import { drawPapercraftSemantic, papercraftObjectRegions } from './papercraft/semantic-art.js';
+
+function artBox(art: NarrativeRect): NarrativeRect {
+  return { x: art.x + art.width * 0.005, y: art.y + art.height * 0.005, width: art.width * 0.99, height: art.height * 0.99 };
+}
 
 interface PaperGuide {
   readonly identity: 'guia-de-revision';
@@ -173,10 +180,8 @@ function stateRank(phase: NarrativePhase): number {
   return 0;
 }
 
-export function papercraftStatusStampText(status: NormalizedNarrativeBrief['status']): string {
-  if (status === 'done') return 'REVISADA';
-  if (status === 'in-review') return 'EN REVISIÓN';
-  return 'PENDIENTE';
+export function papercraftStatusStampText(status: NormalizedNarrativeBrief['status'], locale: 'es' | 'en' = 'es'): string {
+  return workflowBadgeText('papercraft', locale, status, 'workflow')!;
 }
 
 function drawSignal(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect, progress: number, accent: string): void {
@@ -241,30 +246,30 @@ function drawReviewStamp(ctx: ReturnType<typeof canvasFor>['ctx'], box: Narrativ
   ctx.restore();
 }
 
-function drawComparison(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect, ink: string, muted: string): void {
+function drawComparison(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect, ink: string, muted: string, locale: 'es' | 'en'): void {
   const pad = box.width * 0.12;
   const left = box.x + pad;
   const right = box.x + box.width - pad;
   const top = box.y + box.height * 0.15;
-  drawText(ctx, 'Guía', left, top + box.height * 0.09, 'Fraunces', 560, Math.max(24, box.width * 0.13), ink);
-  drawText(ctx, 'LECTURA', left, top + box.height * 0.21, 'Nunito Sans', 800, Math.max(12, box.width * 0.045), muted);
+  drawText(ctx, sceneText('papercraft', locale, 'guide'), left, top + box.height * 0.09, 'Fraunces', 560, Math.max(24, box.width * 0.13), ink);
+  drawText(ctx, sceneText('papercraft', locale, 'reading'), left, top + box.height * 0.21, 'Nunito Sans', 800, Math.max(12, box.width * 0.045), muted);
   drawRule(ctx, left, top + box.height * 0.24, right, '#D7CBB9', 1.2);
   drawRule(ctx, left, top + box.height * 0.36, right * 0.89, '#8F7C68', 2);
   drawRule(ctx, left, top + box.height * 0.41, right * 0.83, '#C9B8A2', 1.2);
-  drawText(ctx, 'SEÑAL', left, top + box.height * 0.56, 'Nunito Sans', 800, Math.max(12, box.width * 0.045), muted);
+  drawText(ctx, sceneText('papercraft', locale, 'signal'), left, top + box.height * 0.56, 'Nunito Sans', 800, Math.max(12, box.width * 0.045), muted);
   drawRule(ctx, left, top + box.height * 0.60, right, '#D7CBB9', 1.2);
   drawRule(ctx, left, top + box.height * 0.70, right * 0.9, '#8F7C68', 2);
 }
 
-function drawChecklist(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect, ink: string, muted: string, accent: string): void {
+function drawChecklist(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect, ink: string, muted: string, accent: string, locale: 'es' | 'en'): void {
   const pad = box.width * 0.12;
   const left = box.x + pad;
   const size = Math.max(16, box.width * 0.07);
-  drawText(ctx, 'Lista de revisión', left, box.y + box.height * 0.25, 'Fraunces', 560, Math.max(22, box.width * 0.095), ink);
+  drawText(ctx, sceneText('papercraft', locale, 'reviewList'), left, box.y + box.height * 0.25, 'Fraunces', 560, Math.max(22, box.width * 0.095), ink);
   const rows = [
-    { label: 'LEER LA GUÍA', y: box.y + box.height * 0.42 },
-    { label: 'SEÑALAR EL DATO', y: box.y + box.height * 0.57 },
-    { label: 'DEJAR EN REVISIÓN', y: box.y + box.height * 0.72 },
+    { label: sceneText('papercraft', locale, 'readGuide'), y: box.y + box.height * 0.42 },
+    { label: sceneText('papercraft', locale, 'markDatum'), y: box.y + box.height * 0.57 },
+    { label: sceneText('papercraft', locale, 'leaveInReview'), y: box.y + box.height * 0.72 },
   ];
   for (const [index, row] of rows.entries()) {
     ctx.strokeStyle = index === 1 ? accent : '#9B8570';
@@ -281,12 +286,7 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
   const { ctx } = canvasFor(brief.output.width, brief.output.height);
   const art = layout.reservedArtArea;
   const preset = getStyle('papercraft');
-  const box: NarrativeRect = {
-    x: art.x + art.width * 0.005,
-    y: art.y + art.height * 0.005,
-    width: art.width * 0.99,
-    height: art.height * 0.99,
-  };
+  const box = artBox(art);
   const backingSheet: NarrativeRect = { ...box, x: box.x + box.width * 0.045, y: box.y + box.height * 0.035, width: box.width * 0.94, height: box.height * 0.95 };
   const middleSheet: NarrativeRect = { ...box, x: box.x - box.width * 0.028, y: box.y + box.height * 0.018, width: box.width * 0.97, height: box.height * 0.96 };
   ctx.save();
@@ -300,16 +300,19 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
   fillLayer(ctx, box, preset.palette.surface, guide.cutVariant, guide.edgeProfile, '#CBB99F', { blur: 4, y: 4, alpha: 0.22 });
   drawPaperGrain(ctx, box, guide.grainSeed);
   drawCutoutWindow(ctx, box, backingColor, preset.palette.ink);
-  if (guide.composition === 'checklist') drawChecklist(ctx, box, preset.palette.ink, preset.palette.muted, preset.palette.accent);
-  else drawComparison(ctx, box, preset.palette.ink, preset.palette.muted);
+  const semantic = context.semantic;
+  const semanticMode = Boolean(semantic && semantic.primitive !== 'legacy-illustration');
+  if (semanticMode && semantic) drawPapercraftSemantic(ctx, semantic, box, { ...preset.palette, cardScale: layout.cardScale }, brief.locale);
+  else if (guide.composition === 'checklist') drawChecklist(ctx, box, preset.palette.ink, preset.palette.muted, preset.palette.accent, brief.locale);
+  else drawComparison(ctx, box, preset.palette.ink, preset.palette.muted, brief.locale);
   drawTornRibbon(ctx, box, guide.tapeAngle, preset.palette.accent4, preset.palette.ink);
   const outgoing = stateRank(brief.phases[frame.fromPhaseIndex]!);
   const incoming = stateRank(brief.phases[frame.toPhaseIndex]!);
   const eased = phaseMarkProgress(frame, (value) => cubicBezierEase(value, 0.4, 0, 0.2, 1));
   const level = outgoing + (incoming - outgoing) * eased;
-  const stampText = papercraftStatusStampText(brief.status);
-  drawSignal(ctx, box, Math.max(0, Math.min(1, level)), preset.palette.accent);
-  drawReviewStamp(ctx, box, Math.max(0, level - 1), stampText, preset.palette.accent, preset.palette.ink);
+  const stampText = workflowBadgeText('papercraft', brief.locale, brief.workflowStatus, brief.badgePolicy, brief.badgeText);
+  if (!semanticMode) drawSignal(ctx, box, Math.max(0, Math.min(1, level)), preset.palette.accent);
+  if (stampText) drawReviewStamp(ctx, box, Math.max(0, level - 1), stampText, preset.palette.accent, preset.palette.ink);
   ctx.restore();
   return ctx.getImageData(0, 0, brief.output.width, brief.output.height).data;
 }
@@ -317,6 +320,7 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
 export const papercraftNarrativeScene: NarrativeScene = {
   style: 'papercraft',
   version: 'papercraft-editorial/1.1.0',
+  vocabulary: sceneVocabulary('value-driven'),
   supportsAspect(aspect) {
     return [16 / 9, 1].some((ratio) => Math.abs(aspect - ratio) / ratio < 0.015);
   },
@@ -331,6 +335,10 @@ export const papercraftNarrativeScene: NarrativeScene = {
       edgeProfile: Object.freeze(Array.from({ length: 24 }, () => rng())),
       grainSeed: Math.floor(rng() * 0xffff_ffff) >>> 0,
     } satisfies PaperGuide);
+  },
+  objectRegions(context) {
+    if (!context.semantic || context.semantic.primitive === 'legacy-illustration') return [];
+    return papercraftObjectRegions(context, artBox(context.layout.reservedArtArea));
   },
   renderFrame,
 };

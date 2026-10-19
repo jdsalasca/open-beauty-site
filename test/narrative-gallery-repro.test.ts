@@ -3,18 +3,23 @@ import { mkdtemp, readdir, readFile, rm } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { spawnSync } from 'node:child_process';
 import test from 'node:test';
 import { createNarrative } from '../src/narrative/create.js';
 import {
   DEFAULT_NARRATIVE_COMPOSITION,
   NARRATIVE_COMPOSITION_BY_STYLE,
   NARRATIVE_LABEL_TONE_BY_STYLE,
+  SEMANTIC_NARRATIVE_COMPOSITION,
+  narrativeCompositionFor,
   type NarrativeComposition,
 } from '../src/narrative/composition.js';
 import { supportedNarrativeStyles } from '../src/narrative/scene.js';
 import type { StyleSlug } from '../src/types.js';
 
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const REPRO_WORKER = path.join(REPO_ROOT, 'test', 'support', 'narrative-repro-worker.ts');
+const NARRATIVE_ROOT = path.join(REPO_ROOT, 'docs', 'narrative-gif');
 const GALLERY_ROOT = path.join(REPO_ROOT, 'docs', 'narrative-gif', 'gallery');
 const PILOTS_ROOT = path.join(REPO_ROOT, 'docs', 'narrative-gif', 'pilots');
 const COMPOSITIONS = ['comparison', 'checklist'] as const;
@@ -112,6 +117,23 @@ test('the declarative style rules preserve every branch-specific value', () => {
   assert.deepEqual(Object.keys(NARRATIVE_COMPOSITION_BY_STYLE).sort(), supportedNarrativeStyles());
 });
 
+test('semantic papercraft and brutalist keep their enlarged art lane', () => {
+  assert.deepEqual(SEMANTIC_NARRATIVE_COMPOSITION, {
+    textWidthRatio: 0.43,
+    artGapRatio: 0.02,
+    artWidthRatio: 0.45,
+    artY: 0.05,
+    artHeight: 0.90,
+  });
+  for (const style of ['papercraft', 'brutalist'] as const) {
+    assert.deepEqual(narrativeCompositionFor(style, true), SEMANTIC_NARRATIVE_COMPOSITION);
+    assert.deepEqual(narrativeCompositionFor(style), EXPECTED_COMPOSITIONS[style]);
+  }
+  for (const style of ['isotype', 'opart'] as const) {
+    assert.deepEqual(narrativeCompositionFor(style), EXPECTED_COMPOSITIONS[style]);
+  }
+});
+
 test('every committed narrative pack regenerates byte-for-byte from its brief', async () => {
   const packages = await committedPackages();
   const galleryPackages = packages.filter((item) => item.briefPath.startsWith(GALLERY_ROOT));
@@ -141,12 +163,33 @@ test('every committed narrative pack regenerates byte-for-byte from its brief', 
   try {
     for (const [index, item] of packages.entries()) {
       const outputDir = path.join(tempRoot, `${index}-${item.brief.style}-${item.composition}`);
-      const generated = await createNarrative(item.brief, { outputDir });
-      const balance = generated.evaluation['rendered-legibility'].controls.find((control) => control.name === 'composition-balance');
+      const child = spawnSync(process.execPath, ['--import', 'tsx', REPRO_WORKER, item.briefPath, outputDir], {
+        cwd: REPO_ROOT,
+        encoding: 'utf8',
+        timeout: 120_000,
+        maxBuffer: 2 * 1024 * 1024,
+        windowsHide: true,
+      });
+      assert.equal(child.status, 0, `${item.brief.style}/${item.composition} repro worker exited ${child.status}: ${child.stderr || child.stdout}`);
+      const generated = { paths: {
+        gif: path.join(outputDir, `${path.basename(item.briefPath, '.json')}.gif`),
+        png: '',
+        contactSheet: '',
+      } };
+      const outputFiles = await readdir(outputDir);
+      const expectedBase = outputFiles.find((name) => name.endsWith('.manifest.json'))?.replace(/\.manifest\.json$/u, '');
+      assert.ok(expectedBase, `${item.brief.style}/${item.composition} worker wrote a manifest`);
+      const reproManifest = JSON.parse(await readFile(path.join(outputDir, `${expectedBase}.manifest.json`), 'utf8')) as {
+        evaluation: { 'rendered-legibility': { controls: Array<{ name: string; detail: string }> } };
+      };
+      const balance = reproManifest.evaluation['rendered-legibility'].controls.find((control) => control.name === 'composition-balance');
       assert.ok(balance, `${item.brief.style}/${item.composition} reports decoded composition balance`);
       const fill = balance.detail.match(/text-column vertical fill ([\d.]+)%/u);
       assert.ok(fill, `${item.brief.style}/${item.composition} reports a text-column fill ratio`);
       assert.ok(Number(fill[1]) >= 60, `${item.brief.style}/${item.composition} fills at least 60% of the text column vertically`);
+      generated.paths.gif = path.join(outputDir, `${expectedBase}.gif`);
+      generated.paths.png = path.join(outputDir, `${expectedBase}.png`);
+      generated.paths.contactSheet = path.join(outputDir, `${expectedBase}-contact-sheet.png`);
       const artifacts = [
         ['GIF', generated.paths.gif],
         ['PNG', generated.paths.png],
@@ -157,7 +200,65 @@ test('every committed narrative pack regenerates byte-for-byte from its brief', 
         const committedPath = path.join(item.packageDir, path.basename(generatedPath));
         const generatedBytes = await readFile(generatedPath);
         const committedBytes = await readFile(committedPath);
-        assert.deepEqual(generatedBytes, committedBytes, `${item.brief.style}/${item.composition} ${format} matches ${item.briefPath}`);
+        assert.equal(generatedBytes.equals(committedBytes), true, `${item.brief.style}/${item.composition} ${format} matches ${item.briefPath}`);
+      }
+    }
+
+    const artOnlyPackages = packages.filter((item) => item.brief.style === 'isotype' || item.brief.style === 'opart');
+    for (const [index, item] of artOnlyPackages.entries()) {
+      const style = item.brief.style;
+      const outputDir = path.join(tempRoot, `art-only-${index}-${style}-${item.composition}`);
+      const child = spawnSync(process.execPath, ['--import', 'tsx', REPRO_WORKER, item.briefPath, outputDir, '--art-only'], {
+        cwd: REPO_ROOT,
+        encoding: 'utf8',
+        timeout: 120_000,
+        maxBuffer: 2 * 1024 * 1024,
+        windowsHide: true,
+      });
+      assert.equal(child.status, 0, `${style}/${item.composition} art-only repro worker exited ${child.status}: ${child.stderr || child.stdout}`);
+      const outputFiles = await readdir(outputDir);
+      const expectedBase = outputFiles.find((name) => name.endsWith('.manifest.json'))?.replace(/\.manifest\.json$/u, '');
+      assert.ok(expectedBase?.endsWith('-art-only'), `${style}/${item.composition} art-only worker wrote a separate manifest`);
+      const manifest = JSON.parse(await readFile(path.join(outputDir, `${expectedBase}.manifest.json`), 'utf8')) as { artOnly: boolean };
+      assert.equal(manifest.artOnly, true, `${style}/${item.composition} manifest records art-only mode`);
+      for (const format of ['gif', 'png', 'contact-sheet.png']) {
+        const generatedPath = path.join(outputDir, `${expectedBase}${format === 'contact-sheet.png' ? '-contact-sheet.png' : `.${format}`}`);
+        const committedPath = path.join(item.packageDir, path.basename(generatedPath));
+        const generatedBytes = await readFile(generatedPath);
+        const committedBytes = await readFile(committedPath);
+        assert.equal(generatedBytes.equals(committedBytes), true, `${style}/${item.composition} art-only ${format} matches ${item.briefPath}`);
+      }
+    }
+  } finally {
+    await rm(tempRoot, { recursive: true, force: true });
+  }
+});
+
+test('all committed narrative manifests reproduce GIF, PNG and contact sheet byte-for-byte', async () => {
+  const manifestFiles = await filesUnder(NARRATIVE_ROOT, (fileName) => fileName.endsWith('.manifest.json'));
+  assert.equal(manifestFiles.length, 60, 'all gallery, pilot, semantic and standalone art-only packs are enumerated');
+  const tempRoot = await mkdtemp(path.join(os.tmpdir(), 'narrative-all-manifest-repro-'));
+  try {
+    for (const [index, manifestPath] of manifestFiles.entries()) {
+      const manifest = JSON.parse(await readFile(manifestPath, 'utf8')) as {
+        brief: unknown;
+        artOnly?: boolean;
+        style?: string;
+        files: { gif: string; png: string; contactSheet: string };
+      };
+      assert.ok(manifest.brief, `${manifestPath} stores its source brief`);
+      const outputDir = path.join(tempRoot, `${index}-${manifest.style ?? 'narrative'}`);
+      const result = await createNarrative(manifest.brief, { outputDir, artOnly: manifest.artOnly === true });
+      const artifacts = [
+        ['GIF', result.paths.gif, manifest.files.gif],
+        ['PNG', result.paths.png, manifest.files.png],
+        ['contact sheet', result.paths.contactSheet, manifest.files.contactSheet],
+      ] as const;
+      for (const [format, generatedPath, committedPath] of artifacts) {
+        const sourcePath = path.join(path.dirname(manifestPath), path.basename(committedPath));
+        const generatedBytes = await readFile(generatedPath);
+        const committedBytes = await readFile(sourcePath);
+        assert.equal(generatedBytes.equals(committedBytes), true, `${format} reproduces ${manifestPath}`);
       }
     }
   } finally {

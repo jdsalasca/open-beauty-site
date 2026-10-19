@@ -1,0 +1,213 @@
+{
+  "style": "papercraft",
+  "subfamily": "editorial",
+  "kind": "narrative-gif",
+  "locale": "en",
+  "audience": "Team reviewing a list",
+  "title": "Count",
+  "workflowStatus": "in-review",
+  "outcome": {
+    "mode": "expected",
+    "scopeNote": "Illustrative example: the count includes only related visible cards; it does not represent items outside the collection."
+  },
+  "illustrative": true,
+  "badgePolicy": "none",
+  "phases": [
+    {
+      "id": "scope-of-two",
+      "label": "Before",
+      "text": "A and B count as 2.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "before",
+        "semantic": {
+          "primitive": "counter",
+          "illustrative": true,
+          "entities": [
+            {
+              "id": "counter",
+              "kind": "counter",
+              "value": 2
+            },
+            {
+              "id": "card-a",
+              "kind": "row",
+              "label": "A"
+            },
+            {
+              "id": "card-b",
+              "kind": "row",
+              "label": "B"
+            },
+            {
+              "id": "card-c",
+              "kind": "row",
+              "label": "C"
+            }
+          ],
+          "relations": [
+            {
+              "kind": "counts",
+              "from": "counter",
+              "to": "card-a"
+            },
+            {
+              "kind": "counts",
+              "from": "counter",
+              "to": "card-b"
+            }
+          ],
+          "states": {
+            "counter": "value",
+            "card-a": "default",
+            "card-b": "default",
+            "card-c": "pending"
+          },
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "third-card-included",
+      "label": "Add C",
+      "text": "Card C is included.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "flagged",
+        "semantic": {
+          "primitive": "counter",
+          "illustrative": true,
+          "entities": [
+            {
+              "id": "counter",
+              "kind": "counter",
+              "value": 3
+            },
+            {
+              "id": "card-a",
+              "kind": "row",
+              "label": "A"
+            },
+            {
+              "id": "card-b",
+              "kind": "row",
+              "label": "B"
+            },
+            {
+              "id": "card-c",
+              "kind": "row",
+              "label": "C"
+            }
+          ],
+          "relations": [
+            {
+              "kind": "counts",
+              "from": "counter",
+              "to": "card-a"
+            },
+            {
+              "kind": "counts",
+              "from": "counter",
+              "to": "card-b"
+            },
+            {
+              "kind": "counts",
+              "from": "counter",
+              "to": "card-c"
+            }
+          ],
+          "states": {
+            "counter": "increased",
+            "card-a": "default",
+            "card-b": "default",
+            "card-c": "accepted"
+          },
+          "actions": [
+            {
+              "entityId": "counter",
+              "type": "count-changes"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "set-of-three",
+      "label": "Expected result",
+      "text": "Expected total: 3.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "review-ready",
+        "semantic": {
+          "primitive": "counter",
+          "illustrative": true,
+          "entities": [
+            {
+              "id": "counter",
+              "kind": "counter",
+              "value": 3
+            },
+            {
+              "id": "card-a",
+              "kind": "row",
+              "label": "A"
+            },
+            {
+              "id": "card-b",
+              "kind": "row",
+              "label": "B"
+            },
+            {
+              "id": "card-c",
+              "kind": "row",
+              "label": "C"
+            }
+          ],
+          "relations": [
+            {
+              "kind": "counts",
+              "from": "counter",
+              "to": "card-a"
+            },
+            {
+              "kind": "counts",
+              "from": "counter",
+              "to": "card-b"
+            },
+            {
+              "kind": "counts",
+              "from": "counter",
+              "to": "card-c"
+            }
+          ],
+          "states": {
+            "counter": "pending",
+            "card-a": "default",
+            "card-b": "default",
+            "card-c": "accepted"
+          },
+          "actions": []
+        }
+      }
+    }
+  ],
+  "playback": {
+    "preset": "concise",
+    "minReadableHoldMs": 2200,
+    "transitionMs": 400,
+    "loop": true,
+    "totalDurationBudgetMs": 15000
+  },
+  "output": {
+    "width": 640,
+    "height": 360,
+    "formats": [
+      "gif",
+      "png"
+    ]
+  },
+  "seed": 19
+}

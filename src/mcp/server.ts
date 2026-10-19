@@ -27,8 +27,12 @@ import { makeArtifact } from '../make.js';
 import { SKILL_FALLBACK, styleGuideMarkdown, stylesOverview } from '../guide.js';
 import { packageRoot } from '../paths.js';
 import { createNarrative, narrativeFailure } from '../narrative/create.js';
+import { narrativeBriefSchema } from '../narrative/brief.js';
+import { narrativeCapabilityReport } from '../narrative/capabilities.js';
 import { NarrativeError } from '../types/narrative.js';
 import { createNarrativeGallery } from '../narrative/gallery.js';
+import { getNarrativeReviewState, NARRATIVE_REVIEW_HELP, reviewNarrativeArtifact } from '../narrative/review.js';
+import { narrativeFeedbackSchema, reviewCriteriaSchema, reviewLevelsSchema, reviewerSchema } from '../types/narrative-review.js';
 
 const styleEnum = z.enum([
   'renaissance',
@@ -798,24 +802,91 @@ QUALITY BAR
     {
       title: 'Create a narrative GIF review pack',
       description:
-        'Creates a narrative GIF review pack for papercraft/editorial, brutalist/documentary or poster, vaporwave, galactic, and nature. Other eight styles still return STYLE_NOT_SUPPORTED_YET with the supported-style list; no generic renderer is substituted. Returns GIF/PNG/contact-sheet/manifest paths and separate integrity, style, legibility, narrative and visual-review levels.',
+        'Creates a narrative GIF review pack for any registered scene. Call beauty_get_capabilities first to inspect semantic primitive/aspect/locale fallback and allowed visual vocabularies; only renderer-declared values are accepted. Returns GIF/PNG/contact-sheet/manifest paths and separate integrity, style, legibility, narrative and visual-review levels.',
       inputSchema: {
-        style: styleEnum.describe('Supported narrative scenes: papercraft/editorial, brutalist/documentary or poster, vaporwave, galactic, nature. Other styles remain explicitly unsupported; must match brief.style.'),
-        brief: z.record(z.string(), z.unknown()).describe('The normalized narrative-gif JSON brief with 3–5 phases.'),
+        style: styleEnum.describe('Narrative scene; must match brief.style.'),
+        brief: narrativeBriefSchema.describe('Validated narrative-gif brief. Its field descriptions are shared with beauty narrative --help.'),
         output: z.string().max(260).optional().describe('Output directory; defaults to beauty-output/narrative/<style>-<brief-hash>.'),
+        artOnly: z.boolean().optional().describe('Also make a separate review pack without narrative title, phase labels or body copy.'),
       },
     },
-    async ({ style, brief, output }) => {
+    async ({ style, brief, output, artOnly }) => {
       try {
         if (brief.style !== style) {
           const result = narrativeFailure(new NarrativeError('INVALID_STATE', `style ${style} must match brief.style ${String(brief.style ?? '(missing)')}.`, 'Set the same style in both places.', 'style'));
           return { content: [{ type: 'text' as const, text: JSON.stringify(result) }], structuredContent: { ...result }, isError: true };
         }
-        const result = await createNarrative(brief, { outputDir: output });
+        const result = await createNarrative(brief, { outputDir: output, artOnly });
         return { content: [{ type: 'text' as const, text: JSON.stringify(result) }], structuredContent: { ...result } };
       } catch (error) {
         const result = narrativeFailure(error);
         return { content: [{ type: 'text' as const, text: JSON.stringify(result) }], structuredContent: { ...result }, isError: true };
+      }
+    },
+  );
+
+  server.registerTool(
+    'beauty_get_capabilities',
+    {
+      title: 'Inspect narrative capabilities',
+      description: 'Returns the machine-readable style × primitive × aspect × locale matrix, each cell reason, and valid visual kinds, states and actions. Use before composing a narrative brief.',
+      inputSchema: {
+        style: styleEnum.optional().describe('Optional narrative style filter.'),
+      },
+    },
+    async ({ style }) => {
+      const report = narrativeCapabilityReport(style ? { style } : {});
+      return {
+        content: [{ type: 'text' as const, text: JSON.stringify(report) }],
+        structuredContent: { ...report },
+      };
+    },
+  );
+
+  server.registerTool(
+    'beauty_review_artifact',
+    {
+      title: 'Record a narrative visual review',
+      description: `Stores reviewer, six visual-matrix verdicts, five evaluation levels, feedback and exact GIF/PNG/manifest hashes. Only an independent valid review can approve visual-review. Publication remains a human recommendation signal and never publishes automatically.\n\n${NARRATIVE_REVIEW_HELP}`,
+      inputSchema: {
+        pack: z.string().min(1).max(500).describe('Narrative manifest path, GIF/PNG pack path, or pack base path.'),
+        reviewer: reviewerSchema.describe('Human reviewer, or model reviewer with model id, version and criteria.'),
+        criteria: reviewCriteriaSchema.optional().describe('Six required visual matrix verdicts; omitted criteria remain not-evaluated.'),
+        quality_levels: reviewLevelsSchema.partial().optional().describe('Five-level review structure. Publication recommendation requires all five pass and a human reviewer.'),
+        feedback: z.array(narrativeFeedbackSchema).optional().describe('Structured frame-indexed problems and allowed adjustments.'),
+        frames: z.boolean().optional().describe('Extract independently decoded frames and native-pixel crops into <pack>.frames/.'),
+        note: z.string().max(4000).optional(),
+      },
+    },
+    async ({ pack, reviewer, criteria, quality_levels, feedback, frames, note }) => {
+      try {
+        const result = await reviewNarrativeArtifact({
+          manifestPath: pack, reviewer, criteria, qualityLevels: quality_levels,
+          feedback, extractFrames: frames, overallNote: note,
+        });
+        return {
+          content: [{ type: 'text' as const, text: JSON.stringify({ reviewPath: result.reviewPath, ...result.assessment }, null, 2) }],
+          structuredContent: { reviewPath: result.reviewPath, ...result.assessment },
+        };
+      } catch (error) {
+        return { content: [{ type: 'text' as const, text: `Review failed: ${(error as Error).message}` }], isError: true };
+      }
+    },
+  );
+
+  server.registerTool(
+    'beauty_get_review_state',
+    {
+      title: 'Check narrative review freshness',
+      description: 'Checks the latest ledger record against current GIF, PNG and normalized manifest hashes; returns none, pending, approved, revise or stale.',
+      inputSchema: { pack: z.string().min(1).max(500).describe('Narrative manifest, pack file or pack base path.') },
+    },
+    async ({ pack }) => {
+      try {
+        const state = await getNarrativeReviewState(pack);
+        return { content: [{ type: 'text' as const, text: JSON.stringify(state, null, 2) }], structuredContent: { ...state } };
+      } catch (error) {
+        return { content: [{ type: 'text' as const, text: `Review state failed: ${(error as Error).message}` }], isError: true };
       }
     },
   );

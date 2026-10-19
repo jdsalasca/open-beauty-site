@@ -28,6 +28,15 @@ export const DEFAULT_NARRATIVE_COMPOSITION: NarrativeComposition = {
   artHeight: 0.66,
 };
 
+/** Enlarged art column for the two renderers that draw identified semantic objects. */
+export const SEMANTIC_NARRATIVE_COMPOSITION: NarrativeComposition = {
+  textWidthRatio: 0.43,
+  artGapRatio: 0.02,
+  artWidthRatio: 0.45,
+  artY: 0.05,
+  artHeight: 0.90,
+};
+
 export const NARRATIVE_COMPOSITION_BY_STYLE: Readonly<Partial<Record<StyleSlug, NarrativeComposition>>> = {
   papercraft: { textWidthRatio: 0.57, artGapRatio: 0.02, artWidthRatio: 0.31, artY: 0.08, artHeight: 0.84 },
   brutalist: { textWidthRatio: 0.57, artGapRatio: 0.02, artWidthRatio: 0.31, artY: 0.08, artHeight: 0.84 },
@@ -66,7 +75,8 @@ export const NARRATIVE_CONTACT_MIDPOINT_STYLES: ReadonlySet<StyleSlug> = new Set
   'bestiary', 'brutalist', 'memphis', 'papercraft', 'psychedelic', 'ukiyoe',
 ]);
 
-export function narrativeCompositionFor(style: StyleSlug): NarrativeComposition {
+export function narrativeCompositionFor(style: StyleSlug, semantic = false): NarrativeComposition {
+  if (semantic && (style === 'papercraft' || style === 'brutalist')) return SEMANTIC_NARRATIVE_COMPOSITION;
   return NARRATIVE_COMPOSITION_BY_STYLE[style] ?? DEFAULT_NARRATIVE_COMPOSITION;
 }
 

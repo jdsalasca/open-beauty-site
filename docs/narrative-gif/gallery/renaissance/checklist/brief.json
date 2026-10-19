@@ -2,15 +2,96 @@
   "style": "renaissance",
   "kind": "narrative-gif",
   "locale": "es",
-  "audience": "Producto en Sprint Review",
-  "title": "Ruta para revisar el cierre",
-  "status": "in-review",
+  "audience": "Equipo que ordena fragmentos",
+  "title": "Cuenta del fresco",
+  "workflowStatus": "in-review",
+  "outcome": { "mode": "expected" },
+  "illustrative": true,
+  "badgePolicy": "none",
   "phases": [
-    { "id": "before", "label": "Antes", "text": "El cambio se leía sin una ruta de revisión.", "visual": { "kind": "checklist", "state": "unreviewed" } },
-    { "id": "change", "label": "Cambio", "text": "La propuesta ordena la lectura en pasos visibles.", "visual": { "kind": "checklist", "state": "flagged" } },
-    { "id": "result", "label": "Resultado esperado", "text": "El equipo podrá comprobar la secuencia antes del cierre.", "visual": { "kind": "checklist", "state": "review-ready" } }
+    {
+      "id": "primera-pieza",
+      "label": "Primera pieza",
+      "text": "Una pieza identificada entra en el registro del arco.",
+      "visual": {
+        "kind": "checklist",
+        "state": "unreviewed",
+        "semantic": {
+          "primitive": "counter",
+          "illustrative": true,
+          "entities": [
+            { "id": "conteo", "kind": "counter", "value": 1 },
+            { "id": "panel-a", "kind": "card", "label": "Panel A" },
+            { "id": "panel-b", "kind": "card", "label": "Panel B" },
+            { "id": "panel-c", "kind": "card", "label": "Panel C" },
+            { "id": "panel-d", "kind": "card", "label": "Panel D" }
+          ],
+          "relations": [{ "kind": "counts", "from": "conteo", "to": "panel-a" }],
+          "states": { "conteo": "value", "panel-a": "member", "panel-b": "default", "panel-c": "default", "panel-d": "default" },
+          "actions": [{ "entityId": "conteo", "type": "count-changes" }]
+        }
+      }
+    },
+    {
+      "id": "dos-piezas",
+      "label": "Dos piezas",
+      "text": "El segundo panel queda junto al primero; el conteo sigue los vínculos.",
+      "visual": {
+        "kind": "checklist",
+        "state": "flagged",
+        "semantic": {
+          "primitive": "counter",
+          "illustrative": true,
+          "entities": [
+            { "id": "conteo", "kind": "counter", "value": 2 },
+            { "id": "panel-a", "kind": "card", "label": "Panel A" },
+            { "id": "panel-b", "kind": "card", "label": "Panel B" },
+            { "id": "panel-c", "kind": "card", "label": "Panel C" },
+            { "id": "panel-d", "kind": "card", "label": "Panel D" }
+          ],
+          "relations": [
+            { "kind": "counts", "from": "conteo", "to": "panel-a" },
+            { "kind": "counts", "from": "conteo", "to": "panel-b" }
+          ],
+          "states": { "conteo": "increased", "panel-a": "member", "panel-b": "member", "panel-c": "default", "panel-d": "default" },
+          "actions": [{ "entityId": "conteo", "type": "count-changes" }, { "entityId": "panel-b", "type": "add-to-collection" }]
+        }
+      }
+    },
+    {
+      "id": "composicion-estable",
+      "label": "Composición estable",
+      "text": "Las cuatro piezas halladas ocupan sus lugares en una calma asimétrica.",
+      "visual": {
+        "kind": "checklist",
+        "state": "review-ready",
+        "semantic": {
+          "primitive": "counter",
+          "illustrative": true,
+          "entities": [
+            { "id": "conteo", "kind": "counter", "value": 4 },
+            { "id": "panel-a", "kind": "card", "label": "Panel A" },
+            { "id": "panel-b", "kind": "card", "label": "Panel B" },
+            { "id": "panel-c", "kind": "card", "label": "Panel C" },
+            { "id": "panel-d", "kind": "card", "label": "Panel D" }
+          ],
+          "relations": [
+            { "kind": "counts", "from": "conteo", "to": "panel-a" },
+            { "kind": "counts", "from": "conteo", "to": "panel-b" },
+            { "kind": "counts", "from": "conteo", "to": "panel-c" },
+            { "kind": "counts", "from": "conteo", "to": "panel-d" }
+          ],
+          "states": { "conteo": "increased", "panel-a": "member", "panel-b": "member", "panel-c": "member", "panel-d": "member" },
+          "actions": [
+            { "entityId": "conteo", "type": "count-changes" },
+            { "entityId": "panel-c", "type": "add-to-collection" },
+            { "entityId": "panel-d", "type": "add-to-collection" }
+          ]
+        }
+      }
+    }
   ],
-  "playback": { "minReadableHoldMs": 5000, "transitionMs": 650, "loop": true },
+  "playback": { "preset": "readable", "transitionMs": 650, "loop": true },
   "output": { "width": 1280, "height": 720, "formats": ["gif", "png"], "preset": "review-1280x720" },
-  "seed": 7
+  "seed": 41
 }

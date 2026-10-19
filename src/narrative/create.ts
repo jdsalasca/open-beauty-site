@@ -7,9 +7,11 @@ import { createNarrativeManifest } from './manifest.js';
 import { normalizeNarrativeBrief } from './brief.js';
 import { resolveNarrativeScene } from './scene.js';
 import { buildNarrativeTimeline } from './timeline.js';
+import { refreshNarrativeReviewMetadata } from './review.js';
 
 export interface CreateNarrativeOptions {
   outputDir?: string;
+  artOnly?: boolean;
   /** Injection seam for isolated renderer tests; production styles use the registry. */
   scene?: NarrativeScene;
 }
@@ -21,12 +23,12 @@ export interface NarrativeGenerationResult {
   paths: { gif: string; png: string; contactSheet: string; manifest: string };
   frames: number;
   durationMs: number;
-  diagnostics: Array<{ code: string; message: string; suggestion?: string }>;
+  diagnostics: Array<{ code: string; message: string; suggestion?: string; phaseIndex?: number; value?: string; style?: string; validAlternatives?: string[] }>;
   evaluation: NarrativeEvaluation;
 }
 
 export async function createNarrative(input: NarrativeBriefInput | unknown, options: CreateNarrativeOptions = {}): Promise<NarrativeGenerationResult> {
-  const { brief, hash } = normalizeNarrativeBrief(input);
+  const { brief, hash, outputHash } = normalizeNarrativeBrief(input);
   const scene = resolveNarrativeScene(brief.style, options.scene);
   if (!scene.supportsAspect(brief.output.width / brief.output.height)) {
     throw new NarrativeError(
@@ -38,8 +40,8 @@ export async function createNarrative(input: NarrativeBriefInput | unknown, opti
   }
   const layout = layoutNarrative(brief);
   const timeline = buildNarrativeTimeline(brief);
-  const outputDir = path.resolve(process.cwd(), options.outputDir ?? path.join('beauty-output', 'narrative', `${brief.style}-${hash.slice(0, 8)}`));
-  const encoded = await encodeNarrative(brief, hash, layout, timeline, scene, outputDir);
+  const outputDir = path.resolve(process.cwd(), options.outputDir ?? path.join('beauty-output', 'narrative', `${brief.style}-${outputHash.slice(0, 8)}`));
+  const encoded = await encodeNarrative(brief, outputHash, layout, timeline, scene, outputDir, options.artOnly ?? false);
   const evaluation = evaluateNarrative({ brief, layout, encoded, fontChecksPassed: true });
   const controls = [
     ...evaluation['technical-integrity'].controls,
@@ -47,9 +49,11 @@ export async function createNarrative(input: NarrativeBriefInput | unknown, opti
     ...evaluation['rendered-legibility'].controls,
     ...evaluation.narrative.controls,
   ];
-  const { path: manifestPath } = await createNarrativeManifest({ brief, briefHash: hash, encoded, controls, evaluation, outputDir });
+  const { path: manifestPath } = await createNarrativeManifest({ brief, briefHash: hash, encoded, timeline, controls, evaluation, outputDir });
+  await refreshNarrativeReviewMetadata(manifestPath);
   encoded.decoded.sampledFrames.length = 0;
   const diagnostics = [
+    ...timeline.warnings.map((warning) => ({ code: warning.code, message: warning.message })),
     ...layout.warnings.map((message) => ({ code: 'LAYOUT_WARNING', message })),
     ...(evaluation['style-conformance'].status === 'pending' ? [{ code: 'STYLE_REVIEW_PENDING', message: 'Source and pixel controls do not replace human review of the rendered style.' }] : []),
     ...(evaluation['rendered-legibility'].status === 'pending' ? [{ code: 'LEGIBILITY_REVIEW_PENDING', message: 'OCR and human reading at 640×360 have not been evaluated.' }] : []),
@@ -72,7 +76,7 @@ export async function createNarrative(input: NarrativeBriefInput | unknown, opti
 
 export function narrativeFailure(error: unknown): {
   ok: false;
-  diagnostics: Array<{ code: string; message: string; suggestion?: string }>;
+  diagnostics: Array<{ code: string; message: string; suggestion?: string; phaseIndex?: number; value?: string; style?: string; validAlternatives?: string[] }>;
   evaluation: NarrativeEvaluation;
 } {
   const narrativeError = error instanceof NarrativeError
@@ -80,7 +84,12 @@ export function narrativeFailure(error: unknown): {
     : new NarrativeError('INVALID_STATE', error instanceof Error ? error.message : String(error), 'Correct the brief and retry.');
   return {
     ok: false,
-    diagnostics: [{ code: narrativeError.code, message: narrativeError.message, suggestion: narrativeError.suggestion }],
+    diagnostics: [{
+      code: narrativeError.code,
+      message: narrativeError.message,
+      suggestion: narrativeError.suggestion,
+      ...narrativeError.details,
+    }],
     evaluation: pendingNarrativeEvaluation(narrativeError.message, narrativeError.code === 'STYLE_NOT_SUPPORTED_YET'),
   };
 }

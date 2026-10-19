@@ -1,0 +1,1551 @@
+{
+  "schemaVersion": 2,
+  "commit": "168194e754e50f69395a6101252afb6a3122acff",
+  "brief": {
+    "style": "isotype",
+    "kind": "narrative-gif",
+    "locale": "es",
+    "audience": "Producto en Sprint Review",
+    "title": "Ruta para revisar el cierre",
+    "workflowStatus": "in-review",
+    "outcome": {
+      "mode": "expected"
+    },
+    "illustrative": true,
+    "badgePolicy": "none",
+    "phases": [
+      {
+        "id": "before",
+        "label": "Antes",
+        "text": "Seis pictogramas ilustrativos componen la lista de revisión.",
+        "visual": {
+          "kind": "checklist",
+          "state": "unreviewed",
+          "semantic": {
+            "primitive": "card-collection",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "roster",
+                "kind": "collection",
+                "label": "Conjunto ilustrativo",
+                "illustrative": true
+              },
+              {
+                "id": "unit-1",
+                "kind": "card",
+                "illustrative": true
+              },
+              {
+                "id": "unit-2",
+                "kind": "card",
+                "illustrative": true
+              },
+              {
+                "id": "unit-3",
+                "kind": "card",
+                "illustrative": true
+              },
+              {
+                "id": "unit-4",
+                "kind": "card",
+                "illustrative": true
+              },
+              {
+                "id": "unit-5",
+                "kind": "card",
+                "illustrative": true
+              },
+              {
+                "id": "unit-6",
+                "kind": "card",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "member-of",
+                "from": "unit-1",
+                "to": "roster"
+              },
+              {
+                "kind": "member-of",
+                "from": "unit-2",
+                "to": "roster"
+              },
+              {
+                "kind": "member-of",
+                "from": "unit-3",
+                "to": "roster"
+              },
+              {
+                "kind": "member-of",
+                "from": "unit-4",
+                "to": "roster"
+              },
+              {
+                "kind": "member-of",
+                "from": "unit-5",
+                "to": "roster"
+              },
+              {
+                "kind": "member-of",
+                "from": "unit-6",
+                "to": "roster"
+              }
+            ],
+            "states": {
+              "roster": "open",
+              "unit-1": "member",
+              "unit-2": "member",
+              "unit-3": "member",
+              "unit-4": "member",
+              "unit-5": "member",
+              "unit-6": "default"
+            },
+            "actions": []
+          }
+        }
+      },
+      {
+        "id": "change",
+        "label": "Cambio",
+        "text": "Una unidad se marca sin ocultar las demás.",
+        "visual": {
+          "kind": "checklist",
+          "state": "flagged",
+          "semantic": {
+            "primitive": "card-collection",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "roster",
+                "kind": "collection",
+                "label": "Conjunto ilustrativo",
+                "illustrative": true
+              },
+              {
+                "id": "unit-1",
+                "kind": "card",
+                "illustrative": true
+              },
+              {
+                "id": "unit-2",
+                "kind": "card",
+                "illustrative": true
+              },
+              {
+                "id": "unit-3",
+                "kind": "card",
+                "illustrative": true
+              },
+              {
+                "id": "unit-4",
+                "kind": "card",
+                "illustrative": true
+              },
+              {
+                "id": "unit-5",
+                "kind": "card",
+                "illustrative": true
+              },
+              {
+                "id": "unit-6",
+                "kind": "card",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "member-of",
+                "from": "unit-1",
+                "to": "roster"
+              },
+              {
+                "kind": "member-of",
+                "from": "unit-2",
+                "to": "roster"
+              },
+              {
+                "kind": "member-of",
+                "from": "unit-3",
+                "to": "roster"
+              },
+              {
+                "kind": "member-of",
+                "from": "unit-4",
+                "to": "roster"
+              },
+              {
+                "kind": "member-of",
+                "from": "unit-5",
+                "to": "roster"
+              },
+              {
+                "kind": "member-of",
+                "from": "unit-6",
+                "to": "roster"
+              }
+            ],
+            "states": {
+              "roster": "open",
+              "unit-1": "member",
+              "unit-2": "member",
+              "unit-3": "member",
+              "unit-4": "member",
+              "unit-5": "member",
+              "unit-6": "selected"
+            },
+            "actions": []
+          }
+        }
+      },
+      {
+        "id": "result",
+        "label": "Resultado esperado",
+        "text": "La unidad marcada ocupa una zona separada y sigue dentro del total.",
+        "visual": {
+          "kind": "checklist",
+          "state": "review-ready",
+          "semantic": {
+            "primitive": "card-collection",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "roster",
+                "kind": "collection",
+                "label": "Conjunto ilustrativo",
+                "illustrative": true
+              },
+              {
+                "id": "unit-1",
+                "kind": "card",
+                "illustrative": true
+              },
+              {
+                "id": "unit-2",
+                "kind": "card",
+                "illustrative": true
+              },
+              {
+                "id": "unit-3",
+                "kind": "card",
+                "illustrative": true
+              },
+              {
+                "id": "unit-4",
+                "kind": "card",
+                "illustrative": true
+              },
+              {
+                "id": "unit-5",
+                "kind": "card",
+                "illustrative": true
+              },
+              {
+                "id": "unit-6",
+                "kind": "card",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "member-of",
+                "from": "unit-1",
+                "to": "roster"
+              },
+              {
+                "kind": "member-of",
+                "from": "unit-2",
+                "to": "roster"
+              },
+              {
+                "kind": "member-of",
+                "from": "unit-3",
+                "to": "roster"
+              },
+              {
+                "kind": "member-of",
+                "from": "unit-4",
+                "to": "roster"
+              },
+              {
+                "kind": "member-of",
+                "from": "unit-5",
+                "to": "roster"
+              },
+              {
+                "kind": "member-of",
+                "from": "unit-6",
+                "to": "roster"
+              }
+            ],
+            "states": {
+              "roster": "counted",
+              "unit-1": "member",
+              "unit-2": "member",
+              "unit-3": "member",
+              "unit-4": "member",
+              "unit-5": "member",
+              "unit-6": "pending"
+            },
+            "actions": []
+          }
+        }
+      }
+    ],
+    "playback": {
+      "preset": "readable",
+      "minReadableHoldMs": 5000,
+      "transitionMs": 650,
+      "loop": true,
+      "totalDurationBudgetMs": 30000
+    },
+    "output": {
+      "width": 1280,
+      "height": 720,
+      "formats": [
+        "gif",
+        "png"
+      ],
+      "preset": "review-1280x720"
+    },
+    "seed": 7,
+    "status": "in-review"
+  },
+  "briefSha256": "7915960d8ff4b40515ff359527f004452d27bf7bacf4a59c3c70aa7ace55f9b9",
+  "style": "isotype",
+  "subfamily": null,
+  "workflowStatus": "in-review",
+  "outcome": {
+    "mode": "expected"
+  },
+  "evidenceClassification": "illustrative",
+  "illustrative": true,
+  "artOnly": false,
+  "seed": 7,
+  "renderer": {
+    "narrative": "narrative-core/0.2.0",
+    "canvas": "@napi-rs/canvas@1.0.11",
+    "gif": "gifenc@1.0.3",
+    "scene": "isotype-countable-semantic-pictograms/2.0.0"
+  },
+  "fonts": {
+    "bundleVersion": "repo-bundled-ofl-1",
+    "roles": {
+      "display": {
+        "family": "Jost",
+        "weight": 500
+      },
+      "reading": {
+        "family": "IBM Plex Sans",
+        "weight": 400
+      },
+      "label": {
+        "family": "IBM Plex Sans",
+        "weight": 500
+      },
+      "figure": {
+        "family": "Jost",
+        "weight": 500
+      },
+      "annotation": {
+        "family": "IBM Plex Sans",
+        "weight": 400
+      }
+    }
+  },
+  "dimensions": {
+    "width": 1280,
+    "height": 720
+  },
+  "formats": [
+    "gif",
+    "png"
+  ],
+  "decoded": {
+    "width": 1280,
+    "height": 720,
+    "frameCount": 33,
+    "delaysMs": [
+      80,
+      5000,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      80,
+      5000,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      80,
+      5000,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70
+    ],
+    "durationMs": 17190,
+    "loopCount": 0,
+    "integrity": true
+  },
+  "ffprobe": {
+    "available": true,
+    "passed": true,
+    "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode."
+  },
+  "bytes": {
+    "gif": 906645,
+    "png": 67161,
+    "contactSheet": 82278
+  },
+  "hashes": {
+    "briefSha256": "7915960d8ff4b40515ff359527f004452d27bf7bacf4a59c3c70aa7ace55f9b9",
+    "gifSha256": "f0a8dd8ec18f90057d732856394e46362942780004daea5183bdbadf421350f3",
+    "pngSha256": "8dd0b1a36700466156091ea29ec42832a5d419383371fcd7dc8a38d47a1aee89",
+    "contactSheetSha256": "d820e558fc068971aa99aa87df2cf51ce7c055e9df3a36cb4c14aebd0d1e1ce1"
+  },
+  "files": {
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6298d032\\docs\\narrative-gif\\gallery\\isotype\\checklist\\ruta-para-revisar-el-cierre-9cfda0c7.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6298d032\\docs\\narrative-gif\\gallery\\isotype\\checklist\\ruta-para-revisar-el-cierre-9cfda0c7.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6298d032\\docs\\narrative-gif\\gallery\\isotype\\checklist\\ruta-para-revisar-el-cierre-9cfda0c7-contact-sheet.png"
+  },
+  "controls": [
+    {
+      "name": "gif-integrity",
+      "passed": true,
+      "detail": "Independent LZW decode and GIF trailer passed.",
+      "source": "decoded"
+    },
+    {
+      "name": "dimensions",
+      "passed": true,
+      "detail": "decoded 1280×720; requested 1280×720",
+      "source": "decoded"
+    },
+    {
+      "name": "frame-count",
+      "passed": true,
+      "detail": "33 decoded frame(s)",
+      "source": "decoded"
+    },
+    {
+      "name": "duration",
+      "passed": true,
+      "detail": "17190ms decoded; holds exclude transitions",
+      "source": "decoded"
+    },
+    {
+      "name": "loop",
+      "passed": true,
+      "detail": "repeat=0; result-to-before bridge is explicit",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-holds",
+      "passed": true,
+      "detail": "before 5000/5000ms, change 5000/5000ms, result 5000/5000ms",
+      "source": "decoded"
+    },
+    {
+      "name": "ffprobe-crosscheck",
+      "passed": true,
+      "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode.",
+      "source": "decoded"
+    },
+    {
+      "name": "files",
+      "passed": true,
+      "detail": "GIF 906645B · PNG 67161B · contact 82278B",
+      "source": "decoded"
+    },
+    {
+      "name": "scene-renderer-registered",
+      "passed": true,
+      "detail": "renderer isotype/isotype-countable-semantic-pictograms/2.0.0 exists; visual style likeness remains a separate review",
+      "source": "source"
+    },
+    {
+      "name": "type-system",
+      "passed": true,
+      "detail": "style typeSystem tokens are attached to raster role registry",
+      "source": "source"
+    },
+    {
+      "name": "narrative-subfamily",
+      "passed": true,
+      "detail": "isotype/default selects an explicit narrative art direction",
+      "source": "source"
+    },
+    {
+      "name": "font-registration-and-glyphs",
+      "passed": true,
+      "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "distinct-frames",
+      "passed": true,
+      "detail": "19 unique composited frame(s); a format-valid static GIF does not pass",
+      "source": "pixels"
+    },
+    {
+      "name": "palette-loss",
+      "passed": true,
+      "detail": "41 colors; mean channel loss 0.031, max 6; sampled 33 frames",
+      "source": "pixels"
+    },
+    {
+      "name": "title-complete",
+      "passed": true,
+      "detail": "Ruta para revisar / el cierre",
+      "source": "source"
+    },
+    {
+      "name": "phase-before-label-complete",
+      "passed": true,
+      "detail": "Antes",
+      "source": "source"
+    },
+    {
+      "name": "phase-before-text-complete",
+      "passed": true,
+      "detail": "Seis pictogramas / ilustrativos componen / la lista de revisión.",
+      "source": "source"
+    },
+    {
+      "name": "phase-change-label-complete",
+      "passed": true,
+      "detail": "Cambio",
+      "source": "source"
+    },
+    {
+      "name": "phase-change-text-complete",
+      "passed": true,
+      "detail": "Una unidad se marca / sin ocultar las demás.",
+      "source": "source"
+    },
+    {
+      "name": "phase-result-label-complete",
+      "passed": true,
+      "detail": "Resultado esperado",
+      "source": "source"
+    },
+    {
+      "name": "phase-result-text-complete",
+      "passed": true,
+      "detail": "La unidad marcada / ocupa una zona / separada y sigue / dentro del total.",
+      "source": "source"
+    },
+    {
+      "name": "registered-fonts",
+      "passed": true,
+      "detail": "all role faces and Spanish glyphs rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "review-size-thresholds",
+      "passed": true,
+      "detail": "title 69px; phase body >=36px; label >=24px",
+      "source": "source"
+    },
+    {
+      "name": "640x360-effective-size",
+      "passed": true,
+      "detail": "title 34.5px; body min 27.0px (requires >=20px); label min 15.0px",
+      "source": "source"
+    },
+    {
+      "name": "composition-balance",
+      "passed": true,
+      "detail": "proxy; 8×4 decoded-pixel grid against #F2EBDD: empty cells 34.4%, text-column vertical fill 100.0%, art/object area outside the text column 25.0%, largest empty rectangle 18.8%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: before · pausa: empty 34.4%, text fill 100.0%, art 25.0%, largest empty 18.8% | before → change · punto medio de transición: empty 43.8%, text fill 75.0%, art 25.0%, largest empty 21.9% | change · pausa: empty 43.8%, text fill 75.0%, art 25.0%, largest empty 21.9% | change → result · punto medio de transición: empty 25.0%, text fill 100.0%, art 31.3%, largest empty 12.5% | result · pausa: empty 25.0%, text fill 100.0%, art 31.3%, largest empty 12.5% | result → before · unión del ciclo: empty 34.4%, text fill 100.0%, art 25.0%, largest empty 18.8%",
+      "source": "pixels"
+    },
+    {
+      "name": "contrast",
+      "passed": true,
+      "detail": "rendered text colors: ink 14.37:1; label 5.10:1 (not an OCR or per-pixel text measurement)",
+      "source": "source"
+    },
+    {
+      "name": "safe-zone-and-collisions",
+      "passed": true,
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+      "source": "source"
+    },
+    {
+      "name": "stable-reading-holds",
+      "passed": true,
+      "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-count-and-copy",
+      "passed": true,
+      "detail": "3 complete phases; all copy retained",
+      "source": "source"
+    },
+    {
+      "name": "shared-object-identity",
+      "passed": true,
+      "detail": "One scene object instance is created and passed to every phase frame.",
+      "source": "source"
+    },
+    {
+      "name": "visual-state-change",
+      "passed": true,
+      "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+      "source": "pixels"
+    },
+    {
+      "name": "workflow-outcome-separation",
+      "passed": true,
+      "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+      "source": "source"
+    },
+    {
+      "name": "outcome-evidence",
+      "passed": true,
+      "detail": "Expected outcome; no benefit measurement is claimed.",
+      "source": "source"
+    },
+    {
+      "name": "result-follows-outcome",
+      "passed": true,
+      "detail": "outcome=expected; final label=\"Resultado esperado\"",
+      "source": "source"
+    },
+    {
+      "name": "semantic-illustrative-data",
+      "passed": true,
+      "detail": "brief illustrative=true; semantic phase flags=true,true,true",
+      "source": "source"
+    },
+    {
+      "name": "semantic-object-midpoint:before → change · punto medio de transición",
+      "passed": true,
+      "detail": "decoded object diff 0.5%; changed-state entities: unit-6; unit-1 member→member 0.0%, unit-2 member→member 0.0%, unit-3 member→member 0.0%, unit-4 member→member 0.0%, unit-5 member→member 3.2%, unit-6 default→selected 6.9%, roster open→open 0.3%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:change → result · punto medio de transición",
+      "passed": true,
+      "detail": "decoded object diff 3.3%; changed-state entities: unit-6, roster; unit-1 member→member 0.0%, unit-2 member→member 0.0%, unit-3 member→member 0.0%, unit-4 member→member 0.0%, unit-5 member→member 6.4%, unit-6 selected→pending 24.9%, roster open→counted 2.9%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:result → before · unión del ciclo",
+      "passed": true,
+      "detail": "decoded object diff 3.0%; changed-state entities: unit-6, roster; unit-1 member→member 0.0%, unit-2 member→member 0.0%, unit-3 member→member 0.0%, unit-4 member→member 0.0%, unit-5 member→member 0.0%, unit-6 pending→default 16.4%, roster counted→open 3.0%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:before → change hold",
+      "passed": true,
+      "detail": "decoded object diff 0.5%; changed-state entities: unit-6; unit-1 member→member 0.0%, unit-2 member→member 0.0%, unit-3 member→member 0.0%, unit-4 member→member 0.0%, unit-5 member→member 3.2%, unit-6 default→selected 6.9%, roster open→open 0.3%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:change → result hold",
+      "passed": true,
+      "detail": "decoded object diff 3.1%; changed-state entities: unit-6, roster; unit-1 member→member 0.0%, unit-2 member→member 0.0%, unit-3 member→member 0.0%, unit-4 member→member 0.0%, unit-5 member→member 6.4%, unit-6 selected→pending 9.8%, roster open→counted 3.1%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:result → before loop join",
+      "passed": true,
+      "detail": "decoded object diff 2.9%; changed-state entities: unit-6, roster; unit-1 member→member 0.0%, unit-2 member→member 0.0%, unit-3 member→member 0.0%, unit-4 member→member 0.0%, unit-5 member→member 3.2%, unit-6 pending→default 14.4%, roster counted→open 2.9%",
+      "source": "decoded"
+    }
+  ],
+  "evaluation": {
+    "technical-integrity": {
+      "status": "pass",
+      "controls": [
+        {
+          "name": "gif-integrity",
+          "passed": true,
+          "detail": "Independent LZW decode and GIF trailer passed.",
+          "source": "decoded"
+        },
+        {
+          "name": "dimensions",
+          "passed": true,
+          "detail": "decoded 1280×720; requested 1280×720",
+          "source": "decoded"
+        },
+        {
+          "name": "frame-count",
+          "passed": true,
+          "detail": "33 decoded frame(s)",
+          "source": "decoded"
+        },
+        {
+          "name": "duration",
+          "passed": true,
+          "detail": "17190ms decoded; holds exclude transitions",
+          "source": "decoded"
+        },
+        {
+          "name": "loop",
+          "passed": true,
+          "detail": "repeat=0; result-to-before bridge is explicit",
+          "source": "decoded"
+        },
+        {
+          "name": "phase-holds",
+          "passed": true,
+          "detail": "before 5000/5000ms, change 5000/5000ms, result 5000/5000ms",
+          "source": "decoded"
+        },
+        {
+          "name": "ffprobe-crosscheck",
+          "passed": true,
+          "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode.",
+          "source": "decoded"
+        },
+        {
+          "name": "files",
+          "passed": true,
+          "detail": "GIF 906645B · PNG 67161B · contact 82278B",
+          "source": "decoded"
+        }
+      ]
+    },
+    "style-conformance": {
+      "status": "pending",
+      "sourceStatus": "pass",
+      "pixelStatus": "pass",
+      "controls": [
+        {
+          "name": "scene-renderer-registered",
+          "passed": true,
+          "detail": "renderer isotype/isotype-countable-semantic-pictograms/2.0.0 exists; visual style likeness remains a separate review",
+          "source": "source"
+        },
+        {
+          "name": "type-system",
+          "passed": true,
+          "detail": "style typeSystem tokens are attached to raster role registry",
+          "source": "source"
+        },
+        {
+          "name": "narrative-subfamily",
+          "passed": true,
+          "detail": "isotype/default selects an explicit narrative art direction",
+          "source": "source"
+        },
+        {
+          "name": "font-registration-and-glyphs",
+          "passed": true,
+          "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "distinct-frames",
+          "passed": true,
+          "detail": "19 unique composited frame(s); a format-valid static GIF does not pass",
+          "source": "pixels"
+        },
+        {
+          "name": "palette-loss",
+          "passed": true,
+          "detail": "41 colors; mean channel loss 0.031, max 6; sampled 33 frames",
+          "source": "pixels"
+        }
+      ],
+      "note": "Source checks identify renderer/font tokens; pixel checks measure frame change and palette loss. Neither substitutes for visual review."
+    },
+    "rendered-legibility": {
+      "status": "pending",
+      "controls": [
+        {
+          "name": "title-complete",
+          "passed": true,
+          "detail": "Ruta para revisar / el cierre",
+          "source": "source"
+        },
+        {
+          "name": "phase-before-label-complete",
+          "passed": true,
+          "detail": "Antes",
+          "source": "source"
+        },
+        {
+          "name": "phase-before-text-complete",
+          "passed": true,
+          "detail": "Seis pictogramas / ilustrativos componen / la lista de revisión.",
+          "source": "source"
+        },
+        {
+          "name": "phase-change-label-complete",
+          "passed": true,
+          "detail": "Cambio",
+          "source": "source"
+        },
+        {
+          "name": "phase-change-text-complete",
+          "passed": true,
+          "detail": "Una unidad se marca / sin ocultar las demás.",
+          "source": "source"
+        },
+        {
+          "name": "phase-result-label-complete",
+          "passed": true,
+          "detail": "Resultado esperado",
+          "source": "source"
+        },
+        {
+          "name": "phase-result-text-complete",
+          "passed": true,
+          "detail": "La unidad marcada / ocupa una zona / separada y sigue / dentro del total.",
+          "source": "source"
+        },
+        {
+          "name": "registered-fonts",
+          "passed": true,
+          "detail": "all role faces and Spanish glyphs rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "review-size-thresholds",
+          "passed": true,
+          "detail": "title 69px; phase body >=36px; label >=24px",
+          "source": "source"
+        },
+        {
+          "name": "640x360-effective-size",
+          "passed": true,
+          "detail": "title 34.5px; body min 27.0px (requires >=20px); label min 15.0px",
+          "source": "source"
+        },
+        {
+          "name": "composition-balance",
+          "passed": true,
+          "detail": "proxy; 8×4 decoded-pixel grid against #F2EBDD: empty cells 34.4%, text-column vertical fill 100.0%, art/object area outside the text column 25.0%, largest empty rectangle 18.8%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: before · pausa: empty 34.4%, text fill 100.0%, art 25.0%, largest empty 18.8% | before → change · punto medio de transición: empty 43.8%, text fill 75.0%, art 25.0%, largest empty 21.9% | change · pausa: empty 43.8%, text fill 75.0%, art 25.0%, largest empty 21.9% | change → result · punto medio de transición: empty 25.0%, text fill 100.0%, art 31.3%, largest empty 12.5% | result · pausa: empty 25.0%, text fill 100.0%, art 31.3%, largest empty 12.5% | result → before · unión del ciclo: empty 34.4%, text fill 100.0%, art 25.0%, largest empty 18.8%",
+          "source": "pixels"
+        },
+        {
+          "name": "contrast",
+          "passed": true,
+          "detail": "rendered text colors: ink 14.37:1; label 5.10:1 (not an OCR or per-pixel text measurement)",
+          "source": "source"
+        },
+        {
+          "name": "safe-zone-and-collisions",
+          "passed": true,
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+          "source": "source"
+        },
+        {
+          "name": "stable-reading-holds",
+          "passed": true,
+          "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+          "source": "decoded"
+        }
+      ],
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
+    },
+    "narrative": {
+      "status": "pending",
+      "controls": [
+        {
+          "name": "phase-count-and-copy",
+          "passed": true,
+          "detail": "3 complete phases; all copy retained",
+          "source": "source"
+        },
+        {
+          "name": "shared-object-identity",
+          "passed": true,
+          "detail": "One scene object instance is created and passed to every phase frame.",
+          "source": "source"
+        },
+        {
+          "name": "visual-state-change",
+          "passed": true,
+          "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+          "source": "pixels"
+        },
+        {
+          "name": "workflow-outcome-separation",
+          "passed": true,
+          "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+          "source": "source"
+        },
+        {
+          "name": "outcome-evidence",
+          "passed": true,
+          "detail": "Expected outcome; no benefit measurement is claimed.",
+          "source": "source"
+        },
+        {
+          "name": "result-follows-outcome",
+          "passed": true,
+          "detail": "outcome=expected; final label=\"Resultado esperado\"",
+          "source": "source"
+        },
+        {
+          "name": "semantic-illustrative-data",
+          "passed": true,
+          "detail": "brief illustrative=true; semantic phase flags=true,true,true",
+          "source": "source"
+        },
+        {
+          "name": "semantic-object-midpoint:before → change · punto medio de transición",
+          "passed": true,
+          "detail": "decoded object diff 0.5%; changed-state entities: unit-6; unit-1 member→member 0.0%, unit-2 member→member 0.0%, unit-3 member→member 0.0%, unit-4 member→member 0.0%, unit-5 member→member 3.2%, unit-6 default→selected 6.9%, roster open→open 0.3%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:change → result · punto medio de transición",
+          "passed": true,
+          "detail": "decoded object diff 3.3%; changed-state entities: unit-6, roster; unit-1 member→member 0.0%, unit-2 member→member 0.0%, unit-3 member→member 0.0%, unit-4 member→member 0.0%, unit-5 member→member 6.4%, unit-6 selected→pending 24.9%, roster open→counted 2.9%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:result → before · unión del ciclo",
+          "passed": true,
+          "detail": "decoded object diff 3.0%; changed-state entities: unit-6, roster; unit-1 member→member 0.0%, unit-2 member→member 0.0%, unit-3 member→member 0.0%, unit-4 member→member 0.0%, unit-5 member→member 0.0%, unit-6 pending→default 16.4%, roster counted→open 3.0%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:before → change hold",
+          "passed": true,
+          "detail": "decoded object diff 0.5%; changed-state entities: unit-6; unit-1 member→member 0.0%, unit-2 member→member 0.0%, unit-3 member→member 0.0%, unit-4 member→member 0.0%, unit-5 member→member 3.2%, unit-6 default→selected 6.9%, roster open→open 0.3%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:change → result hold",
+          "passed": true,
+          "detail": "decoded object diff 3.1%; changed-state entities: unit-6, roster; unit-1 member→member 0.0%, unit-2 member→member 0.0%, unit-3 member→member 0.0%, unit-4 member→member 0.0%, unit-5 member→member 6.4%, unit-6 selected→pending 9.8%, roster open→counted 3.1%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:result → before loop join",
+          "passed": true,
+          "detail": "decoded object diff 2.9%; changed-state entities: unit-6, roster; unit-1 member→member 0.0%, unit-2 member→member 0.0%, unit-3 member→member 0.0%, unit-4 member→member 0.0%, unit-5 member→member 3.2%, unit-6 pending→default 14.4%, roster counted→open 2.9%",
+          "source": "decoded"
+        }
+      ],
+      "note": "Automated checks separate work status from expected/observed outcome and confirm required evidence fields; causal meaning and evidence scope still need human review."
+    },
+    "visual-review": {
+      "status": "pending",
+      "criteria": [
+        "identity at 200px thumbnail",
+        "full text and contrast at 640×360",
+        "style material in native frame",
+        "same object and causal change across phases",
+        "result faithful to outcome and evidence scope",
+        "deliberate loop restart"
+      ],
+      "evidence": []
+    },
+    "publicationRecommendation": "none"
+  },
+  "phaseCaptures": [
+    {
+      "phaseId": "before",
+      "labels": [
+        "before · inicio",
+        "before · pausa",
+        "before → change · punto medio de transición",
+        "before · salida",
+        "reinicio del loop"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6298d032\\docs\\narrative-gif\\gallery\\isotype\\checklist\\ruta-para-revisar-el-cierre-9cfda0c7-contact-sheet.png"
+    },
+    {
+      "phaseId": "change",
+      "labels": [
+        "change · inicio",
+        "change · pausa",
+        "change → result · punto medio de transición",
+        "change · salida"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6298d032\\docs\\narrative-gif\\gallery\\isotype\\checklist\\ruta-para-revisar-el-cierre-9cfda0c7-contact-sheet.png"
+    },
+    {
+      "phaseId": "result",
+      "labels": [
+        "result · inicio",
+        "result · pausa",
+        "result → before · unión del ciclo",
+        "result · salida"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6298d032\\docs\\narrative-gif\\gallery\\isotype\\checklist\\ruta-para-revisar-el-cierre-9cfda0c7-contact-sheet.png"
+    }
+  ],
+  "semanticObjectCaptures": [
+    {
+      "label": "before · pausa",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 0,
+      "frameIndex": 1,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "unit-1",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 177.75,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-2",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 228.29399999999998,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-3",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 278.83799999999997,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-4",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 329.382,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-5",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 379.926,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-6",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 430.46999999999997,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "roster",
+          "bounds": {
+            "x": 680.32,
+            "y": 168.84,
+            "width": 495.36,
+            "height": 466.56
+          }
+        }
+      ]
+    },
+    {
+      "label": "before → change · punto medio de transición",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 0,
+      "frameIndex": 5,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "unit-1",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 177.75,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-2",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 228.29399999999998,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-3",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 278.83799999999997,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-4",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 329.382,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-5",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 379.926,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-6",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 430.46999999999997,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "roster",
+          "bounds": {
+            "x": 680.32,
+            "y": 168.84,
+            "width": 495.36,
+            "height": 466.56
+          }
+        }
+      ]
+    },
+    {
+      "label": "change · pausa",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 1,
+      "frameIndex": 12,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "unit-1",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 177.75,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-2",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 228.29399999999998,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-3",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 278.83799999999997,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-4",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 329.382,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-5",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 379.926,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-6",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 430.46999999999997,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "roster",
+          "bounds": {
+            "x": 680.32,
+            "y": 168.84,
+            "width": 495.36,
+            "height": 466.56
+          }
+        }
+      ]
+    },
+    {
+      "label": "change → result · punto medio de transición",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 1,
+      "frameIndex": 16,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "unit-1",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 177.75,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-2",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 228.29399999999998,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-3",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 278.83799999999997,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-4",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 329.382,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-5",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 379.926,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-6",
+          "bounds": {
+            "x": 771.49,
+            "y": 521.19,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "roster",
+          "bounds": {
+            "x": 680.32,
+            "y": 168.84,
+            "width": 495.36,
+            "height": 466.56
+          }
+        }
+      ]
+    },
+    {
+      "label": "result · pausa",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 2,
+      "frameIndex": 23,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "unit-1",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 177.75,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-2",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 228.29399999999998,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-3",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 278.83799999999997,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-4",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 329.382,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-5",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 379.926,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-6",
+          "bounds": {
+            "x": 771.49,
+            "y": 521.19,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "roster",
+          "bounds": {
+            "x": 680.32,
+            "y": 168.84,
+            "width": 495.36,
+            "height": 466.56
+          }
+        }
+      ]
+    },
+    {
+      "label": "result → before · unión del ciclo",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 2,
+      "frameIndex": 27,
+      "kind": "loop-bridge",
+      "regions": [
+        {
+          "entityId": "unit-1",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 177.75,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-2",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 228.29399999999998,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-3",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 278.83799999999997,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-4",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 329.382,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-5",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 379.926,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "unit-6",
+          "bounds": {
+            "x": 702.3699999999999,
+            "y": 430.46999999999997,
+            "width": 82.62,
+            "height": 92.34
+          }
+        },
+        {
+          "entityId": "roster",
+          "bounds": {
+            "x": 680.32,
+            "y": 168.84,
+            "width": 495.36,
+            "height": 466.56
+          }
+        }
+      ]
+    }
+  ],
+  "compositionByFrame": [
+    {
+      "label": "before · pausa",
+      "metrics": {
+        "emptyCellRatio": 0.34375,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.25,
+        "largestEmptyRectangleRatio": 0.1875
+      }
+    },
+    {
+      "label": "before → change · punto medio de transición",
+      "metrics": {
+        "emptyCellRatio": 0.4375,
+        "textColumnFillRatio": 0.75,
+        "objectAreaRatio": 0.25,
+        "largestEmptyRectangleRatio": 0.21875
+      }
+    },
+    {
+      "label": "change · pausa",
+      "metrics": {
+        "emptyCellRatio": 0.4375,
+        "textColumnFillRatio": 0.75,
+        "objectAreaRatio": 0.25,
+        "largestEmptyRectangleRatio": 0.21875
+      }
+    },
+    {
+      "label": "change → result · punto medio de transición",
+      "metrics": {
+        "emptyCellRatio": 0.25,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.3125,
+        "largestEmptyRectangleRatio": 0.125
+      }
+    },
+    {
+      "label": "result · pausa",
+      "metrics": {
+        "emptyCellRatio": 0.25,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.3125,
+        "largestEmptyRectangleRatio": 0.125
+      }
+    },
+    {
+      "label": "result → before · unión del ciclo",
+      "metrics": {
+        "emptyCellRatio": 0.34375,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.25,
+        "largestEmptyRectangleRatio": 0.1875
+      }
+    }
+  ],
+  "palette": {
+    "colors": 41,
+    "meanAbsoluteChannelError": 0.031,
+    "maximumChannelError": 6,
+    "sampledFrames": 33
+  },
+  "phaseHoldsVerified": [
+    {
+      "phaseId": "before",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    },
+    {
+      "phaseId": "change",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    },
+    {
+      "phaseId": "result",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    }
+  ],
+  "timing": {
+    "preset": "readable",
+    "holdsRequestedMs": 15000,
+    "holdsDecodedMs": 15000,
+    "transitionsMs": 1300,
+    "loopBridgeMs": 650,
+    "entryMs": 240,
+    "totalDecodedMs": 17190,
+    "totalDurationBudgetMs": 30000,
+    "phaseHolds": [
+      {
+        "phaseId": "before",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      },
+      {
+        "phaseId": "change",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      },
+      {
+        "phaseId": "result",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      }
+    ],
+    "warnings": []
+  },
+  "resourceEstimate": {
+    "pixelFrames": 30412800,
+    "maxPixelFrames": 96000000,
+    "memoryBytes": 107634688,
+    "maxMemoryBytes": 268435456
+  },
+  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed."
+}

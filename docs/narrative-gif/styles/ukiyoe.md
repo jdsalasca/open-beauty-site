@@ -1,30 +1,35 @@
-# Ukiyo-e / recorrido costero
+# Ukiyo-e · viaje costero en planos
 
-## Intención
+## Intención visual
 
-Planos de papel, cielo vacío, horizonte fijo y azul Prusia. El mismo bote viaja desde una medida sin señal hasta un punto de revisión; la ruta explica el cambio. Una cartela en español identifica el punto, sin glifos japoneses de relleno.
+Un campo de impresión en azul Prusia conserva cielo abierto, horizonte y referencia costera en coordenadas fijas. Nubes de tinta, cordillera distante y capas de mar ocupan el rectángulo con planos distintos. Un barco de escala protagonista lleva el cambio; el barco secundario del checklist queda bajo las etiquetas de estación. La cartela usa texto latino legible y no glifos de relleno.
 
 ## Composiciones
 
-- `comparison`: bote, punto de referencia fijo y recorrido punteado que se completa entre Antes, Cambio y Resultado esperado/observado.
-- `checklist`: conserva horizonte y bote; tres marcas de costa aparecen en orden para mostrar el proceso.
-- La variación por seed se limita a desplazamientos pequeños de ola y bote. No cambia la historia ni la posición del horizonte.
+- **comparison · Travesía interrumpida:** emplea `file-download`. El archivo/bote pasa de pendiente a 55% de avance, falla allí y reintenta hasta 72% sin llegar a la referencia. El horizonte, el faro y la cartela no cambian de sitio. La pausa final mantiene explícito que la llegada sigue pendiente.
+- **checklist · Estaciones de la costa:** emplea `card-collection`. Las estaciones A, B y C conservan identidad sobre la costa; la pertenencia cambia de cero a una y luego tres estaciones. El faro y el horizonte permanecen fijos. El bote secundario navega debajo del nombre A/B/C para dejar el texto del objeto despejado.
+- Ambas composiciones usan `badgePolicy: none` porque el sello de estado no forma parte de esta estampa. `outcome: expected` y el carácter ilustrativo quedan en el manifiesto; no se presenta el ejemplo como evidencia observada.
 
-## Tipografía y límites
+## Tipografía, tamaño y balance
 
-- Display: Shippori Mincho B1. Lectura, etiqueta y anotación latina: Zen Kaku Gothic New. Se usa copy latino; no se simulan textos japoneses.
-- El copy principal se envuelve en una columna de 43% del lienzo; el campo de ilustración empieza en 50%. Fuente muy larga o fase que no cabe produce `TEXT_OVERFLOW` con sugerencia; no se recorta.
-- Admite 16:9 y 1:1. 9:16 devuelve `UNSUPPORTED_ASPECT`: esta disposición necesita copy a la izquierda y recorrido horizontal a la derecha.
-- Campo visual de arte: 47% del ancho × 94% del alto = **44,18%** del cuadro. Es la huella del campo, no una segmentación de los píxeles de las figuras.
-- En 1280×720: título 76 px, cuerpo mínimo 36 px, etiqueta mínima 24 px. Manifiesto: tamaño efectivo en tarjeta 640×360: título 38 px, cuerpo 20 px, etiqueta 14 px.
+- Display: Shippori Mincho B1. Copy, estaciones, faro y cartela: Zen Kaku Gothic New. Todo el texto representado es latino.
+- A 1280×720 el título es de 76px, el cuerpo supera 36px y las etiquetas superan 24px. Las palabras internas de la cartela se dibujan a 28px nativos (14px efectivos a 640×360).
+- El campo costero mide 47% × 94% del lienzo, equivalente a 44,18% de área. El balance se mide sobre GIF decodificado: rectángulo vacío máximo **6,3%** en comparison y **9,4%** en checklist; ambas pasan el límite existente de 22%. No se alteró el umbral.
+- La matriz solo declara `supported` las celdas 16:9 de `file-download` y `card-collection` para español e inglés. Los otros aspectos y primitivas conservan su fallback o estado anterior hasta tener render y decodificación probados.
 
-## Rechaza
+## Evidencia reproducible
 
-Símbolos japoneses sin significado, sakura de relleno, olas sobre el copy, cambio de horizonte entre fases y recorridos que no conectan bote con punto de referencia.
+- Escena y regiones semánticas: [`ukiyoe.ts`](../../../src/narrative/scenes/ukiyoe.ts).
+- Prueba bilingüe de render, cambio decodificado, balance, holds art-only y controles negativos: [`narrative-style-semantic.test.ts`](../../../test/narrative-style-semantic.test.ts).
+- Briefs, GIF, PNG, contacto y manifiesto: [`comparison`](../gallery/ukiyoe/comparison/) y [`checklist`](../gallery/ukiyoe/checklist/).
+- GIF y hoja de contacto sin copy narrativo: [`comparison`](../art-only/ukiyoe/comparison/) y [`checklist`](../art-only/ukiyoe/checklist/).
+- Iteraciones observadas, métricas y pendientes: [`REVIEW-renaissance-ukiyoe.md`](../gallery/REVIEW-renaissance-ukiyoe.md).
 
-## Evidencia y reproducción
+Reproducción:
 
-- Escena y prueba: `src/narrative/scenes/ukiyoe.ts`, `test/narrative-stage-c.test.ts`.
-- Brief, GIF, PNG, contacto y manifiesto de cada variante: `docs/narrative-gif/gallery/ukiyoe/comparison/` y `docs/narrative-gif/gallery/ukiyoe/checklist/`.
-- En cada contacto se etiquetan inicio, pausa, punto medio de transición, salida y reinicio del loop. Los manifiestos registran tres holds decodificados de 5.000 ms; revisión visual y recomendación de publicación siguen pendientes.
-- Reproducir: `pnpm dev narrative --style ukiyoe --brief docs/narrative-gif/gallery/ukiyoe/comparison/brief.json --out docs/narrative-gif/gallery/ukiyoe/comparison` (cambiar `comparison` por `checklist`).
+```powershell
+pnpm dev narrative --style ukiyoe --brief docs/narrative-gif/gallery/ukiyoe/comparison/brief.json --out docs/narrative-gif/gallery/ukiyoe/comparison
+pnpm dev narrative --style ukiyoe --art-only --brief docs/narrative-gif/gallery/ukiyoe/comparison/brief.json --out docs/narrative-gif/art-only/ukiyoe/comparison
+```
+
+El manifiesto conserva `visual-review: pending` y `publicationRecommendation: none`: la inspección de estas rondas no sustituye una revisión independiente.

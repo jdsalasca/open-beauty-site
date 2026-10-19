@@ -53,13 +53,17 @@ test('brief normalizes defaults, hashes canonically and keeps the final state ho
   assert.equal(first.brief.phases[2]!.label, 'Resultado esperado');
   const observed = brief({ status: 'done', phases: [
     ...(raw.phases as unknown[]).slice(0, 2),
-    { id: 'result', label: 'Resultado observado', text: 'Se verificó el cambio.', visual: { kind: 'document', state: 'verified' } },
-  ] });
+    { id: 'result', label: 'Resultado observado', text: 'Se verificó el cambio.', visual: { kind: 'document', state: 'reviewed' } },
+  ], illustrative: false, outcome: {
+    mode: 'observed',
+    evidenceRefs: [{ id: 'test-evidence-1', label: 'Acta de verificación' }],
+    scopeNote: 'No se afirma despliegue, medición ni impacto en usuarios.',
+  } });
   assert.equal(normalizeNarrativeBrief(observed).brief.phases[2]!.label, 'Resultado observado');
   const englishExpected = brief({ locale: 'en', phases: [
     { id: 'before', label: 'Before', text: 'The measure arrived without a signal.', visual: { kind: 'document', state: 'unreviewed' } },
     { id: 'change', label: 'Change', text: 'A review signal is now visible.', visual: { kind: 'document', state: 'flagged' } },
-    { id: 'result', label: 'Expected result', text: 'Review before release.', visual: { kind: 'document', state: 'ready' } },
+    { id: 'result', label: 'Expected result', text: 'Review before release.', visual: { kind: 'document', state: 'review-ready' } },
   ] });
   assert.equal(normalizeNarrativeBrief(englishExpected).brief.phases[2]!.label, 'Expected result');
   const open = brief({ status: 'open' });
@@ -71,12 +75,14 @@ test('brief failures use actionable typed codes and millisecond units', () => {
   empty.phases[1].text = '  ';
   codeFrom(() => normalizeNarrativeBrief(empty), 'EMPTY_PHASE');
   codeFrom(() => normalizeNarrativeBrief({ ...brief(), status: 'resolved' }), 'INVALID_STATE');
-  const wrongDone = brief({ status: 'done' });
-  codeFrom(() => normalizeNarrativeBrief(wrongDone), 'INVALID_STATE');
+  const doneExpected = normalizeNarrativeBrief(brief({ status: 'done' })).brief;
+  assert.equal(doneExpected.workflowStatus, 'done');
+  assert.equal(doneExpected.outcome.mode, 'expected');
+  assert.equal(doneExpected.phases.at(-1)?.label, 'Resultado esperado');
   codeFrom(() => normalizeNarrativeBrief(brief({ playback: { transitionMs: -10 } })), 'BAD_DURATION');
   codeFrom(() => normalizeNarrativeBrief(brief({ playback: { minReadableHoldMs: 5, transitionMs: 650, loop: true } })), 'BAD_DURATION');
-  codeFrom(() => normalizeNarrativeBrief(brief({ playback: { minReadableHoldMs: Number.POSITIVE_INFINITY } })), 'NOT_FINITE');
-  codeFrom(() => normalizeNarrativeBrief(brief({ playback: { minReadableHoldMs: Number.NaN } })), 'NOT_FINITE');
+  codeFrom(() => normalizeNarrativeBrief(brief({ playback: { minReadableHoldMs: Number.POSITIVE_INFINITY } })), 'BAD_DURATION');
+  codeFrom(() => normalizeNarrativeBrief(brief({ playback: { minReadableHoldMs: Number.NaN } })), 'BAD_DURATION');
   codeFrom(() => normalizeNarrativeBrief(brief({ output: { width: 100, height: 56, formats: ['gif', 'png'] } })), 'IMPOSSIBLE_SIZE');
   codeFrom(() => normalizeNarrativeBrief(brief({ output: { width: 2880, height: 1620, formats: ['gif', 'png'] } })), 'RESOURCE_LIMIT');
   codeFrom(() => normalizeNarrativeBrief(brief({ output: { width: 640, height: 400, formats: ['gif', 'png'] } })), 'UNSUPPORTED_ASPECT');
@@ -257,8 +263,8 @@ test('timeline gives each phase a separate readable hold and transitions at 12fp
   const memoryLimited = normalizeNarrativeBrief(brief({
     phases: [
       ...sourcePhases,
-      { id: 'detail', label: 'Detalle', text: 'Sigue el cambio.', visual: { kind: 'document', state: 'detail' } },
-      { id: 'close', label: 'Resultado esperado', text: 'Pendiente de verificar.', visual: { kind: 'document', state: 'pending' } },
+      { id: 'detail', label: 'Detalle', text: 'Sigue el cambio.', visual: { kind: 'document', state: 'flagged' } },
+      { id: 'close', label: 'Resultado esperado', text: 'Pendiente de verificar.', visual: { kind: 'document', state: 'unreviewed' } },
     ],
     output: { preset: 'square-1080', width: 2048, height: 2048, formats: ['gif', 'png'] },
     playback: { minReadableHoldMs: 5_000, transitionMs: 10, loop: true },

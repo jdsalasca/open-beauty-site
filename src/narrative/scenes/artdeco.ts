@@ -2,6 +2,8 @@ import { canvasFor } from '../../canvas.js';
 import { getStyle } from '../../styles/presets.js';
 import type { NarrativeRenderContext, NarrativeRect, NarrativeScene } from '../../types/narrative.js';
 import { cubicBezierEase, drawRule } from './common.js';
+import { sceneVocabulary } from '../vocabulary.js';
+import { sceneText } from '../i18n.js';
 import { clamp, compositionFor, drawRoleText, mix, phasePosition, type StageCComposition } from './stage-c-common.js';
 
 interface DecoAxis {
@@ -115,13 +117,14 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
   if (panel.composition === 'comparison') drawComparison(ctx, box, panel, state, colors);
   else drawChecklist(ctx, box, panel, state, colors);
   // A single off-axis caption breaks the centered portal; no rays sit behind copy.
-  drawRoleText(ctx, 'REVISIÓN', box.x + box.width * 0.08, box.y + box.height * 0.96, context.fonts.effective.annotation, 24, colors.ink);
+  drawRoleText(ctx, sceneText('artdeco', brief.locale, 'caption'), box.x + box.width * 0.08, box.y + box.height * 0.96, context.fonts.effective.annotation, 24, colors.ink);
   return ctx.getImageData(0, 0, brief.output.width, brief.output.height).data;
 }
 
 export const artdecoNarrativeScene: NarrativeScene = {
   style: 'artdeco',
   version: 'artdeco-lacquer-axis/1.0.0',
+  vocabulary: sceneVocabulary('phase-order-fallback'),
   supportsAspect(aspect) {
     return [16 / 9, 1, 9 / 16].some((ratio) => Math.abs(aspect - ratio) / ratio < 0.015);
   },

@@ -18,5 +18,6 @@ export { BeautyError } from './page/common.js';
 export * from './narrative/index.js';
 export { createNarrativeGallery } from './narrative/gallery.js';
 export type { NarrativeGalleryOptions, NarrativeGalleryResult } from './narrative/gallery.js';
+export * from './types/narrative-review.js';
 
 export const VERSION = '0.1.0';
