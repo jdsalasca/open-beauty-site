@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "commit": "127a6323dca9346b78e771caeefc3337ea04117a",
+  "commit": "aaa4322afd9cf89b6ef3a8c7a1ae542fcef5ed31",
   "brief": {
     "style": "ukiyoe",
     "kind": "narrative-gif",
@@ -145,20 +145,20 @@
     "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 745595,
-    "png": 48396,
-    "contactSheet": 59173
+    "gif": 849096,
+    "png": 58661,
+    "contactSheet": 68213
   },
   "hashes": {
     "briefSha256": "42f06804e36695e91880cac4222ede38aa5159c31181059a3e44b962bdc287f0",
-    "gifSha256": "02b6dd3055c62c8bff55e90fe0ee7c5e7c71b6b94769b60b29422c354132d14b",
-    "pngSha256": "2e608a27e70d813c1ca4f049dfc2c4636c6f4f86ce51e64ecafe0bb98d0b5769",
-    "contactSheetSha256": "780b09b5f661c9be40650ec1e69d7a48ae56baf578c3ccda02f0e6bf5810bea3"
+    "gifSha256": "658dca34802204d9da28a401681dade6d15f5a0660e2c8d5b535182d70794128",
+    "pngSha256": "9cdd30d2d66eed1bd8a3e77f0e1291e307549a864bd8ec062a7336c9f5dc64c3",
+    "contactSheetSha256": "f33d4a298bc97863d76f88be9580aa01fb4735bb41143b64070fcc93ec0c2c22"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6b1942f1\\docs\\narrative-gif\\gallery\\ukiyoe\\comparison\\senal-42f06804.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6b1942f1\\docs\\narrative-gif\\gallery\\ukiyoe\\comparison\\senal-42f06804.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6b1942f1\\docs\\narrative-gif\\gallery\\ukiyoe\\comparison\\senal-42f06804-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\ukiyoe\\comparison\\senal-42f06804.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\ukiyoe\\comparison\\senal-42f06804.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\ukiyoe\\comparison\\senal-42f06804-contact-sheet.png"
   },
   "controls": [
     {
@@ -206,7 +206,7 @@
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 745595B · PNG 48396B · contact 59173B",
+      "detail": "GIF 849096B · PNG 58661B · contact 68213B",
       "source": "decoded"
     },
     {
@@ -242,7 +242,7 @@
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "51 colors; mean channel loss 0.023, max 10; sampled 33 frames",
+      "detail": "56 colors; mean channel loss 0.022, max 13; sampled 33 frames",
       "source": "pixels"
     },
     {
@@ -260,7 +260,7 @@
     {
       "name": "phase-before-text-complete",
       "passed": true,
-      "detail": "La medida puede quedar sin / señal.",
+      "detail": "La medida puede / quedar sin señal.",
       "source": "source"
     },
     {
@@ -272,7 +272,7 @@
     {
       "name": "phase-change-text-complete",
       "passed": true,
-      "detail": "La guía marca qué requiere / revisión.",
+      "detail": "La guía marca qué / requiere revisión.",
       "source": "source"
     },
     {
@@ -284,7 +284,7 @@
     {
       "name": "phase-result-text-complete",
       "passed": true,
-      "detail": "Revisarla antes del cierre de la / sprint.",
+      "detail": "Revisarla antes del / cierre de la sprint.",
       "source": "source"
     },
     {
@@ -296,14 +296,21 @@
     {
       "name": "review-size-thresholds",
       "passed": true,
-      "detail": "title 76px; phase body >=36px; label >=24px",
+      "detail": "title 104px; phase body >=36px; label >=24px",
       "source": "source"
     },
     {
       "name": "640x360-effective-size",
       "passed": true,
-      "detail": "title 38.0px; body min 20.0px; label min 14.0px",
+      "detail": "title 52.0px; body min 28.0px (requires >=20px); label min 15.0px",
       "source": "source"
+    },
+    {
+      "name": "composition-balance",
+      "passed": false,
+      "severity": "warning",
+      "detail": "WARN · revise; 8×4 decoded-pixel grid against #F3E9D2: empty cells 28.1%, text-column vertical fill 100.0%, art/object area outside the text column 34.4%, largest empty rectangle 25.0%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+      "source": "pixels"
     },
     {
       "name": "contrast",
@@ -314,7 +321,7 @@
     {
       "name": "safe-zone-and-collisions",
       "passed": true,
-      "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
       "source": "source"
     },
     {
@@ -397,7 +404,7 @@
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 745595B · PNG 48396B · contact 59173B",
+          "detail": "GIF 849096B · PNG 58661B · contact 68213B",
           "source": "decoded"
         }
       ]
@@ -440,14 +447,14 @@
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "51 colors; mean channel loss 0.023, max 10; sampled 33 frames",
+          "detail": "56 colors; mean channel loss 0.022, max 13; sampled 33 frames",
           "source": "pixels"
         }
       ],
       "note": "Source checks identify renderer/font tokens; pixel checks measure frame change and palette loss. Neither substitutes for visual review."
     },
     "rendered-legibility": {
-      "status": "pending",
+      "status": "revise",
       "controls": [
         {
           "name": "title-complete",
@@ -464,7 +471,7 @@
         {
           "name": "phase-before-text-complete",
           "passed": true,
-          "detail": "La medida puede quedar sin / señal.",
+          "detail": "La medida puede / quedar sin señal.",
           "source": "source"
         },
         {
@@ -476,7 +483,7 @@
         {
           "name": "phase-change-text-complete",
           "passed": true,
-          "detail": "La guía marca qué requiere / revisión.",
+          "detail": "La guía marca qué / requiere revisión.",
           "source": "source"
         },
         {
@@ -488,7 +495,7 @@
         {
           "name": "phase-result-text-complete",
           "passed": true,
-          "detail": "Revisarla antes del cierre de la / sprint.",
+          "detail": "Revisarla antes del / cierre de la sprint.",
           "source": "source"
         },
         {
@@ -500,14 +507,21 @@
         {
           "name": "review-size-thresholds",
           "passed": true,
-          "detail": "title 76px; phase body >=36px; label >=24px",
+          "detail": "title 104px; phase body >=36px; label >=24px",
           "source": "source"
         },
         {
           "name": "640x360-effective-size",
           "passed": true,
-          "detail": "title 38.0px; body min 20.0px; label min 14.0px",
+          "detail": "title 52.0px; body min 28.0px (requires >=20px); label min 15.0px",
           "source": "source"
+        },
+        {
+          "name": "composition-balance",
+          "passed": false,
+          "severity": "warning",
+          "detail": "WARN · revise; 8×4 decoded-pixel grid against #F3E9D2: empty cells 28.1%, text-column vertical fill 100.0%, art/object area outside the text column 34.4%, largest empty rectangle 25.0%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+          "source": "pixels"
         },
         {
           "name": "contrast",
@@ -518,7 +532,7 @@
         {
           "name": "safe-zone-and-collisions",
           "passed": true,
-          "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
           "source": "source"
         },
         {
@@ -528,7 +542,7 @@
           "source": "decoded"
         }
       ],
-      "note": "Layout, contrast and decoded holds are measured; OCR and human reading at card size remain pending."
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
     },
     "narrative": {
       "status": "pending",
@@ -584,7 +598,7 @@
         "before · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6b1942f1\\docs\\narrative-gif\\gallery\\ukiyoe\\comparison\\senal-42f06804-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\ukiyoe\\comparison\\senal-42f06804-contact-sheet.png"
     },
     {
       "phaseId": "change",
@@ -594,7 +608,7 @@
         "change · transición media",
         "change · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6b1942f1\\docs\\narrative-gif\\gallery\\ukiyoe\\comparison\\senal-42f06804-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\ukiyoe\\comparison\\senal-42f06804-contact-sheet.png"
     },
     {
       "phaseId": "result",
@@ -604,13 +618,13 @@
         "result · transición media",
         "result · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6b1942f1\\docs\\narrative-gif\\gallery\\ukiyoe\\comparison\\senal-42f06804-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\ukiyoe\\comparison\\senal-42f06804-contact-sheet.png"
     }
   ],
   "palette": {
-    "colors": 51,
-    "meanAbsoluteChannelError": 0.023,
-    "maximumChannelError": 10,
+    "colors": 56,
+    "meanAbsoluteChannelError": 0.022,
+    "maximumChannelError": 13,
     "sampledFrames": 33
   },
   "phaseHoldsVerified": [

@@ -48,12 +48,14 @@ export async function createNarrative(input: NarrativeBriefInput | unknown, opti
     ...evaluation.narrative.controls,
   ];
   const { path: manifestPath } = await createNarrativeManifest({ brief, briefHash: hash, encoded, controls, evaluation, outputDir });
+  encoded.decoded.sampledFrames.length = 0;
   const diagnostics = [
     ...layout.warnings.map((message) => ({ code: 'LAYOUT_WARNING', message })),
     ...(evaluation['style-conformance'].status === 'pending' ? [{ code: 'STYLE_REVIEW_PENDING', message: 'Source and pixel controls do not replace human review of the rendered style.' }] : []),
     ...(evaluation['rendered-legibility'].status === 'pending' ? [{ code: 'LEGIBILITY_REVIEW_PENDING', message: 'OCR and human reading at 640×360 have not been evaluated.' }] : []),
     ...(evaluation.narrative.status === 'pending' ? [{ code: 'NARRATIVE_REVIEW_PENDING', message: 'Automated checks cannot decide whether the visual change proves a causal story.' }] : []),
-    ...controls.filter((control) => !control.passed).map((control) => ({ code: 'CONTROL_FAILED', message: `${control.name}: ${control.detail}` })),
+    ...controls.filter((control) => !control.passed && control.severity === 'warning').map((control) => ({ code: 'COMPOSITION_REVISE', message: `${control.name}: ${control.detail}` })),
+    ...controls.filter((control) => !control.passed && control.severity !== 'warning').map((control) => ({ code: 'CONTROL_FAILED', message: `${control.name}: ${control.detail}` })),
     { code: 'PUBLICATION_REVIEW_REQUIRED', message: 'No automatic recommendation to publish is made.' },
   ];
   return {

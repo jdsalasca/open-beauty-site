@@ -13,6 +13,12 @@ export interface VerifiedGifFrame {
   transparent: boolean;
 }
 
+export interface VerifiedGifPixelFrame {
+  index: number;
+  /** Full composited RGB raster decoded from the exported GIF. */
+  rgb: Uint8Array;
+}
+
 export interface VerifiedGif {
   width: number;
   height: number;
@@ -21,6 +27,7 @@ export interface VerifiedGif {
   durationMs: number;
   loopCount: number | null;
   integrity: { valid: boolean; errors: string[] };
+  sampledFrames: VerifiedGifPixelFrame[];
 }
 
 export interface FfprobeCrosscheck {
@@ -97,7 +104,7 @@ function readSubBlocks(data: Uint8Array, start: number): { bytes: Uint8Array; ne
 }
 
 /** Independent LZW decoder used for integrity checks on the encoded file. */
-function decodeLzw(data: Uint8Array, minimumCodeSize: number, expectedPixels: number): number {
+function decodeLzw(data: Uint8Array, minimumCodeSize: number, expectedPixels: number, keepPixels: boolean): { count: number; pixels?: Uint8Array } {
   if (minimumCodeSize < 2 || minimumCodeSize > 8) throw new Error(`invalid GIF LZW minimum code size ${minimumCodeSize}`);
   const clear = 1 << minimumCodeSize;
   const end = clear + 1;
@@ -106,6 +113,7 @@ function decodeLzw(data: Uint8Array, minimumCodeSize: number, expectedPixels: nu
   let previous: Uint8Array | undefined;
   let bitOffset = 0;
   let outputPixels = 0;
+  const pixels = keepPixels ? new Uint8Array(expectedPixels) : undefined;
   const reset = () => {
     dictionary = Array.from({ length: clear }, (_, index) => Uint8Array.of(index));
     dictionary.push(new Uint8Array(), new Uint8Array());
@@ -143,8 +151,10 @@ function decodeLzw(data: Uint8Array, minimumCodeSize: number, expectedPixels: nu
     } else {
       throw new Error(`invalid GIF LZW code ${code}`);
     }
+    const writeAt = outputPixels;
     outputPixels += word.length;
     if (outputPixels > expectedPixels) throw new Error(`GIF LZW produced more than ${expectedPixels} pixels`);
+    pixels?.set(word, writeAt);
     if (previous) {
       const entry = new Uint8Array(previous.length + 1);
       entry.set(previous);
@@ -155,10 +165,19 @@ function decodeLzw(data: Uint8Array, minimumCodeSize: number, expectedPixels: nu
     previous = word;
   }
   if (!ended) throw new Error('GIF LZW end code is missing');
-  return outputPixels;
+  return { count: outputPixels, ...(pixels ? { pixels } : {}) };
 }
 
-export function verifyNarrativeGif(data: Uint8Array): VerifiedGif {
+function paletteColor(palette: Uint8Array, index: number, errors: string[], frameIndex: number): [number, number, number] {
+  const offset = index * 3;
+  if (offset + 2 >= palette.length) {
+    errors.push(`frame ${frameIndex} references color index ${index} outside its palette`);
+    return [0, 0, 0];
+  }
+  return [palette[offset]!, palette[offset + 1]!, palette[offset + 2]!];
+}
+
+export function verifyNarrativeGif(data: Uint8Array, sampleFrameIndices: number[] = []): VerifiedGif {
   const errors: string[] = [];
   if (data.length < 13) throw new Error('GIF is shorter than its logical screen descriptor');
   const signature = String.fromCharCode(...data.subarray(0, 6));
@@ -169,17 +188,31 @@ export function verifyNarrativeGif(data: Uint8Array): VerifiedGif {
   const packed = data[10]!;
   let offset = 13;
   let globalPaletteSize = 0;
+  let globalPalette: Uint8Array<ArrayBufferLike> = new Uint8Array();
   if (packed & 0x80) {
     globalPaletteSize = 3 * 2 ** ((packed & 0x07) + 1);
+    globalPalette = data.subarray(offset, offset + globalPaletteSize);
     offset += globalPaletteSize;
   }
   if (offset > data.length) throw new Error('truncated GIF global palette');
   let delayMs = 0;
   let disposal = 0;
   let transparent = false;
+  let transparentIndex: number | null = null;
   let loopCount: number | null = null;
   let trailerFound = false;
   const frames: VerifiedGifFrame[] = [];
+  const sampleSet = new Set(sampleFrameIndices);
+  const sampledFrames: VerifiedGifPixelFrame[] = [];
+  const screenPixels = sampleSet.size ? new Uint8Array(width * height * 3) : undefined;
+  const background = globalPalette.length && data[11]! * 3 + 2 < globalPalette.length
+    ? paletteColor(globalPalette, data[11]!, errors, -1)
+    : [0, 0, 0] as [number, number, number];
+  if (screenPixels) {
+    for (let offset = 0; offset < screenPixels.length; offset += 3) screenPixels.set(background, offset);
+  }
+  let previousFrame: VerifiedGifFrame | undefined;
+  let previousRestore: Uint8Array | undefined;
 
   while (offset < data.length) {
     const marker = data[offset]!;
@@ -199,6 +232,7 @@ export function verifyNarrativeGif(data: Uint8Array): VerifiedGif {
         disposal = (flags >> 2) & 7;
         delayMs = u16(data, offset + 2) * 10;
         transparent = (flags & 1) !== 0;
+        transparentIndex = transparent ? data[offset + 4]! : null;
         if (data[offset + 5] !== 0) throw new Error('invalid GIF graphic control terminator');
         offset += 6;
         continue;
@@ -226,8 +260,10 @@ export function verifyNarrativeGif(data: Uint8Array): VerifiedGif {
     const descriptor = data[offset + 9]!;
     offset += 10;
     let localPaletteSize = 0;
+    let localPalette: Uint8Array<ArrayBufferLike> = new Uint8Array();
     if (descriptor & 0x80) {
       localPaletteSize = 3 * 2 ** ((descriptor & 0x07) + 1);
+      localPalette = data.subarray(offset, offset + localPaletteSize);
       offset += localPaletteSize;
     }
     if (offset > data.length) throw new Error('truncated GIF local palette');
@@ -238,12 +274,41 @@ export function verifyNarrativeGif(data: Uint8Array): VerifiedGif {
     if (descriptor & 0x40) errors.push('interlaced GIF frame was not expected');
     if (left + frameWidth > width || top + frameHeight > height) errors.push(`frame ${frames.length} exceeds the logical screen`);
     const expectedPixels = frameWidth * frameHeight;
-    const decodedPixels = decodeLzw(blocks.bytes, minimumCodeSize, expectedPixels);
-    if (decodedPixels !== expectedPixels) errors.push(`frame ${frames.length} decoded ${decodedPixels}/${expectedPixels} pixels`);
-    frames.push({ left, top, width: frameWidth, height: frameHeight, delayMs, disposal, transparent });
+    if (screenPixels && previousFrame) {
+      if (previousFrame.disposal === 2) {
+        for (let y = previousFrame.top; y < previousFrame.top + previousFrame.height; y += 1) {
+          for (let x = previousFrame.left; x < previousFrame.left + previousFrame.width; x += 1) {
+            screenPixels.set(background, (y * width + x) * 3);
+          }
+        }
+      } else if (previousFrame.disposal === 3 && previousRestore) {
+        screenPixels.set(previousRestore);
+      }
+    }
+    const restore = screenPixels && disposal === 3 ? screenPixels.slice() : undefined;
+    const decoded = decodeLzw(blocks.bytes, minimumCodeSize, expectedPixels, Boolean(screenPixels));
+    if (decoded.count !== expectedPixels) errors.push(`frame ${frames.length} decoded ${decoded.count}/${expectedPixels} pixels`);
+    const frameIndex = frames.length;
+    const frame: VerifiedGifFrame = { left, top, width: frameWidth, height: frameHeight, delayMs, disposal, transparent };
+    if (screenPixels && decoded.pixels) {
+      const colorTable = localPalette.length ? localPalette : globalPalette;
+      for (let pixel = 0; pixel < decoded.pixels.length; pixel += 1) {
+        const index = decoded.pixels[pixel]!;
+        if (transparent && index === transparentIndex) continue;
+        const x = left + pixel % frameWidth;
+        const y = top + Math.floor(pixel / frameWidth);
+        if (x < 0 || x >= width || y < 0 || y >= height) continue;
+        screenPixels.set(paletteColor(colorTable, index, errors, frameIndex), (y * width + x) * 3);
+      }
+      if (sampleSet.has(frameIndex)) sampledFrames.push({ index: frameIndex, rgb: screenPixels.slice() });
+    }
+    frames.push(frame);
+    previousFrame = frame;
+    previousRestore = restore;
     delayMs = 0;
     disposal = 0;
     transparent = false;
+    transparentIndex = null;
     offset = blocks.next;
   }
   if (!trailerFound) errors.push('GIF trailer is missing');
@@ -258,5 +323,6 @@ export function verifyNarrativeGif(data: Uint8Array): VerifiedGif {
     durationMs: delaysMs.reduce((sum, delay) => sum + delay, 0),
     loopCount,
     integrity: { valid: errors.length === 0, errors },
+    sampledFrames,
   };
 }

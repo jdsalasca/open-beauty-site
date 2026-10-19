@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "commit": "d78a1360e9619fa326d6ce513e19eaac3b08ec4e",
+  "commit": "aaa4322afd9cf89b6ef3a8c7a1ae542fcef5ed31",
   "brief": {
     "style": "brutalist",
     "subfamily": "documentary",
@@ -155,20 +155,20 @@
     "detail": "ffprobe 1280×720; 42 frames; 17940ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 1269490,
-    "png": 65509,
-    "contactSheet": 75662
+    "gif": 1407379,
+    "png": 73056,
+    "contactSheet": 85319
   },
   "hashes": {
     "briefSha256": "903609f3a1411e8935e901ecaffae18de1c42c7f1c6edcdaa6778168ceb42ad3",
-    "gifSha256": "442501c9fd367c0491e37ff26c635091b97f4c64ebf7497beb708c7d2808eaac",
-    "pngSha256": "2d6968f4ef8334898490f162010d7cf6668c937a41ef52181ab60c8b7a8436ec",
-    "contactSheetSha256": "b633e4056d7112ebaac1182c3cd73434262605b79ff0c0ae9fa72fba81818dc7"
+    "gifSha256": "7b45a20e8eaa9fc8a51b097f9f1bda1d564a99bc7833447aba4062a265a4e239",
+    "pngSha256": "3b5fd9e383f908a95135edd3a48ed9fe46b7e0407088a3dba6d00ec7888b272b",
+    "contactSheetSha256": "c02f106f228a564b69451b321df87c9bcec33fab44871b4c35592aabbcaf007d"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\brutalist\\observacion-registrada\\observacion-registrada-903609f3.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\brutalist\\observacion-registrada\\observacion-registrada-903609f3.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\brutalist\\observacion-registrada\\observacion-registrada-903609f3-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\brutalist\\observacion-registrada\\observacion-registrada-903609f3.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\brutalist\\observacion-registrada\\observacion-registrada-903609f3.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\brutalist\\observacion-registrada\\observacion-registrada-903609f3-contact-sheet.png"
   },
   "controls": [
     {
@@ -216,7 +216,7 @@
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 1269490B · PNG 65509B · contact 75662B",
+      "detail": "GIF 1407379B · PNG 73056B · contact 85319B",
       "source": "decoded"
     },
     {
@@ -252,7 +252,7 @@
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "67 colors; mean channel loss 0.036, max 9; sampled 42 frames",
+      "detail": "69 colors; mean channel loss 0.033, max 9; sampled 42 frames",
       "source": "pixels"
     },
     {
@@ -270,7 +270,7 @@
     {
       "name": "phase-before-text-complete",
       "passed": true,
-      "detail": "La ficha no indicaba dónde / revisar la advertencia.",
+      "detail": "La ficha no indicaba / dónde revisar la / advertencia.",
       "source": "source"
     },
     {
@@ -282,7 +282,7 @@
     {
       "name": "phase-change-text-complete",
       "passed": true,
-      "detail": "La observación queda señalada / en el mismo documento.",
+      "detail": "La observación queda / señalada en el mismo / documento.",
       "source": "source"
     },
     {
@@ -294,7 +294,7 @@
     {
       "name": "phase-result-text-complete",
       "passed": true,
-      "detail": "La ficha queda lista para una / nueva lectura.",
+      "detail": "La ficha queda lista / para una nueva / lectura.",
       "source": "source"
     },
     {
@@ -312,8 +312,14 @@
     {
       "name": "640x360-effective-size",
       "passed": true,
-      "detail": "title 34.5px; body min 20.0px; label min 14.0px",
+      "detail": "title 34.5px; body min 28.0px (requires >=20px); label min 15.0px",
       "source": "source"
+    },
+    {
+      "name": "composition-balance",
+      "passed": true,
+      "detail": "proxy; 8×4 decoded-pixel grid against #F2EFE4: empty cells 15.6%, text-column vertical fill 100.0%, art/object area outside the text column 37.5%, largest empty rectangle 6.3%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+      "source": "pixels"
     },
     {
       "name": "contrast",
@@ -324,7 +330,7 @@
     {
       "name": "safe-zone-and-collisions",
       "passed": true,
-      "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
       "source": "source"
     },
     {
@@ -407,7 +413,7 @@
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 1269490B · PNG 65509B · contact 75662B",
+          "detail": "GIF 1407379B · PNG 73056B · contact 85319B",
           "source": "decoded"
         }
       ]
@@ -450,7 +456,7 @@
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "67 colors; mean channel loss 0.036, max 9; sampled 42 frames",
+          "detail": "69 colors; mean channel loss 0.033, max 9; sampled 42 frames",
           "source": "pixels"
         }
       ],
@@ -474,7 +480,7 @@
         {
           "name": "phase-before-text-complete",
           "passed": true,
-          "detail": "La ficha no indicaba dónde / revisar la advertencia.",
+          "detail": "La ficha no indicaba / dónde revisar la / advertencia.",
           "source": "source"
         },
         {
@@ -486,7 +492,7 @@
         {
           "name": "phase-change-text-complete",
           "passed": true,
-          "detail": "La observación queda señalada / en el mismo documento.",
+          "detail": "La observación queda / señalada en el mismo / documento.",
           "source": "source"
         },
         {
@@ -498,7 +504,7 @@
         {
           "name": "phase-result-text-complete",
           "passed": true,
-          "detail": "La ficha queda lista para una / nueva lectura.",
+          "detail": "La ficha queda lista / para una nueva / lectura.",
           "source": "source"
         },
         {
@@ -516,8 +522,14 @@
         {
           "name": "640x360-effective-size",
           "passed": true,
-          "detail": "title 34.5px; body min 20.0px; label min 14.0px",
+          "detail": "title 34.5px; body min 28.0px (requires >=20px); label min 15.0px",
           "source": "source"
+        },
+        {
+          "name": "composition-balance",
+          "passed": true,
+          "detail": "proxy; 8×4 decoded-pixel grid against #F2EFE4: empty cells 15.6%, text-column vertical fill 100.0%, art/object area outside the text column 37.5%, largest empty rectangle 6.3%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+          "source": "pixels"
         },
         {
           "name": "contrast",
@@ -528,7 +540,7 @@
         {
           "name": "safe-zone-and-collisions",
           "passed": true,
-          "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
           "source": "source"
         },
         {
@@ -538,7 +550,7 @@
           "source": "decoded"
         }
       ],
-      "note": "Layout, contrast and decoded holds are measured; OCR and human reading at card size remain pending."
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
     },
     "narrative": {
       "status": "pending",
@@ -594,7 +606,7 @@
         "before · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\brutalist\\observacion-registrada\\observacion-registrada-903609f3-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\brutalist\\observacion-registrada\\observacion-registrada-903609f3-contact-sheet.png"
     },
     {
       "phaseId": "change",
@@ -604,7 +616,7 @@
         "change · transición media",
         "change · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\brutalist\\observacion-registrada\\observacion-registrada-903609f3-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\brutalist\\observacion-registrada\\observacion-registrada-903609f3-contact-sheet.png"
     },
     {
       "phaseId": "result",
@@ -614,12 +626,12 @@
         "result · transición media",
         "result · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\brutalist\\observacion-registrada\\observacion-registrada-903609f3-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\brutalist\\observacion-registrada\\observacion-registrada-903609f3-contact-sheet.png"
     }
   ],
   "palette": {
-    "colors": 67,
-    "meanAbsoluteChannelError": 0.036,
+    "colors": 69,
+    "meanAbsoluteChannelError": 0.033,
     "maximumChannelError": 9,
     "sampledFrames": 42
   },

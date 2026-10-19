@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "commit": "8199103db118759c589f6593a4d6eb13c71230ae",
+  "commit": "aaa4322afd9cf89b6ef3a8c7a1ae542fcef5ed31",
   "brief": {
     "style": "galactic",
     "kind": "narrative-gif",
@@ -145,20 +145,20 @@
     "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 1091744,
-    "png": 122814,
-    "contactSheet": 91717
+    "gif": 1179740,
+    "png": 133091,
+    "contactSheet": 97527
   },
   "hashes": {
     "briefSha256": "2110868c35637624a163dceb8ad863a21e348a9b603e9b96c2e3664ba211dc9c",
-    "gifSha256": "6ffca6fc49190cfd544fd801c7d81a0f6566d0c370e1ec0a0141292fe8ffd5c5",
-    "pngSha256": "62be008ace610445512721fa61dcd69bfd3f90f95e8663d50603b067c73a1775",
-    "contactSheetSha256": "d6a55997c24673cc0218b47635eab2a0ed36ff6431b0827fa5f9d7f95be28448"
+    "gifSha256": "e278a1aa63053959686ab960d4733f5ae29eba2504ac523e8f21d315c67bb5e6",
+    "pngSha256": "5b70040c4b0e6b03a0edd94e1e136ea89d0f286c7a9eb3999cd4dc77ae60fc69",
+    "contactSheetSha256": "28fd171bbc585a8d905034410b76f97ea1ea2948678a4b81fae9c97246fb2d45"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-f4a8d2d6\\docs\\narrative-gif\\gallery\\galactic\\comparison\\ruta-de-lectura-2110868c.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-f4a8d2d6\\docs\\narrative-gif\\gallery\\galactic\\comparison\\ruta-de-lectura-2110868c.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-f4a8d2d6\\docs\\narrative-gif\\gallery\\galactic\\comparison\\ruta-de-lectura-2110868c-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\galactic\\comparison\\ruta-de-lectura-2110868c.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\galactic\\comparison\\ruta-de-lectura-2110868c.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\galactic\\comparison\\ruta-de-lectura-2110868c-contact-sheet.png"
   },
   "controls": [
     {
@@ -206,7 +206,7 @@
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 1091744B · PNG 122814B · contact 91717B",
+      "detail": "GIF 1179740B · PNG 133091B · contact 97527B",
       "source": "decoded"
     },
     {
@@ -242,7 +242,7 @@
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "74 colors; mean channel loss 0.284, max 9; sampled 33 frames",
+      "detail": "78 colors; mean channel loss 0.296, max 9; sampled 33 frames",
       "source": "pixels"
     },
     {
@@ -260,7 +260,7 @@
     {
       "name": "phase-before-text-complete",
       "passed": true,
-      "detail": "La señal aún no alcanza el / punto de revisión.",
+      "detail": "La señal aún no / alcanza el punto de / revisión.",
       "source": "source"
     },
     {
@@ -272,7 +272,7 @@
     {
       "name": "phase-change-text-complete",
       "passed": true,
-      "detail": "Una trayectoria conecta la / señal con el mismo destino.",
+      "detail": "Una trayectoria / conecta la señal con / el mismo destino.",
       "source": "source"
     },
     {
@@ -284,7 +284,7 @@
     {
       "name": "phase-result-text-complete",
       "passed": true,
-      "detail": "El equipo puede retomar esa / ruta antes de cerrar la / sprint.",
+      "detail": "El equipo puede / retomar esa ruta / antes de cerrar la / sprint.",
       "source": "source"
     },
     {
@@ -302,8 +302,14 @@
     {
       "name": "640x360-effective-size",
       "passed": true,
-      "detail": "title 34.5px; body min 20.0px; label min 14.0px",
+      "detail": "title 34.5px; body min 27.0px (requires >=20px); label min 15.0px",
       "source": "source"
+    },
+    {
+      "name": "composition-balance",
+      "passed": true,
+      "detail": "proxy; 8×4 decoded-pixel grid against #05060A: empty cells 56.3%, text-column vertical fill 100.0%, art/object area outside the text column 12.5%, largest empty rectangle 18.8%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+      "source": "pixels"
     },
     {
       "name": "contrast",
@@ -314,7 +320,7 @@
     {
       "name": "safe-zone-and-collisions",
       "passed": true,
-      "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
       "source": "source"
     },
     {
@@ -397,7 +403,7 @@
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 1091744B · PNG 122814B · contact 91717B",
+          "detail": "GIF 1179740B · PNG 133091B · contact 97527B",
           "source": "decoded"
         }
       ]
@@ -440,7 +446,7 @@
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "74 colors; mean channel loss 0.284, max 9; sampled 33 frames",
+          "detail": "78 colors; mean channel loss 0.296, max 9; sampled 33 frames",
           "source": "pixels"
         }
       ],
@@ -464,7 +470,7 @@
         {
           "name": "phase-before-text-complete",
           "passed": true,
-          "detail": "La señal aún no alcanza el / punto de revisión.",
+          "detail": "La señal aún no / alcanza el punto de / revisión.",
           "source": "source"
         },
         {
@@ -476,7 +482,7 @@
         {
           "name": "phase-change-text-complete",
           "passed": true,
-          "detail": "Una trayectoria conecta la / señal con el mismo destino.",
+          "detail": "Una trayectoria / conecta la señal con / el mismo destino.",
           "source": "source"
         },
         {
@@ -488,7 +494,7 @@
         {
           "name": "phase-result-text-complete",
           "passed": true,
-          "detail": "El equipo puede retomar esa / ruta antes de cerrar la / sprint.",
+          "detail": "El equipo puede / retomar esa ruta / antes de cerrar la / sprint.",
           "source": "source"
         },
         {
@@ -506,8 +512,14 @@
         {
           "name": "640x360-effective-size",
           "passed": true,
-          "detail": "title 34.5px; body min 20.0px; label min 14.0px",
+          "detail": "title 34.5px; body min 27.0px (requires >=20px); label min 15.0px",
           "source": "source"
+        },
+        {
+          "name": "composition-balance",
+          "passed": true,
+          "detail": "proxy; 8×4 decoded-pixel grid against #05060A: empty cells 56.3%, text-column vertical fill 100.0%, art/object area outside the text column 12.5%, largest empty rectangle 18.8%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+          "source": "pixels"
         },
         {
           "name": "contrast",
@@ -518,7 +530,7 @@
         {
           "name": "safe-zone-and-collisions",
           "passed": true,
-          "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
           "source": "source"
         },
         {
@@ -528,7 +540,7 @@
           "source": "decoded"
         }
       ],
-      "note": "Layout, contrast and decoded holds are measured; OCR and human reading at card size remain pending."
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
     },
     "narrative": {
       "status": "pending",
@@ -583,7 +595,7 @@
         "before · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-f4a8d2d6\\docs\\narrative-gif\\gallery\\galactic\\comparison\\ruta-de-lectura-2110868c-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\galactic\\comparison\\ruta-de-lectura-2110868c-contact-sheet.png"
     },
     {
       "phaseId": "change",
@@ -592,7 +604,7 @@
         "change · pausa",
         "change · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-f4a8d2d6\\docs\\narrative-gif\\gallery\\galactic\\comparison\\ruta-de-lectura-2110868c-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\galactic\\comparison\\ruta-de-lectura-2110868c-contact-sheet.png"
     },
     {
       "phaseId": "result",
@@ -601,12 +613,12 @@
         "result · pausa",
         "result · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-f4a8d2d6\\docs\\narrative-gif\\gallery\\galactic\\comparison\\ruta-de-lectura-2110868c-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\galactic\\comparison\\ruta-de-lectura-2110868c-contact-sheet.png"
     }
   ],
   "palette": {
-    "colors": 74,
-    "meanAbsoluteChannelError": 0.284,
+    "colors": 78,
+    "meanAbsoluteChannelError": 0.296,
     "maximumChannelError": 9,
     "sampledFrames": 33
   },

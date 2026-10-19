@@ -48,6 +48,8 @@ Estos dos briefs preservan una tercera historia comparativa para los pilotos; la
 
 Los cinco ratios por estilo y el fallback están en [ARCHITECTURE.md](../ARCHITECTURE.md#per-style-composition-contract). Las escenas, tipografías y límites particulares se describen en las fichas enlazadas por estilo.
 
+La pasada de composición documenta cuatro iteraciones de render e inspección de las 13 hojas de contacto y sus frames nativos, con métricas comparativas decodificadas para los 28 paquetes: [REVIEW-layout-pass.md](REVIEW-layout-pass.md). Esa inspección visual no equivale a aprobación independiente; todos los manifiestos conservan `visual-review: pending`.
+
 - [Revisión Stage C: Renaissance, Art Deco, Isotype, Op Art, Ukiyo-e, Bestiary, Psychedelic y Memphis](REVIEW-stage-c.md)
 - [Revisión Stage C: Vaporwave, Galactic y Nature](REVIEW-stage-c-vaporwave-galactic-nature.md)
 - [Revisión de pilotos](../pilots/REVIEW.md)

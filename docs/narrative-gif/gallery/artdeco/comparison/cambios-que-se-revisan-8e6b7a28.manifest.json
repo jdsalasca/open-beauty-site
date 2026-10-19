@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "commit": "e06f887769ae1ee14b225c136402d471623c0f2d",
+  "commit": "aaa4322afd9cf89b6ef3a8c7a1ae542fcef5ed31",
   "brief": {
     "style": "artdeco",
     "kind": "narrative-gif",
@@ -145,20 +145,20 @@
     "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 920325,
-    "png": 44651,
-    "contactSheet": 53236
+    "gif": 1047136,
+    "png": 50832,
+    "contactSheet": 56929
   },
   "hashes": {
     "briefSha256": "8e6b7a28e6be16d9e207c89f7be7f99e2bf7b9a3eec481f0e5b04f1ec6fca5cf",
-    "gifSha256": "3120fb1c75d42fb5e75d5b8aee7a2ba38c52441bf50437c47dc724e876ac5035",
-    "pngSha256": "4523899658b1ae5b2568e0d8c2cb3cae8ae1e79a38698ad6971944c7a4b81dae",
-    "contactSheetSha256": "917c0ae17c05125d6098c6e68354a3edd299355ede9197ec453b15b4254e4bcc"
+    "gifSha256": "9d437b7fbd6d0bd6966044c2c6823205439fc5280dd5f9898184af96e13b8010",
+    "pngSha256": "263bc4d10df476441359c02016b09bd2b5439eec47aa553a783ddcdc6ad025ae",
+    "contactSheetSha256": "c6e5da1c83db47bda70570164ea488e77feefe152171e288e2bede2f21374cbe"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-b369da1b\\docs\\narrative-gif\\gallery\\artdeco\\comparison\\cambios-que-se-revisan-8e6b7a28.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-b369da1b\\docs\\narrative-gif\\gallery\\artdeco\\comparison\\cambios-que-se-revisan-8e6b7a28.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-b369da1b\\docs\\narrative-gif\\gallery\\artdeco\\comparison\\cambios-que-se-revisan-8e6b7a28-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\artdeco\\comparison\\cambios-que-se-revisan-8e6b7a28.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\artdeco\\comparison\\cambios-que-se-revisan-8e6b7a28.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\artdeco\\comparison\\cambios-que-se-revisan-8e6b7a28-contact-sheet.png"
   },
   "controls": [
     {
@@ -206,7 +206,7 @@
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 920325B · PNG 44651B · contact 53236B",
+      "detail": "GIF 1047136B · PNG 50832B · contact 56929B",
       "source": "decoded"
     },
     {
@@ -242,7 +242,7 @@
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "40 colors; mean channel loss 0.017, max 5; sampled 33 frames",
+      "detail": "40 colors; mean channel loss 0.075, max 6; sampled 33 frames",
       "source": "pixels"
     },
     {
@@ -260,7 +260,7 @@
     {
       "name": "phase-before-text-complete",
       "passed": true,
-      "detail": "La guía podía cambiar sin / indicar qué revisar.",
+      "detail": "La guía podía / cambiar sin indicar / qué revisar.",
       "source": "source"
     },
     {
@@ -272,7 +272,7 @@
     {
       "name": "phase-change-text-complete",
       "passed": true,
-      "detail": "La propuesta añade una / señal junto al cambio para / orientar la lectura.",
+      "detail": "La propuesta añade / una señal junto al / cambio para orientar / la lectura.",
       "source": "source"
     },
     {
@@ -284,7 +284,7 @@
     {
       "name": "phase-result-text-complete",
       "passed": true,
-      "detail": "El equipo podrá comprobar si / la señal facilita la revisión / antes del cierre.",
+      "detail": "El equipo podrá / comprobar si la señal / facilita la revisión / antes del cierre.",
       "source": "source"
     },
     {
@@ -302,8 +302,14 @@
     {
       "name": "640x360-effective-size",
       "passed": true,
-      "detail": "title 34.5px; body min 20.0px; label min 14.0px",
+      "detail": "title 34.5px; body min 26.5px (requires >=20px); label min 15.0px",
       "source": "source"
+    },
+    {
+      "name": "composition-balance",
+      "passed": true,
+      "detail": "proxy; 8×4 decoded-pixel grid against #0E0E10: empty cells 34.4%, text-column vertical fill 75.0%, art/object area outside the text column 34.4%, largest empty rectangle 12.5%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+      "source": "pixels"
     },
     {
       "name": "contrast",
@@ -314,7 +320,7 @@
     {
       "name": "safe-zone-and-collisions",
       "passed": true,
-      "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
       "source": "source"
     },
     {
@@ -397,7 +403,7 @@
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 920325B · PNG 44651B · contact 53236B",
+          "detail": "GIF 1047136B · PNG 50832B · contact 56929B",
           "source": "decoded"
         }
       ]
@@ -440,7 +446,7 @@
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "40 colors; mean channel loss 0.017, max 5; sampled 33 frames",
+          "detail": "40 colors; mean channel loss 0.075, max 6; sampled 33 frames",
           "source": "pixels"
         }
       ],
@@ -464,7 +470,7 @@
         {
           "name": "phase-before-text-complete",
           "passed": true,
-          "detail": "La guía podía cambiar sin / indicar qué revisar.",
+          "detail": "La guía podía / cambiar sin indicar / qué revisar.",
           "source": "source"
         },
         {
@@ -476,7 +482,7 @@
         {
           "name": "phase-change-text-complete",
           "passed": true,
-          "detail": "La propuesta añade una / señal junto al cambio para / orientar la lectura.",
+          "detail": "La propuesta añade / una señal junto al / cambio para orientar / la lectura.",
           "source": "source"
         },
         {
@@ -488,7 +494,7 @@
         {
           "name": "phase-result-text-complete",
           "passed": true,
-          "detail": "El equipo podrá comprobar si / la señal facilita la revisión / antes del cierre.",
+          "detail": "El equipo podrá / comprobar si la señal / facilita la revisión / antes del cierre.",
           "source": "source"
         },
         {
@@ -506,8 +512,14 @@
         {
           "name": "640x360-effective-size",
           "passed": true,
-          "detail": "title 34.5px; body min 20.0px; label min 14.0px",
+          "detail": "title 34.5px; body min 26.5px (requires >=20px); label min 15.0px",
           "source": "source"
+        },
+        {
+          "name": "composition-balance",
+          "passed": true,
+          "detail": "proxy; 8×4 decoded-pixel grid against #0E0E10: empty cells 34.4%, text-column vertical fill 75.0%, art/object area outside the text column 34.4%, largest empty rectangle 12.5%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+          "source": "pixels"
         },
         {
           "name": "contrast",
@@ -518,7 +530,7 @@
         {
           "name": "safe-zone-and-collisions",
           "passed": true,
-          "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
           "source": "source"
         },
         {
@@ -528,7 +540,7 @@
           "source": "decoded"
         }
       ],
-      "note": "Layout, contrast and decoded holds are measured; OCR and human reading at card size remain pending."
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
     },
     "narrative": {
       "status": "pending",
@@ -583,7 +595,7 @@
         "before · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-b369da1b\\docs\\narrative-gif\\gallery\\artdeco\\comparison\\cambios-que-se-revisan-8e6b7a28-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\artdeco\\comparison\\cambios-que-se-revisan-8e6b7a28-contact-sheet.png"
     },
     {
       "phaseId": "change",
@@ -592,7 +604,7 @@
         "change · pausa",
         "change · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-b369da1b\\docs\\narrative-gif\\gallery\\artdeco\\comparison\\cambios-que-se-revisan-8e6b7a28-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\artdeco\\comparison\\cambios-que-se-revisan-8e6b7a28-contact-sheet.png"
     },
     {
       "phaseId": "result",
@@ -601,13 +613,13 @@
         "result · pausa",
         "result · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-b369da1b\\docs\\narrative-gif\\gallery\\artdeco\\comparison\\cambios-que-se-revisan-8e6b7a28-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\artdeco\\comparison\\cambios-que-se-revisan-8e6b7a28-contact-sheet.png"
     }
   ],
   "palette": {
     "colors": 40,
-    "meanAbsoluteChannelError": 0.017,
-    "maximumChannelError": 5,
+    "meanAbsoluteChannelError": 0.075,
+    "maximumChannelError": 6,
     "sampledFrames": 33
   },
   "phaseHoldsVerified": [

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "commit": "d78a1360e9619fa326d6ce513e19eaac3b08ec4e",
+  "commit": "aaa4322afd9cf89b6ef3a8c7a1ae542fcef5ed31",
   "brief": {
     "style": "papercraft",
     "subfamily": "editorial",
@@ -155,20 +155,20 @@
     "detail": "ffprobe 1280×720; 42 frames; 17940ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 1207417,
-    "png": 87690,
-    "contactSheet": 83184
+    "gif": 1358387,
+    "png": 91949,
+    "contactSheet": 93122
   },
   "hashes": {
     "briefSha256": "34abb5716f4f6e1659849d238699d824b58f50489bd3c9d54f76bd65c18fcd0d",
-    "gifSha256": "579278b6b1b3f4af15a68368415c8063a05c47b711e4269d9237ff8083d0866e",
-    "pngSha256": "dda03510a6a1535bb235b503af59554e502917684019420d4c86f17197e0f703",
-    "contactSheetSha256": "a130b08353413d728933909cb9e412401a78842ac28fcad9dfa102a6fad0d37b"
+    "gifSha256": "346366c203fec24e5065da64808b9e6fdee99cc1471528891094e9b9e133f5bc",
+    "pngSha256": "e5b92fd3d67bb90226c1539d4ad5415ac008c2a488fe477fdeaed6a9f58beb45",
+    "contactSheetSha256": "a280dae15ce0fb9e0ade7b6fbf00b8dc228471b3cb465dc04daa173fb2977fd1"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-34abb571.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-34abb571.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-34abb571-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-34abb571.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-34abb571.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-34abb571-contact-sheet.png"
   },
   "controls": [
     {
@@ -216,7 +216,7 @@
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 1207417B · PNG 87690B · contact 83184B",
+      "detail": "GIF 1358387B · PNG 91949B · contact 93122B",
       "source": "decoded"
     },
     {
@@ -252,7 +252,7 @@
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "52 colors; mean channel loss 2.239, max 11; sampled 42 frames",
+      "detail": "58 colors; mean channel loss 2.23, max 8; sampled 42 frames",
       "source": "pixels"
     },
     {
@@ -270,7 +270,7 @@
     {
       "name": "phase-before-text-complete",
       "passed": true,
-      "detail": "La ficha no indicaba dónde revisar la / advertencia.",
+      "detail": "La ficha no indicaba dónde / revisar la advertencia.",
       "source": "source"
     },
     {
@@ -282,7 +282,7 @@
     {
       "name": "phase-change-text-complete",
       "passed": true,
-      "detail": "La observación queda señalada en el / mismo documento.",
+      "detail": "La observación queda / señalada en el mismo / documento.",
       "source": "source"
     },
     {
@@ -294,7 +294,7 @@
     {
       "name": "phase-result-text-complete",
       "passed": true,
-      "detail": "La ficha queda lista para una nueva / lectura.",
+      "detail": "La ficha queda lista para una / nueva lectura.",
       "source": "source"
     },
     {
@@ -312,8 +312,14 @@
     {
       "name": "640x360-effective-size",
       "passed": true,
-      "detail": "title 38.0px; body min 20.0px; label min 14.0px",
+      "detail": "title 38.0px; body min 28.0px (requires >=20px); label min 15.0px",
       "source": "source"
+    },
+    {
+      "name": "composition-balance",
+      "passed": true,
+      "detail": "proxy; 8×4 decoded-pixel grid against #FBF1E2: empty cells 37.5%, text-column vertical fill 75.0%, art/object area outside the text column 28.1%, largest empty rectangle 15.6%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+      "source": "pixels"
     },
     {
       "name": "contrast",
@@ -324,7 +330,7 @@
     {
       "name": "safe-zone-and-collisions",
       "passed": true,
-      "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
       "source": "source"
     },
     {
@@ -407,7 +413,7 @@
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 1207417B · PNG 87690B · contact 83184B",
+          "detail": "GIF 1358387B · PNG 91949B · contact 93122B",
           "source": "decoded"
         }
       ]
@@ -450,7 +456,7 @@
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "52 colors; mean channel loss 2.239, max 11; sampled 42 frames",
+          "detail": "58 colors; mean channel loss 2.23, max 8; sampled 42 frames",
           "source": "pixels"
         }
       ],
@@ -474,7 +480,7 @@
         {
           "name": "phase-before-text-complete",
           "passed": true,
-          "detail": "La ficha no indicaba dónde revisar la / advertencia.",
+          "detail": "La ficha no indicaba dónde / revisar la advertencia.",
           "source": "source"
         },
         {
@@ -486,7 +492,7 @@
         {
           "name": "phase-change-text-complete",
           "passed": true,
-          "detail": "La observación queda señalada en el / mismo documento.",
+          "detail": "La observación queda / señalada en el mismo / documento.",
           "source": "source"
         },
         {
@@ -498,7 +504,7 @@
         {
           "name": "phase-result-text-complete",
           "passed": true,
-          "detail": "La ficha queda lista para una nueva / lectura.",
+          "detail": "La ficha queda lista para una / nueva lectura.",
           "source": "source"
         },
         {
@@ -516,8 +522,14 @@
         {
           "name": "640x360-effective-size",
           "passed": true,
-          "detail": "title 38.0px; body min 20.0px; label min 14.0px",
+          "detail": "title 38.0px; body min 28.0px (requires >=20px); label min 15.0px",
           "source": "source"
+        },
+        {
+          "name": "composition-balance",
+          "passed": true,
+          "detail": "proxy; 8×4 decoded-pixel grid against #FBF1E2: empty cells 37.5%, text-column vertical fill 75.0%, art/object area outside the text column 28.1%, largest empty rectangle 15.6%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+          "source": "pixels"
         },
         {
           "name": "contrast",
@@ -528,7 +540,7 @@
         {
           "name": "safe-zone-and-collisions",
           "passed": true,
-          "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
           "source": "source"
         },
         {
@@ -538,7 +550,7 @@
           "source": "decoded"
         }
       ],
-      "note": "Layout, contrast and decoded holds are measured; OCR and human reading at card size remain pending."
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
     },
     "narrative": {
       "status": "pending",
@@ -594,7 +606,7 @@
         "before · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-34abb571-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-34abb571-contact-sheet.png"
     },
     {
       "phaseId": "change",
@@ -604,7 +616,7 @@
         "change · transición media",
         "change · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-34abb571-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-34abb571-contact-sheet.png"
     },
     {
       "phaseId": "result",
@@ -614,13 +626,13 @@
         "result · transición media",
         "result · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-7e9fa580\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-34abb571-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\pilots\\papercraft\\observacion-registrada\\observacion-registrada-34abb571-contact-sheet.png"
     }
   ],
   "palette": {
-    "colors": 52,
-    "meanAbsoluteChannelError": 2.239,
-    "maximumChannelError": 11,
+    "colors": 58,
+    "meanAbsoluteChannelError": 2.23,
+    "maximumChannelError": 8,
     "sampledFrames": 42
   },
   "phaseHoldsVerified": [

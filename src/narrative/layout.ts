@@ -113,7 +113,7 @@ export function layoutNarrative(brief: NormalizedNarrativeBrief): NarrativeLayou
   const composition = narrativeCompositionFor(brief.style);
   const { ctx } = canvasFor(16, 16);
   const safeZone: NarrativeRect = { x: width * 0.05, y: height * 0.05, width: width * 0.9, height: height * 0.9 };
-  const textArea: NarrativeRect = { x: safeZone.x, y: height * 0.09, width: width * composition.textWidthRatio, height: height * 0.81 };
+  const textArea: NarrativeRect = { x: safeZone.x, y: safeZone.y, width: width * composition.textWidthRatio, height: safeZone.height };
   const reservedArtArea: NarrativeRect = {
     x: textArea.x + textArea.width + width * composition.artGapRatio,
     y: height * composition.artY,
@@ -121,16 +121,18 @@ export function layoutNarrative(brief: NormalizedNarrativeBrief): NarrativeLayou
     height: height * composition.artHeight,
   };
   assertSafeRect(safeZone, width, height);
+  assertSafeRect(reservedArtArea, width, height);
   const cardScale = Math.min(640 / width, 360 / height);
-  const titleBox: NarrativeRect = { x: textArea.x, y: height * 0.10, width: textArea.width, height: height * 0.21 };
-  const labelBox: NarrativeRect = { x: textArea.x, y: height * 0.34, width: textArea.width, height: height * 0.09 };
-  const bodyBox: NarrativeRect = { x: textArea.x, y: height * 0.43, width: textArea.width, height: height * 0.47 };
+  const scale = Math.min(width / 1280, height / 720);
+  const titleBox: NarrativeRect = { x: textArea.x, y: textArea.y, width: textArea.width, height: textArea.height * 0.23 };
+  const labelBox: NarrativeRect = { x: textArea.x, y: textArea.y, width: textArea.width, height: textArea.height * 0.10 };
+  const bodyBox: NarrativeRect = { x: textArea.x, y: textArea.y, width: textArea.width, height: textArea.height * 0.56 };
   const titleSize = fitText({
     text: brief.title,
     box: titleBox,
     face: fonts.effective.display,
     fallback: fonts.approvedAlternative.display,
-    maxSize: 76,
+    maxSize: Math.max(56, Math.round(104 * scale)),
     minSize: 56,
     leading: 1.08,
     tracking: emValue(fonts.typeSystem.displayTracking),
@@ -143,7 +145,7 @@ export function layoutNarrative(brief: NormalizedNarrativeBrief): NarrativeLayou
       box: labelBox,
       face: fonts.effective.label,
       fallback: fonts.approvedAlternative.label,
-      maxSize: 28,
+      maxSize: Math.max(24, Math.round(30 * scale)),
       minSize: 24,
       leading: 1.2,
       tracking: emValue(fonts.typeSystem.labelTracking),
@@ -155,7 +157,7 @@ export function layoutNarrative(brief: NormalizedNarrativeBrief): NarrativeLayou
       box: bodyBox,
       face: fonts.effective.reading,
       fallback: fonts.approvedAlternative.reading,
-      maxSize: 40,
+      maxSize: Math.max(36, Math.round(56 * scale)),
       minSize: 36,
       leading: Number.parseFloat(fonts.typeSystem.bodyLeading),
       tracking: 0,
@@ -164,5 +166,17 @@ export function layoutNarrative(brief: NormalizedNarrativeBrief): NarrativeLayou
     }, ctx);
     return { label, body };
   });
-  return { safeZone, textArea, reservedArtArea, title: titleSize, phases, cardScale, warnings: [] };
+  const maxLabelHeight = Math.max(...phases.map((phase) => phase.label.height));
+  const maxBodyHeight = Math.max(...phases.map((phase) => phase.body.height));
+  const titleLabelGap = height * 0.10;
+  const labelBodyGap = height * 0.10;
+  const groupHeight = titleSize.height + titleLabelGap + maxLabelHeight + labelBodyGap + maxBodyHeight;
+  const groupTop = textArea.y + (textArea.height - groupHeight) / 2;
+  const copyPositions = {
+    titleY: groupTop,
+    labelY: groupTop + titleSize.height + titleLabelGap,
+    bodyY: groupTop + titleSize.height + titleLabelGap + maxLabelHeight + labelBodyGap,
+    groupHeight,
+  };
+  return { safeZone, textArea, reservedArtArea, copyPositions, title: titleSize, phases, cardScale, warnings: [] };
 }

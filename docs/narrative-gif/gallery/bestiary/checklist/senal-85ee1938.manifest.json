@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "commit": "127a6323dca9346b78e771caeefc3337ea04117a",
+  "commit": "aaa4322afd9cf89b6ef3a8c7a1ae542fcef5ed31",
   "brief": {
     "style": "bestiary",
     "kind": "narrative-gif",
@@ -145,20 +145,20 @@
     "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 1063773,
-    "png": 86353,
-    "contactSheet": 82590
+    "gif": 1171385,
+    "png": 96895,
+    "contactSheet": 92086
   },
   "hashes": {
     "briefSha256": "85ee1938c0cd046aa911ab4508f4d9927a36ceb019158aaf8a2af94c31184412",
-    "gifSha256": "87d93283948c507204c37d302a93cb806cff63e2b877ca0da65097bc99e3ed67",
-    "pngSha256": "8e393cca79e2d8319b7ab35f5962ee4abc2aa02dd7f36bceb6a06918af99b3f9",
-    "contactSheetSha256": "d98931cdb562bc31c85589488b2bc7f07c874ed1c66c87118abddd4a08a1e5f4"
+    "gifSha256": "87d65c15c4fca7076afe154a93d526a43f3a3c23382c483e7236adc68391d8f5",
+    "pngSha256": "665f9818eda49039733fd4065c9679b4a1b8c2e3f93f51255d07242390fe66b2",
+    "contactSheetSha256": "d1d74763b2cabc589248c0eaa13babdefec9c5134bc330e496795aa15de9a4cd"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6b1942f1\\docs\\narrative-gif\\gallery\\bestiary\\checklist\\senal-85ee1938.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6b1942f1\\docs\\narrative-gif\\gallery\\bestiary\\checklist\\senal-85ee1938.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6b1942f1\\docs\\narrative-gif\\gallery\\bestiary\\checklist\\senal-85ee1938-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\bestiary\\checklist\\senal-85ee1938.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\bestiary\\checklist\\senal-85ee1938.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\bestiary\\checklist\\senal-85ee1938-contact-sheet.png"
   },
   "controls": [
     {
@@ -206,7 +206,7 @@
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 1063773B · PNG 86353B · contact 82590B",
+      "detail": "GIF 1171385B · PNG 96895B · contact 92086B",
       "source": "decoded"
     },
     {
@@ -242,7 +242,7 @@
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "53 colors; mean channel loss 0.033, max 7; sampled 33 frames",
+      "detail": "52 colors; mean channel loss 0.04, max 7; sampled 33 frames",
       "source": "pixels"
     },
     {
@@ -260,7 +260,7 @@
     {
       "name": "phase-before-text-complete",
       "passed": true,
-      "detail": "La medida puede quedar sin / señal.",
+      "detail": "La medida puede / quedar sin señal.",
       "source": "source"
     },
     {
@@ -272,7 +272,7 @@
     {
       "name": "phase-change-text-complete",
       "passed": true,
-      "detail": "La guía marca qué requiere / revisión.",
+      "detail": "La guía marca qué / requiere revisión.",
       "source": "source"
     },
     {
@@ -284,7 +284,7 @@
     {
       "name": "phase-result-text-complete",
       "passed": true,
-      "detail": "Revisarla antes del cierre de la / sprint.",
+      "detail": "Revisarla antes del / cierre de la sprint.",
       "source": "source"
     },
     {
@@ -296,14 +296,20 @@
     {
       "name": "review-size-thresholds",
       "passed": true,
-      "detail": "title 76px; phase body >=36px; label >=24px",
+      "detail": "title 104px; phase body >=36px; label >=24px",
       "source": "source"
     },
     {
       "name": "640x360-effective-size",
       "passed": true,
-      "detail": "title 38.0px; body min 20.0px; label min 14.0px",
+      "detail": "title 52.0px; body min 28.0px (requires >=20px); label min 15.0px",
       "source": "source"
+    },
+    {
+      "name": "composition-balance",
+      "passed": true,
+      "detail": "proxy; 8×4 decoded-pixel grid against #E8D9B8: empty cells 18.8%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 12.5%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+      "source": "pixels"
     },
     {
       "name": "contrast",
@@ -314,7 +320,7 @@
     {
       "name": "safe-zone-and-collisions",
       "passed": true,
-      "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
       "source": "source"
     },
     {
@@ -397,7 +403,7 @@
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 1063773B · PNG 86353B · contact 82590B",
+          "detail": "GIF 1171385B · PNG 96895B · contact 92086B",
           "source": "decoded"
         }
       ]
@@ -440,7 +446,7 @@
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "53 colors; mean channel loss 0.033, max 7; sampled 33 frames",
+          "detail": "52 colors; mean channel loss 0.04, max 7; sampled 33 frames",
           "source": "pixels"
         }
       ],
@@ -464,7 +470,7 @@
         {
           "name": "phase-before-text-complete",
           "passed": true,
-          "detail": "La medida puede quedar sin / señal.",
+          "detail": "La medida puede / quedar sin señal.",
           "source": "source"
         },
         {
@@ -476,7 +482,7 @@
         {
           "name": "phase-change-text-complete",
           "passed": true,
-          "detail": "La guía marca qué requiere / revisión.",
+          "detail": "La guía marca qué / requiere revisión.",
           "source": "source"
         },
         {
@@ -488,7 +494,7 @@
         {
           "name": "phase-result-text-complete",
           "passed": true,
-          "detail": "Revisarla antes del cierre de la / sprint.",
+          "detail": "Revisarla antes del / cierre de la sprint.",
           "source": "source"
         },
         {
@@ -500,14 +506,20 @@
         {
           "name": "review-size-thresholds",
           "passed": true,
-          "detail": "title 76px; phase body >=36px; label >=24px",
+          "detail": "title 104px; phase body >=36px; label >=24px",
           "source": "source"
         },
         {
           "name": "640x360-effective-size",
           "passed": true,
-          "detail": "title 38.0px; body min 20.0px; label min 14.0px",
+          "detail": "title 52.0px; body min 28.0px (requires >=20px); label min 15.0px",
           "source": "source"
+        },
+        {
+          "name": "composition-balance",
+          "passed": true,
+          "detail": "proxy; 8×4 decoded-pixel grid against #E8D9B8: empty cells 18.8%, text-column vertical fill 100.0%, art/object area outside the text column 50.0%, largest empty rectangle 12.5%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+          "source": "pixels"
         },
         {
           "name": "contrast",
@@ -518,7 +530,7 @@
         {
           "name": "safe-zone-and-collisions",
           "passed": true,
-          "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
           "source": "source"
         },
         {
@@ -528,7 +540,7 @@
           "source": "decoded"
         }
       ],
-      "note": "Layout, contrast and decoded holds are measured; OCR and human reading at card size remain pending."
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
     },
     "narrative": {
       "status": "pending",
@@ -584,7 +596,7 @@
         "before · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6b1942f1\\docs\\narrative-gif\\gallery\\bestiary\\checklist\\senal-85ee1938-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\bestiary\\checklist\\senal-85ee1938-contact-sheet.png"
     },
     {
       "phaseId": "change",
@@ -594,7 +606,7 @@
         "change · transición media",
         "change · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6b1942f1\\docs\\narrative-gif\\gallery\\bestiary\\checklist\\senal-85ee1938-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\bestiary\\checklist\\senal-85ee1938-contact-sheet.png"
     },
     {
       "phaseId": "result",
@@ -604,12 +616,12 @@
         "result · transición media",
         "result · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-6b1942f1\\docs\\narrative-gif\\gallery\\bestiary\\checklist\\senal-85ee1938-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\bestiary\\checklist\\senal-85ee1938-contact-sheet.png"
     }
   ],
   "palette": {
-    "colors": 53,
-    "meanAbsoluteChannelError": 0.033,
+    "colors": 52,
+    "meanAbsoluteChannelError": 0.04,
     "maximumChannelError": 7,
     "sampledFrames": 33
   },

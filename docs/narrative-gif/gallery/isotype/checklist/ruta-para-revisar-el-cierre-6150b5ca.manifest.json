@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "commit": "e06f887769ae1ee14b225c136402d471623c0f2d",
+  "commit": "aaa4322afd9cf89b6ef3a8c7a1ae542fcef5ed31",
   "brief": {
     "style": "isotype",
     "kind": "narrative-gif",
@@ -145,20 +145,20 @@
     "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode."
   },
   "bytes": {
-    "gif": 831996,
-    "png": 53867,
-    "contactSheet": 53940
+    "gif": 960145,
+    "png": 59932,
+    "contactSheet": 60253
   },
   "hashes": {
     "briefSha256": "6150b5ca2510d21b579e7f9fbdf412d7e486308031064ff847ed6a96f9f718fe",
-    "gifSha256": "4b5b6fce3b8cd3559271ec7d37f5d7cb7779571634579a46c821800cf35dcb3c",
-    "pngSha256": "23ff08dfd935914f71c7c7d384d6fac94d238f55b6f020a1f7a00ba77c61fba5",
-    "contactSheetSha256": "2326ab9107b93de8c7bddf83647e8fa3e6b30962e993e913961e2e59f4d00fc7"
+    "gifSha256": "5f48b01c338da4393313efe04f1db21f497bfb2beb841ac9f79c4aec79252b6c",
+    "pngSha256": "b7325ffd9f1e2f794543da55afd882ffe392b3e2190d1452e0c923df8e3df873",
+    "contactSheetSha256": "7352655961e9500b9a7cff098dc38c3744d0dc4df75c8cd46b6735ceecf6a34e"
   },
   "files": {
-    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-b369da1b\\docs\\narrative-gif\\gallery\\isotype\\checklist\\ruta-para-revisar-el-cierre-6150b5ca.gif",
-    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-b369da1b\\docs\\narrative-gif\\gallery\\isotype\\checklist\\ruta-para-revisar-el-cierre-6150b5ca.png",
-    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-b369da1b\\docs\\narrative-gif\\gallery\\isotype\\checklist\\ruta-para-revisar-el-cierre-6150b5ca-contact-sheet.png"
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\isotype\\checklist\\ruta-para-revisar-el-cierre-6150b5ca.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\isotype\\checklist\\ruta-para-revisar-el-cierre-6150b5ca.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\isotype\\checklist\\ruta-para-revisar-el-cierre-6150b5ca-contact-sheet.png"
   },
   "controls": [
     {
@@ -206,7 +206,7 @@
     {
       "name": "files",
       "passed": true,
-      "detail": "GIF 831996B · PNG 53867B · contact 53940B",
+      "detail": "GIF 960145B · PNG 59932B · contact 60253B",
       "source": "decoded"
     },
     {
@@ -242,7 +242,7 @@
     {
       "name": "palette-loss",
       "passed": true,
-      "detail": "48 colors; mean channel loss 0.03, max 8; sampled 33 frames",
+      "detail": "55 colors; mean channel loss 0.044, max 10; sampled 33 frames",
       "source": "pixels"
     },
     {
@@ -260,7 +260,7 @@
     {
       "name": "phase-before-text-complete",
       "passed": true,
-      "detail": "El cambio se leía sin una ruta / de revisión.",
+      "detail": "El cambio se leía sin / una ruta de revisión.",
       "source": "source"
     },
     {
@@ -272,7 +272,7 @@
     {
       "name": "phase-change-text-complete",
       "passed": true,
-      "detail": "La propuesta ordena la lectura / en pasos visibles.",
+      "detail": "La propuesta ordena / la lectura en pasos / visibles.",
       "source": "source"
     },
     {
@@ -284,7 +284,7 @@
     {
       "name": "phase-result-text-complete",
       "passed": true,
-      "detail": "El equipo podrá comprobar la / secuencia antes del cierre.",
+      "detail": "El equipo podrá / comprobar la / secuencia antes del / cierre.",
       "source": "source"
     },
     {
@@ -302,8 +302,14 @@
     {
       "name": "640x360-effective-size",
       "passed": true,
-      "detail": "title 34.5px; body min 20.0px; label min 14.0px",
+      "detail": "title 34.5px; body min 27.0px (requires >=20px); label min 15.0px",
       "source": "source"
+    },
+    {
+      "name": "composition-balance",
+      "passed": true,
+      "detail": "proxy; 8×4 decoded-pixel grid against #F2EBDD: empty cells 31.3%, text-column vertical fill 75.0%, art/object area outside the text column 40.6%, largest empty rectangle 12.5%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+      "source": "pixels"
     },
     {
       "name": "contrast",
@@ -314,7 +320,7 @@
     {
       "name": "safe-zone-and-collisions",
       "passed": true,
-      "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
       "source": "source"
     },
     {
@@ -397,7 +403,7 @@
         {
           "name": "files",
           "passed": true,
-          "detail": "GIF 831996B · PNG 53867B · contact 53940B",
+          "detail": "GIF 960145B · PNG 59932B · contact 60253B",
           "source": "decoded"
         }
       ]
@@ -440,7 +446,7 @@
         {
           "name": "palette-loss",
           "passed": true,
-          "detail": "48 colors; mean channel loss 0.03, max 8; sampled 33 frames",
+          "detail": "55 colors; mean channel loss 0.044, max 10; sampled 33 frames",
           "source": "pixels"
         }
       ],
@@ -464,7 +470,7 @@
         {
           "name": "phase-before-text-complete",
           "passed": true,
-          "detail": "El cambio se leía sin una ruta / de revisión.",
+          "detail": "El cambio se leía sin / una ruta de revisión.",
           "source": "source"
         },
         {
@@ -476,7 +482,7 @@
         {
           "name": "phase-change-text-complete",
           "passed": true,
-          "detail": "La propuesta ordena la lectura / en pasos visibles.",
+          "detail": "La propuesta ordena / la lectura en pasos / visibles.",
           "source": "source"
         },
         {
@@ -488,7 +494,7 @@
         {
           "name": "phase-result-text-complete",
           "passed": true,
-          "detail": "El equipo podrá comprobar la / secuencia antes del cierre.",
+          "detail": "El equipo podrá / comprobar la / secuencia antes del / cierre.",
           "source": "source"
         },
         {
@@ -506,8 +512,14 @@
         {
           "name": "640x360-effective-size",
           "passed": true,
-          "detail": "title 34.5px; body min 20.0px; label min 14.0px",
+          "detail": "title 34.5px; body min 27.0px (requires >=20px); label min 15.0px",
           "source": "source"
+        },
+        {
+          "name": "composition-balance",
+          "passed": true,
+          "detail": "proxy; 8×4 decoded-pixel grid against #F2EBDD: empty cells 31.3%, text-column vertical fill 75.0%, art/object area outside the text column 40.6%, largest empty rectangle 12.5%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+          "source": "pixels"
         },
         {
           "name": "contrast",
@@ -518,7 +530,7 @@
         {
           "name": "safe-zone-and-collisions",
           "passed": true,
-          "detail": "5% safe margin; layout text and art boxes do not overlap; renderer pixel occlusion is not analyzed",
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
           "source": "source"
         },
         {
@@ -528,7 +540,7 @@
           "source": "decoded"
         }
       ],
-      "note": "Layout, contrast and decoded holds are measured; OCR and human reading at card size remain pending."
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
     },
     "narrative": {
       "status": "pending",
@@ -583,7 +595,7 @@
         "before · salida",
         "reinicio del loop"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-b369da1b\\docs\\narrative-gif\\gallery\\isotype\\checklist\\ruta-para-revisar-el-cierre-6150b5ca-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\isotype\\checklist\\ruta-para-revisar-el-cierre-6150b5ca-contact-sheet.png"
     },
     {
       "phaseId": "change",
@@ -592,7 +604,7 @@
         "change · pausa",
         "change · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-b369da1b\\docs\\narrative-gif\\gallery\\isotype\\checklist\\ruta-para-revisar-el-cierre-6150b5ca-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\isotype\\checklist\\ruta-para-revisar-el-cierre-6150b5ca-contact-sheet.png"
     },
     {
       "phaseId": "result",
@@ -601,13 +613,13 @@
         "result · pausa",
         "result · salida"
       ],
-      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-b369da1b\\docs\\narrative-gif\\gallery\\isotype\\checklist\\ruta-para-revisar-el-cierre-6150b5ca-contact-sheet.png"
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\isotype\\checklist\\ruta-para-revisar-el-cierre-6150b5ca-contact-sheet.png"
     }
   ],
   "palette": {
-    "colors": 48,
-    "meanAbsoluteChannelError": 0.03,
-    "maximumChannelError": 8,
+    "colors": 55,
+    "meanAbsoluteChannelError": 0.044,
+    "maximumChannelError": 10,
     "sampledFrames": 33
   },
   "phaseHoldsVerified": [
