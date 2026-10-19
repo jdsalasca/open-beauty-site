@@ -25,6 +25,7 @@ interface FrameEnv {
   /** Eased arc derived from `t`: 0 at both ends, 1 mid-loop (see loopPhase). */
   phase: number;
   seed: number;
+  diagnostics?: string[];
 }
 
 interface FontSpec {
@@ -296,6 +297,7 @@ function layoutTitle(
     family: string;
     weight?: number;
     lineHeight: number;
+    diagnostics?: string[];
   },
 ): TitleLayout {
   for (let size = Math.floor(options.maxSize); size >= options.minSize; size -= 2) {
@@ -312,8 +314,11 @@ function layoutTitle(
     weight: options.weight ?? 400,
     color: '#000',
   };
+  const lines = wrapLines(ctx, text, options.maxWidth, font);
+  const diagnostic = `gif-title-overflow: title needs ${lines.length} line(s) at the minimum size; all text is retained. Shorten the copy or use the narrative layout.`;
+  if (options.diagnostics && !options.diagnostics.includes(diagnostic)) options.diagnostics.push(diagnostic);
   return {
-    lines: wrapLines(ctx, text, options.maxWidth, font).slice(0, options.maxLines),
+    lines,
     size: options.minSize,
     lineHeight: options.minSize * options.lineHeight,
   };
@@ -579,6 +584,7 @@ function frameRenaissance(env: FrameEnv): void {
     family: titleFontFamily,
     weight: 400,
     lineHeight: 0.98,
+    diagnostics: env.diagnostics,
   });
   const blockHeight = layout.lines.length * layout.lineHeight;
   const centerY = h * 0.51;
@@ -745,6 +751,7 @@ function frameBrutalist(env: FrameEnv): void {
     family: 'Archivo Black',
     weight: 400,
     lineHeight: 0.84,
+    diagnostics: env.diagnostics,
   });
   const blockHeight = layout.lines.length * layout.lineHeight;
   const firstBaseline = h * 0.5 - blockHeight / 2 + layout.size * 0.8;
@@ -908,6 +915,7 @@ function framePapercraft(env: FrameEnv): void {
     family: 'Fraunces',
     weight: 400,
     lineHeight: 1.02,
+    diagnostics: env.diagnostics,
   });
   const blockHeight = layout.lines.length * layout.lineHeight;
   const titleTop = -cardH * 0.16 - blockHeight / 2 + layout.size * 0.78;
@@ -1227,6 +1235,7 @@ function frameShowcase(env: FrameEnv): void {
     family,
     weight: 400,
     lineHeight: 1.02,
+    diagnostics: env.diagnostics,
   });
   const firstBaseline = h / 2 - ((layout.lines.length - 1) * layout.lineHeight) / 2 + layout.size * 0.34;
   drawTitleLines(
@@ -1334,6 +1343,8 @@ export interface GifFrameRequest {
   template?: Template;
   seed?: number;
   maxxing?: boolean;
+  /** Optional diagnostic sink; added compatibly for callers that need overflow feedback. */
+  diagnostics?: string[];
 }
 
 /**
@@ -1364,6 +1375,7 @@ function paintFrame(
     t,
     phase: loopPhase(t),
     seed: request.seed ?? 7,
+    diagnostics: request.diagnostics,
   });
   if (request.maxxing) drawMaxGif(ctx, width, height, preset, t);
   ctx.restore();
@@ -1526,6 +1538,7 @@ export async function createGif(style: StyleSlug, options: GifQualityOptions, ou
     template,
     seed: options.seed,
     maxxing: options.maxxing,
+    diagnostics: warnings,
   };
 
   // One global palette per GIF: sample frames spread across the whole loop so
