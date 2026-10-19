@@ -1,0 +1,652 @@
+{
+  "schemaVersion": 1,
+  "commit": "aaa4322afd9cf89b6ef3a8c7a1ae542fcef5ed31",
+  "brief": {
+    "style": "renaissance",
+    "kind": "narrative-gif",
+    "locale": "es",
+    "audience": "Producto en Sprint Review",
+    "title": "Cambios que se revisan",
+    "status": "in-review",
+    "phases": [
+      {
+        "id": "before",
+        "label": "Antes",
+        "text": "La guía podía cambiar sin indicar qué revisar.",
+        "visual": {
+          "kind": "comparison",
+          "state": "unreviewed"
+        }
+      },
+      {
+        "id": "change",
+        "label": "Cambio",
+        "text": "La propuesta añade una señal junto al cambio para orientar la lectura.",
+        "visual": {
+          "kind": "comparison",
+          "state": "flagged"
+        }
+      },
+      {
+        "id": "result",
+        "label": "Resultado esperado",
+        "text": "El equipo podrá comprobar si la señal facilita la revisión antes del cierre.",
+        "visual": {
+          "kind": "comparison",
+          "state": "review-ready"
+        }
+      }
+    ],
+    "playback": {
+      "minReadableHoldMs": 5000,
+      "transitionMs": 650,
+      "loop": true
+    },
+    "output": {
+      "width": 1280,
+      "height": 720,
+      "formats": [
+        "gif",
+        "png"
+      ],
+      "preset": "review-1280x720"
+    },
+    "seed": 7
+  },
+  "briefSha256": "7cff14627603d885bf4737029b4dd7f77d6e34523f3f4de077c4f3ee6bb313e4",
+  "style": "renaissance",
+  "subfamily": null,
+  "seed": 7,
+  "renderer": {
+    "narrative": "narrative-core/0.1.0",
+    "canvas": "@napi-rs/canvas@1.0.11",
+    "gif": "gifenc@1.0.3",
+    "scene": "renaissance-fresco/1.0.0"
+  },
+  "fonts": {
+    "bundleVersion": "repo-bundled-ofl-1",
+    "roles": {
+      "display": {
+        "family": "EB Garamond",
+        "weight": 600
+      },
+      "reading": {
+        "family": "EB Garamond",
+        "weight": 400
+      },
+      "label": {
+        "family": "EB Garamond",
+        "weight": 600
+      },
+      "figure": {
+        "family": "EB Garamond",
+        "weight": 600
+      },
+      "annotation": {
+        "family": "EB Garamond",
+        "weight": 400
+      }
+    }
+  },
+  "dimensions": {
+    "width": 1280,
+    "height": 720
+  },
+  "formats": [
+    "gif",
+    "png"
+  ],
+  "decoded": {
+    "width": 1280,
+    "height": 720,
+    "frameCount": 33,
+    "delaysMs": [
+      80,
+      5000,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      80,
+      5000,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      80,
+      5000,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70
+    ],
+    "durationMs": 17190,
+    "loopCount": 0,
+    "integrity": true
+  },
+  "ffprobe": {
+    "available": true,
+    "passed": true,
+    "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode."
+  },
+  "bytes": {
+    "gif": 1010896,
+    "png": 67677,
+    "contactSheet": 66219
+  },
+  "hashes": {
+    "briefSha256": "7cff14627603d885bf4737029b4dd7f77d6e34523f3f4de077c4f3ee6bb313e4",
+    "gifSha256": "d2ce8be4b93b24871b49a17dbd5ab870447bf8c1078439bc2dff1b8eaec8a5c5",
+    "pngSha256": "89688fa5ba96766e4e8d9229a1e752c3d16867dcb618bccca246785e926ee280",
+    "contactSheetSha256": "59cd7c5a5bbf1f6069ae1c1e2daaafd2e96c9b139d9e1f7508a66135fd750170"
+  },
+  "files": {
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\renaissance\\comparison\\cambios-que-se-revisan-7cff1462.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\renaissance\\comparison\\cambios-que-se-revisan-7cff1462.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\renaissance\\comparison\\cambios-que-se-revisan-7cff1462-contact-sheet.png"
+  },
+  "controls": [
+    {
+      "name": "gif-integrity",
+      "passed": true,
+      "detail": "Independent LZW decode and GIF trailer passed.",
+      "source": "decoded"
+    },
+    {
+      "name": "dimensions",
+      "passed": true,
+      "detail": "decoded 1280×720; requested 1280×720",
+      "source": "decoded"
+    },
+    {
+      "name": "frame-count",
+      "passed": true,
+      "detail": "33 decoded frame(s)",
+      "source": "decoded"
+    },
+    {
+      "name": "duration",
+      "passed": true,
+      "detail": "17190ms decoded; holds exclude transitions",
+      "source": "decoded"
+    },
+    {
+      "name": "loop",
+      "passed": true,
+      "detail": "repeat=0; result-to-before bridge is explicit",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-holds",
+      "passed": true,
+      "detail": "before 5000/5000ms, change 5000/5000ms, result 5000/5000ms",
+      "source": "decoded"
+    },
+    {
+      "name": "ffprobe-crosscheck",
+      "passed": true,
+      "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode.",
+      "source": "decoded"
+    },
+    {
+      "name": "files",
+      "passed": true,
+      "detail": "GIF 1010896B · PNG 67677B · contact 66219B",
+      "source": "decoded"
+    },
+    {
+      "name": "scene-renderer-registered",
+      "passed": true,
+      "detail": "renderer renaissance/renaissance-fresco/1.0.0 exists; visual style likeness remains a separate review",
+      "source": "source"
+    },
+    {
+      "name": "type-system",
+      "passed": true,
+      "detail": "style typeSystem tokens are attached to raster role registry",
+      "source": "source"
+    },
+    {
+      "name": "narrative-subfamily",
+      "passed": true,
+      "detail": "renaissance/default selects an explicit narrative art direction",
+      "source": "source"
+    },
+    {
+      "name": "font-registration-and-glyphs",
+      "passed": true,
+      "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "distinct-frames",
+      "passed": true,
+      "detail": "27 unique composited frame(s); a format-valid static GIF does not pass",
+      "source": "pixels"
+    },
+    {
+      "name": "palette-loss",
+      "passed": true,
+      "detail": "61 colors; mean channel loss 0.025, max 9; sampled 33 frames",
+      "source": "pixels"
+    },
+    {
+      "name": "title-complete",
+      "passed": true,
+      "detail": "Cambios que se / revisan",
+      "source": "source"
+    },
+    {
+      "name": "phase-before-label-complete",
+      "passed": true,
+      "detail": "Antes",
+      "source": "source"
+    },
+    {
+      "name": "phase-before-text-complete",
+      "passed": true,
+      "detail": "La guía podía cambiar sin / indicar qué revisar.",
+      "source": "source"
+    },
+    {
+      "name": "phase-change-label-complete",
+      "passed": true,
+      "detail": "Cambio",
+      "source": "source"
+    },
+    {
+      "name": "phase-change-text-complete",
+      "passed": true,
+      "detail": "La propuesta añade una / señal junto al cambio / para orientar la lectura.",
+      "source": "source"
+    },
+    {
+      "name": "phase-result-label-complete",
+      "passed": true,
+      "detail": "Resultado esperado",
+      "source": "source"
+    },
+    {
+      "name": "phase-result-text-complete",
+      "passed": true,
+      "detail": "El equipo podrá / comprobar si la señal / facilita la revisión antes / del cierre.",
+      "source": "source"
+    },
+    {
+      "name": "registered-fonts",
+      "passed": true,
+      "detail": "all role faces and Spanish glyphs rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "review-size-thresholds",
+      "passed": true,
+      "detail": "title 69px; phase body >=36px; label >=24px",
+      "source": "source"
+    },
+    {
+      "name": "640x360-effective-size",
+      "passed": true,
+      "detail": "title 34.5px; body min 28.0px (requires >=20px); label min 15.0px",
+      "source": "source"
+    },
+    {
+      "name": "composition-balance",
+      "passed": true,
+      "detail": "proxy; 8×4 decoded-pixel grid against #F6EDDD: empty cells 21.9%, text-column vertical fill 75.0%, art/object area outside the text column 50.0%, largest empty rectangle 12.5%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+      "source": "pixels"
+    },
+    {
+      "name": "contrast",
+      "passed": true,
+      "detail": "rendered text colors: ink 13.53:1; label 13.53:1 (not an OCR or per-pixel text measurement)",
+      "source": "source"
+    },
+    {
+      "name": "safe-zone-and-collisions",
+      "passed": true,
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+      "source": "source"
+    },
+    {
+      "name": "stable-reading-holds",
+      "passed": true,
+      "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-count-and-copy",
+      "passed": true,
+      "detail": "3 complete phases; all copy retained",
+      "source": "source"
+    },
+    {
+      "name": "shared-object-identity",
+      "passed": true,
+      "detail": "One scene object instance is created and passed to every phase frame.",
+      "source": "source"
+    },
+    {
+      "name": "visual-state-change",
+      "passed": true,
+      "detail": "Phase states differ and exported frames are not identical.",
+      "source": "pixels"
+    },
+    {
+      "name": "result-follows-status",
+      "passed": true,
+      "detail": "status=in-review; final label=\"Resultado esperado\"",
+      "source": "source"
+    }
+  ],
+  "evaluation": {
+    "technical-integrity": {
+      "status": "pass",
+      "controls": [
+        {
+          "name": "gif-integrity",
+          "passed": true,
+          "detail": "Independent LZW decode and GIF trailer passed.",
+          "source": "decoded"
+        },
+        {
+          "name": "dimensions",
+          "passed": true,
+          "detail": "decoded 1280×720; requested 1280×720",
+          "source": "decoded"
+        },
+        {
+          "name": "frame-count",
+          "passed": true,
+          "detail": "33 decoded frame(s)",
+          "source": "decoded"
+        },
+        {
+          "name": "duration",
+          "passed": true,
+          "detail": "17190ms decoded; holds exclude transitions",
+          "source": "decoded"
+        },
+        {
+          "name": "loop",
+          "passed": true,
+          "detail": "repeat=0; result-to-before bridge is explicit",
+          "source": "decoded"
+        },
+        {
+          "name": "phase-holds",
+          "passed": true,
+          "detail": "before 5000/5000ms, change 5000/5000ms, result 5000/5000ms",
+          "source": "decoded"
+        },
+        {
+          "name": "ffprobe-crosscheck",
+          "passed": true,
+          "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode.",
+          "source": "decoded"
+        },
+        {
+          "name": "files",
+          "passed": true,
+          "detail": "GIF 1010896B · PNG 67677B · contact 66219B",
+          "source": "decoded"
+        }
+      ]
+    },
+    "style-conformance": {
+      "status": "pending",
+      "sourceStatus": "pass",
+      "pixelStatus": "pass",
+      "controls": [
+        {
+          "name": "scene-renderer-registered",
+          "passed": true,
+          "detail": "renderer renaissance/renaissance-fresco/1.0.0 exists; visual style likeness remains a separate review",
+          "source": "source"
+        },
+        {
+          "name": "type-system",
+          "passed": true,
+          "detail": "style typeSystem tokens are attached to raster role registry",
+          "source": "source"
+        },
+        {
+          "name": "narrative-subfamily",
+          "passed": true,
+          "detail": "renaissance/default selects an explicit narrative art direction",
+          "source": "source"
+        },
+        {
+          "name": "font-registration-and-glyphs",
+          "passed": true,
+          "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "distinct-frames",
+          "passed": true,
+          "detail": "27 unique composited frame(s); a format-valid static GIF does not pass",
+          "source": "pixels"
+        },
+        {
+          "name": "palette-loss",
+          "passed": true,
+          "detail": "61 colors; mean channel loss 0.025, max 9; sampled 33 frames",
+          "source": "pixels"
+        }
+      ],
+      "note": "Source checks identify renderer/font tokens; pixel checks measure frame change and palette loss. Neither substitutes for visual review."
+    },
+    "rendered-legibility": {
+      "status": "pending",
+      "controls": [
+        {
+          "name": "title-complete",
+          "passed": true,
+          "detail": "Cambios que se / revisan",
+          "source": "source"
+        },
+        {
+          "name": "phase-before-label-complete",
+          "passed": true,
+          "detail": "Antes",
+          "source": "source"
+        },
+        {
+          "name": "phase-before-text-complete",
+          "passed": true,
+          "detail": "La guía podía cambiar sin / indicar qué revisar.",
+          "source": "source"
+        },
+        {
+          "name": "phase-change-label-complete",
+          "passed": true,
+          "detail": "Cambio",
+          "source": "source"
+        },
+        {
+          "name": "phase-change-text-complete",
+          "passed": true,
+          "detail": "La propuesta añade una / señal junto al cambio / para orientar la lectura.",
+          "source": "source"
+        },
+        {
+          "name": "phase-result-label-complete",
+          "passed": true,
+          "detail": "Resultado esperado",
+          "source": "source"
+        },
+        {
+          "name": "phase-result-text-complete",
+          "passed": true,
+          "detail": "El equipo podrá / comprobar si la señal / facilita la revisión antes / del cierre.",
+          "source": "source"
+        },
+        {
+          "name": "registered-fonts",
+          "passed": true,
+          "detail": "all role faces and Spanish glyphs rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "review-size-thresholds",
+          "passed": true,
+          "detail": "title 69px; phase body >=36px; label >=24px",
+          "source": "source"
+        },
+        {
+          "name": "640x360-effective-size",
+          "passed": true,
+          "detail": "title 34.5px; body min 28.0px (requires >=20px); label min 15.0px",
+          "source": "source"
+        },
+        {
+          "name": "composition-balance",
+          "passed": true,
+          "detail": "proxy; 8×4 decoded-pixel grid against #F6EDDD: empty cells 21.9%, text-column vertical fill 75.0%, art/object area outside the text column 50.0%, largest empty rectangle 12.5%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+          "source": "pixels"
+        },
+        {
+          "name": "contrast",
+          "passed": true,
+          "detail": "rendered text colors: ink 13.53:1; label 13.53:1 (not an OCR or per-pixel text measurement)",
+          "source": "source"
+        },
+        {
+          "name": "safe-zone-and-collisions",
+          "passed": true,
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+          "source": "source"
+        },
+        {
+          "name": "stable-reading-holds",
+          "passed": true,
+          "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+          "source": "decoded"
+        }
+      ],
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
+    },
+    "narrative": {
+      "status": "pending",
+      "controls": [
+        {
+          "name": "phase-count-and-copy",
+          "passed": true,
+          "detail": "3 complete phases; all copy retained",
+          "source": "source"
+        },
+        {
+          "name": "shared-object-identity",
+          "passed": true,
+          "detail": "One scene object instance is created and passed to every phase frame.",
+          "source": "source"
+        },
+        {
+          "name": "visual-state-change",
+          "passed": true,
+          "detail": "Phase states differ and exported frames are not identical.",
+          "source": "pixels"
+        },
+        {
+          "name": "result-follows-status",
+          "passed": true,
+          "detail": "status=in-review; final label=\"Resultado esperado\"",
+          "source": "source"
+        }
+      ],
+      "note": "Automated checks verify phase/state structure and shared object identity; causal meaning still needs review."
+    },
+    "visual-review": {
+      "status": "pending",
+      "criteria": [
+        "identity at 200px thumbnail",
+        "full text and contrast at 640×360",
+        "style material in native frame",
+        "same object and causal change across phases",
+        "result faithful to status",
+        "deliberate loop restart"
+      ],
+      "evidence": []
+    },
+    "publicationRecommendation": "none"
+  },
+  "phaseCaptures": [
+    {
+      "phaseId": "before",
+      "labels": [
+        "before · inicio",
+        "before · pausa",
+        "before · salida",
+        "reinicio del loop"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\renaissance\\comparison\\cambios-que-se-revisan-7cff1462-contact-sheet.png"
+    },
+    {
+      "phaseId": "change",
+      "labels": [
+        "change · inicio",
+        "change · pausa",
+        "change · salida"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\renaissance\\comparison\\cambios-que-se-revisan-7cff1462-contact-sheet.png"
+    },
+    {
+      "phaseId": "result",
+      "labels": [
+        "result · inicio",
+        "result · pausa",
+        "result · salida"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\renaissance\\comparison\\cambios-que-se-revisan-7cff1462-contact-sheet.png"
+    }
+  ],
+  "palette": {
+    "colors": 61,
+    "meanAbsoluteChannelError": 0.025,
+    "maximumChannelError": 9,
+    "sampledFrames": 33
+  },
+  "phaseHoldsVerified": [
+    {
+      "phaseId": "before",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    },
+    {
+      "phaseId": "change",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    },
+    {
+      "phaseId": "result",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    }
+  ],
+  "resourceEstimate": {
+    "pixelFrames": 30412800,
+    "maxPixelFrames": 96000000,
+    "memoryBytes": 107634688,
+    "maxMemoryBytes": 268435456
+  },
+  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed."
+}

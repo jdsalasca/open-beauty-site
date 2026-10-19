@@ -1,0 +1,1091 @@
+{
+  "schemaVersion": 3,
+  "commit": "8e1695849bfeb327907de744a3b3f9168f063606",
+  "brief": {
+    "style": "brutalist",
+    "subfamily": "documentary",
+    "kind": "narrative-gif",
+    "locale": "es",
+    "audience": "Producto en Sprint Review",
+    "title": "Lectura antes del cierre",
+    "status": "in-review",
+    "badgePolicy": "workflow",
+    "phases": [
+      {
+        "id": "before",
+        "label": "Antes",
+        "text": "La ficha puede llegar sin una lectura compartida.",
+        "visual": {
+          "kind": "checklist",
+          "state": "unreviewed",
+          "semantic": {
+            "primitive": "legacy-illustration",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "legacy-object",
+                "kind": "illustration",
+                "illustrative": true
+              }
+            ],
+            "relations": [],
+            "states": {
+              "legacy-object": "unreviewed"
+            },
+            "actions": []
+          }
+        }
+      },
+      {
+        "id": "change",
+        "label": "Cambio",
+        "text": "Una lista deja visibles los puntos por comprobar.",
+        "visual": {
+          "kind": "checklist",
+          "state": "flagged",
+          "semantic": {
+            "primitive": "legacy-illustration",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "legacy-object",
+                "kind": "illustration",
+                "illustrative": true
+              }
+            ],
+            "relations": [],
+            "states": {
+              "legacy-object": "flagged"
+            },
+            "actions": []
+          }
+        }
+      },
+      {
+        "id": "result",
+        "label": "Resultado esperado",
+        "text": "El equipo termina la revisión antes de cerrar la ficha.",
+        "visual": {
+          "kind": "checklist",
+          "state": "review-ready",
+          "semantic": {
+            "primitive": "legacy-illustration",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "legacy-object",
+                "kind": "illustration",
+                "illustrative": true
+              }
+            ],
+            "relations": [],
+            "states": {
+              "legacy-object": "review-ready"
+            },
+            "actions": []
+          }
+        }
+      }
+    ],
+    "playback": {
+      "preset": "readable",
+      "minReadableHoldMs": 5000,
+      "transitionMs": 900,
+      "loop": true,
+      "totalDurationBudgetMs": 30000
+    },
+    "output": {
+      "width": 1280,
+      "height": 720,
+      "formats": [
+        "gif",
+        "png"
+      ],
+      "preset": "review-1280x720"
+    },
+    "seed": 29,
+    "workflowStatus": "in-review",
+    "outcome": {
+      "mode": "expected"
+    },
+    "illustrative": true
+  },
+  "briefSha256": "b0ca49512354e6a46b1683b1adaab03517e97a27b1f958610a3daa30f00630b9",
+  "style": "brutalist",
+  "subfamily": "documentary",
+  "workflowStatus": "in-review",
+  "outcome": {
+    "mode": "expected"
+  },
+  "evidenceClassification": "illustrative",
+  "illustrative": true,
+  "artOnly": false,
+  "seed": 29,
+  "renderer": {
+    "narrative": "narrative-core/0.2.0",
+    "canvas": "@napi-rs/canvas@1.0.11",
+    "gif": "gifenc@1.0.3",
+    "scene": "brutalist-documentary/1.1.0"
+  },
+  "fonts": {
+    "bundleVersion": "repo-bundled-ofl-1",
+    "roles": {
+      "display": {
+        "family": "Archivo Black",
+        "weight": 400
+      },
+      "reading": {
+        "family": "Space Mono",
+        "weight": 400
+      },
+      "label": {
+        "family": "Space Mono",
+        "weight": 700
+      },
+      "figure": {
+        "family": "Archivo Black",
+        "weight": 400
+      },
+      "annotation": {
+        "family": "Space Mono",
+        "weight": 400
+      }
+    }
+  },
+  "dimensions": {
+    "width": 1280,
+    "height": 720
+  },
+  "formats": [
+    "gif",
+    "png"
+  ],
+  "decoded": {
+    "width": 1280,
+    "height": 720,
+    "frameCount": 42,
+    "delaysMs": [
+      80,
+      5000,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      80,
+      5000,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      80,
+      5000,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70
+    ],
+    "durationMs": 17940,
+    "loopCount": 0,
+    "integrity": true
+  },
+  "ffprobe": {
+    "available": true,
+    "passed": true,
+    "detail": "ffprobe 1280×720; 42 frames; 17940ms; matches the independent LZW decode."
+  },
+  "bytes": {
+    "gif": 1444112,
+    "png": 69316,
+    "contactSheet": 86974
+  },
+  "hashes": {
+    "briefSha256": "b0ca49512354e6a46b1683b1adaab03517e97a27b1f958610a3daa30f00630b9",
+    "gifSha256": "c91f219315ce53860ea7bcdcf367e06801e14596beece1c26c8f7c9d21481618",
+    "pngSha256": "301b48d9e98668107af4f7ca2519269cd0d58f9a9180acc2d4d95efbb93cde07",
+    "contactSheetSha256": "50e09cd1b2db1e0f46ba1d8ed75d9537989dd5fb074a57f51a601bea878ad1d7"
+  },
+  "files": {
+    "gif": "../../../../pilots/brutalist/lectura-antes-del-cierre/lectura-antes-del-cierre-b49056b8.gif",
+    "png": "../../../../pilots/brutalist/lectura-antes-del-cierre/lectura-antes-del-cierre-b49056b8.png",
+    "contactSheet": "../../../../pilots/brutalist/lectura-antes-del-cierre/lectura-antes-del-cierre-b49056b8-contact-sheet.png"
+  },
+  "controls": [
+    {
+      "name": "gif-integrity",
+      "passed": true,
+      "detail": "Independent LZW decode and GIF trailer passed.",
+      "source": "decoded"
+    },
+    {
+      "name": "dimensions",
+      "passed": true,
+      "detail": "decoded 1280×720; requested 1280×720",
+      "source": "decoded"
+    },
+    {
+      "name": "frame-count",
+      "passed": true,
+      "detail": "42 decoded frame(s)",
+      "source": "decoded"
+    },
+    {
+      "name": "duration",
+      "passed": true,
+      "detail": "17940ms decoded; holds exclude transitions",
+      "source": "decoded"
+    },
+    {
+      "name": "loop",
+      "passed": true,
+      "detail": "repeat=0; result-to-before bridge is explicit",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-holds",
+      "passed": true,
+      "detail": "before 5000/5000ms, change 5000/5000ms, result 5000/5000ms",
+      "source": "decoded"
+    },
+    {
+      "name": "ffprobe-crosscheck",
+      "passed": true,
+      "detail": "ffprobe 1280×720; 42 frames; 17940ms; matches the independent LZW decode.",
+      "source": "decoded"
+    },
+    {
+      "name": "files",
+      "passed": true,
+      "detail": "GIF 1444112B · PNG 69316B · contact 86974B",
+      "source": "decoded"
+    },
+    {
+      "name": "scene-renderer-registered",
+      "passed": true,
+      "detail": "renderer brutalist/brutalist-documentary/1.1.0 exists; visual style likeness remains a separate review",
+      "source": "source"
+    },
+    {
+      "name": "type-system",
+      "passed": true,
+      "detail": "style typeSystem tokens are attached to raster role registry",
+      "source": "source"
+    },
+    {
+      "name": "narrative-subfamily",
+      "passed": true,
+      "detail": "brutalist/documentary selects an explicit narrative art direction",
+      "source": "source"
+    },
+    {
+      "name": "font-registration-and-glyphs",
+      "passed": true,
+      "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "distinct-frames",
+      "passed": true,
+      "detail": "36 unique composited frame(s); a format-valid static GIF does not pass",
+      "source": "pixels"
+    },
+    {
+      "name": "palette-loss",
+      "passed": true,
+      "detail": "70 colors; mean channel loss 0.031, max 8; sampled 42 frames",
+      "source": "pixels"
+    },
+    {
+      "name": "title-complete",
+      "passed": true,
+      "detail": "Lectura antes del / cierre",
+      "source": "source"
+    },
+    {
+      "name": "phase-before-label-complete",
+      "passed": true,
+      "detail": "Antes",
+      "source": "source"
+    },
+    {
+      "name": "phase-before-text-complete",
+      "passed": true,
+      "detail": "La ficha puede llegar / sin una lectura / compartida.",
+      "source": "source"
+    },
+    {
+      "name": "phase-change-label-complete",
+      "passed": true,
+      "detail": "Cambio",
+      "source": "source"
+    },
+    {
+      "name": "phase-change-text-complete",
+      "passed": true,
+      "detail": "Una lista deja / visibles los puntos / por comprobar.",
+      "source": "source"
+    },
+    {
+      "name": "phase-result-label-complete",
+      "passed": true,
+      "detail": "Resultado esperado",
+      "source": "source"
+    },
+    {
+      "name": "phase-result-text-complete",
+      "passed": true,
+      "detail": "El equipo termina la / revisión antes de / cerrar la ficha.",
+      "source": "source"
+    },
+    {
+      "name": "registered-fonts",
+      "passed": true,
+      "detail": "all role faces and Spanish glyphs rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "review-size-thresholds",
+      "passed": true,
+      "detail": "title 69px; phase body >=36px; label >=24px",
+      "source": "source"
+    },
+    {
+      "name": "640x360-effective-size",
+      "passed": true,
+      "detail": "title 34.5px; body min 28.0px (requires >=20px); label min 15.0px",
+      "source": "source"
+    },
+    {
+      "name": "composition-balance",
+      "passed": true,
+      "detail": "proxy; 8×4 decoded-pixel grid against #F2EFE4: empty cells 15.6%, text-column vertical fill 100.0%, art/object area outside the text column 37.5%, largest empty rectangle 9.4%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: before · pausa: empty 15.6%, text fill 100.0%, art 37.5%, largest empty 9.4% | before → change · punto medio de transición: empty 12.5%, text fill 100.0%, art 37.5%, largest empty 9.4% | change · pausa: empty 12.5%, text fill 100.0%, art 37.5%, largest empty 9.4% | change → result · punto medio de transición: empty 9.4%, text fill 100.0%, art 37.5%, largest empty 6.3% | result · pausa: empty 9.4%, text fill 100.0%, art 37.5%, largest empty 6.3% | result → before · unión del ciclo: empty 15.6%, text fill 100.0%, art 37.5%, largest empty 9.4%",
+      "source": "pixels"
+    },
+    {
+      "name": "contrast",
+      "passed": true,
+      "detail": "rendered text colors: ink 17.10:1; label 17.10:1 (not an OCR or per-pixel text measurement)",
+      "source": "source"
+    },
+    {
+      "name": "safe-zone-and-collisions",
+      "passed": true,
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+      "source": "source"
+    },
+    {
+      "name": "stable-reading-holds",
+      "passed": true,
+      "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-count-and-copy",
+      "passed": true,
+      "detail": "3 complete phases; all copy retained",
+      "source": "source"
+    },
+    {
+      "name": "shared-object-identity",
+      "passed": true,
+      "detail": "One scene object instance is created and passed to every phase frame.",
+      "source": "source"
+    },
+    {
+      "name": "visual-state-change",
+      "passed": true,
+      "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+      "source": "pixels"
+    },
+    {
+      "name": "workflow-outcome-separation",
+      "passed": true,
+      "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+      "source": "source"
+    },
+    {
+      "name": "outcome-evidence",
+      "passed": true,
+      "detail": "Expected outcome; no benefit measurement is claimed.",
+      "source": "source"
+    },
+    {
+      "name": "result-follows-outcome",
+      "passed": true,
+      "detail": "outcome=expected; final label=\"Resultado esperado\"",
+      "source": "source"
+    },
+    {
+      "name": "semantic-illustrative-data",
+      "passed": true,
+      "detail": "brief illustrative=true; semantic phase flags=true,true,true",
+      "source": "source"
+    },
+    {
+      "name": "semantic-object-transformation",
+      "passed": false,
+      "status": "pending",
+      "detail": "Pending: this scene did not declare object regions for every phase hold; full-frame or text changes cannot substitute.",
+      "source": "decoded"
+    }
+  ],
+  "evaluation": {
+    "technical-integrity": {
+      "status": "pass",
+      "controls": [
+        {
+          "name": "gif-integrity",
+          "passed": true,
+          "detail": "Independent LZW decode and GIF trailer passed.",
+          "source": "decoded"
+        },
+        {
+          "name": "dimensions",
+          "passed": true,
+          "detail": "decoded 1280×720; requested 1280×720",
+          "source": "decoded"
+        },
+        {
+          "name": "frame-count",
+          "passed": true,
+          "detail": "42 decoded frame(s)",
+          "source": "decoded"
+        },
+        {
+          "name": "duration",
+          "passed": true,
+          "detail": "17940ms decoded; holds exclude transitions",
+          "source": "decoded"
+        },
+        {
+          "name": "loop",
+          "passed": true,
+          "detail": "repeat=0; result-to-before bridge is explicit",
+          "source": "decoded"
+        },
+        {
+          "name": "phase-holds",
+          "passed": true,
+          "detail": "before 5000/5000ms, change 5000/5000ms, result 5000/5000ms",
+          "source": "decoded"
+        },
+        {
+          "name": "ffprobe-crosscheck",
+          "passed": true,
+          "detail": "ffprobe 1280×720; 42 frames; 17940ms; matches the independent LZW decode.",
+          "source": "decoded"
+        },
+        {
+          "name": "files",
+          "passed": true,
+          "detail": "GIF 1444112B · PNG 69316B · contact 86974B",
+          "source": "decoded"
+        }
+      ]
+    },
+    "style-conformance": {
+      "status": "pending",
+      "sourceStatus": "pass",
+      "pixelStatus": "pass",
+      "controls": [
+        {
+          "name": "scene-renderer-registered",
+          "passed": true,
+          "detail": "renderer brutalist/brutalist-documentary/1.1.0 exists; visual style likeness remains a separate review",
+          "source": "source"
+        },
+        {
+          "name": "type-system",
+          "passed": true,
+          "detail": "style typeSystem tokens are attached to raster role registry",
+          "source": "source"
+        },
+        {
+          "name": "narrative-subfamily",
+          "passed": true,
+          "detail": "brutalist/documentary selects an explicit narrative art direction",
+          "source": "source"
+        },
+        {
+          "name": "font-registration-and-glyphs",
+          "passed": true,
+          "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "distinct-frames",
+          "passed": true,
+          "detail": "36 unique composited frame(s); a format-valid static GIF does not pass",
+          "source": "pixels"
+        },
+        {
+          "name": "palette-loss",
+          "passed": true,
+          "detail": "70 colors; mean channel loss 0.031, max 8; sampled 42 frames",
+          "source": "pixels"
+        }
+      ],
+      "note": "Source checks identify renderer/font tokens; pixel checks measure frame change and palette loss. Neither substitutes for visual review."
+    },
+    "rendered-legibility": {
+      "status": "pending",
+      "controls": [
+        {
+          "name": "title-complete",
+          "passed": true,
+          "detail": "Lectura antes del / cierre",
+          "source": "source"
+        },
+        {
+          "name": "phase-before-label-complete",
+          "passed": true,
+          "detail": "Antes",
+          "source": "source"
+        },
+        {
+          "name": "phase-before-text-complete",
+          "passed": true,
+          "detail": "La ficha puede llegar / sin una lectura / compartida.",
+          "source": "source"
+        },
+        {
+          "name": "phase-change-label-complete",
+          "passed": true,
+          "detail": "Cambio",
+          "source": "source"
+        },
+        {
+          "name": "phase-change-text-complete",
+          "passed": true,
+          "detail": "Una lista deja / visibles los puntos / por comprobar.",
+          "source": "source"
+        },
+        {
+          "name": "phase-result-label-complete",
+          "passed": true,
+          "detail": "Resultado esperado",
+          "source": "source"
+        },
+        {
+          "name": "phase-result-text-complete",
+          "passed": true,
+          "detail": "El equipo termina la / revisión antes de / cerrar la ficha.",
+          "source": "source"
+        },
+        {
+          "name": "registered-fonts",
+          "passed": true,
+          "detail": "all role faces and Spanish glyphs rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "review-size-thresholds",
+          "passed": true,
+          "detail": "title 69px; phase body >=36px; label >=24px",
+          "source": "source"
+        },
+        {
+          "name": "640x360-effective-size",
+          "passed": true,
+          "detail": "title 34.5px; body min 28.0px (requires >=20px); label min 15.0px",
+          "source": "source"
+        },
+        {
+          "name": "composition-balance",
+          "passed": true,
+          "detail": "proxy; 8×4 decoded-pixel grid against #F2EFE4: empty cells 15.6%, text-column vertical fill 100.0%, art/object area outside the text column 37.5%, largest empty rectangle 9.4%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score. Per-frame: before · pausa: empty 15.6%, text fill 100.0%, art 37.5%, largest empty 9.4% | before → change · punto medio de transición: empty 12.5%, text fill 100.0%, art 37.5%, largest empty 9.4% | change · pausa: empty 12.5%, text fill 100.0%, art 37.5%, largest empty 9.4% | change → result · punto medio de transición: empty 9.4%, text fill 100.0%, art 37.5%, largest empty 6.3% | result · pausa: empty 9.4%, text fill 100.0%, art 37.5%, largest empty 6.3% | result → before · unión del ciclo: empty 15.6%, text fill 100.0%, art 37.5%, largest empty 9.4%",
+          "source": "pixels"
+        },
+        {
+          "name": "contrast",
+          "passed": true,
+          "detail": "rendered text colors: ink 17.10:1; label 17.10:1 (not an OCR or per-pixel text measurement)",
+          "source": "source"
+        },
+        {
+          "name": "safe-zone-and-collisions",
+          "passed": true,
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+          "source": "source"
+        },
+        {
+          "name": "stable-reading-holds",
+          "passed": true,
+          "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+          "source": "decoded"
+        }
+      ],
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
+    },
+    "narrative": {
+      "status": "pending",
+      "controls": [
+        {
+          "name": "phase-count-and-copy",
+          "passed": true,
+          "detail": "3 complete phases; all copy retained",
+          "source": "source"
+        },
+        {
+          "name": "shared-object-identity",
+          "passed": true,
+          "detail": "One scene object instance is created and passed to every phase frame.",
+          "source": "source"
+        },
+        {
+          "name": "visual-state-change",
+          "passed": true,
+          "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+          "source": "pixels"
+        },
+        {
+          "name": "workflow-outcome-separation",
+          "passed": true,
+          "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+          "source": "source"
+        },
+        {
+          "name": "outcome-evidence",
+          "passed": true,
+          "detail": "Expected outcome; no benefit measurement is claimed.",
+          "source": "source"
+        },
+        {
+          "name": "result-follows-outcome",
+          "passed": true,
+          "detail": "outcome=expected; final label=\"Resultado esperado\"",
+          "source": "source"
+        },
+        {
+          "name": "semantic-illustrative-data",
+          "passed": true,
+          "detail": "brief illustrative=true; semantic phase flags=true,true,true",
+          "source": "source"
+        },
+        {
+          "name": "semantic-object-transformation",
+          "passed": false,
+          "status": "pending",
+          "detail": "Pending: this scene did not declare object regions for every phase hold; full-frame or text changes cannot substitute.",
+          "source": "decoded"
+        }
+      ],
+      "note": "Automated checks separate work status from expected/observed outcome and confirm required evidence fields; causal meaning and evidence scope still need human review."
+    },
+    "visual-review": {
+      "status": "pending",
+      "reviewer": null,
+      "criteria": {
+        "thumbnailIdentity": {
+          "verdict": "not-evaluated"
+        },
+        "cardSizeReading": {
+          "verdict": "not-evaluated"
+        },
+        "styleMaterial": {
+          "verdict": "not-evaluated"
+        },
+        "phaseContinuity": {
+          "verdict": "not-evaluated"
+        },
+        "loopRestart": {
+          "verdict": "not-evaluated"
+        },
+        "artOnlyTransformationUnderstood": {
+          "verdict": "not-evaluated"
+        }
+      },
+      "feedback": [],
+      "evidence": []
+    },
+    "publicationRecommendation": "none",
+    "automatedEvidence": {
+      "balanceByFrame": [
+        {
+          "frameIndex": 1,
+          "phaseId": "before",
+          "kind": "hold",
+          "label": "before · pausa",
+          "regions": [],
+          "metrics": {
+            "emptyCellRatio": 0.15625,
+            "textColumnFillRatio": 1,
+            "objectAreaRatio": 0.375,
+            "largestEmptyRectangleRatio": 0.09375
+          }
+        },
+        {
+          "frameIndex": 7,
+          "phaseId": "change",
+          "kind": "transition",
+          "label": "before → change · punto medio de transición",
+          "regions": [],
+          "metrics": {
+            "emptyCellRatio": 0.125,
+            "textColumnFillRatio": 1,
+            "objectAreaRatio": 0.375,
+            "largestEmptyRectangleRatio": 0.09375
+          }
+        },
+        {
+          "frameIndex": 15,
+          "phaseId": "change",
+          "kind": "hold",
+          "label": "change · pausa",
+          "regions": [],
+          "metrics": {
+            "emptyCellRatio": 0.125,
+            "textColumnFillRatio": 1,
+            "objectAreaRatio": 0.375,
+            "largestEmptyRectangleRatio": 0.09375
+          }
+        },
+        {
+          "frameIndex": 21,
+          "phaseId": "result",
+          "kind": "transition",
+          "label": "change → result · punto medio de transición",
+          "regions": [],
+          "metrics": {
+            "emptyCellRatio": 0.09375,
+            "textColumnFillRatio": 1,
+            "objectAreaRatio": 0.375,
+            "largestEmptyRectangleRatio": 0.0625
+          }
+        },
+        {
+          "frameIndex": 29,
+          "phaseId": "result",
+          "kind": "hold",
+          "label": "result · pausa",
+          "regions": [],
+          "metrics": {
+            "emptyCellRatio": 0.09375,
+            "textColumnFillRatio": 1,
+            "objectAreaRatio": 0.375,
+            "largestEmptyRectangleRatio": 0.0625
+          }
+        },
+        {
+          "frameIndex": 35,
+          "phaseId": "before",
+          "kind": "loop-bridge",
+          "label": "result → before · unión del ciclo",
+          "regions": [],
+          "metrics": {
+            "emptyCellRatio": 0.15625,
+            "textColumnFillRatio": 1,
+            "objectAreaRatio": 0.375,
+            "largestEmptyRectangleRatio": 0.09375
+          }
+        }
+      ],
+      "objectTransformationByFrame": [
+        {
+          "frameIndex": 1,
+          "phaseId": "before",
+          "kind": "hold",
+          "measured": false,
+          "passed": false,
+          "regions": []
+        },
+        {
+          "frameIndex": 7,
+          "phaseId": "change",
+          "kind": "transition",
+          "measured": false,
+          "passed": false,
+          "regions": []
+        },
+        {
+          "frameIndex": 15,
+          "phaseId": "change",
+          "kind": "hold",
+          "measured": false,
+          "passed": false,
+          "regions": []
+        },
+        {
+          "frameIndex": 21,
+          "phaseId": "result",
+          "kind": "transition",
+          "measured": false,
+          "passed": false,
+          "regions": []
+        },
+        {
+          "frameIndex": 29,
+          "phaseId": "result",
+          "kind": "hold",
+          "measured": false,
+          "passed": false,
+          "regions": []
+        },
+        {
+          "frameIndex": 35,
+          "phaseId": "before",
+          "kind": "loop-bridge",
+          "measured": false,
+          "passed": false,
+          "regions": []
+        }
+      ]
+    }
+  },
+  "phaseCaptures": [
+    {
+      "phaseId": "before",
+      "labels": [
+        "before · inicio",
+        "before · pausa",
+        "before · transición media",
+        "before · salida",
+        "reinicio del loop"
+      ],
+      "contactSheet": "../../../../pilots/brutalist/lectura-antes-del-cierre/lectura-antes-del-cierre-b49056b8-contact-sheet.png"
+    },
+    {
+      "phaseId": "change",
+      "labels": [
+        "change · inicio",
+        "change · pausa",
+        "change · transición media",
+        "change · salida"
+      ],
+      "contactSheet": "../../../../pilots/brutalist/lectura-antes-del-cierre/lectura-antes-del-cierre-b49056b8-contact-sheet.png"
+    },
+    {
+      "phaseId": "result",
+      "labels": [
+        "result · inicio",
+        "result · pausa",
+        "result · transición media",
+        "result · salida"
+      ],
+      "contactSheet": "../../../../pilots/brutalist/lectura-antes-del-cierre/lectura-antes-del-cierre-b49056b8-contact-sheet.png"
+    }
+  ],
+  "semanticObjectCaptures": [
+    {
+      "label": "before · pausa",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 0,
+      "frameIndex": 1,
+      "kind": "hold",
+      "regions": []
+    },
+    {
+      "label": "before → change · punto medio de transición",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 0,
+      "frameIndex": 7,
+      "kind": "transition",
+      "regions": []
+    },
+    {
+      "label": "change · pausa",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 1,
+      "frameIndex": 15,
+      "kind": "hold",
+      "regions": []
+    },
+    {
+      "label": "change → result · punto medio de transición",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 1,
+      "frameIndex": 21,
+      "kind": "transition",
+      "regions": []
+    },
+    {
+      "label": "result · pausa",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 2,
+      "frameIndex": 29,
+      "kind": "hold",
+      "regions": []
+    },
+    {
+      "label": "result → before · unión del ciclo",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 2,
+      "frameIndex": 35,
+      "kind": "loop-bridge",
+      "regions": []
+    }
+  ],
+  "compositionByFrame": [
+    {
+      "frameIndex": 1,
+      "label": "before · pausa",
+      "phaseId": "before",
+      "kind": "hold",
+      "regions": [],
+      "metrics": {
+        "emptyCellRatio": 0.15625,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.375,
+        "largestEmptyRectangleRatio": 0.09375
+      }
+    },
+    {
+      "frameIndex": 7,
+      "label": "before → change · punto medio de transición",
+      "phaseId": "change",
+      "kind": "transition",
+      "regions": [],
+      "metrics": {
+        "emptyCellRatio": 0.125,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.375,
+        "largestEmptyRectangleRatio": 0.09375
+      }
+    },
+    {
+      "frameIndex": 15,
+      "label": "change · pausa",
+      "phaseId": "change",
+      "kind": "hold",
+      "regions": [],
+      "metrics": {
+        "emptyCellRatio": 0.125,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.375,
+        "largestEmptyRectangleRatio": 0.09375
+      }
+    },
+    {
+      "frameIndex": 21,
+      "label": "change → result · punto medio de transición",
+      "phaseId": "result",
+      "kind": "transition",
+      "regions": [],
+      "metrics": {
+        "emptyCellRatio": 0.09375,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.375,
+        "largestEmptyRectangleRatio": 0.0625
+      }
+    },
+    {
+      "frameIndex": 29,
+      "label": "result · pausa",
+      "phaseId": "result",
+      "kind": "hold",
+      "regions": [],
+      "metrics": {
+        "emptyCellRatio": 0.09375,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.375,
+        "largestEmptyRectangleRatio": 0.0625
+      }
+    },
+    {
+      "frameIndex": 35,
+      "label": "result → before · unión del ciclo",
+      "phaseId": "before",
+      "kind": "loop-bridge",
+      "regions": [],
+      "metrics": {
+        "emptyCellRatio": 0.15625,
+        "textColumnFillRatio": 1,
+        "objectAreaRatio": 0.375,
+        "largestEmptyRectangleRatio": 0.09375
+      }
+    }
+  ],
+  "palette": {
+    "colors": 70,
+    "meanAbsoluteChannelError": 0.031,
+    "maximumChannelError": 8,
+    "sampledFrames": 42
+  },
+  "phaseHoldsVerified": [
+    {
+      "phaseId": "before",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    },
+    {
+      "phaseId": "change",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    },
+    {
+      "phaseId": "result",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    }
+  ],
+  "timing": {
+    "preset": "readable",
+    "holdsRequestedMs": 15000,
+    "holdsDecodedMs": 15000,
+    "transitionsMs": 1800,
+    "loopBridgeMs": 900,
+    "entryMs": 240,
+    "totalDecodedMs": 17940,
+    "totalDurationBudgetMs": 30000,
+    "phaseHolds": [
+      {
+        "phaseId": "before",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      },
+      {
+        "phaseId": "change",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      },
+      {
+        "phaseId": "result",
+        "requestedMs": 5000,
+        "encodedMs": 5000,
+        "decodedMs": 5000
+      }
+    ],
+    "warnings": []
+  },
+  "resourceEstimate": {
+    "pixelFrames": 38707200,
+    "maxPixelFrames": 96000000,
+    "memoryBytes": 124370944,
+    "maxMemoryBytes": 268435456
+  },
+  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed.",
+  "generatedBy": "open-beauty-site",
+  "reviewState": "none",
+  "openFeedbackCount": 0,
+  "feedbackFrames": [],
+  "publicationRecommendation": "none",
+  "renderRevision": 0
+}

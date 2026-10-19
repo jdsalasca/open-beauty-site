@@ -62,6 +62,8 @@
     "visual:matrix": "tsx scripts/visual-matrix.ts",
     "fonts:check": "tsx scripts/narrative-fonts-check.ts",
     "narrative:recipes": "tsx scripts/narrative-recipes.ts",
+    "gallery:compare": "tsx scripts/gallery-compare.ts",
+    "capabilities:matrix": "tsx scripts/capabilities-matrix.ts",
     "docs:build": "tsx scripts/build-docs.ts",
     "e2e:colmena": "tsx scripts/e2e-colmena.ts",
     "check": "tsc -p tsconfig.json --noEmit",

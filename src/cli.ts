@@ -23,7 +23,7 @@ import { createNarrative, narrativeFailure } from './narrative/create.js';
 import { NARRATIVE_BRIEF_EXAMPLE, narrativeHelpOptions } from './narrative/brief.js';
 import { narrativeCapabilityReport } from './narrative/capabilities.js';
 import { NarrativeError } from './types/narrative.js';
-import { createNarrativeGallery } from './narrative/gallery.js';
+import { createNarrativeGallery, createNarrativeCompareGallery } from './narrative/gallery.js';
 import { NARRATIVE_REVIEW_LEVELS, type NarrativeFeedback, type NarrativeReviewer, type NarrativeReviewCriterion, type NarrativeReviewLevel, type NarrativeReviewVerdict } from './types/narrative-review.js';
 import { NARRATIVE_REVIEW_HELP, NARRATIVE_RERENDER_HELP, reviewNarrativeArtifact, getNarrativeReviewState } from './narrative/review.js';
 import { rerenderNarrativePack } from './narrative/rerender.js';
@@ -144,10 +144,11 @@ const COMMAND_HELP: Record<string, CommandHelpEntry> = {
     example: 'beauty capabilities --style papercraft --json',
   },
   gallery: {
-    summary: 'Build a self-contained review gallery from narrative manifests.',
-    usage: 'beauty gallery <dir> [--out gallery.html] [--title "..."]',
+    summary: 'Build a self-contained review or before/after comparison gallery.',
+    usage: 'beauty gallery <dir> [--compare compare-dir] [--out gallery.html] [--title "..."]',
     options: [
       '  <dir>              Scan this folder tree for narrative manifests and their packs',
+      '  --compare dir      Read compare/index.json and build a comparative gallery',
       '  --out path         Write the one-file HTML gallery (default: gallery.html)',
       '  --title "..."      Gallery heading and document title',
     ],
@@ -752,6 +753,13 @@ async function main(): Promise<void> {
       const directory = positionals[1];
       if (!directory) throw new Error('Pass the folder tree that contains narrative manifests: beauty gallery <dir>.');
       const output = stringFlag(flags, 'out') ?? 'gallery.html';
+      const compareDirectory = stringFlag(flags, 'compare');
+      if (compareDirectory) {
+        const result = await createNarrativeCompareGallery({ directory: compareDirectory, output, title: stringFlag(flags, 'title') });
+        console.log(`Galería comparativa · ${result.pieceCount} pares y fixtures · ${result.styles.length} estilos`);
+        console.log(result.path);
+        return;
+      }
       const result = await createNarrativeGallery({ directory, output, title: stringFlag(flags, 'title') });
       console.log(`Galería narrativa · ${result.pieceCount} piezas · ${result.styles.length} estilos`);
       console.log(result.path);
