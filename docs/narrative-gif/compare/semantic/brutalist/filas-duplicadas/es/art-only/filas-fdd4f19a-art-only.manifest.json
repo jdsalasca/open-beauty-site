@@ -1,0 +1,3964 @@
+{
+  "schemaVersion": 3,
+  "commit": "8e1695849bfeb327907de744a3b3f9168f063606",
+  "brief": {
+    "style": "brutalist",
+    "subfamily": "documentary",
+    "kind": "narrative-gif",
+    "locale": "es",
+    "audience": "Equipo de operación de datos",
+    "title": "Filas",
+    "workflowStatus": "in-review",
+    "outcome": {
+      "mode": "expected",
+      "scopeNote": "Ejemplo ilustrativo: la regla rechaza la fila repetida y no borra registros; el efecto no se mide."
+    },
+    "illustrative": true,
+    "badgePolicy": "none",
+    "phases": [
+      {
+        "id": "repeticion-visible",
+        "label": "Repetición",
+        "text": "REG-204 se repite.",
+        "visual": {
+          "kind": "comparison",
+          "state": "before",
+          "semantic": {
+            "primitive": "table-rows",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "tabla",
+                "kind": "table",
+                "illustrative": true
+              },
+              {
+                "id": "fila-original",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              },
+              {
+                "id": "fila-repetida",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "duplicate-of",
+                "from": "fila-repetida",
+                "to": "fila-original"
+              }
+            ],
+            "states": {
+              "tabla": "default",
+              "fila-original": "original",
+              "fila-repetida": "duplicate"
+            },
+            "actions": []
+          }
+        },
+        "holdMs": 2200
+      },
+      {
+        "id": "duplicado-identificado",
+        "label": "Identificada",
+        "text": "Duplicado señalado.",
+        "visual": {
+          "kind": "comparison",
+          "state": "flagged",
+          "semantic": {
+            "primitive": "table-rows",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "tabla",
+                "kind": "table",
+                "illustrative": true
+              },
+              {
+                "id": "fila-original",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              },
+              {
+                "id": "fila-repetida",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "duplicate-of",
+                "from": "fila-repetida",
+                "to": "fila-original"
+              }
+            ],
+            "states": {
+              "tabla": "default",
+              "fila-original": "original",
+              "fila-repetida": "flagged"
+            },
+            "actions": [
+              {
+                "entityId": "fila-repetida",
+                "type": "mark-duplicate"
+              }
+            ]
+          }
+        },
+        "holdMs": 2200
+      },
+      {
+        "id": "rechazo-autorizado",
+        "label": "Rechazo",
+        "text": "Regla lo rechaza.",
+        "visual": {
+          "kind": "comparison",
+          "state": "review-ready",
+          "semantic": {
+            "primitive": "table-rows",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "tabla",
+                "kind": "table",
+                "illustrative": true
+              },
+              {
+                "id": "fila-original",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              },
+              {
+                "id": "fila-repetida",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "duplicate-of",
+                "from": "fila-repetida",
+                "to": "fila-original"
+              }
+            ],
+            "states": {
+              "tabla": "default",
+              "fila-original": "original",
+              "fila-repetida": "rejected"
+            },
+            "actions": [
+              {
+                "entityId": "fila-repetida",
+                "type": "reject"
+              }
+            ]
+          }
+        },
+        "holdMs": 2200
+      },
+      {
+        "id": "beneficio-esperado",
+        "label": "Resultado esperado",
+        "text": "No borrada; sin medir.",
+        "visual": {
+          "kind": "comparison",
+          "state": "review-ready",
+          "semantic": {
+            "primitive": "table-rows",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "tabla",
+                "kind": "table",
+                "illustrative": true
+              },
+              {
+                "id": "fila-original",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              },
+              {
+                "id": "fila-repetida",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "duplicate-of",
+                "from": "fila-repetida",
+                "to": "fila-original"
+              }
+            ],
+            "states": {
+              "tabla": "reviewed",
+              "fila-original": "original",
+              "fila-repetida": "rejected"
+            },
+            "actions": []
+          }
+        },
+        "holdMs": 2200
+      }
+    ],
+    "playback": {
+      "preset": "concise",
+      "minReadableHoldMs": 2200,
+      "transitionMs": 400,
+      "loop": true,
+      "totalDurationBudgetMs": 20000
+    },
+    "output": {
+      "width": 640,
+      "height": 360,
+      "formats": [
+        "gif",
+        "png"
+      ],
+      "preset": "review-1280x720"
+    },
+    "seed": 7,
+    "status": "in-review"
+  },
+  "briefSha256": "f8df25aa2916fcaef6f59814b76deb92dd0ac83a765028dcb0bd044c0ab41e6f",
+  "style": "brutalist",
+  "subfamily": "documentary",
+  "workflowStatus": "in-review",
+  "outcome": {
+    "mode": "expected",
+    "scopeNote": "Ejemplo ilustrativo: la regla rechaza la fila repetida y no borra registros; el efecto no se mide."
+  },
+  "evidenceClassification": "illustrative",
+  "illustrative": true,
+  "artOnly": true,
+  "seed": 7,
+  "renderer": {
+    "narrative": "narrative-core/0.2.0",
+    "canvas": "@napi-rs/canvas@1.0.11",
+    "gif": "gifenc@1.0.3",
+    "scene": "brutalist-documentary/1.1.0"
+  },
+  "fonts": {
+    "bundleVersion": "repo-bundled-ofl-1",
+    "roles": {
+      "display": {
+        "family": "Archivo Black",
+        "weight": 400
+      },
+      "reading": {
+        "family": "Space Mono",
+        "weight": 400
+      },
+      "label": {
+        "family": "Space Mono",
+        "weight": 700
+      },
+      "figure": {
+        "family": "Archivo Black",
+        "weight": 400
+      },
+      "annotation": {
+        "family": "Space Mono",
+        "weight": 400
+      }
+    }
+  },
+  "dimensions": {
+    "width": 640,
+    "height": 360
+  },
+  "formats": [
+    "gif",
+    "png"
+  ],
+  "decoded": {
+    "width": 640,
+    "height": 360,
+    "frameCount": 28,
+    "delaysMs": [
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80
+    ],
+    "durationMs": 10720,
+    "loopCount": 0,
+    "integrity": true
+  },
+  "ffprobe": {
+    "available": true,
+    "passed": true,
+    "detail": "ffprobe 640×360; 28 frames; 10720ms; matches the independent LZW decode."
+  },
+  "bytes": {
+    "gif": 189411,
+    "png": 10723,
+    "contactSheet": 63875
+  },
+  "hashes": {
+    "briefSha256": "f8df25aa2916fcaef6f59814b76deb92dd0ac83a765028dcb0bd044c0ab41e6f",
+    "gifSha256": "1d3230093799cf11a087314ba982f651e0d6ef5a73a331a157d94cbc0142e2ff",
+    "pngSha256": "8a64576bfa67fc7fc5816ea59252e7b5383a3d26aabf62b623175f99b464e30b",
+    "contactSheetSha256": "29339dd30d558c3b8dfaec3e2fb3d43ace511efbccdaf4ed166b8eff6e17b576"
+  },
+  "files": {
+    "gif": "../../../../../../semantic/brutalist/filas-duplicadas/art-only/es/filas-fdd4f19a-art-only.gif",
+    "png": "../../../../../../semantic/brutalist/filas-duplicadas/art-only/es/filas-fdd4f19a-art-only.png",
+    "contactSheet": "../../../../../../semantic/brutalist/filas-duplicadas/art-only/es/filas-fdd4f19a-art-only-contact-sheet.png"
+  },
+  "controls": [
+    {
+      "name": "gif-integrity",
+      "passed": true,
+      "detail": "Independent LZW decode and GIF trailer passed.",
+      "source": "decoded"
+    },
+    {
+      "name": "dimensions",
+      "passed": true,
+      "detail": "decoded 640×360; requested 640×360",
+      "source": "decoded"
+    },
+    {
+      "name": "frame-count",
+      "passed": true,
+      "detail": "28 decoded frame(s)",
+      "source": "decoded"
+    },
+    {
+      "name": "duration",
+      "passed": true,
+      "detail": "10720ms decoded; holds exclude transitions",
+      "source": "decoded"
+    },
+    {
+      "name": "loop",
+      "passed": true,
+      "detail": "repeat=0; result-to-before bridge is explicit",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-holds",
+      "passed": true,
+      "detail": "repeticion-visible 2200/2200ms, duplicado-identificado 2200/2200ms, rechazo-autorizado 2200/2200ms, beneficio-esperado 2200/2200ms",
+      "source": "decoded"
+    },
+    {
+      "name": "ffprobe-crosscheck",
+      "passed": true,
+      "detail": "ffprobe 640×360; 28 frames; 10720ms; matches the independent LZW decode.",
+      "source": "decoded"
+    },
+    {
+      "name": "files",
+      "passed": true,
+      "detail": "GIF 189411B · PNG 10723B · contact 63875B",
+      "source": "decoded"
+    },
+    {
+      "name": "scene-renderer-registered",
+      "passed": true,
+      "detail": "renderer brutalist/brutalist-documentary/1.1.0 exists; visual style likeness remains a separate review",
+      "source": "source"
+    },
+    {
+      "name": "type-system",
+      "passed": true,
+      "detail": "style typeSystem tokens are attached to raster role registry",
+      "source": "source"
+    },
+    {
+      "name": "narrative-subfamily",
+      "passed": true,
+      "detail": "brutalist/documentary selects an explicit narrative art direction",
+      "source": "source"
+    },
+    {
+      "name": "font-registration-and-glyphs",
+      "passed": true,
+      "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "distinct-frames",
+      "passed": true,
+      "detail": "4 unique composited frame(s); a format-valid static GIF does not pass",
+      "source": "pixels"
+    },
+    {
+      "name": "palette-loss",
+      "passed": true,
+      "detail": "44 colors; mean channel loss 0.222, max 9; sampled 28 frames",
+      "source": "pixels"
+    },
+    {
+      "name": "title-complete",
+      "passed": true,
+      "detail": "Filas",
+      "source": "source"
+    },
+    {
+      "name": "phase-repeticion-visible-label-complete",
+      "passed": true,
+      "detail": "Repetición",
+      "source": "source"
+    },
+    {
+      "name": "phase-repeticion-visible-text-complete",
+      "passed": true,
+      "detail": "REG-204 se / repite.",
+      "source": "source"
+    },
+    {
+      "name": "phase-duplicado-identificado-label-complete",
+      "passed": true,
+      "detail": "Identificada",
+      "source": "source"
+    },
+    {
+      "name": "phase-duplicado-identificado-text-complete",
+      "passed": true,
+      "detail": "Duplicado / señalado.",
+      "source": "source"
+    },
+    {
+      "name": "phase-rechazo-autorizado-label-complete",
+      "passed": true,
+      "detail": "Rechazo",
+      "source": "source"
+    },
+    {
+      "name": "phase-rechazo-autorizado-text-complete",
+      "passed": true,
+      "detail": "Regla lo / rechaza.",
+      "source": "source"
+    },
+    {
+      "name": "phase-beneficio-esperado-label-complete",
+      "passed": true,
+      "detail": "Resultado / esperado",
+      "source": "source"
+    },
+    {
+      "name": "phase-beneficio-esperado-text-complete",
+      "passed": true,
+      "detail": "No borrada; / sin medir.",
+      "source": "source"
+    },
+    {
+      "name": "registered-fonts",
+      "passed": true,
+      "detail": "all role faces and Spanish glyphs rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "review-size-thresholds",
+      "passed": true,
+      "detail": "title 56px; phase body >=36px; label >=24px",
+      "source": "source"
+    },
+    {
+      "name": "640x360-effective-size",
+      "passed": true,
+      "detail": "title 56.0px; body min 36.0px (requires >=20px); label min 24.0px",
+      "source": "source"
+    },
+    {
+      "name": "semantic-text-legibility",
+      "passed": true,
+      "status": "pass",
+      "detail": "minimum effective text >=14px: 14.0px; minimum headline none; measured 21 declared object text box(es) at 640×360.",
+      "source": "decoded"
+    },
+    {
+      "name": "composition-balance",
+      "passed": false,
+      "severity": "warning",
+      "detail": "WARN · revise; 8×4 decoded-pixel grid against #F2EFE4: empty cells 50.0%, text-column vertical fill 0.0%, art/object area outside the text column 50.0%, largest empty rectangle 50.0%; thresholds: rectangle <=22%, text fill >=60% (text-fill threshold omitted in art-only mode); not an aesthetic score. Per-frame: repeticion-visible · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | repeticion-visible → duplicado-identificado · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | duplicado-identificado · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | duplicado-identificado → rechazo-autorizado · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | rechazo-autorizado · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | rechazo-autorizado → beneficio-esperado · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | beneficio-esperado · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | beneficio-esperado → repeticion-visible · unión del ciclo: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0%",
+      "source": "pixels"
+    },
+    {
+      "name": "contrast",
+      "passed": true,
+      "detail": "rendered text colors: ink 17.10:1; label 17.10:1 (not an OCR or per-pixel text measurement)",
+      "source": "source"
+    },
+    {
+      "name": "safe-zone-and-collisions",
+      "passed": true,
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+      "source": "source"
+    },
+    {
+      "name": "stable-reading-holds",
+      "passed": true,
+      "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-count-and-copy",
+      "passed": true,
+      "detail": "4 complete phases; all copy retained",
+      "source": "source"
+    },
+    {
+      "name": "shared-object-identity",
+      "passed": true,
+      "detail": "One scene object instance is created and passed to every phase frame.",
+      "source": "source"
+    },
+    {
+      "name": "visual-state-change",
+      "passed": true,
+      "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+      "source": "pixels"
+    },
+    {
+      "name": "workflow-outcome-separation",
+      "passed": true,
+      "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+      "source": "source"
+    },
+    {
+      "name": "outcome-evidence",
+      "passed": true,
+      "detail": "Expected outcome; no benefit measurement is claimed.",
+      "source": "source"
+    },
+    {
+      "name": "result-follows-outcome",
+      "passed": true,
+      "detail": "outcome=expected; final label=\"Resultado esperado\"",
+      "source": "source"
+    },
+    {
+      "name": "semantic-illustrative-data",
+      "passed": true,
+      "detail": "brief illustrative=true; semantic phase flags=true,true,true,true",
+      "source": "source"
+    },
+    {
+      "name": "semantic-object-midpoint:repeticion-visible → duplicado-identificado · punto medio de transición",
+      "passed": true,
+      "detail": "decoded object diff 1.4%; changed-state entities: fila-repetida; tabla default→default 0.9%, fila-original original→original 0.0%, fila-repetida duplicate→flagged 5.9%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:duplicado-identificado → rechazo-autorizado · punto medio de transición",
+      "passed": true,
+      "detail": "decoded object diff 7.6%; changed-state entities: fila-repetida; tabla default→default 4.9%, fila-original original→original 0.0%, fila-repetida flagged→rejected 33.4%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:rechazo-autorizado → beneficio-esperado · punto medio de transición",
+      "passed": true,
+      "detail": "decoded object diff 1.5%; changed-state entities: tabla; tabla default→reviewed 1.9%, fila-original original→original 0.0%, fila-repetida rejected→rejected 0.0%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:beneficio-esperado → repeticion-visible · unión del ciclo",
+      "passed": true,
+      "detail": "decoded object diff 9.1%; changed-state entities: tabla, fila-repetida; tabla reviewed→default 6.8%, fila-original original→original 0.0%, fila-repetida rejected→duplicate 33.4%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:repeticion-visible → duplicado-identificado hold",
+      "passed": true,
+      "detail": "decoded object diff 1.4%; changed-state entities: fila-repetida; tabla default→default 0.9%, fila-original original→original 0.0%, fila-repetida duplicate→flagged 5.9%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:duplicado-identificado → rechazo-autorizado hold",
+      "passed": true,
+      "detail": "decoded object diff 7.6%; changed-state entities: fila-repetida; tabla default→default 4.9%, fila-original original→original 0.0%, fila-repetida flagged→rejected 33.4%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:rechazo-autorizado → beneficio-esperado hold",
+      "passed": true,
+      "detail": "decoded object diff 1.5%; changed-state entities: tabla; tabla default→reviewed 1.9%, fila-original original→original 0.0%, fila-repetida rejected→rejected 0.0%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:beneficio-esperado → repeticion-visible loop join",
+      "passed": true,
+      "detail": "decoded object diff 9.1%; changed-state entities: tabla, fila-repetida; tabla reviewed→default 6.8%, fila-original original→original 0.0%, fila-repetida rejected→duplicate 33.4%",
+      "source": "decoded"
+    }
+  ],
+  "evaluation": {
+    "technical-integrity": {
+      "status": "pass",
+      "controls": [
+        {
+          "name": "gif-integrity",
+          "passed": true,
+          "detail": "Independent LZW decode and GIF trailer passed.",
+          "source": "decoded"
+        },
+        {
+          "name": "dimensions",
+          "passed": true,
+          "detail": "decoded 640×360; requested 640×360",
+          "source": "decoded"
+        },
+        {
+          "name": "frame-count",
+          "passed": true,
+          "detail": "28 decoded frame(s)",
+          "source": "decoded"
+        },
+        {
+          "name": "duration",
+          "passed": true,
+          "detail": "10720ms decoded; holds exclude transitions",
+          "source": "decoded"
+        },
+        {
+          "name": "loop",
+          "passed": true,
+          "detail": "repeat=0; result-to-before bridge is explicit",
+          "source": "decoded"
+        },
+        {
+          "name": "phase-holds",
+          "passed": true,
+          "detail": "repeticion-visible 2200/2200ms, duplicado-identificado 2200/2200ms, rechazo-autorizado 2200/2200ms, beneficio-esperado 2200/2200ms",
+          "source": "decoded"
+        },
+        {
+          "name": "ffprobe-crosscheck",
+          "passed": true,
+          "detail": "ffprobe 640×360; 28 frames; 10720ms; matches the independent LZW decode.",
+          "source": "decoded"
+        },
+        {
+          "name": "files",
+          "passed": true,
+          "detail": "GIF 189411B · PNG 10723B · contact 63875B",
+          "source": "decoded"
+        }
+      ]
+    },
+    "style-conformance": {
+      "status": "pending",
+      "sourceStatus": "pass",
+      "pixelStatus": "pass",
+      "controls": [
+        {
+          "name": "scene-renderer-registered",
+          "passed": true,
+          "detail": "renderer brutalist/brutalist-documentary/1.1.0 exists; visual style likeness remains a separate review",
+          "source": "source"
+        },
+        {
+          "name": "type-system",
+          "passed": true,
+          "detail": "style typeSystem tokens are attached to raster role registry",
+          "source": "source"
+        },
+        {
+          "name": "narrative-subfamily",
+          "passed": true,
+          "detail": "brutalist/documentary selects an explicit narrative art direction",
+          "source": "source"
+        },
+        {
+          "name": "font-registration-and-glyphs",
+          "passed": true,
+          "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "distinct-frames",
+          "passed": true,
+          "detail": "4 unique composited frame(s); a format-valid static GIF does not pass",
+          "source": "pixels"
+        },
+        {
+          "name": "palette-loss",
+          "passed": true,
+          "detail": "44 colors; mean channel loss 0.222, max 9; sampled 28 frames",
+          "source": "pixels"
+        }
+      ],
+      "note": "Source checks identify renderer/font tokens; pixel checks measure frame change and palette loss. Neither substitutes for visual review."
+    },
+    "rendered-legibility": {
+      "status": "revise",
+      "controls": [
+        {
+          "name": "title-complete",
+          "passed": true,
+          "detail": "Filas",
+          "source": "source"
+        },
+        {
+          "name": "phase-repeticion-visible-label-complete",
+          "passed": true,
+          "detail": "Repetición",
+          "source": "source"
+        },
+        {
+          "name": "phase-repeticion-visible-text-complete",
+          "passed": true,
+          "detail": "REG-204 se / repite.",
+          "source": "source"
+        },
+        {
+          "name": "phase-duplicado-identificado-label-complete",
+          "passed": true,
+          "detail": "Identificada",
+          "source": "source"
+        },
+        {
+          "name": "phase-duplicado-identificado-text-complete",
+          "passed": true,
+          "detail": "Duplicado / señalado.",
+          "source": "source"
+        },
+        {
+          "name": "phase-rechazo-autorizado-label-complete",
+          "passed": true,
+          "detail": "Rechazo",
+          "source": "source"
+        },
+        {
+          "name": "phase-rechazo-autorizado-text-complete",
+          "passed": true,
+          "detail": "Regla lo / rechaza.",
+          "source": "source"
+        },
+        {
+          "name": "phase-beneficio-esperado-label-complete",
+          "passed": true,
+          "detail": "Resultado / esperado",
+          "source": "source"
+        },
+        {
+          "name": "phase-beneficio-esperado-text-complete",
+          "passed": true,
+          "detail": "No borrada; / sin medir.",
+          "source": "source"
+        },
+        {
+          "name": "registered-fonts",
+          "passed": true,
+          "detail": "all role faces and Spanish glyphs rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "review-size-thresholds",
+          "passed": true,
+          "detail": "title 56px; phase body >=36px; label >=24px",
+          "source": "source"
+        },
+        {
+          "name": "640x360-effective-size",
+          "passed": true,
+          "detail": "title 56.0px; body min 36.0px (requires >=20px); label min 24.0px",
+          "source": "source"
+        },
+        {
+          "name": "semantic-text-legibility",
+          "passed": true,
+          "status": "pass",
+          "detail": "minimum effective text >=14px: 14.0px; minimum headline none; measured 21 declared object text box(es) at 640×360.",
+          "source": "decoded"
+        },
+        {
+          "name": "composition-balance",
+          "passed": false,
+          "severity": "warning",
+          "detail": "WARN · revise; 8×4 decoded-pixel grid against #F2EFE4: empty cells 50.0%, text-column vertical fill 0.0%, art/object area outside the text column 50.0%, largest empty rectangle 50.0%; thresholds: rectangle <=22%, text fill >=60% (text-fill threshold omitted in art-only mode); not an aesthetic score. Per-frame: repeticion-visible · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | repeticion-visible → duplicado-identificado · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | duplicado-identificado · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | duplicado-identificado → rechazo-autorizado · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | rechazo-autorizado · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | rechazo-autorizado → beneficio-esperado · punto medio de transición: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | beneficio-esperado · pausa: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0% | beneficio-esperado → repeticion-visible · unión del ciclo: empty 50.0%, text fill 0.0%, art 50.0%, largest empty 50.0%",
+          "source": "pixels"
+        },
+        {
+          "name": "contrast",
+          "passed": true,
+          "detail": "rendered text colors: ink 17.10:1; label 17.10:1 (not an OCR or per-pixel text measurement)",
+          "source": "source"
+        },
+        {
+          "name": "safe-zone-and-collisions",
+          "passed": true,
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+          "source": "source"
+        },
+        {
+          "name": "stable-reading-holds",
+          "passed": true,
+          "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+          "source": "decoded"
+        }
+      ],
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
+    },
+    "narrative": {
+      "status": "pending",
+      "controls": [
+        {
+          "name": "phase-count-and-copy",
+          "passed": true,
+          "detail": "4 complete phases; all copy retained",
+          "source": "source"
+        },
+        {
+          "name": "shared-object-identity",
+          "passed": true,
+          "detail": "One scene object instance is created and passed to every phase frame.",
+          "source": "source"
+        },
+        {
+          "name": "visual-state-change",
+          "passed": true,
+          "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+          "source": "pixels"
+        },
+        {
+          "name": "workflow-outcome-separation",
+          "passed": true,
+          "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+          "source": "source"
+        },
+        {
+          "name": "outcome-evidence",
+          "passed": true,
+          "detail": "Expected outcome; no benefit measurement is claimed.",
+          "source": "source"
+        },
+        {
+          "name": "result-follows-outcome",
+          "passed": true,
+          "detail": "outcome=expected; final label=\"Resultado esperado\"",
+          "source": "source"
+        },
+        {
+          "name": "semantic-illustrative-data",
+          "passed": true,
+          "detail": "brief illustrative=true; semantic phase flags=true,true,true,true",
+          "source": "source"
+        },
+        {
+          "name": "semantic-object-midpoint:repeticion-visible → duplicado-identificado · punto medio de transición",
+          "passed": true,
+          "detail": "decoded object diff 1.4%; changed-state entities: fila-repetida; tabla default→default 0.9%, fila-original original→original 0.0%, fila-repetida duplicate→flagged 5.9%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:duplicado-identificado → rechazo-autorizado · punto medio de transición",
+          "passed": true,
+          "detail": "decoded object diff 7.6%; changed-state entities: fila-repetida; tabla default→default 4.9%, fila-original original→original 0.0%, fila-repetida flagged→rejected 33.4%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:rechazo-autorizado → beneficio-esperado · punto medio de transición",
+          "passed": true,
+          "detail": "decoded object diff 1.5%; changed-state entities: tabla; tabla default→reviewed 1.9%, fila-original original→original 0.0%, fila-repetida rejected→rejected 0.0%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:beneficio-esperado → repeticion-visible · unión del ciclo",
+          "passed": true,
+          "detail": "decoded object diff 9.1%; changed-state entities: tabla, fila-repetida; tabla reviewed→default 6.8%, fila-original original→original 0.0%, fila-repetida rejected→duplicate 33.4%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:repeticion-visible → duplicado-identificado hold",
+          "passed": true,
+          "detail": "decoded object diff 1.4%; changed-state entities: fila-repetida; tabla default→default 0.9%, fila-original original→original 0.0%, fila-repetida duplicate→flagged 5.9%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:duplicado-identificado → rechazo-autorizado hold",
+          "passed": true,
+          "detail": "decoded object diff 7.6%; changed-state entities: fila-repetida; tabla default→default 4.9%, fila-original original→original 0.0%, fila-repetida flagged→rejected 33.4%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:rechazo-autorizado → beneficio-esperado hold",
+          "passed": true,
+          "detail": "decoded object diff 1.5%; changed-state entities: tabla; tabla default→reviewed 1.9%, fila-original original→original 0.0%, fila-repetida rejected→rejected 0.0%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:beneficio-esperado → repeticion-visible loop join",
+          "passed": true,
+          "detail": "decoded object diff 9.1%; changed-state entities: tabla, fila-repetida; tabla reviewed→default 6.8%, fila-original original→original 0.0%, fila-repetida rejected→duplicate 33.4%",
+          "source": "decoded"
+        }
+      ],
+      "note": "Automated checks separate work status from expected/observed outcome and confirm required evidence fields; causal meaning and evidence scope still need human review."
+    },
+    "visual-review": {
+      "status": "pending",
+      "reviewer": null,
+      "criteria": {
+        "thumbnailIdentity": {
+          "verdict": "not-evaluated"
+        },
+        "cardSizeReading": {
+          "verdict": "not-evaluated"
+        },
+        "styleMaterial": {
+          "verdict": "not-evaluated"
+        },
+        "phaseContinuity": {
+          "verdict": "not-evaluated"
+        },
+        "loopRestart": {
+          "verdict": "not-evaluated"
+        },
+        "artOnlyTransformationUnderstood": {
+          "verdict": "not-evaluated"
+        }
+      },
+      "feedback": [],
+      "evidence": []
+    },
+    "publicationRecommendation": "none",
+    "automatedEvidence": {
+      "balanceByFrame": [
+        {
+          "frameIndex": 1,
+          "phaseId": "repeticion-visible",
+          "kind": "hold",
+          "label": "repeticion-visible · pausa",
+          "regions": [
+            {
+              "entityId": "tabla",
+              "bounds": {
+                "x": 321.44,
+                "y": 19.62,
+                "width": 285.11999999999995,
+                "height": 320.76
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 342.824,
+                    "y": 34.092200000000005,
+                    "width": 79,
+                    "height": 20
+                  },
+                  "fontSizePx": 16,
+                  "role": "label"
+                }
+              ]
+            },
+            {
+              "entityId": "fila-original",
+              "bounds": {
+                "x": 342.824,
+                "y": 90.1872,
+                "width": 196.73280000000005,
+                "height": 67.584132
+              },
+              "textBoxes": [
+                {
+                  "text": "REG-204",
+                  "bounds": {
+                    "x": 351.676976,
+                    "y": 103.24837676,
+                    "width": 69,
+                    "height": 20
+                  },
+                  "fontSizePx": 16,
+                  "role": "identifier"
+                },
+                {
+                  "text": "FUENTE",
+                  "bounds": {
+                    "x": 356.12313728000004,
+                    "y": 130.93034692,
+                    "width": 52,
+                    "height": 17
+                  },
+                  "fontSizePx": 14,
+                  "role": "status"
+                }
+              ]
+            },
+            {
+              "entityId": "fila-repetida",
+              "bounds": {
+                "x": 342.824,
+                "y": 168.77339999999998,
+                "width": 196.73280000000005,
+                "height": 67.58413200000001
+              },
+              "textBoxes": [
+                {
+                  "text": "REG-204",
+                  "bounds": {
+                    "x": 351.676976,
+                    "y": 181.83457675999998,
+                    "width": 69,
+                    "height": 20
+                  },
+                  "fontSizePx": 16,
+                  "role": "identifier"
+                },
+                {
+                  "text": "DUPLICADA",
+                  "bounds": {
+                    "x": 356.12313728000004,
+                    "y": 209.51654691999997,
+                    "width": 78,
+                    "height": 17
+                  },
+                  "fontSizePx": 14,
+                  "role": "status"
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.5,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        },
+        {
+          "frameIndex": 3,
+          "phaseId": "duplicado-identificado",
+          "kind": "transition",
+          "label": "repeticion-visible → duplicado-identificado · punto medio de transición",
+          "regions": [
+            {
+              "entityId": "tabla",
+              "bounds": {
+                "x": 321.44,
+                "y": 19.62,
+                "width": 285.11999999999995,
+                "height": 320.76
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 342.824,
+                    "y": 34.092200000000005,
+                    "width": 79,
+                    "height": 20
+                  },
+                  "fontSizePx": 16,
+                  "role": "label"
+                }
+              ]
+            },
+            {
+              "entityId": "fila-original",
+              "bounds": {
+                "x": 342.824,
+                "y": 90.1872,
+                "width": 196.73280000000005,
+                "height": 67.584132
+              },
+              "textBoxes": [
+                {
+                  "text": "REG-204",
+                  "bounds": {
+                    "x": 351.676976,
+                    "y": 103.24837676,
+                    "width": 69,
+                    "height": 20
+                  },
+                  "fontSizePx": 16,
+                  "role": "identifier"
+                },
+                {
+                  "text": "FUENTE",
+                  "bounds": {
+                    "x": 356.12313728000004,
+                    "y": 130.93034692,
+                    "width": 52,
+                    "height": 17
+                  },
+                  "fontSizePx": 14,
+                  "role": "status"
+                }
+              ]
+            },
+            {
+              "entityId": "fila-repetida",
+              "bounds": {
+                "x": 342.824,
+                "y": 168.77339999999998,
+                "width": 196.73280000000005,
+                "height": 67.58413200000001
+              },
+              "textBoxes": [
+                {
+                  "text": "REG-204",
+                  "bounds": {
+                    "x": 351.676976,
+                    "y": 181.83457675999998,
+                    "width": 69,
+                    "height": 20
+                  },
+                  "fontSizePx": 16,
+                  "role": "identifier"
+                },
+                {
+                  "text": "SEÑALADA",
+                  "bounds": {
+                    "x": 356.12313728000004,
+                    "y": 209.51654691999997,
+                    "width": 69,
+                    "height": 17
+                  },
+                  "fontSizePx": 14,
+                  "role": "status"
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.5,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        },
+        {
+          "frameIndex": 8,
+          "phaseId": "duplicado-identificado",
+          "kind": "hold",
+          "label": "duplicado-identificado · pausa",
+          "regions": [
+            {
+              "entityId": "tabla",
+              "bounds": {
+                "x": 321.44,
+                "y": 19.62,
+                "width": 285.11999999999995,
+                "height": 320.76
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 342.824,
+                    "y": 34.092200000000005,
+                    "width": 79,
+                    "height": 20
+                  },
+                  "fontSizePx": 16,
+                  "role": "label"
+                }
+              ]
+            },
+            {
+              "entityId": "fila-original",
+              "bounds": {
+                "x": 342.824,
+                "y": 90.1872,
+                "width": 196.73280000000005,
+                "height": 67.584132
+              },
+              "textBoxes": [
+                {
+                  "text": "REG-204",
+                  "bounds": {
+                    "x": 351.676976,
+                    "y": 103.24837676,
+                    "width": 69,
+                    "height": 20
+                  },
+                  "fontSizePx": 16,
+                  "role": "identifier"
+                },
+                {
+                  "text": "FUENTE",
+                  "bounds": {
+                    "x": 356.12313728000004,
+                    "y": 130.93034692,
+                    "width": 52,
+                    "height": 17
+                  },
+                  "fontSizePx": 14,
+                  "role": "status"
+                }
+              ]
+            },
+            {
+              "entityId": "fila-repetida",
+              "bounds": {
+                "x": 342.824,
+                "y": 168.77339999999998,
+                "width": 196.73280000000005,
+                "height": 67.58413200000001
+              },
+              "textBoxes": [
+                {
+                  "text": "REG-204",
+                  "bounds": {
+                    "x": 351.676976,
+                    "y": 181.83457675999998,
+                    "width": 69,
+                    "height": 20
+                  },
+                  "fontSizePx": 16,
+                  "role": "identifier"
+                },
+                {
+                  "text": "SEÑALADA",
+                  "bounds": {
+                    "x": 356.12313728000004,
+                    "y": 209.51654691999997,
+                    "width": 69,
+                    "height": 17
+                  },
+                  "fontSizePx": 14,
+                  "role": "status"
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.5,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        },
+        {
+          "frameIndex": 10,
+          "phaseId": "rechazo-autorizado",
+          "kind": "transition",
+          "label": "duplicado-identificado → rechazo-autorizado · punto medio de transición",
+          "regions": [
+            {
+              "entityId": "tabla",
+              "bounds": {
+                "x": 321.44,
+                "y": 19.62,
+                "width": 285.11999999999995,
+                "height": 320.76
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 342.824,
+                    "y": 34.092200000000005,
+                    "width": 79,
+                    "height": 20
+                  },
+                  "fontSizePx": 16,
+                  "role": "label"
+                }
+              ]
+            },
+            {
+              "entityId": "fila-original",
+              "bounds": {
+                "x": 342.824,
+                "y": 90.1872,
+                "width": 196.73280000000005,
+                "height": 67.584132
+              },
+              "textBoxes": [
+                {
+                  "text": "REG-204",
+                  "bounds": {
+                    "x": 351.676976,
+                    "y": 103.24837676,
+                    "width": 69,
+                    "height": 20
+                  },
+                  "fontSizePx": 16,
+                  "role": "identifier"
+                },
+                {
+                  "text": "FUENTE",
+                  "bounds": {
+                    "x": 356.12313728000004,
+                    "y": 130.93034692,
+                    "width": 52,
+                    "height": 17
+                  },
+                  "fontSizePx": 14,
+                  "role": "status"
+                }
+              ]
+            },
+            {
+              "entityId": "fila-repetida",
+              "bounds": {
+                "x": 342.824,
+                "y": 168.77339999999998,
+                "width": 196.73280000000005,
+                "height": 67.58413200000001
+              },
+              "textBoxes": [
+                {
+                  "text": "REG-204",
+                  "bounds": {
+                    "x": 351.676976,
+                    "y": 181.83457675999998,
+                    "width": 69,
+                    "height": 20
+                  },
+                  "fontSizePx": 16,
+                  "role": "identifier"
+                },
+                {
+                  "text": "RECHAZADA",
+                  "bounds": {
+                    "x": 356.12313728000004,
+                    "y": 209.51654691999997,
+                    "width": 78,
+                    "height": 17
+                  },
+                  "fontSizePx": 14,
+                  "role": "status"
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.5,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        },
+        {
+          "frameIndex": 15,
+          "phaseId": "rechazo-autorizado",
+          "kind": "hold",
+          "label": "rechazo-autorizado · pausa",
+          "regions": [
+            {
+              "entityId": "tabla",
+              "bounds": {
+                "x": 321.44,
+                "y": 19.62,
+                "width": 285.11999999999995,
+                "height": 320.76
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 342.824,
+                    "y": 34.092200000000005,
+                    "width": 79,
+                    "height": 20
+                  },
+                  "fontSizePx": 16,
+                  "role": "label"
+                }
+              ]
+            },
+            {
+              "entityId": "fila-original",
+              "bounds": {
+                "x": 342.824,
+                "y": 90.1872,
+                "width": 196.73280000000005,
+                "height": 67.584132
+              },
+              "textBoxes": [
+                {
+                  "text": "REG-204",
+                  "bounds": {
+                    "x": 351.676976,
+                    "y": 103.24837676,
+                    "width": 69,
+                    "height": 20
+                  },
+                  "fontSizePx": 16,
+                  "role": "identifier"
+                },
+                {
+                  "text": "FUENTE",
+                  "bounds": {
+                    "x": 356.12313728000004,
+                    "y": 130.93034692,
+                    "width": 52,
+                    "height": 17
+                  },
+                  "fontSizePx": 14,
+                  "role": "status"
+                }
+              ]
+            },
+            {
+              "entityId": "fila-repetida",
+              "bounds": {
+                "x": 342.824,
+                "y": 168.77339999999998,
+                "width": 196.73280000000005,
+                "height": 67.58413200000001
+              },
+              "textBoxes": [
+                {
+                  "text": "REG-204",
+                  "bounds": {
+                    "x": 351.676976,
+                    "y": 181.83457675999998,
+                    "width": 69,
+                    "height": 20
+                  },
+                  "fontSizePx": 16,
+                  "role": "identifier"
+                },
+                {
+                  "text": "RECHAZADA",
+                  "bounds": {
+                    "x": 356.12313728000004,
+                    "y": 209.51654691999997,
+                    "width": 78,
+                    "height": 17
+                  },
+                  "fontSizePx": 14,
+                  "role": "status"
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.5,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        },
+        {
+          "frameIndex": 17,
+          "phaseId": "beneficio-esperado",
+          "kind": "transition",
+          "label": "rechazo-autorizado → beneficio-esperado · punto medio de transición",
+          "regions": [
+            {
+              "entityId": "tabla",
+              "bounds": {
+                "x": 321.44,
+                "y": 19.62,
+                "width": 285.11999999999995,
+                "height": 320.76
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 342.824,
+                    "y": 34.092200000000005,
+                    "width": 79,
+                    "height": 20
+                  },
+                  "fontSizePx": 16,
+                  "role": "label"
+                },
+                {
+                  "text": "CONSERVADA",
+                  "bounds": {
+                    "x": 350.693312,
+                    "y": 260.560048,
+                    "width": 86,
+                    "height": 17
+                  },
+                  "fontSizePx": 14,
+                  "role": "status"
+                }
+              ]
+            },
+            {
+              "entityId": "fila-original",
+              "bounds": {
+                "x": 342.824,
+                "y": 90.1872,
+                "width": 196.73280000000005,
+                "height": 67.584132
+              },
+              "textBoxes": [
+                {
+                  "text": "REG-204",
+                  "bounds": {
+                    "x": 351.676976,
+                    "y": 103.24837676,
+                    "width": 69,
+                    "height": 20
+                  },
+                  "fontSizePx": 16,
+                  "role": "identifier"
+                },
+                {
+                  "text": "FUENTE",
+                  "bounds": {
+                    "x": 356.12313728000004,
+                    "y": 130.93034692,
+                    "width": 52,
+                    "height": 17
+                  },
+                  "fontSizePx": 14,
+                  "role": "status"
+                }
+              ]
+            },
+            {
+              "entityId": "fila-repetida",
+              "bounds": {
+                "x": 342.824,
+                "y": 168.77339999999998,
+                "width": 196.73280000000005,
+                "height": 67.58413200000001
+              },
+              "textBoxes": [
+                {
+                  "text": "REG-204",
+                  "bounds": {
+                    "x": 351.676976,
+                    "y": 181.83457675999998,
+                    "width": 69,
+                    "height": 20
+                  },
+                  "fontSizePx": 16,
+                  "role": "identifier"
+                },
+                {
+                  "text": "RECHAZADA",
+                  "bounds": {
+                    "x": 356.12313728000004,
+                    "y": 209.51654691999997,
+                    "width": 78,
+                    "height": 17
+                  },
+                  "fontSizePx": 14,
+                  "role": "status"
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.5,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        },
+        {
+          "frameIndex": 22,
+          "phaseId": "beneficio-esperado",
+          "kind": "hold",
+          "label": "beneficio-esperado · pausa",
+          "regions": [
+            {
+              "entityId": "tabla",
+              "bounds": {
+                "x": 321.44,
+                "y": 19.62,
+                "width": 285.11999999999995,
+                "height": 320.76
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 342.824,
+                    "y": 34.092200000000005,
+                    "width": 79,
+                    "height": 20
+                  },
+                  "fontSizePx": 16,
+                  "role": "label"
+                },
+                {
+                  "text": "CONSERVADA",
+                  "bounds": {
+                    "x": 350.693312,
+                    "y": 260.560048,
+                    "width": 86,
+                    "height": 17
+                  },
+                  "fontSizePx": 14,
+                  "role": "status"
+                }
+              ]
+            },
+            {
+              "entityId": "fila-original",
+              "bounds": {
+                "x": 342.824,
+                "y": 90.1872,
+                "width": 196.73280000000005,
+                "height": 67.584132
+              },
+              "textBoxes": [
+                {
+                  "text": "REG-204",
+                  "bounds": {
+                    "x": 351.676976,
+                    "y": 103.24837676,
+                    "width": 69,
+                    "height": 20
+                  },
+                  "fontSizePx": 16,
+                  "role": "identifier"
+                },
+                {
+                  "text": "FUENTE",
+                  "bounds": {
+                    "x": 356.12313728000004,
+                    "y": 130.93034692,
+                    "width": 52,
+                    "height": 17
+                  },
+                  "fontSizePx": 14,
+                  "role": "status"
+                }
+              ]
+            },
+            {
+              "entityId": "fila-repetida",
+              "bounds": {
+                "x": 342.824,
+                "y": 168.77339999999998,
+                "width": 196.73280000000005,
+                "height": 67.58413200000001
+              },
+              "textBoxes": [
+                {
+                  "text": "REG-204",
+                  "bounds": {
+                    "x": 351.676976,
+                    "y": 181.83457675999998,
+                    "width": 69,
+                    "height": 20
+                  },
+                  "fontSizePx": 16,
+                  "role": "identifier"
+                },
+                {
+                  "text": "RECHAZADA",
+                  "bounds": {
+                    "x": 356.12313728000004,
+                    "y": 209.51654691999997,
+                    "width": 78,
+                    "height": 17
+                  },
+                  "fontSizePx": 14,
+                  "role": "status"
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.5,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        },
+        {
+          "frameIndex": 24,
+          "phaseId": "repeticion-visible",
+          "kind": "loop-bridge",
+          "label": "beneficio-esperado → repeticion-visible · unión del ciclo",
+          "regions": [
+            {
+              "entityId": "tabla",
+              "bounds": {
+                "x": 321.44,
+                "y": 19.62,
+                "width": 285.11999999999995,
+                "height": 320.76
+              },
+              "textBoxes": [
+                {
+                  "text": "REGISTRO",
+                  "bounds": {
+                    "x": 342.824,
+                    "y": 34.092200000000005,
+                    "width": 79,
+                    "height": 20
+                  },
+                  "fontSizePx": 16,
+                  "role": "label"
+                }
+              ]
+            },
+            {
+              "entityId": "fila-original",
+              "bounds": {
+                "x": 342.824,
+                "y": 90.1872,
+                "width": 196.73280000000005,
+                "height": 67.584132
+              },
+              "textBoxes": [
+                {
+                  "text": "REG-204",
+                  "bounds": {
+                    "x": 351.676976,
+                    "y": 103.24837676,
+                    "width": 69,
+                    "height": 20
+                  },
+                  "fontSizePx": 16,
+                  "role": "identifier"
+                },
+                {
+                  "text": "FUENTE",
+                  "bounds": {
+                    "x": 356.12313728000004,
+                    "y": 130.93034692,
+                    "width": 52,
+                    "height": 17
+                  },
+                  "fontSizePx": 14,
+                  "role": "status"
+                }
+              ]
+            },
+            {
+              "entityId": "fila-repetida",
+              "bounds": {
+                "x": 342.824,
+                "y": 168.77339999999998,
+                "width": 196.73280000000005,
+                "height": 67.58413200000001
+              },
+              "textBoxes": [
+                {
+                  "text": "REG-204",
+                  "bounds": {
+                    "x": 351.676976,
+                    "y": 181.83457675999998,
+                    "width": 69,
+                    "height": 20
+                  },
+                  "fontSizePx": 16,
+                  "role": "identifier"
+                },
+                {
+                  "text": "DUPLICADA",
+                  "bounds": {
+                    "x": 356.12313728000004,
+                    "y": 209.51654691999997,
+                    "width": 78,
+                    "height": 17
+                  },
+                  "fontSizePx": 14,
+                  "role": "status"
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.5,
+            "textColumnFillRatio": 0,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.5
+          }
+        }
+      ],
+      "objectTransformationByFrame": [
+        {
+          "frameIndex": 3,
+          "phaseId": "duplicado-identificado",
+          "fromPhaseId": "repeticion-visible",
+          "kind": "transition",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "tabla",
+              "bounds": {
+                "x": 321.44,
+                "y": 19.62,
+                "width": 285.11999999999995,
+                "height": 320.76
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0.008762976154280502,
+              "changed": false
+            },
+            {
+              "entityId": "fila-original",
+              "bounds": {
+                "x": 342.824,
+                "y": 90.1872,
+                "width": 196.73280000000005,
+                "height": 67.584132
+              },
+              "fromState": "original",
+              "toState": "original",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "fila-repetida",
+              "bounds": {
+                "x": 342.824,
+                "y": 168.77339999999998,
+                "width": 196.73280000000005,
+                "height": 67.58413200000001
+              },
+              "fromState": "duplicate",
+              "toState": "flagged",
+              "pixelDiffRatio": 0.0590689503732982,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 10,
+          "phaseId": "rechazo-autorizado",
+          "fromPhaseId": "duplicado-identificado",
+          "kind": "transition",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "tabla",
+              "bounds": {
+                "x": 321.44,
+                "y": 19.62,
+                "width": 285.11999999999995,
+                "height": 320.76
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0.049493984276592976,
+              "changed": false
+            },
+            {
+              "entityId": "fila-original",
+              "bounds": {
+                "x": 342.824,
+                "y": 90.1872,
+                "width": 196.73280000000005,
+                "height": 67.584132
+              },
+              "fromState": "original",
+              "toState": "original",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "fila-repetida",
+              "bounds": {
+                "x": 342.824,
+                "y": 168.77339999999998,
+                "width": 196.73280000000005,
+                "height": 67.58413200000001
+              },
+              "fromState": "flagged",
+              "toState": "rejected",
+              "pixelDiffRatio": 0.33362611623481186,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 17,
+          "phaseId": "beneficio-esperado",
+          "fromPhaseId": "rechazo-autorizado",
+          "kind": "transition",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "tabla",
+              "bounds": {
+                "x": 321.44,
+                "y": 19.62,
+                "width": 285.11999999999995,
+                "height": 320.76
+              },
+              "fromState": "default",
+              "toState": "reviewed",
+              "pixelDiffRatio": 0.01894844286148634,
+              "changed": true
+            },
+            {
+              "entityId": "fila-original",
+              "bounds": {
+                "x": 342.824,
+                "y": 90.1872,
+                "width": 196.73280000000005,
+                "height": 67.584132
+              },
+              "fromState": "original",
+              "toState": "original",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "fila-repetida",
+              "bounds": {
+                "x": 342.824,
+                "y": 168.77339999999998,
+                "width": 196.73280000000005,
+                "height": 67.58413200000001
+              },
+              "fromState": "rejected",
+              "toState": "rejected",
+              "pixelDiffRatio": 0,
+              "changed": false
+            }
+          ]
+        },
+        {
+          "frameIndex": 24,
+          "phaseId": "repeticion-visible",
+          "fromPhaseId": "beneficio-esperado",
+          "kind": "loop-bridge",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "tabla",
+              "bounds": {
+                "x": 321.44,
+                "y": 19.62,
+                "width": 285.11999999999995,
+                "height": 320.76
+              },
+              "fromState": "reviewed",
+              "toState": "default",
+              "pixelDiffRatio": 0.06847500325761195,
+              "changed": true
+            },
+            {
+              "entityId": "fila-original",
+              "bounds": {
+                "x": 342.824,
+                "y": 90.1872,
+                "width": 196.73280000000005,
+                "height": 67.584132
+              },
+              "fromState": "original",
+              "toState": "original",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "fila-repetida",
+              "bounds": {
+                "x": 342.824,
+                "y": 168.77339999999998,
+                "width": 196.73280000000005,
+                "height": 67.58413200000001
+              },
+              "fromState": "rejected",
+              "toState": "duplicate",
+              "pixelDiffRatio": 0.3338457034109208,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 8,
+          "phaseId": "duplicado-identificado",
+          "fromPhaseId": "repeticion-visible",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "tabla",
+              "bounds": {
+                "x": 321.44,
+                "y": 19.62,
+                "width": 285.11999999999995,
+                "height": 320.76
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0.008762976154280502,
+              "changed": false
+            },
+            {
+              "entityId": "fila-original",
+              "bounds": {
+                "x": 342.824,
+                "y": 90.1872,
+                "width": 196.73280000000005,
+                "height": 67.584132
+              },
+              "fromState": "original",
+              "toState": "original",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "fila-repetida",
+              "bounds": {
+                "x": 342.824,
+                "y": 168.77339999999998,
+                "width": 196.73280000000005,
+                "height": 67.58413200000001
+              },
+              "fromState": "duplicate",
+              "toState": "flagged",
+              "pixelDiffRatio": 0.0590689503732982,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 15,
+          "phaseId": "rechazo-autorizado",
+          "fromPhaseId": "duplicado-identificado",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "tabla",
+              "bounds": {
+                "x": 321.44,
+                "y": 19.62,
+                "width": 285.11999999999995,
+                "height": 320.76
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0.049493984276592976,
+              "changed": false
+            },
+            {
+              "entityId": "fila-original",
+              "bounds": {
+                "x": 342.824,
+                "y": 90.1872,
+                "width": 196.73280000000005,
+                "height": 67.584132
+              },
+              "fromState": "original",
+              "toState": "original",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "fila-repetida",
+              "bounds": {
+                "x": 342.824,
+                "y": 168.77339999999998,
+                "width": 196.73280000000005,
+                "height": 67.58413200000001
+              },
+              "fromState": "flagged",
+              "toState": "rejected",
+              "pixelDiffRatio": 0.33362611623481186,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 22,
+          "phaseId": "beneficio-esperado",
+          "fromPhaseId": "rechazo-autorizado",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "tabla",
+              "bounds": {
+                "x": 321.44,
+                "y": 19.62,
+                "width": 285.11999999999995,
+                "height": 320.76
+              },
+              "fromState": "default",
+              "toState": "reviewed",
+              "pixelDiffRatio": 0.01894844286148634,
+              "changed": true
+            },
+            {
+              "entityId": "fila-original",
+              "bounds": {
+                "x": 342.824,
+                "y": 90.1872,
+                "width": 196.73280000000005,
+                "height": 67.584132
+              },
+              "fromState": "original",
+              "toState": "original",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "fila-repetida",
+              "bounds": {
+                "x": 342.824,
+                "y": 168.77339999999998,
+                "width": 196.73280000000005,
+                "height": 67.58413200000001
+              },
+              "fromState": "rejected",
+              "toState": "rejected",
+              "pixelDiffRatio": 0,
+              "changed": false
+            }
+          ]
+        },
+        {
+          "frameIndex": 1,
+          "phaseId": "repeticion-visible",
+          "fromPhaseId": "beneficio-esperado",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "tabla",
+              "bounds": {
+                "x": 321.44,
+                "y": 19.62,
+                "width": 285.11999999999995,
+                "height": 320.76
+              },
+              "fromState": "reviewed",
+              "toState": "default",
+              "pixelDiffRatio": 0.06847500325761195,
+              "changed": true
+            },
+            {
+              "entityId": "fila-original",
+              "bounds": {
+                "x": 342.824,
+                "y": 90.1872,
+                "width": 196.73280000000005,
+                "height": 67.584132
+              },
+              "fromState": "original",
+              "toState": "original",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "fila-repetida",
+              "bounds": {
+                "x": 342.824,
+                "y": 168.77339999999998,
+                "width": 196.73280000000005,
+                "height": 67.58413200000001
+              },
+              "fromState": "rejected",
+              "toState": "duplicate",
+              "pixelDiffRatio": 0.3338457034109208,
+              "changed": true
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "phaseCaptures": [
+    {
+      "phaseId": "repeticion-visible",
+      "labels": [
+        "repeticion-visible · inicio",
+        "repeticion-visible · pausa",
+        "repeticion-visible → duplicado-identificado · punto medio de transición",
+        "repeticion-visible · salida",
+        "reinicio del loop"
+      ],
+      "contactSheet": "../../../../../../semantic/brutalist/filas-duplicadas/art-only/es/filas-fdd4f19a-art-only-contact-sheet.png"
+    },
+    {
+      "phaseId": "duplicado-identificado",
+      "labels": [
+        "duplicado-identificado · inicio",
+        "duplicado-identificado · pausa",
+        "duplicado-identificado → rechazo-autorizado · punto medio de transición",
+        "duplicado-identificado · salida"
+      ],
+      "contactSheet": "../../../../../../semantic/brutalist/filas-duplicadas/art-only/es/filas-fdd4f19a-art-only-contact-sheet.png"
+    },
+    {
+      "phaseId": "rechazo-autorizado",
+      "labels": [
+        "rechazo-autorizado · inicio",
+        "rechazo-autorizado · pausa",
+        "rechazo-autorizado → beneficio-esperado · punto medio de transición",
+        "rechazo-autorizado · salida"
+      ],
+      "contactSheet": "../../../../../../semantic/brutalist/filas-duplicadas/art-only/es/filas-fdd4f19a-art-only-contact-sheet.png"
+    },
+    {
+      "phaseId": "beneficio-esperado",
+      "labels": [
+        "beneficio-esperado · inicio",
+        "beneficio-esperado · pausa",
+        "beneficio-esperado → repeticion-visible · unión del ciclo",
+        "beneficio-esperado · salida"
+      ],
+      "contactSheet": "../../../../../../semantic/brutalist/filas-duplicadas/art-only/es/filas-fdd4f19a-art-only-contact-sheet.png"
+    }
+  ],
+  "semanticObjectCaptures": [
+    {
+      "label": "repeticion-visible · pausa",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 0,
+      "frameIndex": 1,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 342.824,
+            "y": 90.1872,
+            "width": 196.73280000000005,
+            "height": 67.584132
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 103.24837676,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "FUENTE",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 130.93034692,
+                "width": 52,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 342.824,
+            "y": 168.77339999999998,
+            "width": 196.73280000000005,
+            "height": 67.58413200000001
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 181.83457675999998,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "DUPLICADA",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 209.51654691999997,
+                "width": 78,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "repeticion-visible → duplicado-identificado · punto medio de transición",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 0,
+      "frameIndex": 3,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 342.824,
+            "y": 90.1872,
+            "width": 196.73280000000005,
+            "height": 67.584132
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 103.24837676,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "FUENTE",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 130.93034692,
+                "width": 52,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 342.824,
+            "y": 168.77339999999998,
+            "width": 196.73280000000005,
+            "height": 67.58413200000001
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 181.83457675999998,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "SEÑALADA",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 209.51654691999997,
+                "width": 69,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "duplicado-identificado · pausa",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 1,
+      "frameIndex": 8,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 342.824,
+            "y": 90.1872,
+            "width": 196.73280000000005,
+            "height": 67.584132
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 103.24837676,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "FUENTE",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 130.93034692,
+                "width": 52,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 342.824,
+            "y": 168.77339999999998,
+            "width": 196.73280000000005,
+            "height": 67.58413200000001
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 181.83457675999998,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "SEÑALADA",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 209.51654691999997,
+                "width": 69,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "duplicado-identificado → rechazo-autorizado · punto medio de transición",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 1,
+      "frameIndex": 10,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 342.824,
+            "y": 90.1872,
+            "width": 196.73280000000005,
+            "height": 67.584132
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 103.24837676,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "FUENTE",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 130.93034692,
+                "width": 52,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 342.824,
+            "y": 168.77339999999998,
+            "width": 196.73280000000005,
+            "height": 67.58413200000001
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 181.83457675999998,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "RECHAZADA",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 209.51654691999997,
+                "width": 78,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "rechazo-autorizado · pausa",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 2,
+      "frameIndex": 15,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 342.824,
+            "y": 90.1872,
+            "width": 196.73280000000005,
+            "height": 67.584132
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 103.24837676,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "FUENTE",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 130.93034692,
+                "width": 52,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 342.824,
+            "y": 168.77339999999998,
+            "width": 196.73280000000005,
+            "height": 67.58413200000001
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 181.83457675999998,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "RECHAZADA",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 209.51654691999997,
+                "width": 78,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "rechazo-autorizado → beneficio-esperado · punto medio de transición",
+      "phaseIndex": 3,
+      "fromPhaseIndex": 2,
+      "frameIndex": 17,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "CONSERVADA",
+              "bounds": {
+                "x": 350.693312,
+                "y": 260.560048,
+                "width": 86,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 342.824,
+            "y": 90.1872,
+            "width": 196.73280000000005,
+            "height": 67.584132
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 103.24837676,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "FUENTE",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 130.93034692,
+                "width": 52,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 342.824,
+            "y": 168.77339999999998,
+            "width": 196.73280000000005,
+            "height": 67.58413200000001
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 181.83457675999998,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "RECHAZADA",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 209.51654691999997,
+                "width": 78,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "beneficio-esperado · pausa",
+      "phaseIndex": 3,
+      "fromPhaseIndex": 3,
+      "frameIndex": 22,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "CONSERVADA",
+              "bounds": {
+                "x": 350.693312,
+                "y": 260.560048,
+                "width": 86,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 342.824,
+            "y": 90.1872,
+            "width": 196.73280000000005,
+            "height": 67.584132
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 103.24837676,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "FUENTE",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 130.93034692,
+                "width": 52,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 342.824,
+            "y": 168.77339999999998,
+            "width": 196.73280000000005,
+            "height": 67.58413200000001
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 181.83457675999998,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "RECHAZADA",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 209.51654691999997,
+                "width": 78,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "beneficio-esperado → repeticion-visible · unión del ciclo",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 3,
+      "frameIndex": 24,
+      "kind": "loop-bridge",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 342.824,
+            "y": 90.1872,
+            "width": 196.73280000000005,
+            "height": 67.584132
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 103.24837676,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "FUENTE",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 130.93034692,
+                "width": 52,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 342.824,
+            "y": 168.77339999999998,
+            "width": 196.73280000000005,
+            "height": 67.58413200000001
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 181.83457675999998,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "DUPLICADA",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 209.51654691999997,
+                "width": 78,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "compositionByFrame": [
+    {
+      "frameIndex": 1,
+      "label": "repeticion-visible · pausa",
+      "phaseId": "repeticion-visible",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 342.824,
+            "y": 90.1872,
+            "width": 196.73280000000005,
+            "height": 67.584132
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 103.24837676,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "FUENTE",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 130.93034692,
+                "width": 52,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 342.824,
+            "y": 168.77339999999998,
+            "width": 196.73280000000005,
+            "height": 67.58413200000001
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 181.83457675999998,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "DUPLICADA",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 209.51654691999997,
+                "width": 78,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "frameIndex": 3,
+      "label": "repeticion-visible → duplicado-identificado · punto medio de transición",
+      "phaseId": "duplicado-identificado",
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 342.824,
+            "y": 90.1872,
+            "width": 196.73280000000005,
+            "height": 67.584132
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 103.24837676,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "FUENTE",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 130.93034692,
+                "width": 52,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 342.824,
+            "y": 168.77339999999998,
+            "width": 196.73280000000005,
+            "height": 67.58413200000001
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 181.83457675999998,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "SEÑALADA",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 209.51654691999997,
+                "width": 69,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "frameIndex": 8,
+      "label": "duplicado-identificado · pausa",
+      "phaseId": "duplicado-identificado",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 342.824,
+            "y": 90.1872,
+            "width": 196.73280000000005,
+            "height": 67.584132
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 103.24837676,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "FUENTE",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 130.93034692,
+                "width": 52,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 342.824,
+            "y": 168.77339999999998,
+            "width": 196.73280000000005,
+            "height": 67.58413200000001
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 181.83457675999998,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "SEÑALADA",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 209.51654691999997,
+                "width": 69,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "frameIndex": 10,
+      "label": "duplicado-identificado → rechazo-autorizado · punto medio de transición",
+      "phaseId": "rechazo-autorizado",
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 342.824,
+            "y": 90.1872,
+            "width": 196.73280000000005,
+            "height": 67.584132
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 103.24837676,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "FUENTE",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 130.93034692,
+                "width": 52,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 342.824,
+            "y": 168.77339999999998,
+            "width": 196.73280000000005,
+            "height": 67.58413200000001
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 181.83457675999998,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "RECHAZADA",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 209.51654691999997,
+                "width": 78,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "frameIndex": 15,
+      "label": "rechazo-autorizado · pausa",
+      "phaseId": "rechazo-autorizado",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 342.824,
+            "y": 90.1872,
+            "width": 196.73280000000005,
+            "height": 67.584132
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 103.24837676,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "FUENTE",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 130.93034692,
+                "width": 52,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 342.824,
+            "y": 168.77339999999998,
+            "width": 196.73280000000005,
+            "height": 67.58413200000001
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 181.83457675999998,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "RECHAZADA",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 209.51654691999997,
+                "width": 78,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "frameIndex": 17,
+      "label": "rechazo-autorizado → beneficio-esperado · punto medio de transición",
+      "phaseId": "beneficio-esperado",
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "CONSERVADA",
+              "bounds": {
+                "x": 350.693312,
+                "y": 260.560048,
+                "width": 86,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 342.824,
+            "y": 90.1872,
+            "width": 196.73280000000005,
+            "height": 67.584132
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 103.24837676,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "FUENTE",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 130.93034692,
+                "width": 52,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 342.824,
+            "y": 168.77339999999998,
+            "width": 196.73280000000005,
+            "height": 67.58413200000001
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 181.83457675999998,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "RECHAZADA",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 209.51654691999997,
+                "width": 78,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "frameIndex": 22,
+      "label": "beneficio-esperado · pausa",
+      "phaseId": "beneficio-esperado",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            },
+            {
+              "text": "CONSERVADA",
+              "bounds": {
+                "x": 350.693312,
+                "y": 260.560048,
+                "width": 86,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 342.824,
+            "y": 90.1872,
+            "width": 196.73280000000005,
+            "height": 67.584132
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 103.24837676,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "FUENTE",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 130.93034692,
+                "width": 52,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 342.824,
+            "y": 168.77339999999998,
+            "width": 196.73280000000005,
+            "height": 67.58413200000001
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 181.83457675999998,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "RECHAZADA",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 209.51654691999997,
+                "width": 78,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    },
+    {
+      "frameIndex": 24,
+      "label": "beneficio-esperado → repeticion-visible · unión del ciclo",
+      "phaseId": "repeticion-visible",
+      "kind": "loop-bridge",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 321.44,
+            "y": 19.62,
+            "width": 285.11999999999995,
+            "height": 320.76
+          },
+          "textBoxes": [
+            {
+              "text": "REGISTRO",
+              "bounds": {
+                "x": 342.824,
+                "y": 34.092200000000005,
+                "width": 79,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 342.824,
+            "y": 90.1872,
+            "width": 196.73280000000005,
+            "height": 67.584132
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 103.24837676,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "FUENTE",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 130.93034692,
+                "width": 52,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 342.824,
+            "y": 168.77339999999998,
+            "width": 196.73280000000005,
+            "height": 67.58413200000001
+          },
+          "textBoxes": [
+            {
+              "text": "REG-204",
+              "bounds": {
+                "x": 351.676976,
+                "y": 181.83457675999998,
+                "width": 69,
+                "height": 20
+              },
+              "fontSizePx": 16,
+              "role": "identifier"
+            },
+            {
+              "text": "DUPLICADA",
+              "bounds": {
+                "x": 356.12313728000004,
+                "y": 209.51654691999997,
+                "width": 78,
+                "height": 17
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            }
+          ]
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.5,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.5
+      }
+    }
+  ],
+  "palette": {
+    "colors": 44,
+    "meanAbsoluteChannelError": 0.222,
+    "maximumChannelError": 9,
+    "sampledFrames": 28
+  },
+  "phaseHoldsVerified": [
+    {
+      "phaseId": "repeticion-visible",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    },
+    {
+      "phaseId": "duplicado-identificado",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    },
+    {
+      "phaseId": "rechazo-autorizado",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    },
+    {
+      "phaseId": "beneficio-esperado",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    }
+  ],
+  "timing": {
+    "preset": "concise",
+    "holdsRequestedMs": 8800,
+    "holdsDecodedMs": 8800,
+    "transitionsMs": 1200,
+    "loopBridgeMs": 400,
+    "entryMs": 320,
+    "totalDecodedMs": 10720,
+    "totalDurationBudgetMs": 20000,
+    "phaseHolds": [
+      {
+        "phaseId": "repeticion-visible",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      },
+      {
+        "phaseId": "duplicado-identificado",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      },
+      {
+        "phaseId": "rechazo-autorizado",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      },
+      {
+        "phaseId": "beneficio-esperado",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      }
+    ],
+    "warnings": []
+  },
+  "resourceEstimate": {
+    "pixelFrames": 6451200,
+    "maxPixelFrames": 96000000,
+    "memoryBytes": 37511168,
+    "maxMemoryBytes": 268435456
+  },
+  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed.",
+  "generatedBy": "open-beauty-site",
+  "reviewState": "none",
+  "openFeedbackCount": 0,
+  "feedbackFrames": [],
+  "publicationRecommendation": "none",
+  "renderRevision": 0
+}

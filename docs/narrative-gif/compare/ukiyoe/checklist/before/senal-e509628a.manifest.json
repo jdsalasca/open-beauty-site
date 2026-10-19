@@ -1,0 +1,657 @@
+{
+  "schemaVersion": 1,
+  "commit": "aaa4322afd9cf89b6ef3a8c7a1ae542fcef5ed31",
+  "brief": {
+    "style": "ukiyoe",
+    "kind": "narrative-gif",
+    "locale": "es",
+    "audience": "Producto en Sprint Review",
+    "title": "Señal",
+    "status": "in-review",
+    "phases": [
+      {
+        "id": "before",
+        "label": "Antes",
+        "text": "La medida puede quedar sin señal.",
+        "visual": {
+          "kind": "checklist",
+          "state": "unreviewed"
+        }
+      },
+      {
+        "id": "change",
+        "label": "Cambio",
+        "text": "La guía marca qué requiere revisión.",
+        "visual": {
+          "kind": "checklist",
+          "state": "flagged"
+        }
+      },
+      {
+        "id": "result",
+        "label": "Resultado esperado",
+        "text": "Revisarla antes del cierre de la sprint.",
+        "visual": {
+          "kind": "checklist",
+          "state": "review-ready"
+        }
+      }
+    ],
+    "playback": {
+      "minReadableHoldMs": 5000,
+      "transitionMs": 650,
+      "loop": true
+    },
+    "output": {
+      "width": 1280,
+      "height": 720,
+      "formats": [
+        "gif",
+        "png"
+      ],
+      "preset": "review-1280x720"
+    },
+    "seed": 7
+  },
+  "briefSha256": "e509628ae8676facffa96cf8afe75105b4dafcdadbc2203f65fc63e546c2af2b",
+  "style": "ukiyoe",
+  "subfamily": null,
+  "seed": 7,
+  "renderer": {
+    "narrative": "narrative-core/0.1.0",
+    "canvas": "@napi-rs/canvas@1.0.11",
+    "gif": "gifenc@1.0.3",
+    "scene": "ukiyoe-coastal-print/1.0.0"
+  },
+  "fonts": {
+    "bundleVersion": "repo-bundled-ofl-1",
+    "roles": {
+      "display": {
+        "family": "Shippori Mincho B1",
+        "weight": 700
+      },
+      "reading": {
+        "family": "Zen Kaku Gothic New",
+        "weight": 400
+      },
+      "label": {
+        "family": "Zen Kaku Gothic New",
+        "weight": 500
+      },
+      "figure": {
+        "family": "Shippori Mincho B1",
+        "weight": 700
+      },
+      "annotation": {
+        "family": "Zen Kaku Gothic New",
+        "weight": 400
+      }
+    }
+  },
+  "dimensions": {
+    "width": 1280,
+    "height": 720
+  },
+  "formats": [
+    "gif",
+    "png"
+  ],
+  "decoded": {
+    "width": 1280,
+    "height": 720,
+    "frameCount": 33,
+    "delaysMs": [
+      80,
+      5000,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      80,
+      5000,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      80,
+      5000,
+      80,
+      80,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70
+    ],
+    "durationMs": 17190,
+    "loopCount": 0,
+    "integrity": true
+  },
+  "ffprobe": {
+    "available": true,
+    "passed": true,
+    "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode."
+  },
+  "bytes": {
+    "gif": 843310,
+    "png": 58934,
+    "contactSheet": 67727
+  },
+  "hashes": {
+    "briefSha256": "e509628ae8676facffa96cf8afe75105b4dafcdadbc2203f65fc63e546c2af2b",
+    "gifSha256": "29302a68c1df2e4686c382f0b41478a09669123d216e91b4a932202487b78c88",
+    "pngSha256": "1ae82f2b7822fe8fdfa15c3ee4eda91e80fd3c6f849343ae8be8a7424dd6fe49",
+    "contactSheetSha256": "5e095a73ab1295430df6d296eaf2e00110c56356e6e8f6e7dd0c1fa835e752a8"
+  },
+  "files": {
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\ukiyoe\\checklist\\senal-e509628a.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\ukiyoe\\checklist\\senal-e509628a.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\ukiyoe\\checklist\\senal-e509628a-contact-sheet.png"
+  },
+  "controls": [
+    {
+      "name": "gif-integrity",
+      "passed": true,
+      "detail": "Independent LZW decode and GIF trailer passed.",
+      "source": "decoded"
+    },
+    {
+      "name": "dimensions",
+      "passed": true,
+      "detail": "decoded 1280×720; requested 1280×720",
+      "source": "decoded"
+    },
+    {
+      "name": "frame-count",
+      "passed": true,
+      "detail": "33 decoded frame(s)",
+      "source": "decoded"
+    },
+    {
+      "name": "duration",
+      "passed": true,
+      "detail": "17190ms decoded; holds exclude transitions",
+      "source": "decoded"
+    },
+    {
+      "name": "loop",
+      "passed": true,
+      "detail": "repeat=0; result-to-before bridge is explicit",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-holds",
+      "passed": true,
+      "detail": "before 5000/5000ms, change 5000/5000ms, result 5000/5000ms",
+      "source": "decoded"
+    },
+    {
+      "name": "ffprobe-crosscheck",
+      "passed": true,
+      "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode.",
+      "source": "decoded"
+    },
+    {
+      "name": "files",
+      "passed": true,
+      "detail": "GIF 843310B · PNG 58934B · contact 67727B",
+      "source": "decoded"
+    },
+    {
+      "name": "scene-renderer-registered",
+      "passed": true,
+      "detail": "renderer ukiyoe/ukiyoe-coastal-print/1.0.0 exists; visual style likeness remains a separate review",
+      "source": "source"
+    },
+    {
+      "name": "type-system",
+      "passed": true,
+      "detail": "style typeSystem tokens are attached to raster role registry",
+      "source": "source"
+    },
+    {
+      "name": "narrative-subfamily",
+      "passed": true,
+      "detail": "ukiyoe/default selects an explicit narrative art direction",
+      "source": "source"
+    },
+    {
+      "name": "font-registration-and-glyphs",
+      "passed": true,
+      "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "distinct-frames",
+      "passed": true,
+      "detail": "28 unique composited frame(s); a format-valid static GIF does not pass",
+      "source": "pixels"
+    },
+    {
+      "name": "palette-loss",
+      "passed": true,
+      "detail": "52 colors; mean channel loss 0.022, max 13; sampled 33 frames",
+      "source": "pixels"
+    },
+    {
+      "name": "title-complete",
+      "passed": true,
+      "detail": "Señal",
+      "source": "source"
+    },
+    {
+      "name": "phase-before-label-complete",
+      "passed": true,
+      "detail": "Antes",
+      "source": "source"
+    },
+    {
+      "name": "phase-before-text-complete",
+      "passed": true,
+      "detail": "La medida puede / quedar sin señal.",
+      "source": "source"
+    },
+    {
+      "name": "phase-change-label-complete",
+      "passed": true,
+      "detail": "Cambio",
+      "source": "source"
+    },
+    {
+      "name": "phase-change-text-complete",
+      "passed": true,
+      "detail": "La guía marca qué / requiere revisión.",
+      "source": "source"
+    },
+    {
+      "name": "phase-result-label-complete",
+      "passed": true,
+      "detail": "Resultado esperado",
+      "source": "source"
+    },
+    {
+      "name": "phase-result-text-complete",
+      "passed": true,
+      "detail": "Revisarla antes del / cierre de la sprint.",
+      "source": "source"
+    },
+    {
+      "name": "registered-fonts",
+      "passed": true,
+      "detail": "all role faces and Spanish glyphs rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "review-size-thresholds",
+      "passed": true,
+      "detail": "title 104px; phase body >=36px; label >=24px",
+      "source": "source"
+    },
+    {
+      "name": "640x360-effective-size",
+      "passed": true,
+      "detail": "title 52.0px; body min 28.0px (requires >=20px); label min 15.0px",
+      "source": "source"
+    },
+    {
+      "name": "composition-balance",
+      "passed": false,
+      "severity": "warning",
+      "detail": "WARN · revise; 8×4 decoded-pixel grid against #F3E9D2: empty cells 28.1%, text-column vertical fill 100.0%, art/object area outside the text column 34.4%, largest empty rectangle 25.0%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+      "source": "pixels"
+    },
+    {
+      "name": "contrast",
+      "passed": true,
+      "detail": "rendered text colors: ink 13.46:1; label 9.63:1 (not an OCR or per-pixel text measurement)",
+      "source": "source"
+    },
+    {
+      "name": "safe-zone-and-collisions",
+      "passed": true,
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+      "source": "source"
+    },
+    {
+      "name": "stable-reading-holds",
+      "passed": true,
+      "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-count-and-copy",
+      "passed": true,
+      "detail": "3 complete phases; all copy retained",
+      "source": "source"
+    },
+    {
+      "name": "shared-object-identity",
+      "passed": true,
+      "detail": "One scene object instance is created and passed to every phase frame.",
+      "source": "source"
+    },
+    {
+      "name": "visual-state-change",
+      "passed": true,
+      "detail": "Phase states differ and exported frames are not identical.",
+      "source": "pixels"
+    },
+    {
+      "name": "result-follows-status",
+      "passed": true,
+      "detail": "status=in-review; final label=\"Resultado esperado\"",
+      "source": "source"
+    }
+  ],
+  "evaluation": {
+    "technical-integrity": {
+      "status": "pass",
+      "controls": [
+        {
+          "name": "gif-integrity",
+          "passed": true,
+          "detail": "Independent LZW decode and GIF trailer passed.",
+          "source": "decoded"
+        },
+        {
+          "name": "dimensions",
+          "passed": true,
+          "detail": "decoded 1280×720; requested 1280×720",
+          "source": "decoded"
+        },
+        {
+          "name": "frame-count",
+          "passed": true,
+          "detail": "33 decoded frame(s)",
+          "source": "decoded"
+        },
+        {
+          "name": "duration",
+          "passed": true,
+          "detail": "17190ms decoded; holds exclude transitions",
+          "source": "decoded"
+        },
+        {
+          "name": "loop",
+          "passed": true,
+          "detail": "repeat=0; result-to-before bridge is explicit",
+          "source": "decoded"
+        },
+        {
+          "name": "phase-holds",
+          "passed": true,
+          "detail": "before 5000/5000ms, change 5000/5000ms, result 5000/5000ms",
+          "source": "decoded"
+        },
+        {
+          "name": "ffprobe-crosscheck",
+          "passed": true,
+          "detail": "ffprobe 1280×720; 33 frames; 17190ms; matches the independent LZW decode.",
+          "source": "decoded"
+        },
+        {
+          "name": "files",
+          "passed": true,
+          "detail": "GIF 843310B · PNG 58934B · contact 67727B",
+          "source": "decoded"
+        }
+      ]
+    },
+    "style-conformance": {
+      "status": "pending",
+      "sourceStatus": "pass",
+      "pixelStatus": "pass",
+      "controls": [
+        {
+          "name": "scene-renderer-registered",
+          "passed": true,
+          "detail": "renderer ukiyoe/ukiyoe-coastal-print/1.0.0 exists; visual style likeness remains a separate review",
+          "source": "source"
+        },
+        {
+          "name": "type-system",
+          "passed": true,
+          "detail": "style typeSystem tokens are attached to raster role registry",
+          "source": "source"
+        },
+        {
+          "name": "narrative-subfamily",
+          "passed": true,
+          "detail": "ukiyoe/default selects an explicit narrative art direction",
+          "source": "source"
+        },
+        {
+          "name": "font-registration-and-glyphs",
+          "passed": true,
+          "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "distinct-frames",
+          "passed": true,
+          "detail": "28 unique composited frame(s); a format-valid static GIF does not pass",
+          "source": "pixels"
+        },
+        {
+          "name": "palette-loss",
+          "passed": true,
+          "detail": "52 colors; mean channel loss 0.022, max 13; sampled 33 frames",
+          "source": "pixels"
+        }
+      ],
+      "note": "Source checks identify renderer/font tokens; pixel checks measure frame change and palette loss. Neither substitutes for visual review."
+    },
+    "rendered-legibility": {
+      "status": "revise",
+      "controls": [
+        {
+          "name": "title-complete",
+          "passed": true,
+          "detail": "Señal",
+          "source": "source"
+        },
+        {
+          "name": "phase-before-label-complete",
+          "passed": true,
+          "detail": "Antes",
+          "source": "source"
+        },
+        {
+          "name": "phase-before-text-complete",
+          "passed": true,
+          "detail": "La medida puede / quedar sin señal.",
+          "source": "source"
+        },
+        {
+          "name": "phase-change-label-complete",
+          "passed": true,
+          "detail": "Cambio",
+          "source": "source"
+        },
+        {
+          "name": "phase-change-text-complete",
+          "passed": true,
+          "detail": "La guía marca qué / requiere revisión.",
+          "source": "source"
+        },
+        {
+          "name": "phase-result-label-complete",
+          "passed": true,
+          "detail": "Resultado esperado",
+          "source": "source"
+        },
+        {
+          "name": "phase-result-text-complete",
+          "passed": true,
+          "detail": "Revisarla antes del / cierre de la sprint.",
+          "source": "source"
+        },
+        {
+          "name": "registered-fonts",
+          "passed": true,
+          "detail": "all role faces and Spanish glyphs rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "review-size-thresholds",
+          "passed": true,
+          "detail": "title 104px; phase body >=36px; label >=24px",
+          "source": "source"
+        },
+        {
+          "name": "640x360-effective-size",
+          "passed": true,
+          "detail": "title 52.0px; body min 28.0px (requires >=20px); label min 15.0px",
+          "source": "source"
+        },
+        {
+          "name": "composition-balance",
+          "passed": false,
+          "severity": "warning",
+          "detail": "WARN · revise; 8×4 decoded-pixel grid against #F3E9D2: empty cells 28.1%, text-column vertical fill 100.0%, art/object area outside the text column 34.4%, largest empty rectangle 25.0%; thresholds: rectangle <=22%, text fill >=60%; not an aesthetic score.",
+          "source": "pixels"
+        },
+        {
+          "name": "contrast",
+          "passed": true,
+          "detail": "rendered text colors: ink 13.46:1; label 9.63:1 (not an OCR or per-pixel text measurement)",
+          "source": "source"
+        },
+        {
+          "name": "safe-zone-and-collisions",
+          "passed": true,
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+          "source": "source"
+        },
+        {
+          "name": "stable-reading-holds",
+          "passed": true,
+          "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+          "source": "decoded"
+        }
+      ],
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
+    },
+    "narrative": {
+      "status": "pending",
+      "controls": [
+        {
+          "name": "phase-count-and-copy",
+          "passed": true,
+          "detail": "3 complete phases; all copy retained",
+          "source": "source"
+        },
+        {
+          "name": "shared-object-identity",
+          "passed": true,
+          "detail": "One scene object instance is created and passed to every phase frame.",
+          "source": "source"
+        },
+        {
+          "name": "visual-state-change",
+          "passed": true,
+          "detail": "Phase states differ and exported frames are not identical.",
+          "source": "pixels"
+        },
+        {
+          "name": "result-follows-status",
+          "passed": true,
+          "detail": "status=in-review; final label=\"Resultado esperado\"",
+          "source": "source"
+        }
+      ],
+      "note": "Automated checks verify phase/state structure and shared object identity; causal meaning still needs review."
+    },
+    "visual-review": {
+      "status": "pending",
+      "criteria": [
+        "identity at 200px thumbnail",
+        "full text and contrast at 640×360",
+        "style material in native frame",
+        "same object and causal change across phases",
+        "result faithful to status",
+        "deliberate loop restart"
+      ],
+      "evidence": []
+    },
+    "publicationRecommendation": "none"
+  },
+  "phaseCaptures": [
+    {
+      "phaseId": "before",
+      "labels": [
+        "before · inicio",
+        "before · pausa",
+        "before · transición media",
+        "before · salida",
+        "reinicio del loop"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\ukiyoe\\checklist\\senal-e509628a-contact-sheet.png"
+    },
+    {
+      "phaseId": "change",
+      "labels": [
+        "change · inicio",
+        "change · pausa",
+        "change · transición media",
+        "change · salida"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\ukiyoe\\checklist\\senal-e509628a-contact-sheet.png"
+    },
+    {
+      "phaseId": "result",
+      "labels": [
+        "result · inicio",
+        "result · pausa",
+        "result · transición media",
+        "result · salida"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-9f9765e6\\docs\\narrative-gif\\gallery\\ukiyoe\\checklist\\senal-e509628a-contact-sheet.png"
+    }
+  ],
+  "palette": {
+    "colors": 52,
+    "meanAbsoluteChannelError": 0.022,
+    "maximumChannelError": 13,
+    "sampledFrames": 33
+  },
+  "phaseHoldsVerified": [
+    {
+      "phaseId": "before",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    },
+    {
+      "phaseId": "change",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    },
+    {
+      "phaseId": "result",
+      "requiredMs": 5000,
+      "decodedMs": 5000,
+      "passed": true
+    }
+  ],
+  "resourceEstimate": {
+    "pixelFrames": 30412800,
+    "maxPixelFrames": 96000000,
+    "memoryBytes": 107634688,
+    "maxMemoryBytes": 268435456
+  },
+  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed."
+}

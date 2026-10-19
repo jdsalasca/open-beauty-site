@@ -1,0 +1,3660 @@
+{
+  "schemaVersion": 3,
+  "commit": "8e1695849bfeb327907de744a3b3f9168f063606",
+  "brief": {
+    "style": "papercraft",
+    "subfamily": "editorial",
+    "kind": "narrative-gif",
+    "locale": "es",
+    "audience": "Equipo que revisa un listado",
+    "title": "Total",
+    "workflowStatus": "in-review",
+    "outcome": {
+      "mode": "expected",
+      "scopeNote": "Ejemplo ilustrativo: el conteo incluye solo las tarjetas visibles relacionadas; no representa elementos fuera de la colección."
+    },
+    "illustrative": true,
+    "badgePolicy": "none",
+    "phases": [
+      {
+        "id": "alcance-de-dos",
+        "label": "Antes",
+        "text": "A y B forman el conteo 2.",
+        "visual": {
+          "kind": "comparison",
+          "state": "before",
+          "semantic": {
+            "primitive": "counter",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "contador",
+                "kind": "counter",
+                "value": 2,
+                "illustrative": true
+              },
+              {
+                "id": "ficha-a",
+                "kind": "row",
+                "label": "A",
+                "illustrative": true
+              },
+              {
+                "id": "ficha-b",
+                "kind": "row",
+                "label": "B",
+                "illustrative": true
+              },
+              {
+                "id": "ficha-c",
+                "kind": "row",
+                "label": "C",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "counts",
+                "from": "contador",
+                "to": "ficha-a"
+              },
+              {
+                "kind": "counts",
+                "from": "contador",
+                "to": "ficha-b"
+              }
+            ],
+            "states": {
+              "contador": "value",
+              "ficha-a": "default",
+              "ficha-b": "default",
+              "ficha-c": "pending"
+            },
+            "actions": []
+          }
+        },
+        "holdMs": 2200
+      },
+      {
+        "id": "tercera-ficha-incluida",
+        "label": "Se suma C",
+        "text": "La ficha C se incluye.",
+        "visual": {
+          "kind": "comparison",
+          "state": "flagged",
+          "semantic": {
+            "primitive": "counter",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "contador",
+                "kind": "counter",
+                "value": 3,
+                "illustrative": true
+              },
+              {
+                "id": "ficha-a",
+                "kind": "row",
+                "label": "A",
+                "illustrative": true
+              },
+              {
+                "id": "ficha-b",
+                "kind": "row",
+                "label": "B",
+                "illustrative": true
+              },
+              {
+                "id": "ficha-c",
+                "kind": "row",
+                "label": "C",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "counts",
+                "from": "contador",
+                "to": "ficha-a"
+              },
+              {
+                "kind": "counts",
+                "from": "contador",
+                "to": "ficha-b"
+              },
+              {
+                "kind": "counts",
+                "from": "contador",
+                "to": "ficha-c"
+              }
+            ],
+            "states": {
+              "contador": "increased",
+              "ficha-a": "default",
+              "ficha-b": "default",
+              "ficha-c": "accepted"
+            },
+            "actions": [
+              {
+                "entityId": "contador",
+                "type": "count-changes"
+              }
+            ]
+          }
+        },
+        "holdMs": 2200
+      },
+      {
+        "id": "conjunto-de-tres",
+        "label": "Resultado esperado",
+        "text": "Total esperado: 3.",
+        "visual": {
+          "kind": "comparison",
+          "state": "review-ready",
+          "semantic": {
+            "primitive": "counter",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "contador",
+                "kind": "counter",
+                "value": 3,
+                "illustrative": true
+              },
+              {
+                "id": "ficha-a",
+                "kind": "row",
+                "label": "A",
+                "illustrative": true
+              },
+              {
+                "id": "ficha-b",
+                "kind": "row",
+                "label": "B",
+                "illustrative": true
+              },
+              {
+                "id": "ficha-c",
+                "kind": "row",
+                "label": "C",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "counts",
+                "from": "contador",
+                "to": "ficha-a"
+              },
+              {
+                "kind": "counts",
+                "from": "contador",
+                "to": "ficha-b"
+              },
+              {
+                "kind": "counts",
+                "from": "contador",
+                "to": "ficha-c"
+              }
+            ],
+            "states": {
+              "contador": "pending",
+              "ficha-a": "default",
+              "ficha-b": "default",
+              "ficha-c": "accepted"
+            },
+            "actions": []
+          }
+        },
+        "holdMs": 2200
+      }
+    ],
+    "playback": {
+      "preset": "concise",
+      "minReadableHoldMs": 2200,
+      "transitionMs": 400,
+      "loop": true,
+      "totalDurationBudgetMs": 15000
+    },
+    "output": {
+      "width": 640,
+      "height": 360,
+      "formats": [
+        "gif",
+        "png"
+      ],
+      "preset": "review-1280x720"
+    },
+    "seed": 19,
+    "status": "in-review"
+  },
+  "briefSha256": "db76fd68aaeb7cf3db737aeaa6b194dcc8339b401e76e2f7a67d56cb372b8218",
+  "style": "papercraft",
+  "subfamily": "editorial",
+  "workflowStatus": "in-review",
+  "outcome": {
+    "mode": "expected",
+    "scopeNote": "Ejemplo ilustrativo: el conteo incluye solo las tarjetas visibles relacionadas; no representa elementos fuera de la colección."
+  },
+  "evidenceClassification": "illustrative",
+  "illustrative": true,
+  "artOnly": true,
+  "seed": 19,
+  "renderer": {
+    "narrative": "narrative-core/0.2.0",
+    "canvas": "@napi-rs/canvas@1.0.11",
+    "gif": "gifenc@1.0.3",
+    "scene": "papercraft-editorial/1.1.0"
+  },
+  "fonts": {
+    "bundleVersion": "repo-bundled-ofl-1",
+    "roles": {
+      "display": {
+        "family": "Fraunces",
+        "weight": 560
+      },
+      "reading": {
+        "family": "Nunito Sans",
+        "weight": 400
+      },
+      "label": {
+        "family": "Nunito Sans",
+        "weight": 800
+      },
+      "figure": {
+        "family": "Fraunces",
+        "weight": 560
+      },
+      "annotation": {
+        "family": "Space Mono",
+        "weight": 400
+      }
+    }
+  },
+  "dimensions": {
+    "width": 640,
+    "height": 360
+  },
+  "formats": [
+    "gif",
+    "png"
+  ],
+  "decoded": {
+    "width": 640,
+    "height": 360,
+    "frameCount": 21,
+    "delaysMs": [
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80
+    ],
+    "durationMs": 8040,
+    "loopCount": 0,
+    "integrity": true
+  },
+  "ffprobe": {
+    "available": true,
+    "passed": true,
+    "detail": "ffprobe 640×360; 21 frames; 8040ms; matches the independent LZW decode."
+  },
+  "bytes": {
+    "gif": 239433,
+    "png": 34208,
+    "contactSheet": 79226
+  },
+  "hashes": {
+    "briefSha256": "db76fd68aaeb7cf3db737aeaa6b194dcc8339b401e76e2f7a67d56cb372b8218",
+    "gifSha256": "0752539ac99b62311d02ceca923053496370cc1574d2a9617deae374e4ae5e70",
+    "pngSha256": "e74017efea3d57e7fce05b9690f80e28a370c04f900a1493e0defe38b7754a1a",
+    "contactSheetSha256": "20663d98c059cd35ac016e274dfbeb00e985d2c78083094ca89a08d9fc134817"
+  },
+  "files": {
+    "gif": "../../../../../../semantic/papercraft/contador-coleccion/art-only/es/total-1b74129f-art-only.gif",
+    "png": "../../../../../../semantic/papercraft/contador-coleccion/art-only/es/total-1b74129f-art-only.png",
+    "contactSheet": "../../../../../../semantic/papercraft/contador-coleccion/art-only/es/total-1b74129f-art-only-contact-sheet.png"
+  },
+  "controls": [
+    {
+      "name": "gif-integrity",
+      "passed": true,
+      "detail": "Independent LZW decode and GIF trailer passed.",
+      "source": "decoded"
+    },
+    {
+      "name": "dimensions",
+      "passed": true,
+      "detail": "decoded 640×360; requested 640×360",
+      "source": "decoded"
+    },
+    {
+      "name": "frame-count",
+      "passed": true,
+      "detail": "21 decoded frame(s)",
+      "source": "decoded"
+    },
+    {
+      "name": "duration",
+      "passed": true,
+      "detail": "8040ms decoded; holds exclude transitions",
+      "source": "decoded"
+    },
+    {
+      "name": "loop",
+      "passed": true,
+      "detail": "repeat=0; result-to-before bridge is explicit",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-holds",
+      "passed": true,
+      "detail": "alcance-de-dos 2200/2200ms, tercera-ficha-incluida 2200/2200ms, conjunto-de-tres 2200/2200ms",
+      "source": "decoded"
+    },
+    {
+      "name": "ffprobe-crosscheck",
+      "passed": true,
+      "detail": "ffprobe 640×360; 21 frames; 8040ms; matches the independent LZW decode.",
+      "source": "decoded"
+    },
+    {
+      "name": "files",
+      "passed": true,
+      "detail": "GIF 239433B · PNG 34208B · contact 79226B",
+      "source": "decoded"
+    },
+    {
+      "name": "scene-renderer-registered",
+      "passed": true,
+      "detail": "renderer papercraft/papercraft-editorial/1.1.0 exists; visual style likeness remains a separate review",
+      "source": "source"
+    },
+    {
+      "name": "type-system",
+      "passed": true,
+      "detail": "style typeSystem tokens are attached to raster role registry",
+      "source": "source"
+    },
+    {
+      "name": "narrative-subfamily",
+      "passed": true,
+      "detail": "papercraft/editorial selects an explicit narrative art direction",
+      "source": "source"
+    },
+    {
+      "name": "font-registration-and-glyphs",
+      "passed": true,
+      "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "distinct-frames",
+      "passed": true,
+      "detail": "3 unique composited frame(s); a format-valid static GIF does not pass",
+      "source": "pixels"
+    },
+    {
+      "name": "palette-loss",
+      "passed": true,
+      "detail": "51 colors; mean channel loss 2.165, max 11; sampled 21 frames",
+      "source": "pixels"
+    },
+    {
+      "name": "title-complete",
+      "passed": true,
+      "detail": "Total",
+      "source": "source"
+    },
+    {
+      "name": "phase-alcance-de-dos-label-complete",
+      "passed": true,
+      "detail": "Antes",
+      "source": "source"
+    },
+    {
+      "name": "phase-alcance-de-dos-text-complete",
+      "passed": true,
+      "detail": "A y B forman el / conteo 2.",
+      "source": "source"
+    },
+    {
+      "name": "phase-tercera-ficha-incluida-label-complete",
+      "passed": true,
+      "detail": "Se suma C",
+      "source": "source"
+    },
+    {
+      "name": "phase-tercera-ficha-incluida-text-complete",
+      "passed": true,
+      "detail": "La ficha C se / incluye.",
+      "source": "source"
+    },
+    {
+      "name": "phase-conjunto-de-tres-label-complete",
+      "passed": true,
+      "detail": "Resultado / esperado",
+      "source": "source"
+    },
+    {
+      "name": "phase-conjunto-de-tres-text-complete",
+      "passed": true,
+      "detail": "Total esperado: / 3.",
+      "source": "source"
+    },
+    {
+      "name": "registered-fonts",
+      "passed": true,
+      "detail": "all role faces and Spanish glyphs rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "review-size-thresholds",
+      "passed": true,
+      "detail": "title 56px; phase body >=36px; label >=24px",
+      "source": "source"
+    },
+    {
+      "name": "640x360-effective-size",
+      "passed": true,
+      "detail": "title 56.0px; body min 36.0px (requires >=20px); label min 24.0px",
+      "source": "source"
+    },
+    {
+      "name": "semantic-text-legibility",
+      "passed": true,
+      "status": "pass",
+      "detail": "minimum effective text >=14px: 14.0px; minimum headline 34.0px (requires >=20px); measured 19 declared object text box(es) at 640×360.",
+      "source": "decoded"
+    },
+    {
+      "name": "composition-balance",
+      "passed": false,
+      "severity": "warning",
+      "detail": "WARN · revise; 8×4 decoded-pixel grid against #FBF1E2: empty cells 43.8%, text-column vertical fill 50.0%, art/object area outside the text column 50.0%, largest empty rectangle 37.5%; thresholds: rectangle <=22%, text fill >=60% (text-fill threshold omitted in art-only mode); not an aesthetic score. Per-frame: alcance-de-dos · pausa: empty 43.8%, text fill 50.0%, art 50.0%, largest empty 37.5% | alcance-de-dos → tercera-ficha-incluida · punto medio de transición: empty 43.8%, text fill 50.0%, art 50.0%, largest empty 37.5% | tercera-ficha-incluida · pausa: empty 43.8%, text fill 50.0%, art 50.0%, largest empty 37.5% | tercera-ficha-incluida → conjunto-de-tres · punto medio de transición: empty 43.8%, text fill 50.0%, art 50.0%, largest empty 37.5% | conjunto-de-tres · pausa: empty 43.8%, text fill 50.0%, art 50.0%, largest empty 37.5% | conjunto-de-tres → alcance-de-dos · unión del ciclo: empty 43.8%, text fill 50.0%, art 50.0%, largest empty 37.5%",
+      "source": "pixels"
+    },
+    {
+      "name": "contrast",
+      "passed": true,
+      "detail": "rendered text colors: ink 9.67:1; label 3.05:1 (not an OCR or per-pixel text measurement)",
+      "source": "source"
+    },
+    {
+      "name": "safe-zone-and-collisions",
+      "passed": true,
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+      "source": "source"
+    },
+    {
+      "name": "stable-reading-holds",
+      "passed": true,
+      "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-count-and-copy",
+      "passed": true,
+      "detail": "3 complete phases; all copy retained",
+      "source": "source"
+    },
+    {
+      "name": "shared-object-identity",
+      "passed": true,
+      "detail": "One scene object instance is created and passed to every phase frame.",
+      "source": "source"
+    },
+    {
+      "name": "visual-state-change",
+      "passed": true,
+      "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+      "source": "pixels"
+    },
+    {
+      "name": "workflow-outcome-separation",
+      "passed": true,
+      "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+      "source": "source"
+    },
+    {
+      "name": "outcome-evidence",
+      "passed": true,
+      "detail": "Expected outcome; no benefit measurement is claimed.",
+      "source": "source"
+    },
+    {
+      "name": "result-follows-outcome",
+      "passed": true,
+      "detail": "outcome=expected; final label=\"Resultado esperado\"",
+      "source": "source"
+    },
+    {
+      "name": "semantic-illustrative-data",
+      "passed": true,
+      "detail": "brief illustrative=true; semantic phase flags=true,true,true",
+      "source": "source"
+    },
+    {
+      "name": "semantic-object-midpoint:alcance-de-dos → tercera-ficha-incluida · punto medio de transición",
+      "passed": true,
+      "detail": "decoded object diff 1.2%; changed-state entities: contador, ficha-c; contador value→increased 2.7%, ficha-a default→default 0.0%, ficha-b default→default 0.0%, ficha-c pending→accepted 0.4%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:tercera-ficha-incluida → conjunto-de-tres · punto medio de transición",
+      "passed": true,
+      "detail": "decoded object diff 3.5%; changed-state entities: contador; contador increased→pending 8.3%, ficha-a default→default 0.0%, ficha-b default→default 0.0%, ficha-c accepted→accepted 0.0%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:conjunto-de-tres → alcance-de-dos · unión del ciclo",
+      "passed": true,
+      "detail": "decoded object diff 4.7%; changed-state entities: contador, ficha-c; contador pending→value 11.0%, ficha-a default→default 0.0%, ficha-b default→default 0.0%, ficha-c accepted→pending 0.4%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:alcance-de-dos → tercera-ficha-incluida hold",
+      "passed": true,
+      "detail": "decoded object diff 1.2%; changed-state entities: contador, ficha-c; contador value→increased 2.7%, ficha-a default→default 0.0%, ficha-b default→default 0.0%, ficha-c pending→accepted 0.4%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:tercera-ficha-incluida → conjunto-de-tres hold",
+      "passed": true,
+      "detail": "decoded object diff 3.5%; changed-state entities: contador; contador increased→pending 8.3%, ficha-a default→default 0.0%, ficha-b default→default 0.0%, ficha-c accepted→accepted 0.0%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:conjunto-de-tres → alcance-de-dos loop join",
+      "passed": true,
+      "detail": "decoded object diff 4.7%; changed-state entities: contador, ficha-c; contador pending→value 11.0%, ficha-a default→default 0.0%, ficha-b default→default 0.0%, ficha-c accepted→pending 0.4%",
+      "source": "decoded"
+    }
+  ],
+  "evaluation": {
+    "technical-integrity": {
+      "status": "pass",
+      "controls": [
+        {
+          "name": "gif-integrity",
+          "passed": true,
+          "detail": "Independent LZW decode and GIF trailer passed.",
+          "source": "decoded"
+        },
+        {
+          "name": "dimensions",
+          "passed": true,
+          "detail": "decoded 640×360; requested 640×360",
+          "source": "decoded"
+        },
+        {
+          "name": "frame-count",
+          "passed": true,
+          "detail": "21 decoded frame(s)",
+          "source": "decoded"
+        },
+        {
+          "name": "duration",
+          "passed": true,
+          "detail": "8040ms decoded; holds exclude transitions",
+          "source": "decoded"
+        },
+        {
+          "name": "loop",
+          "passed": true,
+          "detail": "repeat=0; result-to-before bridge is explicit",
+          "source": "decoded"
+        },
+        {
+          "name": "phase-holds",
+          "passed": true,
+          "detail": "alcance-de-dos 2200/2200ms, tercera-ficha-incluida 2200/2200ms, conjunto-de-tres 2200/2200ms",
+          "source": "decoded"
+        },
+        {
+          "name": "ffprobe-crosscheck",
+          "passed": true,
+          "detail": "ffprobe 640×360; 21 frames; 8040ms; matches the independent LZW decode.",
+          "source": "decoded"
+        },
+        {
+          "name": "files",
+          "passed": true,
+          "detail": "GIF 239433B · PNG 34208B · contact 79226B",
+          "source": "decoded"
+        }
+      ]
+    },
+    "style-conformance": {
+      "status": "pending",
+      "sourceStatus": "pass",
+      "pixelStatus": "pass",
+      "controls": [
+        {
+          "name": "scene-renderer-registered",
+          "passed": true,
+          "detail": "renderer papercraft/papercraft-editorial/1.1.0 exists; visual style likeness remains a separate review",
+          "source": "source"
+        },
+        {
+          "name": "type-system",
+          "passed": true,
+          "detail": "style typeSystem tokens are attached to raster role registry",
+          "source": "source"
+        },
+        {
+          "name": "narrative-subfamily",
+          "passed": true,
+          "detail": "papercraft/editorial selects an explicit narrative art direction",
+          "source": "source"
+        },
+        {
+          "name": "font-registration-and-glyphs",
+          "passed": true,
+          "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "distinct-frames",
+          "passed": true,
+          "detail": "3 unique composited frame(s); a format-valid static GIF does not pass",
+          "source": "pixels"
+        },
+        {
+          "name": "palette-loss",
+          "passed": true,
+          "detail": "51 colors; mean channel loss 2.165, max 11; sampled 21 frames",
+          "source": "pixels"
+        }
+      ],
+      "note": "Source checks identify renderer/font tokens; pixel checks measure frame change and palette loss. Neither substitutes for visual review."
+    },
+    "rendered-legibility": {
+      "status": "revise",
+      "controls": [
+        {
+          "name": "title-complete",
+          "passed": true,
+          "detail": "Total",
+          "source": "source"
+        },
+        {
+          "name": "phase-alcance-de-dos-label-complete",
+          "passed": true,
+          "detail": "Antes",
+          "source": "source"
+        },
+        {
+          "name": "phase-alcance-de-dos-text-complete",
+          "passed": true,
+          "detail": "A y B forman el / conteo 2.",
+          "source": "source"
+        },
+        {
+          "name": "phase-tercera-ficha-incluida-label-complete",
+          "passed": true,
+          "detail": "Se suma C",
+          "source": "source"
+        },
+        {
+          "name": "phase-tercera-ficha-incluida-text-complete",
+          "passed": true,
+          "detail": "La ficha C se / incluye.",
+          "source": "source"
+        },
+        {
+          "name": "phase-conjunto-de-tres-label-complete",
+          "passed": true,
+          "detail": "Resultado / esperado",
+          "source": "source"
+        },
+        {
+          "name": "phase-conjunto-de-tres-text-complete",
+          "passed": true,
+          "detail": "Total esperado: / 3.",
+          "source": "source"
+        },
+        {
+          "name": "registered-fonts",
+          "passed": true,
+          "detail": "all role faces and Spanish glyphs rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "review-size-thresholds",
+          "passed": true,
+          "detail": "title 56px; phase body >=36px; label >=24px",
+          "source": "source"
+        },
+        {
+          "name": "640x360-effective-size",
+          "passed": true,
+          "detail": "title 56.0px; body min 36.0px (requires >=20px); label min 24.0px",
+          "source": "source"
+        },
+        {
+          "name": "semantic-text-legibility",
+          "passed": true,
+          "status": "pass",
+          "detail": "minimum effective text >=14px: 14.0px; minimum headline 34.0px (requires >=20px); measured 19 declared object text box(es) at 640×360.",
+          "source": "decoded"
+        },
+        {
+          "name": "composition-balance",
+          "passed": false,
+          "severity": "warning",
+          "detail": "WARN · revise; 8×4 decoded-pixel grid against #FBF1E2: empty cells 43.8%, text-column vertical fill 50.0%, art/object area outside the text column 50.0%, largest empty rectangle 37.5%; thresholds: rectangle <=22%, text fill >=60% (text-fill threshold omitted in art-only mode); not an aesthetic score. Per-frame: alcance-de-dos · pausa: empty 43.8%, text fill 50.0%, art 50.0%, largest empty 37.5% | alcance-de-dos → tercera-ficha-incluida · punto medio de transición: empty 43.8%, text fill 50.0%, art 50.0%, largest empty 37.5% | tercera-ficha-incluida · pausa: empty 43.8%, text fill 50.0%, art 50.0%, largest empty 37.5% | tercera-ficha-incluida → conjunto-de-tres · punto medio de transición: empty 43.8%, text fill 50.0%, art 50.0%, largest empty 37.5% | conjunto-de-tres · pausa: empty 43.8%, text fill 50.0%, art 50.0%, largest empty 37.5% | conjunto-de-tres → alcance-de-dos · unión del ciclo: empty 43.8%, text fill 50.0%, art 50.0%, largest empty 37.5%",
+          "source": "pixels"
+        },
+        {
+          "name": "contrast",
+          "passed": true,
+          "detail": "rendered text colors: ink 9.67:1; label 3.05:1 (not an OCR or per-pixel text measurement)",
+          "source": "source"
+        },
+        {
+          "name": "safe-zone-and-collisions",
+          "passed": true,
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+          "source": "source"
+        },
+        {
+          "name": "stable-reading-holds",
+          "passed": true,
+          "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+          "source": "decoded"
+        }
+      ],
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
+    },
+    "narrative": {
+      "status": "pending",
+      "controls": [
+        {
+          "name": "phase-count-and-copy",
+          "passed": true,
+          "detail": "3 complete phases; all copy retained",
+          "source": "source"
+        },
+        {
+          "name": "shared-object-identity",
+          "passed": true,
+          "detail": "One scene object instance is created and passed to every phase frame.",
+          "source": "source"
+        },
+        {
+          "name": "visual-state-change",
+          "passed": true,
+          "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+          "source": "pixels"
+        },
+        {
+          "name": "workflow-outcome-separation",
+          "passed": true,
+          "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+          "source": "source"
+        },
+        {
+          "name": "outcome-evidence",
+          "passed": true,
+          "detail": "Expected outcome; no benefit measurement is claimed.",
+          "source": "source"
+        },
+        {
+          "name": "result-follows-outcome",
+          "passed": true,
+          "detail": "outcome=expected; final label=\"Resultado esperado\"",
+          "source": "source"
+        },
+        {
+          "name": "semantic-illustrative-data",
+          "passed": true,
+          "detail": "brief illustrative=true; semantic phase flags=true,true,true",
+          "source": "source"
+        },
+        {
+          "name": "semantic-object-midpoint:alcance-de-dos → tercera-ficha-incluida · punto medio de transición",
+          "passed": true,
+          "detail": "decoded object diff 1.2%; changed-state entities: contador, ficha-c; contador value→increased 2.7%, ficha-a default→default 0.0%, ficha-b default→default 0.0%, ficha-c pending→accepted 0.4%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:tercera-ficha-incluida → conjunto-de-tres · punto medio de transición",
+          "passed": true,
+          "detail": "decoded object diff 3.5%; changed-state entities: contador; contador increased→pending 8.3%, ficha-a default→default 0.0%, ficha-b default→default 0.0%, ficha-c accepted→accepted 0.0%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:conjunto-de-tres → alcance-de-dos · unión del ciclo",
+          "passed": true,
+          "detail": "decoded object diff 4.7%; changed-state entities: contador, ficha-c; contador pending→value 11.0%, ficha-a default→default 0.0%, ficha-b default→default 0.0%, ficha-c accepted→pending 0.4%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:alcance-de-dos → tercera-ficha-incluida hold",
+          "passed": true,
+          "detail": "decoded object diff 1.2%; changed-state entities: contador, ficha-c; contador value→increased 2.7%, ficha-a default→default 0.0%, ficha-b default→default 0.0%, ficha-c pending→accepted 0.4%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:tercera-ficha-incluida → conjunto-de-tres hold",
+          "passed": true,
+          "detail": "decoded object diff 3.5%; changed-state entities: contador; contador increased→pending 8.3%, ficha-a default→default 0.0%, ficha-b default→default 0.0%, ficha-c accepted→accepted 0.0%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:conjunto-de-tres → alcance-de-dos loop join",
+          "passed": true,
+          "detail": "decoded object diff 4.7%; changed-state entities: contador, ficha-c; contador pending→value 11.0%, ficha-a default→default 0.0%, ficha-b default→default 0.0%, ficha-c accepted→pending 0.4%",
+          "source": "decoded"
+        }
+      ],
+      "note": "Automated checks separate work status from expected/observed outcome and confirm required evidence fields; causal meaning and evidence scope still need human review."
+    },
+    "visual-review": {
+      "status": "pending",
+      "reviewer": null,
+      "criteria": {
+        "thumbnailIdentity": {
+          "verdict": "not-evaluated"
+        },
+        "cardSizeReading": {
+          "verdict": "not-evaluated"
+        },
+        "styleMaterial": {
+          "verdict": "not-evaluated"
+        },
+        "phaseContinuity": {
+          "verdict": "not-evaluated"
+        },
+        "loopRestart": {
+          "verdict": "not-evaluated"
+        },
+        "artOnlyTransformationUnderstood": {
+          "verdict": "not-evaluated"
+        }
+      },
+      "feedback": [],
+      "evidence": []
+    },
+    "publicationRecommendation": "none",
+    "automatedEvidence": {
+      "balanceByFrame": [
+        {
+          "frameIndex": 1,
+          "phaseId": "alcance-de-dos",
+          "kind": "hold",
+          "label": "alcance-de-dos · pausa",
+          "regions": [
+            {
+              "entityId": "contador",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 93.0204
+              },
+              "textBoxes": [
+                {
+                  "text": "2",
+                  "bounds": {
+                    "x": 402.6992,
+                    "y": 215.2836,
+                    "width": 122.6016,
+                    "height": 61.393464
+                  },
+                  "fontSizePx": 34,
+                  "role": "headline"
+                },
+                {
+                  "text": "ELEMENTOS",
+                  "bounds": {
+                    "x": 402.6992,
+                    "y": 215.2836,
+                    "width": 122.6016,
+                    "height": 61.393464
+                  },
+                  "fontSizePx": 15,
+                  "role": "label"
+                },
+                {
+                  "text": "EJEMPLO",
+                  "bounds": {
+                    "x": 435.488,
+                    "y": 34.0542,
+                    "width": 156.816,
+                    "height": 32.076
+                  },
+                  "fontSizePx": 14,
+                  "role": "label"
+                }
+              ]
+            },
+            {
+              "entityId": "ficha-a",
+              "bounds": {
+                "x": 367.05920000000003,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "textBoxes": [
+                {
+                  "text": "A",
+                  "bounds": {
+                    "x": 367.05920000000003,
+                    "y": 115.848,
+                    "width": 59.8752,
+                    "height": 86.6052
+                  },
+                  "fontSizePx": 18,
+                  "role": "identifier"
+                }
+              ]
+            },
+            {
+              "entityId": "ficha-b",
+              "bounds": {
+                "x": 434.0624,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "textBoxes": [
+                {
+                  "text": "B",
+                  "bounds": {
+                    "x": 434.0624,
+                    "y": 115.848,
+                    "width": 59.8752,
+                    "height": 86.6052
+                  },
+                  "fontSizePx": 18,
+                  "role": "identifier"
+                }
+              ]
+            },
+            {
+              "entityId": "ficha-c",
+              "bounds": {
+                "x": 501.0656,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "textBoxes": [
+                {
+                  "text": "C",
+                  "bounds": {
+                    "x": 501.0656,
+                    "y": 115.848,
+                    "width": 59.8752,
+                    "height": 86.6052
+                  },
+                  "fontSizePx": 18,
+                  "role": "identifier"
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.4375,
+            "textColumnFillRatio": 0.5,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.375
+          }
+        },
+        {
+          "frameIndex": 3,
+          "phaseId": "tercera-ficha-incluida",
+          "kind": "transition",
+          "label": "alcance-de-dos → tercera-ficha-incluida · punto medio de transición",
+          "regions": [
+            {
+              "entityId": "contador",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 93.0204
+              },
+              "textBoxes": [
+                {
+                  "text": "3",
+                  "bounds": {
+                    "x": 402.6992,
+                    "y": 215.2836,
+                    "width": 122.6016,
+                    "height": 61.393464
+                  },
+                  "fontSizePx": 34,
+                  "role": "headline"
+                },
+                {
+                  "text": "ELEMENTOS",
+                  "bounds": {
+                    "x": 402.6992,
+                    "y": 215.2836,
+                    "width": 122.6016,
+                    "height": 61.393464
+                  },
+                  "fontSizePx": 15,
+                  "role": "label"
+                },
+                {
+                  "text": "EJEMPLO",
+                  "bounds": {
+                    "x": 435.488,
+                    "y": 34.0542,
+                    "width": 156.816,
+                    "height": 32.076
+                  },
+                  "fontSizePx": 14,
+                  "role": "label"
+                }
+              ]
+            },
+            {
+              "entityId": "ficha-a",
+              "bounds": {
+                "x": 367.05920000000003,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "textBoxes": [
+                {
+                  "text": "A",
+                  "bounds": {
+                    "x": 367.05920000000003,
+                    "y": 115.848,
+                    "width": 59.8752,
+                    "height": 86.6052
+                  },
+                  "fontSizePx": 18,
+                  "role": "identifier"
+                }
+              ]
+            },
+            {
+              "entityId": "ficha-b",
+              "bounds": {
+                "x": 434.0624,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "textBoxes": [
+                {
+                  "text": "B",
+                  "bounds": {
+                    "x": 434.0624,
+                    "y": 115.848,
+                    "width": 59.8752,
+                    "height": 86.6052
+                  },
+                  "fontSizePx": 18,
+                  "role": "identifier"
+                }
+              ]
+            },
+            {
+              "entityId": "ficha-c",
+              "bounds": {
+                "x": 501.0656,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "textBoxes": [
+                {
+                  "text": "C",
+                  "bounds": {
+                    "x": 501.0656,
+                    "y": 115.848,
+                    "width": 59.8752,
+                    "height": 86.6052
+                  },
+                  "fontSizePx": 18,
+                  "role": "identifier"
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.4375,
+            "textColumnFillRatio": 0.5,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.375
+          }
+        },
+        {
+          "frameIndex": 8,
+          "phaseId": "tercera-ficha-incluida",
+          "kind": "hold",
+          "label": "tercera-ficha-incluida · pausa",
+          "regions": [
+            {
+              "entityId": "contador",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 93.0204
+              },
+              "textBoxes": [
+                {
+                  "text": "3",
+                  "bounds": {
+                    "x": 402.6992,
+                    "y": 215.2836,
+                    "width": 122.6016,
+                    "height": 61.393464
+                  },
+                  "fontSizePx": 34,
+                  "role": "headline"
+                },
+                {
+                  "text": "ELEMENTOS",
+                  "bounds": {
+                    "x": 402.6992,
+                    "y": 215.2836,
+                    "width": 122.6016,
+                    "height": 61.393464
+                  },
+                  "fontSizePx": 15,
+                  "role": "label"
+                },
+                {
+                  "text": "EJEMPLO",
+                  "bounds": {
+                    "x": 435.488,
+                    "y": 34.0542,
+                    "width": 156.816,
+                    "height": 32.076
+                  },
+                  "fontSizePx": 14,
+                  "role": "label"
+                }
+              ]
+            },
+            {
+              "entityId": "ficha-a",
+              "bounds": {
+                "x": 367.05920000000003,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "textBoxes": [
+                {
+                  "text": "A",
+                  "bounds": {
+                    "x": 367.05920000000003,
+                    "y": 115.848,
+                    "width": 59.8752,
+                    "height": 86.6052
+                  },
+                  "fontSizePx": 18,
+                  "role": "identifier"
+                }
+              ]
+            },
+            {
+              "entityId": "ficha-b",
+              "bounds": {
+                "x": 434.0624,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "textBoxes": [
+                {
+                  "text": "B",
+                  "bounds": {
+                    "x": 434.0624,
+                    "y": 115.848,
+                    "width": 59.8752,
+                    "height": 86.6052
+                  },
+                  "fontSizePx": 18,
+                  "role": "identifier"
+                }
+              ]
+            },
+            {
+              "entityId": "ficha-c",
+              "bounds": {
+                "x": 501.0656,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "textBoxes": [
+                {
+                  "text": "C",
+                  "bounds": {
+                    "x": 501.0656,
+                    "y": 115.848,
+                    "width": 59.8752,
+                    "height": 86.6052
+                  },
+                  "fontSizePx": 18,
+                  "role": "identifier"
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.4375,
+            "textColumnFillRatio": 0.5,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.375
+          }
+        },
+        {
+          "frameIndex": 10,
+          "phaseId": "conjunto-de-tres",
+          "kind": "transition",
+          "label": "tercera-ficha-incluida → conjunto-de-tres · punto medio de transición",
+          "regions": [
+            {
+              "entityId": "contador",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 93.0204
+              },
+              "textBoxes": [
+                {
+                  "text": "3",
+                  "bounds": {
+                    "x": 402.6992,
+                    "y": 215.2836,
+                    "width": 122.6016,
+                    "height": 61.393464
+                  },
+                  "fontSizePx": 34,
+                  "role": "headline"
+                },
+                {
+                  "text": "ELEMENTOS",
+                  "bounds": {
+                    "x": 402.6992,
+                    "y": 215.2836,
+                    "width": 122.6016,
+                    "height": 61.393464
+                  },
+                  "fontSizePx": 15,
+                  "role": "label"
+                },
+                {
+                  "text": "ESPERADO",
+                  "bounds": {
+                    "x": 414.95936,
+                    "y": 282.258288,
+                    "width": 98.08128,
+                    "height": 20.464488
+                  },
+                  "fontSizePx": 14,
+                  "role": "status"
+                },
+                {
+                  "text": "EJEMPLO",
+                  "bounds": {
+                    "x": 435.488,
+                    "y": 34.0542,
+                    "width": 156.816,
+                    "height": 32.076
+                  },
+                  "fontSizePx": 14,
+                  "role": "label"
+                }
+              ]
+            },
+            {
+              "entityId": "ficha-a",
+              "bounds": {
+                "x": 367.05920000000003,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "textBoxes": [
+                {
+                  "text": "A",
+                  "bounds": {
+                    "x": 367.05920000000003,
+                    "y": 115.848,
+                    "width": 59.8752,
+                    "height": 86.6052
+                  },
+                  "fontSizePx": 18,
+                  "role": "identifier"
+                }
+              ]
+            },
+            {
+              "entityId": "ficha-b",
+              "bounds": {
+                "x": 434.0624,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "textBoxes": [
+                {
+                  "text": "B",
+                  "bounds": {
+                    "x": 434.0624,
+                    "y": 115.848,
+                    "width": 59.8752,
+                    "height": 86.6052
+                  },
+                  "fontSizePx": 18,
+                  "role": "identifier"
+                }
+              ]
+            },
+            {
+              "entityId": "ficha-c",
+              "bounds": {
+                "x": 501.0656,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "textBoxes": [
+                {
+                  "text": "C",
+                  "bounds": {
+                    "x": 501.0656,
+                    "y": 115.848,
+                    "width": 59.8752,
+                    "height": 86.6052
+                  },
+                  "fontSizePx": 18,
+                  "role": "identifier"
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.4375,
+            "textColumnFillRatio": 0.5,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.375
+          }
+        },
+        {
+          "frameIndex": 15,
+          "phaseId": "conjunto-de-tres",
+          "kind": "hold",
+          "label": "conjunto-de-tres · pausa",
+          "regions": [
+            {
+              "entityId": "contador",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 93.0204
+              },
+              "textBoxes": [
+                {
+                  "text": "3",
+                  "bounds": {
+                    "x": 402.6992,
+                    "y": 215.2836,
+                    "width": 122.6016,
+                    "height": 61.393464
+                  },
+                  "fontSizePx": 34,
+                  "role": "headline"
+                },
+                {
+                  "text": "ELEMENTOS",
+                  "bounds": {
+                    "x": 402.6992,
+                    "y": 215.2836,
+                    "width": 122.6016,
+                    "height": 61.393464
+                  },
+                  "fontSizePx": 15,
+                  "role": "label"
+                },
+                {
+                  "text": "ESPERADO",
+                  "bounds": {
+                    "x": 414.95936,
+                    "y": 282.258288,
+                    "width": 98.08128,
+                    "height": 20.464488
+                  },
+                  "fontSizePx": 14,
+                  "role": "status"
+                },
+                {
+                  "text": "EJEMPLO",
+                  "bounds": {
+                    "x": 435.488,
+                    "y": 34.0542,
+                    "width": 156.816,
+                    "height": 32.076
+                  },
+                  "fontSizePx": 14,
+                  "role": "label"
+                }
+              ]
+            },
+            {
+              "entityId": "ficha-a",
+              "bounds": {
+                "x": 367.05920000000003,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "textBoxes": [
+                {
+                  "text": "A",
+                  "bounds": {
+                    "x": 367.05920000000003,
+                    "y": 115.848,
+                    "width": 59.8752,
+                    "height": 86.6052
+                  },
+                  "fontSizePx": 18,
+                  "role": "identifier"
+                }
+              ]
+            },
+            {
+              "entityId": "ficha-b",
+              "bounds": {
+                "x": 434.0624,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "textBoxes": [
+                {
+                  "text": "B",
+                  "bounds": {
+                    "x": 434.0624,
+                    "y": 115.848,
+                    "width": 59.8752,
+                    "height": 86.6052
+                  },
+                  "fontSizePx": 18,
+                  "role": "identifier"
+                }
+              ]
+            },
+            {
+              "entityId": "ficha-c",
+              "bounds": {
+                "x": 501.0656,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "textBoxes": [
+                {
+                  "text": "C",
+                  "bounds": {
+                    "x": 501.0656,
+                    "y": 115.848,
+                    "width": 59.8752,
+                    "height": 86.6052
+                  },
+                  "fontSizePx": 18,
+                  "role": "identifier"
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.4375,
+            "textColumnFillRatio": 0.5,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.375
+          }
+        },
+        {
+          "frameIndex": 17,
+          "phaseId": "alcance-de-dos",
+          "kind": "loop-bridge",
+          "label": "conjunto-de-tres → alcance-de-dos · unión del ciclo",
+          "regions": [
+            {
+              "entityId": "contador",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 93.0204
+              },
+              "textBoxes": [
+                {
+                  "text": "2",
+                  "bounds": {
+                    "x": 402.6992,
+                    "y": 215.2836,
+                    "width": 122.6016,
+                    "height": 61.393464
+                  },
+                  "fontSizePx": 34,
+                  "role": "headline"
+                },
+                {
+                  "text": "ELEMENTOS",
+                  "bounds": {
+                    "x": 402.6992,
+                    "y": 215.2836,
+                    "width": 122.6016,
+                    "height": 61.393464
+                  },
+                  "fontSizePx": 15,
+                  "role": "label"
+                },
+                {
+                  "text": "EJEMPLO",
+                  "bounds": {
+                    "x": 435.488,
+                    "y": 34.0542,
+                    "width": 156.816,
+                    "height": 32.076
+                  },
+                  "fontSizePx": 14,
+                  "role": "label"
+                }
+              ]
+            },
+            {
+              "entityId": "ficha-a",
+              "bounds": {
+                "x": 367.05920000000003,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "textBoxes": [
+                {
+                  "text": "A",
+                  "bounds": {
+                    "x": 367.05920000000003,
+                    "y": 115.848,
+                    "width": 59.8752,
+                    "height": 86.6052
+                  },
+                  "fontSizePx": 18,
+                  "role": "identifier"
+                }
+              ]
+            },
+            {
+              "entityId": "ficha-b",
+              "bounds": {
+                "x": 434.0624,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "textBoxes": [
+                {
+                  "text": "B",
+                  "bounds": {
+                    "x": 434.0624,
+                    "y": 115.848,
+                    "width": 59.8752,
+                    "height": 86.6052
+                  },
+                  "fontSizePx": 18,
+                  "role": "identifier"
+                }
+              ]
+            },
+            {
+              "entityId": "ficha-c",
+              "bounds": {
+                "x": 501.0656,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "textBoxes": [
+                {
+                  "text": "C",
+                  "bounds": {
+                    "x": 501.0656,
+                    "y": 115.848,
+                    "width": 59.8752,
+                    "height": 86.6052
+                  },
+                  "fontSizePx": 18,
+                  "role": "identifier"
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "emptyCellRatio": 0.4375,
+            "textColumnFillRatio": 0.5,
+            "objectAreaRatio": 0.5,
+            "largestEmptyRectangleRatio": 0.375
+          }
+        }
+      ],
+      "objectTransformationByFrame": [
+        {
+          "frameIndex": 3,
+          "phaseId": "tercera-ficha-incluida",
+          "fromPhaseId": "alcance-de-dos",
+          "kind": "transition",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "contador",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 93.0204
+              },
+              "fromState": "value",
+              "toState": "increased",
+              "pixelDiffRatio": 0.026938915579958818,
+              "changed": true
+            },
+            {
+              "entityId": "ficha-a",
+              "bounds": {
+                "x": 367.05920000000003,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "ficha-b",
+              "bounds": {
+                "x": 434.0624,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "ficha-c",
+              "bounds": {
+                "x": 501.0656,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fromState": "pending",
+              "toState": "accepted",
+              "pixelDiffRatio": 0.0035984848484848487,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 10,
+          "phaseId": "conjunto-de-tres",
+          "fromPhaseId": "tercera-ficha-incluida",
+          "kind": "transition",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "contador",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 93.0204
+              },
+              "fromState": "increased",
+              "toState": "pending",
+              "pixelDiffRatio": 0.08339052848318462,
+              "changed": true
+            },
+            {
+              "entityId": "ficha-a",
+              "bounds": {
+                "x": 367.05920000000003,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "ficha-b",
+              "bounds": {
+                "x": 434.0624,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "ficha-c",
+              "bounds": {
+                "x": 501.0656,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fromState": "accepted",
+              "toState": "accepted",
+              "pixelDiffRatio": 0,
+              "changed": false
+            }
+          ]
+        },
+        {
+          "frameIndex": 17,
+          "phaseId": "alcance-de-dos",
+          "fromPhaseId": "conjunto-de-tres",
+          "kind": "loop-bridge",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "contador",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 93.0204
+              },
+              "fromState": "pending",
+              "toState": "value",
+              "pixelDiffRatio": 0.11032944406314345,
+              "changed": true
+            },
+            {
+              "entityId": "ficha-a",
+              "bounds": {
+                "x": 367.05920000000003,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "ficha-b",
+              "bounds": {
+                "x": 434.0624,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "ficha-c",
+              "bounds": {
+                "x": 501.0656,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fromState": "accepted",
+              "toState": "pending",
+              "pixelDiffRatio": 0.0035984848484848487,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 8,
+          "phaseId": "tercera-ficha-incluida",
+          "fromPhaseId": "alcance-de-dos",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "contador",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 93.0204
+              },
+              "fromState": "value",
+              "toState": "increased",
+              "pixelDiffRatio": 0.026938915579958818,
+              "changed": true
+            },
+            {
+              "entityId": "ficha-a",
+              "bounds": {
+                "x": 367.05920000000003,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "ficha-b",
+              "bounds": {
+                "x": 434.0624,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "ficha-c",
+              "bounds": {
+                "x": 501.0656,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fromState": "pending",
+              "toState": "accepted",
+              "pixelDiffRatio": 0.0035984848484848487,
+              "changed": true
+            }
+          ]
+        },
+        {
+          "frameIndex": 15,
+          "phaseId": "conjunto-de-tres",
+          "fromPhaseId": "tercera-ficha-incluida",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "contador",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 93.0204
+              },
+              "fromState": "increased",
+              "toState": "pending",
+              "pixelDiffRatio": 0.08339052848318462,
+              "changed": true
+            },
+            {
+              "entityId": "ficha-a",
+              "bounds": {
+                "x": 367.05920000000003,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "ficha-b",
+              "bounds": {
+                "x": 434.0624,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "ficha-c",
+              "bounds": {
+                "x": 501.0656,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fromState": "accepted",
+              "toState": "accepted",
+              "pixelDiffRatio": 0,
+              "changed": false
+            }
+          ]
+        },
+        {
+          "frameIndex": 1,
+          "phaseId": "alcance-de-dos",
+          "fromPhaseId": "conjunto-de-tres",
+          "kind": "hold",
+          "measured": true,
+          "passed": true,
+          "regions": [
+            {
+              "entityId": "contador",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 93.0204
+              },
+              "fromState": "pending",
+              "toState": "value",
+              "pixelDiffRatio": 0.11032944406314345,
+              "changed": true
+            },
+            {
+              "entityId": "ficha-a",
+              "bounds": {
+                "x": 367.05920000000003,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "ficha-b",
+              "bounds": {
+                "x": 434.0624,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fromState": "default",
+              "toState": "default",
+              "pixelDiffRatio": 0,
+              "changed": false
+            },
+            {
+              "entityId": "ficha-c",
+              "bounds": {
+                "x": 501.0656,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fromState": "accepted",
+              "toState": "pending",
+              "pixelDiffRatio": 0.0035984848484848487,
+              "changed": true
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "phaseCaptures": [
+    {
+      "phaseId": "alcance-de-dos",
+      "labels": [
+        "alcance-de-dos · inicio",
+        "alcance-de-dos · pausa",
+        "alcance-de-dos → tercera-ficha-incluida · punto medio de transición",
+        "alcance-de-dos · salida",
+        "reinicio del loop"
+      ],
+      "contactSheet": "../../../../../../semantic/papercraft/contador-coleccion/art-only/es/total-1b74129f-art-only-contact-sheet.png"
+    },
+    {
+      "phaseId": "tercera-ficha-incluida",
+      "labels": [
+        "tercera-ficha-incluida · inicio",
+        "tercera-ficha-incluida · pausa",
+        "tercera-ficha-incluida → conjunto-de-tres · punto medio de transición",
+        "tercera-ficha-incluida · salida"
+      ],
+      "contactSheet": "../../../../../../semantic/papercraft/contador-coleccion/art-only/es/total-1b74129f-art-only-contact-sheet.png"
+    },
+    {
+      "phaseId": "conjunto-de-tres",
+      "labels": [
+        "conjunto-de-tres · inicio",
+        "conjunto-de-tres · pausa",
+        "conjunto-de-tres → alcance-de-dos · unión del ciclo",
+        "conjunto-de-tres · salida"
+      ],
+      "contactSheet": "../../../../../../semantic/papercraft/contador-coleccion/art-only/es/total-1b74129f-art-only-contact-sheet.png"
+    }
+  ],
+  "semanticObjectCaptures": [
+    {
+      "label": "alcance-de-dos · pausa",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 0,
+      "frameIndex": 1,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "contador",
+          "bounds": {
+            "x": 402.6992,
+            "y": 215.2836,
+            "width": 122.6016,
+            "height": 93.0204
+          },
+          "textBoxes": [
+            {
+              "text": "2",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 61.393464
+              },
+              "fontSizePx": 34,
+              "role": "headline"
+            },
+            {
+              "text": "ELEMENTOS",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 61.393464
+              },
+              "fontSizePx": 15,
+              "role": "label"
+            },
+            {
+              "text": "EJEMPLO",
+              "bounds": {
+                "x": 435.488,
+                "y": 34.0542,
+                "width": 156.816,
+                "height": 32.076
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-a",
+          "bounds": {
+            "x": 367.05920000000003,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "A",
+              "bounds": {
+                "x": 367.05920000000003,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-b",
+          "bounds": {
+            "x": 434.0624,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "B",
+              "bounds": {
+                "x": 434.0624,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-c",
+          "bounds": {
+            "x": 501.0656,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "C",
+              "bounds": {
+                "x": 501.0656,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "alcance-de-dos → tercera-ficha-incluida · punto medio de transición",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 0,
+      "frameIndex": 3,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "contador",
+          "bounds": {
+            "x": 402.6992,
+            "y": 215.2836,
+            "width": 122.6016,
+            "height": 93.0204
+          },
+          "textBoxes": [
+            {
+              "text": "3",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 61.393464
+              },
+              "fontSizePx": 34,
+              "role": "headline"
+            },
+            {
+              "text": "ELEMENTOS",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 61.393464
+              },
+              "fontSizePx": 15,
+              "role": "label"
+            },
+            {
+              "text": "EJEMPLO",
+              "bounds": {
+                "x": 435.488,
+                "y": 34.0542,
+                "width": 156.816,
+                "height": 32.076
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-a",
+          "bounds": {
+            "x": 367.05920000000003,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "A",
+              "bounds": {
+                "x": 367.05920000000003,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-b",
+          "bounds": {
+            "x": 434.0624,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "B",
+              "bounds": {
+                "x": 434.0624,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-c",
+          "bounds": {
+            "x": 501.0656,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "C",
+              "bounds": {
+                "x": 501.0656,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "tercera-ficha-incluida · pausa",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 1,
+      "frameIndex": 8,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "contador",
+          "bounds": {
+            "x": 402.6992,
+            "y": 215.2836,
+            "width": 122.6016,
+            "height": 93.0204
+          },
+          "textBoxes": [
+            {
+              "text": "3",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 61.393464
+              },
+              "fontSizePx": 34,
+              "role": "headline"
+            },
+            {
+              "text": "ELEMENTOS",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 61.393464
+              },
+              "fontSizePx": 15,
+              "role": "label"
+            },
+            {
+              "text": "EJEMPLO",
+              "bounds": {
+                "x": 435.488,
+                "y": 34.0542,
+                "width": 156.816,
+                "height": 32.076
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-a",
+          "bounds": {
+            "x": 367.05920000000003,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "A",
+              "bounds": {
+                "x": 367.05920000000003,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-b",
+          "bounds": {
+            "x": 434.0624,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "B",
+              "bounds": {
+                "x": 434.0624,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-c",
+          "bounds": {
+            "x": 501.0656,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "C",
+              "bounds": {
+                "x": 501.0656,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "tercera-ficha-incluida → conjunto-de-tres · punto medio de transición",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 1,
+      "frameIndex": 10,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "contador",
+          "bounds": {
+            "x": 402.6992,
+            "y": 215.2836,
+            "width": 122.6016,
+            "height": 93.0204
+          },
+          "textBoxes": [
+            {
+              "text": "3",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 61.393464
+              },
+              "fontSizePx": 34,
+              "role": "headline"
+            },
+            {
+              "text": "ELEMENTOS",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 61.393464
+              },
+              "fontSizePx": 15,
+              "role": "label"
+            },
+            {
+              "text": "ESPERADO",
+              "bounds": {
+                "x": 414.95936,
+                "y": 282.258288,
+                "width": 98.08128,
+                "height": 20.464488
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            },
+            {
+              "text": "EJEMPLO",
+              "bounds": {
+                "x": 435.488,
+                "y": 34.0542,
+                "width": 156.816,
+                "height": 32.076
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-a",
+          "bounds": {
+            "x": 367.05920000000003,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "A",
+              "bounds": {
+                "x": 367.05920000000003,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-b",
+          "bounds": {
+            "x": 434.0624,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "B",
+              "bounds": {
+                "x": 434.0624,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-c",
+          "bounds": {
+            "x": 501.0656,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "C",
+              "bounds": {
+                "x": 501.0656,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "conjunto-de-tres · pausa",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 2,
+      "frameIndex": 15,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "contador",
+          "bounds": {
+            "x": 402.6992,
+            "y": 215.2836,
+            "width": 122.6016,
+            "height": 93.0204
+          },
+          "textBoxes": [
+            {
+              "text": "3",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 61.393464
+              },
+              "fontSizePx": 34,
+              "role": "headline"
+            },
+            {
+              "text": "ELEMENTOS",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 61.393464
+              },
+              "fontSizePx": 15,
+              "role": "label"
+            },
+            {
+              "text": "ESPERADO",
+              "bounds": {
+                "x": 414.95936,
+                "y": 282.258288,
+                "width": 98.08128,
+                "height": 20.464488
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            },
+            {
+              "text": "EJEMPLO",
+              "bounds": {
+                "x": 435.488,
+                "y": 34.0542,
+                "width": 156.816,
+                "height": 32.076
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-a",
+          "bounds": {
+            "x": 367.05920000000003,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "A",
+              "bounds": {
+                "x": 367.05920000000003,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-b",
+          "bounds": {
+            "x": 434.0624,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "B",
+              "bounds": {
+                "x": 434.0624,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-c",
+          "bounds": {
+            "x": 501.0656,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "C",
+              "bounds": {
+                "x": 501.0656,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "conjunto-de-tres → alcance-de-dos · unión del ciclo",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 2,
+      "frameIndex": 17,
+      "kind": "loop-bridge",
+      "regions": [
+        {
+          "entityId": "contador",
+          "bounds": {
+            "x": 402.6992,
+            "y": 215.2836,
+            "width": 122.6016,
+            "height": 93.0204
+          },
+          "textBoxes": [
+            {
+              "text": "2",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 61.393464
+              },
+              "fontSizePx": 34,
+              "role": "headline"
+            },
+            {
+              "text": "ELEMENTOS",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 61.393464
+              },
+              "fontSizePx": 15,
+              "role": "label"
+            },
+            {
+              "text": "EJEMPLO",
+              "bounds": {
+                "x": 435.488,
+                "y": 34.0542,
+                "width": 156.816,
+                "height": 32.076
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-a",
+          "bounds": {
+            "x": 367.05920000000003,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "A",
+              "bounds": {
+                "x": 367.05920000000003,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-b",
+          "bounds": {
+            "x": 434.0624,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "B",
+              "bounds": {
+                "x": 434.0624,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-c",
+          "bounds": {
+            "x": 501.0656,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "C",
+              "bounds": {
+                "x": 501.0656,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "compositionByFrame": [
+    {
+      "frameIndex": 1,
+      "label": "alcance-de-dos · pausa",
+      "phaseId": "alcance-de-dos",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "contador",
+          "bounds": {
+            "x": 402.6992,
+            "y": 215.2836,
+            "width": 122.6016,
+            "height": 93.0204
+          },
+          "textBoxes": [
+            {
+              "text": "2",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 61.393464
+              },
+              "fontSizePx": 34,
+              "role": "headline"
+            },
+            {
+              "text": "ELEMENTOS",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 61.393464
+              },
+              "fontSizePx": 15,
+              "role": "label"
+            },
+            {
+              "text": "EJEMPLO",
+              "bounds": {
+                "x": 435.488,
+                "y": 34.0542,
+                "width": 156.816,
+                "height": 32.076
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-a",
+          "bounds": {
+            "x": 367.05920000000003,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "A",
+              "bounds": {
+                "x": 367.05920000000003,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-b",
+          "bounds": {
+            "x": 434.0624,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "B",
+              "bounds": {
+                "x": 434.0624,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-c",
+          "bounds": {
+            "x": 501.0656,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "C",
+              "bounds": {
+                "x": 501.0656,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.4375,
+        "textColumnFillRatio": 0.5,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.375
+      }
+    },
+    {
+      "frameIndex": 3,
+      "label": "alcance-de-dos → tercera-ficha-incluida · punto medio de transición",
+      "phaseId": "tercera-ficha-incluida",
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "contador",
+          "bounds": {
+            "x": 402.6992,
+            "y": 215.2836,
+            "width": 122.6016,
+            "height": 93.0204
+          },
+          "textBoxes": [
+            {
+              "text": "3",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 61.393464
+              },
+              "fontSizePx": 34,
+              "role": "headline"
+            },
+            {
+              "text": "ELEMENTOS",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 61.393464
+              },
+              "fontSizePx": 15,
+              "role": "label"
+            },
+            {
+              "text": "EJEMPLO",
+              "bounds": {
+                "x": 435.488,
+                "y": 34.0542,
+                "width": 156.816,
+                "height": 32.076
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-a",
+          "bounds": {
+            "x": 367.05920000000003,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "A",
+              "bounds": {
+                "x": 367.05920000000003,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-b",
+          "bounds": {
+            "x": 434.0624,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "B",
+              "bounds": {
+                "x": 434.0624,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-c",
+          "bounds": {
+            "x": 501.0656,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "C",
+              "bounds": {
+                "x": 501.0656,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.4375,
+        "textColumnFillRatio": 0.5,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.375
+      }
+    },
+    {
+      "frameIndex": 8,
+      "label": "tercera-ficha-incluida · pausa",
+      "phaseId": "tercera-ficha-incluida",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "contador",
+          "bounds": {
+            "x": 402.6992,
+            "y": 215.2836,
+            "width": 122.6016,
+            "height": 93.0204
+          },
+          "textBoxes": [
+            {
+              "text": "3",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 61.393464
+              },
+              "fontSizePx": 34,
+              "role": "headline"
+            },
+            {
+              "text": "ELEMENTOS",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 61.393464
+              },
+              "fontSizePx": 15,
+              "role": "label"
+            },
+            {
+              "text": "EJEMPLO",
+              "bounds": {
+                "x": 435.488,
+                "y": 34.0542,
+                "width": 156.816,
+                "height": 32.076
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-a",
+          "bounds": {
+            "x": 367.05920000000003,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "A",
+              "bounds": {
+                "x": 367.05920000000003,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-b",
+          "bounds": {
+            "x": 434.0624,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "B",
+              "bounds": {
+                "x": 434.0624,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-c",
+          "bounds": {
+            "x": 501.0656,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "C",
+              "bounds": {
+                "x": 501.0656,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.4375,
+        "textColumnFillRatio": 0.5,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.375
+      }
+    },
+    {
+      "frameIndex": 10,
+      "label": "tercera-ficha-incluida → conjunto-de-tres · punto medio de transición",
+      "phaseId": "conjunto-de-tres",
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "contador",
+          "bounds": {
+            "x": 402.6992,
+            "y": 215.2836,
+            "width": 122.6016,
+            "height": 93.0204
+          },
+          "textBoxes": [
+            {
+              "text": "3",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 61.393464
+              },
+              "fontSizePx": 34,
+              "role": "headline"
+            },
+            {
+              "text": "ELEMENTOS",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 61.393464
+              },
+              "fontSizePx": 15,
+              "role": "label"
+            },
+            {
+              "text": "ESPERADO",
+              "bounds": {
+                "x": 414.95936,
+                "y": 282.258288,
+                "width": 98.08128,
+                "height": 20.464488
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            },
+            {
+              "text": "EJEMPLO",
+              "bounds": {
+                "x": 435.488,
+                "y": 34.0542,
+                "width": 156.816,
+                "height": 32.076
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-a",
+          "bounds": {
+            "x": 367.05920000000003,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "A",
+              "bounds": {
+                "x": 367.05920000000003,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-b",
+          "bounds": {
+            "x": 434.0624,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "B",
+              "bounds": {
+                "x": 434.0624,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-c",
+          "bounds": {
+            "x": 501.0656,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "C",
+              "bounds": {
+                "x": 501.0656,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.4375,
+        "textColumnFillRatio": 0.5,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.375
+      }
+    },
+    {
+      "frameIndex": 15,
+      "label": "conjunto-de-tres · pausa",
+      "phaseId": "conjunto-de-tres",
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "contador",
+          "bounds": {
+            "x": 402.6992,
+            "y": 215.2836,
+            "width": 122.6016,
+            "height": 93.0204
+          },
+          "textBoxes": [
+            {
+              "text": "3",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 61.393464
+              },
+              "fontSizePx": 34,
+              "role": "headline"
+            },
+            {
+              "text": "ELEMENTOS",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 61.393464
+              },
+              "fontSizePx": 15,
+              "role": "label"
+            },
+            {
+              "text": "ESPERADO",
+              "bounds": {
+                "x": 414.95936,
+                "y": 282.258288,
+                "width": 98.08128,
+                "height": 20.464488
+              },
+              "fontSizePx": 14,
+              "role": "status"
+            },
+            {
+              "text": "EJEMPLO",
+              "bounds": {
+                "x": 435.488,
+                "y": 34.0542,
+                "width": 156.816,
+                "height": 32.076
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-a",
+          "bounds": {
+            "x": 367.05920000000003,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "A",
+              "bounds": {
+                "x": 367.05920000000003,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-b",
+          "bounds": {
+            "x": 434.0624,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "B",
+              "bounds": {
+                "x": 434.0624,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-c",
+          "bounds": {
+            "x": 501.0656,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "C",
+              "bounds": {
+                "x": 501.0656,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.4375,
+        "textColumnFillRatio": 0.5,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.375
+      }
+    },
+    {
+      "frameIndex": 17,
+      "label": "conjunto-de-tres → alcance-de-dos · unión del ciclo",
+      "phaseId": "alcance-de-dos",
+      "kind": "loop-bridge",
+      "regions": [
+        {
+          "entityId": "contador",
+          "bounds": {
+            "x": 402.6992,
+            "y": 215.2836,
+            "width": 122.6016,
+            "height": 93.0204
+          },
+          "textBoxes": [
+            {
+              "text": "2",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 61.393464
+              },
+              "fontSizePx": 34,
+              "role": "headline"
+            },
+            {
+              "text": "ELEMENTOS",
+              "bounds": {
+                "x": 402.6992,
+                "y": 215.2836,
+                "width": 122.6016,
+                "height": 61.393464
+              },
+              "fontSizePx": 15,
+              "role": "label"
+            },
+            {
+              "text": "EJEMPLO",
+              "bounds": {
+                "x": 435.488,
+                "y": 34.0542,
+                "width": 156.816,
+                "height": 32.076
+              },
+              "fontSizePx": 14,
+              "role": "label"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-a",
+          "bounds": {
+            "x": 367.05920000000003,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "A",
+              "bounds": {
+                "x": 367.05920000000003,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-b",
+          "bounds": {
+            "x": 434.0624,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "B",
+              "bounds": {
+                "x": 434.0624,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        },
+        {
+          "entityId": "ficha-c",
+          "bounds": {
+            "x": 501.0656,
+            "y": 115.848,
+            "width": 59.8752,
+            "height": 86.6052
+          },
+          "textBoxes": [
+            {
+              "text": "C",
+              "bounds": {
+                "x": 501.0656,
+                "y": 115.848,
+                "width": 59.8752,
+                "height": 86.6052
+              },
+              "fontSizePx": 18,
+              "role": "identifier"
+            }
+          ]
+        }
+      ],
+      "metrics": {
+        "emptyCellRatio": 0.4375,
+        "textColumnFillRatio": 0.5,
+        "objectAreaRatio": 0.5,
+        "largestEmptyRectangleRatio": 0.375
+      }
+    }
+  ],
+  "palette": {
+    "colors": 51,
+    "meanAbsoluteChannelError": 2.165,
+    "maximumChannelError": 11,
+    "sampledFrames": 21
+  },
+  "phaseHoldsVerified": [
+    {
+      "phaseId": "alcance-de-dos",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    },
+    {
+      "phaseId": "tercera-ficha-incluida",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    },
+    {
+      "phaseId": "conjunto-de-tres",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    }
+  ],
+  "timing": {
+    "preset": "concise",
+    "holdsRequestedMs": 6600,
+    "holdsDecodedMs": 6600,
+    "transitionsMs": 800,
+    "loopBridgeMs": 400,
+    "entryMs": 240,
+    "totalDecodedMs": 8040,
+    "totalDurationBudgetMs": 15000,
+    "phaseHolds": [
+      {
+        "phaseId": "alcance-de-dos",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      },
+      {
+        "phaseId": "tercera-ficha-incluida",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      },
+      {
+        "phaseId": "conjunto-de-tres",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      }
+    ],
+    "warnings": [
+      {
+        "code": "READING_LOAD",
+        "message": "Phase 1 has about 3.64 words/s (8 label+body words ÷ 2.20s hold); the reading threshold is 3 words/s."
+      },
+      {
+        "code": "READING_LOAD",
+        "message": "Phase 2 has about 3.64 words/s (8 label+body words ÷ 2.20s hold); the reading threshold is 3 words/s."
+      }
+    ]
+  },
+  "resourceEstimate": {
+    "pixelFrames": 4838400,
+    "maxPixelFrames": 96000000,
+    "memoryBytes": 34170880,
+    "maxMemoryBytes": 268435456
+  },
+  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed.",
+  "generatedBy": "open-beauty-site",
+  "reviewState": "none",
+  "openFeedbackCount": 0,
+  "feedbackFrames": [],
+  "publicationRecommendation": "none",
+  "renderRevision": 0
+}
