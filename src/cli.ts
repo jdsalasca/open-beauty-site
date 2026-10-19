@@ -21,6 +21,7 @@ import { ensureFonts } from './canvas.js';
 import { packageRoot } from './paths.js';
 import { createNarrative, narrativeFailure } from './narrative/create.js';
 import { NARRATIVE_BRIEF_EXAMPLE, narrativeHelpOptions } from './narrative/brief.js';
+import { narrativeCapabilityReport } from './narrative/capabilities.js';
 import { NarrativeError } from './types/narrative.js';
 import { createNarrativeGallery } from './narrative/gallery.js';
 
@@ -129,6 +130,15 @@ const COMMAND_HELP: Record<string, CommandHelpEntry> = {
     usage: 'beauty narrative --style <s> --brief brief.json [--out dir]',
     options: narrativeHelpOptions(),
     example: `beauty narrative --style papercraft --brief narrative.json --out out/narrative\n\n${NARRATIVE_BRIEF_EXAMPLE}`,
+  },
+  capabilities: {
+    summary: 'Inspect the narrative renderer capability registry.',
+    usage: 'beauty capabilities [--style <s>] [--json]',
+    options: [
+      '  --style <s>        Filter to one of the thirteen narrative scenes',
+      '  --json             Print the complete machine-readable capability matrix',
+    ],
+    example: 'beauty capabilities --style papercraft --json',
   },
   gallery: {
     summary: 'Build a self-contained review gallery from narrative manifests.',
@@ -382,6 +392,7 @@ Commands:
       [--out dir]
   beauty sequence --style <s> --brief seq.json   Create an SVG story + GIF from frames
   beauty narrative --style <s> --brief brief.json [--out dir]  Create a narrative GIF pack
+  beauty capabilities [--style <s>] [--json]  Inspect narrative options before writing a brief
   beauty gallery <dir> [--out gallery.html] [--title "..."]  Build a static review gallery
   beauty canvas --style <s> --brief canvas.json  Create an open animated SVG canvas
   beauty motion --style <s> --title "..."      Create an animated SVG loop
@@ -661,6 +672,25 @@ async function main(): Promise<void> {
       } catch (error) {
         console.log(JSON.stringify(narrativeFailure(error), null, 2));
         process.exitCode = 1;
+      }
+      return;
+    }
+
+    case 'capabilities': {
+      const styleValue = stringFlag(flags, 'style');
+      if (styleValue && !isStyleSlug(styleValue)) {
+        throw new Error(`Unknown style "${styleValue}". Choose one of: ${styleSlugs.join(', ')}.`);
+      }
+      const report = narrativeCapabilityReport(styleValue ? { style: styleValue as StyleSlug } : {});
+      if (booleanFlag(flags, 'json')) {
+        console.log(JSON.stringify(report, null, 2));
+        return;
+      }
+      console.log(`Narrative capabilities · ${report.cells.length} cells · supported ${report.summary.supported} · fallback ${report.summary.fallback} · unsupported ${report.summary.unsupported}`);
+      for (const style of [...new Set(report.cells.map((cell) => cell.style))]) {
+        const cells = report.cells.filter((cell) => cell.style === style);
+        const states = [...new Set(cells.flatMap((cell) => cell.allowed.visualStates.map((entry) => entry.value)))].join(', ');
+        console.log(`${style}: ${cells.filter((cell) => cell.status === 'fallback').length} fallback · ${cells.filter((cell) => cell.status === 'unsupported').length} unsupported · states ${states}`);
       }
       return;
     }

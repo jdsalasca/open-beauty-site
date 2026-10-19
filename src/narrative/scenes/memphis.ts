@@ -2,6 +2,8 @@ import { canvasFor } from '../../canvas.js';
 import { getStyle } from '../../styles/presets.js';
 import type { NarrativePhase, NarrativeRect, NarrativeRenderContext, NarrativeScene, NormalizedNarrativeBrief } from '../../types/narrative.js';
 import { cubicBezierEase, drawText } from './common.js';
+import { sceneVocabulary } from '../vocabulary.js';
+import { sceneText } from '../i18n.js';
 
 interface MemphisReview {
   readonly identity: 'ficha-de-revision';
@@ -97,7 +99,7 @@ function drawCheck(ctx: ReturnType<typeof canvasFor>['ctx'], x: number, y: numbe
   ctx.stroke();
 }
 
-function drawComparisonCard(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect, review: MemphisReview, level: number, face: string, colors: { ink: string; pink: string; mint: string; cobalt: string; butter: string }): void {
+function drawComparisonCard(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect, review: MemphisReview, level: number, face: string, locale: 'es' | 'en', colors: { ink: string; pink: string; mint: string; cobalt: string; butter: string }): void {
   const eased = cubicBezierEase(Math.max(0, Math.min(1, level / 2)), 0.22, 0.61, 0.36, 1);
   const angle = review.protagonistAngle * (1 - eased);
   const centerX = box.x + box.width / 2;
@@ -116,7 +118,7 @@ function drawComparisonCard(ctx: ReturnType<typeof canvasFor>['ctx'], box: Narra
   ctx.strokeRect(box.x, box.y, box.width, box.height);
   ctx.fillStyle = accent;
   ctx.fillRect(box.x + box.width * 0.08, box.y + box.height * 0.1, box.width * 0.38, box.height * 0.19);
-  drawText(ctx, 'MEDIDA', box.x + box.width * 0.12, box.y + box.height * 0.235, face, 500, 24, colors.ink);
+  drawText(ctx, sceneText('memphis', locale, 'measure'), box.x + box.width * 0.12, box.y + box.height * 0.235, face, 500, 24, colors.ink);
   ctx.strokeStyle = colors.ink;
   ctx.lineWidth = 2;
   for (let row = 0; row < 3; row += 1) {
@@ -136,12 +138,12 @@ function drawComparisonCard(ctx: ReturnType<typeof canvasFor>['ctx'], box: Narra
   if (level > 1.75) {
     ctx.fillStyle = colors.butter;
     ctx.fillRect(box.x + box.width * 0.09, box.y + box.height * 0.79, box.width * 0.37, box.height * 0.085);
-    drawText(ctx, 'REVISIÓN', box.x + box.width * 0.12, box.y + box.height * 0.85, face, 500, 24, colors.ink);
+    drawText(ctx, sceneText('memphis', locale, 'review'), box.x + box.width * 0.12, box.y + box.height * 0.85, face, 500, 24, colors.ink);
   }
   ctx.restore();
 }
 
-function drawChecklistCard(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect, review: MemphisReview, level: number, face: string, colors: { ink: string; pink: string; mint: string; cobalt: string; butter: string }): void {
+function drawChecklistCard(ctx: ReturnType<typeof canvasFor>['ctx'], box: NarrativeRect, review: MemphisReview, level: number, face: string, locale: 'es' | 'en', colors: { ink: string; pink: string; mint: string; cobalt: string; butter: string }): void {
   const eased = cubicBezierEase(Math.max(0, Math.min(1, level / 2)), 0.22, 0.61, 0.36, 1);
   const angle = review.protagonistAngle * (1 - eased);
   const centerX = box.x + box.width / 2;
@@ -159,11 +161,11 @@ function drawChecklistCard(ctx: ReturnType<typeof canvasFor>['ctx'], box: Narrat
   ctx.strokeRect(box.x, box.y, box.width, box.height);
   ctx.fillStyle = review.accent === 'pink' ? colors.pink : colors.mint;
   ctx.fillRect(box.x + box.width * 0.08, box.y + box.height * 0.08, box.width * 0.78, box.height * 0.16);
-  drawText(ctx, 'REVISAR ANTES DE CERRAR', box.x + box.width * 0.11, box.y + box.height * 0.19, face, 500, 24, colors.ink);
+  drawText(ctx, sceneText('memphis', locale, 'reviewBeforeClosing'), box.x + box.width * 0.11, box.y + box.height * 0.19, face, 500, 24, colors.ink);
   const rows = [
-    { label: 'LEER', y: box.y + box.height * 0.42, reached: 1 },
-    { label: 'SEÑALAR', y: box.y + box.height * 0.59, reached: level },
-    { label: 'REVISAR', y: box.y + box.height * 0.76, reached: Math.max(0, level - 1) },
+    { label: sceneText('memphis', locale, 'read'), y: box.y + box.height * 0.42, reached: 1 },
+    { label: sceneText('memphis', locale, 'mark'), y: box.y + box.height * 0.59, reached: level },
+    { label: sceneText('memphis', locale, 'review'), y: box.y + box.height * 0.76, reached: Math.max(0, level - 1) },
   ];
   for (const row of rows) {
     ctx.strokeStyle = colors.ink;
@@ -209,14 +211,15 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
   ctx.strokeStyle = colors.ink;
   ctx.lineWidth = 3;
   ctx.strokeRect(field.x, field.y, field.width, field.height);
-  if (review.composition === 'checklist') drawChecklistCard(ctx, card, review, level, fonts.effective.label.family, colors);
-  else drawComparisonCard(ctx, card, review, level, fonts.effective.label.family, colors);
+  if (review.composition === 'checklist') drawChecklistCard(ctx, card, review, level, fonts.effective.label.family, brief.locale, colors);
+  else drawComparisonCard(ctx, card, review, level, fonts.effective.label.family, brief.locale, colors);
   return ctx.getImageData(0, 0, brief.output.width, brief.output.height).data;
 }
 
 export const memphisNarrativeScene: NarrativeScene = {
   style: 'memphis',
   version: 'memphis-keyline-assembly/1.0.0',
+  vocabulary: sceneVocabulary('value-driven'),
   supportsAspect(aspect) {
     return [16 / 9, 1].some((ratio) => Math.abs(aspect - ratio) / ratio < 0.015);
   },

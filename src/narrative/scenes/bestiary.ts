@@ -2,6 +2,8 @@ import { canvasFor } from '../../canvas.js';
 import { getStyle } from '../../styles/presets.js';
 import type { NarrativePhase, NarrativeRect, NarrativeRenderContext, NarrativeScene, NormalizedNarrativeBrief } from '../../types/narrative.js';
 import { cubicBezierEase } from './common.js';
+import { sceneVocabulary } from '../vocabulary.js';
+import { sceneText } from '../i18n.js';
 
 interface OwlFolio {
   readonly identity: 'buho-de-disco-facial';
@@ -185,7 +187,7 @@ function drawOwl(ctx: ReturnType<typeof canvasFor>['ctx'], field: NarrativeRect,
   return { x: cx, y: cy, rx: headRx, ry: headRy };
 }
 
-function drawComparisonNotes(ctx: ReturnType<typeof canvasFor>['ctx'], field: NarrativeRect, head: { x: number; y: number; rx: number; ry: number }, level: number, face: string, ink: string, lapis: string, rubric: string): void {
+function drawComparisonNotes(ctx: ReturnType<typeof canvasFor>['ctx'], field: NarrativeRect, head: { x: number; y: number; rx: number; ry: number }, level: number, face: string, ink: string, lapis: string, rubric: string, locale: 'es' | 'en'): void {
   const noteX = field.x + field.width * 0.31;
   const noteY = field.y + field.height * 0.67;
   ctx.strokeStyle = lapis;
@@ -198,7 +200,7 @@ function drawComparisonNotes(ctx: ReturnType<typeof canvasFor>['ctx'], field: Na
   ctx.font = `400 24px "${face}"`;
   ctx.fillStyle = ink;
   ctx.textBaseline = 'alphabetic';
-  ctx.fillText('DISCO', noteX, noteY);
+  ctx.fillText(sceneText('bestiary', locale, 'disc'), noteX, noteY);
   if (level > 0.7) {
     ctx.strokeStyle = rubric;
     ctx.lineWidth = 2;
@@ -207,14 +209,14 @@ function drawComparisonNotes(ctx: ReturnType<typeof canvasFor>['ctx'], field: Na
     ctx.lineTo(noteX + 69, noteY + 12);
     ctx.stroke();
     ctx.fillStyle = rubric;
-    ctx.fillText('FOCO', noteX, noteY + 38);
+    ctx.fillText(sceneText('bestiary', locale, 'focus'), noteX, noteY + 38);
   }
 }
 
-function drawChecklistNotes(ctx: ReturnType<typeof canvasFor>['ctx'], field: NarrativeRect, level: number, face: string, ink: string, lapis: string, rubric: string): void {
+function drawChecklistNotes(ctx: ReturnType<typeof canvasFor>['ctx'], field: NarrativeRect, level: number, face: string, ink: string, lapis: string, rubric: string, locale: 'es' | 'en'): void {
   const x = field.x + field.width * 0.14;
   const y = field.y + field.height * 0.72;
-  const labels = ['OBSERVAR', 'ENMARCAR', 'REVISAR'];
+  const labels = [sceneText('bestiary', locale, 'observe'), sceneText('bestiary', locale, 'frame'), sceneText('bestiary', locale, 'review')];
   for (let index = 0; index < labels.length; index += 1) {
     const rowY = y + index * 37;
     ctx.strokeStyle = index <= Math.floor(level) ? lapis : ink;
@@ -248,14 +250,15 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
   drawPage(ctx, field, colors);
   drawInitial(ctx, field, fonts.effective.display.family, colors.ink, colors.lapis);
   const head = drawOwl(ctx, field, folio, level, colors, folio.composition === 'checklist');
-  if (folio.composition === 'checklist') drawChecklistNotes(ctx, field, level, fonts.effective.label.family, colors.ink, colors.lapis, colors.rubric);
-  else drawComparisonNotes(ctx, field, head, level, fonts.effective.label.family, colors.ink, colors.lapis, colors.rubric);
+  if (folio.composition === 'checklist') drawChecklistNotes(ctx, field, level, fonts.effective.label.family, colors.ink, colors.lapis, colors.rubric, brief.locale);
+  else drawComparisonNotes(ctx, field, head, level, fonts.effective.label.family, colors.ink, colors.lapis, colors.rubric, brief.locale);
   return ctx.getImageData(0, 0, brief.output.width, brief.output.height).data;
 }
 
 export const bestiaryNarrativeScene: NarrativeScene = {
   style: 'bestiary',
   version: 'bestiary-owl-folio/1.0.0',
+  vocabulary: sceneVocabulary('value-driven'),
   supportsAspect(aspect) {
     return [16 / 9, 1].some((ratio) => Math.abs(aspect - ratio) / ratio < 0.015);
   },

@@ -12,7 +12,7 @@ import { NARRATIVE_MAX_MEMORY_BYTES, NARRATIVE_MAX_PIXEL_FRAMES, type NarrativeT
 import { crossCheckWithFfprobe, verifyNarrativeGif, type FfprobeCrosscheck, type VerifiedGif } from './verify-gif.js';
 
 const { GIFEncoder, applyPalette, quantize } = gifenc;
-export const NARRATIVE_RENDERER_VERSION = 'narrative-core/0.1.0';
+export const NARRATIVE_RENDERER_VERSION = 'narrative-core/0.2.0';
 const SAMPLE_PIXELS_PER_FRAME = 2_048;
 const CONTACT_TILE_WIDTH = 320;
 const CONTACT_LABEL_HEIGHT = 28;

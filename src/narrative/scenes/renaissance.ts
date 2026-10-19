@@ -3,6 +3,8 @@ import { getStyle } from '../../styles/presets.js';
 import type { NarrativeRenderContext, NarrativeRect, NarrativeScene } from '../../types/narrative.js';
 import { cubicBezierEase, drawRule } from './common.js';
 import { clamp, compositionFor, drawRoleText, mix, phasePosition, type StageCComposition } from './stage-c-common.js';
+import { sceneVocabulary } from '../vocabulary.js';
+import { sceneText } from '../i18n.js';
 
 interface FrescoPanel {
   readonly identity: 'fresco-fragment';
@@ -102,13 +104,14 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
   const state = phasePosition(context, (value) => cubicBezierEase(value, 0.22, 0.61, 0.36, 1));
   if (panel.composition === 'comparison') drawComparison(ctx, box, panel, state, colors);
   else drawChecklist(ctx, box, panel, state, colors);
-  drawRoleText(ctx, 'PIEZA', box.x + box.width * 0.68, box.y + box.height * 0.88, context.fonts.effective.annotation, 24, colors.ink);
+  drawRoleText(ctx, sceneText('renaissance', brief.locale, 'caption'), box.x + box.width * 0.68, box.y + box.height * 0.88, context.fonts.effective.annotation, 24, colors.ink);
   return ctx.getImageData(0, 0, brief.output.width, brief.output.height).data;
 }
 
 export const renaissanceNarrativeScene: NarrativeScene = {
   style: 'renaissance',
   version: 'renaissance-fresco/1.0.0',
+  vocabulary: sceneVocabulary('phase-order-fallback'),
   supportsAspect(aspect) {
     return [16 / 9, 1, 9 / 16].some((ratio) => Math.abs(aspect - ratio) / ratio < 0.015);
   },

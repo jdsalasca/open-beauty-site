@@ -1,0 +1,125 @@
+import type { StyleSlug } from '../types.js';
+import type { NarrativeBadgePolicy, NarrativeLocale, NarrativeStatus } from '../types/narrative.js';
+
+type Pairs = Record<string, readonly [string, string]>;
+type LocalizedStyle = Record<NarrativeLocale, Record<string, string>>;
+
+const PAIRS: Record<StyleSlug, Pairs> = {
+  artdeco: { caption: ['REVISIÓN', 'REVIEW'] },
+  bestiary: {
+    disc: ['DISCO', 'DISC'],
+    focus: ['FOCO', 'FOCUS'],
+    observe: ['OBSERVAR', 'OBSERVE'],
+    frame: ['ENMARCAR', 'FRAME'],
+    review: ['REVISAR', 'REVIEW'],
+  },
+  brutalist: {
+    badgeOpen: ['PENDIENTE', 'PENDING'],
+    badgeInReview: ['EN REVISIÓN', 'IN REVIEW'],
+    badgeDone: ['REVISADA', 'REVIEWED'],
+    observation: ['OBSERVACIÓN', 'OBSERVATION'],
+    state: ['ESTADO', 'STATUS'],
+    reference: ['REFERENCIA', 'REFERENCE'],
+    copy: ['COPIA', 'COPY'],
+    trace: ['TRAZA', 'TRACE'],
+    register: ['REGISTRO', 'REGISTER'],
+    reviewSheet: ['FICHA DE REVISIÓN', 'REVIEW FORM'],
+    measure: ['MEDIDA', 'MEASURE'],
+    mark: ['SEÑALAR', 'FLAG'],
+    review: ['REVISIÓN', 'REVIEW'],
+    readingControl: ['CONTROL DE LECTURA', 'READING CHECK'],
+    readGuide: ['LEER LA GUÍA', 'READ THE GUIDE'],
+    markDatum: ['SEÑALAR EL DATO', 'FLAG THE VALUE'],
+    leaveInReview: ['DEJAR EN REVISIÓN', 'LEAVE IN REVIEW'],
+    notice: ['AVISO', 'NOTICE'],
+    changeRegistered: ['CAMBIO REGISTRADO', 'CHANGE RECORDED'],
+  },
+  galactic: {
+    trajectory: ['TRAYECTORIA', 'TRAJECTORY'],
+    observe: ['OBSERVAR', 'OBSERVE'],
+    annotate: ['ANOTAR', 'ANNOTATE'],
+    archive: ['ARCHIVAR', 'ARCHIVE'],
+  },
+  isotype: {
+    categories: ['CATEGORÍAS CUALITATIVAS', 'QUALITATIVE CATEGORIES'],
+    noMetric: ['SIN MÉTRICA', 'NO METRIC'],
+    before: ['ANTES', 'BEFORE'],
+    observed: ['OBSERVADO', 'OBSERVED'],
+    expected: ['ESPERADO', 'EXPECTED'],
+    change: ['CAMBIO', 'CHANGE'],
+    stage: ['ETAPA', 'STEP'],
+  },
+  memphis: {
+    measure: ['MEDIDA', 'MEASURE'],
+    review: ['REVISIÓN', 'REVIEW'],
+    reviewBeforeClosing: ['REVISAR ANTES DE CERRAR', 'REVIEW BEFORE CLOSING'],
+    read: ['LEER', 'READ'],
+    mark: ['SEÑALAR', 'FLAG'],
+  },
+  nature: {
+    badgeOpen: ['PENDIENTE', 'PENDING'],
+    badgeInReview: ['EN REVISIÓN', 'IN REVIEW'],
+    badgeDone: ['ARCHIVADA', 'ARCHIVED'],
+    botanicalArchive: ['ARCHIVO BOTÁNICO', 'BOTANICAL ARCHIVE'],
+    observationSheet: ['PLIEGO DE OBSERVACIÓN', 'OBSERVATION SHEET'],
+    observation: ['OBSERVACIÓN', 'OBSERVATION'],
+    observe: ['OBSERVAR', 'OBSERVE'],
+    annotate: ['ANOTAR', 'ANNOTATE'],
+    archive: ['ARCHIVAR', 'ARCHIVE'],
+  },
+  opart: {},
+  papercraft: {
+    badgeOpen: ['PENDIENTE', 'PENDING'],
+    badgeInReview: ['EN REVISIÓN', 'IN REVIEW'],
+    badgeDone: ['REVISADA', 'REVIEWED'],
+    guide: ['Guía', 'Guide'],
+    reading: ['LECTURA', 'READING'],
+    signal: ['SEÑAL', 'SIGNAL'],
+    reviewList: ['Lista de revisión', 'Review list'],
+    readGuide: ['LEER LA GUÍA', 'READ THE GUIDE'],
+    markDatum: ['SEÑALAR EL DATO', 'FLAG THE VALUE'],
+    leaveInReview: ['DEJAR EN REVISIÓN', 'LEAVE IN REVIEW'],
+  },
+  psychedelic: { review: ['REVISIÓN', 'REVIEW'] },
+  renaissance: { caption: ['PIEZA', 'FRAGMENT'] },
+  ukiyoe: {
+    point: ['PUNTO', 'POINT'],
+    of: ['DE', 'OF'],
+    review: ['REVISIÓN', 'REVIEW'],
+    signal: ['SEÑAL', 'SIGNAL'],
+  },
+  vaporwave: {
+    badgeOpen: ['PENDIENTE', 'PENDING'],
+    badgeInReview: ['EN REVISIÓN', 'IN REVIEW'],
+    badgeDone: ['REVISADO', 'REVIEWED'],
+    editor: ['EDITOR DE REVISION', 'REVIEW EDITOR'],
+    demoArchive: ['ARCHIVO DEMO · 1999', 'DEMO FILE · 1999'],
+    readingFile: ['LECTURA.TXT', 'READING.TXT'],
+    state: ['ESTADO', 'STATUS'],
+    review: ['REVISAR', 'REVIEW'],
+    archive: ['ARCHIVO', 'FILE'],
+    checklistStatus: ['REVISAR · MARCAR · ARCHIVAR', 'REVIEW · FLAG · ARCHIVE'],
+    comparisonStatus: ['ARCHIVO · LECTURA · REVISIÓN', 'FILE · READING · REVIEW'],
+    signal: ['SEÑALAR', 'FLAG'],
+  },
+};
+
+export const NARRATIVE_SCENE_TEXT_CATALOG: Record<StyleSlug, LocalizedStyle> = Object.fromEntries(
+  Object.entries(PAIRS).map(([style, pairs]) => [style, {
+    es: Object.fromEntries(Object.entries(pairs).map(([key, values]) => [key, values[0]])),
+    en: Object.fromEntries(Object.entries(pairs).map(([key, values]) => [key, values[1]])),
+  }]),
+) as Record<StyleSlug, LocalizedStyle>;
+
+export function sceneText(style: StyleSlug, locale: NarrativeLocale, key: string): string {
+  const value = NARRATIVE_SCENE_TEXT_CATALOG[style][locale][key];
+  if (value === undefined) throw new Error(`Missing ${locale} narrative scene text ${style}.${key}.`);
+  return value;
+}
+
+export function workflowBadgeText(style: StyleSlug, locale: NarrativeLocale, status: NarrativeStatus, policy: NarrativeBadgePolicy, customText?: string): string | undefined {
+  if (policy === 'none') return undefined;
+  if (policy === 'custom') return customText;
+  const key = status === 'done' ? 'badgeDone' : status === 'in-review' ? 'badgeInReview' : 'badgeOpen';
+  return sceneText(style, locale, key);
+}

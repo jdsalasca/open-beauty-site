@@ -78,3 +78,15 @@ test('every narrative schema field and example appears in narrative --help', asy
   assert.match(help, /"kind": "narrative-gif"/);
   assert.match(help, /Resultado esperado/);
 });
+
+test('capability CLI help and JSON command expose one machine-readable registry', async () => {
+  const help = await runCli(['capabilities', '--help']);
+  assert.match(help, /beauty capabilities \[--style <s>\] \[--json\]/);
+  assert.match(help, /--style/);
+  assert.match(help, /--json/);
+  const child = await runCli(['capabilities', '--style', 'papercraft', '--json']);
+  const report = JSON.parse(child) as { cells: Array<{ style: string }>; summary: Record<string, number> };
+  assert.equal(report.cells.length, 24);
+  assert.ok(report.cells.every((cell) => cell.style === 'papercraft'));
+  assert.equal(report.summary.supported, 0);
+});

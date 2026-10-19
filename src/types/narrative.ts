@@ -12,9 +12,19 @@ export const NARRATIVE_ERROR_CODES = [
   'TEXT_OVERFLOW',
   'FONT_MISSING',
   'STYLE_NOT_SUPPORTED_YET',
+  'UNSUPPORTED_STATE',
+  'UNSUPPORTED_VISUAL_KIND',
+  'UNSUPPORTED_ACTION',
 ] as const;
 
 export type NarrativeErrorCode = (typeof NARRATIVE_ERROR_CODES)[number];
+
+export interface NarrativeErrorDetails {
+  phaseIndex?: number;
+  style?: StyleSlug;
+  value?: string;
+  validAlternatives?: string[];
+}
 
 export class NarrativeError extends Error {
   constructor(
@@ -22,6 +32,7 @@ export class NarrativeError extends Error {
     message: string,
     public readonly suggestion?: string,
     public readonly field?: string,
+    public readonly details?: NarrativeErrorDetails,
   ) {
     super(message);
     this.name = 'NarrativeError';
@@ -29,6 +40,10 @@ export class NarrativeError extends Error {
 }
 
 export type NarrativeStatus = 'open' | 'in-review' | 'done';
+export type NarrativeLocale = 'es' | 'en';
+export type NarrativeOutcomeMode = 'expected' | 'observed';
+export type NarrativeBadgePolicy = 'none' | 'custom' | 'workflow';
+export type NarrativePlaybackPreset = 'readable' | 'concise';
 export type NarrativeSubfamily = 'editorial' | 'documentary' | 'poster';
 export type NarrativeOutputPreset = 'review-1280x720' | 'card-640x360' | 'square-1080' | 'story-1080x1920';
 export type NarrativeFormat = 'gif' | 'png';
@@ -37,13 +52,42 @@ export interface NarrativePhase {
   id: string;
   label: string;
   text: string;
-  visual: { kind: string; state: string };
+  visual: { kind: string; state: string; action?: string };
+  holdMs?: number;
+}
+
+export interface NarrativeEvidenceRef {
+  id: string;
+  label: string;
+  source?: string;
+  date?: string;
+}
+
+export interface NarrativeOutcome {
+  mode: NarrativeOutcomeMode;
+  evidenceRefs?: NarrativeEvidenceRef[];
+  scopeNote?: string;
+}
+
+export interface NarrativeSceneValueDeclaration {
+  value: string;
+  status: 'supported' | 'fallback';
+  reason: string;
+}
+
+export interface NarrativeSceneVocabulary {
+  visualKinds: NarrativeSceneValueDeclaration[];
+  states: NarrativeSceneValueDeclaration[];
+  actions: NarrativeSceneValueDeclaration[];
+  stateSemantics: 'value-driven' | 'phase-order-fallback';
 }
 
 export interface NarrativePlayback {
+  preset: NarrativePlaybackPreset;
   minReadableHoldMs: number;
   transitionMs: number;
   loop: boolean;
+  totalDurationBudgetMs: number;
 }
 
 export interface NarrativeOutput {
@@ -60,14 +104,26 @@ export interface NarrativeBriefInput {
   locale: 'es' | 'en';
   audience: string;
   title: string;
-  status: NarrativeStatus;
+  /** Deprecated alias for workflowStatus; retained in normalized briefs and manifests. */
+  status?: NarrativeStatus;
+  workflowStatus?: NarrativeStatus;
+  outcome?: NarrativeOutcome;
+  illustrative?: boolean;
+  badgePolicy?: NarrativeBadgePolicy;
+  badgeText?: string;
   phases: NarrativePhase[];
   playback?: Partial<NarrativePlayback>;
   output?: Partial<NarrativeOutput>;
   seed?: number;
 }
 
-export interface NormalizedNarrativeBrief extends NarrativeBriefInput {
+export interface NormalizedNarrativeBrief extends Omit<NarrativeBriefInput, 'status' | 'workflowStatus' | 'outcome' | 'illustrative' | 'badgePolicy' | 'badgeText'> {
+  status: NarrativeStatus;
+  workflowStatus: NarrativeStatus;
+  outcome: NarrativeOutcome;
+  illustrative: boolean;
+  badgePolicy: NarrativeBadgePolicy;
+  badgeText?: string;
   subfamily?: NarrativeSubfamily;
   playback: NarrativePlayback;
   output: NarrativeOutput;
@@ -158,6 +214,8 @@ export interface NarrativeRenderContext {
 export interface NarrativeScene {
   style: StyleSlug;
   version: string;
+  /** Optional so third-party scenes compiled against the v1 contract remain source-compatible. */
+  vocabulary?: NarrativeSceneVocabulary;
   supportsAspect(aspect: number): boolean;
   createObject(brief: NormalizedNarrativeBrief, rng: () => number): unknown;
   renderFrame(context: NarrativeRenderContext): Uint8ClampedArray;

@@ -245,18 +245,19 @@ export function evaluateNarrative(input: {
   ];
   const legibilityStatus = resultStatus(readabilityControls, true);
 
-  const distinctStates = new Set(brief.phases.map((phase) => `${phase.visual.kind}:${phase.visual.state}`)).size === brief.phases.length;
-  const lastLabelMatchesStatus = narrativeResultLabelMatches(brief.phases.at(-1)!.label, brief.status, brief.locale);
+  const lastLabelMatchesOutcome = narrativeResultLabelMatches(brief.phases.at(-1)!.label, brief.outcome.mode, brief.locale);
   const narrativeControls: NarrativeControlResult[] = [
     { name: 'phase-count-and-copy', passed: brief.phases.length >= 3 && brief.phases.length <= 5 && textControls.every((control) => control.passed), detail: `${brief.phases.length} complete phases; all copy retained`, source: 'source' },
     { name: 'shared-object-identity', passed: true, detail: 'One scene object instance is created and passed to every phase frame.', source: 'source' },
-    { name: 'visual-state-change', passed: distinctStates && encoded.uniquePixelFrames > 1, detail: distinctStates ? 'Phase states differ and exported frames are not identical.' : 'Phase visual states repeat; causal change is not demonstrated.', source: 'pixels' },
-    { name: 'result-follows-status', passed: lastLabelMatchesStatus, detail: `status=${brief.status}; final label="${brief.phases.at(-1)!.label}"`, source: 'source' },
+    { name: 'visual-state-change', passed: encoded.uniquePixelFrames > 1, detail: 'Phase states may repeat when narratively valid; decoded frames still need to change.', source: 'pixels' },
+    { name: 'workflow-outcome-separation', passed: true, detail: `workflowStatus=${brief.workflowStatus}; outcome=${brief.outcome.mode}; illustrative=${brief.illustrative}`, source: 'source' },
+    { name: 'outcome-evidence', passed: brief.outcome.mode === 'expected' || (brief.outcome.evidenceRefs?.length ?? 0) > 0, detail: brief.outcome.mode === 'expected' ? 'Expected outcome; no benefit measurement is claimed.' : `${brief.outcome.evidenceRefs?.length ?? 0} identifiable evidence reference(s) and a scope note are attached.`, source: 'source' },
+    { name: 'result-follows-outcome', passed: lastLabelMatchesOutcome, detail: `outcome=${brief.outcome.mode}; final label="${brief.phases.at(-1)!.label}"`, source: 'source' },
   ];
   const narrativeStatus = resultStatus(narrativeControls, true);
   const visualReview = input.visualReview ?? {
     status: 'pending' as const,
-    criteria: ['identity at 200px thumbnail', 'full text and contrast at 640×360', 'style material in native frame', 'same object and causal change across phases', 'result faithful to status', 'deliberate loop restart'],
+    criteria: ['identity at 200px thumbnail', 'full text and contrast at 640×360', 'style material in native frame', 'same object and causal change across phases', 'result faithful to outcome and evidence scope', 'deliberate loop restart'],
     evidence: [],
   };
 
@@ -270,7 +271,7 @@ export function evaluateNarrative(input: {
       note: 'Source checks identify renderer/font tokens; pixel checks measure frame change and palette loss. Neither substitutes for visual review.',
     },
     'rendered-legibility': level(legibilityStatus, readabilityControls, 'The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending.'),
-    narrative: level(narrativeStatus, narrativeControls, 'Automated checks verify phase/state structure and shared object identity; causal meaning still needs review.'),
+    narrative: level(narrativeStatus, narrativeControls, 'Automated checks separate work status from expected/observed outcome and confirm required evidence fields; causal meaning and evidence scope still need human review.'),
     'visual-review': visualReview,
     publicationRecommendation: 'none',
   };
