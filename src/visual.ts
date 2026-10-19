@@ -738,20 +738,35 @@ export async function auditArtifactBatch(
         const next = queue.shift();
         if (!next) return;
         const { item, index } = next;
-        const file = await fileFor(item);
-        const { findings } = await collectFindings(browser!, file, options.viewports ?? VISUAL_VIEWPORTS, undefined);
-        const visual: VisualAuditReport = {
-          status: 'ran',
-          issues: findings.map(issueFor),
-          findings,
-          playwright: location,
-        };
-        const base = validateArtifact(item.html, item.style);
-        entries[index] = {
-          label: item.label,
-          result: visual.issues.length ? mergeIssues(base, visual.issues) : base,
-          visual,
-        };
+        try {
+          const file = await fileFor(item);
+          const { findings } = await collectFindings(browser!, file, options.viewports ?? VISUAL_VIEWPORTS, undefined);
+          const visual: VisualAuditReport = {
+            status: 'ran',
+            issues: findings.map(issueFor),
+            findings,
+            playwright: location,
+          };
+          const base = validateArtifact(item.html, item.style);
+          entries[index] = {
+            label: item.label,
+            result: visual.issues.length ? mergeIssues(base, visual.issues) : base,
+            visual,
+          };
+        } catch (error) {
+          const reason = error instanceof Error ? error.message.split('\n')[0] : String(error);
+          entries[index] = {
+            label: item.label,
+            result: validateArtifact(item.html, item.style),
+            visual: {
+              status: 'skipped',
+              message: visualSkipMessage(`Chromium failed on ${item.label}: ${reason}`),
+              issues: [],
+              findings: [],
+              playwright: location,
+            },
+          };
+        }
       }
     };
     await Promise.all(Array.from({ length: concurrency }, worker));
