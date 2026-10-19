@@ -26,6 +26,21 @@ export interface MakeInput {
   locale?: Locale;
   /** File path or folder. Defaults to a deterministic beauty-output path. */
   output?: string;
+  /** Optional headline override; bypasses the short-title derivation. */
+  title?: string;
+  /** Optional one-line tagline override; bypasses the derived tagline. */
+  tagline?: string;
+}
+
+/**
+ * The copy a one-sentence idea is expanded into: a short headline, a one-line
+ * tagline and the remainder as the intro paragraph. `intro` is empty when the
+ * idea had no remainder, so callers can fall back to the style voice.
+ */
+export interface DerivedCopy {
+  title: string;
+  tagline: string;
+  intro: string;
 }
 
 export interface MakeIssue {

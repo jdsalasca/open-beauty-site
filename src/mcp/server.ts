@@ -379,6 +379,16 @@ QUALITY BAR
       .string()
       .describe('One sentence describing the subject or goal. Example: "A neighborhood bakery that bakes sourdough at dawn."'),
     locale: localeEnum.optional().describe('Microcopy language: "es" (default) or "en". Example: "en".'),
+    title: z
+      .string()
+      .max(90)
+      .optional()
+      .describe('Optional short headline override (5 words or fewer). Omit to derive it from the idea. Example: "Noche polinizadora".'),
+    tagline: z
+      .string()
+      .max(160)
+      .optional()
+      .describe('Optional one-line tagline override. Omit to derive it from the idea. Example: "Caminatas nocturnas que registran sonidos."'),
     output: z
       .string()
       .max(260)
