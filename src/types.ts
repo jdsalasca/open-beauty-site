@@ -1,3 +1,7 @@
+import type { SceneSubject } from './art.js';
+
+export type { SceneSubject } from './art.js';
+
 export type StyleSlug =
   | 'renaissance'
   | 'brutalist'
@@ -44,6 +48,11 @@ export interface DeckStat {
 export interface DeckFigure {
   /** Papercut scene for a figure slide. */
   scene?: StoryScene;
+  /**
+   * Explicit subject mark for non-papercraft styles. It takes precedence over
+   * `scene.kind`, so a brief can request `table` or `window` directly.
+   */
+  subject?: SceneSubject;
   caption?: string;
   source?: string;
 }
