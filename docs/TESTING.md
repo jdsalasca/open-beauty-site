@@ -4,8 +4,17 @@
 
 ```bash
 pnpm build
-pnpm test
+pnpm test            # test:unit, then test:browser
+pnpm test:unit       # fast, parallel (Node's default concurrency = CPU count)
+pnpm test:browser    # serial (concurrency 1), one Chromium per file
+pnpm check:all       # check + build + check:scripts + test:unit + test:browser
+pnpm check:all:report # same integral, writes docs/reports/check-all-latest.{md,json}
 ```
+
+`scripts/test-suite.ts` splits `test/*.test.ts` in two groups. The seven suites
+that launch Chromium/Playwright run serially so several browser launches never
+compete for CPU; every other file runs in parallel. See
+[Browser suites and timeouts](#browser-suites-and-timeouts).
 
 The suite runs with Node's test runner through `tsx`:
 
@@ -33,6 +42,50 @@ Current result: **65/65 passing** in ~8 s (plus MCP startup).
 ✔ example routes point to real files
 ✔ the deck audit catches a slide with too many words
 ```
+
+## Browser suites and timeouts
+
+The browser suites are `test/deck-capture.test.ts`,
+`test/min-text-visual.test.ts`, `test/narrative-compare.browser.test.ts`,
+`test/narrative-gallery.browser.test.ts`, `test/page-geometry.test.ts`,
+`test/visual-matrix.test.ts` and `test/visual.test.ts`. They import Playwright
+from `BEAUTY_PLAYWRIGHT_ROOT` (or the shared sibling checkout) and skip when it
+is absent, so the suite stays green on machines without browsers. Each file
+reuses a single Chromium; `min-text-visual.test.ts` and the fixture rules in
+`visual.test.ts` share one browser through `auditArtifactBatch` instead of one
+launch per artifact.
+
+Every Playwright launch and navigation uses one explicit timeout,
+`BEAUTY_BROWSER_TIMEOUT_MS` (default `60000` ms, see `src/browser.ts`). A launch
+that times out is retried exactly once; assertion failures are never retried.
+Raise it on a loaded machine:
+
+```bash
+BEAUTY_BROWSER_TIMEOUT_MS=120000 pnpm test:browser
+```
+
+What a timeout means: a Chromium launch or a `page.goto` did not complete
+within the budget. It is a real failure of the run (the test fails), not a
+weakening of the assertion, and it usually points to CPU contention or a
+misconfigured `BEAUTY_PLAYWRIGHT_ROOT`. It is never silently converted into a
+pass.
+
+Reference environment and expected duration (measured 2026-10-19, Windows 11
+x64, Node v24.21.0, 8 CPUs, Playwright from the sibling checkout):
+
+| Command | Tests | Expected duration |
+| --- | ---: | --- |
+| `pnpm test:unit` | 439 | ~5 min (parallel) |
+| `pnpm test:browser` | 21 | ~5 min (serial) |
+| `pnpm check:all` | 460 | ~10 min |
+
+Durations grow with CPU load; the numbers above are wall-clock, not a cap.
+
+`pnpm check:all:report` runs the same five steps in order and writes
+`docs/reports/check-all-latest.md` (per-step table plus output tails) and
+`docs/reports/check-all-latest.json` (durations, pass/fail/skip counts and
+timeout mentions). The report is the real output of a real run: a red run
+writes a red report.
 
 ## Visual QA
 
