@@ -23,10 +23,10 @@ Las primitivas indicadas son las celdas `supported` para aspecto 16:9 y locale e
 | bestiary | UnifrakturMaguntia / IM Fell English | checklist, comparison | — | No hay pack | Técnica pass; resto pending |
 | brutalist | Archivo Black / Space Mono | checklist, comparison | card-collection, counter, file-download, table-rows | `semantic/brutalist/**/art-only` (3 briefs × es/en) | Técnica pass; resto pending |
 | galactic | Michroma / Space Grotesk | checklist, comparison | — | No hay pack | Técnica pass; resto pending |
-| isotype | Jost / IBM Plex Sans | checklist, comparison | card-collection, counter | No hay fixture semántico solo arte | Técnica pass; legibilidad revise; visual pending |
+| isotype | Jost / IBM Plex Sans | checklist, comparison | card-collection, counter | `gallery/isotype/{checklist,comparison}/*-art-only` (sin fixture semántico pareado) | Técnica pass; legibilidad revise; visual pending |
 | memphis | Bricolage Grotesque / DM Sans | checklist, comparison | — | No hay pack | Técnica pass; resto pending |
 | nature | Cormorant Garamond / Karla | checklist, comparison | — | No hay pack | Técnica pass; resto pending |
-| opart | Archivo Black / Space Grotesk | checklist, comparison | card-collection | No hay fixture semántico solo arte | Técnica pass; legibilidad revise; visual pending |
+| opart | Archivo Black / Space Grotesk | checklist, comparison | card-collection | `gallery/opart/{checklist,comparison}/*-art-only` (sin fixture semántico pareado) | Técnica pass; legibilidad revise; visual pending |
 | papercraft | Fraunces / Nunito Sans | checklist, comparison | card-collection, counter, file-download, table-rows | `semantic/papercraft/**/art-only` (3 briefs × es/en) | Técnica pass; resto pending |
 | psychedelic | Bungee Shade / Space Grotesk | checklist, comparison | — | No hay pack | Técnica pass; resto pending |
 | renaissance | EB Garamond / EB Garamond | checklist, comparison | card-collection, counter | `art-only/renaissance/` (pack existente, no fixture semántico pareado) | Técnica pass; resto pending |
@@ -61,9 +61,12 @@ El índice registra **15.824.107 bytes binarios nuevos en 40 archivos**; el GIF 
 | Pruebas dirigidas compare + matrix | **5/5**; incluye página estática, A100, índice, teclado y matriz |
 | `node dist/cli.js validate docs/narrative-gif/COMPARE.html --style papercraft --visual` | **A 100/100**, visión 4/4, cero avisos |
 | `pnpm visual:matrix` | **91/91 A100**, 0 celdas debajo del mínimo |
-| `pnpm check:all` y repro byte por byte | Pendientes al redactar; registrar salida final antes del cierre |
+| `test/narrative-gallery-repro.test.ts` | **28/28** packs por brief y **60/60** manifiestos canónicos reproducen GIF, PNG y hoja de contacto byte por byte |
+| `test/page-geometry.test.ts` | La suite completa tuvo timeout al abrir `isotype-4.html`; ejecución aislada: **2/2** pruebas pass |
+| `test/visual-matrix.test.ts` | En la suite completa, Chromium expiró en `brutalist/retro` y marcó 90/91; ejecución aislada: **4/4** pass y `pnpm visual:matrix`: 91/91 A100 |
+| `pnpm check:all` | **Falló: 453 pass, 2 fail, 1 skipped / 456**. Las dos fallas fueron timeouts de navegación local en las pruebas de geometría y matriz visual. |
 
-Controles negativos explícitos: la matriz mantiene **254/312** celdas como no aprobadas (158 `fallback` + 96 `unsupported`); el test de matriz comprueba que solo las 58 celdas `supported` tienen prueba y pack existentes. En navegador se verificaron dos condiciones de carga negativa: cero GIF antes de pulsar Reproducir y cero GIF en movimiento reducido sin acción explícita. La regresión de los pares históricos conserva el resultado negativo de transformación en 14/14, en vez de inferir causalidad desde cambios de texto.
+Controles negativos explícitos: la matriz mantiene **254/312** celdas como no aprobadas (158 `fallback` + 96 `unsupported`); el test de matriz comprueba que solo las 58 celdas `supported` tienen prueba y pack existentes. Pasaron los tests `isotype text-only changes do not pass the semantic-object control`, `opart text-only changes do not pass the semantic-object control`, `text-only and decorative-only changes cannot pass the semantic object pixel control`, `unknown semantic states and actions fail before render with allowed alternatives` y `scenes without declared object regions keep transformation status pending` (1 cada uno). En navegador se verificaron dos condiciones de carga negativa: cero GIF antes de pulsar Reproducir y cero GIF en movimiento reducido sin acción explícita. La regresión de los pares históricos conserva el resultado negativo de transformación en 14/14, en vez de inferir causalidad desde cambios de texto.
 
 ## Inspección visual, límites y pendientes
 
@@ -76,5 +79,7 @@ Se generaron y revisaron capturas de `COMPARE.html` a 1440 y 360 px fuera del re
 - papercraft tiene materialidad clara y brutalist una jerarquía deliberada; sus pares heredados siguen mostrando el mismo arte en varios briefs.
 
 La inspección anterior la realizó quien preparó esta entrega; **ninguno de los 13 estilos fue revisado ni aprobado independientemente**. Tampoco se revisaron todos los frames/holds de los 14 pares ni se contrastó con la referencia privada de Grid. No hay feedback humano abierto que enlazar a frames; el estado permanece `pending`. Las 91 comprobaciones de `visual:matrix` evalúan la calidad de páginas HTML, no sustituyen esa revisión de GIF.
+
+La suite completa detectó saturación/timeout de navegación de Chromium en dos pruebas que pasan aisladas, y omitió otro chequeo de miniaturización de recetas tras un timeout de Chromium. Por ello `pnpm check:all` queda reportado como fallido aunque las matrices solicitadas y las reproducciones byte a byte pasaron por separado.
 
 La igualdad binaria de varios pares y los 14 fallos de transformación heredada son los límites más relevantes. La comparación informa tamaños y decodificación con precisión; no demuestra mejora visual en los pares idénticos. La determinación se limita a la misma plataforma, runtime y dependencias fijadas en `pnpm-lock.yaml`; no se afirma igualdad de bytes entre sistemas operativos.
