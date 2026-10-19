@@ -5,7 +5,7 @@ description: Create art-directed HTML pages, decks, stories, experiences, motion
 
 # open-beauty-site (weak-model kit)
 
-Pick what you want. Copy the command. Run validate. Ship only A + vision 4/4.
+Pick what you want. Copy the command. Run validate and inspect the rendered output. The craft grade and vision heuristics are not visual approval.
 
 `beauty` is the installed CLI; `node dist/cli.js` is the same program after
 `pnpm build`. On a fresh checkout, run `pnpm setup` first: it installs, builds
@@ -24,6 +24,7 @@ and tests. If `dist/` is missing, the CLI prints the exact one-line fix.
 | Experience | `beauty experience --style <s> --brief examples/recipes/<s>/experience.json --out out/<s>-exp.html` |
 | Motion SVG | `beauty motion --style <s> --title "..." --scene bloom --out out/<s>.svg` |
 | GIF | `beauty gif --style <s> --text "Short Title" --out out/<s>.gif` |
+| Narrative GIF pack | `beauty narrative --style <s> --brief brief.json --out out/narrative` |
 | Sprint kit | `beauty sprint --style <s> --brief sprint.json` |
 | Validate | `beauty validate <file> --style <s> --strict` |
 | Repair | `beauty fix <file> --style <s>` |
@@ -32,6 +33,13 @@ and tests. If `dist/` is missing, the CLI prints the exact one-line fix.
 `beauty make <kind>` accepts `page|deck|gif|story|experience|motion`. `beauty
 sprint` writes review + retrospective + planning plus three GIFs; run
 `beauty sprint --help` for its brief schema and options.
+
+`beauty narrative` validates a 3–5-phase `narrative-gif` brief and, when that
+style has a reviewed scene renderer, writes GIF, PNG, a phase contact sheet and
+a manifest. This foundation has no production narrative scenes yet; all styles
+return `STYLE_NOT_SUPPORTED_YET` with the supported style list (`none`). Do not
+replace that result with a generic renderer or report a visual review that was
+not performed. Run `beauty narrative --help` for fields and a complete example.
 
 ## Briefs from a file or stdin
 
@@ -88,7 +96,7 @@ claude mcp add -s user open-beauty -- node "<repo>/dist/mcp/server.js"
 1. Read the style guide first: `beauty guide <style>`.
 2. Copy a recipe from `examples/recipes/<style>/`; change only words, not tokens.
 3. One accent per screen. Real copy, no placeholders, no lorem.
-4. Validate every output. Ship only craft A and vision 4/4.
+4. Validate every output, then inspect its actual render. Craft A and vision 4/4 are heuristics, not a human visual review.
 5. GIF text is 2-5 words; objectives go in a page or deck.
 
 ## How to look at your output

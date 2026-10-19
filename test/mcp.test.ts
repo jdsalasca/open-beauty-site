@@ -36,6 +36,7 @@ test('exposes the full tool surface', async () => {
     'beauty_create_experience',
     'beauty_create_gif',
     'beauty_create_motion',
+    'beauty_create_narrative',
     'beauty_create_page',
     'beauty_create_sequence',
     'beauty_create_sprint',
@@ -133,6 +134,43 @@ test('creates a valid GIF over MCP', async () => {
   assert.match(text, /Created a Brutalist GIF/);
   const file = await readFile(path.join(dir, 'out', 'mcp.gif'));
   assert.equal(file.subarray(0, 6).toString('ascii'), 'GIF89a');
+});
+
+test('narrative MCP reports structured unsupported-style diagnostics and separate levels', async () => {
+  const result = await client.callTool({
+    name: 'beauty_create_narrative',
+    arguments: {
+      style: 'papercraft',
+      brief: {
+        style: 'papercraft',
+        kind: 'narrative-gif',
+        locale: 'es',
+        audience: 'Producto',
+        title: 'Guías claras',
+        status: 'in-review',
+        phases: [
+          { id: 'before', label: 'Antes', text: 'La medida llegaba sin aviso.', visual: { kind: 'document', state: 'unreviewed' } },
+          { id: 'change', label: 'Cambio', text: 'Ahora aparece una señal.', visual: { kind: 'document', state: 'flagged' } },
+          { id: 'result', label: 'Resultado esperado', text: 'Revisar antes de publicar.', visual: { kind: 'document', state: 'review-ready' } },
+        ],
+      },
+      output: 'out/narrative',
+    },
+  });
+  assert.equal(result.isError, true);
+  const structured = result.structuredContent as {
+    ok: boolean;
+    diagnostics: Array<{ code: string; message: string }>;
+    evaluation: Record<string, { status: string }>;
+  };
+  assert.equal(structured.ok, false);
+  assert.equal(structured.diagnostics[0]?.code, 'STYLE_NOT_SUPPORTED_YET');
+  assert.match(structured.diagnostics[0]?.message ?? '', /Supported styles: none/);
+  assert.deepEqual(Object.keys(structured.evaluation).sort(), [
+    'technical-integrity', 'style-conformance', 'rendered-legibility', 'narrative', 'visual-review', 'publicationRecommendation',
+  ].sort());
+  assert.equal(structured.evaluation['visual-review']?.status, 'pending');
+  assert.ok(!existsSync(path.join(dir, 'out', 'narrative')));
 });
 test('aborts a GIF request instead of waiting for the render', async () => {
   const controller = new AbortController();

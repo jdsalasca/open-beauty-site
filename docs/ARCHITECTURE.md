@@ -16,6 +16,7 @@ The model supplies content and judgement. It never supplies a hex colour or a fo
 brief + style ──► preset ──► renderer ──► HTML ──► validator ──► score + fixes
                      │
                      └────► canvas frames ──► gifenc ──► GIF
+                     └────► narrative brief ──► narrative core ──► GIF + PNG + contact + manifest
 ```
 
 ## Layers
@@ -104,15 +105,21 @@ An optional second art direction. `applyMaxxing` injects a body class, one origi
 
 ### 9.7. Sequences (`src/sequence.ts`)
 
-A `SequenceBrief` is 2–12 open-canvas frames with durations. `renderSequence` freezes layer animation per frame, composes a loopable SVG with per-frame keyframes, and rasterises the same frames through `@napi-rs/canvas` into a GIF encoded by `gifenc`. Assets keep alt, caption and source; the first frame is the reduced-motion still. `beauty_create_sequence` and the `sequence` skill expose it.
+A `SequenceBrief` is 2–12 open-canvas frames with durations. `renderSequence` freezes layer animation per frame, composes a loopable SVG with per-frame keyframes, and rasterises the same frames through `@napi-rs/canvas` into a GIF encoded by `gifenc`. Each authored scene is one GIF image frame with its requested duration encoded as a delay; the shared palette samples all scenes. Assets keep alt, caption and source; the first frame is the reduced-motion still. `beauty_create_sequence` and the `sequence` skill expose it. The GIF timing change removes the previous 360-frame repeat inflation.
+
+### 9.8. Narrative GIF foundations (`src/narrative/`)
+
+`brief.ts` validates and hashes a three-to-five-phase `narrative-gif` contract. `fonts.ts` maps five raster roles to the guide preferences and approved bundled alternatives; `layout.ts` fits complete copy against width, height, safe area and card-size thresholds. `timeline.ts` represents entries, full-duration holds, transitions and the loop bridge. A `NarrativeScene` owns each style's object, composition and material, while `encode.ts` writes GIF/PNG/contact sheet. `verify-gif.ts`, `evaluate.ts` and `manifest.ts` record decoded-file evidence and five separate review levels. The registry is intentionally empty until style renderers are built and reviewed; the test-only scene is injected and never exported as a style.
+
+The CLI `beauty narrative` and MCP `beauty_create_narrative` use the same contract. At this foundation stage they return `STYLE_NOT_SUPPORTED_YET` for all 13 styles and list the registered set (`none`). This prevents a generic fallback from being presented as an art-directed style.
 
 ### 10. MCP server (`src/mcp/server.ts`)
 
-`McpServer` over stdio. Fourteen tools, twenty-two resources, and an `instructions` string that repeats the workflow. The tools call the same `generate.ts` functions as the CLI, so the output is identical.
+`McpServer` over stdio. Seventeen tools, twenty-two resources, and an `instructions` string that repeats the workflow. Existing tools keep their names; `beauty_create_narrative` adds the normalized brief and structured diagnostics.
 
 ### 11. CLI (`src/cli.ts`)
 
-`beauty styles | guide | page | gif | validate | examples | doctor | mcp`. Useful for humans, CI and agents that cannot load MCP.
+`beauty styles | guide | page | gif | narrative | validate | examples | doctor | mcp`. Useful for humans, CI and agents that cannot load MCP.
 
 ### 12. Skills (`skills/*.md`)
 

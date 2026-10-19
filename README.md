@@ -2,6 +2,8 @@
 
 Open Beauty es un arnés de diseño y servidor MCP que convierte un brief corto en una página HTML, experiencia, cuento, presentación, kit de sprint o GIF completo y validado, en uno de trece sistemas editoriales. El modelo aporta contenido y juicio; el arnés aporta fuentes, paleta, composición, movimiento y la puerta de calidad.
 
+La ruta `beauty narrative` define briefs de tres a cinco fases y genera GIF, PNG, contacto y manifest cuando existe un renderer narrativo revisado para el estilo. La base ya está disponible; las escenas de los trece estilos siguen pendientes y devuelven `STYLE_NOT_SUPPORTED_YET` sin sustituirlas por un estilo genérico.
+
 ## Inicio rápido
 
 ```bash
@@ -77,6 +79,7 @@ Scroll-eá la página antes de capturar: las secciones aparecen al hacer scroll 
 | `beauty_create_deck` | Genera una presentación 16:9 | `beauty_create_deck({ style: "nature", title: "Té", slides: [...] })` |
 | `beauty_create_sprint` | Genera review + retro + planning + 3 GIFs | `beauty_create_sprint({ style: "artdeco", sprint: "16" })` |
 | `beauty_create_gif` | Genera un GIF editorial | `beauty_create_gif({ style: "artdeco", text: "Subir" })` |
+| `beauty_create_narrative` | Valida una historia de 3–5 fases; devuelve rutas y niveles separados cuando el estilo tiene escena | `beauty_create_narrative({ style: "papercraft", brief: { kind: "narrative-gif", ... } })` |
 | `beauty_validate` | Audita HTML y devuelve grado y fixes (`visual: true` incluye el pase de navegador) | `beauty_validate({ style: "nature", path: "page.html", visual: true })` |
 | `beauty_fix` | Repara y revalida con las mismas opciones | `beauty_fix({ style: "nature", path: "page.html", visual: true })` |
 | `beauty_examples` | Devuelve rutas de referencia | `beauty_examples()` |
