@@ -191,21 +191,30 @@ export function storiesTable(preset: StylePreset, locale: SprintLocale, stories:
   return `<div class="sprint-block" data-sprint="stories"><table class="${cls}">${head}<tbody>${rows}</tbody></table></div>`;
 }
 
-export function risksBlock(preset: StylePreset, locale: SprintLocale, risks: SprintRisk[], withHeader: boolean): string {
-  const items = risks
-    .map(
-      (risk) => `<article class="sprint-risk">
+function riskCard(risk: SprintRisk, locale: SprintLocale): string {
+  return `<article class="sprint-risk">
         <h3>${esc(risk.title)}</h3>
         ${risk.impact ? `<p>${esc(risk.impact)}</p>` : ''}
         ${risk.mitigation ? `<p class="sprint-mitigation">${esc(translate(locale, 'Mitigación', 'Mitigation'))}: ${esc(risk.mitigation)}</p>` : ''}
         ${risk.owner ? `<span>${esc(translate(locale, 'responsable', 'owner'))} · ${esc(risk.owner)}</span>` : ''}
-      </article>`,
-    )
-    .join('');
+      </article>`;
+}
+
+export function risksBlock(preset: StylePreset, locale: SprintLocale, risks: SprintRisk[], withHeader: boolean): string {
+  const items = risks.map((risk) => riskCard(risk, locale)).join('');
   const head = withHeader
     ? `<p class="sprint-block-label">${esc(translate(locale, 'riesgos del sprint', 'sprint risks'))}</p>`
     : '';
   return `<div class="sprint-block" data-sprint="risks">${head}<div class="sprint-risks">${items}</div></div>`;
+}
+
+/** Legacy `blockers[]`: rendered as a compact risk-like list instead of disappearing. */
+export function blockersBlock(locale: SprintLocale, blockers: string[], withHeader: boolean): string {
+  const items = blockers.map((blocker) => riskCard({ title: blocker }, locale)).join('');
+  const head = withHeader
+    ? `<p class="sprint-block-label">${esc(translate(locale, 'bloqueos del sprint', 'sprint blockers'))}</p>`
+    : '';
+  return `<div class="sprint-block" data-sprint="blockers">${head}<div class="sprint-risks">${items}</div></div>`;
 }
 
 export interface RetroColumns {

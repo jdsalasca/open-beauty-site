@@ -95,7 +95,10 @@ export const sprintBriefSchema = z.object({
   summary: optionalText(240),
   metrics: z.array(sprintMetricSchema).max(6).optional(),
   highlights: z.array(text(160)).max(8).optional(),
-  blockers: z.array(text(160)).max(8).optional(),
+  blockers: z
+    .array(z.string().min(1).max(300, 'Blockers are limited to 300 characters; move the rest into the sprint summary.'))
+    .max(8)
+    .optional(),
   next: z.array(text(160)).max(8).optional(),
   quote: z.object({ text: text(320), author: optionalText(90) }).optional(),
   stories: z.array(sprintStorySchema).max(40).optional(),

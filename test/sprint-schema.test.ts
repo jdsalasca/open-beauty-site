@@ -105,6 +105,22 @@ test('unknown fields warn instead of disappearing silently', () => {
   assert.ok(warnings.some((warning) => warning.includes('stories.0.wat')));
 });
 
+test('legacy blockers accept up to 300 characters with a clear limit', () => {
+  const allowed = 'a'.repeat(300);
+  const { data } = parseSprintBrief({ sprint: 'S14', style: 'isotype', blockers: [allowed] });
+  assert.equal(data.blockers[0]?.length, 300);
+
+  let error: unknown;
+  try {
+    parseSprintBrief({ sprint: 'S14', style: 'isotype', blockers: ['a'.repeat(301)] });
+  } catch (caught) {
+    error = caught;
+  }
+  assert.ok(error instanceof SprintBriefError);
+  assert.match((error as Error).message, /blockers\.0/);
+  assert.match((error as Error).message, /300/);
+});
+
 test('the sprint id is required to be non-empty', () => {
   assert.throws(() => parseSprintBrief({ sprint: '', style: 'isotype' }), SprintBriefError);
   assert.throws(() => parseSprintBrief({ style: 'isotype' }), SprintBriefError);

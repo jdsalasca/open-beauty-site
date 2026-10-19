@@ -59,6 +59,15 @@ export function checkSprintFidelity(
       });
     }
   }
+  for (const blocker of data.blockers) {
+    if (!has(pages.review, blocker)) {
+      issues.push({
+        severity: 'error',
+        code: 'sprint-fidelity',
+        message: `Legacy blocker "${blocker}" is missing from the review document.`,
+      });
+    }
+  }
   for (const action of data.retro.actions) {
     if (!has(pages.retro, action.what)) {
       issues.push({
