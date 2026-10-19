@@ -9,6 +9,7 @@ import { parseSprintBrief, type SprintData } from './data.js';
 import { applySprintCss, checkSprintFidelity, injectSprintBlocks, type SprintKitIssue } from './render.js';
 import { buildPlanningDocument, buildRetroDocument, buildReviewDocument, type SprintDocument } from './slides.js';
 import { createSprintGif, type SprintGifOptions } from './gif.js';
+import { ensureMinTextSizeInHtml } from '../page/min-text.js';
 
 export interface SprintKitFile {
   html: string;
@@ -79,7 +80,10 @@ export async function createSprintKit(raw: unknown, output?: string, options: Sp
 
   for (const document of documents) {
     const rendered = renderDeck({ style: preset, brief: document.brief });
-    const html = applySprintCss(injectSprintBlocks(rendered.html, document.blocks));
+    const html = ensureMinTextSizeInHtml(applySprintCss(injectSprintBlocks(rendered.html, document.blocks)), {
+      minPx: 12,
+      maxWidth: 720,
+    });
     const validation = validateDeck(html, data.style);
     const names = FILE_NAMES[document.kind];
     const htmlPath = path.join(directory, names.html);
