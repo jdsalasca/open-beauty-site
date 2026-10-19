@@ -223,12 +223,31 @@ export const HEADLINE_GLYPH_RATIO = 0.62;
 export const HEADLINE_PREFERRED_VW = 12;
 
 /**
- * A display font that is monospaced (a pixel face, for example) advances a full
- * em per glyph; every other face averages a little over half an em. The wider
- * estimate keeps a pixel headline from overflowing where a serif would not.
+ * Average advance width of a display glyph, as a fraction of the font size,
+ * measured in Chromium for the display faces the styles actually use. A wider
+ * estimate keeps a headline word from overflowing its container; unknown faces
+ * fall back to the conservative default.
  */
+const DISPLAY_GLYPH_RATIOS: Array<[RegExp, number]> = [
+  [/press start|courier|pixel|monospace/i, 1.05],
+  [/michroma/i, 1],
+  [/archivo black|impact|arial black/i, 0.85],
+  [/bungee/i, 0.85],
+  [/poiret/i, 0.66],
+  [/unifraktur|gothic/i, 0.52],
+  [/fraunces|cormorant|garamond|georgia|serif/i, 0.52],
+  [/shippori|mincho/i, 0.6],
+  [/bricolage|grotesque|jost|karla|nunito|dm sans/i, 0.62],
+];
+
+/** A display font that is monospaced (a pixel face, for example) advances a full
+ * em per glyph; every other face's ratio comes from the measured table. */
 export function displayGlyphRatio(displayFont: string): number {
-  return /mono|press start|courier|pixel/i.test(String(displayFont ?? '')) ? 1 : HEADLINE_GLYPH_RATIO;
+  const family = String(displayFont ?? '');
+  for (const [pattern, ratio] of DISPLAY_GLYPH_RATIOS) {
+    if (pattern.test(family)) return ratio;
+  }
+  return HEADLINE_GLYPH_RATIO;
 }
 
 /** Count the grapheme-ish code points of the longest word in a headline. */

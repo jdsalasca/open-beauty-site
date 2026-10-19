@@ -34,8 +34,10 @@ test('exposes the full tool surface', async () => {
     'beauty_create_canvas',
     'beauty_create_deck',
     'beauty_create_experience',
+    'beauty_create_gallery',
     'beauty_create_gif',
     'beauty_create_motion',
+    'beauty_create_narrative',
     'beauty_create_page',
     'beauty_create_sequence',
     'beauty_create_sprint',
@@ -56,6 +58,25 @@ test('styles expose exact fonts and palette', async () => {
   assert.match(text, /EB Garamond/);
   assert.match(text, /#B4432C/);
   assert.match(text, /0–2 px/);
+});
+
+test('gallery MCP creates one manifest-driven static HTML file', async () => {
+  const result = await client.callTool({
+    name: 'beauty_create_gallery',
+    arguments: {
+      directory: path.join(root, 'docs', 'narrative-gif'),
+      output: 'out/narrative-gallery.html',
+      title: 'Revisión MCP',
+    },
+  });
+  assert.notEqual(result.isError, true);
+  const structured = result.structuredContent as { path: string; pieceCount: number; styles: string[] };
+  assert.equal(structured.pieceCount, 28);
+  assert.equal(structured.styles.length, 13);
+  const html = await readFile(structured.path, 'utf8');
+  assert.match(html, /<title>Revisión MCP<\/title>/);
+  assert.match(html, /visual-review: pending/);
+  assert.doesNotMatch(html, /<img[^>]+src="[^"]+\.gif/i);
 });
 
 test('creates and audits a page over MCP', async () => {
@@ -133,6 +154,92 @@ test('creates a valid GIF over MCP', async () => {
   assert.match(text, /Created a Brutalist GIF/);
   const file = await readFile(path.join(dir, 'out', 'mcp.gif'));
   assert.equal(file.subarray(0, 6).toString('ascii'), 'GIF89a');
+});
+
+test('narrative MCP creates a real pilot pack and keeps visual review pending', async () => {
+  const result = await client.callTool({
+    name: 'beauty_create_narrative',
+    arguments: {
+      style: 'papercraft',
+      brief: {
+        style: 'papercraft',
+        subfamily: 'editorial',
+        kind: 'narrative-gif',
+        locale: 'es',
+        audience: 'Producto',
+        title: 'Guías claras',
+        status: 'in-review',
+        phases: [
+          { id: 'before', label: 'Antes', text: 'La medida llegaba sin aviso.', visual: { kind: 'document', state: 'unreviewed' } },
+          { id: 'change', label: 'Cambio', text: 'Ahora aparece una señal.', visual: { kind: 'document', state: 'flagged' } },
+          { id: 'result', label: 'Resultado esperado', text: 'Revisar antes de publicar.', visual: { kind: 'document', state: 'review-ready' } },
+        ],
+      },
+      output: 'out/narrative',
+    },
+  });
+  assert.notEqual(result.isError, true);
+  const structured = result.structuredContent as {
+    ok: boolean;
+    paths: { gif: string; png: string; contactSheet: string; manifest: string };
+    evaluation: Record<string, { status: string }>;
+  };
+  assert.equal(structured.ok, true);
+  assert.deepEqual(Object.keys(structured.evaluation).sort(), [
+    'technical-integrity', 'style-conformance', 'rendered-legibility', 'narrative', 'visual-review', 'publicationRecommendation',
+  ].sort());
+  assert.equal(structured.evaluation['visual-review']?.status, 'pending');
+  assert.ok(existsSync(structured.paths.gif));
+  assert.ok(existsSync(structured.paths.png));
+  assert.ok(existsSync(structured.paths.contactSheet));
+  assert.ok(existsSync(structured.paths.manifest));
+});
+
+test('narrative MCP renders a registered Stage C style', async () => {
+  const result = await client.callTool({
+    name: 'beauty_create_narrative',
+    arguments: {
+      style: 'renaissance',
+      brief: { style: 'renaissance', kind: 'narrative-gif', audience: 'Producto', title: 'Revisión', status: 'in-review', phases: [
+        { id: 'before', label: 'Antes', text: 'Sin revisión.', visual: { kind: 'comparison', state: 'unreviewed' } },
+        { id: 'change', label: 'Cambio', text: 'Señal visible.', visual: { kind: 'comparison', state: 'flagged' } },
+        { id: 'result', label: 'Resultado esperado', text: 'Lista para revisar.', visual: { kind: 'comparison', state: 'review-ready' } },
+      ] },
+      output: 'out/stage-c-renaissance',
+    },
+  });
+  const structured = result.structuredContent as {
+    ok: boolean;
+    paths: { gif: string; png: string; contactSheet: string; manifest: string };
+    evaluation: { 'visual-review'?: { status: string } };
+  };
+  assert.equal(structured.ok, true);
+  assert.equal(structured.evaluation['visual-review']?.status, 'pending');
+  assert.ok(existsSync(structured.paths.gif));
+  assert.ok(existsSync(structured.paths.png));
+  assert.ok(existsSync(structured.paths.contactSheet));
+  assert.ok(existsSync(structured.paths.manifest));
+});
+test('narrative MCP rejects an unknown style before creating output files', async () => {
+  const result = await client.callTool({
+    name: 'beauty_create_narrative',
+    arguments: {
+      style: 'unlisted-style',
+      brief: { style: 'unlisted-style', kind: 'narrative-gif', audience: 'Producto', title: 'Revisión', status: 'in-review', phases: [
+        { id: 'before', label: 'Antes', text: 'Sin revisión.', visual: { kind: 'comparison', state: 'unreviewed' } },
+        { id: 'change', label: 'Cambio', text: 'Señal visible.', visual: { kind: 'comparison', state: 'flagged' } },
+        { id: 'result', label: 'Resultado esperado', text: 'Lista para revisar.', visual: { kind: 'comparison', state: 'review-ready' } },
+      ] },
+      output: 'out/unsupported-narrative',
+    },
+  });
+  assert.equal(result.isError, true);
+  const message = (result.content as Array<{ type: string; text?: string }>)
+    .filter((item) => item.type === 'text')
+    .map((item) => item.text ?? '')
+    .join('\n');
+  assert.match(message, /invalid_enum_value|Invalid|style/i);
+  assert.ok(!existsSync(path.join(dir, 'out', 'unsupported-narrative')));
 });
 test('aborts a GIF request instead of waiting for the render', async () => {
   const controller = new AbortController();
@@ -222,7 +329,11 @@ test('creates a museum experience over MCP', async () => {
 });
 
 test('creates a chaptered story over MCP', async () => {
-  const body = 'Una casa aprende a respirar cuando alguien la habita. La puerta cruje, el pasillo huele a lluvia y una silla se mueve cuando la memoria vuelve. No hay fantasmas: hay costumbres que ocupan el espacio. '.repeat(2);
+  const bodies = [
+    'Una casa aprende a respirar cuando alguien la habita. La puerta cruje, el pasillo huele a lluvia y una silla se mueve cuando la memoria vuelve. No hay fantasmas: hay costumbres que ocupan el espacio. Cada invierno el umbral se hincha y la madera recuerda el peso exacto de quien entraba sin llamar. La casa no guarda retratos, guarda rutinas. ',
+    'La silla se corre sola cada mediodía. Nadie la empuja; el piso de tablones guarda la huella de quien se sentaba a leer con la ventana abierta. La casa repite el gesto hasta que el gesto es suyo. A las tres de la tarde la sombra del marco cae sobre el asiento y el asiento espera. Esperar también es una forma de habitar. ',
+    'Cuando la casa respira, la calle entera baja el volumen. Las cortinas marcan el compás, el tejado suelta el calor de la siesta y la puerta queda entornada para que vuelva la memoria. Los vecinos dicen que es el viento; el gato sabe que no. Al anochecer el pasillo exhala y la casa vuelve a empezar. ',
+  ];
   const result = await client.callTool({
     name: 'beauty_create_story',
     arguments: {
@@ -231,9 +342,9 @@ test('creates a chaptered story over MCP', async () => {
       tagline: 'Un cuento sobre habitar.',
       source: 'Cuaderno de la casa',
       chapters: [
-        { kicker: 'I', title: 'La puerta', body },
-        { kicker: 'II', title: 'La silla', body },
-        { kicker: 'III', title: 'La casa', body },
+        { kicker: 'I', title: 'La puerta', body: bodies[0]! },
+        { kicker: 'II', title: 'La silla', body: bodies[1]! },
+        { kicker: 'III', title: 'La casa', body: bodies[2]! },
       ],
       output: 'story.html',
     },

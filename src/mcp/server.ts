@@ -5,7 +5,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { z } from 'zod';
-import type { Brief, CanvasLayer, DeckBrief, ExperienceBrief, SequenceFrame, StoryBrief, StyleSlug } from '../types.js';
+import type { Brief, CanvasLayer, DeckBrief, ExperienceBrief, PageBrief, SequenceFrame, StoryBrief, StyleSlug } from '../types.js';
 import { DECK_CONTENT_SLIDE_LIMIT, DECK_STAT_LIMIT } from '../types/deck.js';
 import { VERSION } from '../index.js';
 import { createCanvas, createDeck, createExperience, createGifFile, createMotion, createPage, createSequence, createStory, timestamp } from '../generate.js';
@@ -20,12 +20,15 @@ import {
   sprintTeamSchema,
   sprintVelocitySchema,
 } from '../types/sprint.js';
-import { formatValidation, validateDeck, validateExperience, validateHtml, validateStory } from '../validate.js';
-import { fixHtml } from '../fix.js';
+import { formatValidation } from '../validate.js';
+import { auditArtifact, repairArtifact } from '../visual.js';
 import { presets, styleSlugs } from '../styles/presets.js';
 import { makeArtifact } from '../make.js';
 import { SKILL_FALLBACK, styleGuideMarkdown, stylesOverview } from '../guide.js';
 import { packageRoot } from '../paths.js';
+import { createNarrative, narrativeFailure } from '../narrative/create.js';
+import { NarrativeError } from '../types/narrative.js';
+import { createNarrativeGallery } from '../narrative/gallery.js';
 
 const styleEnum = z.enum([
   'renaissance',
@@ -155,6 +158,14 @@ const briefFields = {
   sections: z.array(sectionSchema).max(6).optional().describe('2–3 cards work best. Omit for a one-screen page.'),
   quote: quoteSchema.optional(),
   cta: ctaSchema.optional().describe('Final call to action. Defaults to a sensible label.'),
+  closing: z
+    .object({
+      title: z.string().min(1).max(120).optional().describe('Closing headline; replaces the style default.'),
+      text: z.string().max(400).optional().describe('Supporting sentence under the closing headline.'),
+      cta: z.object({ label: z.string().min(1).max(40).optional(), href: z.string().max(200).optional() }).optional(),
+    })
+    .optional()
+    .describe('Closing section copy for the final call to action.'),
   footer: z.string().max(160).optional(),
   locale: localeEnum.optional().describe('Microcopy language. Defaults to Spanish.'),
   seed: z.number().int().min(0).max(9999).optional().describe('Changes decorative variation deterministically.'),
@@ -240,7 +251,7 @@ const storyInputSchema = z.object({
 
 type StoryInput = z.infer<typeof storyInputSchema>;
 
-function briefFromArgs(args: PageInput): Partial<Brief> {
+function briefFromArgs(args: PageInput): Partial<PageBrief> {
   return {
     title: args.title,
     tagline: args.tagline,
@@ -250,6 +261,7 @@ function briefFromArgs(args: PageInput): Partial<Brief> {
     sections: args.sections,
     quote: args.quote,
     cta: args.cta,
+    closing: args.closing,
     footer: args.footer,
     locale: args.locale,
     seed: args.seed,
@@ -533,7 +545,11 @@ QUALITY BAR
         summary: z.string().max(240).optional().describe('One honest sentence that opens the review.'),
         metrics: z.array(z.object({ label: z.string().max(60), value: z.string().max(40) })).max(6).optional(),
         highlights: z.array(z.string().max(160)).max(8).optional().describe('Things that now exist; what the team can demo.'),
-        blockers: z.array(z.string().max(160)).max(8).optional().describe('Systemic friction, not personal blame.'),
+        blockers: z
+          .array(z.string().max(300, 'Blockers are limited to 300 characters; move the rest into the sprint summary.'))
+          .max(8)
+          .optional()
+          .describe('Systemic friction, not personal blame. Rendered as a risk-like list in the review.'),
         next: z.array(z.string().max(160)).max(8).optional().describe('Small bets for the next sprint.'),
         quote: quoteSchema.optional(),
         stories: z.array(sprintStorySchema).max(40).optional().describe('Stories with title, points, status and owner.'),
@@ -544,12 +560,16 @@ QUALITY BAR
         capacity: z.array(sprintCapacitySchema).max(20).optional().describe('Days of focus per person for the next sprint.'),
         nextGoal: z.string().max(240).optional(),
         subfamily: z.string().max(40).optional(),
+        size: z.number().int().min(240).max(1200).optional().describe('Square sprint GIF side in px; defaults to 640.'),
+        fps: z.number().int().min(8).max(30).optional().describe('Sprint GIF frames per second; defaults to 12.'),
+        frames: z.number().int().min(8).max(180).optional().describe('Encoded sprint GIF frames; defaults to fps × 2.4 s.'),
         output: z.string().max(260).optional().describe('Output folder. Defaults to a unique beauty-output/sprint-<team>-<sprint>-<hash> folder.'),
       },
     },
     async (args) => {
       try {
-        const result = await createSprintKit(args);
+        const { size, fps, frames, ...brief } = args;
+        const result = await createSprintKit(brief, args.output, { size, fps, frames });
         const lines = [
           `Sprint kit created in ${result.directory}`,
           `review: ${result.review.grade} ${result.review.score}/100 · vision ${result.review.vision}/4`,
@@ -667,12 +687,12 @@ QUALITY BAR
     {
       title: 'Create a looping GIF',
       description:
-        'Renders an animated GIF with the same editorial system: title reveal, loop or poster. Text should be short (2–6 words).',
+        'Renders an animated GIF with the same editorial system. Every template opens on the composed poster frame; title and loop cycle an eased arc. Text should be short (2–6 words).',
       inputSchema: {
         style: styleEnum,
         text: z.string().min(1).max(48).describe('Short headline for the GIF.'),
         subtitle: z.string().max(64).optional().describe('Small caption below the title.'),
-        template: z.enum(['title', 'loop', 'poster']).optional().describe('title = reveal, loop = seamless marquee/float, poster = ambient shapes.'),
+        template: z.enum(['title', 'loop', 'poster']).optional().describe('title/loop = seamless eased loop that starts composed; poster = static composed frame.'),
         width: z.number().int().min(240).max(1200).optional(),
         height: z.number().int().min(240).max(1200).optional(),
         fps: z.number().int().min(8).max(30).optional(),
@@ -769,6 +789,56 @@ QUALITY BAR
         return text(args.include_svg ? `${summary}\n\n--- SVG ---\n${result.svg}` : summary);
       } catch (error) {
         return { content: [{ type: 'text' as const, text: `Sequence failed: ${(error as Error).message}` }], isError: true };
+      }
+    },
+  );
+
+  server.registerTool(
+    'beauty_create_narrative',
+    {
+      title: 'Create a narrative GIF review pack',
+      description:
+        'Creates a narrative GIF review pack for papercraft/editorial, brutalist/documentary or poster, vaporwave, galactic, and nature. Other eight styles still return STYLE_NOT_SUPPORTED_YET with the supported-style list; no generic renderer is substituted. Returns GIF/PNG/contact-sheet/manifest paths and separate integrity, style, legibility, narrative and visual-review levels.',
+      inputSchema: {
+        style: styleEnum.describe('Supported narrative scenes: papercraft/editorial, brutalist/documentary or poster, vaporwave, galactic, nature. Other styles remain explicitly unsupported; must match brief.style.'),
+        brief: z.record(z.string(), z.unknown()).describe('The normalized narrative-gif JSON brief with 3–5 phases.'),
+        output: z.string().max(260).optional().describe('Output directory; defaults to beauty-output/narrative/<style>-<brief-hash>.'),
+      },
+    },
+    async ({ style, brief, output }) => {
+      try {
+        if (brief.style !== style) {
+          const result = narrativeFailure(new NarrativeError('INVALID_STATE', `style ${style} must match brief.style ${String(brief.style ?? '(missing)')}.`, 'Set the same style in both places.', 'style'));
+          return { content: [{ type: 'text' as const, text: JSON.stringify(result) }], structuredContent: { ...result }, isError: true };
+        }
+        const result = await createNarrative(brief, { outputDir: output });
+        return { content: [{ type: 'text' as const, text: JSON.stringify(result) }], structuredContent: { ...result } };
+      } catch (error) {
+        const result = narrativeFailure(error);
+        return { content: [{ type: 'text' as const, text: JSON.stringify(result) }], structuredContent: { ...result }, isError: true };
+      }
+    },
+  );
+
+  server.registerTool(
+    'beauty_create_gallery',
+    {
+      title: 'Create a narrative GIF review gallery',
+      description:
+        'Scans a folder tree for narrative pack manifests and writes one self-contained Spanish HTML gallery. PNG posters stay static until a reviewer explicitly plays a GIF. Links remain relative to the local pack files, and each evaluation status is read from its manifest.',
+      inputSchema: {
+        directory: z.string().min(1).max(260).describe('Folder tree to scan recursively for narrative manifests.'),
+        output: z.string().max(260).optional().describe('HTML output path; defaults to gallery.html.'),
+        title: z.string().max(160).optional().describe('Gallery page title.'),
+      },
+    },
+    async ({ directory, output, title }) => {
+      try {
+        const result = await createNarrativeGallery({ directory, output: output ?? 'gallery.html', title });
+        const summary = `Created ${result.pieceCount} narrative pieces across ${result.styles.length} styles.\n${result.path}`;
+        return { content: [{ type: 'text' as const, text: summary }], structuredContent: { ...result } };
+      } catch (error) {
+        return { content: [{ type: 'text' as const, text: `Gallery failed: ${(error as Error).message}` }], isError: true };
       }
     },
   );
@@ -893,27 +963,31 @@ QUALITY BAR
     {
       title: 'Audit a page against one style',
       description:
-        'Scores an HTML file from 0–100 and lists exact fixes for fonts, palette, borders, radii, shadows, motion, markup and contrast. Use this after any manual edit.',
+        'Scores an HTML file from 0–100 and lists exact fixes for fonts, palette, borders, radii, shadows, motion, markup, contrast and repeated filler. Pass visual: true to also load it in Chromium at 360x780 and 1440x900 and report overflow, occluded text, orphan grid items, clipped or mid-word-broken text, tiny text and decoration over content. Visual issues count as warnings (an open warning caps the grade at B). Use this after any manual edit.',
       inputSchema: {
         style: styleEnum,
         path: z.string().max(260).optional().describe('Path to an HTML file.'),
         html: z.string().optional().describe('Raw HTML, if you do not have a file.'),
+        visual: z.boolean().optional().describe('Run the real-browser visual pass (skipped with a one-line fix when Playwright is unavailable).'),
       },
     },
-    async ({ style, path: filePath, html }) => {
+    async ({ style, path: filePath, html, visual }) => {
       try {
         const source = html ?? (filePath ? await readFile(path.resolve(process.cwd(), filePath), 'utf8') : '');
         if (!source) {
           return { content: [{ type: 'text' as const, text: 'Pass either path or html.' }], isError: true };
         }
-        const result = source.includes('class="deck')
-      ? validateDeck(source, style)
-      : source.includes('class="xp ')
-        ? validateExperience(source, style)
-        : source.includes('class="story-page')
-          ? validateStory(source, style)
-          : validateHtml(source, style);
-        return text(`${formatValidation(result)}\n\nstats: ${JSON.stringify(result.stats)}`);
+        const report = await auditArtifact(source, style, {
+          visual,
+          filePath: filePath ? path.resolve(process.cwd(), filePath) : undefined,
+        });
+        const visualLine =
+          visual && report.visual.status === 'skipped' && report.visual.message
+            ? `\n${report.visual.message}`
+            : visual
+              ? `\nvisual: ran at ${report.visual.playwright?.root ?? 'playwright'} · ${report.visual.findings.length} geometry finding(s)`
+              : '';
+        return text(`${formatValidation(report.result)}${visualLine}\n\nstats: ${JSON.stringify(report.result.stats)}`);
       } catch (error) {
         return errorResult(`Validate failed: ${errorMessage(error)}`);
       }
@@ -925,22 +999,26 @@ QUALITY BAR
     {
       title: 'Apply safe automatic repairs and re-validate',
       description:
-        'Replays the machine-applicable patches from beauty_validate: missing lang/title/viewport, empty alt, heading order, skip link and landmarks, forbidden Never-list elements, off-palette colours snapped to the nearest token and text-overflow clamps. Returns before/after scores and is idempotent. Write with output when you want a file on disk.',
+        'Replays the machine-applicable patches from beauty_validate: missing lang/title/viewport, empty alt, heading order, skip link and landmarks, forbidden Never-list elements, off-palette colours snapped to the nearest token, text-overflow clamps and — with visual: true — fixed/sticky controls over text, orphan grid items, clipped or tiny text and decoration over content. It uses the same audit entry as beauty_validate and reports before/after from that same function. Returns before/after scores and is idempotent. Write with output when you want a file on disk.',
       inputSchema: {
         style: styleEnum,
         path: z.string().max(260).optional().describe('Path to an HTML file.'),
         html: z.string().optional().describe('Raw HTML, if you do not have a file.'),
         output: z.string().max(260).optional().describe('Write the repaired HTML to this path.'),
+        visual: z.boolean().optional().describe('Re-validate in Chromium and repair visual issues too.'),
         include_html: z.boolean().optional().describe('Also return the repaired HTML.'),
       },
     },
-    async ({ style, path: filePath, html, output, include_html }) => {
+    async ({ style, path: filePath, html, output, visual, include_html }) => {
       try {
         const source = html ?? (filePath ? await readFile(path.resolve(process.cwd(), filePath), 'utf8') : '');
         if (!source) {
           return { content: [{ type: 'text' as const, text: 'Pass either path or html.' }], isError: true };
         }
-        const result = fixHtml(source, style);
+        const result = await repairArtifact(source, style, {
+          visual,
+          filePath: filePath ? path.resolve(process.cwd(), filePath) : undefined,
+        });
         if (output) {
           await writeFile(path.resolve(process.cwd(), output), result.html, 'utf8');
         }
@@ -949,9 +1027,12 @@ QUALITY BAR
           `score: ${result.before.score} (${result.before.grade}) → ${result.after.score} (${result.after.grade})`,
           `errors: ${result.before.errors} → ${result.after.errors} · warnings: ${result.before.warnings} → ${result.after.warnings}`,
           `repairs: ${result.fixes.length}${result.fixes.length ? ` (${result.fixes.join(', ')})` : ' — already clean'}`,
+          visual && result.visual.status === 'skipped' && result.visual.message ? result.visual.message : '',
           output ? `file: ${path.resolve(process.cwd(), output)}` : 'No file written (pass output to save).',
-          `Next: call beauty_validate to confirm the repairs.`,
-        ].join('\n');
+          `Next: call beauty_validate with the same options to confirm the repairs.`,
+        ]
+          .filter(Boolean)
+          .join('\n');
         return text(include_html ? `${summary}\n\n--- HTML ---\n${result.html}` : summary);
       } catch (error) {
         return errorResult(`Fix failed: ${errorMessage(error)}`);

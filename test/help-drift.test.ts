@@ -1,0 +1,80 @@
+import assert from 'node:assert/strict';
+import { spawn } from 'node:child_process';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+import test from 'node:test';
+import { distCliPath } from '../src/cli.js';
+import { GIF_FLAGS } from '../src/types/gif.js';
+import { sprintBriefSchema, sprintHelpOptions } from '../src/types/sprint.js';
+import { narrativeBriefSchema } from '../src/narrative/brief.js';
+
+/**
+ * Help drift guards. `beauty sprint --help` and `beauty gif --help` are
+ * generated from one source of truth (the zod schema and the flag table); these
+ * tests fail when the CLI starts reading a flag that the help never mentions.
+ */
+
+const root = process.cwd();
+
+function runCli(args: string[]): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const child = spawn(process.execPath, [distCliPath(), ...args], { cwd: root });
+    let stdout = '';
+    child.stdout.on('data', (chunk) => {
+      stdout += chunk;
+    });
+    child.on('error', reject);
+    child.on('close', () => resolve(stdout));
+  });
+}
+
+test('every flag read in the gif branch appears in gif --help', async () => {
+  const source = readFileSync(path.join(root, 'src', 'cli.ts'), 'utf8');
+  const start = source.indexOf("case 'gif'");
+  const end = source.indexOf("case 'sprint'");
+  assert.ok(start >= 0 && end > start, 'could not locate the gif branch in cli.ts');
+  const branch = source.slice(start, end);
+  const flags = new Set(
+    Array.from(branch.matchAll(/(?:stringFlag|booleanFlag|numberFlag)\(flags,\s*'([^']+)'\)/g), (match) => match[1]!),
+  );
+  assert.ok(flags.has('poster'), 'the gif branch should read --poster');
+  const help = await runCli(['gif', '--help']);
+  for (const flag of flags) {
+    assert.ok(help.includes(`--${flag}`), `gif --help is missing --${flag}`);
+  }
+  for (const entry of GIF_FLAGS) {
+    assert.ok(help.includes(`--${entry.flag}`), `GIF_FLAGS lists --${entry.flag} but the help does not show it`);
+  }
+});
+
+test('every sprint schema field appears in sprint --help', async () => {
+  const help = await runCli(['sprint', '--help']);
+  const keys = Object.keys(sprintBriefSchema.shape);
+  for (const key of keys) {
+    assert.ok(help.includes(key), `sprint --help is missing the schema field "${key}"`);
+  }
+  for (const key of ['team', 'sprint', 'stories', 'velocity', 'burndown', 'risks', 'retro', 'capacity', 'nextGoal']) {
+    assert.ok(help.includes(key), `sprint --help is missing the rich field "${key}"`);
+  }
+  assert.match(help, /stories.*velocity.*burndown/s, 'sprint --help needs the rich schema, not the legacy one');
+  assert.match(help, /"sprint": \{ "id"/, 'sprint --help needs a JSON example');
+});
+
+test('sprint help options are generated from the schema keys', () => {
+  const options = sprintHelpOptions().join('\n');
+  for (const key of Object.keys(sprintBriefSchema.shape)) {
+    assert.ok(options.includes(key), `sprintHelpOptions is missing "${key}"`);
+  }
+});
+
+test('every narrative schema field and example appears in narrative --help', async () => {
+  const help = await runCli(['narrative', '--help']);
+  for (const key of Object.keys(narrativeBriefSchema.shape)) {
+    assert.ok(help.includes(key), `narrative --help is missing the schema field "${key}"`);
+  }
+  for (const flag of ['--style', '--brief', '--out']) {
+    assert.ok(help.includes(flag), `narrative --help is missing ${flag}`);
+  }
+  assert.match(help, /"kind": "narrative-gif"/);
+  assert.match(help, /Resultado esperado/);
+});

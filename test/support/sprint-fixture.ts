@@ -61,3 +61,39 @@ export const RICH_SPRINT = {
   ],
   nextGoal: 'Una lectura común del norte, publicada y discutida.',
 } as const;
+
+/**
+ * A brief dense enough to overflow the old eight-slide cap: ten stories and
+ * three detailed risks used to leave only one risk card in the review.
+ */
+export const LONG_SPRINT = {
+  ...RICH_SPRINT,
+  stories: [
+    ...RICH_SPRINT.stories,
+    { id: 'SC-106', title: 'Conciliar el archivo del valle', points: 3, status: 'done', owner: 'Lucía Rojas' },
+    { id: 'SC-107', title: 'Nombrar las estaciones de niebla', points: 5, status: 'done', owner: 'Mateo Gil' },
+    { id: 'SC-108', title: 'Publicar el mapa de sombras', points: 2, status: 'carried', owner: 'Sombra Común' },
+    { id: 'SC-109', title: 'Revisar el tablero de campo', points: 3, status: 'done', owner: 'Lucía Rojas' },
+    { id: 'SC-110', title: 'Cerrar la lectura del norte', points: 5, status: 'dropped', owner: 'Mateo Gil' },
+  ],
+  risks: [
+    {
+      title: 'Mezclar cortes y fallas',
+      impact: 'las mediciones de octubre no se pueden comparar entre sí',
+      mitigation: 'repetir el transecto con doble lectura y registrar la hora',
+      owner: 'Lucía Rojas',
+    },
+    {
+      title: 'Dependencia de una sola estación',
+      impact: 'las lecturas de niebla quedan frágiles y sin contraste',
+      mitigation: 'sumar una estación móvil al recorrido del norte',
+      owner: 'Mateo Gil',
+    },
+    {
+      title: 'Tablero duplicado',
+      impact: 'el equipo mantiene dos fuentes de verdad para el mismo dato',
+      mitigation: 'cerrar el tablero heredado y archivar sus datos',
+      owner: 'Sombra Común',
+    },
+  ],
+} as const;

@@ -1,6 +1,6 @@
 # MCP server
 
-`open-beauty-site` exposes a stdio MCP server with fourteen tools and twenty-two resources. The server is deliberately narrow: it does not call an LLM, it does not browse the web, and it does not invent content. It turns a short brief into a complete, validated artefact.
+`open-beauty-site` exposes a stdio MCP server with eighteen tools and twenty-two resources. The server is deliberately narrow: it does not call an LLM, it does not browse the web, and it does not invent content. It turns a short brief into a complete, validated artefact.
 
 ## Build
 
@@ -262,6 +262,50 @@ Creates a chaptered story, history lesson or narrative essay: cover, chapter nav
 
 Returns path, dimensions, frame count, fps and file size. Frames are capped at 180.
 
+### `beauty_create_narrative`
+
+Accepts the same normalized `narrative-gif` brief as `beauty narrative`. All thirteen registered style scenes are available. Papercraft supports its editorial subfamily; brutalist supports documentary (default) and poster. Each scene declares supported aspect ratios rather than silently cropping or stretching. Exports include a real GIF, PNG, contact sheet and manifest with independently decoded timing and five separate evaluation levels; visual review remains pending until a reviewer records evidence.
+
+```json
+{
+  "style": "papercraft",
+  "brief": {
+    "style": "papercraft",
+    "subfamily": "editorial",
+    "kind": "narrative-gif",
+    "locale": "es",
+    "audience": "Producto",
+    "title": "Guías claras",
+    "status": "in-review",
+    "phases": [
+      { "id": "before", "label": "Antes", "text": "La medida llegaba sin aviso.", "visual": { "kind": "document", "state": "unreviewed" } },
+      { "id": "change", "label": "Cambio", "text": "Ahora aparece una señal de revisión.", "visual": { "kind": "document", "state": "flagged" } },
+      { "id": "result", "label": "Resultado esperado", "text": "Detectar el problema antes de publicar.", "visual": { "kind": "document", "state": "review-ready" } }
+    ]
+  },
+  "output": "out/narrative"
+}
+```
+
+CLI equivalent: `beauty narrative --style papercraft --brief brief.json --out out/narrative`. Run `beauty narrative --help` for the complete schema-derived field list and JSON example.
+
+### `beauty_create_gallery`
+
+Scans a directory recursively for `*.manifest.json` or `manifest.json` files,
+resolves their GIF, PNG and contact-sheet assets beside each manifest, and
+writes one static Spanish HTML review gallery. Poster images load first; the
+GIF is requested only after explicit playback. Evaluation statuses are read
+from their manifests, and the page remains self-contained apart from relative
+links to those local pack files.
+
+| Argument | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `directory` | string | yes | Folder tree to scan. |
+| `output` | string | no | HTML path; defaults to `gallery.html`. |
+| `title` | string | no | Page title. |
+
+CLI equivalent: `beauty gallery docs/narrative-gif --out docs/narrative-gif/GALLERY.html --title "Sprint Review"`.
+
 ### `beauty_create_motion`
 
 Creates a single-file, looping **animated SVG poster**. It is not a GIF: it is an SVG with CSS keyframes, a reduced-motion fallback, exact style fonts, palette and a scene vocabulary.
@@ -342,7 +386,7 @@ Vision (0–4) is a separate heuristic, not a grade:
 - `asymmetry-or-bleed`: a full-bleed band, clip-path or two-column hero;
 - `material`: at least two physical marks (grain, tape, inset edge, draw-on-stroke, 3px border).
 
-The skill asks for **craft A and vision 4/4**. A/100 with vision 3/4 means the page is obedient but still a template.
+Craft and vision remain separate heuristic reports. A `4/4` result measures only these four source/metadata checks; it is not human visual approval. Narrative output reports technical integrity, style conformance, rendered legibility, narrative continuity and visual review independently, and never recommends publishing automatically.
 
 ### `beauty_examples`
 

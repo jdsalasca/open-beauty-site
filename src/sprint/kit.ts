@@ -9,6 +9,7 @@ import { parseSprintBrief, type SprintData } from './data.js';
 import { applySprintCss, checkSprintFidelity, injectSprintBlocks, type SprintKitIssue } from './render.js';
 import { buildPlanningDocument, buildRetroDocument, buildReviewDocument, type SprintDocument } from './slides.js';
 import { createSprintGif, type SprintGifOptions } from './gif.js';
+import { ensureMinTextSizeInHtml } from '../page/min-text.js';
 
 export interface SprintKitFile {
   html: string;
@@ -29,6 +30,8 @@ export interface SprintKitResult {
 export interface SprintKitOptions extends SprintGifOptions {
   /** Injected in tests; defaults to a random UUID fragment. */
   runId?: string;
+  /** Skip the three GIF encodes (the HTML kit is still written); used by the visual matrix. */
+  skipGifs?: boolean;
 }
 
 const FILE_NAMES: Record<SprintDocument['kind'], { html: string; gif: string }> = {
@@ -79,13 +82,16 @@ export async function createSprintKit(raw: unknown, output?: string, options: Sp
 
   for (const document of documents) {
     const rendered = renderDeck({ style: preset, brief: document.brief });
-    const html = applySprintCss(injectSprintBlocks(rendered.html, document.blocks));
+    const html = ensureMinTextSizeInHtml(applySprintCss(injectSprintBlocks(rendered.html, document.blocks)), {
+      minPx: 12,
+      maxWidth: 720,
+    });
     const validation = validateDeck(html, data.style);
     const names = FILE_NAMES[document.kind];
     const htmlPath = path.join(directory, names.html);
     const gifPath = path.join(directory, names.gif);
     await writeFile(htmlPath, html, 'utf8');
-    await createSprintGif(data.style, document.kind, data, gifPath, options);
+    if (!options.skipGifs) await createSprintGif(data.style, document.kind, data, gifPath, options);
     htmls[document.kind] = html;
     files[document.kind] = {
       html: htmlPath,

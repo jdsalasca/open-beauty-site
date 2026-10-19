@@ -1,4 +1,4 @@
-import type { Brief, StyleSlug } from '../types.js';
+import type { PageBrief, StyleSlug } from '../types.js';
 import { getStyle } from '../styles/presets.js';
 import { renderRenaissance } from './renaissance.js';
 import { renderBrutalist } from './brutalist.js';
@@ -8,7 +8,7 @@ import { renderBestiary, renderGalactic, renderMemphis, renderPsychedelic, rende
 import { renderNatureMemory } from './nature-memory.js';
 import { applyMaxxing } from '../maxxing.js';
 
-function renderPageBase(style: StyleSlug, brief: Partial<Brief>): string {
+function renderPageBase(style: StyleSlug, brief: Partial<PageBrief>): string {
   const preset = getStyle(style);
   switch (style) {
     case 'renaissance':
@@ -45,7 +45,7 @@ function renderPageBase(style: StyleSlug, brief: Partial<Brief>): string {
 }
 
 
-export function renderPage(style: StyleSlug, brief: Partial<Brief>): string {
+export function renderPage(style: StyleSlug, brief: Partial<PageBrief>): string {
   const preset = getStyle(style);
   const html = renderPageBase(style, brief);
   return brief.maxxing ? applyMaxxing(html, preset) : html;

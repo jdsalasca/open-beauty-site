@@ -60,6 +60,13 @@ for (const kind of KINDS) {
       const text = bytes.toString('utf8');
       if (kind === 'gif') {
         assert.equal(bytes.subarray(0, 6).toString('ascii'), 'GIF89a', `${kind}/${style}: not a GIF`);
+        assert.deepEqual(
+          result.vision.checks.map((check) => check.name),
+          ['gif-format', 'animated', 'dimensions', 'non-empty'],
+          `${kind}/${style}: vision remains a four-check format/metadata heuristic`,
+        );
+        assert.equal(result.vision.score, 4, `${kind}/${style}: heuristic reports 4/4`);
+        assert.match(result.next_step, /no changes are needed/i, `${kind}/${style}: legacy next step treats a clean heuristic as sufficient`);
       } else if (kind === 'motion') {
         assert.match(text, /^<svg\b/, `${kind}/${style}: not an SVG`);
         assert.match(text, /prefers-reduced-motion/, `${kind}/${style}: missing reduced motion`);

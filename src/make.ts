@@ -1,7 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import type {
-  Brief,
   DeckBrief,
   DeckSlide,
   ExperienceBrief,
@@ -9,6 +8,7 @@ import type {
   GifOptions,
   Locale,
   MotionBrief,
+  PageBrief,
   SectionBrief,
   StoryBrief,
   StoryChapter,
@@ -140,18 +140,33 @@ function wordsFrom(value: string): string {
   return value.split(/\s+/).filter(Boolean).join(' ');
 }
 
-function pageBrief(voice: StyleVoice, idea: string, locale: Locale): Partial<Brief> {
+/**
+ * One template per card so a generated page never repeats the same filler
+ * sentence in every section; the brief's own detail still carries the idea.
+ */
+const SECTION_BODIES: Record<Locale, Array<(detail: string) => string>> = {
+  es: [
+    (detail) => `Empezamos por lo concreto: ${detail}`,
+    (detail) => `La medida aparece después: ${detail}`,
+    (detail) => `Al final solo queda la prueba: ${detail}`,
+  ],
+  en: [
+    (detail) => `We start with the concrete: ${detail}`,
+    (detail) => `The measure arrives later: ${detail}`,
+    (detail) => `At the end only the proof remains: ${detail}`,
+  ],
+};
+
+function pageBrief(voice: StyleVoice, idea: string, locale: Locale): Partial<PageBrief> {
   const copy = deriveCopy(idea, locale);
   const titles = voice.sectionTitles[locale];
   const details = voice.details[locale];
   const kickers = SHARED.sectionKickers[locale];
+  const bodies = SECTION_BODIES[locale];
   const sections: SectionBrief[] = titles.map((title, index) => ({
     kicker: kickers[index],
     title,
-    body:
-      locale === 'es'
-        ? wordsFrom(`Empezamos por lo concreto: ${details[index] ?? ''} Después ajustamos la escala hasta que la idea se sostiene sola.`)
-        : wordsFrom(`We start with the concrete: ${details[index] ?? ''} Then we tune the scale until the idea stands on its own.`),
+    body: wordsFrom(bodies[index % bodies.length]!(details[index] ?? '')),
   }));
   return {
     title: copy.title,

@@ -1,9 +1,10 @@
-import type { Brief, StylePreset } from '../types.js';
+import type { PageBrief, StylePreset } from '../types.js';
 import {
   arrowSvg,
   esc,
   labels,
   normalizeBrief,
+  resolveClosing,
   REVEAL_SCRIPT,
   safeHref,
   shell,
@@ -13,7 +14,7 @@ import {
 
 const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI'];
 
-function archPlate(locale: Brief['locale']): string {
+function archPlate(locale: PageBrief['locale']): string {
   const caption =
     locale === 'en' ? 'Fig. I — A study of light and stone' : 'Fig. I — Estudio de la luz y la piedra';
   return `<figure class="plate reveal" style="--d:4">
@@ -98,7 +99,7 @@ function ornamentDivider(): string {
 </div>`;
 }
 
-export function renderRenaissance(input: Partial<Brief>, preset: StylePreset): string {
+export function renderRenaissance(input: Partial<PageBrief>, preset: StylePreset): string {
   const brief = normalizeBrief(input);
   const locale = brief.locale ?? 'es';
   const l = labels(locale);
@@ -112,6 +113,12 @@ export function renderRenaissance(input: Partial<Brief>, preset: StylePreset): s
     label: t(locale, 'Empecemos', 'Let us begin'),
     href: '#contact',
   };
+  const closing = resolveClosing(brief, {
+    title: t(locale, 'El siguiente capítulo es tuyo.', 'The next chapter is yours.'),
+    text: t(locale, 'Un proyecto, una exposición, un libro. Escribinos y lo pensamos juntos.', 'A project, an exhibition, a book. Write to us and we will think it through together.'),
+    label: cta.label,
+    href: cta.href,
+  });
   const sections = brief.sections ?? [];
   const quote = brief.quote;
   const year = new Date().getFullYear();
@@ -185,7 +192,7 @@ export function renderRenaissance(input: Partial<Brief>, preset: StylePreset): s
       </div>
       <span class="works-count">${String(sections.length).padStart(2, '0')} ${esc(l.selectedWorks)}</span>
     </header>
-    <div class="works-grid">
+    <div class="works-grid" data-count="${sections.length}">
       ${cards}
     </div>
   </section>`
@@ -204,9 +211,9 @@ export function renderRenaissance(input: Partial<Brief>, preset: StylePreset): s
 
   <section id="contact" class="cta reveal">
     <p class="section-label">${esc(l.contact)}</p>
-    <h2>${esc(t(locale, 'El siguiente capítulo es tuyo.', 'The next chapter is yours.'))}</h2>
-    <p>${esc(t(locale, 'Un proyecto, una exposición, un libro. Escribinos y lo pensamos juntos.', 'A project, an exhibition, a book. Write to us and we will think it through together.'))}</p>
-    <a class="button button-gold" href="${safeHref(cta.href)}">${esc(cta.label)} ${arrowSvg(16)}</a>
+    <h2>${esc(closing.title)}</h2>
+    ${closing.text ? `<p>${esc(closing.text)}</p>` : ''}
+    <a class="button button-gold" href="${safeHref(closing.cta.href)}">${esc(closing.cta.label)} ${arrowSvg(16)}</a>
   </section>
 </main>
 
@@ -282,7 +289,14 @@ h1 em{font-style:italic;color:var(--rose)}
 .works-head{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;margin-bottom:54px}
 .works-head h2{font-weight:400;font-size:clamp(38px,4.4vw,58px);line-height:1;margin:0;letter-spacing:-.01em}
 .works-count{font-size:11px;letter-spacing:.18em;font-feature-settings:"smcp" 1;text-transform:none;color:var(--muted);text-align:right;line-height:1.7}
-.works-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.works-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))}
+@media (min-width:981px){
+  .works-grid[data-count="1"]{grid-template-columns:minmax(0,1fr)}
+  .works-grid[data-count="2"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .works-grid[data-count="3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .works-grid[data-count="4"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .works-grid[data-count="5"],.works-grid[data-count="6"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
 .work{padding:0 30px;border-left:1px solid var(--hair)}
 .work:first-child{padding-left:0;border-left:none}
 .work:last-child{padding-right:0}
@@ -316,6 +330,7 @@ h1 em{font-style:italic;color:var(--rose)}
 .js .reveal.is-in{opacity:1;transform:none}
 @media (max-width:980px){
   .hero{grid-template-columns:1fr;gap:34px;padding-top:44px}
+  .variant-1 .hero{grid-template-columns:1fr}
   .variant-1 .hero-copy,.variant-1 .plate{order:0}
   .plate{max-width:620px;margin:0 auto}
   .manifesto{grid-template-columns:1fr;gap:44px}
@@ -353,5 +368,6 @@ h1 em{font-style:italic;color:var(--rose)}
     body,
     bodyClass: `variant-${variant}`,
     script: REVEAL_SCRIPT,
+    closing: closing.title,
   });
 }

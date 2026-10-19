@@ -2,21 +2,27 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { existsSync, statSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
-import { createRequire } from 'node:module';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import type { Brief, DeckBrief, ExperienceBrief, SequenceBrief, SprintBrief, StoryBrief, StyleSlug } from './types.js';
 import { VERSION } from './index.js';
 import { createCanvas, createDeck, createExperience, createGifFile, createMotion, createPage, createSequence, createStory, slugify, timestamp } from './generate.js';
+import { createGifPoster } from './gif.js';
 import { createSprintKit } from './sprint.js';
-import { formatValidation, validateDeck, validateExperience, validateHtml, validateStory } from './validate.js';
-import { fixHtml } from './fix.js';
+import { formatValidation } from './validate.js';
+import { auditArtifact, meetsStrictBar, repairArtifact, locatePlaywright } from './visual.js';
+import { gifHelpOptions, gifUsage } from './types/gif.js';
+import { sprintHelpOptions, SPRINT_BRIEF_EXAMPLE } from './types/sprint.js';
 import { getStyle, isStyleSlug, styleSlugs } from './styles/presets.js';
 import { makeArtifact } from './make.js';
 import { MAKE_KINDS, isMakeKind } from './types/make.js';
 import { styleGuideMarkdown, stylesOverview } from './guide.js';
 import { ensureFonts } from './canvas.js';
 import { packageRoot } from './paths.js';
+import { createNarrative, narrativeFailure } from './narrative/create.js';
+import { NARRATIVE_BRIEF_EXAMPLE, narrativeHelpOptions } from './narrative/brief.js';
+import { NarrativeError } from './types/narrative.js';
+import { createNarrativeGallery } from './narrative/gallery.js';
 
 type Flags = Record<string, string | boolean>;
 
@@ -104,14 +110,9 @@ const COMMAND_HELP: Record<string, CommandHelpEntry> = {
   },
   sprint: {
     summary: 'Create review + retrospective + planning + 3 GIFs.',
-    usage: 'beauty sprint --style <s> --brief sprint.json [--brief -] [--out folder]',
-    options: [
-      '  --brief <file>     JSON brief: sprint (required), team, date, summary,',
-      '                     metrics[], highlights[], blockers[], next[], quote',
-      '  --brief -          Read the sprint brief JSON from stdin (avoids os error 206)',
-      '  --out path         Output folder (defaults to beauty-output/sprint-<id>)',
-    ],
-    example: 'beauty sprint --style artdeco --brief sprint.json',
+    usage: 'beauty sprint --style <s> --brief sprint.json [--brief -] [--size 640] [--fps 12] [--frames 29] [--out folder]',
+    options: sprintHelpOptions(),
+    example: `beauty sprint --style isotype --brief sprint.json\n\n${SPRINT_BRIEF_EXAMPLE}`,
   },
   sequence: {
     summary: 'Create an SVG story + GIF from frames.',
@@ -122,6 +123,22 @@ const COMMAND_HELP: Record<string, CommandHelpEntry> = {
       '  --out path         Base path; writes .svg and .gif',
     ],
     example: 'beauty sequence --style papercraft --brief seq.json --out out/sequence',
+  },
+  narrative: {
+    summary: 'Create a narrative GIF pack with separate evaluation levels.',
+    usage: 'beauty narrative --style <s> --brief brief.json [--out dir]',
+    options: narrativeHelpOptions(),
+    example: `beauty narrative --style papercraft --brief narrative.json --out out/narrative\n\n${NARRATIVE_BRIEF_EXAMPLE}`,
+  },
+  gallery: {
+    summary: 'Build a self-contained review gallery from narrative manifests.',
+    usage: 'beauty gallery <dir> [--out gallery.html] [--title "..."]',
+    options: [
+      '  <dir>              Scan this folder tree for narrative manifests and their packs',
+      '  --out path         Write the one-file HTML gallery (default: gallery.html)',
+      '  --title "..."      Gallery heading and document title',
+    ],
+    example: 'beauty gallery docs/narrative-gif --out docs/narrative-gif/GALLERY.html --title "Sprint Review"',
   },
   canvas: {
     summary: 'Create an open animated SVG canvas.',
@@ -150,38 +167,36 @@ const COMMAND_HELP: Record<string, CommandHelpEntry> = {
   },
   gif: {
     summary: 'Create a looping GIF.',
-    usage: 'beauty gif --style <s> --text "..." [--subtitle "..."] [--template title] [--fps 20] [--out file.gif]',
-    options: [
-      '  --text "..."       2–5 word headline',
-      '  --subtitle "..."   Small caption',
-      '  --template name    title|loop|poster',
-      '  --width / --height Pixels (240–1200)',
-      '  --fps / --duration Frame rate and seconds',
-      '  --maxxing          Full art direction',
-      '  --out path         Where to write the GIF',
-    ],
-    example: 'beauty gif --style artdeco --text "Subir" --subtitle "1930"',
+    usage: gifUsage(),
+    options: gifHelpOptions(),
+    example: 'beauty gif --style artdeco --text "Subir" --subtitle "1930" --poster',
   },
   validate: {
     summary: 'Audit HTML and return a grade, issues and fixes.',
-    usage: 'beauty validate <file> --style <s> [--strict]',
+    usage: 'beauty validate <file> --style <s> [--strict] [--visual] [--shots dir]',
     options: [
       '  <file>             HTML file to audit',
       '  --style <s>        Style the file must obey',
-      '  --strict            Exit 1 when the score is below 90',
+      '  --visual           Load it in Chromium at 360x780 and 1440x900',
+      '  --shots <dir>      Write visual-360.png and visual-1440.png (implies --visual)',
+      '  --strict           Exit 1 unless craft A (90+), vision 4/4 and no open warning',
+      '  Exit codes: 0 ok · 1 below the strict bar or an error · a skipped visual check never fails',
     ],
-    example: 'beauty validate out/nature.html --style nature --strict',
+    example: 'beauty validate out/nature.html --style nature --strict --visual',
   },
   fix: {
-    summary: 'Apply safe repairs and re-validate.',
-    usage: 'beauty fix <file> --style <s> [--out f.html] [--strict]',
+    summary: 'Apply safe repairs and re-validate with the same options as validate.',
+    usage: 'beauty fix <file> --style <s> [--out f.html] [--strict] [--visual] [--shots dir]',
     options: [
       '  <file>             HTML file to repair',
       '  --style <s>        Style the file must obey',
       '  --out path         Write to a new file instead of overwriting',
-      '  --strict            Exit 1 when the score is below 90',
+      '  --visual           Re-validate in Chromium and repair visual issues too',
+      '  --shots <dir>      Write visual-360.png and visual-1440.png (implies --visual)',
+      '  --strict           Exit 1 unless craft A (90+), vision 4/4 and no open warning',
+      '  Exit codes: 0 ok · 1 below the strict bar or an error · a skipped visual check never fails',
     ],
-    example: 'beauty fix out/nature.html --style nature',
+    example: 'beauty fix out/nature.html --style nature --visual',
   },
   examples: {
     summary: 'Show reference output paths.',
@@ -366,15 +381,17 @@ Commands:
   beauty sprint --style <s> --brief sprint.json   Create review + retrospective + planning + 3 GIFs
       [--out dir]
   beauty sequence --style <s> --brief seq.json   Create an SVG story + GIF from frames
+  beauty narrative --style <s> --brief brief.json [--out dir]  Create a narrative GIF pack
+  beauty gallery <dir> [--out gallery.html] [--title "..."]  Build a static review gallery
   beauty canvas --style <s> --brief canvas.json  Create an open animated SVG canvas
   beauty motion --style <s> --title "..."      Create an animated SVG loop
       [--scene orbit|bloom|tide|papercut|constellation|ribbon|rain|type]
       [--size square|portrait|landscape] [--duration 14] [--maxxing] [--out loop.svg]
   beauty gif --style <s> --text "..."        Create a looping GIF
       [--subtitle "..."] [--template title|loop|poster] [--fps 20] [--duration 2.4]
-      [--width 800] [--height 800] [--maxxing] [--out file.gif]
-  beauty validate <file> --style <s> [--strict]
-  beauty fix <file> --style <s> [--out f.html]
+      [--width 800] [--height 800] [--maxxing] [--poster] [--out file.gif]
+  beauty validate <file> --style <s> [--strict] [--visual] [--shots dir]
+  beauty fix <file> --style <s> [--out f.html] [--strict] [--visual]
                                              Apply safe repairs and re-validate
   beauty examples                            Show reference output
   beauty doctor                              Check dist, fonts, runtime and Playwright
@@ -382,6 +399,7 @@ Commands:
   beauty version                             Print the package version
 
 Styles: ${styleSlugs.join(', ')}
+Exit codes for validate/fix: 0 ok · 1 below the strict bar (craft A/90 + vision 4/4) or an error.
 `;
 }
 
@@ -419,12 +437,13 @@ async function doctorReport(): Promise<void> {
     console.log(`native canvas: error · ${(error as Error).message} · fix: pnpm install`);
   }
 
-  try {
-    const require = createRequire(import.meta.url);
-    require.resolve('playwright');
-    console.log('playwright: installed · screenshot with `pnpm exec playwright screenshot <file|url> out.png`');
-  } catch {
-    console.log('playwright: not installed · fix: pnpm add -D playwright && pnpm exec playwright install chromium');
+  const playwright = locatePlaywright();
+  if (playwright) {
+    console.log(`playwright: found at ${playwright.root} (${playwright.source}) · visual checks enabled`);
+  } else {
+    console.log(
+      'playwright: not installed · fix: set BEAUTY_PLAYWRIGHT_ROOT to a playwright folder, or run pnpm add -D playwright && pnpm exec playwright install chromium',
+    );
   }
 
   console.log('status: ready');
@@ -615,6 +634,36 @@ async function main(): Promise<void> {
       return;
     }
 
+    case 'narrative': {
+      const style = requireStyle(stringFlag(flags, 'style'));
+      const brief = (await loadBrief<Partial<Brief>>(stringFlag(flags, 'brief'))) as unknown;
+      const briefStyle = brief && typeof brief === 'object' ? (brief as Record<string, unknown>).style : undefined;
+      if (briefStyle !== style) {
+        const failure = narrativeFailure(new NarrativeError('INVALID_STATE', `--style ${style} must match brief.style ${String(briefStyle ?? '(missing)')}.`, 'Set the same registered style in the flag and the brief.', 'style'));
+        console.log(JSON.stringify(failure, null, 2));
+        process.exitCode = 1;
+        return;
+      }
+      try {
+        const result = await createNarrative(brief, { outputDir: stringFlag(flags, 'out') });
+        console.log(JSON.stringify(result, null, 2));
+      } catch (error) {
+        console.log(JSON.stringify(narrativeFailure(error), null, 2));
+        process.exitCode = 1;
+      }
+      return;
+    }
+
+    case 'gallery': {
+      const directory = positionals[1];
+      if (!directory) throw new Error('Pass the folder tree that contains narrative manifests: beauty gallery <dir>.');
+      const output = stringFlag(flags, 'out') ?? 'gallery.html';
+      const result = await createNarrativeGallery({ directory, output, title: stringFlag(flags, 'title') });
+      console.log(`Galería narrativa · ${result.pieceCount} piezas · ${result.styles.length} estilos`);
+      console.log(result.path);
+      return;
+    }
+
     case 'canvas': {
       const style = requireStyle(stringFlag(flags, 'style'));
       const fileBrief = (await loadBrief(stringFlag(flags, 'brief'))) as any;
@@ -687,6 +736,22 @@ async function main(): Promise<void> {
       });
       console.log(`${getStyle(style).name} GIF · ${result.width}×${result.height} · ${result.frames} frames · ${Math.round(result.bytes / 1024)} KB`);
       console.log(result.path);
+      if (booleanFlag(flags, 'poster')) {
+        const posterPath = result.path.replace(/\.gif$/i, '.png');
+        await createGifPoster(
+          style,
+          {
+            text,
+            subtitle: stringFlag(flags, 'subtitle'),
+            width: numberFlag(flags, 'width'),
+            height: numberFlag(flags, 'height'),
+            seed: numberFlag(flags, 'seed'),
+            maxxing: booleanFlag(flags, 'maxxing'),
+          },
+          posterPath,
+        );
+        console.log(posterPath);
+      }
       return;
     }
 
@@ -694,11 +759,16 @@ async function main(): Promise<void> {
       const style = requireStyle(stringFlag(flags, 'style'));
       const brief = mergeBrief(await loadBrief<Partial<SprintBrief>>(stringFlag(flags, 'brief')), flags);
       if (!brief.sprint) throw new Error('Pass a sprint brief with { "sprint": "15", "style": "nature", ... }. See `beauty sprint --help` for the schema.');
-      const result = await createSprintKit({ ...brief, sprint: brief.sprint, style }, stringFlag(flags, 'out'));
+      const result = await createSprintKit({ ...brief, sprint: brief.sprint, style }, stringFlag(flags, 'out'), {
+        size: numberFlag(flags, 'size'),
+        fps: numberFlag(flags, 'fps'),
+        frames: numberFlag(flags, 'frames'),
+      });
       for (const item of [result.review, result.retro, result.planning]) {
         console.log(`${item.grade} ${item.score}/100 · vision ${item.vision}/4 · ${item.html}`);
         console.log(`GIF · ${item.gif}`);
       }
+      for (const issue of result.issues) console.log(`${issue.severity.toUpperCase()} ${issue.code} · ${issue.message}`);
       console.log(result.directory);
       return;
     }
@@ -707,17 +777,16 @@ async function main(): Promise<void> {
       const file = positionals[1];
       if (!file) throw new Error('Pass an HTML file to validate.');
       const style = requireStyle(stringFlag(flags, 'style'));
-      const html = await readFile(path.resolve(process.cwd(), file), 'utf8');
-      const result = html.includes('class="deck')
-        ? validateDeck(html, style)
-        : html.includes('class="xp ')
-          ? validateExperience(html, style)
-          : html.includes('class="story-page')
-            ? validateStory(html, style)
-            : validateHtml(html, style);
-      console.log(formatValidation(result));
-      console.log(`stats: ${JSON.stringify(result.stats)}`);
-      if (flags.strict && result.score < 90) process.exitCode = 1;
+      const source = path.resolve(process.cwd(), file);
+      const html = await readFile(source, 'utf8');
+      const shots = stringFlag(flags, 'shots');
+      const visual = booleanFlag(flags, 'visual') || shots !== undefined;
+      const report = await auditArtifact(html, style, { visual, shots, filePath: source });
+      console.log(formatValidation(report.result));
+      console.log(`stats: ${JSON.stringify(report.result.stats)}`);
+      if (visual && report.visual.status === 'skipped' && report.visual.message) console.log(report.visual.message);
+      if (report.visual.shots?.length) console.log(`shots: ${report.visual.shots.join(', ')}`);
+      if (booleanFlag(flags, 'strict') && !meetsStrictBar(report.result)) process.exitCode = 1;
       return;
     }
 
@@ -727,14 +796,19 @@ async function main(): Promise<void> {
       const style = requireStyle(stringFlag(flags, 'style'));
       const source = path.resolve(process.cwd(), file);
       const html = await readFile(source, 'utf8');
-      const result = fixHtml(html, style);
+      const shots = stringFlag(flags, 'shots');
+      const visual = booleanFlag(flags, 'visual') || shots !== undefined;
+      const result = await repairArtifact(html, style, { visual, shots, filePath: source });
       const out = stringFlag(flags, 'out');
       const target = out ? path.resolve(process.cwd(), out) : source;
       await writeFile(target, result.html, 'utf8');
       console.log(`${style} · ${result.before.score} → ${result.after.score} (${result.before.grade} → ${result.after.grade})`);
       console.log(`${result.fixes.length} repair(s): ${result.fixes.join(', ') || 'none'}`);
+      console.log(`post-check: ${formatValidation(result.afterResult).split('\n')[0]} · ${result.afterResult.issues.length} issue(s) remaining`);
+      if (visual && result.visual.status === 'skipped' && result.visual.message) console.log(result.visual.message);
+      if (result.visual.shots?.length) console.log(`shots: ${result.visual.shots.join(', ')}`);
       console.log(target);
-      if (flags.strict && result.after.score < 90) process.exitCode = 1;
+      if (booleanFlag(flags, 'strict') && !meetsStrictBar(result.afterResult)) process.exitCode = 1;
       return;
     }
 

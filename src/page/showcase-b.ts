@@ -1,8 +1,8 @@
-import type { Brief, StylePreset } from '../types.js';
+import type { PageBrief, StylePreset } from '../types.js';
 import { esc } from './common.js';
 import { renderShowcase } from './showcase.js';
 
-export function renderBestiary(brief: Partial<Brief>, preset: StylePreset): string {
+export function renderBestiary(brief: Partial<PageBrief>, preset: StylePreset): string {
   const art = `<div class="bestiary-art">
   <svg viewBox="0 0 560 640" role="img" aria-label="Bestiario iluminado con una liebre alada">
     <rect x="12" y="12" width="536" height="616" fill="none" stroke="var(--accent)" stroke-width="2"/>
@@ -84,7 +84,7 @@ export function renderBestiary(brief: Partial<Brief>, preset: StylePreset): stri
   });
 }
 
-export function renderPsychedelic(brief: Partial<Brief>, preset: StylePreset): string {
+export function renderPsychedelic(brief: Partial<PageBrief>, preset: StylePreset): string {
   const art = `<div class="psy-field">
   <svg viewBox="0 0 620 660" role="img" aria-label="Formas líquidas psicodélicas con ojos">
     <g class="psy-blob psy-blob-a" fill="var(--accent)" opacity=".9">
@@ -163,7 +163,7 @@ export function renderPsychedelic(brief: Partial<Brief>, preset: StylePreset): s
   });
 }
 
-export function renderMemphis(brief: Partial<Brief>, preset: StylePreset): string {
+export function renderMemphis(brief: Partial<PageBrief>, preset: StylePreset): string {
   const art = `<div class="mem-field">
   <div class="mem-shape mem-pink" data-scatter></div>
   <div class="mem-shape mem-mint" data-scatter></div>
@@ -232,7 +232,7 @@ export function renderMemphis(brief: Partial<Brief>, preset: StylePreset): strin
   });
 }
 
-export function renderVaporwave(brief: Partial<Brief>, preset: StylePreset): string {
+export function renderVaporwave(brief: Partial<PageBrief>, preset: StylePreset): string {
   const locale = brief.locale === 'en' ? 'en' : 'es';
   // The desktop window is built from the brief, not from a fixed demo folder.
   const base = (brief.brand || brief.title || (locale === 'en' ? 'archive' : 'archivo')).trim();
@@ -247,7 +247,6 @@ export function renderVaporwave(brief: Partial<Brief>, preset: StylePreset): str
     .map((name, index) => `<div class="vapor-file${index === 1 ? ' is-selected' : ''}"><span class="vapor-icon">▣</span><span>${esc(name)}</span></div>`)
     .join('\n      ');
   const art = `<div class="vapor-scene">
-  <div class="vapor-sun"></div>
   <div class="vapor-grid"></div>
   <div class="vapor-window" data-drag>
     <div class="vapor-bar"><span>${esc(winName)}.EXE</span><span class="vapor-dots"><i></i><i></i><i></i></span></div>
@@ -266,8 +265,8 @@ export function renderVaporwave(brief: Partial<Brief>, preset: StylePreset): str
 .style-vaporwave .top{border-bottom:2px solid rgba(255,255,255,.2);background:rgba(43,58,143,.35)}
 .style-vaporwave .brand{font-size:13px;letter-spacing:.04em;line-height:1.6}
 .style-vaporwave .brand .mark{color:var(--accent2)}
-.style-vaporwave .hero{grid-template-columns:1.02fr .98fr;gap:12px;padding-top:26px;padding-bottom:30px;overflow:hidden}
-.style-vaporwave .hero::before{content:"";position:absolute;left:50%;bottom:-2px;width:120vw;height:46%;transform:translateX(-50%) perspective(300px) rotateX(62deg);transform-origin:bottom;background-image:linear-gradient(rgba(79,227,227,.5) 2px,transparent 2px),linear-gradient(90deg,rgba(79,227,227,.5) 2px,transparent 2px);background-size:54px 36px;opacity:.55;pointer-events:none;z-index:0}
+.style-vaporwave .hero{grid-template-columns:1.02fr .98fr;gap:12px;padding-top:26px;padding-bottom:30px}
+.style-vaporwave .hero::before{content:"";position:absolute;left:0;right:0;bottom:-2px;height:46%;transform:perspective(300px) rotateX(62deg);transform-origin:bottom;background-image:linear-gradient(rgba(79,227,227,.5) 2px,transparent 2px),linear-gradient(90deg,rgba(79,227,227,.5) 2px,transparent 2px);background-size:54px 36px;opacity:.55;pointer-events:none;z-index:0}
 .style-vaporwave .hero-copy{position:relative;z-index:2}
 .style-vaporwave h1{font-size:clamp(24px,3.2vw,40px);line-height:1.35;letter-spacing:-.02em;text-transform:uppercase;max-width:14ch;background:linear-gradient(180deg,var(--ink) 0%,var(--accent2) 38%,var(--accent3) 52%,var(--accent) 78%,var(--ink) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(3px 3px 0 var(--deep))}
 .style-vaporwave h1 em{color:transparent;display:block;font-style:normal}
@@ -277,15 +276,15 @@ export function renderVaporwave(brief: Partial<Brief>, preset: StylePreset): str
 .style-vaporwave .nav-cta{border:2px solid var(--accent2);color:var(--accent2);background:var(--deep)}
 .style-vaporwave .hero-art{position:relative;z-index:2}
 .style-vaporwave .vapor-scene{position:relative;min-height:530px;width:100%}
-.style-vaporwave .vapor-sun{position:absolute;right:8%;top:3%;width:240px;height:240px;border-radius:50%;background:linear-gradient(180deg,var(--accent) 0 50%,var(--accent2) 50% 100%);opacity:.85;filter:blur(.2px)}
-.style-vaporwave .vapor-sun::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(180deg,transparent 0 12px,var(--bg) 12px 18px);opacity:.6}
-.style-vaporwave .vapor-grid{position:absolute;right:-30%;bottom:0;width:150%;height:45%;transform:perspective(300px) rotateX(60deg);transform-origin:bottom;background-image:linear-gradient(rgba(255,79,163,.5) 2px,transparent 2px),linear-gradient(90deg,rgba(79,227,227,.5) 2px,transparent 2px);background-size:48px 48px;opacity:.5}
+.style-vaporwave .vapor-scene:before{content:"";position:absolute;right:8%;top:3%;width:240px;height:240px;border-radius:50%;background:linear-gradient(180deg,var(--accent) 0 50%,var(--accent2) 50% 100%);opacity:.85;filter:blur(.2px)}
+.style-vaporwave .vapor-scene:after{content:"";position:absolute;right:8%;top:3%;width:240px;height:240px;border-radius:50%;background:repeating-linear-gradient(180deg,transparent 0 12px,var(--bg) 12px 18px);opacity:.6}
+.style-vaporwave .vapor-grid{position:absolute;right:0;bottom:0;width:100%;height:45%;transform:perspective(300px) rotateX(60deg);transform-origin:bottom;background-image:linear-gradient(rgba(255,79,163,.5) 2px,transparent 2px),linear-gradient(90deg,rgba(79,227,227,.5) 2px,transparent 2px);background-size:48px 48px;opacity:.5}
 .style-vaporwave .vapor-window{position:absolute;left:0;top:20%;width:92%;border:2px solid var(--ink);background:var(--accent3);box-shadow:6px 6px 0 var(--deep);cursor:grab;user-select:none}
 .style-vaporwave .vapor-window:active{cursor:grabbing}
 .style-vaporwave .vapor-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;background:linear-gradient(90deg,var(--deep),var(--accent));color:var(--ink);padding:6px 8px;font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:.08em;border-bottom:2px solid var(--ink)}
 .style-vaporwave .vapor-dots{display:flex;gap:4px}.style-vaporwave .vapor-dots i{width:12px;height:12px;background:var(--accent3);border:1px solid var(--ink);display:block}
 .style-vaporwave .vapor-body{background:var(--accent3);color:var(--ink);padding:9px;font-family:'Space Grotesk',sans-serif;font-size:11px}
-.style-vaporwave .vapor-path{border:1px solid var(--ink);padding:4px 6px;margin:0 0 8px;font-size:9px;background:var(--bg);color:var(--ink);overflow:hidden;white-space:nowrap}
+.style-vaporwave .vapor-path{border:1px solid var(--ink);padding:4px 6px;margin:0 0 8px;font-size:9px;background:var(--bg);color:var(--ink);overflow-wrap:anywhere}
 .style-vaporwave .vapor-file{display:flex;align-items:center;gap:8px;padding:4px 6px;border:1px solid transparent}
 .style-vaporwave .vapor-file.is-selected{background:var(--accent);border-color:var(--ink);color:var(--bg)}
 .style-vaporwave .vapor-icon{color:var(--deep);font-size:14px}
@@ -337,9 +336,8 @@ export function renderVaporwave(brief: Partial<Brief>, preset: StylePreset): str
   });
 }
 
-export function renderGalactic(brief: Partial<Brief>, preset: StylePreset): string {
+export function renderGalactic(brief: Partial<PageBrief>, preset: StylePreset): string {
   const art = `<div class="galaxy-stage">
-  <div class="galaxy-stars" aria-hidden="true"></div>
   <svg class="galaxy-svg" viewBox="0 0 760 760" role="img" aria-label="Planeta anillado con órbitas y estrellas">
     <defs>
       <radialGradient id="planetBody" cx="38%" cy="32%" r="72%">
@@ -398,8 +396,8 @@ export function renderGalactic(brief: Partial<Brief>, preset: StylePreset): stri
 .style-galactic .nav-cta{border:1px solid var(--accent);color:var(--accent);background:rgba(121,232,255,.05)}
 .style-galactic .hero-art{position:relative;z-index:2;min-width:0}
 .style-galactic .galaxy-stage{position:relative;width:112%;max-width:760px;margin-left:-2%;aspect-ratio:1}
-.style-galactic .galaxy-stars{position:absolute;inset:-20%;background-image:radial-gradient(circle at 18% 22%,rgba(242,244,255,.8) 0 1px,transparent 1.5px),radial-gradient(circle at 72% 16%,rgba(121,232,255,.8) 0 1px,transparent 1.6px),radial-gradient(circle at 84% 68%,rgba(242,244,255,.55) 0 1px,transparent 1.4px),radial-gradient(circle at 34% 82%,rgba(179,136,255,.65) 0 1px,transparent 1.5px);background-size:170px 190px,230px 210px,190px 240px,260px 200px;opacity:.8;animation:star-drift 70s linear infinite}
-.style-galactic .galaxy-svg{position:relative;z-index:2;width:100%;height:auto;overflow:visible}
+.style-galactic .galaxy-stage:before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 18% 22%,rgba(242,244,255,.8) 0 1px,transparent 1.5px),radial-gradient(circle at 72% 16%,rgba(121,232,255,.8) 0 1px,transparent 1.6px),radial-gradient(circle at 84% 68%,rgba(242,244,255,.55) 0 1px,transparent 1.4px),radial-gradient(circle at 34% 82%,rgba(179,136,255,.65) 0 1px,transparent 1.5px);background-size:170px 190px,230px 210px,190px 240px,260px 200px;opacity:.8;animation:star-drift 70s linear infinite}
+.style-galactic .galaxy-svg{position:relative;z-index:2;width:100%;height:auto;overflow:hidden}
 .style-galactic .orbit-one{transform-origin:380px 380px;animation:orbit 62s linear infinite}
 .style-galactic .orbit-two{transform-origin:380px 380px;animation:orbit 44s linear infinite reverse}
 .style-galactic .orbit-three{transform-origin:380px 380px;animation:orbit 80s linear infinite}
@@ -441,7 +439,8 @@ export function renderGalactic(brief: Partial<Brief>, preset: StylePreset): stri
 .style-galactic .cta .btn:hover{background:var(--ink)}
 .style-galactic .foot{border-color:rgba(121,232,255,.22);color:var(--muted)}
 @media (max-width:980px){.style-galactic .hero{grid-template-columns:1fr;min-height:auto}.style-galactic .galaxy-stage{width:100%;max-width:560px;margin:0 auto}.style-galactic h1{max-width:16ch}.style-galactic .music-room{grid-template-columns:1fr}.style-galactic .music-room .player{grid-template-columns:56px 1fr}}
-@media (prefers-reduced-motion:reduce){.style-galactic .orbit-one,.style-galactic .orbit-two,.style-galactic .orbit-three,.style-galactic .galaxy-moon,.style-galactic .galaxy-stars{animation:none}}
+@media (min-width:981px) and (max-width:1340px){.style-galactic .galaxy-stage{width:100%;margin-left:0}}
+@media (prefers-reduced-motion:reduce){.style-galactic .orbit-one,.style-galactic .orbit-two,.style-galactic .orbit-three,.style-galactic .galaxy-moon,.style-galactic .galaxy-stage:before{animation:none}}
 `;
   return renderShowcase(brief, preset, {
     art,

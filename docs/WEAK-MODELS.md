@@ -27,13 +27,40 @@ open-beauty-site removes those choices instead of asking for taste.
 
 - `skills/beauty.md` is a one-page decision tree: what you want -> exact command.
 - `examples/recipes/<style>/` holds starter briefs (`page`, `deck`, `story`,
-  `experience`) that already validate. Change words, not tokens.
+  `experience`, `sprint` and `narrative`) that already validate. Change words,
+  not tokens.
 - Per-style skills open with a Quick recipe: three copy-paste commands, five hard
   rules, three common mistakes with fixes, and words/tone in es + en.
 - `beauty <cmd> --help` and `beauty help <cmd>` print that command's options and
   one example. Every `--brief` flag accepts a file path or `-` for stdin, and
   `beauty make` accepts `--idea-file`, so long briefs never hit the Windows
   command-length limit (os error 206).
+
+## Flujo de historia GIF
+
+Usa `beauty make` para convertir una idea de una frase en un artefacto
+autoseleccionado; usa `beauty narrative` cuando el brief debe conservar tres
+fases, estado observado/esperado, duración legible y evaluaciones; usa
+`beauty sequence` para dibujar varios frames concretos; usa `beauty gif` para
+un título corto en loop. Las diferencias y comandos completos están en
+[`skills/narrative.md`](../skills/narrative.md).
+
+Las recetas `examples/recipes/<style>/narrative.json` contienen copy en español
+para una Sprint Review. `in-review` acaba en **Resultado esperado**; solo
+`done`, con evidencia, puede decir **Resultado observado**. Ante `TEXT_OVERFLOW`,
+lee la fase y el texto completo que reporta, divide o edita el copy y renderiza
+otra vez; no elimines palabras para ocultar el diagnóstico.
+
+La galería se genera con:
+
+```bash
+beauty gallery docs/narrative-gif --out docs/narrative-gif/GALLERY.html
+```
+
+Abre cada tarjeta como PNG estático; Reproducir carga el GIF bajo petición y
+Detener vuelve a la imagen fija. Revisa la vista de 640 × 360. `visual-review`
+empieza `pending`, y ninguno de los cinco niveles de evaluación recomienda o
+aprueba publicar.
 
 ## Available one-shot and repair commands
 

@@ -26,7 +26,15 @@ export type PatchOp =
   | 'strip-emoji'
   | 'strip-placeholder'
   | 'ensure-reduced-motion'
-  | 'cap-duration';
+  | 'cap-duration'
+  | 'reserve-fixed-space'
+  | 'span-last-grid-item'
+  | 'prevent-midword-break'
+  | 'nowrap-counters'
+  | 'fit-wide-element'
+  | 'unclip-text'
+  | 'raise-small-text'
+  | 'hide-decoration';
 
 export interface Patch {
   op: PatchOp;

@@ -4,7 +4,7 @@ import type { SKRSContext2D } from '@napi-rs/canvas';
 import type { GifResult, StyleSlug } from '../types.js';
 import { getStyle } from '../styles/presets.js';
 import { canvasFor } from '../canvas.js';
-import { drawGifFrame, mapIndices, STYLE_DITHER } from '../gif.js';
+import { drawGifFrame, loopPhase, mapIndices, STYLE_DITHER } from '../gif.js';
 import { t as translate } from '../page/common.js';
 import { sprintBrand, type SprintCapacity, type SprintData } from './data.js';
 
@@ -15,7 +15,11 @@ export type SprintGifKind = 'review' | 'retro' | 'planning';
 export interface SprintGifOptions {
   width?: number;
   height?: number;
+  /** Square side in pixels; `width`/`height` win when both are provided. */
+  size?: number;
   fps?: number;
+  /** Total encoded frames; overrides `fps × duration`. */
+  frames?: number;
   duration?: number;
 }
 
@@ -27,6 +31,9 @@ const MIN_DURATION = 1;
 const MAX_DURATION = 6;
 const MIN_FRAMES = 8;
 const MAX_FRAMES = 180;
+const DEFAULT_SIZE = 640;
+const DEFAULT_FPS = 12;
+const DEFAULT_DURATION = 2.4;
 const PALETTE_COLORS = 128;
 const PALETTE_SAMPLES = 6;
 
@@ -112,11 +119,13 @@ interface Geometry {
 }
 
 function resolveGeometry(options: SprintGifOptions): Geometry {
-  const width = clamp(Math.round(options.width ?? 800), MIN_SIZE, MAX_SIZE);
-  const height = clamp(Math.round(options.height ?? 800), MIN_SIZE, MAX_SIZE);
-  const fps = clamp(Math.round(options.fps ?? 20), MIN_FPS, MAX_FPS);
-  const duration = clamp(options.duration ?? 2.4, MIN_DURATION, MAX_DURATION);
-  const frames = clamp(Math.round(fps * duration), MIN_FRAMES, MAX_FRAMES);
+  const size = clamp(Math.round(options.size ?? DEFAULT_SIZE), MIN_SIZE, MAX_SIZE);
+  const width = clamp(Math.round(options.width ?? size), MIN_SIZE, MAX_SIZE);
+  const height = clamp(Math.round(options.height ?? size), MIN_SIZE, MAX_SIZE);
+  const fps = clamp(Math.round(options.fps ?? DEFAULT_FPS), MIN_FPS, MAX_FPS);
+  const duration = clamp(options.duration ?? DEFAULT_DURATION, MIN_DURATION, MAX_DURATION);
+  const requested = options.frames === undefined ? fps * duration : options.frames;
+  const frames = clamp(Math.round(requested), MIN_FRAMES, MAX_FRAMES);
   return { width, height, fps, duration, frames };
 }
 
@@ -264,8 +273,10 @@ function drawRetro(ctx: SKRSContext2D, style: StyleSlug, data: SprintData, t: nu
     return;
   }
 
-  const segment = 1 / shown.length;
-  const position = clamp(t, 0, 0.9999) / segment;
+  // `t` is the reveal arc: 1 on the poster frame, 0 mid-loop. Position the
+  // first action fully drawn at the poster and cycle towards the last as the
+  // arc un-draws, so both ends of the loop land on a complete frame.
+  const position = clamp(shown.length - 0.5 - t * (shown.length - 1), 0, shown.length - 0.0001);
   const active = Math.min(shown.length - 1, Math.floor(position));
   const local = position - active;
   const alpha = easeOutCubic(clamp(local / 0.2, 0, 1)) * (1 - easeOutCubic(clamp((local - 0.78) / 0.22, 0, 1)));
@@ -371,11 +382,15 @@ export function drawSprintFrame(
   const image = ctx.createImageData(width, height);
   image.data.set(base);
   ctx.putImageData(image, 0, 0);
-  drawHeader(ctx, style, data, kind, clamped, width, height);
+  // Frame 0 is the fully drawn data poster. The eased arc un-draws it towards
+  // the middle of the loop and returns it before the wrap, so the restart is
+  // imperceptible instead of jumping from the final numbers back to zero.
+  const reveal = 1 - loopPhase(clamped);
+  drawHeader(ctx, style, data, kind, reveal, width, height);
   const panel = panelFor(ctx, style, width, height);
-  if (kind === 'review') drawReview(ctx, style, data, clamped, width, height, panel);
-  else if (kind === 'retro') drawRetro(ctx, style, data, clamped, width, height, panel);
-  else drawCapacity(ctx, style, data, clamped, width, height, panel);
+  if (kind === 'review') drawReview(ctx, style, data, reveal, width, height, panel);
+  else if (kind === 'retro') drawRetro(ctx, style, data, reveal, width, height, panel);
+  else drawCapacity(ctx, style, data, reveal, width, height, panel);
   return ctx.getImageData(0, 0, width, height).data;
 }
 

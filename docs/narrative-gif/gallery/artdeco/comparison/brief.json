@@ -1,0 +1,16 @@
+{
+  "style": "artdeco",
+  "kind": "narrative-gif",
+  "locale": "es",
+  "audience": "Producto en Sprint Review",
+  "title": "Cambios que se revisan",
+  "status": "in-review",
+  "phases": [
+    { "id": "before", "label": "Antes", "text": "La guía podía cambiar sin indicar qué revisar.", "visual": { "kind": "comparison", "state": "unreviewed" } },
+    { "id": "change", "label": "Cambio", "text": "La propuesta añade una señal junto al cambio para orientar la lectura.", "visual": { "kind": "comparison", "state": "flagged" } },
+    { "id": "result", "label": "Resultado esperado", "text": "El equipo podrá comprobar si la señal facilita la revisión antes del cierre.", "visual": { "kind": "comparison", "state": "review-ready" } }
+  ],
+  "playback": { "minReadableHoldMs": 5000, "transitionMs": 650, "loop": true },
+  "output": { "width": 1280, "height": 720, "formats": ["gif", "png"], "preset": "review-1280x720" },
+  "seed": 7
+}

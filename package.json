@@ -1,6 +1,7 @@
 {
   "name": "open-beauty-site",
   "version": "0.1.0",
+  "packageManager": "pnpm@11.18.0",
   "description": "A design harness + MCP server that lets small models make beautiful HTML pages and GIFs.",
   "type": "module",
   "main": "./dist/index.js",
@@ -58,11 +59,14 @@
     "showcase": "tsx scripts/build-showcase.ts",
     "compare": "tsx scripts/build-compare.ts",
     "coverage:matrix": "tsx scripts/coverage-matrix.ts",
+    "visual:matrix": "tsx scripts/visual-matrix.ts",
+    "fonts:check": "tsx scripts/narrative-fonts-check.ts",
+    "narrative:recipes": "tsx scripts/narrative-recipes.ts",
     "docs:build": "tsx scripts/build-docs.ts",
     "e2e:colmena": "tsx scripts/e2e-colmena.ts",
     "check": "tsc -p tsconfig.json --noEmit",
     "check:scripts": "tsc -p tsconfig.scripts.json --noEmit",
-    "check:all": "pnpm check && pnpm check:scripts && pnpm test"
+    "check:all": "pnpm check && pnpm build && pnpm check:scripts && pnpm test"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.32.1",
