@@ -739,13 +739,14 @@ async function main(): Promise<void> {
       console.log(`Narrative capabilities · ${report.cells.length} cells · supported ${report.summary.supported} · fallback ${report.summary.fallback} · unsupported ${report.summary.unsupported}`);
       for (const style of [...new Set(report.cells.map((cell) => cell.style))]) {
         const cells = report.cells.filter((cell) => cell.style === style);
+        const layouts = [...new Set(cells.flatMap((cell) => cell.layouts))].join(', ');
         const states = [...new Set(cells.flatMap((cell) => cell.allowed.visualStates.map((entry) => entry.value)))].join(', ');
         const semantic = cells.filter((cell) => cell.aspect === '16:9' && cell.locale === 'es').map((cell) => {
           const statesByKind = Object.entries(cell.allowed.semanticStates).map(([kind, values]) => `${kind}[${values?.join('|') ?? ''}]`).join(',');
           const actionsByKind = Object.entries(cell.allowed.semanticActions).map(([kind, values]) => `${kind}[${values?.join('|') ?? ''}]`).join(',');
           return `${cell.primitive}=${cell.status}; entities ${cell.allowed.semanticEntityKinds.join('|')}; states ${statesByKind}; actions ${actionsByKind}`;
         }).join(' · ');
-        console.log(`${style}: ${cells.filter((cell) => cell.status === 'supported').length} supported · ${cells.filter((cell) => cell.status === 'fallback').length} fallback · ${cells.filter((cell) => cell.status === 'unsupported').length} unsupported · visual states ${states} · ${semantic}`);
+        console.log(`${style}: ${cells.filter((cell) => cell.status === 'supported').length} supported · ${cells.filter((cell) => cell.status === 'fallback').length} fallback · ${cells.filter((cell) => cell.status === 'unsupported').length} unsupported · layouts ${layouts || '(none for this aspect)'} · visual states ${states} · ${semantic}`);
       }
       return;
     }

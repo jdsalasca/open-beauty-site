@@ -79,6 +79,12 @@ test('every narrative schema field and example appears in narrative --help', asy
   }
   assert.match(help, /"kind": "narrative-gif"/);
   assert.match(help, /Resultado esperado/);
+  for (const layout of ['object-left', 'object-right', 'object-top', 'object-hero']) {
+    assert.ok(help.includes(layout), `narrative --help is missing layout ${layout}`);
+  }
+  for (const preset of ['product-review', 'readable', 'concise']) {
+    assert.ok(help.includes(preset), `narrative --help is missing playback preset ${preset}`);
+  }
 });
 
 test('capability CLI help and JSON command expose one machine-readable registry', async () => {

@@ -1,8 +1,11 @@
 import type { StyleSlug } from '../types.js';
 import { getNarrativeScene, supportedNarrativeStyles } from './scene.js';
-import type { NarrativeLocale, NarrativeSceneValueDeclaration } from '../types/narrative.js';
+import type { NarrativeLocale, NarrativeSceneLayout, NarrativeSceneValueDeclaration } from '../types/narrative.js';
 import type { NarrativeSemanticEntityKind } from '../types/narrative-scene.js';
+import { narrativeLayoutsFor } from './composition.js';
 import { NARRATIVE_PRIMITIVE_ENTITY_KINDS, NARRATIVE_SEMANTIC_ACTIONS, NARRATIVE_SEMANTIC_STATES } from './semantic.js';
+
+export { narrativeLayoutsFor } from './composition.js';
 
 export const NARRATIVE_PRIMITIVES = ['table-rows', 'card-collection', 'counter', 'file-download'] as const;
 export type NarrativePrimitive = (typeof NARRATIVE_PRIMITIVES)[number];
@@ -54,6 +57,8 @@ export interface NarrativeCapabilityCell {
   aspect: NarrativeAspect;
   locale: NarrativeLocale;
   status: NarrativeCapabilityStatus;
+  /** Explicit per-style/aspect layout hints; unsupported hints return UNSUPPORTED_LAYOUT. */
+  layouts: NarrativeSceneLayout[];
   reason: string;
   allowed: {
     visualKinds: NarrativeSceneValueDeclaration[];
@@ -106,7 +111,7 @@ export function narrativeCapabilityReport(filter: NarrativeCapabilityFilter = {}
         : semanticSupported
           ? `${style} renders ${primitive} with stable entity regions; decoded state changes are exercised in test/${semanticRenderTest(style)}.test.ts for ${aspect.id}/${locale}.`
           : fallbackReason(style, primitive);
-      return { style, primitive, aspect: aspect.id, locale, status, reason, allowed };
+      return { style, primitive, aspect: aspect.id, locale, status, layouts: narrativeLayoutsFor(style, aspect.width / aspect.height), reason, allowed };
     })));
   });
   const summary: Record<NarrativeCapabilityStatus, number> = { supported: 0, unsupported: 0, fallback: 0 };

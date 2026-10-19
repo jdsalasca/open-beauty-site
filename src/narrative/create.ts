@@ -28,7 +28,7 @@ export interface NarrativeGenerationResult {
 }
 
 export async function createNarrative(input: NarrativeBriefInput | unknown, options: CreateNarrativeOptions = {}): Promise<NarrativeGenerationResult> {
-  const { brief, hash, outputHash } = normalizeNarrativeBrief(input);
+  const { brief, hash, outputHash, warnings: editorialWarnings } = normalizeNarrativeBrief(input);
   const scene = resolveNarrativeScene(brief.style, options.scene);
   if (!scene.supportsAspect(brief.output.width / brief.output.height)) {
     throw new NarrativeError(
@@ -49,10 +49,16 @@ export async function createNarrative(input: NarrativeBriefInput | unknown, opti
     ...evaluation['rendered-legibility'].controls,
     ...evaluation.narrative.controls,
   ];
-  const { path: manifestPath } = await createNarrativeManifest({ brief, briefHash: hash, encoded, timeline, controls, evaluation, outputDir });
+  const { path: manifestPath } = await createNarrativeManifest({ brief, briefHash: hash, encoded, timeline, controls, evaluation, editorialWarnings, outputDir });
   await refreshNarrativeReviewMetadata(manifestPath);
   encoded.decoded.sampledFrames.length = 0;
   const diagnostics = [
+    ...editorialWarnings.map((warning) => ({
+      code: warning.code,
+      message: warning.message,
+      suggestion: warning.suggestion,
+      ...(warning.phaseIndex === undefined ? {} : { phaseIndex: warning.phaseIndex }),
+    })),
     ...timeline.warnings.map((warning) => ({ code: warning.code, message: warning.message })),
     ...layout.warnings.map((message) => ({ code: 'LAYOUT_WARNING', message })),
     ...(evaluation['style-conformance'].status === 'pending' ? [{ code: 'STYLE_REVIEW_PENDING', message: 'Source and pixel controls do not replace human review of the rendered style.' }] : []),

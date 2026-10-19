@@ -4,11 +4,14 @@ import { styleSlugs } from '../styles/presets.js';
 import {
   NarrativeError,
   type NarrativeBriefInput,
+  type NarrativeEditorialWarning,
   type NarrativeLocale,
   type NarrativeOutcomeMode,
   type NarrativeOutputPreset,
   type NormalizedNarrativeBrief,
 } from '../types/narrative.js';
+import { NARRATIVE_SCENE_LAYOUTS, narrativeLayoutsFor } from './composition.js';
+import { editorialGuidelineWarnings, lintNarrativeContent } from './editorial.js';
 import { getNarrativeScene } from './scene.js';
 import { normalizeSemanticPhases, narrativeSemanticSceneSchema } from './semantic.js';
 
@@ -29,6 +32,7 @@ const phaseSchema = z.object({
     action: z.string().trim().min(1).max(64).optional().describe('Future or renderer-declared action; unknown actions fail validation.'),
     semantic: narrativeSemanticSceneSchema.optional().describe('Optional style-neutral entities, relations, per-phase states and actions.'),
   }).strict().describe('Visual composition state; validation happens before rendering.'),
+  layout: z.enum(NARRATIVE_SCENE_LAYOUTS).optional().describe('Optional scene geometry: object-left, object-right (current default), object-top or object-hero. Query beauty_get_capabilities before using a layout not supported by the style.'),
   holdMs: z.number().finite().positive().optional().describe('Optional explicit hold in milliseconds; floor depends on playback.preset.'),
 }).strict();
 
@@ -58,14 +62,14 @@ export const narrativeBriefSchema = z.object({
   illustrative: z.boolean().optional().describe('Mark synthetic or demonstration content; defaults to true for v1 migration.'),
   badgePolicy: z.enum(['none', 'custom', 'workflow']).default('workflow').describe('none|custom|workflow; workflow preserves v1 stamps by default.'),
   badgeText: z.string().trim().min(1).max(64).optional().describe('Required only with badgePolicy=custom.'),
-  phases: z.array(phaseSchema).min(3).max(5).describe('3–5 { id, label, text, visual: { kind, state, action? }, holdMs? } phases.'),
+  phases: z.array(phaseSchema).min(3).max(8).describe('3–8 { id, label, text, visual: { kind, state, action? }, layout?, holdMs? } phases. The product-review preset suggests Problema → Solución → Highlight but never forces three scenes.'),
   playback: z.object({
-    preset: z.enum(['readable', 'concise']).optional().describe('readable defaults to a 5000ms floor; concise allows 2000ms explicit holds.'),
+    preset: z.enum(['readable', 'concise', 'product-review']).optional().describe('product-review keeps the 5000ms readable floor, extends by text load and uses short transitions; readable defaults to 5000ms; concise allows 2000ms explicit holds.'),
     minReadableHoldMs: z.number().finite().positive().optional().describe('Minimum hold in milliseconds; cannot undercut the preset floor.'),
     transitionMs: z.number().finite().positive().default(650).describe('Transition duration in milliseconds; remains separate from holds.'),
     loop: z.boolean().default(true).describe('Adds a result-to-before bridge when enabled.'),
     totalDurationBudgetMs: z.number().finite().positive().optional().describe('Warning budget for complete decoded duration, including transitions and loop bridge.'),
-  }).strict().default({ transitionMs: 650, loop: true }).describe('readable keeps the 5000ms floor; concise allows explicit holds from 2000ms. Durations are milliseconds.'),
+  }).strict().default({ transitionMs: 650, loop: true }).describe('product-review and readable keep the 5000ms floor; concise allows explicit holds from 2000ms. Durations are milliseconds.'),
   output: z.object({
     width: z.number().finite().int().positive().optional().describe('Pixel width; provide with height and choose a supported aspect.'),
     height: z.number().finite().int().positive().optional().describe('Pixel height; provide with width and choose a supported aspect.'),
@@ -88,6 +92,12 @@ export function narrativeHelpOptions(): string[] {
     '',
     '  JSON brief fields:',
     ...Object.keys(narrativeBriefSchema.shape).map((key) => `  ${key.padEnd(18)} ${NARRATIVE_FIELD_DESCRIPTIONS[key] ?? 'See the narrative brief schema.'}`),
+    '',
+    '  playback.preset:  product-review (3 suggested scenes, 5000ms readable floor, 320ms transitions),',
+    '                    readable (5000ms floor, 650ms transitions) or concise (2000ms floor, short copy only)',
+    `  phases[].layout:  ${NARRATIVE_SCENE_LAYOUTS.join(', ')}`,
+    '                    object-left/right work for every style; object-top/hero currently render in papercraft and brutalist.',
+    '                    Unsupported combinations return UNSUPPORTED_LAYOUT with alternatives; the engine never silently re-composes.',
   ];
 }
 
@@ -164,6 +174,7 @@ export interface ParsedNarrativeBrief {
   brief: NormalizedNarrativeBrief;
   hash: string;
   outputHash: string;
+  warnings: NarrativeEditorialWarning[];
 }
 
 export interface ContentSource<TPayload> {
@@ -173,6 +184,10 @@ export interface ContentSource<TPayload> {
 export type ContentSourceAdapter<TPayload> = (payload: TPayload) => NarrativeBriefInput | unknown | Promise<NarrativeBriefInput | unknown>;
 
 export function normalizeNarrativeBrief(input: unknown): ParsedNarrativeBrief {
+  const rawPlayback = input && typeof input === 'object' && (input as Record<string, unknown>).playback
+    ? (input as Record<string, unknown>).playback as Record<string, unknown>
+    : undefined;
+  const explicitTransitionMs = typeof rawPlayback?.transitionMs === 'number';
   const invalidNumber = nonFinitePath(input);
   if (invalidNumber) {
     const isDuration = /^\$\.playback\.(minReadableHoldMs|transitionMs|totalDurationBudgetMs)$|^\$\.phases\[\d+\]\.holdMs$/u.test(invalidNumber);
@@ -277,7 +292,7 @@ export function normalizeNarrativeBrief(input: unknown): ParsedNarrativeBrief {
   }
 
   const playbackPreset = value.playback.preset ?? 'readable';
-  const holdFloorMs = playbackPreset === 'readable' ? 5_000 : 2_000;
+  const holdFloorMs = playbackPreset === 'concise' ? 2_000 : 5_000;
   const minReadableHoldMs = value.playback.minReadableHoldMs ?? holdFloorMs;
   if (minReadableHoldMs < holdFloorMs) {
     fail('BAD_DURATION', `playback.minReadableHoldMs is ${minReadableHoldMs}ms; the ${playbackPreset} floor is ${holdFloorMs}ms.`, `Use at least ${holdFloorMs}ms for the ${playbackPreset} preset.`, 'playback.minReadableHoldMs');
@@ -291,7 +306,7 @@ export function normalizeNarrativeBrief(input: unknown): ParsedNarrativeBrief {
     }
   }
   const totalDurationBudgetMs = value.playback.totalDurationBudgetMs ?? 30_000;
-  const transitionMs = value.playback.transitionMs;
+  const transitionMs = playbackPreset === 'product-review' && !explicitTransitionMs ? 320 : value.playback.transitionMs;
   const loop = value.playback.loop;
   const allowedSubfamilies = value.style === 'papercraft'
     ? ['editorial']
@@ -350,6 +365,22 @@ export function normalizeNarrativeBrief(input: unknown): ParsedNarrativeBrief {
   }
   assertAllowedAspect(width, height);
 
+  for (const [phaseIndex, phase] of value.phases.entries()) {
+    if (!phase.layout) continue;
+    const supportedLayouts = narrativeLayoutsFor(value.style, width / height);
+    if (!supportedLayouts.includes(phase.layout)) {
+      fail(
+        'UNSUPPORTED_LAYOUT',
+        `layout "${phase.layout}" is not supported by ${value.style} at ${width}×${height} in phase ${phaseIndex}.`,
+        supportedLayouts.length
+          ? `Choose one of: ${supportedLayouts.join(', ')}. The scene is not silently re-composed.`
+          : `The style has no renderer for this aspect; choose a supported aspect (${styleSlugs.includes(value.style) ? '16:9, 1:1 or 9:16 for the styles that declare it' : 'see capabilities'}).`,
+        `phases[${phaseIndex}].layout`,
+        { phaseIndex, style: value.style, value: phase.layout, validAlternatives: supportedLayouts },
+      );
+    }
+  }
+
   const expectedLabel = value.locale === 'en' ? 'Expected result' : 'Resultado esperado';
   const observedLabel = value.locale === 'en' ? 'Observed result' : 'Resultado observado';
   const phases = normalizeSemanticPhases(value.phases.map((phase) => ({ ...phase, text: phase.text.trim() })), illustrative, value.style);
@@ -374,6 +405,14 @@ export function normalizeNarrativeBrief(input: unknown): ParsedNarrativeBrief {
     output: { ...value.output, width, height, formats: [...value.output.formats] },
     seed: value.seed,
   } as NormalizedNarrativeBrief;
+  const warnings = [
+    ...lintNarrativeContent(brief.phases),
+    ...editorialGuidelineWarnings({
+      playbackPreset,
+      title: brief.title,
+      phases: brief.phases,
+    }),
+  ];
   const hash = createHash('sha256').update(stableJson(brief)).digest('hex');
   const renderProjection = {
     style: brief.style,
@@ -390,20 +429,21 @@ export function normalizeNarrativeBrief(input: unknown): ParsedNarrativeBrief {
       visual: phase.visual.semantic.primitive === 'legacy-illustration'
         ? { kind: phase.visual.kind, state: phase.visual.state, ...(phase.visual.action ? { action: phase.visual.action } : {}) }
         : phase.visual,
+      ...(phase.layout === undefined ? {} : { layout: phase.layout }),
       ...(phase.holdMs === undefined ? {} : { holdMs: phase.holdMs }),
     })),
     playback: {
       minReadableHoldMs,
       transitionMs,
       loop,
-      ...(playbackPreset === 'concise' ? { preset: playbackPreset } : {}),
+      ...(playbackPreset === 'readable' ? {} : { preset: playbackPreset }),
     },
     output: brief.output,
     seed: brief.seed,
     ...(brief.badgePolicy === 'workflow' ? {} : { badgePolicy: brief.badgePolicy, ...(brief.badgeText ? { badgeText: brief.badgeText } : {}) }),
   };
   const outputHash = createHash('sha256').update(stableJson(renderProjection)).digest('hex');
-  return { brief, hash, outputHash };
+  return { brief, hash, outputHash, warnings };
 }
 
 export function parseNarrativeBrief(input: NarrativeBriefInput | unknown): ParsedNarrativeBrief {
