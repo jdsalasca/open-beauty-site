@@ -235,8 +235,9 @@ test('every committed narrative pack regenerates byte-for-byte from its brief', 
 });
 
 test('all committed narrative manifests reproduce GIF, PNG and contact sheet byte-for-byte', async () => {
-  const manifestFiles = await filesUnder(NARRATIVE_ROOT, (fileName) => fileName.endsWith('.manifest.json'));
-  assert.equal(manifestFiles.length, 60, 'all gallery, pilot, semantic and standalone art-only packs are enumerated');
+  const allManifestFiles = await filesUnder(NARRATIVE_ROOT, (fileName) => fileName.endsWith('.manifest.json'));
+  const manifestFiles = allManifestFiles.filter((fileName) => path.relative(NARRATIVE_ROOT, fileName).split(path.sep)[0] !== 'compare');
+  assert.equal(manifestFiles.length, 60, 'all canonical gallery, pilot, semantic and standalone art-only packs are enumerated; comparison evidence has its own index test');
   const tempRoot = await mkdtemp(path.join(os.tmpdir(), 'narrative-all-manifest-repro-'));
   try {
     for (const [index, manifestPath] of manifestFiles.entries()) {
