@@ -431,6 +431,17 @@ async function doctorReport(): Promise<void> {
   }
 
   try {
+    // The narrative GIF engine uses the real per-style families, not only the five above.
+    const { checkAllNarrativeFonts } = await import('./narrative/fonts.js');
+    const checks = checkAllNarrativeFonts();
+    const families = new Set(checks.map((check) => check.family));
+    const synthetic = checks.filter((check) => check.syntheticBold || check.syntheticItalic).length;
+    console.log(`narrative fonts: ok · ${checks.length} style/role checks · ${families.size} families (Spanish glyphs verified)${synthetic ? ` · ${synthetic} synthetic face(s)` : ''}`);
+  } catch (error) {
+    console.log(`narrative fonts: error · ${(error as Error).message} · fix: pnpm fonts:check`);
+  }
+
+  try {
     const { canvas } = await import('./canvas.js').then((mod) => mod.canvasFor(2, 2));
     console.log(`native canvas: ok (${canvas.width}×${canvas.height})`);
   } catch (error) {

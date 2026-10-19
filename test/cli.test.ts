@@ -133,6 +133,8 @@ test('beauty doctor reports dist, node, fonts, canvas and playwright with fixes'
   for (const token of ['dist/cli.js', 'node', 'fonts', 'canvas', 'playwright']) {
     assert.ok(lower.includes(token), `doctor is missing "${token}"`);
   }
+  // The narrative engine's real per-style families (16 beyond the five legacy ones) must be verified too.
+  assert.match(result.stdout, /narrative fonts: ok · 65 style\/role checks · \d+ families/, 'doctor must report the narrative font families');
   if (/playwright: found at/i.test(result.stdout)) {
     assert.match(result.stdout, /\((env|project|global|sibling)\)/, 'doctor must name where Playwright was found');
   } else {
