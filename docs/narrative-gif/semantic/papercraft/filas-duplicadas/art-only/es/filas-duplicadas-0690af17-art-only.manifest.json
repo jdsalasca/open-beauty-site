@@ -1,0 +1,1654 @@
+{
+  "schemaVersion": 2,
+  "commit": "310fbf72043658fa508c2d9ac5c47fe85c1ed64b",
+  "brief": {
+    "style": "papercraft",
+    "subfamily": "editorial",
+    "kind": "narrative-gif",
+    "locale": "es",
+    "audience": "Equipo de operación de datos",
+    "title": "Filas duplicadas",
+    "workflowStatus": "in-review",
+    "outcome": {
+      "mode": "expected",
+      "scopeNote": "Ejemplo ilustrativo: se espera reducir el riesgo de aceptar filas repetidas en este flujo; no se afirma que se borren registros ni que haya una medición de impacto."
+    },
+    "illustrative": true,
+    "badgePolicy": "none",
+    "phases": [
+      {
+        "id": "repeticion-visible",
+        "label": "Repetición visible",
+        "text": "Dos filas comparten REG-204; aún no hay una decisión.",
+        "visual": {
+          "kind": "comparison",
+          "state": "before",
+          "semantic": {
+            "primitive": "table-rows",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "tabla",
+                "kind": "table",
+                "illustrative": true
+              },
+              {
+                "id": "fila-original",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              },
+              {
+                "id": "fila-repetida",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "duplicate-of",
+                "from": "fila-repetida",
+                "to": "fila-original"
+              }
+            ],
+            "states": {
+              "tabla": "default",
+              "fila-original": "original",
+              "fila-repetida": "original"
+            },
+            "actions": []
+          }
+        },
+        "holdMs": 2200
+      },
+      {
+        "id": "duplicado-identificado",
+        "label": "Duplicado identificado",
+        "text": "La relación permite señalar cuál fila está repetida.",
+        "visual": {
+          "kind": "comparison",
+          "state": "flagged",
+          "semantic": {
+            "primitive": "table-rows",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "tabla",
+                "kind": "table",
+                "illustrative": true
+              },
+              {
+                "id": "fila-original",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              },
+              {
+                "id": "fila-repetida",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "duplicate-of",
+                "from": "fila-repetida",
+                "to": "fila-original"
+              }
+            ],
+            "states": {
+              "tabla": "default",
+              "fila-original": "original",
+              "fila-repetida": "flagged"
+            },
+            "actions": [
+              {
+                "entityId": "fila-repetida",
+                "type": "detect"
+              }
+            ]
+          }
+        },
+        "holdMs": 2200
+      },
+      {
+        "id": "rechazo-autorizado",
+        "label": "Rechazo autorizado",
+        "text": "La regla ilustrada detecta y rechaza; no borra la fila.",
+        "visual": {
+          "kind": "comparison",
+          "state": "review-ready",
+          "semantic": {
+            "primitive": "table-rows",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "tabla",
+                "kind": "table",
+                "illustrative": true
+              },
+              {
+                "id": "fila-original",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              },
+              {
+                "id": "fila-repetida",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "duplicate-of",
+                "from": "fila-repetida",
+                "to": "fila-original"
+              }
+            ],
+            "states": {
+              "tabla": "default",
+              "fila-original": "original",
+              "fila-repetida": "rejected"
+            },
+            "actions": [
+              {
+                "entityId": "fila-repetida",
+                "type": "reject"
+              }
+            ]
+          }
+        },
+        "holdMs": 2200
+      },
+      {
+        "id": "estado-posterior",
+        "label": "Estado posterior",
+        "text": "Ambas filas siguen visibles; una queda rechazada.",
+        "visual": {
+          "kind": "comparison",
+          "state": "review-ready",
+          "semantic": {
+            "primitive": "table-rows",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "tabla",
+                "kind": "table",
+                "illustrative": true
+              },
+              {
+                "id": "fila-original",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              },
+              {
+                "id": "fila-repetida",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "duplicate-of",
+                "from": "fila-repetida",
+                "to": "fila-original"
+              }
+            ],
+            "states": {
+              "tabla": "reviewed",
+              "fila-original": "original",
+              "fila-repetida": "rejected"
+            },
+            "actions": []
+          }
+        },
+        "holdMs": 2200
+      },
+      {
+        "id": "beneficio-esperado",
+        "label": "Resultado esperado",
+        "text": "Se esperan menos duplicados aceptados; el efecto no se mide.",
+        "visual": {
+          "kind": "comparison",
+          "state": "review-ready",
+          "semantic": {
+            "primitive": "table-rows",
+            "illustrative": true,
+            "entities": [
+              {
+                "id": "tabla",
+                "kind": "table",
+                "illustrative": true
+              },
+              {
+                "id": "fila-original",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              },
+              {
+                "id": "fila-repetida",
+                "kind": "row",
+                "label": "REG-204",
+                "value": "REG-204",
+                "illustrative": true
+              }
+            ],
+            "relations": [
+              {
+                "kind": "duplicate-of",
+                "from": "fila-repetida",
+                "to": "fila-original"
+              }
+            ],
+            "states": {
+              "tabla": "reviewed",
+              "fila-original": "original",
+              "fila-repetida": "rejected"
+            },
+            "actions": []
+          }
+        },
+        "holdMs": 2200
+      }
+    ],
+    "playback": {
+      "preset": "concise",
+      "minReadableHoldMs": 2200,
+      "transitionMs": 400,
+      "loop": true,
+      "totalDurationBudgetMs": 20000
+    },
+    "output": {
+      "width": 640,
+      "height": 360,
+      "formats": [
+        "gif",
+        "png"
+      ],
+      "preset": "review-1280x720"
+    },
+    "seed": 7,
+    "status": "in-review"
+  },
+  "briefSha256": "9dc79320efa978c515fa767eef44b330500a8e63da0a8d57da448b95a0bc124b",
+  "style": "papercraft",
+  "subfamily": "editorial",
+  "workflowStatus": "in-review",
+  "outcome": {
+    "mode": "expected",
+    "scopeNote": "Ejemplo ilustrativo: se espera reducir el riesgo de aceptar filas repetidas en este flujo; no se afirma que se borren registros ni que haya una medición de impacto."
+  },
+  "evidenceClassification": "illustrative",
+  "illustrative": true,
+  "artOnly": true,
+  "seed": 7,
+  "renderer": {
+    "narrative": "narrative-core/0.2.0",
+    "canvas": "@napi-rs/canvas@1.0.11",
+    "gif": "gifenc@1.0.3",
+    "scene": "papercraft-editorial/1.1.0"
+  },
+  "fonts": {
+    "bundleVersion": "repo-bundled-ofl-1",
+    "roles": {
+      "display": {
+        "family": "Fraunces",
+        "weight": 560
+      },
+      "reading": {
+        "family": "Nunito Sans",
+        "weight": 400
+      },
+      "label": {
+        "family": "Nunito Sans",
+        "weight": 800
+      },
+      "figure": {
+        "family": "Fraunces",
+        "weight": 560
+      },
+      "annotation": {
+        "family": "Space Mono",
+        "weight": 400
+      }
+    }
+  },
+  "dimensions": {
+    "width": 640,
+    "height": 360
+  },
+  "formats": [
+    "gif",
+    "png"
+  ],
+  "decoded": {
+    "width": 640,
+    "height": 360,
+    "frameCount": 35,
+    "delaysMs": [
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      2200,
+      80,
+      80,
+      80,
+      80,
+      80
+    ],
+    "durationMs": 13400,
+    "loopCount": 0,
+    "integrity": true
+  },
+  "ffprobe": {
+    "available": true,
+    "passed": true,
+    "detail": "ffprobe 640×360; 35 frames; 13400ms; matches the independent LZW decode."
+  },
+  "bytes": {
+    "gif": 361933,
+    "png": 31692,
+    "contactSheet": 123834
+  },
+  "hashes": {
+    "briefSha256": "9dc79320efa978c515fa767eef44b330500a8e63da0a8d57da448b95a0bc124b",
+    "gifSha256": "37d5e2362e8034295ee2893f348d58265a742df1cdbdb073a36424a8bb45bafe",
+    "pngSha256": "94d3d5c97bab597d182f573ae4fd50e1ee05354230d6f56264b768143559a762",
+    "contactSheetSha256": "748b7cdd0460df9438ba882f2c8b01df53b72e8e92d72989aab2cf66e6e56c66"
+  },
+  "files": {
+    "gif": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-83db42e3\\docs\\narrative-gif\\semantic\\papercraft\\filas-duplicadas\\art-only\\es\\filas-duplicadas-0690af17-art-only.gif",
+    "png": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-83db42e3\\docs\\narrative-gif\\semantic\\papercraft\\filas-duplicadas\\art-only\\es\\filas-duplicadas-0690af17-art-only.png",
+    "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-83db42e3\\docs\\narrative-gif\\semantic\\papercraft\\filas-duplicadas\\art-only\\es\\filas-duplicadas-0690af17-art-only-contact-sheet.png"
+  },
+  "controls": [
+    {
+      "name": "gif-integrity",
+      "passed": true,
+      "detail": "Independent LZW decode and GIF trailer passed.",
+      "source": "decoded"
+    },
+    {
+      "name": "dimensions",
+      "passed": true,
+      "detail": "decoded 640×360; requested 640×360",
+      "source": "decoded"
+    },
+    {
+      "name": "frame-count",
+      "passed": true,
+      "detail": "35 decoded frame(s)",
+      "source": "decoded"
+    },
+    {
+      "name": "duration",
+      "passed": true,
+      "detail": "13400ms decoded; holds exclude transitions",
+      "source": "decoded"
+    },
+    {
+      "name": "loop",
+      "passed": true,
+      "detail": "repeat=0; result-to-before bridge is explicit",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-holds",
+      "passed": true,
+      "detail": "repeticion-visible 2200/2200ms, duplicado-identificado 2200/2200ms, rechazo-autorizado 2200/2200ms, estado-posterior 2200/2200ms, beneficio-esperado 2200/2200ms",
+      "source": "decoded"
+    },
+    {
+      "name": "ffprobe-crosscheck",
+      "passed": true,
+      "detail": "ffprobe 640×360; 35 frames; 13400ms; matches the independent LZW decode.",
+      "source": "decoded"
+    },
+    {
+      "name": "files",
+      "passed": true,
+      "detail": "GIF 361933B · PNG 31692B · contact 123834B",
+      "source": "decoded"
+    },
+    {
+      "name": "scene-renderer-registered",
+      "passed": true,
+      "detail": "renderer papercraft/papercraft-editorial/1.1.0 exists; visual style likeness remains a separate review",
+      "source": "source"
+    },
+    {
+      "name": "type-system",
+      "passed": true,
+      "detail": "style typeSystem tokens are attached to raster role registry",
+      "source": "source"
+    },
+    {
+      "name": "narrative-subfamily",
+      "passed": true,
+      "detail": "papercraft/editorial selects an explicit narrative art direction",
+      "source": "source"
+    },
+    {
+      "name": "font-registration-and-glyphs",
+      "passed": true,
+      "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "distinct-frames",
+      "passed": true,
+      "detail": "3 unique composited frame(s); a format-valid static GIF does not pass",
+      "source": "pixels"
+    },
+    {
+      "name": "palette-loss",
+      "passed": true,
+      "detail": "47 colors; mean channel loss 1.287, max 11; sampled 35 frames",
+      "source": "pixels"
+    },
+    {
+      "name": "title-complete",
+      "passed": true,
+      "detail": "Filas duplicadas",
+      "source": "source"
+    },
+    {
+      "name": "phase-repeticion-visible-label-complete",
+      "passed": true,
+      "detail": "Repetición visible",
+      "source": "source"
+    },
+    {
+      "name": "phase-repeticion-visible-text-complete",
+      "passed": true,
+      "detail": "Dos filas comparten / REG-204; aún no hay / una decisión.",
+      "source": "source"
+    },
+    {
+      "name": "phase-duplicado-identificado-label-complete",
+      "passed": true,
+      "detail": "Duplicado identificado",
+      "source": "source"
+    },
+    {
+      "name": "phase-duplicado-identificado-text-complete",
+      "passed": true,
+      "detail": "La relación permite / señalar cuál fila está / repetida.",
+      "source": "source"
+    },
+    {
+      "name": "phase-rechazo-autorizado-label-complete",
+      "passed": true,
+      "detail": "Rechazo autorizado",
+      "source": "source"
+    },
+    {
+      "name": "phase-rechazo-autorizado-text-complete",
+      "passed": true,
+      "detail": "La regla ilustrada / detecta y rechaza; no / borra la fila.",
+      "source": "source"
+    },
+    {
+      "name": "phase-estado-posterior-label-complete",
+      "passed": true,
+      "detail": "Estado posterior",
+      "source": "source"
+    },
+    {
+      "name": "phase-estado-posterior-text-complete",
+      "passed": true,
+      "detail": "Ambas filas siguen / visibles; una queda / rechazada.",
+      "source": "source"
+    },
+    {
+      "name": "phase-beneficio-esperado-label-complete",
+      "passed": true,
+      "detail": "Resultado esperado",
+      "source": "source"
+    },
+    {
+      "name": "phase-beneficio-esperado-text-complete",
+      "passed": true,
+      "detail": "Se esperan menos / duplicados aceptados; / el efecto no se mide.",
+      "source": "source"
+    },
+    {
+      "name": "registered-fonts",
+      "passed": true,
+      "detail": "all role faces and Spanish glyphs rendered/measured",
+      "source": "source"
+    },
+    {
+      "name": "review-size-thresholds",
+      "passed": true,
+      "detail": "title 56px; phase body >=36px; label >=24px",
+      "source": "source"
+    },
+    {
+      "name": "640x360-effective-size",
+      "passed": true,
+      "detail": "title 56.0px; body min 36.0px (requires >=20px); label min 24.0px",
+      "source": "source"
+    },
+    {
+      "name": "composition-balance",
+      "passed": false,
+      "severity": "warning",
+      "detail": "WARN · revise; 8×4 decoded-pixel grid against #FBF1E2: empty cells 62.5%, text-column vertical fill 0.0%, art/object area outside the text column 37.5%, largest empty rectangle 62.5%; thresholds: rectangle <=22%, text fill >=60% (text-fill threshold omitted in art-only mode); not an aesthetic score. Per-frame: repeticion-visible · pausa: empty 62.5%, text fill 0.0%, art 37.5%, largest empty 62.5% | repeticion-visible → duplicado-identificado · punto medio de transición: empty 62.5%, text fill 0.0%, art 37.5%, largest empty 62.5% | duplicado-identificado · pausa: empty 62.5%, text fill 0.0%, art 37.5%, largest empty 62.5% | duplicado-identificado → rechazo-autorizado · punto medio de transición: empty 62.5%, text fill 0.0%, art 37.5%, largest empty 62.5% | rechazo-autorizado · pausa: empty 62.5%, text fill 0.0%, art 37.5%, largest empty 62.5% | rechazo-autorizado → estado-posterior · punto medio de transición: empty 62.5%, text fill 0.0%, art 37.5%, largest empty 62.5% | estado-posterior · pausa: empty 62.5%, text fill 0.0%, art 37.5%, largest empty 62.5% | estado-posterior → beneficio-esperado · punto medio de transición: empty 62.5%, text fill 0.0%, art 37.5%, largest empty 62.5% | beneficio-esperado · pausa: empty 62.5%, text fill 0.0%, art 37.5%, largest empty 62.5% | beneficio-esperado → repeticion-visible · unión del ciclo: empty 62.5%, text fill 0.0%, art 37.5%, largest empty 62.5%",
+      "source": "pixels"
+    },
+    {
+      "name": "contrast",
+      "passed": true,
+      "detail": "rendered text colors: ink 9.67:1; label 3.05:1 (not an OCR or per-pixel text measurement)",
+      "source": "source"
+    },
+    {
+      "name": "safe-zone-and-collisions",
+      "passed": true,
+      "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+      "source": "source"
+    },
+    {
+      "name": "stable-reading-holds",
+      "passed": true,
+      "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+      "source": "decoded"
+    },
+    {
+      "name": "phase-count-and-copy",
+      "passed": true,
+      "detail": "5 complete phases; all copy retained",
+      "source": "source"
+    },
+    {
+      "name": "shared-object-identity",
+      "passed": true,
+      "detail": "One scene object instance is created and passed to every phase frame.",
+      "source": "source"
+    },
+    {
+      "name": "visual-state-change",
+      "passed": true,
+      "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+      "source": "pixels"
+    },
+    {
+      "name": "workflow-outcome-separation",
+      "passed": true,
+      "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+      "source": "source"
+    },
+    {
+      "name": "outcome-evidence",
+      "passed": true,
+      "detail": "Expected outcome; no benefit measurement is claimed.",
+      "source": "source"
+    },
+    {
+      "name": "result-follows-outcome",
+      "passed": true,
+      "detail": "outcome=expected; final label=\"Resultado esperado\"",
+      "source": "source"
+    },
+    {
+      "name": "semantic-illustrative-data",
+      "passed": true,
+      "detail": "brief illustrative=true; semantic phase flags=true,true,true,true,true",
+      "source": "source"
+    },
+    {
+      "name": "semantic-object-midpoint:repeticion-visible → duplicado-identificado · punto medio de transición",
+      "passed": true,
+      "detail": "decoded object diff 4.1%; changed-state entities: fila-repetida; tabla default→default 3.0%, fila-original original→original 0.0%, fila-repetida original→flagged 13.6%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:duplicado-identificado → rechazo-autorizado · punto medio de transición",
+      "passed": true,
+      "detail": "decoded object diff 25.9%; changed-state entities: fila-repetida; tabla default→default 18.2%, fila-original original→original 0.0%, fila-repetida flagged→rejected 89.8%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:rechazo-autorizado → estado-posterior · punto medio de transición",
+      "passed": false,
+      "detail": "decoded object diff 0.0%; changed-state entities: none; tabla default→reviewed 0.0%, fila-original original→original 0.0%, fila-repetida rejected→rejected 0.0%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:estado-posterior → beneficio-esperado · punto medio de transición",
+      "passed": false,
+      "detail": "decoded object diff 0.0%; changed-state entities: none; tabla reviewed→reviewed 0.0%, fila-original original→original 0.0%, fila-repetida rejected→rejected 0.0%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-midpoint:beneficio-esperado → repeticion-visible · unión del ciclo",
+      "passed": true,
+      "detail": "decoded object diff 27.4%; changed-state entities: tabla, fila-repetida; tabla reviewed→default 19.3%, fila-original original→original 0.0%, fila-repetida rejected→original 94.7%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:repeticion-visible → duplicado-identificado hold",
+      "passed": true,
+      "detail": "decoded object diff 4.1%; changed-state entities: fila-repetida; tabla default→default 3.0%, fila-original original→original 0.0%, fila-repetida original→flagged 13.6%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:duplicado-identificado → rechazo-autorizado hold",
+      "passed": true,
+      "detail": "decoded object diff 25.9%; changed-state entities: fila-repetida; tabla default→default 18.2%, fila-original original→original 0.0%, fila-repetida flagged→rejected 89.8%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:rechazo-autorizado → estado-posterior hold",
+      "passed": false,
+      "detail": "decoded object diff 0.0%; changed-state entities: none; tabla default→reviewed 0.0%, fila-original original→original 0.0%, fila-repetida rejected→rejected 0.0%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:estado-posterior → beneficio-esperado hold",
+      "passed": false,
+      "detail": "decoded object diff 0.0%; changed-state entities: none; tabla reviewed→reviewed 0.0%, fila-original original→original 0.0%, fila-repetida rejected→rejected 0.0%",
+      "source": "decoded"
+    },
+    {
+      "name": "semantic-object-transformation:beneficio-esperado → repeticion-visible loop join",
+      "passed": true,
+      "detail": "decoded object diff 27.4%; changed-state entities: tabla, fila-repetida; tabla reviewed→default 19.3%, fila-original original→original 0.0%, fila-repetida rejected→original 94.7%",
+      "source": "decoded"
+    }
+  ],
+  "evaluation": {
+    "technical-integrity": {
+      "status": "pass",
+      "controls": [
+        {
+          "name": "gif-integrity",
+          "passed": true,
+          "detail": "Independent LZW decode and GIF trailer passed.",
+          "source": "decoded"
+        },
+        {
+          "name": "dimensions",
+          "passed": true,
+          "detail": "decoded 640×360; requested 640×360",
+          "source": "decoded"
+        },
+        {
+          "name": "frame-count",
+          "passed": true,
+          "detail": "35 decoded frame(s)",
+          "source": "decoded"
+        },
+        {
+          "name": "duration",
+          "passed": true,
+          "detail": "13400ms decoded; holds exclude transitions",
+          "source": "decoded"
+        },
+        {
+          "name": "loop",
+          "passed": true,
+          "detail": "repeat=0; result-to-before bridge is explicit",
+          "source": "decoded"
+        },
+        {
+          "name": "phase-holds",
+          "passed": true,
+          "detail": "repeticion-visible 2200/2200ms, duplicado-identificado 2200/2200ms, rechazo-autorizado 2200/2200ms, estado-posterior 2200/2200ms, beneficio-esperado 2200/2200ms",
+          "source": "decoded"
+        },
+        {
+          "name": "ffprobe-crosscheck",
+          "passed": true,
+          "detail": "ffprobe 640×360; 35 frames; 13400ms; matches the independent LZW decode.",
+          "source": "decoded"
+        },
+        {
+          "name": "files",
+          "passed": true,
+          "detail": "GIF 361933B · PNG 31692B · contact 123834B",
+          "source": "decoded"
+        }
+      ]
+    },
+    "style-conformance": {
+      "status": "pending",
+      "sourceStatus": "pass",
+      "pixelStatus": "pass",
+      "controls": [
+        {
+          "name": "scene-renderer-registered",
+          "passed": true,
+          "detail": "renderer papercraft/papercraft-editorial/1.1.0 exists; visual style likeness remains a separate review",
+          "source": "source"
+        },
+        {
+          "name": "type-system",
+          "passed": true,
+          "detail": "style typeSystem tokens are attached to raster role registry",
+          "source": "source"
+        },
+        {
+          "name": "narrative-subfamily",
+          "passed": true,
+          "detail": "papercraft/editorial selects an explicit narrative art direction",
+          "source": "source"
+        },
+        {
+          "name": "font-registration-and-glyphs",
+          "passed": true,
+          "detail": "registered bundled role faces and required Spanish glyphs were rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "distinct-frames",
+          "passed": true,
+          "detail": "3 unique composited frame(s); a format-valid static GIF does not pass",
+          "source": "pixels"
+        },
+        {
+          "name": "palette-loss",
+          "passed": true,
+          "detail": "47 colors; mean channel loss 1.287, max 11; sampled 35 frames",
+          "source": "pixels"
+        }
+      ],
+      "note": "Source checks identify renderer/font tokens; pixel checks measure frame change and palette loss. Neither substitutes for visual review."
+    },
+    "rendered-legibility": {
+      "status": "revise",
+      "controls": [
+        {
+          "name": "title-complete",
+          "passed": true,
+          "detail": "Filas duplicadas",
+          "source": "source"
+        },
+        {
+          "name": "phase-repeticion-visible-label-complete",
+          "passed": true,
+          "detail": "Repetición visible",
+          "source": "source"
+        },
+        {
+          "name": "phase-repeticion-visible-text-complete",
+          "passed": true,
+          "detail": "Dos filas comparten / REG-204; aún no hay / una decisión.",
+          "source": "source"
+        },
+        {
+          "name": "phase-duplicado-identificado-label-complete",
+          "passed": true,
+          "detail": "Duplicado identificado",
+          "source": "source"
+        },
+        {
+          "name": "phase-duplicado-identificado-text-complete",
+          "passed": true,
+          "detail": "La relación permite / señalar cuál fila está / repetida.",
+          "source": "source"
+        },
+        {
+          "name": "phase-rechazo-autorizado-label-complete",
+          "passed": true,
+          "detail": "Rechazo autorizado",
+          "source": "source"
+        },
+        {
+          "name": "phase-rechazo-autorizado-text-complete",
+          "passed": true,
+          "detail": "La regla ilustrada / detecta y rechaza; no / borra la fila.",
+          "source": "source"
+        },
+        {
+          "name": "phase-estado-posterior-label-complete",
+          "passed": true,
+          "detail": "Estado posterior",
+          "source": "source"
+        },
+        {
+          "name": "phase-estado-posterior-text-complete",
+          "passed": true,
+          "detail": "Ambas filas siguen / visibles; una queda / rechazada.",
+          "source": "source"
+        },
+        {
+          "name": "phase-beneficio-esperado-label-complete",
+          "passed": true,
+          "detail": "Resultado esperado",
+          "source": "source"
+        },
+        {
+          "name": "phase-beneficio-esperado-text-complete",
+          "passed": true,
+          "detail": "Se esperan menos / duplicados aceptados; / el efecto no se mide.",
+          "source": "source"
+        },
+        {
+          "name": "registered-fonts",
+          "passed": true,
+          "detail": "all role faces and Spanish glyphs rendered/measured",
+          "source": "source"
+        },
+        {
+          "name": "review-size-thresholds",
+          "passed": true,
+          "detail": "title 56px; phase body >=36px; label >=24px",
+          "source": "source"
+        },
+        {
+          "name": "640x360-effective-size",
+          "passed": true,
+          "detail": "title 56.0px; body min 36.0px (requires >=20px); label min 24.0px",
+          "source": "source"
+        },
+        {
+          "name": "composition-balance",
+          "passed": false,
+          "severity": "warning",
+          "detail": "WARN · revise; 8×4 decoded-pixel grid against #FBF1E2: empty cells 62.5%, text-column vertical fill 0.0%, art/object area outside the text column 37.5%, largest empty rectangle 62.5%; thresholds: rectangle <=22%, text fill >=60% (text-fill threshold omitted in art-only mode); not an aesthetic score. Per-frame: repeticion-visible · pausa: empty 62.5%, text fill 0.0%, art 37.5%, largest empty 62.5% | repeticion-visible → duplicado-identificado · punto medio de transición: empty 62.5%, text fill 0.0%, art 37.5%, largest empty 62.5% | duplicado-identificado · pausa: empty 62.5%, text fill 0.0%, art 37.5%, largest empty 62.5% | duplicado-identificado → rechazo-autorizado · punto medio de transición: empty 62.5%, text fill 0.0%, art 37.5%, largest empty 62.5% | rechazo-autorizado · pausa: empty 62.5%, text fill 0.0%, art 37.5%, largest empty 62.5% | rechazo-autorizado → estado-posterior · punto medio de transición: empty 62.5%, text fill 0.0%, art 37.5%, largest empty 62.5% | estado-posterior · pausa: empty 62.5%, text fill 0.0%, art 37.5%, largest empty 62.5% | estado-posterior → beneficio-esperado · punto medio de transición: empty 62.5%, text fill 0.0%, art 37.5%, largest empty 62.5% | beneficio-esperado · pausa: empty 62.5%, text fill 0.0%, art 37.5%, largest empty 62.5% | beneficio-esperado → repeticion-visible · unión del ciclo: empty 62.5%, text fill 0.0%, art 37.5%, largest empty 62.5%",
+          "source": "pixels"
+        },
+        {
+          "name": "contrast",
+          "passed": true,
+          "detail": "rendered text colors: ink 9.67:1; label 3.05:1 (not an OCR or per-pixel text measurement)",
+          "source": "source"
+        },
+        {
+          "name": "safe-zone-and-collisions",
+          "passed": true,
+          "detail": "5% safe margin for the text column and reserved art box; boxes do not overlap; per-pixel text collisions are not analyzed",
+          "source": "source"
+        },
+        {
+          "name": "stable-reading-holds",
+          "passed": true,
+          "detail": "Each complete hold is one fixed encoded image with its own GIF delay; transitions are separate frames.",
+          "source": "decoded"
+        }
+      ],
+      "note": "The 8×4 decoded-pixel composition metric is a balance proxy, not an aesthetic score; OCR and human reading at card size remain pending."
+    },
+    "narrative": {
+      "status": "fail",
+      "controls": [
+        {
+          "name": "phase-count-and-copy",
+          "passed": true,
+          "detail": "5 complete phases; all copy retained",
+          "source": "source"
+        },
+        {
+          "name": "shared-object-identity",
+          "passed": true,
+          "detail": "One scene object instance is created and passed to every phase frame.",
+          "source": "source"
+        },
+        {
+          "name": "visual-state-change",
+          "passed": true,
+          "detail": "Phase states may repeat when narratively valid; decoded frames still need to change.",
+          "source": "pixels"
+        },
+        {
+          "name": "workflow-outcome-separation",
+          "passed": true,
+          "detail": "workflowStatus=in-review; outcome=expected; illustrative=true",
+          "source": "source"
+        },
+        {
+          "name": "outcome-evidence",
+          "passed": true,
+          "detail": "Expected outcome; no benefit measurement is claimed.",
+          "source": "source"
+        },
+        {
+          "name": "result-follows-outcome",
+          "passed": true,
+          "detail": "outcome=expected; final label=\"Resultado esperado\"",
+          "source": "source"
+        },
+        {
+          "name": "semantic-illustrative-data",
+          "passed": true,
+          "detail": "brief illustrative=true; semantic phase flags=true,true,true,true,true",
+          "source": "source"
+        },
+        {
+          "name": "semantic-object-midpoint:repeticion-visible → duplicado-identificado · punto medio de transición",
+          "passed": true,
+          "detail": "decoded object diff 4.1%; changed-state entities: fila-repetida; tabla default→default 3.0%, fila-original original→original 0.0%, fila-repetida original→flagged 13.6%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:duplicado-identificado → rechazo-autorizado · punto medio de transición",
+          "passed": true,
+          "detail": "decoded object diff 25.9%; changed-state entities: fila-repetida; tabla default→default 18.2%, fila-original original→original 0.0%, fila-repetida flagged→rejected 89.8%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:rechazo-autorizado → estado-posterior · punto medio de transición",
+          "passed": false,
+          "detail": "decoded object diff 0.0%; changed-state entities: none; tabla default→reviewed 0.0%, fila-original original→original 0.0%, fila-repetida rejected→rejected 0.0%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:estado-posterior → beneficio-esperado · punto medio de transición",
+          "passed": false,
+          "detail": "decoded object diff 0.0%; changed-state entities: none; tabla reviewed→reviewed 0.0%, fila-original original→original 0.0%, fila-repetida rejected→rejected 0.0%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-midpoint:beneficio-esperado → repeticion-visible · unión del ciclo",
+          "passed": true,
+          "detail": "decoded object diff 27.4%; changed-state entities: tabla, fila-repetida; tabla reviewed→default 19.3%, fila-original original→original 0.0%, fila-repetida rejected→original 94.7%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:repeticion-visible → duplicado-identificado hold",
+          "passed": true,
+          "detail": "decoded object diff 4.1%; changed-state entities: fila-repetida; tabla default→default 3.0%, fila-original original→original 0.0%, fila-repetida original→flagged 13.6%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:duplicado-identificado → rechazo-autorizado hold",
+          "passed": true,
+          "detail": "decoded object diff 25.9%; changed-state entities: fila-repetida; tabla default→default 18.2%, fila-original original→original 0.0%, fila-repetida flagged→rejected 89.8%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:rechazo-autorizado → estado-posterior hold",
+          "passed": false,
+          "detail": "decoded object diff 0.0%; changed-state entities: none; tabla default→reviewed 0.0%, fila-original original→original 0.0%, fila-repetida rejected→rejected 0.0%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:estado-posterior → beneficio-esperado hold",
+          "passed": false,
+          "detail": "decoded object diff 0.0%; changed-state entities: none; tabla reviewed→reviewed 0.0%, fila-original original→original 0.0%, fila-repetida rejected→rejected 0.0%",
+          "source": "decoded"
+        },
+        {
+          "name": "semantic-object-transformation:beneficio-esperado → repeticion-visible loop join",
+          "passed": true,
+          "detail": "decoded object diff 27.4%; changed-state entities: tabla, fila-repetida; tabla reviewed→default 19.3%, fila-original original→original 0.0%, fila-repetida rejected→original 94.7%",
+          "source": "decoded"
+        }
+      ],
+      "note": "Automated checks separate work status from expected/observed outcome and confirm required evidence fields; causal meaning and evidence scope still need human review."
+    },
+    "visual-review": {
+      "status": "pending",
+      "criteria": [
+        "identity at 200px thumbnail",
+        "full text and contrast at 640×360",
+        "style material in native frame",
+        "same object and causal change across phases",
+        "result faithful to outcome and evidence scope",
+        "deliberate loop restart"
+      ],
+      "evidence": []
+    },
+    "publicationRecommendation": "none"
+  },
+  "phaseCaptures": [
+    {
+      "phaseId": "repeticion-visible",
+      "labels": [
+        "repeticion-visible · inicio",
+        "repeticion-visible · pausa",
+        "repeticion-visible → duplicado-identificado · punto medio de transición",
+        "repeticion-visible · salida",
+        "reinicio del loop"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-83db42e3\\docs\\narrative-gif\\semantic\\papercraft\\filas-duplicadas\\art-only\\es\\filas-duplicadas-0690af17-art-only-contact-sheet.png"
+    },
+    {
+      "phaseId": "duplicado-identificado",
+      "labels": [
+        "duplicado-identificado · inicio",
+        "duplicado-identificado · pausa",
+        "duplicado-identificado → rechazo-autorizado · punto medio de transición",
+        "duplicado-identificado · salida"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-83db42e3\\docs\\narrative-gif\\semantic\\papercraft\\filas-duplicadas\\art-only\\es\\filas-duplicadas-0690af17-art-only-contact-sheet.png"
+    },
+    {
+      "phaseId": "rechazo-autorizado",
+      "labels": [
+        "rechazo-autorizado · inicio",
+        "rechazo-autorizado · pausa",
+        "rechazo-autorizado → estado-posterior · punto medio de transición",
+        "rechazo-autorizado · salida"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-83db42e3\\docs\\narrative-gif\\semantic\\papercraft\\filas-duplicadas\\art-only\\es\\filas-duplicadas-0690af17-art-only-contact-sheet.png"
+    },
+    {
+      "phaseId": "estado-posterior",
+      "labels": [
+        "estado-posterior · inicio",
+        "estado-posterior · pausa",
+        "estado-posterior → beneficio-esperado · punto medio de transición",
+        "estado-posterior · salida"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-83db42e3\\docs\\narrative-gif\\semantic\\papercraft\\filas-duplicadas\\art-only\\es\\filas-duplicadas-0690af17-art-only-contact-sheet.png"
+    },
+    {
+      "phaseId": "beneficio-esperado",
+      "labels": [
+        "beneficio-esperado · inicio",
+        "beneficio-esperado · pausa",
+        "beneficio-esperado → repeticion-visible · unión del ciclo",
+        "beneficio-esperado · salida"
+      ],
+      "contactSheet": "C:\\Users\\jdsal\\.colmena\\worktrees\\open-beauty-site-quality-83db42e3\\docs\\narrative-gif\\semantic\\papercraft\\filas-duplicadas\\art-only\\es\\filas-duplicadas-0690af17-art-only-contact-sheet.png"
+    }
+  ],
+  "semanticObjectCaptures": [
+    {
+      "label": "repeticion-visible · pausa",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 0,
+      "frameIndex": 1,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 432.19775999999996,
+            "y": 90.1872,
+            "width": 153.20448,
+            "height": 185.61311999999998
+          }
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 437.55991679999994,
+            "y": 127.54932480000001,
+            "width": 142.4801664,
+            "height": 39.2781312
+          }
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 437.55991679999994,
+            "y": 175.4494848,
+            "width": 142.4801664,
+            "height": 39.2781312
+          }
+        }
+      ]
+    },
+    {
+      "label": "repeticion-visible → duplicado-identificado · punto medio de transición",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 0,
+      "frameIndex": 3,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 432.19775999999996,
+            "y": 90.1872,
+            "width": 153.20448,
+            "height": 185.61311999999998
+          }
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 437.55991679999994,
+            "y": 127.54932480000001,
+            "width": 142.4801664,
+            "height": 39.2781312
+          }
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 437.55991679999994,
+            "y": 175.4494848,
+            "width": 142.4801664,
+            "height": 39.2781312
+          }
+        }
+      ]
+    },
+    {
+      "label": "duplicado-identificado · pausa",
+      "phaseIndex": 1,
+      "fromPhaseIndex": 1,
+      "frameIndex": 8,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 432.19775999999996,
+            "y": 90.1872,
+            "width": 153.20448,
+            "height": 185.61311999999998
+          }
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 437.55991679999994,
+            "y": 127.54932480000001,
+            "width": 142.4801664,
+            "height": 39.2781312
+          }
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 437.55991679999994,
+            "y": 175.4494848,
+            "width": 142.4801664,
+            "height": 39.2781312
+          }
+        }
+      ]
+    },
+    {
+      "label": "duplicado-identificado → rechazo-autorizado · punto medio de transición",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 1,
+      "frameIndex": 10,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 432.19775999999996,
+            "y": 90.1872,
+            "width": 153.20448,
+            "height": 185.61311999999998
+          }
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 437.55991679999994,
+            "y": 127.54932480000001,
+            "width": 142.4801664,
+            "height": 39.2781312
+          }
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 437.55991679999994,
+            "y": 175.4494848,
+            "width": 142.4801664,
+            "height": 39.2781312
+          }
+        }
+      ]
+    },
+    {
+      "label": "rechazo-autorizado · pausa",
+      "phaseIndex": 2,
+      "fromPhaseIndex": 2,
+      "frameIndex": 15,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 432.19775999999996,
+            "y": 90.1872,
+            "width": 153.20448,
+            "height": 185.61311999999998
+          }
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 437.55991679999994,
+            "y": 127.54932480000001,
+            "width": 142.4801664,
+            "height": 39.2781312
+          }
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 437.55991679999994,
+            "y": 175.4494848,
+            "width": 142.4801664,
+            "height": 39.2781312
+          }
+        }
+      ]
+    },
+    {
+      "label": "rechazo-autorizado → estado-posterior · punto medio de transición",
+      "phaseIndex": 3,
+      "fromPhaseIndex": 2,
+      "frameIndex": 17,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 432.19775999999996,
+            "y": 90.1872,
+            "width": 153.20448,
+            "height": 185.61311999999998
+          }
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 437.55991679999994,
+            "y": 127.54932480000001,
+            "width": 142.4801664,
+            "height": 39.2781312
+          }
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 437.55991679999994,
+            "y": 175.4494848,
+            "width": 142.4801664,
+            "height": 39.2781312
+          }
+        }
+      ]
+    },
+    {
+      "label": "estado-posterior · pausa",
+      "phaseIndex": 3,
+      "fromPhaseIndex": 3,
+      "frameIndex": 22,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 432.19775999999996,
+            "y": 90.1872,
+            "width": 153.20448,
+            "height": 185.61311999999998
+          }
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 437.55991679999994,
+            "y": 127.54932480000001,
+            "width": 142.4801664,
+            "height": 39.2781312
+          }
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 437.55991679999994,
+            "y": 175.4494848,
+            "width": 142.4801664,
+            "height": 39.2781312
+          }
+        }
+      ]
+    },
+    {
+      "label": "estado-posterior → beneficio-esperado · punto medio de transición",
+      "phaseIndex": 4,
+      "fromPhaseIndex": 3,
+      "frameIndex": 24,
+      "kind": "transition",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 432.19775999999996,
+            "y": 90.1872,
+            "width": 153.20448,
+            "height": 185.61311999999998
+          }
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 437.55991679999994,
+            "y": 127.54932480000001,
+            "width": 142.4801664,
+            "height": 39.2781312
+          }
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 437.55991679999994,
+            "y": 175.4494848,
+            "width": 142.4801664,
+            "height": 39.2781312
+          }
+        }
+      ]
+    },
+    {
+      "label": "beneficio-esperado · pausa",
+      "phaseIndex": 4,
+      "fromPhaseIndex": 4,
+      "frameIndex": 29,
+      "kind": "hold",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 432.19775999999996,
+            "y": 90.1872,
+            "width": 153.20448,
+            "height": 185.61311999999998
+          }
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 437.55991679999994,
+            "y": 127.54932480000001,
+            "width": 142.4801664,
+            "height": 39.2781312
+          }
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 437.55991679999994,
+            "y": 175.4494848,
+            "width": 142.4801664,
+            "height": 39.2781312
+          }
+        }
+      ]
+    },
+    {
+      "label": "beneficio-esperado → repeticion-visible · unión del ciclo",
+      "phaseIndex": 0,
+      "fromPhaseIndex": 4,
+      "frameIndex": 31,
+      "kind": "loop-bridge",
+      "regions": [
+        {
+          "entityId": "tabla",
+          "bounds": {
+            "x": 432.19775999999996,
+            "y": 90.1872,
+            "width": 153.20448,
+            "height": 185.61311999999998
+          }
+        },
+        {
+          "entityId": "fila-original",
+          "bounds": {
+            "x": 437.55991679999994,
+            "y": 127.54932480000001,
+            "width": 142.4801664,
+            "height": 39.2781312
+          }
+        },
+        {
+          "entityId": "fila-repetida",
+          "bounds": {
+            "x": 437.55991679999994,
+            "y": 175.4494848,
+            "width": 142.4801664,
+            "height": 39.2781312
+          }
+        }
+      ]
+    }
+  ],
+  "compositionByFrame": [
+    {
+      "label": "repeticion-visible · pausa",
+      "metrics": {
+        "emptyCellRatio": 0.625,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.375,
+        "largestEmptyRectangleRatio": 0.625
+      }
+    },
+    {
+      "label": "repeticion-visible → duplicado-identificado · punto medio de transición",
+      "metrics": {
+        "emptyCellRatio": 0.625,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.375,
+        "largestEmptyRectangleRatio": 0.625
+      }
+    },
+    {
+      "label": "duplicado-identificado · pausa",
+      "metrics": {
+        "emptyCellRatio": 0.625,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.375,
+        "largestEmptyRectangleRatio": 0.625
+      }
+    },
+    {
+      "label": "duplicado-identificado → rechazo-autorizado · punto medio de transición",
+      "metrics": {
+        "emptyCellRatio": 0.625,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.375,
+        "largestEmptyRectangleRatio": 0.625
+      }
+    },
+    {
+      "label": "rechazo-autorizado · pausa",
+      "metrics": {
+        "emptyCellRatio": 0.625,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.375,
+        "largestEmptyRectangleRatio": 0.625
+      }
+    },
+    {
+      "label": "rechazo-autorizado → estado-posterior · punto medio de transición",
+      "metrics": {
+        "emptyCellRatio": 0.625,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.375,
+        "largestEmptyRectangleRatio": 0.625
+      }
+    },
+    {
+      "label": "estado-posterior · pausa",
+      "metrics": {
+        "emptyCellRatio": 0.625,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.375,
+        "largestEmptyRectangleRatio": 0.625
+      }
+    },
+    {
+      "label": "estado-posterior → beneficio-esperado · punto medio de transición",
+      "metrics": {
+        "emptyCellRatio": 0.625,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.375,
+        "largestEmptyRectangleRatio": 0.625
+      }
+    },
+    {
+      "label": "beneficio-esperado · pausa",
+      "metrics": {
+        "emptyCellRatio": 0.625,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.375,
+        "largestEmptyRectangleRatio": 0.625
+      }
+    },
+    {
+      "label": "beneficio-esperado → repeticion-visible · unión del ciclo",
+      "metrics": {
+        "emptyCellRatio": 0.625,
+        "textColumnFillRatio": 0,
+        "objectAreaRatio": 0.375,
+        "largestEmptyRectangleRatio": 0.625
+      }
+    }
+  ],
+  "palette": {
+    "colors": 47,
+    "meanAbsoluteChannelError": 1.287,
+    "maximumChannelError": 11,
+    "sampledFrames": 35
+  },
+  "phaseHoldsVerified": [
+    {
+      "phaseId": "repeticion-visible",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    },
+    {
+      "phaseId": "duplicado-identificado",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    },
+    {
+      "phaseId": "rechazo-autorizado",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    },
+    {
+      "phaseId": "estado-posterior",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    },
+    {
+      "phaseId": "beneficio-esperado",
+      "requiredMs": 2200,
+      "decodedMs": 2200,
+      "passed": true
+    }
+  ],
+  "timing": {
+    "preset": "concise",
+    "holdsRequestedMs": 11000,
+    "holdsDecodedMs": 11000,
+    "transitionsMs": 1600,
+    "loopBridgeMs": 400,
+    "entryMs": 400,
+    "totalDecodedMs": 13400,
+    "totalDurationBudgetMs": 20000,
+    "phaseHolds": [
+      {
+        "phaseId": "repeticion-visible",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      },
+      {
+        "phaseId": "duplicado-identificado",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      },
+      {
+        "phaseId": "rechazo-autorizado",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      },
+      {
+        "phaseId": "estado-posterior",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      },
+      {
+        "phaseId": "beneficio-esperado",
+        "requestedMs": 2200,
+        "encodedMs": 2200,
+        "decodedMs": 2200
+      }
+    ],
+    "warnings": [
+      {
+        "code": "READING_LOAD",
+        "message": "Phase 1 has about 5.00 words/s (11 label+body words ÷ 2.20s hold); the reading threshold is 3 words/s."
+      },
+      {
+        "code": "READING_LOAD",
+        "message": "Phase 2 has about 4.55 words/s (10 label+body words ÷ 2.20s hold); the reading threshold is 3 words/s."
+      },
+      {
+        "code": "READING_LOAD",
+        "message": "Phase 3 has about 5.45 words/s (12 label+body words ÷ 2.20s hold); the reading threshold is 3 words/s."
+      },
+      {
+        "code": "READING_LOAD",
+        "message": "Phase 4 has about 4.09 words/s (9 label+body words ÷ 2.20s hold); the reading threshold is 3 words/s."
+      },
+      {
+        "code": "READING_LOAD",
+        "message": "Phase 5 has about 5.45 words/s (12 label+body words ÷ 2.20s hold); the reading threshold is 3 words/s."
+      }
+    ]
+  },
+  "resourceEstimate": {
+    "pixelFrames": 8064000,
+    "maxPixelFrames": 96000000,
+    "memoryBytes": 40851456,
+    "maxMemoryBytes": 268435456
+  },
+  "deterministicScope": "Byte-for-byte determinism is verified on the same OS and architecture, Node runtime, pnpm-lock.yaml dependency graph and @napi-rs/canvas/gifenc versions; cross-platform byte equality is not claimed."
+}

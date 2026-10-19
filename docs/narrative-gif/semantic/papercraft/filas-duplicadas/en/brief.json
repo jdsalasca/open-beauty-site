@@ -1,0 +1,130 @@
+{
+  "style": "papercraft",
+  "subfamily": "editorial",
+  "kind": "narrative-gif",
+  "locale": "en",
+  "audience": "Data operations team",
+  "title": "Repeated rows",
+  "workflowStatus": "in-review",
+  "outcome": {
+    "mode": "expected",
+    "scopeNote": "Illustrative example: the flow is expected to reduce the risk of accepting repeated rows; it does not claim record deletion or measured impact."
+  },
+  "illustrative": true,
+  "badgePolicy": "none",
+  "phases": [
+    {
+      "id": "repetition-visible",
+      "label": "Repetition visible",
+      "text": "Two rows share REC-204; no decision is marked yet.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "before",
+        "semantic": {
+          "primitive": "table-rows",
+          "illustrative": true,
+          "entities": [
+            { "id": "table", "kind": "table" },
+            { "id": "original-row", "kind": "row", "label": "REC-204", "value": "REC-204" },
+            { "id": "repeated-row", "kind": "row", "label": "REC-204", "value": "REC-204" }
+          ],
+          "relations": [{ "kind": "duplicate-of", "from": "repeated-row", "to": "original-row" }],
+          "states": { "table": "default", "original-row": "original", "repeated-row": "original" },
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "duplicate-identified",
+      "label": "Duplicate identified",
+      "text": "The relation identifies which row is repeated.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "flagged",
+        "semantic": {
+          "primitive": "table-rows",
+          "illustrative": true,
+          "entities": [
+            { "id": "table", "kind": "table" },
+            { "id": "original-row", "kind": "row", "label": "REC-204", "value": "REC-204" },
+            { "id": "repeated-row", "kind": "row", "label": "REC-204", "value": "REC-204" }
+          ],
+          "relations": [{ "kind": "duplicate-of", "from": "repeated-row", "to": "original-row" }],
+          "states": { "table": "default", "original-row": "original", "repeated-row": "flagged" },
+          "actions": [{ "entityId": "repeated-row", "type": "detect" }]
+        }
+      }
+    },
+    {
+      "id": "authorized-rejection",
+      "label": "Authorized rejection",
+      "text": "It detects and rejects the repeated row; it does not delete it.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "review-ready",
+        "semantic": {
+          "primitive": "table-rows",
+          "illustrative": true,
+          "entities": [
+            { "id": "table", "kind": "table" },
+            { "id": "original-row", "kind": "row", "label": "REC-204", "value": "REC-204" },
+            { "id": "repeated-row", "kind": "row", "label": "REC-204", "value": "REC-204" }
+          ],
+          "relations": [{ "kind": "duplicate-of", "from": "repeated-row", "to": "original-row" }],
+          "states": { "table": "default", "original-row": "original", "repeated-row": "rejected" },
+          "actions": [{ "entityId": "repeated-row", "type": "reject" }]
+        }
+      }
+    },
+    {
+      "id": "state-after",
+      "label": "State after",
+      "text": "Both rows remain visible; one stays rejected.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "review-ready",
+        "semantic": {
+          "primitive": "table-rows",
+          "illustrative": true,
+          "entities": [
+            { "id": "table", "kind": "table" },
+            { "id": "original-row", "kind": "row", "label": "REC-204", "value": "REC-204" },
+            { "id": "repeated-row", "kind": "row", "label": "REC-204", "value": "REC-204" }
+          ],
+          "relations": [{ "kind": "duplicate-of", "from": "repeated-row", "to": "original-row" }],
+          "states": { "table": "reviewed", "original-row": "original", "repeated-row": "rejected" },
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "expected-benefit",
+      "label": "Expected benefit",
+      "text": "Fewer duplicates are expected; the effect is not measured.",
+      "holdMs": 2200,
+      "visual": {
+        "kind": "comparison",
+        "state": "review-ready",
+        "semantic": {
+          "primitive": "table-rows",
+          "illustrative": true,
+          "entities": [
+            { "id": "table", "kind": "table" },
+            { "id": "original-row", "kind": "row", "label": "REC-204", "value": "REC-204" },
+            { "id": "repeated-row", "kind": "row", "label": "REC-204", "value": "REC-204" }
+          ],
+          "relations": [{ "kind": "duplicate-of", "from": "repeated-row", "to": "original-row" }],
+          "states": { "table": "reviewed", "original-row": "original", "repeated-row": "rejected" },
+          "actions": []
+        }
+      }
+    }
+  ],
+  "playback": { "preset": "concise", "minReadableHoldMs": 2200, "transitionMs": 400, "loop": true, "totalDurationBudgetMs": 20000 },
+  "output": { "width": 640, "height": 360, "formats": ["gif", "png"] },
+  "seed": 7
+}
