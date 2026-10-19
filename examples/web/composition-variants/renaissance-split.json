@@ -1,0 +1,52 @@
+{
+  "title": "Guía de revisión del archivo de planos",
+  "tagline": "Una fila duplicada, una validación y una indicación para corregir.",
+  "intro": "La guía acompaña la revisión semanal de la ficha de planos. Esta edición explica qué ocurre cuando una fila llega completamente duplicada: la validación la detecta, la rechaza y devuelve una indicación concreta para corregirla.",
+  "brand": "Archivo de Planos",
+  "eyebrow": "Edición · Mesa de revisión",
+  "sections": [
+    {
+      "kicker": "01 / Contexto",
+      "title": "La mesa de revisión",
+      "body": "Cada persona carga su tramo en la ficha compartida. Las filas se leen en orden y se comparan con la versión anterior antes de avanzar.",
+      "kind": "explanation"
+    },
+    {
+      "kicker": "02 / Detección",
+      "title": "La fila completamente duplicada",
+      "body": "La validación compara el contenido completo de la fila con las anteriores y la marca como duplicada cuando todos sus campos coinciden. No borra nada: solo señala el problema.",
+      "kind": "comparison"
+    },
+    {
+      "kicker": "03 / Rechazo",
+      "title": "La guía no se publica así",
+      "body": "La versión con la fila repetida se rechaza y queda en la cola de revisión. La persona ve la fila señalada y el campo que coincide para poder comprobarlo.",
+      "kind": "process"
+    },
+    {
+      "kicker": "04 / Corrección",
+      "title": "La indicación para corregir",
+      "body": "La persona recibe una indicación clara: verificar si la fila pertenece a otra hoja, completar el dato que falta o pedir revisión al archivo. Después corrige y vuelve a enviar.",
+      "kind": "process"
+    },
+    {
+      "kicker": "05 / Cierre",
+      "title": "Volver a revisar",
+      "body": "La ficha corregida vuelve a la cola de validación. La guía no promete que el problema no reaparezca: solo confirma que esta versión ya no contiene la fila duplicada.",
+      "kind": "cta"
+    }
+  ],
+  "quote": {
+    "text": "Una guía no arregla el archivo: deja ver dónde mirar.",
+    "author": "Equipo de archivo"
+  },
+  "cta": {
+    "label": "Pedir la guía",
+    "href": "#contacto"
+  },
+  "footer": "Archivo de Planos · Material de trabajo",
+  "locale": "es",
+  "seed": 3,
+  "composition": "split",
+  "scene": "table"
+}

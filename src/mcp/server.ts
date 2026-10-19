@@ -80,6 +80,10 @@ const sectionSchema = z.object({
   kicker: z.string().max(40).optional().describe('Tiny label above the card title.'),
   title: z.string().min(1).max(80).describe('Card title.'),
   body: z.string().min(1).max(400).describe('One or two sentences.'),
+  kind: z
+    .enum(['default', 'explanation', 'comparison', 'process', 'cta'])
+    .optional()
+    .describe('Composition role below the hero; used by split and stepper variants.'),
 });
 
 const quoteSchema = z.object({
@@ -186,6 +190,18 @@ const briefFields = {
     .optional()
     .describe('Closing section copy for the final call to action.'),
   footer: z.string().max(160).optional(),
+  scene: z
+    .enum(['table', 'vitrine', 'river', 'house', 'stage', 'plant', 'window', 'none'])
+    .optional()
+    .describe('Content-driven hero scene; an unsupported value is rejected by the schema.'),
+  heroArt: z
+    .union([z.literal('collage'), z.enum(['table', 'vitrine', 'river', 'house', 'stage', 'plant', 'window', 'none'])])
+    .optional()
+    .describe('Explicit hero-art choice: keep the fixed collage or draw a scene.'),
+  composition: z
+    .enum(['editorial', 'split', 'stepper'])
+    .optional()
+    .describe('Below-hero composition variant chosen by the brief, never at random. Defaults to editorial.'),
   locale: localeEnum.optional().describe('Microcopy language. Defaults to Spanish.'),
   seed: z.number().int().min(0).max(9999).optional().describe('Changes decorative variation deterministically.'),
   subfamily: z.string().max(40).optional().describe('Curated subfamily slug from beauty_get_style.'),
@@ -282,6 +298,9 @@ function briefFromArgs(args: PageInput): Partial<PageBrief> {
     cta: args.cta,
     closing: args.closing,
     footer: args.footer,
+    scene: args.scene,
+    heroArt: args.heroArt,
+    composition: args.composition,
     locale: args.locale,
     seed: args.seed,
     subfamily: args.subfamily,

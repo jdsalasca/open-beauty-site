@@ -1,6 +1,7 @@
 import type { PageBrief, StylePreset } from '../types.js';
 import { arrowSvg, esc, labels, normalizeBrief, resolveClosing, safeHref, shell, splitAccent, t, REVEAL_SCRIPT } from './common.js';
 import { sceneArt } from '../art.js';
+import { heroArtForScene } from './composition.js';
 
 function leafMark(): string {
   return `<svg class="leaf-mark" viewBox="0 0 120 40" aria-hidden="true"><path d="M4 34c18-2 30-13 38-30M42 6c12 2 22 9 28 21M14 30c8-9 18-13 30-12" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>`;
@@ -42,7 +43,7 @@ export function renderNatureMemory(input: Partial<PageBrief>, preset: StylePrese
     </div>
     <figure class="nature-plate reveal" style="--i:1">
       <div class="nature-plate-head"><span>${esc(t(locale, 'Lámina 01', 'Plate 01'))}</span><span>${esc(t(locale, 'Prensado / 2026', 'Pressed / 2026'))}</span></div>
-      <div class="nature-plate-art">${sceneArt(preset, 0, brief.eyebrow || 'HERBARIUM', 'plant')}</div>
+      <div class="nature-plate-art">${heroArtForScene(brief, preset, () => sceneArt(preset, 0, brief.eyebrow || 'HERBARIUM', 'plant'), brief.title)}</div>
       <figcaption><span>${esc(t(locale, 'Espécimen de archivo', 'Archive specimen'))}</span><span>${esc(brand)}</span></figcaption>
     </figure>
   </section>

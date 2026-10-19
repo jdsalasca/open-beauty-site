@@ -21,11 +21,29 @@ export type { PageClosingBrief, PageBrief } from './types/page-brief.js';
 
 export type Locale = 'es' | 'en';
 
+/**
+ * Below-hero composition variant for a page. `editorial` is the current
+ * default layout; `split` splits the hero and adds an explanatory band;
+ * `stepper` is process-led. The variant is chosen by the brief, never by
+ * chance; a seed may only pick between equivalent variants (see
+ * docs/art-direction/ROUTES.md §5).
+ */
+export type PageComposition = 'editorial' | 'split' | 'stepper';
+
+/**
+ * Semantic section type used by the composition variants below the hero. It
+ * keeps the style identity: the renderer consumes the style tokens, only the
+ * role and order change.
+ */
+export type SectionKind = 'default' | 'explanation' | 'comparison' | 'process' | 'cta';
+
 export interface SectionBrief {
   /** Short label above the heading, e.g. "01 — Ritual". */
   kicker?: string;
   title: string;
   body: string;
+  /** Optional composition role; defaults to `default`. */
+  kind?: SectionKind;
 }
 
 export interface QuoteBrief {
@@ -459,6 +477,21 @@ export interface Brief {
   seed?: number;
   /** Optional curated subfamily slug; see the style guide. */
   subfamily?: string;
+  /**
+   * Content-driven hero illustration, using the same `sceneArt` vocabulary
+   * (`table`, `vitrine`, `river`, `house`, `stage`, `plant`, `window`). When
+   * omitted the renderer keeps its fixed illustration. An unsupported value is
+   * reported as a visible warning, never substituted silently.
+   */
+  scene?: SceneSubject | (string & {});
+  /**
+   * Explicit hero-art choice. `collage` selects the fixed template; a scene
+   * subject selects the content-driven illustration. Defaults to the fixed
+   * template when the brief gives no scene.
+   */
+  heroArt?: 'collage' | SceneSubject | (string & {});
+  /** Below-hero composition variant. Defaults to `editorial`. */
+  composition?: PageComposition;
   /** Push art direction, typography and motion to the maximum. */
   maxxing?: boolean;
 }

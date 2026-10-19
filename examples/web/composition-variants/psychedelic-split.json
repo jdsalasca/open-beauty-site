@@ -1,0 +1,52 @@
+{
+  "title": "Guía de la ficha de recitales",
+  "tagline": "Una fila completamente duplicada se detecta y se explica.",
+  "intro": "La guía reúne la ficha de recitales de la sala. Esta edición se detiene en un caso concreto: una fila completamente duplicada que la validación detecta y rechaza, con una indicación para que la persona la corrija.",
+  "brand": "Sala Circular",
+  "eyebrow": "Cartel · Ficha de recitales",
+  "sections": [
+    {
+      "kicker": "01 / Contexto",
+      "title": "La ficha de la sala",
+      "body": "Cada recital anota su programación en la misma ficha. Las filas se revisan en orden antes de publicar la versión del día.",
+      "kind": "explanation"
+    },
+    {
+      "kicker": "02 / Detección",
+      "title": "Una fila completamente duplicada",
+      "body": "La validación compara la fila con las anteriores. Cuando todos los campos coinciden, la marca como duplicada y la deja fuera de la publicación.",
+      "kind": "comparison"
+    },
+    {
+      "kicker": "03 / Rechazo",
+      "title": "La ficha no se publica así",
+      "body": "La versión con la fila repetida se rechaza. La persona ve la fila señalada y el campo que coincide, sin que la guía afirme que se borró algo.",
+      "kind": "process"
+    },
+    {
+      "kicker": "04 / Corrección",
+      "title": "La indicación para corregir",
+      "body": "La indicación pide comprobar si la fila pertenece a otra fecha, completar el dato que falta o consultar con producción. Después se corrige y se vuelve a enviar.",
+      "kind": "process"
+    },
+    {
+      "kicker": "05 / Cierre",
+      "title": "Volver a la cola",
+      "body": "La ficha corregida vuelve a la cola de validación. La guía no promete que no haya más errores: solo confirma que esta versión ya no contiene la fila duplicada.",
+      "kind": "cta"
+    }
+  ],
+  "quote": {
+    "text": "La sala se ordena cuando alguien se anima a señalar el error.",
+    "author": "Producción"
+  },
+  "cta": {
+    "label": "Ver la programación",
+    "href": "#contacto"
+  },
+  "footer": "Sala Circular · Material interno",
+  "locale": "es",
+  "seed": 9,
+  "composition": "split",
+  "scene": "stage"
+}

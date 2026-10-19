@@ -1,0 +1,52 @@
+{
+  "title": "Guía de revisión del registro de especies",
+  "tagline": "Detección, rechazo y corrección de una fila duplicada.",
+  "intro": "La guía acompaña el registro de especies del archivo. Esta edición muestra el recorrido de una fila completamente duplicada: la validación la detecta, la rechaza y le devuelve a la persona una indicación para corregirla.",
+  "brand": "Registro de Especies",
+  "eyebrow": "Manuscrito · Registro de especies",
+  "sections": [
+    {
+      "kicker": "01 / Contexto",
+      "title": "El registro compartido",
+      "body": "Cada investigador carga sus observaciones en una ficha común. Antes de publicar, las filas se comparan con las que ya están registradas.",
+      "kind": "explanation"
+    },
+    {
+      "kicker": "02 / Detección",
+      "title": "La fila repetida",
+      "body": "La validación compara el contenido completo de la fila con las anteriores. Si todos los campos coinciden, la marca como duplicada.",
+      "kind": "comparison"
+    },
+    {
+      "kicker": "03 / Rechazo",
+      "title": "La versión no se publica",
+      "body": "El registro con la fila repetida se rechaza. La validación muestra la fila señalada y el campo que coincide para que la persona pueda comprobarlo.",
+      "kind": "process"
+    },
+    {
+      "kicker": "04 / Corrección",
+      "title": "La indicación para corregir",
+      "body": "La persona recibe una indicación clara: verificar si la fila pertenece a otra hoja, completar el dato que falta o pedir revisión al archivo. Después corrige y vuelve a enviar.",
+      "kind": "process"
+    },
+    {
+      "kicker": "05 / Cierre",
+      "title": "Nueva revisión",
+      "body": "La ficha corregida vuelve a la cola de validación. La guía no afirma que se haya borrado nada ni promete que el problema no reaparezca.",
+      "kind": "cta"
+    }
+  ],
+  "quote": {
+    "text": "El registro no decide por nosotros: nos muestra dónde mirar.",
+    "author": "Equipo de archivo"
+  },
+  "cta": {
+    "label": "Consultar el registro",
+    "href": "#contacto"
+  },
+  "footer": "Registro de Especies · Documento de trabajo",
+  "locale": "es",
+  "seed": 8,
+  "composition": "stepper",
+  "scene": "plant"
+}

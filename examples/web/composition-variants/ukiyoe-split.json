@@ -1,0 +1,52 @@
+{
+  "title": "Guía de la ficha de estaciones",
+  "tagline": "Una fila completamente duplicada y la indicación para corregirla.",
+  "intro": "La guía ordena la ficha de estaciones de la colección. Esta edición describe qué ocurre cuando una fila llega completamente duplicada: la validación la detecta, la rechaza y la persona recibe una indicación para corregirla.",
+  "brand": "Colección Estaciones",
+  "eyebrow": "Estampa · Ficha de estaciones",
+  "sections": [
+    {
+      "kicker": "01 / Contexto",
+      "title": "La ficha de la colección",
+      "body": "Cada estación anota sus piezas en una ficha común. Las filas se revisan en orden antes de publicar la versión del día.",
+      "kind": "explanation"
+    },
+    {
+      "kicker": "02 / Detección",
+      "title": "Una fila completamente duplicada",
+      "body": "La validación compara la fila con las anteriores. Cuando todos los campos coinciden, la marca como duplicada y no la deja pasar.",
+      "kind": "comparison"
+    },
+    {
+      "kicker": "03 / Rechazo",
+      "title": "El rechazo de la versión",
+      "body": "La ficha con la fila repetida se rechaza. La persona ve la fila señalada y el campo que coincide, sin que la guía afirme que se borró algo.",
+      "kind": "process"
+    },
+    {
+      "kicker": "04 / Corrección",
+      "title": "La indicación para corregir",
+      "body": "La indicación pide comprobar si la fila pertenece a otra estación, completar el dato que falta o consultar con el archivo. Después se corrige y se vuelve a enviar.",
+      "kind": "process"
+    },
+    {
+      "kicker": "05 / Cierre",
+      "title": "Una nueva revisión",
+      "body": "La ficha corregida vuelve a la cola de validación. La guía no promete que no haya más errores: solo confirma que esta versión ya no contiene la fila duplicada.",
+      "kind": "cta"
+    }
+  ],
+  "quote": {
+    "text": "Mirar dos veces también es una forma de cuidar.",
+    "author": "Equipo de colección"
+  },
+  "cta": {
+    "label": "Abrir la estampa",
+    "href": "#contacto"
+  },
+  "footer": "Colección Estaciones · Material de trabajo",
+  "locale": "es",
+  "seed": 7,
+  "composition": "split",
+  "scene": "river"
+}

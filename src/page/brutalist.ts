@@ -12,6 +12,7 @@ import {
   splitAccent,
   t,
 } from './common.js';
+import { heroArtForScene } from './composition.js';
 
 function glyphSvg(): string {
   return `<svg viewBox="0 0 320 320" fill="none" aria-hidden="true">
@@ -100,7 +101,7 @@ export function renderBrutalist(input: Partial<PageBrief>, preset: StylePreset):
     </div>
     <aside class="hero-aside reveal" style="--d:2">
       <div class="aside-top"><span>FIG. 01</span><span>SCALE 1:1</span></div>
-      <div class="glyph">${glyphSvg()}</div>
+      <div class="glyph">${heroArtForScene(brief, preset, glyphSvg, brief.title)}</div>
       <div class="aside-bottom"><span>${esc(t(locale, 'SISTEMA DE DISEÑO', 'DESIGN SYSTEM'))}</span><span class="aside-arrow">↗</span></div>
     </aside>
   </section>

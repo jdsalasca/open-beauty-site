@@ -11,6 +11,7 @@ import {
   splitAccent,
   t,
 } from './common.js';
+import { heroArtForScene } from './composition.js';
 
 function flowerMark(size = 20): string {
   return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6">
@@ -19,8 +20,8 @@ function flowerMark(size = 20): string {
 </svg>`;
 }
 
-function heroArt(): string {
-  return `<div class="hero-art reveal" style="--d:3" aria-hidden="true">
+function collageSvg(): string {
+  return `
   <svg viewBox="0 0 560 560" class="collage">
     <defs>
       <filter id="paperShadow" x="-25%" y="-25%" width="150%" height="150%">
@@ -96,7 +97,7 @@ function heroArt(): string {
       </g>
     </g>
   </svg>
-</div>`;
+`;
 }
 
 function scallop(color: string, flip = false): string {
@@ -130,6 +131,7 @@ export function renderPapercraft(input: Partial<PageBrief>, preset: StylePreset)
   const year = new Date().getFullYear();
   const variant = (brief.seed ?? 0) % 3;
   const worksHref = sections.length ? '#works' : '#contact';
+  const hero = heroArtForScene(brief, preset, () => collageSvg(), brief.title);
 
   const cards = sections
     .map(
@@ -166,7 +168,7 @@ export function renderPapercraft(input: Partial<PageBrief>, preset: StylePreset)
       </div>
       <p class="hand-note reveal" style="--d:4">${esc(t(locale, 'Cortado, pegado y pensado a mano.', 'Cut, glued and thought by hand.'))}</p>
     </div>
-    ${heroArt()}
+    <div class="hero-art reveal" style="--d:3" aria-hidden="true">${hero}</div>
   </section>
 
   ${scallop(preset.palette.surface)}

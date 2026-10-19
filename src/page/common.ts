@@ -84,12 +84,16 @@ export function normalizeBrief(input: Partial<PageBrief> & { closing?: PageClosi
   }
 
   const locale: Locale = input.locale === 'en' ? 'en' : 'es';
+  const sectionKinds = ['default', 'explanation', 'comparison', 'process', 'cta'] as const;
   const sections: SectionBrief[] = (input.sections ?? [])
     .slice(0, 6)
     .map((section, index) => ({
       kicker: clampText(section?.kicker ?? '', 28) || undefined,
       title: clampText(section?.title, 64) || `Capítulo ${index + 1}`,
       body: clampText(section?.body, 320),
+      kind: sectionKinds.includes(section?.kind as (typeof sectionKinds)[number])
+        ? (section.kind as (typeof sectionKinds)[number])
+        : undefined,
     }))
     .filter((section) => section.title.length > 0);
 
@@ -98,6 +102,10 @@ export function normalizeBrief(input: Partial<PageBrief> & { closing?: PageClosi
   const closingTitle = clampText(closingInput?.title, 90);
   const closingText = clampText(closingInput?.text, 240);
   const closingLabel = clampText(closingInput?.cta?.label, 30);
+  const composition =
+    input.composition === 'split' || input.composition === 'stepper' || input.composition === 'editorial'
+      ? input.composition
+      : undefined;
 
   return {
     title,
@@ -134,6 +142,9 @@ export function normalizeBrief(input: Partial<PageBrief> & { closing?: PageClosi
     locale,
     seed: Number.isFinite(input.seed) ? Math.abs(Math.trunc(input.seed as number)) : 0,
     subfamily: clampText(input.subfamily, 40) || undefined,
+    scene: clampText(input.scene, 40) || undefined,
+    heroArt: clampText(input.heroArt, 40) || undefined,
+    composition,
   };
 }
 

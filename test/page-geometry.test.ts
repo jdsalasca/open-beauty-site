@@ -86,6 +86,52 @@ test('every style page passes the geometry contract from 320px to 1440px', async
   });
 });
 
+const COMPOSITION_WIDTHS: Array<[number, number]> = [
+  [360, 780],
+  [768, 900],
+  [1440, 900],
+];
+
+test('composition variants and scene heroes pass geometry at 360, 768 and 1440px', async (t) => {
+  await withGeometryBrowser(t, async (browser) => {
+    try {
+      for (const style of styleSlugs) {
+        const recipe = await recipeBrief(style);
+        for (const composition of ['split', 'stepper'] as const) {
+          const html = renderPage(style, {
+            ...recipe,
+            composition,
+            scene: 'table',
+            sections: [
+              { kicker: '01 / Guía', title: 'Guía', body: 'Una fila completamente duplicada espera la validación.', kind: 'explanation' },
+              { kicker: '02 / Detección', title: 'Detección', body: 'La validación señala la fila repetida y la rechaza.', kind: 'comparison' },
+              { kicker: '03 / Corrección', title: 'Corrección', body: 'La persona recibe una indicación para corregir la fila.', kind: 'process' },
+              { kicker: '04 / Revisión', title: 'Revisión', body: 'La fila corregida vuelve a revisarse sin afirmar borrado.', kind: 'process' },
+            ],
+          });
+          const url = writeTempPage(html, `${style}-${composition}.html`);
+          for (const [width, height] of COMPOSITION_WIDTHS) {
+            const { page, close } = await openGeometryPage(browser, { width, height });
+            await page.goto(url, { waitUntil: 'domcontentloaded', timeout: browserTimeoutMs() });
+            await settle(page);
+            const issues = await geometryIssues(page);
+            assert.deepEqual(
+              issues,
+              [],
+              `${style}/${composition} @ ${width}×${height}: ${issues.length} geometry violation(s)\n${issues
+                .map((issue) => `- [${issue.kind}] ${issue.detail}`)
+                .join('\n')}`,
+            );
+            await close();
+          }
+        }
+      }
+    } finally {
+      cleanupTempPages();
+    }
+  });
+});
+
 test('four and five card grids never leave a single orphan item', async (t) => {
   await withGeometryBrowser(t, async (browser) => {
     try {
