@@ -123,10 +123,7 @@ export async function renderSequence(input: Partial<SequenceBrief>): Promise<{ s
   const canvas = createCanvas(width, height);
   const ctx = canvas.getContext('2d');
   const gif = GIFEncoder();
-  let palette: ReturnType<typeof quantize> | null = null;
-  const maxGifFrames = 360;
-  const planned = frames.reduce((sum, frame) => sum + Math.max(1, Math.round(fps * (frame.duration ?? 2.4))), 0);
-  const repeats = Math.max(1, Math.floor(maxGifFrames / planned));
+  const rgbaFrames: Uint8ClampedArray[] = [];
   for (let index = 0; index < frames.length; index += 1) {
     const frame = frames[index]!;
     const svgString = innerSvg(frameSvg(preset, { ...input, style: preset.slug }, frame, width, height, [], rasterFonts(preset)));
@@ -134,17 +131,36 @@ export async function renderSequence(input: Partial<SequenceBrief>): Promise<{ s
     const image = await loadImage(data);
     ctx.clearRect(0, 0, width, height);
     ctx.drawImage(image, 0, 0, width, height);
-    const pixels = ctx.getImageData(0, 0, width, height).data;
-    if (!palette) palette = quantize(pixels, 128, { format: 'rgb444' });
-    const count = Math.max(1, Math.round(fps * (frame.duration ?? 2.4)) * repeats);
-    for (let n = 0; n < count; n += 1) {
-      const indexData = applyPalette(pixels, palette, 'rgb444');
-      gif.writeFrame(indexData, width, height, {
-        palette,
-        delay: Math.round(1000 / fps),
-        repeat: index === 0 && n === 0 ? 0 : undefined,
-      });
+    rgbaFrames.push(ctx.getImageData(0, 0, width, height).data);
+  }
+
+  // Give every authored scene a representative vote so later phases do not
+  // inherit a palette made only from the opening image. Keep sampling bounded
+  // independently of canvas dimensions.
+  const pixelCount = width * height;
+  const samplesPerFrame = Math.min(pixelCount, 65_536);
+  const sampleStride = Math.max(1, Math.ceil(pixelCount / samplesPerFrame));
+  const paletteSamples = new Uint8Array(samplesPerFrame * rgbaFrames.length * 4);
+  let sampleOffset = 0;
+  for (const pixels of rgbaFrames) {
+    for (let pixel = 0; pixel < pixelCount; pixel += sampleStride) {
+      const offset = pixel * 4;
+      paletteSamples[sampleOffset++] = pixels[offset]!;
+      paletteSamples[sampleOffset++] = pixels[offset + 1]!;
+      paletteSamples[sampleOffset++] = pixels[offset + 2]!;
+      paletteSamples[sampleOffset++] = pixels[offset + 3]!;
     }
+  }
+  const palette = quantize(paletteSamples.subarray(0, sampleOffset), 128, { format: 'rgb444' });
+
+  for (let index = 0; index < frames.length; index += 1) {
+    const frame = frames[index]!;
+    const indexData = applyPalette(rgbaFrames[index]!, palette, 'rgb444');
+    gif.writeFrame(indexData, width, height, {
+      palette,
+      delay: Math.round((frame.duration ?? 2.4) * 1000),
+      repeat: index === 0 ? 0 : undefined,
+    });
   }
   gif.finish();
   gifBytes = Buffer.from(gif.bytes());
@@ -160,7 +176,7 @@ export async function renderSequence(input: Partial<SequenceBrief>): Promise<{ s
     checks: [
       { name: 'frames', passed: frames.length >= 2, detail: `${frames.length} frame(s)` },
       { name: 'assets-alt', passed: assets.every(Boolean), detail: `${assets.length} asset alt(s)` },
-      { name: 'palette', passed: true, detail: 'canvas palette enforced per frame' },
+      { name: 'palette', passed: true, detail: `one palette sampled across all ${frames.length} scenes` },
       { name: 'animation', passed: /@keyframes/.test(svg), detail: 'frame keyframes present' },
       { name: 'reduced-motion', passed: /prefers-reduced-motion/.test(svg), detail: 'reduced motion shows first frame' },
       { name: 'gif', passed: input.gif === false || Boolean(gifBytes?.length), detail: input.gif === false ? 'skipped (SVG-only)' : `${Math.round((gifBytes?.length ?? 0) / 1024)} KB GIF` },
