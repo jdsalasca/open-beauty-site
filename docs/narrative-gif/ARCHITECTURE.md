@@ -1,6 +1,6 @@
 # Narrative GIF foundation: architecture decision
 
-**Status:** Stage A and the Stage B foundation are complete. The two production pilots are papercraft/editorial and brutalist/documentary; brutalist/poster remains available. The other eleven styles have no production scene.
+**Status:** Stage A, the Stage B foundation, and all 13 narrative style renderers are complete. Visual sign-off remains pending. Production scenes cover artdeco, bestiary, brutalist, galactic, isotype, memphis, nature, opart, papercraft, psychedelic, renaissance, ukiyoe, and vaporwave. Brutalist/poster remains available.
 
 ## Decision
 
@@ -16,7 +16,7 @@ brief.ts ──► normalized brief + canonical SHA-256
     ├──► fonts.ts ──► existing StylePreset.typeSystem + registered raster roles
     ├──► layout.ts ──► width/height fit, safe area, reserved art area, card-size measures
     ├──► timeline.ts ──► entry, visible hold, transition, explicit loop bridge
-    └──► scene.ts ──► NarrativeScene registry (papercraft + brutalist pilots)
+    └──► scene.ts ──► NarrativeScene registry (13 styles; one renderer per StyleSlug)
                          │
                          ▼
                     encode.ts ──► GIF + PNG + contact sheet
@@ -26,7 +26,7 @@ brief.ts ──► normalized brief + canonical SHA-256
                          └──► manifest.ts (inputs, files, hashes, decode and controls)
 ```
 
-The scene gets the normalized brief, phase index, local time, safe boxes, all font roles and a seeded RNG. The engine creates one `object` once and passes that same reference to every phase. Production `supportedNarrativeStyles()` is `brutalist, papercraft`; unsupported requests return `STYLE_NOT_SUPPORTED_YET` with that complete supported-style list. `test/support/narrative-scene.ts` injects one tiny renderer only in foundation-specific tests.
+The scene gets the normalized brief, phase index, local time, safe boxes, all font roles and a seeded RNG. The engine creates one `object` once and passes that same reference to every phase. Production `supportedNarrativeStyles()` returns all 13 `StyleSlug` values, each registered once; a renderer lookup for an unknown value returns `STYLE_NOT_SUPPORTED_YET`. `test/support/narrative-scene.ts` injects one tiny renderer only in foundation-specific tests.
 
 ## Reuse and compatibility
 
@@ -42,6 +42,20 @@ The scene gets the normalized brief, phase index, local time, safe boxes, all fo
 
 The timeline rejects more than 360 frames, more than 96 million pixel-frames and an estimated working set over 256MiB (GIF output, raster buffers, samples and contact-sheet overhead). The brief rejects dimensions outside supported limits and does not silently resize substantial requests. Output includes GIF, a static PNG and a labeled contact sheet for phase start/hold/exit and loop restart. The manifest records independently decoded dimensions, frame delays, duration, loop, hashes, sizes, role faces, source controls, all five evaluation levels, and the source commit; it contains no credentials. A single `A` or technical pass does not imply style, legibility, narrative or visual approval, and `publicationRecommendation` is always `none`.
 
+## Per-style composition contract
+
+`src/narrative/composition.ts` is the single source for text width, art gap, art width and art vertical bounds. The art x-coordinate is the text area's right edge plus `artGapRatio`; `artY` and `artHeight` are frame-height ratios. The grouped rows below are exact values used to render the committed packages.
+
+| Styles | Text width | Art gap | Art width | Art y | Art height |
+|---|---:|---:|---:|---:|---:|
+| Papercraft, Brutalist | 0.60 | 0.02 | 0.31 | 0.08 | 0.84 |
+| Renaissance, Art Deco, Isotype, Op Art | 0.43 | 0.02 | 0.45 | 0.03 | 0.94 |
+| Vaporwave, Galactic, Nature | 0.44 | 0.02 | 0.45 | 0.05 | 0.90 |
+| Ukiyoe, Bestiary, Psychedelic, Memphis | 0.43 | 0.02 | 0.27 | 0.17 | 0.66 |
+| Fallback | 0.59 | 0.04 | 0.27 | 0.17 | 0.66 |
+
+`NARRATIVE_LABEL_TONE_BY_STYLE` keeps rendered label color and evaluator contrast checks aligned. Contact-sheet midpoint labels remain enabled for the two pilots and Ukiyoe, Bestiary, Psychedelic and Memphis, matching the layout of their committed packs. `test/narrative-gallery-repro.test.ts` guards these rules and compares every committed GIF, PNG and contact sheet byte-for-byte.
+
 ## Typography and licensing
 
 The role registry now points every one of the 13 styles at its real guide families: Poiret One/Josefin Sans, Jost/IBM Plex Sans, Space Grotesk, Shippori Mincho B1/Zen Kaku Gothic New, UnifrakturMaguntia/IM Fell English, Bungee Shade, Bricolage Grotesque/DM Sans, Press Start 2P, Michroma and Cormorant Garamond/Karla ship as bundled OFL `.woff2` faces copied from the npm registry (`@fontsource/*`, versions recorded in `fonts/FONTS.md`, packages removed afterwards). The 21 new files add 415,984 bytes (406.2 KiB). Shippori Mincho B1 and Zen Kaku Gothic New ship Latin subsets only; the packaged files cannot render Japanese text. Papercraft keeps Fraunces Soft + Nunito Sans and brutalist keeps Archivo Black + Space Mono, so their committed pilots stay byte-identical.
@@ -54,11 +68,15 @@ The five output keys are `technical-integrity`, `style-conformance`, `rendered-l
 
 ## Determinism and limits
 
-The pilot E2E tests require byte-identical GIF, poster PNG and contact-sheet bytes for the same brief and seed in this environment; manifest paths reflect the chosen output directory. The manifest scopes rendering determinism to the same OS, architecture, Node/dependency lock and `@napi-rs/canvas`/`gifenc` versions; it makes no cross-platform byte-equality claim. The independent LZW decoder is compared with `ffprobe` where available. Human visual review and 640×360 reading checks are recorded separately; they remain pending until an identified reviewer records evidence.
+`test/narrative-gallery-repro.test.ts` requires byte-identical GIF, PNG and contact-sheet bytes for all 28 committed packs in this environment; manifest paths reflect the chosen output directory. The manifest scopes rendering determinism to the same OS, architecture, Node/dependency lock and `@napi-rs/canvas`/`gifenc` versions; it makes no cross-platform byte-equality claim. The independent LZW decoder is compared with `ffprobe` where available. Human visual review and 640×360 reading checks are recorded separately; they remain pending until an identified reviewer records evidence.
 
 ## Stage B pilot renderers
 
 - **Papercraft/editorial:** one persistent `guía` card with controlled cut edges, a visible notch, layered paper shadows at 2/14/30px, and a torn butter ribbon. The `comparison` composition uses a marked editorial sheet; `checklist` uses the same sheet as a review list. Seeded changes are limited to cut variant, backing paper, small rotation and ribbon angle. State changes add a terracotta signal and a separate `EN REVISIÓN` mark; the card text remains unobscured.
 - **Brutalist/documentary:** one persistent form/ticket with sharp 3px borders, hard offset shadow, a ledger grid, blank fields and a dedicated status margin. `comparison` uses a form with a perforated blank stub; `checklist` uses ruled review rows. An observation stamp occupies a reserved footer and a separate checkbox records review-ready. No value, date, folio or measurement is invented. `poster` keeps a distinct high-contrast sign composition.
+- **Vaporwave:** one dated demo desktop from 1999 keeps its original file, window, horizon and perspective grid. `comparison` moves a file into a review pane; `checklist` turns the same file window into a three-step queue. Press Start 2P is reserved for brief display; Space Grotesk carries reading copy. The screen date marks the fictional interface era, not the Sprint Review date.
+- **Galactic:** a single off-center planet bleeds to the right edge while one trajectory moves a probe from an unreviewed position to a stable orbital relation. `comparison` follows one curved route; `checklist` records three waypoints. Michroma is display; Space Grotesk is reading. There is no audio.
+- **Nature:** one original, genus-free leaf specimen stays fixed on a flat herbarium plate while a fine annotation arrives and its record settles. `comparison` uses one callout; `checklist` uses observation, annotation and archive rows. Cormorant Garamond and Karla carry display and reading roles. No date, location or provenance is shown because none was supplied.
+- Vaporwave, galactic and nature currently support landscape 16:9 only; square and portrait layouts are explicitly rejected instead of being cropped or deformed.
 - Both pilots support 16:9, 1:1 and 9:16. The object stays inside the shared safe/art areas; no square or portrait output is cropped or stretched. A layout overflow returns `TEXT_OVERFLOW` with the complete copy retained in the diagnostic source.
-- See `styles/papercraft.md`, `styles/brutalist.md` and `pilots/REVIEW.md` for composition contracts, rendered evidence, iterations and remaining weaknesses.
+- See `styles/papercraft.md`, `styles/brutalist.md`, `styles/vaporwave.md`, `styles/galactic.md`, `styles/nature.md`, `pilots/REVIEW.md` and `gallery/REVIEW-stage-c-vaporwave-galactic-nature.md` for composition contracts, rendered evidence, iterations and remaining weaknesses. The Stage C exports and their manifests are indexed in `gallery/README.md`.

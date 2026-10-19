@@ -1,31 +1,41 @@
-# Revisión Stage C · cuatro estilos
+# Stage C · revisión de implementación por grupos
 
-**Estado visual:** `pending` en los ocho manifiestos. Esta revisión de implementación no es aprobación independiente ni habilita publicación.
+`visual-review` permanece `pending` y la recomendación de publicación es `none` en todos los manifiestos. Este registro documenta iteraciones de implementación; no reemplaza una revisión visual/editorial independiente ni habilita publicación.
 
-## Método y registro de iteraciones
+## Renaissance, Art Deco, Isotype y Op Art
 
-Se renderizaron de nuevo las ocho composiciones con seed fijo en cada ronda. En la ronda 3 se inspeccionaron las ocho hojas de contacto y 24 cuadros de pausa extraídos del GIF a 1280×720 (Antes, Cambio y Resultado esperado por composición). Se verificaron además los PNG estáticos, texto y pausa decodificada en cada manifest.
+Se volvieron a renderizar las ocho composiciones con seed fijo. En la tercera iteración se revisaron las ocho hojas de contacto, 24 cuadros de pausa a 1280×720 y los PNG estáticos.
 
-| Iteración | Hallazgos concretos | Ajuste aplicado |
+| Iteración | Hallazgo | Ajuste |
 |---|---|---|
-| 1 | Renaissance: la etiqueta de fase ocre no llegaba al contraste requerido. Art Deco: el desplazamiento final de la placa apenas señalaba que se había asentado. Op Art: el cambio del centro de foco era demasiado sutil. | Etiqueta Renaissance en tinta; asiento Art Deco más abajo sobre el eje; mayor rango determinista para el desplazamiento de foco Op Art. |
-| 2 | El manifest seguía calculando contraste como si la etiqueta Renaissance fuera ocre, aunque el PNG ya la mostraba en tinta (2.74:1 falso). En Isotype, la marca roja repetida en cada hoja competía con el indicador de categoría. | Se alineó el evaluator con el color realmente dibujado (13.53:1 para tinta) y se pasó la marca interior de los pictogramas a gris neutro; el rojo queda para el indicador/fila activa. |
-| 3 | Las ocho hojas y los 24 cuadros nativos muestran copy completo y estable, sin solapamientos observados entre banda de lectura y arte. Permanecen dos límites a evaluar: los filetes de 1px y Poiret One pierden definición en Art Deco al reducir; el alto contraste óptico de Op Art puede cansar en lectura prolongada. | No se cambió la composición tras la tercera inspección. Se conservan los límites en las fichas de estilo y el fallback PNG Op Art. Se requiere valoración humana independiente antes de cerrar la revisión visual. |
+| 1 | El ocre de la etiqueta Renaissance no alcanzaba el contraste requerido; el cierre de la placa Art Deco se percibía poco; el cambio del foco Op Art era sutil. | Etiqueta Renaissance en tinta, asiento Art Deco más bajo y mayor desplazamiento determinista del foco Op Art. |
+| 2 | El evaluator aún calculaba el contraste Renaissance como ocre (2,74:1 en vez del color renderizado); la marca roja de los pictogramas Isotype competía con la categoría. | Contraste alineado con tinta (13,53:1) y marcas interiores Isotype en gris neutro; el rojo queda para la categoría/fila activa. |
+| 3 | No se observaron cortes del copy ni cruces entre la banda de lectura y el arte. Persisten límites de reducción tipográfica en Art Deco y posible fatiga por el patrón Op Art. | Sin cambios adicionales de composición; se conservan los límites en sus fichas y el fallback PNG de Op Art. |
 
-## Medidas observadas
+Los GIF decodifican a 1280×720, 33 cuadros y 17.190 ms; los tres holds duran 5.000 ms y las transiciones no los consumen. La huella del objeto/marco observada fue 42,3% del cuadro para Renaissance e Isotype, 40,5% para Art Deco y 40,6% para Op Art. No representa porcentaje de píxeles cubiertos. Los controles verifican texto completo, tamaño mínimo, zona segura y colisiones geométricas, pero no hacen OCR ni certifican lectura humana.
 
-- Cada GIF decodifica a **1280×720**, 33 cuadros y **17.190 ms**. Cada fase queda visible **5.000 ms** en una imagen fija; las transiciones no cuentan como lectura. El puente Resultado→Antes es deliberado, no se denomina seamless.
-- Los ocho GIF están por debajo de **6 MiB**; el README de galería consigna bytes exactos, rutas, tipografías y holds por composición.
-- La caja de arte ocupa aproximadamente **42.3%** del cuadro para Renaissance e Isotype, **40.5%** para Art Deco y **40.6%** para Op Art. Es el cociente del bounding box del objeto/marco entre el cuadro completo, no el porcentaje de píxeles cubiertos.
-- El layout comprueba títulos ≥56px, texto ≥36px y etiquetas ≥24px a tamaño nativo, con zona segura y sin colisión de cajas. A 640×360 la escala tipográfica se reduce a la mitad; el evaluator no hace OCR ni certifica lectura humana.
-- `visual-review` permanece `pending`, `publicationRecommendation` es `none` y las fichas registran limitaciones. En Op Art cada composición exporta GIF animado y PNG fijo de Antes; la galería/reproductor debe sustituir el GIF por ese PNG cuando el usuario detenga la animación.
+Pendiente de revisión independiente: lectura real en tarjeta 640×360, definición de Poiret One y filetes Art Deco en pantallas pequeñas, tolerancia al patrón Op Art y correspondencia causal de cada transición.
 
-## Evidencia
+## Ukiyoe, Bestiary, Psychedelic y Memphis
 
-- Índice de assets, manifests, métricas y medidas por composición: [`README.md`](README.md).
-- Hojas y archivos finales: [`Renaissance`](renaissance/), [`Art Deco`](artdeco/), [`Isotype`](isotype/) y [`Op Art`](opart/).
-- Límites y decisiones por estilo: [`renaissance.md`](../styles/renaissance.md), [`artdeco.md`](../styles/artdeco.md), [`isotype.md`](../styles/isotype.md), [`opart.md`](../styles/opart.md).
+Se inspeccionaron los ocho contactos completos y fotogramas nativos de inicio, pausa de 5 s y cierre.
 
-## Pendientes de revisión independiente
+1. **Primera pasada:** la etiqueta Ukiyoe caía sobre el horizonte; el líder y las notas del búho cruzaban el cuerpo; dos esferas Psychedelic quedaban desconectadas de la señal. Se recolocaron marcador y anotaciones, se curvaron las plumas dentro de las alas y se conectó la señal a la banda naranja.
+2. **Segunda pasada:** el punto Ukiyoe aún tenía poco contraste y las plumas parecían rayos. El rótulo pasó al plano de papel y las plumas quedaron dentro de las alas.
+3. **Tercera pasada:** frases largas invadían el panel aunque no se truncaban. La columna de copy quedó en 43% del ancho y el arte empieza en 50%; el ajuste conserva tamaños mínimos y genera `TEXT_OVERFLOW` con una sugerencia cuando el texto no cabe.
+4. **Cuarta pasada:** se detectó contraste bajo en las etiquetas de Bestiary, Psychedelic y Memphis. Se pasaron a tinta, se alineó el evaluator con el render y se regeneraron los ocho paquetes de este grupo.
 
-Confirmar lectura real en tarjeta de 640×360, fuerza de Poiret One y filetes Art Deco en pantallas pequeñas, tolerancia al patrón Op Art y correspondencia causal de cada transición. Hasta entonces no se aprueba visualmente ni se recomienda publicar.
+Los ocho GIF son 1280×720, 33 cuadros, 17.190 ms y tres holds de 5.000 ms. Los contactos incluyen inicio, pausas, transiciones y reinicio del loop. El mayor GIF pesa 1.063.773 bytes, por debajo de 6 MiB. Los contrastes de etiqueta reportados son 9,63:1 (Ukiyoe), 11,29:1 (Bestiary), 13,71:1 (Psychedelic) y 16,63:1 (Memphis); no miden OCR ni oclusión por píxel. Las tarjetas de 640×360 mantienen el copy en dos líneas según la inspección registrada. Los cuatro estilos admiten 16:9 y 1:1; 9:16 devuelve `UNSUPPORTED_ASPECT`.
+
+- **Ukiyoe:** horizonte y cartela se mantienen; la ruta punteada vincula bote y punto fijo. La cartela es una anotación secundaria en tamaño reducido.
+- **Bestiary:** búho, anillo y lista articulan observación → encuadre → revisión. “Disco/foco” es una metáfora, no una afirmación biológica; la anatomía es vectorial estilizada.
+- **Psychedelic:** el disco “REVISIÓN” y el copy permanecen fijos; las bandas reorganizan el foco y la señal conectada. Las superficies lisas protegen la lectura.
+- **Memphis:** gira la ficha y el marcador llega a su ranura; la variante de proceso marca filas una a una, con decoración de margen fija y escasa.
+
+Los ejemplos `in-review` terminan en **Resultado esperado** y no atribuyen métricas, ahorro ni producción. Un resultado `done` debe usar **Resultado observado** sustentado por el brief. La ilustración no constituye evidencia de producto.
+
+## Evidencia y pendientes compartidos
+
+- Archivos, briefs y manifiestos: [índice de galería](README.md); escenas: `src/narrative/scenes/`.
+- Fichas y límites: [`renaissance`](../styles/renaissance.md), [`artdeco`](../styles/artdeco.md), [`isotype`](../styles/isotype.md), [`opart`](../styles/opart.md), [`ukiyoe`](../styles/ukiyoe.md), [`bestiary`](../styles/bestiary.md), [`psychedelic`](../styles/psychedelic.md) y [`memphis`](../styles/memphis.md).
+- Sigue pendiente la aprobación visual/editorial humana, OCR, legibilidad en diversos dispositivos y la evaluación causal de las escenas.

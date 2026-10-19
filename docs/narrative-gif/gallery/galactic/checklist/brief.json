@@ -1,0 +1,16 @@
+{
+  "style": "galactic",
+  "kind": "narrative-gif",
+  "locale": "es",
+  "audience": "Producto · Sprint Review (ejemplo visual)",
+  "title": "Hitos de lectura",
+  "status": "done",
+  "phases": [
+    { "id": "before", "label": "Antes", "text": "La ruta empieza en un punto todavía sin revisar.", "visual": { "kind": "checklist", "state": "unreviewed" } },
+    { "id": "change", "label": "Cambio", "text": "La señal alcanza el hito de anotación.", "visual": { "kind": "checklist", "state": "flagged" } },
+    { "id": "result", "label": "Resultado observado", "text": "Los tres hitos se mantienen ligados a la misma trayectoria.", "visual": { "kind": "checklist", "state": "review-ready" } }
+  ],
+  "playback": { "minReadableHoldMs": 5000, "transitionMs": 650, "loop": true },
+  "output": { "width": 1280, "height": 720, "formats": ["gif", "png"], "preset": "review-1280x720" },
+  "seed": 11
+}

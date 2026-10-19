@@ -46,7 +46,7 @@ export const narrativeBriefSchema = z.object({
 }).strict();
 
 const NARRATIVE_FIELD_HELP: Record<string, string> = {
-  style: 'Pilots: papercraft (editorial) and brutalist (documentary or poster). Other styles still return STYLE_NOT_SUPPORTED_YET.',
+  style: 'Narrative scenes: artdeco, bestiary, brutalist, galactic, isotype, memphis, nature, opart, papercraft, psychedelic, renaissance, ukiyoe, vaporwave.',
   subfamily: 'papercraft: editorial; brutalist: documentary (default) or poster. Poster preserves the existing high-contrast brutalist direction.',
   kind: 'Must be "narrative-gif".',
   locale: 'es|en; defaults to es.',
@@ -55,13 +55,13 @@ const NARRATIVE_FIELD_HELP: Record<string, string> = {
   status: 'open|in-review|done; controls the final expected/observed label.',
   phases: '3–5 { id, label, text, visual: { kind, state } } phases.',
   playback: '{ minReadableHoldMs, transitionMs, loop }; holds default to 5000ms.',
-  output: '{ width, height, formats, preset }; the two pilot scenes support 16:9, 1:1 and 9:16.',
+  output: '{ width, height, formats, preset }; pilots support 16:9, 1:1 and 9:16; vaporwave, galactic and nature support 16:9 only.',
   seed: 'Integer seed for deterministic scene variation; defaults to 7.',
 };
 
 export function narrativeHelpOptions(): string[] {
   return [
-    '  --style <s>        papercraft/editorial or brutalist/documentary|poster',
+    '  --style <s>        artdeco, bestiary, brutalist, galactic, isotype, memphis, nature, opart, papercraft, psychedelic, renaissance, ukiyoe or vaporwave',
     '  --brief <file>     Read the JSON narrative brief',
     '  --out <dir>        Output folder (GIF, PNG, contact sheet and manifest)',
     '',

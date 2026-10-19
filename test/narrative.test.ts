@@ -300,9 +300,10 @@ test('negative controls cannot pass on file format alone', async () => {
   }
 });
 
-test('registered renderers are supported and the registry preserves an explicit unknown-style failure', () => {
-  const registered = supportedNarrativeStyles();
-  for (const style of ['artdeco', 'brutalist', 'isotype', 'opart', 'papercraft', 'renaissance'] as const) assert.ok(registered.includes(style));
+test('all 13 renderers are registered once and unknown styles retain an explicit failure', () => {
+  assert.deepEqual(supportedNarrativeStyles(), [
+    'artdeco', 'bestiary', 'brutalist', 'galactic', 'isotype', 'memphis', 'nature', 'opart', 'papercraft', 'psychedelic', 'renaissance', 'ukiyoe', 'vaporwave',
+  ]);
   assert.throws(() => getNarrativeScene('unlisted-style' as StyleSlug), (error: unknown) => {
     assert.equal((error as { code: string }).code, 'STYLE_NOT_SUPPORTED_YET');
     assert.match((error as Error).message, /Supported styles:/);

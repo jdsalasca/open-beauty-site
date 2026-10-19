@@ -2,6 +2,7 @@ import type { NormalizedNarrativeBrief, NarrativeControlResult, NarrativeEvaluat
 import type { NarrativeEncodedFiles } from './encode.js';
 import { getStyle } from '../styles/presets.js';
 import { narrativeResultLabelMatches } from './brief.js';
+import { narrativeLabelToneFor } from './composition.js';
 
 function level(status: NarrativeLevelStatus, controls: NarrativeControlResult[], note?: string): NarrativeEvaluationLevel {
   return { status, controls, note };
@@ -95,7 +96,7 @@ export function evaluateNarrative(input: {
   ];
   const fontThresholdsPassed = layout.title.size >= 56 && layout.phases.every((phase) => phase.label.size >= 24 && phase.body.size >= 36);
   const cardThresholdsPassed = layout.phases.every((phase) => phase.label.effectiveCardSize >= 12 && phase.body.effectiveCardSize >= 18) && layout.title.effectiveCardSize >= 28;
-  const labelColor = brief.style === 'brutalist' || brief.style === 'renaissance' ? stylePreset.palette.ink : stylePreset.palette.accent;
+  const labelColor = stylePreset.palette[narrativeLabelToneFor(brief.style)];
   const readabilityControls: NarrativeControlResult[] = [
     ...textControls,
     { name: 'registered-fonts', passed: input.fontChecksPassed ?? true, detail: input.fontChecksPassed === false ? 'a required family, weight or glyph failed rendering/measurement' : 'all role faces and Spanish glyphs rendered/measured', source: 'source' },

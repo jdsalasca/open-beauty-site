@@ -1,0 +1,16 @@
+{
+  "style": "galactic",
+  "kind": "narrative-gif",
+  "locale": "es",
+  "audience": "Producto · Sprint Review (ejemplo visual)",
+  "title": "Ruta de lectura",
+  "status": "in-review",
+  "phases": [
+    { "id": "before", "label": "Antes", "text": "La señal aún no alcanza el punto de revisión.", "visual": { "kind": "comparison", "state": "unreviewed" } },
+    { "id": "change", "label": "Cambio", "text": "Una trayectoria conecta la señal con el mismo destino.", "visual": { "kind": "comparison", "state": "flagged" } },
+    { "id": "result", "label": "Resultado esperado", "text": "El equipo puede retomar esa ruta antes de cerrar la sprint.", "visual": { "kind": "comparison", "state": "review-ready" } }
+  ],
+  "playback": { "minReadableHoldMs": 5000, "transitionMs": 650, "loop": true },
+  "output": { "width": 1280, "height": 720, "formats": ["gif", "png"], "preset": "review-1280x720" },
+  "seed": 7
+}

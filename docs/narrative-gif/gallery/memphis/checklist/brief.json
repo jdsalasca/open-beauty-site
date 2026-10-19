@@ -1,0 +1,16 @@
+{
+  "style": "memphis",
+  "kind": "narrative-gif",
+  "locale": "es",
+  "audience": "Producto en Sprint Review",
+  "title": "Señal",
+  "status": "in-review",
+  "phases": [
+    { "id": "before", "label": "Antes", "text": "La medida puede quedar sin señal.", "visual": { "kind": "checklist", "state": "unreviewed" } },
+    { "id": "change", "label": "Cambio", "text": "La guía marca qué requiere revisión.", "visual": { "kind": "checklist", "state": "flagged" } },
+    { "id": "result", "label": "Resultado esperado", "text": "Revisarla antes del cierre de la sprint.", "visual": { "kind": "checklist", "state": "review-ready" } }
+  ],
+  "playback": { "minReadableHoldMs": 5000, "transitionMs": 650, "loop": true },
+  "output": { "width": 1280, "height": 720, "preset": "review-1280x720", "formats": ["gif", "png"] },
+  "seed": 7
+}
