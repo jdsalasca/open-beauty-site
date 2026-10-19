@@ -101,9 +101,12 @@ test('table-row and card-collection upgrades pass decoded object controls and re
     const cases = [
       { style: 'papercraft', kind: 'comparison' },
       { style: 'papercraft', kind: 'checklist' },
+      ...UPGRADE_STYLES.filter(({ style }) => style !== 'papercraft').map(({ style }) => ({ style, kind: 'comparison' })),
     ] as const;
     for (const { style, kind } of cases) {
-      const result = await createNarrative(legacyBrief(style, kind), { outputDir: path.join(root, `${style}-${kind}`) });
+      const brief = legacyBrief(style, kind);
+      if (style === 'brutalist') brief.output = { preset: 'review-1280x720', formats: ['gif', 'png'] };
+      const result = await createNarrative(brief, { outputDir: path.join(root, `${style}-${kind}`) });
       const objectControls = result.evaluation.narrative.controls.filter((control) => control.name.startsWith('semantic-object-transformation:'));
       assert.ok(objectControls.length > 0, `${style}/${kind} declares decoded object transformation controls`);
       assert.ok(objectControls.every((control) => control.passed), `${style}/${kind} passes every decoded object transformation control: ${objectControls.map((control) => control.detail).join(' | ')}`);

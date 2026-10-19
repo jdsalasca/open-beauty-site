@@ -257,7 +257,9 @@ function createPlan(context: NarrativeRenderContext, box: NarrativeRect, measure
     }
   }
 
-  const badgeText = workflowBadgeText('brutalist', context.brief.locale, context.brief.workflowStatus, context.brief.badgePolicy, context.brief.badgeText);
+  const badgeText = semantic.legacyUpgrade && context.brief.badgePolicy === 'workflow' && context.brief.workflowStatus === 'in-review'
+    ? sceneText('brutalist', context.brief.locale, 'badgeInReviewSemantic')
+    : workflowBadgeText('brutalist', context.brief.locale, context.brief.workflowStatus, context.brief.badgePolicy, context.brief.badgeText);
   if (badgeText) {
     const badgeEntity = containerId ?? semanticEntityIds[0]!;
     const badge = rect(box.x + box.width * 0.81, box.y + box.height * 0.61, box.width * 0.16, box.height * 0.16);

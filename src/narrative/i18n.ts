@@ -16,6 +16,7 @@ const PAIRS: Record<StyleSlug, Pairs> = {
   brutalist: {
     badgeOpen: ['PENDIENTE', 'PENDING'],
     badgeInReview: ['EN REVISIÓN', 'IN REVIEW'],
+    badgeInReviewSemantic: ['REV.', 'REVIEW'],
     badgeDone: ['REVISADA', 'REVIEWED'],
     observation: ['OBSERVACIÓN', 'OBSERVATION'],
     state: ['ESTADO', 'STATUS'],
