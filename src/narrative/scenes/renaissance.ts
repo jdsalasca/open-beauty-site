@@ -306,7 +306,7 @@ function renderFrame(context: NarrativeRenderContext): Uint8ClampedArray {
 
 export const renaissanceNarrativeScene: NarrativeScene = {
   style: 'renaissance',
-  version: 'renaissance-fresco/1.0.0',
+  version: 'renaissance-fresco/1.1.0',
   vocabulary: sceneVocabulary('phase-order-fallback'),
   supportsAspect(aspect) {
     return [16 / 9, 1, 9 / 16].some((ratio) => Math.abs(aspect - ratio) / ratio < 0.015);

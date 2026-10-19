@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "commit": "168194e754e50f69395a6101252afb6a3122acff",
+  "commit": "d1c15e6e297174590339fbaea565f13c02210ba9",
   "brief": {
     "style": "renaissance",
     "kind": "narrative-gif",
@@ -256,7 +256,7 @@
     "narrative": "narrative-core/0.2.0",
     "canvas": "@napi-rs/canvas@1.0.11",
     "gif": "gifenc@1.0.3",
-    "scene": "renaissance-fresco/1.0.0"
+    "scene": "renaissance-fresco/1.1.0"
   },
   "fonts": {
     "bundleVersion": "repo-bundled-ofl-1",
@@ -407,7 +407,7 @@
     {
       "name": "scene-renderer-registered",
       "passed": true,
-      "detail": "renderer renaissance/renaissance-fresco/1.0.0 exists; visual style likeness remains a separate review",
+      "detail": "renderer renaissance/renaissance-fresco/1.1.0 exists; visual style likeness remains a separate review",
       "source": "source"
     },
     {
@@ -666,7 +666,7 @@
         {
           "name": "scene-renderer-registered",
           "passed": true,
-          "detail": "renderer renaissance/renaissance-fresco/1.0.0 exists; visual style likeness remains a separate review",
+          "detail": "renderer renaissance/renaissance-fresco/1.1.0 exists; visual style likeness remains a separate review",
           "source": "source"
         },
         {
