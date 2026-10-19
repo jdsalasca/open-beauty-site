@@ -417,7 +417,14 @@ interface RenderedFigure {
   subjectAttribute: string;
 }
 
-function renderFigureArt(figure: DeckFigure, index: number, style: StylePreset, slideTitle: string, warnings: string[]): RenderedFigure {
+function renderFigureArt(
+  figure: DeckFigure,
+  index: number,
+  style: StylePreset,
+  slideTitle: string,
+  kicker: string | undefined,
+  warnings: string[],
+): RenderedFigure {
   const scene = figure.scene ?? { kind: 'meadow', characters: ['rabbit'], props: ['pine', 'tree', 'flowers'] };
   if (style.slug === 'papercraft') {
     if (figure.subject !== undefined && !figure.scene) {
@@ -430,7 +437,7 @@ function renderFigureArt(figure: DeckFigure, index: number, style: StylePreset, 
   }
   const subject = resolveFigureSubject(figure, style, slideTitle, warnings);
   return {
-    art: sceneArt(style, index + 2, figure.caption || 'FIGURA', subject),
+    art: sceneArt(style, index + 2, kicker || 'FIGURA', subject),
     subjectAttribute: ` data-scene-subject="${subject}"`,
   };
 }
@@ -448,7 +455,7 @@ function renderSlideContent(
     const plan = compositionPlan(slide, index, seed, style);
     let figure: CompositionFigure | undefined;
     if (slide.purpose === 'example' && slide.figure) {
-      const rendered = renderFigureArt(slide.figure, index, style, slide.title, warnings);
+      const rendered = renderFigureArt(slide.figure, index, style, slide.title, slide.kicker, warnings);
       figure = {
         art: rendered.art,
         subjectAttribute: rendered.subjectAttribute,
@@ -459,7 +466,7 @@ function renderSlideContent(
     return renderComposition({ slide, index, plan, locale, figure });
   }
   if (slide.layout === 'figure' && slide.figure) {
-    const rendered = renderFigureArt(slide.figure, index, style, slide.title, warnings);
+    const rendered = renderFigureArt(slide.figure, index, style, slide.title, slide.kicker, warnings);
     return `<div class="slide-inner">
       ${kicker}
       <h2 class="anim" style="--a:1">${esc(slide.title)}</h2>
