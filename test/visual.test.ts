@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { auditArtifact, locatePlaywright, meetsStrictBar, repairArtifact, runVisualAudit } from '../src/visual.js';
+import { auditArtifact, auditArtifactBatch, locatePlaywright, meetsStrictBar, repairArtifact, type BatchAuditEntry } from '../src/visual.js';
 import type { RichValidationResult } from '../src/types/validation.js';
-import type { VisualAuditReport, VisualIssueCode } from '../src/types/visual.js';
+import type { VisualIssueCode } from '../src/types/visual.js';
 import { renderPage } from '../src/page/index.js';
 
 /**
@@ -58,10 +58,14 @@ const FIXTURES: Array<{ code: VisualIssueCode; html: string }> = [
   },
 ];
 
-async function auditAvailable(html: string): Promise<VisualAuditReport | null> {
-  if (!locatePlaywright()) return null;
-  const report = await runVisualAudit(html, 'nature');
-  return report.status === 'ran' ? report : null;
+let fixtureBatch: Promise<Map<string, BatchAuditEntry>> | null = null;
+
+/** Audits all seven fixtures in one Chromium instead of one launch each. */
+async function fixtureReports(): Promise<Map<string, BatchAuditEntry>> {
+  fixtureBatch ??= auditArtifactBatch(
+    FIXTURES.map((fixture) => ({ html: fixture.html, style: 'nature' as const, label: fixture.code })),
+  ).then((entries) => new Map(entries.map((entry) => [entry.label, entry])));
+  return fixtureBatch;
 }
 
 for (const fixture of FIXTURES) {
@@ -70,9 +74,9 @@ for (const fixture of FIXTURES) {
       t.skip('playwright not found via BEAUTY_PLAYWRIGHT_ROOT, project, global or sibling path');
       return;
     }
-    const report = await auditAvailable(fixture.html);
-    if (!report) {
-      t.skip('playwright located but Chromium is unavailable');
+    const report = (await fixtureReports()).get(fixture.code)?.visual;
+    if (!report || report.status !== 'ran') {
+      t.skip(report?.message ?? 'playwright located but Chromium is unavailable');
       return;
     }
     const finding = report.findings.find((item) => item.code === fixture.code);

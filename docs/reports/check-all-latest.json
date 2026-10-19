@@ -1,0 +1,76 @@
+{
+  "generatedAt": "2026-10-19T20:26:39.112Z",
+  "node": "v24.21.0",
+  "platform": "win32",
+  "arch": "x64",
+  "cpus": 8,
+  "browserTimeoutMs": 60000,
+  "overall": "pass",
+  "steps": [
+    {
+      "name": "check",
+      "command": "pnpm check",
+      "status": 0,
+      "durationMs": 1463,
+      "tests": null,
+      "pass": null,
+      "fail": null,
+      "skipped": null,
+      "cancelled": null,
+      "timeouts": 0,
+      "failingTests": []
+    },
+    {
+      "name": "build",
+      "command": "pnpm build",
+      "status": 0,
+      "durationMs": 1971,
+      "tests": null,
+      "pass": null,
+      "fail": null,
+      "skipped": null,
+      "cancelled": null,
+      "timeouts": 0,
+      "failingTests": []
+    },
+    {
+      "name": "check:scripts",
+      "command": "pnpm check:scripts",
+      "status": 0,
+      "durationMs": 1426,
+      "tests": null,
+      "pass": null,
+      "fail": null,
+      "skipped": null,
+      "cancelled": null,
+      "timeouts": 0,
+      "failingTests": []
+    },
+    {
+      "name": "test:unit",
+      "command": "pnpm test:unit",
+      "status": 0,
+      "durationMs": 346476,
+      "tests": 439,
+      "pass": 439,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "timeouts": 0,
+      "failingTests": []
+    },
+    {
+      "name": "test:browser",
+      "command": "pnpm test:browser",
+      "status": 0,
+      "durationMs": 273686,
+      "tests": 21,
+      "pass": 21,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "timeouts": 0,
+      "failingTests": []
+    }
+  ]
+}

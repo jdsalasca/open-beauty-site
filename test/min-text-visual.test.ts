@@ -3,7 +3,7 @@ import test from 'node:test';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { auditArtifact, locatePlaywright } from '../src/visual.js';
+import { auditArtifactBatch, locatePlaywright, type BatchAuditArtifact } from '../src/visual.js';
 import { renderPage } from '../src/page/index.js';
 import { renderDeck } from '../src/deck.js';
 import { renderStory } from '../src/page/story.js';
@@ -46,20 +46,26 @@ test('every recipe renders zero text-too-small findings at 360px', async (t) => 
     t.skip('playwright not found via BEAUTY_PLAYWRIGHT_ROOT, project, global or sibling path');
     return;
   }
-  const failures: string[] = [];
-  let audits = 0;
+  const items: BatchAuditArtifact[] = [];
   for (const kind of KINDS) {
     for (const style of styleSlugs) {
       const html = render(kind, style, await recipe(style, kind));
-      const report = await auditArtifact(html, style, { visual: true });
-      if (report.visual.status !== 'ran') {
-        t.skip(report.visual.message ?? 'playwright located but Chromium is unavailable');
-        return;
-      }
-      audits += 1;
-      for (const finding of report.visual.findings.filter((item) => item.code === 'text-too-small')) {
-        failures.push(`${kind} ${style}: ${finding.selector} · ${finding.detail} · "${finding.text ?? ''}"`);
-      }
+      items.push({ html, style, label: `${kind}-${style}` });
+    }
+  }
+  // One Chromium for the whole matrix: 52 audits in a single browser with a
+  // small page pool instead of 52 separate launches.
+  const entries = await auditArtifactBatch(items, { concurrency: 4 });
+  const failures: string[] = [];
+  let audits = 0;
+  for (const entry of entries) {
+    if (entry.visual.status !== 'ran') {
+      t.skip(entry.visual.message ?? 'playwright located but Chromium is unavailable');
+      return;
+    }
+    audits += 1;
+    for (const finding of entry.visual.findings.filter((item) => item.code === 'text-too-small')) {
+      failures.push(`${entry.label}: ${finding.selector} · ${finding.detail} · "${finding.text ?? ''}"`);
     }
   }
   assert.equal(audits, styleSlugs.length * KINDS.length, 'every recipe must be audited in a real browser');

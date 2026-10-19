@@ -53,7 +53,9 @@
     "mcp": "tsx src/mcp/server.ts",
     "mcp:prod": "node dist/mcp/server.js",
     "mcp:config": "tsx scripts/mcp-config.ts",
-    "test": "tsx --test --test-concurrency=1 test/*.test.ts",
+    "test": "pnpm test:unit && pnpm test:browser",
+    "test:unit": "tsx scripts/test-suite.ts unit",
+    "test:browser": "tsx scripts/test-suite.ts browser",
     "examples": "tsx scripts/build-examples.ts",
     "education": "tsx scripts/build-education.ts",
     "showcase": "tsx scripts/build-showcase.ts",
@@ -69,7 +71,8 @@
     "e2e:colmena": "tsx scripts/e2e-colmena.ts",
     "check": "tsc -p tsconfig.json --noEmit",
     "check:scripts": "tsc -p tsconfig.scripts.json --noEmit",
-    "check:all": "pnpm check && pnpm build && pnpm check:scripts && pnpm test"
+    "check:all": "pnpm check && pnpm build && pnpm check:scripts && pnpm test:unit && pnpm test:browser",
+    "check:all:report": "tsx scripts/check-all-report.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.32.1",

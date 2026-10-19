@@ -5,18 +5,15 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { renderPage } from '../src/page/index.js';
+import { browserTimeoutMs, launchWithRetry, loadChromium, locatePlaywrightRoot } from './support/browser.js';
 
 /**
  * Capture regression test. Playwright is imported from an absolute path outside
  * this repo and skipped when it is not installed, so `pnpm test` stays green on
  * machines without browsers.
  */
-const PLAYWRIGHT_ROOT =
-  process.env.BEAUTY_PLAYWRIGHT_ROOT ??
-  'C:\\Users\\jdsal\\Documents\\Programming-personal\\open-civic-signal-os\\node_modules\\playwright';
-
 interface PageLike {
-  goto(url: string, options?: { waitUntil?: string }): Promise<unknown>;
+  goto(url: string, options?: { waitUntil?: string; timeout?: number }): Promise<unknown>;
   $eval<T>(selector: string, fn: (element: Element) => T): Promise<T>;
   $$eval<T>(selector: string, fn: (elements: Element[]) => T): Promise<T>;
   evaluate<T>(fn: () => T): Promise<T>;
@@ -34,16 +31,10 @@ interface BrowserLike {
 }
 
 interface ChromiumLike {
-  launch(options?: { headless?: boolean }): Promise<BrowserLike>;
+  launch(options?: { headless?: boolean; timeout?: number }): Promise<BrowserLike>;
 }
 
-let chromium: ChromiumLike | null = null;
-try {
-  const imported = (await import(pathToFileURL(path.join(PLAYWRIGHT_ROOT, 'index.mjs')).href)) as { chromium: ChromiumLike };
-  chromium = imported.chromium;
-} catch {
-  chromium = null;
-}
+const chromium = (await loadChromium()) as ChromiumLike | null;
 
 const html = renderPage('galactic', {
   title: 'Captura fiel',
@@ -59,12 +50,12 @@ const html = renderPage('galactic', {
 
 async function withBrowser(t: { skip(message: string): void }, run: (browser: BrowserLike) => Promise<void>): Promise<void> {
   if (!chromium) {
-    t.skip(`playwright not installed at ${PLAYWRIGHT_ROOT}`);
+    t.skip(`playwright not installed at ${locatePlaywrightRoot() ?? 'BEAUTY_PLAYWRIGHT_ROOT'}`);
     return;
   }
   let browser: BrowserLike;
   try {
-    browser = await chromium.launch();
+    browser = await launchWithRetry(chromium, { headless: true });
   } catch (error) {
     t.skip(`chromium unavailable: ${error instanceof Error ? error.message.split('\n')[0] : String(error)}`);
     return;
@@ -92,7 +83,7 @@ test('a webdriver page shows every reveal immediately, without scrolling', async
         Object.defineProperty(navigator, 'webdriver', { get: () => true });
       });
       const page = await context.newPage();
-      await page.goto(pathToFileURL(file).href, { waitUntil: 'domcontentloaded' });
+      await page.goto(pathToFileURL(file).href, { waitUntil: 'domcontentloaded', timeout: browserTimeoutMs() });
       const opacities = await page.$$eval('.reveal', (nodes) => nodes.map((node) => getComputedStyle(node).opacity));
       assert.ok(opacities.length > 0, 'expected .reveal nodes on the page');
       assert.deepEqual([...new Set(opacities)], ['1'], `reveals below the fold are hidden: ${JSON.stringify(opacities)}`);
@@ -121,7 +112,7 @@ test('the ?static parameter reveals everything for humans too', async (t) => {
         Object.defineProperty(navigator, 'webdriver', { get: () => false });
       });
       const page = await context.newPage();
-      await page.goto(`${pathToFileURL(file).href}?static`, { waitUntil: 'domcontentloaded' });
+      await page.goto(`${pathToFileURL(file).href}?static`, { waitUntil: 'domcontentloaded', timeout: browserTimeoutMs() });
       const opacities = await page.$$eval('.reveal', (nodes) => nodes.map((node) => getComputedStyle(node).opacity));
       assert.ok(opacities.length > 0, 'expected .reveal nodes on the page');
       assert.deepEqual([...new Set(opacities)], ['1'], `?static did not reveal everything: ${JSON.stringify(opacities)}`);
