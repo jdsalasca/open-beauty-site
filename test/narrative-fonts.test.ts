@@ -91,17 +91,18 @@ test('packaged woff2 faces stay under the 4 MB budget', async () => {
   assert.ok(bytes <= 4 * 1024 * 1024, `packaged faces weigh ${bytes} bytes`);
 });
 
-test('papercraft and brutalist pilots stay byte-identical to the committed review packs', async () => {
+test('papercraft and brutalist pilots reproduce byte-for-byte the committed review packs of the current renderer', async () => {
   const directory = await mkdtemp(path.join(os.tmpdir(), 'narrative-font-parity-'));
   try {
-    for (const [style, slug, hash] of PILOTS) {
+    for (const [style, slug] of PILOTS) {
       const raw = JSON.parse(await readFile(path.join('docs', 'narrative-gif', 'pilots', 'briefs', `${slug}-${style}.json`), 'utf8')) as Record<string, unknown>;
       const result = await createNarrative(raw, { outputDir: path.join(directory, `${style}-${slug}`) });
       const committed = path.join('docs', 'narrative-gif', 'pilots', style, slug);
-      const gif = await readFile(result.paths.gif);
-      assert.deepEqual(gif, await readFile(path.join(committed, `${slug}-${hash}.gif`)), `${style}/${slug} GIF`);
-      assert.deepEqual(await readFile(result.paths.png), await readFile(path.join(committed, `${slug}-${hash}.png`)), `${style}/${slug} PNG`);
-      assert.deepEqual(await readFile(result.paths.contactSheet), await readFile(path.join(committed, `${slug}-${hash}-contact-sheet.png`)), `${style}/${slug} contact sheet`);
+      // The file name embeds a hash that changes with the renderer version, so the committed pack is
+      // looked up by the name the CURRENT renderer produces: a stale pack fails with ENOENT.
+      for (const [label, generated] of [['GIF', result.paths.gif], ['PNG', result.paths.png], ['contact sheet', result.paths.contactSheet]] as const) {
+        assert.deepEqual(await readFile(generated), await readFile(path.join(committed, path.basename(generated))), `${style}/${slug} ${label}`);
+      }
     }
   } finally {
     await rm(directory, { recursive: true, force: true });
